@@ -21,7 +21,7 @@ The UI SDK extends on our [**Network SDK**](https://github.com/karhoo/karhoo-and
 
 ## Introduction
 
-The KarhooUISDK extends upon the Karhoo network SDK to give you the UI side of a ride hailing/booking experience. This is useful for POC integrations, whitelabel applications or faster integration into existing applications. The UISDK provides entry points for View Controllers (screens) and components (views), that interact with the KarhooAPI to give out of the box experiences for users.    
+The KarhooUISDK extends upon the Karhoo network SDK to give you the UI side of a ride hailing/booking experience. This is useful for Whitelabel applications or faster integration into existing applications. The UISDK provides entry points for View Controllers (screens) and components (views), that interact with the KarhooAPI to give out of the box experiences for users.
 You create the many different views found in the Traveller App. This could be the bookings screen, rides screen, profile screen, etc. Any of them all come from here, the UISDK. 
 
 ## Integration
