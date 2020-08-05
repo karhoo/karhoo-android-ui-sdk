@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RatedQuestionView">
+        <attr name="question" format="string" />
+        <attr name="field_id" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="SupplierListItem">
+        <attr name="layout" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SupplierSortView">
+        <attr name="leftBackground" format="reference" />
+        <attr name="rightBackground" format="reference" />
+        <attr name="leftBackgroundDisabled" format="reference" />
+        <attr name="viewHeight" format="reference" />
+        <attr name="selectedTextColor" format="reference" />
+        <attr name="unselectedTextColor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BookingMapView">
+        <attr name="mapPickupPin" format="reference" />
+        <attr name="mapDropOffPin" format="reference" />
+        <attr name="curvedLineColor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="AddressOptionsView">
+        <attr name="recentLocationIcon" format="reference" />
+    </declare-styleable>
+
+    <attr name="pickupDot" format="reference" />
+    <attr name="dropOffDot" format="reference" />
+    <attr name="dropOffDotEmpty" format="reference" />
+    <attr name="addressPickerBackground" format="reference" />
+    <attr name="addressPickerFlip" format="reference" />
+    <attr name="addressPickerPrebookIcon" format="reference" />
+
+    <declare-styleable name="SupplierListView">
+        <attr name="listBackground" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CategorySelectorView">
+        <attr name="selectedTabTextColor" format="reference" />
+        <attr name="unselectedTabTextColor" format="reference" />
+        <attr name="unavailableTabTextColor" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BookingPaymentView">
+        <attr name="addPaymentBackground" format="reference" />
+        <attr name="changePaymentBackground" format="reference" />
+        <attr name="addCardIcon" format="reference" />
+        <attr name="lineText" format="reference" />
+        <attr name="actionText" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BookingPriceView">
+        <attr name="supplierHeaderText" format="reference" />
+        <attr name="supplierDetailsText" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BookingSupplierView">
+        <attr name="headerText" format="reference" />
+        <attr name="detailsText" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="BookingTermsView">
+        <attr name="termsText" format="reference" />
+        <attr name="termsLinkText" format="reference" />
+    </declare-styleable>
+
+</resources>

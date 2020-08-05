@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/supplierListLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/KhSupplierListView"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/chevronIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_xsmall"
+            android:layout_marginEnd="@dimen/spacing_xsmall"
+            android:paddingTop="@dimen/spacing_xsmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/uisdk_asl_chevron" />
+
+        <com.karhoo.uisdk.screen.booking.supplier.SupplierSortView
+            android:id="@+id/supplierSortWidget"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginTop="@dimen/spacing_xxxsmall"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:clickable="true"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chevronIcon" />
+
+        <com.karhoo.uisdk.screen.booking.supplier.category.CategorySelectorView
+            android:id="@+id/categorySelectorWidget"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:background="@color/opacity_off_white"
+            android:elevation="@dimen/spacing_xsmall"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/supplierSortWidget" />
+
+        <com.karhoo.uisdk.screen.booking.supplier.SupplierRecyclerView
+            android:id="@+id/supplierRecyclerView"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="@dimen/spacing_none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categorySelectorWidget" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

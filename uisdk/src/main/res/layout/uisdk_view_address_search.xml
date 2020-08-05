@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/searchLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/spacing_xxxsmall"
+        android:textColor="@color/off_white"
+        android:textColorHint="#B3ffffff"
+        android:textCursorDrawable="@null">
+
+        <requestFocus />
+    </EditText>
+
+    <ProgressBar
+        android:id="@+id/searchProgressBar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:indeterminate="true"
+        android:paddingLeft="@dimen/spacing_small"
+        android:theme="@style/AppTheme.OffWhiteProgressBar"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/clearSearchButtonIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/spacing_small"
+        android:paddingRight="@dimen/spacing_xsmall"
+        app:srcCompat="@drawable/uisdk_ic_clear" />
+
+</LinearLayout>

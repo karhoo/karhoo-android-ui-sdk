@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/CancelProgressBar"
+        android:layout_width="@dimen/cancel_button_width"
+        android:layout_height="@dimen/cancel_button_height"
+        android:layout_above="@+id/cancelButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:duplicateParentState="false"
+        android:indeterminate="false"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/cancellingLabel"
+        style="@style/Text.White.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/spacing_none"
+        android:layout_alignTop="@id/progressBar"
+        android:layout_alignBottom="@id/progressBar"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/cancelling"
+        android:textAllCaps="true"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancellationButton"
+        android:layout_width="@dimen/spacing_large"
+        android:layout_height="@dimen/spacing_large"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/spacing_xxxsmall"
+        android:src="@drawable/uisdk_ic_request_cancel"
+        app:backgroundTint="@android:color/white"
+        app:borderWidth="@dimen/spacing_none"
+        app:elevation="@dimen/spacing_none"
+        app:pressedTranslationZ="@dimen/spacing_none"
+        app:rippleColor="#e5e5e5" />
+
+</RelativeLayout>

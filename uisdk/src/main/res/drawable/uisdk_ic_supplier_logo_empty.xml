@@ -1,0 +1,9 @@
+<vector android:height="@dimen/icon_size"
+    android:viewportHeight="32.0"
+    android:viewportWidth="32.0"
+    android:width="@dimen/icon_size"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <path
+        android:fillColor="#CCC"
+        android:pathData="M0,4C0,1.79 1.79,0 4,0L28,0C30.21,0 32,1.79 32,4L32,28C32,30.21 30.21,32 28,32L4,32C1.79,32 0,30.21 0,28L0,4ZM1,4L1,28C1,29.65 2.34,31 4,31L28,31C29.65,31 31,29.66 31,28L31,4C31,2.35 29.66,1 28,1L4,1C2.35,1 1,2.34 1,4Z" />
+</vector>

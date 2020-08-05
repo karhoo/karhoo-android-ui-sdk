@@ -1,0 +1,320 @@
+<script>document.write('<script src="http://localhost:35729/livereload.js"></' + 'script>')
+</script><!DOCTYPE html>
+<html>
+    <head>
+        <meta
+                http-equiv="content-type"
+                content="text/html; charset=UTF-8">
+        <title>Karhoo &bull; Contact Support</title>
+        <link
+                rel="stylesheet"
+                href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        <link
+                href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500"
+                rel="stylesheet"
+                type="text/css">
+        <style type="text/css">html, body, div, span, applet, object, iframe,
+        h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+        a, abbr, acronym, address, big, cite, code,
+        del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var,
+        b, u, i, center,
+        dl, dt, dd, ol, ul, li,
+        fieldset, form, label, legend,
+        table, caption, tbody, tfoot, thead, tr, th, td,
+        article, aside, canvas, details, embed,
+        figure, figcaption, footer, header, hgroup,
+        menu, nav, output, ruby, section, summary,
+        time, mark, audio, video {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          font: inherit;
+          font-size: 100%;
+          vertical-align: baseline;
+        }
+        html {
+          line-height: 1;
+        }
+        ol, ul {
+          list-style: none;
+        }
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+        }
+        caption, th, td {
+          text-align: left;
+          font-weight: normal;
+          vertical-align: middle;
+        }
+
+        q, blockquote {
+          quotes: none;
+        }
+        q:before, q:after, blockquote:before, blockquote:after {
+          content: "";
+          content: none;
+        }
+        a img {
+          border: none;
+        }
+        article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+          display: block;
+        }
+
+        * {
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+        body {
+          text-align: center;
+          font-family: 'Work Sans', 'sans-serif';
+          font-weight: 400;
+        }
+
+        a {
+          font-weight: 400;
+          text-decoration: none;
+          display: inline-block;
+          position: relative;
+          padding-bottom: 1px;
+          color: rgba(255, 255, 255, 0.9);
+          -moz-transition: color 0.3s ease;
+          -o-transition: color 0.3s ease;
+          -webkit-transition: color 0.3s ease;
+          transition: color 0.3s ease;
+        }
+        a:hover {
+          color: rgba(255, 255, 255, 1);
+        }
+        a:after {
+          content: '';
+          display: block;
+          margin: auto;
+          height: 2px;
+          width: 0px;
+          background: transparent;
+          -moz-transition: width 0.3s ease, background-color 0.3s ease;
+          -o-transition: width 0.3s ease, background-color 0.3s ease;
+          -webkit-transition: width 0.3s ease, background-color 0.3s ease;
+          transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        a:hover:after {
+          width: 100%;
+          background: white;
+        }
+        img {
+          margin-bottom: 50px;
+        }
+        header, form {
+          padding: 4em 10%;
+        }
+        header {
+          background-image: linear-gradient(45deg, rgb(250,0,70) 0%, rgb(253,0,163) 100%);
+          color: white;
+        }
+        header h1 {
+          font-weight: 500;
+          font-size: 48px;
+          margin-bottom: 10px;
+        }
+        header p {
+          font-weight: 300;
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.9);
+          letter-spacing: .05em;
+        }
+        .form-group {
+          margin-bottom: 50px;
+        }
+        h2.heading {
+          font-size: 18px;
+          text-transform: uppercase;
+          font-weight: 500;
+          text-align: left;
+          color: rgb(51,51,51);
+          border-bottom: 2px solid rgb(250,0,70);
+          padding-bottom: 3px;
+          margin-bottom: 20px;
+        }
+        .controls {
+          text-align: left;
+          position: relative;
+        }
+        .controls input[type="text"],
+        .controls input[type="email"],
+        .controls input[type="tel"],
+        .controls textarea,
+        .controls button {
+          padding: 12px;
+          border: 1px solid rgb(204,204,204);
+          width: 100%;
+          margin-bottom: 18px;
+          font-family: 'Work Sans', 'sans-serif';
+          font-size: 16px;
+          font-weight: 400;
+          background-color: white;
+          -moz-border-radius: 4px;
+          -webkit-border-radius: 4px;
+          border-radius: 4px;
+          -moz-transition: all 0.3s;
+          -o-transition: all 0.3s;
+          -webkit-transition: all 0.3s;
+          transition: all 0.3s;
+        }
+        .controls input[type="text"]:focus,
+        .controls input[type="text"]:hover,
+        .controls input[type="email"]:focus,
+        .controls input[type="email"]:hover,
+        .controls input[type="tel"]:focus,
+        .controls input[type="tel"]:hover,
+        .controls textarea:focus,
+        .controls textarea:hover,
+        .controls button:focus,
+        .controls button:hover {
+          outline: none;
+        }
+        .controls input[type="text"]:focus + label,
+        .controls input[type="text"]:hover + label,
+        .controls input[type="email"]:focus + label,
+        .controls input[type="email"]:hover + label,
+        .controls input[type="tel"]:focus + label,
+        .controls input[type="tel"]:hover + label,
+        .controls textarea:focus + label,
+        .controls textarea:hover + label,
+        .controls button:focus + label,
+        .controls button:hover + label {
+          color: rgb(250,0,70);
+          cursor: text;
+        }
+        .controls input[type="text"]:active,
+        .controls input[type="email"]:active,
+        .controls input[type="tel"]:active,
+        .controls textarea:active {
+          color: rgb(51,51,51);
+        }
+        .controls label {
+          color: rgb(153,153,153);
+          font-size: 16px;
+          display: inline-block;
+          font-weight: 400;
+          background-color: rgba(255, 255, 255, 0);
+          pointer-events: none;
+          padding-bottom: 10px;
+          -moz-transition: color 0.3s, top 0.3s, background-color 0.1s;
+          -o-transition: color 0.3s, top 0.3s, background-color 0.1s;
+          -webkit-transition: color 0.3s, top 0.3s, background-color 0.1s;
+          transition: color 0.3s, top 0.3s, background-color 0.1s;
+        }
+        .controls label.active {
+          top: -11px;
+          background-color: white;
+        }
+        .controls textarea {
+          resize: none;
+          height: 200px;
+        }
+        .controls button {
+          cursor: pointer;
+          background-color: rgb(250,0,70);
+          border: none;
+          color: white;
+          text-shadow: 0px 1px rgb(199,0,56);
+          padding: 12px 0;
+          border: 1px solid rgb(199,0,56);
+          box-shadow: none;
+        }
+        .controls button:hover {
+          text-shadow: 0px 1px rgb(131,0,37);
+          background-color: rgb(199,0,56);
+          border: 1px solid rgb(131,0,37);
+          box-shadow: 0px 4px 8px rgb(204,204,204);
+        }
+
+        </style>
+    </head>
+    <header>
+        <img
+                src="https://image.ibb.co/bRAr3Q/logo.png"
+                alt="logo"
+                height="37"
+                width="228">
+        <h1>How can we help?</h1>
+    </header>
+    <body>
+        <form
+                action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8"
+                method="POST">
+            <input
+                    type=hidden
+                    name="orgid"
+                    value="00D0Y000001ItkG">
+            <input
+                    type=hidden
+                    name="retURL"
+                    value="https://karhoo.force.com/customersupport">
+            <div class="form-group">
+                <h2 class="heading">Contact Details</h2>
+                <div class="controls">
+                    <label for="name">Full Name</label>
+                    <input
+                            type="text"
+                            id="name"
+                            maxlength="80"
+                            name="name"
+                            size="20"
+                            required
+                            value="$[NAME]">
+                </div>
+                <div class="controls">
+                    <label for="email">Email</label>
+                    <input
+                            type="text"
+                            id="email"
+                            maxlength="80"
+                            name="email"
+                            size="20"
+                            required
+                            value="$[EMAIL]">
+                </div>
+                <div class="controls">
+                    <label for="phone">Phone</label>
+                    <input
+                            type="text"
+                            id="phone"
+                            maxlength="40"
+                            name="phone"
+                            size="20"
+                            required
+                            value="$[PHONE]">
+                </div>
+                <div class="controls">
+                    <label for="subject">Subject</label>
+                    <input
+                            type="text"
+                            id="subject"
+                            maxlength="80"
+                            name="subject"
+                            size="20"
+                            required>
+                </div>
+                <div class="controls">
+                    <label for="description">Description</label>
+                    <textarea
+                            type="text"
+                            name="description"
+                            required>$[LAST_TRIP_INFO]
+                    </textarea>
+                    <input
+                            type="hidden"
+                            id="external"
+                            name="external"
+                            value="1" />
+                    <button>Submit</button>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>

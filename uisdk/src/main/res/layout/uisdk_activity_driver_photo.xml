@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:id="@+id/driverNameText"
+        style="@style/Text.White.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/driverPhotoImage"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/driverPhotoImage"
+        android:layout_width="@dimen/photo_width"
+        android:layout_height="@dimen/photo_height"
+        android:layout_centerInParent="true"
+        android:transitionName="driverPhoto" />
+
+</RelativeLayout>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KarhooTraveller</string>
+    <string name="location_permission_denied">El permiso de localización ha sido denegado, actívalo para que podamos ubicarte</string>
+    <string name="permission_rationale_location">Para poder ubicarte en el mapa necesitamos acceso a tu localización. Por favor, activa el permiso de localización.</string>
+    <string name="settings">Ajustes</string>
+
+    <!-- Supplier List -->
+    <string name="sorter_nearest">Proximidad</string>
+    <string name="sorter_cheapest">Tarifa</string>
+    <string name="address_pick_up">Recogida</string>
+    <string name="address_picker_add_pickup">Añadir dirección de recogida</string>
+    <string name="address_picker_pickup">Buscando dirección</string>
+    <string name="address_drop_off">Destino</string>
+    <string name="address_picker_dropoff_booking">Añadir destino</string>
+    <string name="loading_min">min</string>
+    <string name="capacity">x %s</string>
+
+    <!-- Activity Titles -->
+    <string name="title_activity_address">Dirección</string>
+    <string name="title_activity_trip">Trayecto</string>
+    <string name="title_activity_threedsecure">3D Secure</string>
+
+
+    <!-- Address Picker -->
+    <string name="enter_pickup">¿Dónde estás?</string>
+    <string name="enter_destination">¿Dónde vas?</string>
+
+    <!-- Navigation Drawer -->
+    <string name="login">Acceder</string>
+    <string name="profile">Perfil</string>
+    <string name="drawer_closed">Drawer closed</string>
+    <string name="drawer_open">Drawer open</string>
+    <string name="help">Ayuda</string>
+
+    <!-- Register -->
+    <string name="register">REGISTRARSE</string>
+    <string name="sign_in">Acceder</string>
+    <string name="first_name_hint">Nombre</string>
+    <string name="last_name_hint">Apellidos</string>
+    <string name="email_hint">Email</string>
+    <string name="mobile_phone_number_hint">Número de teléfono</string>
+    <string name="code">Prefijo</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="pass_length">Al menos 8 caracteres</string>
+    <string name="register_check_box">No deseo recibir viajes gratuitos, promociones ni ofertas</string>
+    <string name="continue_registration">CONTINUAR</string>
+    <string name="by_continuing_you_agree_to">Al crear una cuenta de Karhoo estás aceptando sus</string>
+    <string name="invalid_email">Error: email no válido</string>
+    <string name="invalid_phone_number">Número de teléfono invalido</string>
+    <string name="invalid_password"> Min. 8 caracteres, 1 mayúscula, 1 número</string>
+    <string name="invalid_empty_field">Error: no se permiten campos vacíos</string>
+
+    <!-- Login -->
+    <string name="sign_in_but">ACCEDER</string>
+    <string name="error_invalid_password">Error: la contraseña es incorrecta</string>
+
+    <!-- Central Lat Lng Charring X -->
+    <string name="central_lat">51.5073</string>
+    <string name="central_long">0.1276</string>
+    <string name="min">min</string>
+
+    <!-- Errors -->
+    <string name="destination_price_error">Selecciona un destino para ver las tarifas</string>
+
+    <!-- Terms and Conditions -->
+    <string name="booking_terms">Al reservar con %1$s</string>
+    <string name="label_terms_and_conditions"> estás aceptando sus Condiciones Generales</string>
+    <string name="label_cancellation_policy">su Política de Cancelación</string>
+    <string name="label_and">&#160;y&#160;</string>
+
+    <!-- Booking Confirmation -->
+    <string name="booking_car">Confirmar viaje</string>
+    <string name="date_label">Fecha:</string>
+    <string name="time_label">Hora:</string>
+    <string name="change">Adjuntar</string>
+
+    <!-- Dialogs -->
+    <string name="ok">OK</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="alternative">Otras Opciones</string>
+    <string name="dispatch_cancelled">Disculpa, %s no tiene conductores disponibles ahora</string>
+
+    <!-- Support -->
+    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
+    <string name="support_email">support@karhoo.com</string>
+    <string name="supplier_email">suppliers@karhoo.com</string>
+    <string name="feedback">Realimentación</string>
+    <string name="title_activity_intent_chooser_send_email">Enviar Email</string>
+    <string name="all_category">Todo</string>
+    <string name="saloon">Salón</string>
+    <string name="mpv">MPV</string>
+    <string name="exec">Ejecutivo</string>
+    <string name="taxi">Taxi</string>
+    <string name="electric">Eléctrico</string>
+    <string name="moto">Moto</string>
+    <string name="wheelchair">Silla de ruedas</string>
+    <string name="minibus">Minibus</string>
+
+    <!-- Email -->
+    <string name="fleet_recommendation_body">Gracias por recomendar una flota en su área. Para incrementar la cobertura en su área lo más rápido posible, díganos el área y el nombre de la compañía de transporte.
+                    Área:
+                    Nombre de la flota:</string>
+    <string name="fleet_recommendation_subject">Recomendar una flota en mi área</string>
+
+    <!-- Shared Preferences -->
+    <string name="location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
+    <string name="permissions">PERMISOS</string>
+    <string name="booking_confirmation">Reserva confirmada</string>
+    <string name="eta">Proximidad</string>
+    <string name="estimated_arrival_time">Tiempo estimado de llegada</string>
+    <string name="estimated_price">Precio estimado</string>
+
+    <!-- Current Trip -->
+    <string name="retrieving_pickup">Buscando punto de recogida</string>
+    <string name="retrieving_dropoff">Buscando destino</string>
+    <string name="supplier">El proveedor</string>
+    <string name="cancel_ride">Cancelar Reserva</string>
+    <string name="cancelling_ride">Cancelando viaje</string>
+    <string name="contact_fleet">Llamar a la flota</string>
+    <string name="contact_driver">Llamar</string>
+    <string name="cancel_your_ride">¿Cancelar el viaje?</string>
+    <string name="cancel_ride_successful">Tu viaje se canceló con éxito</string>
+    <string name="cancel_ride_successful_message">Tu reserva se canceló con éxito.</string>
+    <string name="cancellation_fee">Puede que se te cobre una tarifa de cancelación</string>
+    <string name="call">LLAMAR</string>
+
+    <!-- trip info -->
+    <string name="ride_options">Opciones del viaje</string>
+    <string name="title_activity_rides">Viajes</string>
+    <string name="rides">Viajes</string>
+    <string name="error_cannot_create_user">Parece que hubo un problema al registrar tu cuenta. Vuelve a intentarlo.</string>
+    <string name="add_card">AGREGAR PAGO</string>
+    <string name="add_payment">Agrege un método de pago</string>
+    <string name="payment_issue">Error con el pago</string>
+    <string name="payment_issue_message">Hubo un problema con tu tarjeta</string>
+
+    <!-- Rides -->
+    <string name="title_page_upcoming">Próximos</string>
+    <string name="title_page_past">Anteriores</string>
+    <string name="car_description">Coche: %1$s</string>
+    <string name="track_driver">Localizar conductor</string>
+    <string name="book_now">Reservar</string>
+    <string name="title_upcoming_rides_empty">No tienes reservas</string>
+    <string name="upcoming_rides_empty">Recuerda que puedes reservar hasta con 7 días de antelación</string>
+    <string name="permission_required">Para utilizar la app de Karhoo, activa el permiso de localización</string>
+    <string name="no_destination">Sin Destino</string>
+    <string name="enter_destination_for_vehicles">Introduce un destino para ver los vehículos disponibles</string>
+    <string name="mins">min</string>
+    <string name="origin_book_error">Selecciona un origin para poder hacer una reserva</string>
+    <string name="destination_book_error">Selecciona un destino para poder hacer una reserva</string>
+    <string name="booking_error">Hubo un problema con tu solicitud de viaje. Inténtalo de nuevo</string>
+    <string name="booking_details_error">Detalles de reserva inválidos</string>
+    <string name="invalid_prebook_time_error">La pre-reserva debe realizarse por lo menos a una hora de la hora actual</string>
+    <string name="app_invalid">Esta versión de la app no está actualizada. Actualízala.</string>
+    <string name="something_went_wrong">Hubo un problema</string>
+    <string name="retry">Reintentar</string>
+    <string name="dismiss">OK</string>
+    <string name="update">ACTUALIZAR</string>
+    <string name="title_past_rides_empty">No tienes viajes anteriores</string>
+    <string name="past_rides_empty">Una vez hayas hecho un viaje, aparecerá aquí.</string>
+    <string name="ride_state_cancelled">Cancelado</string>
+    <string name="ride_state_completed">Completado</string>
+    <string name="ride_state_failed">Error</string>
+    <string name="pending">Pendiente</string>
+    <string name="cancelled">Cancelado</string>
+    <string name="status">Estado</string>
+    <string name="price">Tarifa</string>
+    <string name="card">Tarjeta</string>
+    <string name="karhoo_id">ID Karhoo</string>
+    <string name="report_issue">Reportar incidencia</string>
+
+    <!-- Trip states -->
+    <string name="confirmed">Tu viaje ha sido confirmado con %s</string>
+    <string name="requested">Tu viaje ha sido solicitado con %s</string>
+    <string name="driver_en_route">Tu conductor está de camino</string>
+    <string name="allocated">Conductor asignado</string>
+    <string name="approaching">Tu vehículo llegará pronto</string>
+    <string name="arrived">Tu conductor ha llegado</string>
+    <string name="pass_on_board">Ten un buen viaje con %s</string>
+    <string name="completed">Esperamos que hayas disfrutado del viaje</string>
+    <string name="cancelled_by_user">Has cancelado tu reserva con %s</string>
+    <string name="cancelled_by_dispatch">El proveedor %s canceló tu reserva</string>
+    <string name="cancelled_by_karhoo">Karhoo canceló tu reserva</string>
+    <string name="failed_trip">No pudimos reservar tu viaje</string>
+
+    <!-- Fare type -->
+    <string name="fixed_fare">Fijo</string>
+    <string name="estimated_fare">Estimado</string>
+    <string name="metered">Taxímetro</string>
+    <string name="retrieving_quotes">Cargando tarifas</string>
+    <string name="no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
+    <string name="title_activity_airport">Recogida en aeropuerto</string>
+
+    <!-- Address -->
+    <string name="recents_empty">No hay resultados recientes</string>
+    <string name="map_selector">Seleccione la ubicación en el mapa</string>
+    <string name="current_location">Seleccionar ubicación actual</string>
+
+    <!-- Profile -->
+    <string name="phone_number_hint">Número de teléfono</string>
+    <string name="name_hint">Nombre</string>
+    <string name="sign_out">Salir</string>
+    <string name="network_error">Parece que tenemos problemas para conectarnos a la red</string>
+    <string name="requested_invite">Invitación solicitada</string>
+    <string name="save">Guardar</string>
+    <string name="discard">Cancelar</string>
+
+    <!-- General errors, K0xxx -->
+    <string name="K0001">Error general</string>
+    <string name="K0002">Petición de solicitud no válida</string>
+    <string name="K0003">Imposible leer el token de autorización</string>
+    <string name="K0004">La autenticación es necesaria para esta ruta</string>
+    <string name="K0005">Falta el rol requerido para esta solicitud</string>
+    <string name="K0006">Límite excedido</string>
+    <string name="K0007">Error generalizado</string>
+
+    <!-- User errors, K1xxx -->
+    <string name="K1001">Imposible registrar usuario</string>
+    <string name="K1002">Imposible registrar usuario (el usuario ya existe)</string>
+    <string name="K1003">Imposible registrar usuario</string>
+    <string name="K1004">Imposible registrar usuario (número de teléfono no válido)</string>
+    <string name="K1005">Imposible obtener los datos del usuario (token no válido)</string>
+    <string name="K1006">Imposible obtener los datos del usuario (el usuario ya existe)</string>
+
+    <!-- Locations errors, K2xxx -->
+    <string name="K2001">Imposible obtener dirección</string>
+
+    <!-- Quotes errors, K3xxx -->
+    <string name="K3001">Imposible obtener estimaciones</string>
+    <string name="K3002">Imposible obtener estimaciones (no se encontró disponibilidad en el área solicitada)</string>
+    <string name="K3003">Imposible obtener estimaciones (no se encontró la tarifa específica)</string>
+
+    <!-- Bookings errors, K4xxx -->
+    <string name="K4001">Imposible reservar</string>
+    <string name="K4002">Imposible reservar - solicitud inválida (se requiere al menos un valor para detalles de pasajero)</string>
+    <string name="K4003">Imposible reservar (no se encontró la cotización especificada)</string>
+    <string name="K4004">Imposible reservar (intento de reserva de cotización caducada)</string>
+    <string name="K4005">Imposible reservar (Permiso denegado)</string>
+    <string name="K4006">Imposible reservar (Pre-autorización de pago fallida)</string>
+    <string name="K4007">Cancelación fallida</string>
+    <string name="K4008">Cancelación fallida (No se ha encontrado la reserva)</string>
+    <string name="K4009">Cancelación fallida (Permiso denegado)</string>
+    <string name="K4010">Cancelación fallida (Este viaje ya ha sido cancelado)</string>
+    <string name="K4011">No se pudo obtener la reserva</string>
+    <string name="K4012">No se pudo obtener la reserva (No se ha encontrado la reserva)</string>
+    <string name="K4013">No se pudo obtener la reserva (Permiso denegado)</string>
+    <string name="K4014">No pudo completarse la reserva como agente (Agent)</string>
+    <string name="K4015">No pudo completarse la reserva como pasajero</string>
+    <string name="K4018">No pudo realizarse la reserva al no estar ya disponible la cotización</string>
+
+    <!-- Availability errors, K5xxx -->
+    <string name="K5001">No se pudo obtener estimaciones</string>
+    <string name="K5002">Sin disponibilidad (no se encontró disponibilidad en el área solicitada)</string>
+    <string name="K5003">Sin disponibilidad (no se encontraron categorías en el área solicitada)</string>
+
+    <!-- Authentication errors K6xxx -->
+    <string name="K6001">No se puede autenticar</string>
+
+    <!-- Qxxxx errors -->
+    <string name="Q0001">La recogida y el destino no pueden ser iguales.</string>
+    <string name="P0001">Error al recuperar ID de usuario del token</string>
+
+    <string name="temporary_message_error_codes_unknown">Parece que estamos teniendo problemas técnicos en este momento.</string>
+
+    <!-- Payment Errors -->
+    <string name="KP001">No se pudo encontrar al cliente en Braintree</string>
+    <string name="KP002">No se pudo inicializar el cliente para la organización</string>
+    <string name="KP003">No se pudo encontrar el método de pago predeterminado</string>
+    <string name="KP004">No se pudo encontrar la tarjeta de crédito predeterminada</string>
+    <string name="KP005">Error al generar nonce</string>
+    <string name="P0002">Servicio de pago de llamadas fallido</string>
+
+    <string name="title_dispatch_cancelled">Cancelación por parte de la flota</string>
+    <string name="continue_journey">CONTINUAR</string>
+    <string name="got_it">ENTENDIDO</string>
+    <string name="contact">CONTACTO</string>
+    <string name="rebook_ride">Solicitar de nuevo</string>
+    <string name="licence">Licencia:%1$s</string>
+    <string name="initialised">Karhoo está iniciando tu viaje</string>
+    <string name="getting_trip_status">Cargando el estado de tu reserva...</string>
+
+    <!-- Alerts -->
+    <string name="faretype_info_base">La tarifa final puede verse afectada por propinas, peajes, impuestos u otros cargos</string>
+
+    <!-- Airports -->
+    <string name="flight_number">Número de vuelo</string>
+    <string name="add_flight_details">Agregar información de vuelo</string>
+    <string name="notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
+    <string name="meeting_point">Punto de encuentro</string>
+    <string name="fleet">Flota</string>
+    <string name="date">Fecha</string>
+    <string name="results_empty">Sin resultados</string>
+    <string name="ride_contact_details">Detalles</string>
+    <string name="arrival">Llegada</string>
+    <string name="cancelling">Mantenga para cancelar</string>
+    <string name="allocating_trip_two">Esto puede llevar unos minutos</string>
+    <string name="difficulties_cancelling_title">Dificultades para cancelar</string>
+    <string name="difficulties_cancelling_message">Estamos experimentando dificultades cancelando tu viaje. Por favor llama a la flota. </string>
+    <string name="finding_your_ride">Cargando tu viaje...</string>
+    <string name="allocating_trip_one">Espera hasta que se te asigne un conductor</string>
+    <string name="base">Tarifa base</string>
+    <string name="ride_details">Detalles del viaje</string>
+    <string name="ride_confirmed">Viaje confirmado</string>
+    <string name="booking_failed">Reserva fallida</string>
+    <string name="ride_state_pob">Pasajero a bordo</string>
+    <string name="ride_state_arrived">Completado</string>
+    <string name="ride_state_allocated">Asignado</string>
+    <string name="ride_state_der">Conductor de camino</string>
+    <string name="ride_state_approaching">Aproximándose</string>
+    <string name="ride_state_requested">Solicitado</string>
+    <string name="ride_state_confirmed">Confirmado</string>
+    <string name="ride_state_initialised">Iniciado</string>
+    <string name="prebook_timezone_title">La reserva se realizará en hora local</string>
+    <string name="total_fare">Tarifa total</string>
+    <string name="tip_10">Propina (10%)</string>
+    <string name="quoted_fare">Tarifa estimada</string>
+    <string name="done">OK</string>
+    <string name="vehicle">Vehículo</string>
+    <string name="book_return_ride">Reservar viaje de vuelta</string>
+    <string name="card_charged">Cobro realizado</string>
+    <string name="ride_summary">Resumen del viaje</string>
+    <string name="payment_summary">Resumen del pago</string>
+    <string name="booking_failed_body">La demanda es alta. %1 no tiene conductores disponibles en este momento</string>
+    <string name="trip_id">№ de reserva: %1$s</string>
+    <string name="last_trip_id">№ de última reserva: %1$s</string>
+    <string name="last_trip_id_not_set">№ de última reserva: no establecido</string>
+    <string name="about">Información</string>
+    <string name="email_info">Por favor no elimines esta información ya que nos ayuda a mejorar la app. </string>
+    <string name="booking_failed_body_no_fleet_name">La demanda es alta en estos momentos. La flota seleccionada no tiene conductores disponibles.</string>
+    <string name="info">info</string>
+    <string name="location_disabled">Activa los servicios de localización para utilizar la aplicación</string>
+    <string name="terms_conditions">Condiciones generales de utilización</string>
+    <string name="privacy_policy_small">Política de privacidad</string>
+    <string name="K1999">Usuario creado. Te avisaremos cuando tengas acceso a la app.</string>
+
+    <string name="pickup_type_curbside">Recoger afuera</string>
+    <string name="pickup_type_meet_and_greet">Dar la bienvenida</string>
+    <string name="pickup_type_standby">Llamar conductor</string>
+
+    <!--Completed trip-->
+    <string name="rating_submitted">Gracias por enviar tu calificación.</string>
+    <string name="rate_trip_label">Como clasifica usted este viaje?</string>
+    <string name="star_poor">Pobre</string>
+    <string name="star_fair">Justo</string>
+    <string name="star_good">Bueno</string>
+    <string name="star_great">Excelente</string>
+    <string name="star_excellent">Fantástico</string>
+    <string name="submit_button_text">Cuéntanos por qué calificaste de esta manera.</string>
+    <string name="tell_us_more">Por favor, cuéntanos más sobre tu viaje</string>
+
+    <!-- FEEDBACK -->
+    <string name="feedback_title">Por favor, cuéntanos más sobre tu viaje</string>
+    <string name="trip_id_label">Trip ID</string>
+    <string name="additional_comments">Comentarios adicionales</string>
+    <string name="question_one">¿Qué tan contento estuvo con la selección de cotizaciones para su viaje (por ejemplo, flotas, precios y ETA)?</string>
+    <string name='question_two'>¿Cómo fue su experiencia al encontrar el lugar de recogida y conocer a su conductor?</string>
+    <string name="question_three">¿Cómo fue su experiencia mientras estaba en el taxi (por ejemplo, limpieza, ruta y conductor del taxi)?</string>
+    <string name="question_four">¿Qué tan fácil te pareció usar la aplicación?</string>
+    <string name="submit">ENVIAR</string>
+    <string name="feedback_submitted">Gracias por enviar sus comentarios</string>
+
+    <!-- Guest Checkout -->
+    <string name="passenger_details">Detalles del pasajero</string>
+    <string name="payment_details">Detalles del pago</string>
+    <string name="checkout_as_guest">Ordenar como invitado</string>
+</resources>
