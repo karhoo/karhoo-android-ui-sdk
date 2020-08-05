@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bookingButtonLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/uisdk_booking_button_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:srcCompat="@drawable/uisdk_ic_check" />
+
+        <TextView
+            android:id="@+id/bookingRequestLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/spacing_small"
+            android:text="@string/booking_car"
+            android:textAllCaps="true"
+            android:textColor="@color/off_white"
+            android:textSize="@dimen/text_size_large" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/bookingProgressBar"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/off_white"
+        android:progressTint="@color/off_white"
+        android:visibility="invisible" />
+
+</FrameLayout>
+

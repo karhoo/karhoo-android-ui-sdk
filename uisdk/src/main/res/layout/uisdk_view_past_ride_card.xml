@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_xsmall"
+    android:layout_marginTop="@dimen/spacing_xxsmall"
+    android:layout_marginEnd="@dimen/spacing_xsmall"
+    android:layout_marginBottom="@dimen/spacing_xxsmall"
+    android:elevation="@dimen/elevation_default"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="@dimen/logo_size"
+                android:layout_height="@dimen/logo_size"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/bookingTermsText"
+                style="@style/Text.Primary.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dateTimeText"
+                style="@style/Text.Faded.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bookingTermsText"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/pickupTypeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dateTimeText"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="@dimen/spacing_xxsmall"
+                android:background="@drawable/uisdk_background_off_black_rounded"
+                android:paddingLeft="@dimen/spacing_xxsmall"
+                android:paddingTop="@dimen/spacing_xxxsmall"
+                android:paddingRight="@dimen/spacing_xxsmall"
+                android:paddingBottom="@dimen/spacing_xxxsmall"
+                android:text="@string/pickup_type_meet_and_greet"
+                android:textColor="@color/text_white"
+                android:textSize="@dimen/text_size_xsmall"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/pickupBallIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/spacing_xsmall"
+                style="@style/KhPickUpDot" />
+
+            <TextView
+                android:id="@+id/pickupLabel"
+                style="@style/Text.Primary.SmallMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                tools:text="Sample location" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/spacing_small">
+
+            <ImageView
+                android:id="@+id/dropoffBallIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/spacing_xsmall"
+                style="@style/KhDropOffDot" />
+
+            <TextView
+                android:id="@+id/dropOffLabel"
+                style="@style/Text.Primary.SmallMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                tools:text="Pharmacy" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/carText"
+            style="@style/Text.Faded.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xsmall" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/stateIcon"
+                android:layout_width="@dimen/icon_size_small"
+                android:layout_height="@dimen/icon_size_small"
+                android:layout_marginRight="@dimen/icon_size_small" />
+
+            <TextView
+                android:id="@+id/stateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_small_medium" />
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="@dimen/spacing_none"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textSize="@dimen/text_size_small_medium" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

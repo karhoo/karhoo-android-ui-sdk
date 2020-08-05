@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <com.karhoo.uisdk.screen.booking.address.PickUpFullView
+        android:id="@+id/pickUpFullIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/full_view_height"
+        android:layout_marginBottom="@dimen/text_size_small"
+        android:paddingBottom="@dimen/text_size_small" />
+
+    <com.karhoo.uisdk.screen.booking.address.DropOffFullView
+        android:id="@+id/dropOffFullIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/full_view_height"
+        android:layout_marginTop="@dimen/text_size_small"
+        android:paddingTop="@dimen/text_size_small" />
+
+</FrameLayout>

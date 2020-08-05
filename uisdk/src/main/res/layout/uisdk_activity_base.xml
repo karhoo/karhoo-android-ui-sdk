@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/snackBarContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/uisdk_colour_fade"
+    android:elevation="@dimen/spacing_small"
+    android:orientation="vertical">
+
+    <com.karhoo.uisdk.base.view.notification.TopNotificationView
+        android:id="@+id/topNotificationWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.karhoo.uisdk.screen.web.KarhooWebView
+        android:id="@+id/khWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</FrameLayout>

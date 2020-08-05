@@ -1,0 +1,134 @@
+package com.karhoo.uisdk.screen.web
+
+import android.app.AlertDialog
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.http.SslError
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
+import android.webkit.SslErrorHandler
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.FrameLayout
+import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.VersionUtil
+import com.karhoo.uisdk.util.formattedTripId
+import kotlinx.android.synthetic.main.uisdk_view_web.view.khWebViewToolbar
+import kotlinx.android.synthetic.main.uisdk_view_web.view.progressBar
+import kotlinx.android.synthetic.main.uisdk_view_web.view.webView
+
+class KarhooWebView @JvmOverloads constructor(context: Context,
+                                              attrs: AttributeSet? = null,
+                                              defStyleAttr: Int = 0
+                                             ) : FrameLayout(context, attrs, defStyleAttr) {
+
+    private var tripId: String = ""
+
+    init {
+        View.inflate(context, R.layout.uisdk_view_web, this)
+
+        if (!isInEditMode) {
+            webView.apply {
+                settings.apply {
+                    javaScriptEnabled = true
+                    javaScriptCanOpenWindowsAutomatically = true
+                    allowFileAccess = true
+                    builtInZoomControls = false
+                    domStorageEnabled = true
+                    setSupportZoom(false)
+                }
+                isDrawingCacheEnabled = true
+                webViewClient = KarhooWebViewClient()
+            }
+            khWebViewToolbar.setNavigationOnClickListener { hide() }
+        }
+    }
+
+    fun show(url: String,
+             tripId: String = "",
+             isScrollable: Boolean = true) {
+
+        this.tripId = tripId
+
+        webView.setOnTouchListener(DisableScrollTouchListener(isScrollable))
+
+        if (url.isNotEmpty()) {
+            if (url.contains(INTERCEPT_HELP_STRING)) {
+                webView.loadData(prepopulateForUser(KarhooApi.userStore.currentUser,
+                                                    formattedTripId(context, tripId) + "\n" +
+                                                            VersionUtil.appAndDeviceInfo() +
+                                                            VersionUtil.getVersionString(context), context),
+                                 TYPE_TEXT_HTML, UTF_8)
+            } else {
+                webView.loadUrl(url)
+            }
+        }
+
+        visibility = View.VISIBLE
+    }
+
+    fun hide() {
+        this.tripId = ""
+        webView.loadUrl("about:blank")
+        visibility = View.GONE
+    }
+
+    private inner class KarhooWebViewClient : WebViewClient() {
+
+        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+            webView?.loadUrl(url)
+            return false
+        }
+
+        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+            super.onReceivedSslError(view, handler, error)
+            AlertDialog.Builder(context, R.style.AlertDialog)
+                    .setMessage(R.string.notification_error_ssl_cert_invalid)
+                    .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
+                    .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }
+                    .create()
+                    .show()
+        }
+
+        override fun onLoadResource(view: WebView?, url: String?) {
+            if (url?.contains(INTERCEPT_HELP_STRING) == true) {
+                webView.loadData(prepopulateForUser(KarhooApi.userStore.currentUser,
+                                                    formattedTripId(context, tripId) + "\n" +
+                                                            VersionUtil.appAndDeviceInfo() +
+                                                            VersionUtil.getVersionString(context), context),
+                                 TYPE_TEXT_HTML, UTF_8)
+            }
+            super.onLoadResource(view, url)
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            progressBar.visibility = View.VISIBLE
+        }
+
+        override fun onPageFinished(view: WebView?, url: String?) {
+            super.onPageFinished(view, url)
+            progressBar.visibility = View.GONE
+        }
+
+    }
+
+    private inner class DisableScrollTouchListener(val isScrollable: Boolean) : View.OnTouchListener {
+        override fun onTouch(v: View, event: MotionEvent): Boolean {
+            return if (isScrollable) {
+                false
+            } else {
+                event.action == MotionEvent.ACTION_MOVE
+            }
+        }
+    }
+
+    companion object {
+        const val INTERCEPT_HELP_STRING = "CreateRecordForm"
+        const val TYPE_TEXT_HTML = "text/html"
+        const val UTF_8 = "UTF-8"
+    }
+
+}

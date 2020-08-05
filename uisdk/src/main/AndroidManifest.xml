@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.karhoo.uisdk">
+
+    <application>
+        
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="YOUR_GOOGLE_API_KEY" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:label="@string/title_activity_threedsecure"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="${applicationId}.braintree" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.karhoo.uisdk.screen.address.AddressActivity"
+            android:label="@string/title_activity_address"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            tools:replace="android:theme" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.booking.BookingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="com.karhoo.uisdk.screen.trip.TripActivity"
+            android:label="@string/title_activity_trip"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
+            android:label="@string/title_activity_rides"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
+            android:label="@string/title_activity_rides"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
+            android:label="driverPhoto"
+            android:parentActivityName="com.karhoo.uisdk.screen.trip.TripActivity"
+            android:theme="@style/AppTheme.Transparent" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
+            android:label="@string/feedback"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.karhoo.uisdk.screen.web.WebActivity"
+            android:label="@string/title_activity_trip"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+    </application>
+
+</manifest>

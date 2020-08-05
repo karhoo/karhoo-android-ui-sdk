@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context="com.karhoo.uisdk.screen.booking.BookingActivity">
+
+    <com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView
+        android:id="@+id/navigationDrawerWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:openDrawer="start">
+
+        <include
+            layout="@layout/uisdk_activity_booking_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/navigationWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/uisdk_nav_header_main"
+            app:itemIconTint="@color/secondary"
+            app:menu="@menu/uisdk_navigation_menu" />
+
+    </com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView>
+
+    <include layout="@layout/uisdk_activity_base" />
+
+</RelativeLayout>

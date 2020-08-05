@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="animation_duration_slide_out_or_in">300</integer>
+    <integer name="animation_duration_slide_out_or_in_suppliers">600</integer>
+    <integer name="animation_duration_slide_out_or_in_categories">500</integer>
+    <integer name="animation_duration_shared_element">400</integer>
+
+    <item name="visible" type="id" />
+    <item name="masked" type="id" />
+
+</resources>
+

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer name="map_anim_duration">200</integer>
+    <integer name="snackbar_background_fade">250</integer>
+
+    <!-- Flight screen-->
+    <integer name="max_flight_num_chars">8</integer>
+    <integer name="max_flight_info_chars">100</integer>
+
+    <!-- Top notification bar-->
+    <integer name="anim_top_notification_fade">500</integer>
+    <integer name="anim_top_notification_fade_offset">5000</integer>
+
+    <!-- Trip Details Arrow-->
+    <integer name="anim_details_arrow">200</integer>
+
+    <!-- Map Zoom Levels -->
+    <item name="map_zoom_max" format="float" type="dimen">20.0</item>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_small"
+    style="@style/KhBookingETAPriceView">
+
+    <LinearLayout
+        android:id="@+id/etaLayout"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="start"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/etaTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            style="@style/KhBookingETAPriceView"
+            android:text="@string/estimated_arrival_time" />
+
+        <TextView
+            android:id="@+id/etaText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            style="@style/KhBookingETAPriceView"
+            tools:text="5 min" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/priceLayout"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/priceTypeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            style="@style/KhBookingETAPriceView"
+            android:text="@string/estimated_price" />
+
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:autoSizeMaxTextSize="@dimen/text_size_xxlarge"
+            android:autoSizeMinTextSize="@dimen/text_size_small"
+            android:autoSizeStepGranularity="@dimen/spacing_xxxsmall"
+            android:autoSizeTextType="uniform"
+            android:lineSpacingExtra="@dimen/booking_line_spacing"
+            android:maxLines="1"
+            style="@style/KhBookingETAPriceView"
+            tools:text="£15.50" />
+
+    </LinearLayout>
+
+</LinearLayout>

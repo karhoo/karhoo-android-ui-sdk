@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/rideConfirmedIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/prebook_image_height"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/uisdk_ic_prebook_confirmed" />
+
+    <TextView
+        android:id="@+id/rideConfirmedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:text="@string/ride_confirmed"
+        android:textColor="@color/off_black"
+        android:textSize="@dimen/text_size_xlarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rideConfirmedIcon" />
+
+    <TextView
+        android:id="@+id/meetingPointText"
+        style="@style/Text.Faded.Medium"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium_small"
+        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_medium_small"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rideConfirmedLabel"
+        tools:text="Placeholder text that contains information about booking with Fleet such as Meeting Points." />
+
+    <View
+        android:id="@+id/addressDivider"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="@dimen/divider_height"
+        android:layout_marginStart="@dimen/spacing_medium_small"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_medium_small"
+        android:background="@color/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meetingPointText" />
+
+    <TextView
+        android:id="@+id/pickupTypeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:background="@drawable/uisdk_background_off_black_rounded"
+        android:paddingLeft="@dimen/spacing_xxsmall"
+        android:paddingTop="@dimen/spacing_xxxsmall"
+        android:paddingRight="@dimen/spacing_xxsmall"
+        android:paddingBottom="@dimen/spacing_xxxsmall"
+        android:text="@string/pickup_type_meet_and_greet"
+        android:textColor="@color/text_white"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meetingPointText" />
+
+    <TextView
+        android:id="@+id/pickupAddressText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/off_black"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintEnd_toEndOf="@+id/addressDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addressDivider"
+        tools:text="Pickup Display Address" />
+
+    <TextView
+        android:id="@+id/dropoffAddressText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/off_black"
+        android:textSize="@dimen/text_size_medium"
+        app:layout_constraintEnd_toEndOf="@+id/addressDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pickupAddressText"
+        tools:text="Dropoff Display Address" />
+
+    <ImageView
+        android:id="@+id/pickupIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupAddressText"
+        app:layout_constraintEnd_toStartOf="@+id/pickupAddressText"
+        app:layout_constraintTop_toTopOf="@+id/pickupAddressText"
+        style="@style/KhPickUpDot" />
+
+    <ImageView
+        android:id="@+id/dropoffIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@+id/dropoffAddressText"
+        app:layout_constraintEnd_toStartOf="@+id/dropoffAddressText"
+        app:layout_constraintTop_toTopOf="@+id/dropoffAddressText"
+        style="@style/KhDropOffDot" />
+
+    <View
+        android:id="@+id/pickupDropoffDivider"
+        android:layout_width="2dp"
+        android:layout_height="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/icon_size_medium"
+        android:background="@color/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pickupAddressText"
+        app:layout_editor_absoluteX="60dp"
+        app:layout_editor_absoluteY="60dp" />
+
+    <TextView
+        android:id="@+id/bookingTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:textColor="@color/off_black"
+        android:textSize="@dimen/text_size_xxlarge"
+        app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropoffAddressText"
+        tools:text="16:20" />
+
+    <View
+        android:id="@+id/verticalDivider"
+        android:layout_width="@dimen/spacing_xxxsmall"
+        android:layout_height="@dimen/margin_large"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:background="@color/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fareText" />
+
+    <TextView
+        android:id="@+id/fareText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:textColor="@color/off_black"
+        android:textSize="@dimen/text_size_xxlarge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/verticalDivider"
+        app:layout_constraintTop_toBottomOf="@+id/dropoffAddressText"
+        tools:text="£19.99" />
+
+    <TextView
+        android:id="@+id/bookingDateText"
+        style="@style/Text.Faded.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/spacing_none"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookingTimeText"
+        tools:text="20 Feb 2018" />
+
+    <TextView
+        android:id="@+id/fareTypeText"
+        style="@style/Text.Faded.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/spacing_none"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/verticalDivider"
+        app:layout_constraintTop_toBottomOf="@+id/fareText"
+        tools:text="Estimated" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
