@@ -1,0 +1,80 @@
+version: 2
+config_android:
+  docker:
+    - image: circleci/android:api-28
+  working_directory: ~/project
+  environment:
+    JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
+    TERM: dumb
+jobs:
+  build_and_setup:
+    docker:
+      - image: circleci/android:api-28
+    working_directory: ~/project
+    environment:
+      - JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      - GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
+      - TERM: dumb
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: |
+                    echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
+                    echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
+                    echo "KARHOO_SEGMENT_API_KEY_SANDBOX=\"$KARHOO_SEGMENT_API_KEY_SANDBOX\"" >> app/secure.properties
+                    echo "KARHOO_SEGMENT_API_KEY_PROD=\"$KARHOO_SEGMENT_API_KEY_PROD\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_IDENTIFIER=\"$GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_ORGANISATION_ID=\"$GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
+                    echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
+                    echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
+                    echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
+                    sudo chmod +x ./gradlew 
+                    ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Build test and lint
+          command: |
+                    echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
+                    echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
+                    echo "KARHOO_SEGMENT_API_KEY_SANDBOX=\"$KARHOO_SEGMENT_API_KEY_SANDBOX\"" >> app/secure.properties
+                    echo "KARHOO_SEGMENT_API_KEY_PROD=\"$KARHOO_SEGMENT_API_KEY_PROD\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_IDENTIFIER=\"$GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
+                    echo "GUEST_CHECKOUT_ORGANISATION_ID=\"$GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
+                    echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
+                    echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
+                    echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
+                    sudo chmod +x ./gradlew 
+                    ./gradlew testDebug lintRelease
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/junit/
+            find . -type f -regex "./.*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
+          destination: tests
+      - store_artifacts:
+          path: ./app/build/reports
+          destination: reports/
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./app/build
+  
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_and_setup

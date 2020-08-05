@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.karhoo.uisdk.screen.trip.eta.EtaView
+        android:id="@+id/etaWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/driverDetailsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.karhoo.uisdk.screen.trip.deta.DetaView
+        android:id="@+id/detaWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:background="@drawable/uisdk_background_off_white_rounded"
+        android:elevation="@dimen/spacing_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/driverDetailsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/locateMeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:backgroundTint="@color/off_white"
+        app:borderWidth="@dimen/spacing_none"
+        app:layout_constraintBottom_toTopOf="@+id/driverDetailsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/KhBookingMapLocationIcon" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/driverDetailsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/uisdk_background_off_white_rounded"
+        android:elevation="@dimen/spacing_small"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/driverPhotoImage"
+            android:layout_width="@dimen/driver_photo_size"
+            android:layout_height="@dimen/driver_photo_size"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_xsmall"
+            android:layout_marginBottom="@dimen/text_size_small"
+            android:transitionName="driverPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/registrationPlateText"
+            app:srcCompat="@drawable/uisdk_ic_driver_photo" />
+
+        <TextView
+            android:id="@+id/driverNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_xsmall"
+            android:gravity="center_horizontal"
+            android:lines="1"
+            android:textColor="@color/off_black"
+            android:textSize="@dimen/text_size_small_medium"
+            app:layout_constraintStart_toEndOf="@+id/driverPhotoImage"
+            app:layout_constraintTop_toTopOf="@+id/registrationPlateText"
+            tools:text="John Smith" />
+
+        <TextView
+            android:id="@+id/carTypeText"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/spacing_xsmall"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:lines="1"
+            android:textColor="@color/off_black"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toStartOf="@+id/registrationPlateText"
+            app:layout_constraintStart_toStartOf="@+id/driverNameText"
+            app:layout_constraintTop_toBottomOf="@+id/driverNameText"
+            tools:text="Mercedes S Class (Black)" />
+
+        <TextView
+            android:id="@+id/registrationPlateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/spacing_xsmall"
+            android:layout_marginEnd="@dimen/spacing_xsmall"
+            android:background="@drawable/uisdk_text_view_back"
+            android:gravity="center"
+            android:paddingLeft="@dimen/spacing_xsmall"
+            android:paddingTop="@dimen/spacing_xxsmall"
+            android:paddingRight="@dimen/spacing_xsmall"
+            android:paddingBottom="@dimen/spacing_xxsmall"
+            android:textColor="@color/off_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="IG26 J52M" />
+
+        <TextView
+            android:id="@+id/rideOptionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/spacing_xxsmall"
+            android:text="@string/ride_contact_details"
+            android:textColor="@color/off_black"
+            app:layout_constraintEnd_toStartOf="@+id/detailsArrowIcon"
+            app:layout_constraintTop_toBottomOf="@+id/registrationPlateText" />
+
+        <ImageView
+            android:id="@+id/detailsArrowIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xsmall"
+            app:layout_constraintEnd_toEndOf="@+id/registrationPlateText"
+            app:layout_constraintTop_toTopOf="@+id/rideOptionsLabel"
+            app:srcCompat="@drawable/uisdk_ic_arrow_details" />
+
+        <TextView
+            android:id="@+id/licenceNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.Faded.Small"
+            android:paddingBottom="@dimen/spacing_xsmall"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintStart_toStartOf="@+id/carTypeText"
+            app:layout_constraintTop_toBottomOf="@+id/carTypeText"
+            tools:text="TFL Number - 980616" />
+
+        <com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
+            android:id="@+id/contactOptionsWidget"
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rideOptionsLabel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

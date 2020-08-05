@@ -1,0 +1,63 @@
+[
+    {
+        "version": "1.11.0",
+        "notes": "* MOB-2641 Added Missing Translations \n * MOB-2618 LocateMe Button Behaviour \n * MOB-2531 Guest Checkout \n * MOB-2517 Fixed booking screen crash \n * MOB-2784 Android Pickup pin behaviour incorrect with Guest Checkout"
+    },
+    {
+        "version": "1.10.30",
+        "notes": "* MOB-2410 All cancelled trips are always pending \n * MOB-2477 Move reusable dp values to dimens.xml \n * MOB-2474 Convert PNGs to WEBPs  \n * MOB-2431 Snackbar does not show for lack of availability or coverage \n * MOB-2465 Android codebase cleanup"
+    },
+    {
+        "version": "1.10.29",
+        "notes": "*MOB-2391 Locate me button does not reverse geolocate \n * MOB-2376 Some estimated prices on booking request screen are on 2 lines \n * MOB-2080 If car details aren't available, user cannot call fleet or cancel from trip screen \n * MOB-1717 Backgrounded app force opens to ride details screen upon trip completion \n * MOB-2432 Splash screen snackbar not visible after successful registration"
+    },
+    {
+        "version": "1.10.26",
+        "notes": "* MOB-2331 Category crash"
+    },
+    {
+        "version": "1.10.25",
+        "notes": "* MOB-1221 Create 'current location' field as a pick up / drop off location \n * MOB-2307 French translations of vehicle types are incorrect \n * MOB-2317 Drop-off pin is not the correct asset when using set location on map"
+    },
+    {
+        "version": "1.10.24",
+        "notes": "* MOB-1971 Could not get address after fresh login \n * MOB-1678 Prebook Ride Summary not the correct size"
+    },
+    {
+        "version": "1.10.23",
+        "notes": "* DROID-1647 Set pick up and drop off location on map \n * DROID-1653 Handle 412 Errors \n * DROID-1639 Add KarhooSDKConfiguration and KarhooUISDKConfiguration interfaces to SDK modules"
+    },
+    {
+        "version": "1.10.22",
+        "notes": "* DROID-1640 User login crash hotfix \n * Droid-1648 Create sandbox build pipeline with Jenkins"
+    },
+    {
+        "version": "1.10.21",
+        "notes": "** DROID-1640 User login crash hotfix"
+    },
+    {
+        "version": "1.10.21",
+        "notes": "* DROID-1617 Report issue with Ride not working \n * DROID-1635 Snap Location \n * DROID-1640 Loggging out and in on Android since Migration crashes the App \n * MOB-97 Android - Add new ORG ID \n * DROID-1613 Android Design Changes - UI"
+    },
+    {
+        "version": "1.10.20",
+        "notes": "* DROID-1578 Fixed Redundant text in footing of register screen\n * DROID-1628 Airport pick up type symbol visible even though no pick up type is returned\n * DROID-1540 Fleet logo stretched in upcoming and past rides\n * DROID-1634 Translations for save and discard on edit profile\n * DROID-1470 Vehicle capacity to quote\n * DROID-1577 Feedback button triggers recommend fleet\n * DROID-1625 Migrate to Fares Endpoint\n * DROID-1619 Add card not displaying in book ride (Request booking) screen\n * DROID-1592 Pick up and Destination are not at equal distance for the middle\n * DROID-1631 App does not display trip cell with INCOMPLETE state"
+    },
+    {
+        "version": "1.10.19",
+        "notes": "** DROID-1587 Incomplete trip status\n ** DROID-1606 View config ext\n ** DROID-1649 Edit profile button\n ** DROID-1472 Make profile fields editable\n ** DROID-1474 Save and Cancel buttons\n ** DROID-1626 Feature Flag from JSON"
+    },
+    {
+        "version": "1.10.17",
+        "notes": "** DROID-1611 Braintree to only use 2.0 3DS \n ** DROID-1590 Empty pages on quote screen \n * CB-53 Update NSDK Doc site \n ** CB-54 Update to place-details \n ** CB-49 Generate Session Token \n ** CB-51 Change Address Request"
+    },
+    {
+        "version": "1.10.16",
+        "notes": "** DROID-1586 Can't scroll last item in quote view \n ** DROID-1603 AndroidX Migration \n ** DROID-1584 Upodate to Braintree 2.0 \n ** DROID-1591 Payment method different Font"
+    },
+    {
+        "version": "1.10.15",
+        "notes": "** DROID-1567 Android Design - Color changes - jenkins test build"
+    }
+]
+

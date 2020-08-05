@@ -1,0 +1,73 @@
+# fastlane_version "1.97.2"
+# opt_out_usage: true
+# FASTLANE_SKIP_UPDATE_CHECK="1"
+ENV["FASTLANE_SKIP_UPDATE_CHECK"]="1"
+ENV["FASTLANE_OPT_OUT_USAGE"]="1"
+fastlane_version "1.97.2"
+default_platform :android
+FASTLANE_HIDE_CHANGELOG = true
+FASTLANE_SKIP_UPDATE_CHECK = true
+
+releaseNotes = sh("python GetLastChangelog.py")
+
+default_platform :android
+platform :android do
+
+  before_all do
+  end
+
+  desc "Clean"
+  lane :clean do
+    gradle(task: "clean")
+  end
+
+# PUSH TO AppCenter
+  desc "Push Sandbox to AppCenter"
+    lane :pushSandbox do
+      gradle(task: "assembleSandbox")
+      appcenter_upload(
+        api_token: ENV["APPCENTER_API_TOKEN"],
+        owner_name: ENV["APPCENTER_OWNER_NAME"],
+        app_name: "Karhoo-Traveller-SandBox",
+        apk: "../KarhooTraveller/app/build/outputs/apk/sandbox/app-sandbox.apk",
+        notify_testers: true,
+        release_notes: releaseNotes
+      )
+    end
+
+
+  desc "Push ProdQA to AppCenter"
+  lane :pushProdQA do
+    gradle(task: "assembleProdQA")
+    appcenter_upload(
+      api_token: ENV["APPCENTER_API_TOKEN"],
+      owner_name: ENV["APPCENTER_OWNER_NAME"],
+      app_name: "Karhoo-Traveller",
+      apk: "../KarhooTraveller/app/build/outputs/apk/prodQA/app-prodQA.apk",
+      notify_testers: true,
+      release_notes: releaseNotes
+    )
+  end
+
+  desc "Push Staging to AppCenter"
+  lane :pushStaging do
+    gradle(task: "assembleDebug")
+    appcenter_upload(
+      api_token: ENV["APPCENTER_API_TOKEN"],
+      owner_name: ENV["APPCENTER_OWNER_NAME"],
+      app_name: "KarhooTraveller",
+      apk: "../KarhooTraveller/app/build/outputs/apk/debug/app-debug.apk",
+      notify_testers: true,
+      release_notes: releaseNotes
+    )
+  end
+
+  desc "Push all"
+  lane :pushAll do
+    pushStaging
+    pushProdQA
+  end
+ end
+
+
+

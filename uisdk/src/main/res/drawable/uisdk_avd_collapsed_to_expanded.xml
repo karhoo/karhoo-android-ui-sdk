@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidDomInspection --><!-- Suppressing the Lint issues as there related to Animation attrib not being set while it is --><!-- The attrib is set in the parent -->
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:drawable="@drawable/uisdk_ic_arrow_up"
+    tools:targetApi="lollipop">
+
+    <target android:name="chevron">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="400"
+                android:interpolator="@android:interpolator/fast_out_slow_in"
+                android:propertyName="translateY"
+                android:valueFrom="0"
+                android:valueTo="17"
+                tools:targetApi="lollipop" />
+        </aapt:attr>
+    </target>
+
+    <target android:name="left_bar">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="400"
+                android:interpolator="@anim/uisdk_expand_collapse"
+                android:propertyName="rotation"
+                android:valueFrom="135"
+                android:valueTo="225"
+                android:valueType="floatType" />
+        </aapt:attr>
+    </target>
+
+    <target android:name="right_bar">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:duration="400"
+                android:interpolator="@anim/uisdk_expand_collapse"
+                android:propertyName="rotation"
+                android:valueFrom="45"
+                android:valueTo="-45"
+                android:valueType="floatType" />
+        </aapt:attr>
+    </target>
+
+</animated-vector>

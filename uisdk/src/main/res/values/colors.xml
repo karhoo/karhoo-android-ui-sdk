@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colours -->
+    <color name="primary">@color/pink</color>
+    <color name="secondary">@color/dark_blue</color>
+    <color name="primary_red">#FA0046</color>
+    <color name="primary_green">#00CC66</color>
+    <color name="secondary_green">#00994D</color>
+    <color name="primary_blue">#43BCFF</color>
+    <color name="secondary_blue">#0093BF</color>
+    <color name="primary_yellow">#FFBC43</color>
+    <color name="secondary_yellow">#E09323</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorError">@color/primary_red</color>
+
+    <!-- Gradients -->
+    <color name="sort_grad_start_red">#FA0046</color>
+    <color name="sort_grad_end_pink">#FD00A3</color>
+    <color name="sort_grad_end_primary">@color/primary</color>
+    <color name="sort_grad_start_primary">@color/primary</color>
+    <color name="sort_grad_end_secondary">@color/secondary</color>
+    <color name="sort_grad_start_secondary">@color/secondary</color>
+    <color name="light_green_grad">#00E5E5</color>
+    <color name="dark_green_grad">#00E500</color>
+
+    <!-- Greys -->
+    <color name="off_black">#333333</color>
+    <color name="pink">#E40D72</color>
+    <color name="dark_blue">#181447</color>
+    <color name="dark_grey">#666666</color>
+    <color name="med_grey">#999999</color>
+    <color name="silver">#8798AD</color>
+    <color name="light_grey">#CCCCCC</color>
+    <color name="lightish_grey">#888888</color>
+    <color name="lighter_grey">#EEEEEE</color>
+    <color name="off_white">#F7F7F7</color>
+    <color name="greyish_white">#f3f3f4</color>
+    <color name="opacity_off_white">#F2F7F7F7</color>
+    <color name="opacity_off_white_time_picker">#B3FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_black_map">#22000000</color>
+    <color name="transparent_black">#66000000</color>
+    <color name="transparent_black_notification">#AD000000</color>
+    <color name="background_light_grey">#F4F4F5</color>
+
+    <!-- Text -->
+    <color name="text_white">@android:color/white</color>
+    <color name="text_primary">#404040</color>
+    <color name="text_action_up">@color/dark_grey</color>
+    <color name="text_action_pressed">#450815</color>
+    <color name="text_alternative">#888888</color>
+    <color name="text_unavailable">#CCCCCC</color>
+    <color name="text_green">#119F5C</color>
+
+    <!-- Category Selector Divider -->
+    <color name="divider">#E2E2E2</color>
+
+    <!-- Tab Color Selector -->
+    <color name="tab_indicator">@color/primary</color>
+
+    <!-- CANCEL BUTTON -->
+    <color name="transluscent_white">#CCFFFFFF</color>
+    <color name="transluscent_black">#CC000000</color>
+
+    <!-- RatingBar -->
+    <color name="duskYellow">#edd413</color>
+    <color name="lightGrey">#bab9b5</color>
+
+    <!-- Icon -->
+    <color name="icon_blue">#181A47</color>
+
+</resources>

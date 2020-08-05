@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.karhoo.karhootraveller.presentation.register.RegistrationActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            contentInsetLeft="@dimen/spacing_xxlarge"
+            contentInsetStart="@dimen/spacing_xxlarge"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/secondary"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetLeft="@dimen/spacing_xlarge"
+            app:contentInsetStart="@dimen/spacing_xlarge"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            app:popupTheme="@style/ThemeOverlay.AppCompat"
+            app:theme="@style/AppTheme.Toolbar">
+
+            <ProgressBar
+                android:id="@+id/toolbarProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/spacing_small"
+                android:indeterminateTint="@color/off_white"
+                android:indeterminateTintMode="src_in"
+                android:paddingTop="@dimen/spacing_small"
+                android:paddingBottom="@dimen/spacing_small"
+                android:visibility="invisible" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.karhoo.karhootraveller.presentation.register.registration.RegistrationView
+                android:id="@+id/registrationWidget"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent_black"
+                android:clickable="true"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/uisdk_activity_base" />
+
+</RelativeLayout>

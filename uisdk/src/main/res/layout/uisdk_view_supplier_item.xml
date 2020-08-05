@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_xsmall">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/spacing_xsmall">
+
+            <ProgressBar
+                android:id="@+id/supplierProgressBar"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="@dimen/spacing_medium"
+                android:layout_height="@dimen/spacing_medium"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside" />
+
+            <ImageView
+                android:id="@+id/loadingIcon"
+                android:layout_width="@dimen/spacing_medium"
+                android:layout_height="@dimen/spacing_medium"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/uisdk_ic_supplier_logo_loading" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/spacing_none"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/supplierNameText"
+                style="@style/Text.Primary.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="Supplier Name" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pickupTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacing_xsmall"
+                    android:background="@drawable/uisdk_background_off_black_rounded"
+                    android:paddingLeft="@dimen/spacing_xxsmall"
+                    android:paddingTop="@dimen/spacing_xxxsmall"
+                    android:paddingRight="@dimen/spacing_xxsmall"
+                    android:paddingBottom="@dimen/spacing_xxxsmall"
+                    android:text="@string/pickup_type_meet_and_greet"
+                    android:textColor="@color/text_white"
+                    android:textSize="@dimen/text_size_xxsmall" />
+
+                <com.karhoo.uisdk.screen.booking.supplier.capacity.CapacityView
+                    android:id="@+id/capacityWidget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/etaText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:maxLines="1"
+                android:text="@string/loading_min"
+                android:textColor="@color/off_black"
+                android:textSize="@dimen/text_size_medium"
+                tools:text="99 min" />
+
+            <TextView
+                android:id="@+id/categoryText"
+                style="@style/Text.Alternative.XSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_small"
+                tools:text="Car" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/priceLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginRight="@dimen/spacing_xsmall"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|right"
+                android:maxLines="1"
+                android:textColor="@color/off_black"
+                android:textSize="@dimen/text_size_medium"
+                tools:text="GBP100.00 - 100.00" />
+
+            <TextView
+                android:id="@+id/fareTypeText"
+                style="@style/Text.Alternative.XSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_small"
+                tools:text="Fixed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="10000dp"
+        android:layout_height="1dp" />
+
+</LinearLayout>

@@ -1,0 +1,173 @@
+package com.karhoo.karhootraveller.presentation.splash.register
+
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.location.Location
+import android.net.Uri
+import android.util.AttributeSet
+import android.view.View
+import android.widget.LinearLayout
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
+import com.karhoo.karhootraveller.BuildConfig
+import com.karhoo.karhootraveller.KarhooConfig
+import com.karhoo.karhootraveller.R
+import com.karhoo.karhootraveller.presentation.login.LoginActivity
+import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
+import com.karhoo.karhootraveller.presentation.splash.domain.KarhooAppVersionValidator
+import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
+import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
+import com.karhoo.karhootraveller.util.playservices.KarhooPlayServicesUtil
+import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.android.synthetic.main.view_splash.view.guestCheckoutButton
+import kotlinx.android.synthetic.main.view_splash.view.registerButton
+import kotlinx.android.synthetic.main.view_splash.view.signInButton
+
+class SplashScreenView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0)
+    : LinearLayout(context, attrs, defStyleAttr), SplashMVP.View, PermissionListener {
+
+    private var presenter: SplashMVP.Presenter? = null
+
+    var splashActions: SplashActions? = null
+
+    init {
+        inflate(context, R.layout.view_splash, this)
+        initialiseListeners()
+    }
+
+    private fun initialiseListeners() {
+        signInButton.setOnClickListener { goToLogin() }
+        registerButton.setOnClickListener { goToRegistration() }
+        if (BuildConfig.BUILD_TYPE == "debug") {
+            guestCheckoutButton.visibility = View.VISIBLE
+            guestCheckoutButton.setOnClickListener { goToGuestBooking() }
+        } else {
+            guestCheckoutButton.visibility = View.GONE
+        }
+    }
+
+    private fun goToLogin() {
+        val intent = LoginActivity.Builder.builder.build(context)
+        splashActions?.startActivity(intent)
+    }
+
+    private fun goToRegistration() {
+        val intent = RegistrationActivity.Builder.builder.build(context)
+        splashActions?.startActivityForResult(intent, RegistrationActivity.REQ_CODE)
+    }
+
+    private fun goToGuestBooking() {
+        KarhooUISDK.setConfiguration(KarhooConfig(context.applicationContext, true))
+        goToBooking(null)
+    }
+
+    override fun setLoginRegVisibility(visibility: Boolean) {
+        signInButton.visibility = if (visibility) VISIBLE else INVISIBLE
+        registerButton.visibility = if (visibility) VISIBLE else INVISIBLE
+    }
+
+    override fun saveUsersLocation(latLng: LatLng) {
+        val preferences = context.getSharedPreferences(USER_LOCATION_PREF, Context.MODE_PRIVATE)
+        val json = Gson().toJson(latLng)
+        preferences.edit().putString(USER_LOCATION, json).apply()
+    }
+
+    override fun goToBooking(location: Location?) {
+        splashActions?.goToBooking(location)
+    }
+
+    override fun appInvalid() {
+        splashActions?.showErrorWithAction(R.string.app_invalid,
+                                           { context.startActivity(Intent(ACTION_VIEW, Uri.parse("market://details?id=" + context.packageName))) },
+                                           R.string.update)
+    }
+
+    override fun promptUpdatePlayServices(errorCode: Int) {
+        val dialog = GoogleApiAvailability.getInstance()
+                .getErrorDialog(context as Activity, errorCode, 0)
+        dialog.setCancelable(false)
+        dialog.show()
+    }
+
+    override fun onResume() {
+        askForLocationPermission()
+    }
+
+    //region Permissions
+
+    override fun onPermissionGranted(response: PermissionGrantedResponse) {
+        splashActions?.dismissErrors()
+
+        val fallbackLocation = Location("").apply {
+            latitude = context.getString(R.string.central_lat).toDouble()
+            longitude = context.getString(R.string.central_long).toDouble()
+        }
+
+        presenter = SplashPresenter(this,
+                                    KarhooApi.paymentsService,
+                                    LocationProvider(context, KarhooApi.addressService),
+                                    KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
+                                    KarhooAnalytics.INSTANCE, fallbackLocation, KarhooPlayServicesUtil(context))
+        presenter?.getUsersLocation()
+        presenter?.checkIfUserIsLoggedIn()
+    }
+
+    override fun onPermissionDenied(response: PermissionDeniedResponse) {
+        splashActions?.dismissErrors()
+        setRationaleShown(true)
+        presenter?.locationUpdatesDenied()
+        splashActions?.goFullScreen()
+        presenter = SplashPresenter(this,
+                                    KarhooApi.paymentsService,
+                                    LocationProvider(context, KarhooApi.addressService),
+                                    KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
+                                    KarhooAnalytics.INSTANCE, null, KarhooPlayServicesUtil
+                                    (context))
+        presenter?.checkIfUserIsLoggedIn()
+    }
+
+    private fun askForLocationPermission() {
+        Dexter.withActivity(context as Activity)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(this)
+                .check()
+    }
+
+    private fun setRationaleShown(isShown: Boolean) {
+        context.getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
+                .edit().putBoolean(context.getString(R.string.location_rationale_shown), isShown)
+                .apply()
+    }
+
+    private fun rationaleShown(): Boolean {
+        return context.getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
+                .getBoolean(context.getString(R.string.location_rationale_shown), false)
+    }
+
+    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+        token.continuePermissionRequest()
+    }
+
+    companion object {
+        const val USER_LOCATION_PREF = "USER_LOCATION"
+        const val USER_LOCATION = "users::latlng"
+    }
+
+    //endregion
+
+}
