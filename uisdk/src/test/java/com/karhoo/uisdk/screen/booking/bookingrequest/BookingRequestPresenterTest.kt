@@ -330,7 +330,7 @@ class BookingRequestPresenterTest {
         requestPresenter.updateCardDetails(null)
 
         verify(userStore, never()).savedPaymentInfo
-        verify(view, never()).updateCardDetails(any())
+        verify(view, never()).showUpdatedCardDetails(any())
         verify(view).disableBooking()
     }
 
@@ -343,14 +343,13 @@ class BookingRequestPresenterTest {
     fun `card info stored and correct updates made to view if there is payment nonce info`() {
         val desc = "ending in 00"
 
+        whenever(braintreePaymentNonce.nonce).thenReturn(PAYMENTS_NONCE)
         whenever(braintreePaymentNonce.description).thenReturn(desc)
         whenever(braintreePaymentNonce.typeLabel).thenReturn(CardType.VISA.toString())
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
 
-        verify(userStore).savedPaymentInfo
-        verify(view).showUpdatedCardDetails(savedPaymentInfo)
         verify(view).enableBooking()
     }
 
@@ -375,7 +374,7 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -520,7 +519,7 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -548,7 +547,7 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, outboundTripId = "tripId")
 
         requestPresenter.makeBooking()

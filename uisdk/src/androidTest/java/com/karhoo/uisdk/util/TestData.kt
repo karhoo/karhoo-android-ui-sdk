@@ -230,6 +230,7 @@ class TestData {
 
         val TRIP = TripInfo(
                 tripId = "b6a5f9dc-9066-4252-9013-be85dfa563bc",
+                followCode = "b6a5f9dc-9066-4252-9013-be85dfa563bc",
                 origin = TRIP_LOCATION_INFO_PICKUP,
                 destination = TRIP_LOCATION_INFO_DROPOFF,
                 dateScheduled = SCHEDULED_DATE,
@@ -429,7 +430,7 @@ class TestData {
 
         val MEDIUM = measureTimeMillis { 1000 }
 
-        val LONG = measureTimeMillis { 3000 }
+        val LONG = measureTimeMillis { 5000 }
 
     }
 }

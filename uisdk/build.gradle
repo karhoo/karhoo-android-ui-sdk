@@ -23,7 +23,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField "java.util.concurrent.atomic.AtomicBoolean", "IS_TESTING", "new java.util.concurrent.atomic.AtomicBoolean(false)"
     }
     buildTypes {
         release {

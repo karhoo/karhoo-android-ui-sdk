@@ -183,6 +183,16 @@ class ServerRobot {
                        )
     }
 
+    fun guestBookingDetailsResponse(code: Int, response: Any, delayInMillis: Int = 0, trip:
+    String) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.GUEST_BOOKING_DETAILS_METHOD.replace("{id}", trip),
+                delayInMillis = delayInMillis
+                       )
+    }
+
     fun bookingStatusResponse(code: Int, response: Any, delayInMillis: Int = 0, trip: String) {
         mockGetResponse(
                 code = code,
@@ -224,7 +234,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=a1013897-132a-456c-9be2-636979095ad9&currency=GBP",
+                        "?organisation_id=organisation_id&currency=GBP",
                 delayInMillis = delayInMillis
                         )
     }

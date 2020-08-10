@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer
 import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
@@ -58,8 +57,6 @@ interface GuestBookingMVP {
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
 
-        fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?)
-
     }
 
     interface Presenter {
@@ -85,7 +82,7 @@ interface GuestBookingMVP {
 
         fun resetBooking()
 
-        fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?)
+        fun updateCardDetails(braintreeSDKNonce: String?)
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 

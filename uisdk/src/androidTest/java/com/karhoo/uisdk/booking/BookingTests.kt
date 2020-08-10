@@ -68,7 +68,6 @@ class BookingTests : Launch {
 
     @Before
     fun setUp() {
-        BuildConfig.IS_TESTING.set(true)
         setUserInfo()
     }
 
