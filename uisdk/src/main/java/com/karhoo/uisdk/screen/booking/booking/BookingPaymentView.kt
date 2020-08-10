@@ -1,13 +1,21 @@
 package com.karhoo.uisdk.screen.booking.booking
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import com.braintreepayments.api.dropin.DropInRequest
+import com.braintreepayments.api.dropin.DropInResult
+import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
+import com.karhoo.uisdk.BuildConfig
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -15,6 +23,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumber
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
+import java.lang.Exception
 
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
@@ -127,6 +136,37 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(braintreeSDKToken: String) {
         actions?.showPaymentUI(braintreeSDKToken)
+        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
+        val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
+        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
+    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
+        actions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            when (requestCode) {
+                REQ_CODE_BRAINTREE -> {
+                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                }
+                REQ_CODE_BRAINTREE_GUEST -> {
+                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    braintreeResult?.paymentMethodNonce?.let {
+                        presenter.updateCardDetails(it.description, it.typeLabel)
+                    }
+                    handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
+                }
+            }
+        } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
+            refresh()
+        }
+    }
+
+    companion object {
+        private const val REQ_CODE_BRAINTREE = 301
+        private const val REQ_CODE_BRAINTREE_GUEST = 302
+    }
 }

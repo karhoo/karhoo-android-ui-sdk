@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.profile.user.UserProfileMVP
 import com.karhoo.karhootraveller.util.logoutAndResetApp
@@ -90,25 +88,9 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMV
         return true
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String) {
-        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
-        startActivityForResult(dropInRequest.getIntent(this), REQ_CODE_BRAINTREE)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK && data != null) {
-            when (requestCode) {
-                REQ_CODE_BRAINTREE -> extractActivityResultAndPassBackNonce(data)
-            }
-        } else if (requestCode == REQ_CODE_BRAINTREE) {
-            bookingPaymentDetailsWidget.refresh()
-        }
+        bookingPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun extractActivityResultAndPassBackNonce(data: Intent) {
-        val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-        bookingPaymentDetailsWidget.passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
     }
 
     override fun onProfileUpdateModeChanged(canUpdateProfile: Boolean) {
@@ -118,10 +100,6 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMV
 
     override fun onProfileEditModeChanged(canEditProfile: Boolean) {
         invalidateOptionsMenu()
-    }
-
-    companion object {
-        private const val REQ_CODE_BRAINTREE = 301
     }
 
     class Builder private constructor() {
@@ -138,4 +116,8 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMV
                 get() = Builder()
         }
     }
+
+    override fun showPaymentUI(braintreeSDKToken: String) {}
+
+    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {}
 }
