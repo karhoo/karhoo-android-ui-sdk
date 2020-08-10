@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.booking
 
 import android.content.Intent
+import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
@@ -122,7 +123,7 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.mobileNumberInput)
         fillText(
                 resId = R.id.mobileNumberInput,
-                text = TestData.USER.phoneNumber
+                text = TestData.USER_PHONE_NUMBER
                 )
     }
 
@@ -424,6 +425,10 @@ class ResultRobot : BaseTestRobot() {
         checkoutAsGuestButtonIsDisabled()
     }
 
+    fun guestBookingCheckCardDetails() {
+        paymentCardDetailsCheck()
+    }
+
     fun guestDetailsPageFleetCheck() {
         fleetLogoIsVisibleGuestDetails()
         supplierNameVisibleGuestDetails()
@@ -479,6 +484,13 @@ class ResultRobot : BaseTestRobot() {
         textIsVisibleIsDescendant(R.string.payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textIsVisibleIsDescendant(R.string.add_payment, R.id.cardNumberText)
+    }
+
+    fun paymentCardDetailsCheck() {
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.payment_details, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
+        textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
     fun termsGuestDetailsCheck() {
@@ -586,5 +598,9 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkDriverDetails() {
         viewIsVisible(R.id.rideOptionsLabel)
+    }
+
+    fun checkWebViewDisplayed() {
+        viewIsVisible(R.id.activityWebView)
     }
 }

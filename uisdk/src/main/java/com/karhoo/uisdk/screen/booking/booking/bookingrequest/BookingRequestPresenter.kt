@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
@@ -24,7 +23,6 @@ import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.api.service.trips.TripsService
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -32,8 +30,8 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
-import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.service.preference.PreferenceStore
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
@@ -233,12 +231,9 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
         this.braintreeSDKToken = braintreeSDKToken
     }
 
-    override fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?) {
+    override fun updateCardDetails(braintreeSDKNonce: String?) {
         braintreeSDKNonce?.let {
-            nonce = braintreeSDKNonce.nonce
-            userStore.savedPaymentInfo = SavedPaymentInfo(braintreeSDKNonce.description,
-                                                          CardType.fromString(braintreeSDKNonce.typeLabel))
-            refreshCardDetails()
+            nonce = braintreeSDKNonce
             view?.enableBooking()
         } ?: view?.disableBooking()
     }

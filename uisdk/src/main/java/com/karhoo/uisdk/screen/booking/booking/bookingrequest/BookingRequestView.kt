@@ -22,8 +22,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.braintreepayments.api.BraintreeFragment
 import com.braintreepayments.api.ThreeDSecure
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
 import com.braintreepayments.api.interfaces.BraintreeErrorListener
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
@@ -38,6 +36,7 @@ import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
@@ -308,7 +307,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     cancelButton.isEnabled = true
-                    //TODO Replace with hideWindow
                     bookingRequestButton.onLoadingComplete()
                     hideWindow()
                     dialog.dismiss()
@@ -322,11 +320,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(braintreeSDKToken: String) {
-        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         setToken(braintreeSDKToken)
         holdOpenForPaymentFlow = true
-        val requestCode = if (isGuest) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
     override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
@@ -373,10 +368,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         dialog.dismiss()
     }
 
-    private fun refreshPayments() {
-        bookingRequestPaymentDetailsWidget.refresh()
-    }
-
     fun showLoading() {
         cancelButton.isEnabled = false
         bookingRequestButton.showLoading()
@@ -387,7 +378,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        if (BuildConfig.IS_TESTING.get()) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
             return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
         }
         val braintreeFragment = BraintreeFragment
@@ -419,7 +410,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?) {
+    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         presenter.updateCardDetails(braintreeSDKNonce)
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
@@ -432,29 +423,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.setBookingEnablement(isValid)
     }
 
-    private fun passBackBraintreeSDKNonce(braintreeSDKNonce: String) {
-        bookingRequestPaymentDetailsWidget.passBackBraintreeSDKNonce(braintreeSDKNonce)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            when (requestCode) {
-                REQ_CODE_BRAINTREE -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
-                }
-                REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    updateCardDetails(braintreeResult?.paymentMethodNonce)
-                }
-            }
-        } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
-            refreshPayments()
-        }
-    }
-
-    companion object {
-        private const val REQ_CODE_BRAINTREE = 301
-        private const val REQ_CODE_BRAINTREE_GUEST = 302
+        bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
     }
 }

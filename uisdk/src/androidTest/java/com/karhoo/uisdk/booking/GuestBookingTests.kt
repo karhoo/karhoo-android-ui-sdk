@@ -1,19 +1,25 @@
 package com.karhoo.uisdk.booking
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
+import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.KarhooUserManager
+import com.karhoo.sdk.api.datastore.user.KarhooUserStore
+import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.ServerRobot
+import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_V2_ASAP
 import com.karhoo.uisdk.common.serverRobot
@@ -21,6 +27,7 @@ import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
@@ -59,13 +66,14 @@ class GuestBookingTests : Launch {
     @Before
     fun setup() {
         KarhooUISDK.setConfiguration(TestSDKConfig(context = InstrumentationRegistry.getInstrumentation()
-                .targetContext, authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "organisationId")))
+                .targetContext, authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "organisation_id")))
     }
 
     @After
     fun teardown() {
         KarhooUISDK.setConfiguration(TestSDKConfig(context = InstrumentationRegistry.getInstrumentation()
                 .targetContext, authenticationMethod = AuthenticationMethod.KarhooUser()))
+        KarhooApi.userStore.savedPaymentInfo = null
         intent = null
         wireMockRule.resetAll()
     }
@@ -310,61 +318,43 @@ class GuestBookingTests : Launch {
      * conditions text is visible, Book ride button is disabled.
      **/
     @Test
-    fun emptyGuestDetailsPageFullCheck() {
+    fun addCardGuestDetailsPageFullCheck() {
+        KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            addCardResponse(HTTP_OK, PAYMENTS_TOKEN)
+            paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
+            bookingResponse(HTTP_OK, TRIP)
+            bookingStatusResponse(code = HTTP_OK, response = ServerRobot.TRIP_STATUS_DER, trip = TRIP.tripId)
+            driverTrackingResponse(code = HTTP_OK, response = ServerRobot.DRIVER_TRACKING, trip = TRIP.tripId)
+            guestBookingDetailsResponse(code = HTTP_OK, response = ServerRobot.TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
             pressFirstQuote()
             sleep()
+            fillCorrectInfoGuestDetails()
+            enterCardDetails()
+            sleep(LONG)
         } result {
-            fullCheckEmptyGuestDetailsPage()
+            fullCheckFilledGuestDetailsPage()
+            guestBookingCheckCardDetails()
+        }
+        booking {
+            pressBookRideButton()
+            sleep()
+        } result {
+            checkWebViewDisplayed()
         }
     }
-
-    //    /**
-    //     * Given:   I am on the guest booking details screen
-    //     * When:    I check all the elements after entering any details
-    //     * Then:    I can see correctly filled: Fleet logo and name, Vehicle capacity details, Close
-    //     * button enabled,ETA, Price amount and type, All fields are visible: First name, Last name,
-    //     * Email, phone number country code, phone number, additional comments, card number is
-    //     * visible, card edit button is enabled, Terms and conditions text is visible, Book ride button
-    //     * is enabled.
-    //     **/
-    //    @Test
-    //    // TODO implement adding a card
-    //    fun filledGuestDetailsPageFullCheck() {
-    //        serverRobot {
-    //            availabilitiesResponse(HTTP_CREATED, AVAILABILITIES)
-    //            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-    //            quotesResponse(HTTP_OK, QUOTE_TRIP_ASAP)
-    //            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-    //        }
-    //        booking(this, INITIAL_TRIP_INTENT) {
-    //            sleep()
-    //            pressFirstQuote()
-    //            sleep()
-    //            fillCorrectInfoGuestDetails()
-    //            enterCardDetails()
-    //            sleep()
-    //        } result {
-    //            fullCheckFilledGuestDetailsPage()
-    //        }
-    //    }
 
     companion object {
 
         private val origin = ORIGIN_TRIP
         private val destination = DESTINATION_TRIP
         private val initialTripDetails = TripInfo(origin = origin, destination = destination)
-
-        val CLEAN_TRIP_INTENT = Intent().apply {
-            putExtras(Bundle().apply {
-                putParcelable(BookingActivity.Builder.EXTRA_TRIP_DETAILS, TRIP)
-            })
-        }
 
         val INITIAL_TRIP_INTENT = Intent().apply {
             putExtra(BookingActivity.Builder.EXTRA_TRIP_DETAILS, initialTripDetails)

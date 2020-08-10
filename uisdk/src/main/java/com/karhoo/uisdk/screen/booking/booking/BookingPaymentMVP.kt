@@ -1,6 +1,8 @@
 package com.karhoo.uisdk.screen.booking.booking
 
+import android.content.Intent
 import androidx.annotation.StringRes
+import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 
 interface BookingPaymentMVP {
@@ -8,6 +10,10 @@ interface BookingPaymentMVP {
     interface View {
 
         fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+
+        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
         fun showPaymentUI(braintreeSDKToken: String)
 
@@ -25,6 +31,8 @@ interface BookingPaymentMVP {
 
         fun passBackBraintreeSDKNonce(braintreeSDKNonce: String)
 
+        fun updateCardDetails(description: String, typeLabel: String)
+
     }
 
     interface Actions {
@@ -33,5 +41,6 @@ interface BookingPaymentMVP {
 
         fun showErrorDialog(@StringRes stringId: Int)
 
+        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
     }
 }
