@@ -21,8 +21,10 @@ import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -42,6 +44,7 @@ class BookingPaymentPresenterTest {
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val passBraintreeTokenCall: Call<PaymentsNonce> = mock()
     private val passBraintreeTokenCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
+    @Captor private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
 
     @Captor
     private lateinit var sdkInitialisationCaptor: ArgumentCaptor<SDKInitRequest>
@@ -60,13 +63,16 @@ class BookingPaymentPresenterTest {
 
         whenever(userStore.currentUser).thenReturn(userDetails)
 
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context = context, authenticationMethod = AuthenticationMethod.KarhooUser()))
-
         bookingPaymentPresenter = BookingPaymentPresenter(
                 paymentsService = paymentsService,
                 userStore = userStore,
                 view = view
                                                          )
+    }
+
+    @After
+    fun tearDown() {
+        setAuthenticatedUser()
     }
 
     /**
@@ -78,7 +84,7 @@ class BookingPaymentPresenterTest {
     fun `change card pressed for guest and correct organisation id is used`() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = false))
 
         bookingPaymentPresenter.changeCard()
 
@@ -107,11 +113,58 @@ class BookingPaymentPresenterTest {
 
     /**
      * Given:   A request is made to change card
+     * And:     It is a test run
+     * When:    The request is successful
+     * Then:    The view should be asked to show payment UI
+     */
+    @Test
+    fun `change card pressed and result is successful for test`() {
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
+        whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
+        bookingPaymentPresenter.changeCard()
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+
+        verify(view, never()).showPaymentUI(any())
+        verify(userStore).savedPaymentInfo
+
+    }
+
+    /**
+     * Given:   A request is made to change card
+     * And:     It is a guest test run
+     * When:    The request is successful
+     * Then:    The view should be asked to show payment UI
+     */
+    @Test
+    fun `change card pressed and result is successful for guest test`() {
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
+        whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
+        bookingPaymentPresenter.changeCard()
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+
+        verify(view, never()).showPaymentUI(any())
+        verify(view).handlePaymentDetailsUpdate(BRAINTREE_SDK_TOKEN)
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        verify(view).refresh()
+        assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
+        assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
+        verify(view).refresh()
+    }
+
+    /**
+     * Given:   A request is made to change card
      * When:    The request is successful
      * Then:    The view should be asked to show payment UI
      */
     @Test
     fun `change card pressed and result is successful`() {
+        setAuthenticatedUser()
         bookingPaymentPresenter.changeCard()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
@@ -172,6 +225,28 @@ class BookingPaymentPresenterTest {
         verify(view).bindCardDetails(any())
     }
 
+    /**
+     * Given:   A user updates payment card details
+     * Then:    The card info is stored and the view is not updated
+     */
+    @Test
+    fun `card info stored and correct updates made to view if there is payment nonce info`() {
+        val desc = "ending in 00"
+
+        bookingPaymentPresenter.updateCardDetails(desc, "Visa")
+
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        verify(view).refresh()
+        assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
+        assertEquals(desc, paymentInfoCaptor.value.lastFour)
+    }
+
+    private fun setAuthenticatedUser() {
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser(), handleBraintree = false))
+    }
+
     companion object {
         val paymentsNonce = PaymentsNonce(
                 nonce = "1234557683749328",
@@ -180,6 +255,8 @@ class BookingPaymentPresenterTest {
                                          )
 
         val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
+
+        val CARD_ENDING = "....12"
 
         val userDetails: UserInfo = UserInfo(firstName = "David",
                                              lastName = "Smith",

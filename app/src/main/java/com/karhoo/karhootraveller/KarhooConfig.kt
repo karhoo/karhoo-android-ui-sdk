@@ -27,6 +27,8 @@ class KarhooConfig(val context: Context, private val isGuest: Boolean = false) :
         }
     }
 
+    override fun handleBraintree(): Boolean = false
+
     override fun context(): Context {
         return context
     }
