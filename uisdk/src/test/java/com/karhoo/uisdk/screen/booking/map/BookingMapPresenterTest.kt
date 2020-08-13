@@ -1,10 +1,14 @@
 package com.karhoo.uisdk.screen.booking.map
 
 import androidx.lifecycle.LifecycleOwner
+import com.google.android.gms.maps.model.LatLng
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -75,22 +79,15 @@ class BookingMapPresenterTest {
 
     /**
      * Given: The user is on the booking screen
-     * When: Location permission are denied
-     * Then: Show snackbar informing of location permissions
-     */
-    @Test
-    fun `Show Snackbar On Location Permissions Denied`() {
-
-    }
-
-    /**
-     * Given: The user is on the booking screen
      * When: The locate me button is pressed
      * Then: Zoom to user location
      */
     @Test
     fun `Zoom to User Location`() {
+        val latLng = LatLng(100.0, 200.0)
+        presenter.zoom(position = latLng)
 
+        verify(view, atLeastOnce()).zoom(position = latLng)
     }
 
     /**
@@ -100,7 +97,9 @@ class BookingMapPresenterTest {
      */
     @Test
     fun `Focus map on pickup point`() {
+        presenter.zoomMapToMarkers()
 
+        verify(view, atLeastOnce()).zoomMapToOriginAndDestination()
     }
 
     /**
@@ -110,7 +109,9 @@ class BookingMapPresenterTest {
      */
     @Test
     fun `Pickup Pin Moved And Pickup Location Set After Movement Stops`() {
-
+        val latLng = LatLng(10.0, 20.0)
+        presenter.mapDragged()
+        presenter.mapMoved(latLng)
     }
 
     /**
@@ -120,9 +121,10 @@ class BookingMapPresenterTest {
      */
     @Test
     fun `Show snackbar on error`() {
-        val errorMessage = 401
-        presenter.onError(errorMessage)
-        verify(view).showSnackbar(SnackbarConfig(text = "", stringId = errorMessage))
+        val resId: Int = R.string.K4001
+        presenter.onError(resId)
+
+        verify(view).showSnackbar(any())
     }
 
 }
