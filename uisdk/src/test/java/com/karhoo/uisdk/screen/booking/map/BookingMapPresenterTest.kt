@@ -102,18 +102,6 @@ class BookingMapPresenterTest {
 
     /**
      * Given: The user is on the booking screen
-     * When: The map is moved with no following movements
-     * Then: The pickup pin should move and pickup destination should be set
-     */
-    @Test
-    fun `Pickup Pin Moved And Pickup Location Set After Movement Stops`() {
-        val latLng = LatLng(10.0, 20.0)
-        presenter.mapDragged()
-        presenter.mapMoved(latLng)
-    }
-
-    /**
-     * Given: The user is on the booking screen
      * When: An error occurs
      * Then: A snackbar is shown
      */
