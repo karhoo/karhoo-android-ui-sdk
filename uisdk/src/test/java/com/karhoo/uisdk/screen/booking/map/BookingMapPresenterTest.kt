@@ -4,10 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
-import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.mock
