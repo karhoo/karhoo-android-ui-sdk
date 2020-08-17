@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking
 
-import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
@@ -23,16 +22,21 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
 
     init {
         attachView(view)
+        getPaymentProvider()
         userStore.addSavedPaymentObserver(this)
     }
 
     override fun getPaymentProvider() {
         paymentsService.getPaymentProvider().execute { result ->
             when (result) {
-                is Resource.Success -> Log.d("Adyden Result", result.data.provider)
-                is Resource.Failure -> Log.d("Adyden Result", result.error.userFriendlyMessage)
+                is Resource.Success -> handleGetPaymentProviderSuccess(result.data.provider.id)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
+    }
+    
+    private fun handleGetPaymentProviderSuccess(provider: String) {
+        // TODO: To be filled out another time
     }
 
     override fun changeCard() {

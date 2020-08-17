@@ -65,7 +65,7 @@ publish {
 
 dependencies {
 
-    api 'com.karhoo:nsdk-canary:1.0.29'
+    api 'com.karhoo:nsdk-canary:1.0.31'
     api 'com.braintreepayments.api:drop-in:4.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'

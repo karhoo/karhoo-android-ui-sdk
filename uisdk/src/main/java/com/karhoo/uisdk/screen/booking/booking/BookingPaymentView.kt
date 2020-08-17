@@ -47,7 +47,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             presenter = BookingPaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
-                presenter.getPaymentProvider()
             }
         }
     }
