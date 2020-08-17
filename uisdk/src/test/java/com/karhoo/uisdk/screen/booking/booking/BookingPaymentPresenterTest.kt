@@ -247,7 +247,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `fetch payment providers`() {
-        
+
     }
 
     private fun setAuthenticatedUser() {
