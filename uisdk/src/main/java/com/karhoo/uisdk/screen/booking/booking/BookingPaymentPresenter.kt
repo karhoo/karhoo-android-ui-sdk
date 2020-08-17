@@ -26,7 +26,7 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun getPaymentProvider() {
-
+        paymentsService.getPaymentProvider()
     }
 
     override fun changeCard() {

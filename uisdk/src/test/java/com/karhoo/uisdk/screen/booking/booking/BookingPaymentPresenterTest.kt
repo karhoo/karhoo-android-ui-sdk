@@ -241,6 +241,15 @@ class BookingPaymentPresenterTest {
         assertEquals(desc, paymentInfoCaptor.value.lastFour)
     }
 
+    /**
+     * Given: A request is made to fetch payment providers
+     * Then: Fetch payment providers
+     */
+    @Test
+    fun `fetch payment providers`() {
+        
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
