@@ -25,6 +25,10 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         userStore.addSavedPaymentObserver(this)
     }
 
+    override fun getPaymentProvider() {
+
+    }
+
     override fun changeCard() {
         //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val organisationId = KarhooUISDKConfigurationProvider.getGuestOrganisationId()?.let { it }
