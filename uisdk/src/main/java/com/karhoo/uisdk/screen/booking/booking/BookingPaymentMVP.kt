@@ -27,6 +27,8 @@ interface BookingPaymentMVP {
 
     interface Presenter {
 
+        fun getPaymentProvider()
+
         fun changeCard()
 
         fun passBackBraintreeSDKNonce(braintreeSDKNonce: String)
