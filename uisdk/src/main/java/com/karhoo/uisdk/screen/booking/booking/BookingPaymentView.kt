@@ -37,8 +37,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var lineTextStyle: Int = R.style.Text_Action
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
-    var paymentActions: BookingPaymentMVP.PaymentActions? = null
-    var cardActions: BookingPaymentMVP.CardActions? = null
+    var paymentActions: PaymentMVP.PaymentActions? = null
+    var cardActions: PaymentMVP.CardActions? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)

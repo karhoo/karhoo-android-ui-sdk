@@ -27,20 +27,4 @@ interface BookingPaymentMVP {
 
         fun getPaymentProvider()
     }
-
-    interface CardActions {
-
-        fun showErrorDialog(@StringRes stringId: Int)
-    }
-
-    interface PaymentActions {
-
-        fun showPaymentUI()
-
-        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
-
-        fun showPaymentDialog()
-
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
-    }
 }

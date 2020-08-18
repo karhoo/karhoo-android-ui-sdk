@@ -9,12 +9,12 @@ import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.profile.user.UserProfileMVP
 import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.uisdk.base.BaseActivity
-import com.karhoo.uisdk.screen.booking.booking.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import kotlinx.android.synthetic.main.activity_profile.bookingPaymentDetailsWidget
 import kotlinx.android.synthetic.main.activity_profile.toolbar
 import kotlinx.android.synthetic.main.activity_profile.userProfileView
 
-class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfileMVP.Actions {
+class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.Actions {
 
     override val layout: Int = R.layout.activity_profile
 
