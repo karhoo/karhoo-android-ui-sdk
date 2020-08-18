@@ -15,6 +15,7 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
@@ -60,6 +61,7 @@ class BookingRequestPresenterTest {
             tripId = "tripId1234",
             origin = TripLocationInfo(placeId = "placeId1234"),
             destination = TripLocationInfo(placeId = "placeId4321"))
+    private val price: QuotePrice = QuotePrice(highPrice = 10, currencyCode = "GBP")
     private val userDetails: UserInfo = UserInfo(firstName = "David",
                                                  lastName = "Smith",
                                                  email = "test.test@test.test",
@@ -380,7 +382,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(any())
     }
 
     /**
@@ -437,8 +439,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
-        whenever(quote.price.currencyCode).thenReturn("GBP")
-        whenever(quote.price.highPrice).thenReturn(10)
+        whenever(quote.price).thenReturn(price)
 
         requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
@@ -446,7 +447,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(price)
     }
 
     /**
@@ -465,8 +466,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
-        whenever(quote.price.currencyCode).thenReturn("GBP")
-        whenever(quote.price.highPrice).thenReturn(10)
+        whenever(quote.price).thenReturn(price)
 
         requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, outboundTripId = "tripId")
@@ -474,7 +474,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(price)
     }
 
     /**
@@ -602,10 +602,7 @@ class BookingRequestPresenterTest {
     }
 
     companion object {
-        private const val QUOTE_ID = "quote1234"
         private const val THREE_D_SECURE_NONCE = "threeDSecureNonce"
-        private const val BRAINTREE_SDK_TOKEN = "braintreeSdkToken"
         private const val PAYMENTS_NONCE = "paymentsNonce"
-        private const val EXPECTED_AMOUNT_AS_STRING = "1.50"
     }
 }
