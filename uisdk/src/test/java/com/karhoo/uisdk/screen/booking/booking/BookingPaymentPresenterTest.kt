@@ -19,6 +19,7 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -42,18 +43,21 @@ class BookingPaymentPresenterTest {
     private var context: Context = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var view: BookingPaymentMVP.View = mock()
+    private var cardView: BookingPaymentMVP.View = mock()
+    private var paymentView: PaymentMVP.View = mock()
     private val paymentProviderCall: Call<PaymentProvider> = mock()
     private val paymentProviderCaptor = argumentCaptor<(Resource<PaymentProvider>) -> Unit>()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val passBraintreeTokenCall: Call<PaymentsNonce> = mock()
     private val passBraintreeTokenCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
-    @Captor private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
+    @Captor
+    private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
 
     @Captor
     private lateinit var sdkInitialisationCaptor: ArgumentCaptor<SDKInitRequest>
 
+    private lateinit var bookingPaymentPresenter: BookingPaymentPresenter
     private lateinit var braintreeBookingPaymentPresenter: BraintreeBookingPaymentPresenter
 
     @Before
@@ -71,11 +75,14 @@ class BookingPaymentPresenterTest {
 
         whenever(userStore.currentUser).thenReturn(userDetails)
 
+        bookingPaymentPresenter = BookingPaymentPresenter(
+                paymentsService = paymentsService,
+                view = cardView)
+
         braintreeBookingPaymentPresenter = BraintreeBookingPaymentPresenter(
                 paymentsService = paymentsService,
                 userStore = userStore,
-                view = view
-                                                                                                                                              )
+                view = paymentView)
     }
 
     @After
@@ -135,7 +142,7 @@ class BookingPaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(view, never()).showPaymentUI(any())
+        verify(cardView, never()).showPaymentUI(any())
         verify(userStore).savedPaymentInfo
 
     }
@@ -156,13 +163,13 @@ class BookingPaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(view, never()).showPaymentUI(any())
-        verify(view).handlePaymentDetailsUpdate(BRAINTREE_SDK_TOKEN)
+        verify(paymentView, never()).showPaymentUI(any())
+        verify(paymentView).handlePaymentDetailsUpdate(BRAINTREE_SDK_TOKEN)
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        verify(view).refresh()
+        verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
         assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
-        verify(view).refresh()
+        verify(paymentView).refresh()
     }
 
     /**
@@ -177,7 +184,7 @@ class BookingPaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(view).showPaymentUI(any())
+        verify(paymentView).showPaymentUI(any())
     }
 
     /**
@@ -191,7 +198,7 @@ class BookingPaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showError(any())
+        verify(paymentView).showError(any())
     }
 
     /**
@@ -219,7 +226,7 @@ class BookingPaymentPresenterTest {
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showError(any())
+        verify(paymentView).showError(any())
     }
 
     /**
@@ -230,7 +237,7 @@ class BookingPaymentPresenterTest {
     @Test
     fun `user update calls the view to display the new payment info`() {
         braintreeBookingPaymentPresenter.onSavedPaymentInfoChanged(SavedPaymentInfo("", CardType.NOT_SET))
-        verify(view).bindCardDetails(any())
+        verify(paymentView).bindCardDetails(any())
     }
 
     /**
@@ -241,10 +248,10 @@ class BookingPaymentPresenterTest {
     fun `card info stored and correct updates made to view if there is payment nonce info`() {
         val desc = "ending in 00"
 
-        braintreeBookingPaymentPresenter.updateCardDetails(desc, "Visa")
+        braintreeBookingPaymentPresenter.updateCardDetails(paymentsNonce.nonce, desc, "Visa")
 
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        verify(view).refresh()
+        verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
         assertEquals(desc, paymentInfoCaptor.value.lastFour)
     }
@@ -258,7 +265,7 @@ class BookingPaymentPresenterTest {
         paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(ADYEN_PAYMENT)))
 
         verify(paymentsService).getPaymentProvider()
-        verify(view, never()).showError(any())
+        verify(cardView, never()).showError(any())
     }
 
     /**
@@ -271,7 +278,7 @@ class BookingPaymentPresenterTest {
         paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getPaymentProvider()
-        verify(view).showError(any())
+        verify(cardView).showError(any())
     }
 
     private fun setAuthenticatedUser() {
