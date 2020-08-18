@@ -1,7 +1,7 @@
 version: 2
 config_android:
   docker:
-    - image: circleci/android:api-28
+    - image: ccistaging/android:api-28
   working_directory: ~/project
   environment:
     JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
@@ -10,7 +10,7 @@ config_android:
 jobs:
   build_and_setup:
     docker:
-      - image: circleci/android:api-28
+      - image: ccistaging/android:api-28
     working_directory: ~/project
     environment:
       - JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport"
