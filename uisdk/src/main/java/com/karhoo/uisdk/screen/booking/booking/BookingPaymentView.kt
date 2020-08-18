@@ -15,7 +15,7 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -46,7 +46,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
             presenter = BookingPaymentPresenter(view = this)
-            paymentPresenter = BraintreeBookingPaymentPresenter(view = this)
+            paymentPresenter = BraintreePaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }

@@ -10,11 +10,8 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
-import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
@@ -23,11 +20,8 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
-import com.karhoo.uisdk.screen.booking.bookingrequest.BookingRequestPresenterTest
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -69,7 +63,7 @@ class BookingPaymentPresenterTest {
     private lateinit var sdkInitialisationCaptor: ArgumentCaptor<SDKInitRequest>
 
     private lateinit var bookingPaymentPresenter: BookingPaymentPresenter
-    private lateinit var braintreeBookingPaymentPresenter: BraintreeBookingPaymentPresenter
+    private lateinit var braintreePaymentPresenter: BraintreePaymentPresenter
 
     @Before
     fun setUp() {
@@ -92,7 +86,7 @@ class BookingPaymentPresenterTest {
                 paymentsService = paymentsService,
                 view = cardView)
 
-        braintreeBookingPaymentPresenter = BraintreeBookingPaymentPresenter(
+        braintreePaymentPresenter = BraintreePaymentPresenter(
                 paymentsService = paymentsService,
                 userStore = userStore,
                 view = paymentView)
@@ -114,7 +108,7 @@ class BookingPaymentPresenterTest {
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = false))
 
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -130,7 +124,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `change card pressed for logged in user and correct organisation id is used`() {
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -151,7 +145,7 @@ class BookingPaymentPresenterTest {
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
         whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -172,7 +166,7 @@ class BookingPaymentPresenterTest {
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
         whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -193,7 +187,7 @@ class BookingPaymentPresenterTest {
     @Test
     fun `change card pressed and result is successful`() {
         setAuthenticatedUser()
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -207,7 +201,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `change card pressed and result is unsuccessful`() {
-        braintreeBookingPaymentPresenter.sdkInit()
+        braintreePaymentPresenter.sdkInit()
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -221,7 +215,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and bind card details should be called`() {
-        braintreeBookingPaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
 
@@ -235,7 +229,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and an error occurs`() {
-        braintreeBookingPaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -249,7 +243,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `user update calls the view to display the new payment info`() {
-        braintreeBookingPaymentPresenter.onSavedPaymentInfoChanged(SavedPaymentInfo("", CardType.NOT_SET))
+        braintreePaymentPresenter.onSavedPaymentInfoChanged(SavedPaymentInfo("", CardType.NOT_SET))
         verify(paymentView).bindCardDetails(any())
     }
 
@@ -261,7 +255,7 @@ class BookingPaymentPresenterTest {
     fun `card info stored and correct updates made to view if there is payment nonce info`() {
         val desc = "ending in 00"
 
-        braintreeBookingPaymentPresenter.updateCardDetails(paymentsNonce.nonce, desc, "Visa")
+        braintreePaymentPresenter.updateCardDetails(paymentsNonce.nonce, desc, "Visa")
 
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         verify(paymentView).refresh()
@@ -306,7 +300,7 @@ class BookingPaymentPresenterTest {
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
 
-        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(price)
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -329,7 +323,7 @@ class BookingPaymentPresenterTest {
         whenever(price.highPrice).thenReturn(EXPECTED_AMOUNT_AS_STRING.toInt())
         whenever(price.currencyCode).thenReturn("GBP")
 
-        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(price)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
@@ -353,7 +347,7 @@ class BookingPaymentPresenterTest {
         whenever(price.highPrice).thenReturn(1500)
         whenever(price.currencyCode).thenReturn("GBP")
 
-        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(price)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))

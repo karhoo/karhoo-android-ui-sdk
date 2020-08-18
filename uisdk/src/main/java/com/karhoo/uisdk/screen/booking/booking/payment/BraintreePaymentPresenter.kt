@@ -20,9 +20,9 @@ import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
 
-class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
-                                       private val userStore: UserStore = KarhooApi.userStore,
-                                       private val paymentsService: PaymentsService = KarhooApi.paymentsService)
+class BraintreePaymentPresenter(view: PaymentMVP.View,
+                                private val userStore: UserStore = KarhooApi.userStore,
+                                private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
