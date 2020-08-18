@@ -8,7 +8,9 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
+import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
@@ -40,6 +42,8 @@ class BookingPaymentPresenterTest {
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
     private var view: BookingPaymentMVP.View = mock()
+    private val paymentProviderCall: Call<PaymentProvider> = mock()
+    private val paymentProviderCaptor = argumentCaptor<(Resource<PaymentProvider>) -> Unit>()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val passBraintreeTokenCall: Call<PaymentsNonce> = mock()
@@ -56,6 +60,9 @@ class BookingPaymentPresenterTest {
         whenever(paymentsService.initialisePaymentSDK(any()))
                 .thenReturn(sdkInitCall)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
+
+        whenever(paymentsService.getPaymentProvider()).thenReturn(paymentProviderCall)
+        doNothing().whenever(paymentProviderCall).execute(paymentProviderCaptor.capture())
 
         whenever(paymentsService.addPaymentMethod(any()))
                 .thenReturn(passBraintreeTokenCall)
@@ -241,6 +248,31 @@ class BookingPaymentPresenterTest {
         assertEquals(desc, paymentInfoCaptor.value.lastFour)
     }
 
+    /**
+     * Given: A request is made to fetch payment providers
+     * Then: Fetch payment providers
+     */
+    @Test
+    fun `fetch payment providers success`() {
+        paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(ADYEN_PAYMENT)))
+
+        verify(paymentsService).getPaymentProvider()
+        verify(view, never()).showError(any())
+    }
+
+    /**
+     * Given: A request is made to fetch payment providers
+     * When: Fetch payment providers fails
+     * Then: Show error
+     */
+    @Test
+    fun `fetch payment providers failure`() {
+        paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
+
+        verify(paymentsService).getPaymentProvider()
+        verify(view).showError(any())
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
@@ -255,6 +287,8 @@ class BookingPaymentPresenterTest {
                                          )
 
         val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
+
+        val ADYEN_PAYMENT = Provider(id = "Adyen")
 
         val CARD_ENDING = "....12"
 
