@@ -84,9 +84,9 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             analytics?.bookingRequested(currentTripInfo(), outboundTripId)
-            view?.initiliseGuestPayment(quotePriceToAmount(quote))
+            view?.initialiseGuestPayment(quotePriceToAmount(quote))
         } else {
-            view?.initilisePaymentProvider(quotePriceToAmount(quote))
+            view?.initialisePaymentProvider(quotePriceToAmount(quote))
         }
     }
 

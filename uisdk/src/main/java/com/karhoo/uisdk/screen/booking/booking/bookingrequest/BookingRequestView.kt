@@ -410,11 +410,11 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun initilisePaymentProvider(amount: String) {
+    override fun initialisePaymentProvider(amount: String) {
         bookingRequestPaymentDetailsWidget.initialisePaymentFlow(amount)
     }
 
-    override fun initiliseGuestPayment(amount: String) {
+    override fun initialiseGuestPayment(amount: String) {
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(amount)
     }
 

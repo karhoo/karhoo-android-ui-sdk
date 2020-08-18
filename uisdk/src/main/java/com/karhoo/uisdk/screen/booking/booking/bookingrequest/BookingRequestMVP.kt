@@ -56,9 +56,9 @@ interface GuestBookingMVP {
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
 
-        fun initilisePaymentProvider(amount: String)
+        fun initialisePaymentProvider(amount: String)
 
-        fun initiliseGuestPayment(amount: String)
+        fun initialiseGuestPayment(amount: String)
 
     }
 
