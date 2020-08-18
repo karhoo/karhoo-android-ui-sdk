@@ -19,8 +19,6 @@ interface BookingPaymentMVP {
 
         fun showError(@StringRes error: Int)
 
-        fun passBackBraintreeSDKNonce(braintreeSDKNonce: String)
-
         fun refresh()
 
     }
@@ -29,7 +27,7 @@ interface BookingPaymentMVP {
 
         fun changeCard()
 
-        fun passBackBraintreeSDKNonce(braintreeSDKNonce: String)
+        fun passBackNonce(braintreeSDKNonce: String)
 
         fun updateCardDetails(description: String, typeLabel: String)
 

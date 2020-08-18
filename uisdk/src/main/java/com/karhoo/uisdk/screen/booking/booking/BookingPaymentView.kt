@@ -11,11 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.braintreepayments.api.dropin.DropInRequest
 import com.braintreepayments.api.dropin.DropInResult
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
-import com.karhoo.uisdk.BuildConfig
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -23,7 +20,6 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumber
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
-import java.lang.Exception
 
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
@@ -44,7 +40,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
-            presenter = BookingPaymentPresenter(view = this)
+            presenter = BraintreeBookingPaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }
@@ -112,10 +108,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         actions?.showErrorDialog(error)
     }
 
-    override fun passBackBraintreeSDKNonce(braintreeSDKNonce: String) {
-        presenter.passBackBraintreeSDKNonce(braintreeSDKNonce)
-    }
-
     override fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
         savedPaymentInfo?.let {
             apply {
@@ -150,7 +142,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             when (requestCode) {
                 REQ_CODE_BRAINTREE -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                    presenter.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)

@@ -15,9 +15,9 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.extension.isGuest
 
-class BookingPaymentPresenter(view: BookingPaymentMVP.View,
-                              private val userStore: UserStore = KarhooApi.userStore,
-                              private val paymentsService: PaymentsService = KarhooApi.paymentsService)
+class BraintreeBookingPaymentPresenter(view: BookingPaymentMVP.View,
+                                       private val userStore: UserStore = KarhooApi.userStore,
+                                       private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<BookingPaymentMVP.View>(), BookingPaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     init {
@@ -47,14 +47,14 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
                 }
                 view?.handlePaymentDetailsUpdate(braintreeSDKToken)
             } else {
-                passBackBraintreeSDKNonce(braintreeSDKToken)
+                passBackNonce(braintreeSDKToken)
             }
         } else {
             view?.showPaymentUI(braintreeSDKToken)
         }
     }
 
-    override fun passBackBraintreeSDKNonce(braintreeSDKNonce: String) {
+    override fun passBackNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
         val addPaymentRequest = AddPaymentRequest(payer = Payer(id = user.userId,
                                                                 email = user.email,
