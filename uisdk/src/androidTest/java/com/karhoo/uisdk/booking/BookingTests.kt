@@ -87,7 +87,7 @@ class BookingTests : Launch {
                 .putString("mobile_number", "123")
                 .putString("user_id", "1234")
                 .putString("organisations", Gson().toJson(
-                        listOf(Organisation(id = "a1013897-132a-456c-9be2-636979095ad9",
+                        listOf(Organisation(id = "organisation_id",
                                             name = "B2C DefaultOrgForKarhooAppUsers",
                                             roles = emptyList()))))
                 .putString("locale", "en-GB")
