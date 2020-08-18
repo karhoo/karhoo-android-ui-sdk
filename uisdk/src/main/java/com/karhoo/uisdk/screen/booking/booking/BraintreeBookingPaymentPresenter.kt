@@ -18,25 +18,11 @@ import com.karhoo.uisdk.util.extension.isGuest
 class BraintreeBookingPaymentPresenter(view: BookingPaymentMVP.View,
                                        private val userStore: UserStore = KarhooApi.userStore,
                                        private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), BookingPaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<BookingPaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     init {
         attachView(view)
-        getPaymentProvider()
         userStore.addSavedPaymentObserver(this)
-    }
-
-    override fun getPaymentProvider() {
-        paymentsService.getPaymentProvider().execute { result ->
-            when (result) {
-                is Resource.Success -> handleGetPaymentProviderSuccess(result.data.provider.id)
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
-            }
-        }
-    }
-    
-    private fun handleGetPaymentProviderSuccess(provider: String) {
-        // TODO: To be filled out another time
     }
 
     override fun changeCard() {

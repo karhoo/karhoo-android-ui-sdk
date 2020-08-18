@@ -27,6 +27,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View {
 
     private lateinit var presenter: BookingPaymentMVP.Presenter
+    private lateinit var paymentPresenter: PaymentMVP.Presenter
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -40,7 +41,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
-            presenter = BraintreeBookingPaymentPresenter(view = this)
+            presenter = BookingPaymentPresenter(view = this)
+            paymentPresenter = BraintreeBookingPaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }
@@ -74,7 +76,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        presenter.changeCard()
+        paymentPresenter.changeCard()
     }
 
     override fun refresh() {
@@ -142,12 +144,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             when (requestCode) {
                 REQ_CODE_BRAINTREE -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    presenter.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                    paymentPresenter.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        presenter.updateCardDetails(it.description, it.typeLabel)
+                        paymentPresenter.updateCardDetails(it.description, it.typeLabel)
                     }
                     handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }
