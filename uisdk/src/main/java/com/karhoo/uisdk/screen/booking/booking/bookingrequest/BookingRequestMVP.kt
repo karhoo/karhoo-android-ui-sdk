@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import androidx.lifecycle.Observer
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.QuoteType
@@ -47,15 +46,19 @@ interface GuestBookingMVP {
 
         fun showAuthenticatedUserBookingFields()
 
-        fun showPaymentDialog(braintreeSDKToken: String)
+        fun showPaymentFailureDialog()
 
-        fun showPaymentUI(braintreeSDKToken: String)
+        fun showPaymentUI()
 
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
         fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+
+        fun initilisePaymentProvider(amount: String)
+
+        fun initiliseGuestPayment(amount: String)
 
     }
 
@@ -75,8 +78,6 @@ interface GuestBookingMVP {
 
         fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails: PassengerDetails?
         = null, comments: String)
-
-        fun setToken(braintreeSDKToken: String)
 
         fun showBookingRequest(quote: QuoteV2, outboundTripId: String? = null)
 

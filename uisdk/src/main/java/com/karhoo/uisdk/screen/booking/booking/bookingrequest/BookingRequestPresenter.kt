@@ -3,22 +3,16 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
-import com.karhoo.sdk.api.network.request.Payer
-import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -49,12 +43,11 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
                               private val userStore: UserStore)
     : BasePresenter<GuestBookingMVP.View>(), GuestBookingMVP.Presenter, LifecycleObserver {
 
-    private var braintreeSDKToken: String = ""
+//    private var braintreeSDKToken: String = ""
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
     private var flightDetails: FlightDetails? = null
-    private var nonce: String? = null
     private var origin: LocationInfo? = null
     private var outboundTripId: String? = null
     private var quote: QuoteV2? = null
@@ -91,9 +84,9 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             analytics?.bookingRequested(currentTripInfo(), outboundTripId)
-            view?.threeDSecureNonce(braintreeSDKToken, nonce!!, quotePriceToAmount(quote))
+            view?.initiliseGuestPayment(quotePriceToAmount(quote))
         } else {
-            sdkInit()
+            view?.initilisePaymentProvider(quotePriceToAmount(quote))
         }
     }
 
@@ -124,7 +117,7 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
 
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
-            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentDialog(braintreeSDKToken)
+            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog()
             KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error)
             else -> handleError(returnErrorStringOrLogoutIfRequired(error))
         }
@@ -151,34 +144,6 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
             view?.enableBooking()
         } else {
             view?.disableBooking()
-        }
-    }
-
-    private fun sdkInit() {
-        val sdkInitRequest = SDKInitRequest(organisationId = userStore.currentUser.organisations.first().id,
-                                            currency = quote?.price?.currencyCode.orEmpty())
-        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> getNonce(result.data.token)
-                is Resource.Failure -> handleError(R.string.booking_error)
-            }
-        }
-    }
-
-    private fun getNonce(braintreeSDKToken: String) {
-        this.braintreeSDKToken = braintreeSDKToken
-        val user = userStore.currentUser
-        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
-                                                      email = user.email,
-                                                      firstName = user.firstName,
-                                                      lastName = user.lastName),
-                                        organisationId = user.organisations.first().id
-                                       )
-        paymentsService.getNonce(nonceRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data.nonce, quotePriceToAmount(quote))
-                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
-            }
         }
     }
 
@@ -227,13 +192,8 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
         view?.showUpdatedCardDetails(userStore.savedPaymentInfo)
     }
 
-    override fun setToken(braintreeSDKToken: String) {
-        this.braintreeSDKToken = braintreeSDKToken
-    }
-
     override fun updateCardDetails(braintreeSDKNonce: String?) {
         braintreeSDKNonce?.let {
-            nonce = braintreeSDKNonce
             view?.enableBooking()
         } ?: view?.disableBooking()
     }

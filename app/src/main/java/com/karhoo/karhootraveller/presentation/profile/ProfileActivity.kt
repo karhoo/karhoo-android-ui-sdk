@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_profile.bookingPaymentDetailsWidg
 import kotlinx.android.synthetic.main.activity_profile.toolbar
 import kotlinx.android.synthetic.main.activity_profile.userProfileView
 
-class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMVP.Actions {
+class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfileMVP.Actions {
 
     override val layout: Int = R.layout.activity_profile
 
@@ -30,7 +30,7 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMV
         }
         userProfileView.actions = this
         lifecycle.addObserver(userProfileView)
-        bookingPaymentDetailsWidget.actions = this
+        bookingPaymentDetailsWidget.cardActions = this
     }
 
     override fun handleExtras() {
@@ -116,8 +116,4 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.Actions, UserProfileMV
                 get() = Builder()
         }
     }
-
-    override fun showPaymentUI(braintreeSDKToken: String) {}
-
-    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {}
 }

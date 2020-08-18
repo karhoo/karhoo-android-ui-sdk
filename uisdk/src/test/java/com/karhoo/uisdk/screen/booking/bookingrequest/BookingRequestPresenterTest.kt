@@ -461,7 +461,7 @@ class BookingRequestPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showPaymentDialog(BRAINTREE_SDK_TOKEN)
+        verify(view).showPaymentFailureDialog(BRAINTREE_SDK_TOKEN)
     }
 
     /**
@@ -613,7 +613,7 @@ class BookingRequestPresenterTest {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
-        verify(view).showPaymentDialog(anyString())
+        verify(view).showPaymentFailureDialog(anyString())
     }
 
     /**

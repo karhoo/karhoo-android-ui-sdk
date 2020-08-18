@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.network.request.AddPaymentRequest
+import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
@@ -15,26 +16,58 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.extension.isGuest
 
-class BraintreeBookingPaymentPresenter(view: BookingPaymentMVP.View,
+class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
                                        private val userStore: UserStore = KarhooApi.userStore,
                                        private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+
+    private var braintreeSDKToken: String = ""
+    private var nonce: String = ""
 
     init {
         attachView(view)
         userStore.addSavedPaymentObserver(this)
     }
 
-    override fun changeCard() {
+    private fun getSDKInitRequest(): SDKInitRequest {
         //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val organisationId = KarhooUISDKConfigurationProvider.getGuestOrganisationId()?.let { it }
                 ?: userStore.currentUser.organisations.first().id
-        val sdkInitRequest = SDKInitRequest(organisationId = organisationId,
-                                            currency = "GBP")
-        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
+        return SDKInitRequest(organisationId = organisationId,
+                              currency = "GBP")
+    }
+
+    override fun sdkInit() {
+        paymentsService.initialisePaymentSDK(getSDKInitRequest()).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+            }
+        }
+    }
+
+    override fun getPaymentNonce(amount: String) {
+        paymentsService.initialisePaymentSDK(getSDKInitRequest()).execute { result ->
+            when (result) {
+                is Resource.Success -> getNonce(result.data.token, amount)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+            }
+        }
+    }
+
+    private fun getNonce(braintreeSDKToken: String, amount: String) {
+        this.braintreeSDKToken = braintreeSDKToken
+        val user = userStore.currentUser
+        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
+                                                      email = user.email,
+                                                      firstName = user.firstName,
+                                                      lastName = user.lastName),
+                                        organisationId = user.organisations.first().id
+                                       )
+        paymentsService.getNonce(nonceRequest).execute { result ->
+            when (result) {
+                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data.nonce, amount)
+                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
         }
     }
@@ -43,7 +76,8 @@ class BraintreeBookingPaymentPresenter(view: BookingPaymentMVP.View,
         if (KarhooUISDKConfigurationProvider.handleBraintree()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
-                    updateCardDetails(it.lastFour, it.cardType.toString().toLowerCase().capitalize())
+                    updateCardDetails("", it.lastFour, it.cardType.toString().toLowerCase()
+                            .capitalize())
                 }
                 view?.handlePaymentDetailsUpdate(braintreeSDKToken)
             } else {
@@ -75,8 +109,13 @@ class BraintreeBookingPaymentPresenter(view: BookingPaymentMVP.View,
         view?.bindCardDetails(userPaymentInfo)
     }
 
-    override fun updateCardDetails(description: String, typeLabel: String) {
+    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
+        this.nonce = nonce
         userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
         view?.refresh()
+    }
+
+    override fun initialiseGuestPayment(amount: String) {
+        view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
     }
 }

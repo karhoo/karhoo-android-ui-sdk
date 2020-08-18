@@ -9,8 +9,6 @@ interface BookingPaymentMVP {
 
     interface View {
 
-        fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?)
-
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -19,7 +17,9 @@ interface BookingPaymentMVP {
 
         fun showError(@StringRes error: Int)
 
-        fun refresh()
+        fun initialisePaymentFlow(amount: String)
+
+        fun initialiseGuestPayment(amount: String)
 
     }
 
@@ -28,12 +28,19 @@ interface BookingPaymentMVP {
         fun getPaymentProvider()
     }
 
-    interface Actions {
-
-        fun showPaymentUI(braintreeSDKToken: String)
+    interface CardActions {
 
         fun showErrorDialog(@StringRes stringId: Int)
+    }
+
+    interface PaymentActions {
+
+        fun showPaymentUI()
 
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+
+        fun showPaymentDialog()
+
+        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
     }
 }

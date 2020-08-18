@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View {
 
     private lateinit var presenter: BookingPaymentMVP.Presenter
     private lateinit var paymentPresenter: PaymentMVP.Presenter
@@ -35,7 +35,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var lineTextStyle: Int = R.style.Text_Action
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
-    var actions: BookingPaymentMVP.Actions? = null
+    var paymentActions: BookingPaymentMVP.PaymentActions? = null
+    var cardActions: BookingPaymentMVP.CardActions? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
@@ -76,12 +77,20 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        paymentPresenter.changeCard()
+        paymentPresenter.sdkInit()
     }
 
     override fun refresh() {
         cardDetailsVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = View.GONE
+    }
+
+    override fun initialisePaymentFlow(amount: String) {
+        paymentPresenter.getPaymentNonce(amount)
+    }
+
+    override fun initialiseGuestPayment(amount: String) {
+        paymentPresenter.initialiseGuestPayment(amount)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -107,7 +116,11 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showError(error: Int) {
-        actions?.showErrorDialog(error)
+        cardActions?.showErrorDialog(error)
+    }
+
+    override fun showPaymentDialog(braintreeSDKToken: String) {
+        paymentActions?.showPaymentDialog()
     }
 
     override fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -129,14 +142,18 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(braintreeSDKToken: String) {
-        actions?.showPaymentUI(braintreeSDKToken)
+        paymentActions?.showPaymentUI()
         val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
+    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
+        paymentActions?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+    }
+
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
-        actions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+        paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,7 +166,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        paymentPresenter.updateCardDetails(it.description, it.typeLabel)
+                        paymentPresenter.updateCardDetails(it.nonce, it.description, it.typeLabel)
                     }
                     handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }
