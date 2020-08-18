@@ -14,6 +14,8 @@ import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText

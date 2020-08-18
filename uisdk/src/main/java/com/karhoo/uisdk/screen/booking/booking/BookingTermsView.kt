@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.bookingTermsText
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.cancellationText
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.termsConditionsText

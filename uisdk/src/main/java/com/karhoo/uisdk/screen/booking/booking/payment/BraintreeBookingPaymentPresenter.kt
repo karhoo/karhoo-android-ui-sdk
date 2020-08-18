@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking
+package com.karhoo.uisdk.screen.booking.booking.payment
 
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo

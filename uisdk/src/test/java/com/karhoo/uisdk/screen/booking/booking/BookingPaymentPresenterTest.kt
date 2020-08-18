@@ -18,6 +18,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.UnitTestUISDKConfig
+import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -74,7 +75,7 @@ class BookingPaymentPresenterTest {
                 paymentsService = paymentsService,
                 userStore = userStore,
                 view = view
-                                                                           )
+                                                                                                                                              )
     }
 
     @After
