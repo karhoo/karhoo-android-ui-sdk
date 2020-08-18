@@ -73,6 +73,7 @@ class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
     }
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
+        this.braintreeSDKToken = braintreeSDKToken
         if (KarhooUISDKConfigurationProvider.handleBraintree()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
