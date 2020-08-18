@@ -16,10 +16,10 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.ServerRobot
+import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE

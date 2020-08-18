@@ -5,6 +5,7 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.network.request.AddPaymentRequest
 import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
@@ -14,7 +15,10 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.isGuest
+import com.karhoo.uisdk.util.extension.orZero
+import java.util.Currency
 
 class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
                                        private val userStore: UserStore = KarhooApi.userStore,
@@ -29,16 +33,17 @@ class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
         userStore.addSavedPaymentObserver(this)
     }
 
-    private fun getSDKInitRequest(): SDKInitRequest {
+    private fun getSDKInitRequest(currencyCode: String): SDKInitRequest {
         //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val organisationId = KarhooUISDKConfigurationProvider.getGuestOrganisationId()?.let { it }
                 ?: userStore.currentUser.organisations.first().id
         return SDKInitRequest(organisationId = organisationId,
-                              currency = "GBP")
+                              currency = currencyCode)
     }
 
     override fun sdkInit() {
-        paymentsService.initialisePaymentSDK(getSDKInitRequest()).execute { result ->
+        val sdkInitRequest = getSDKInitRequest("GBP")
+        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
@@ -46,10 +51,12 @@ class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
         }
     }
 
-    override fun getPaymentNonce(amount: String) {
-        paymentsService.initialisePaymentSDK(getSDKInitRequest()).execute { result ->
+    override fun getPaymentNonce(price: QuotePrice?) {
+        val sdkInitRequest = getSDKInitRequest(price?.currencyCode.orEmpty())
+        paymentsService.initialisePaymentSDK(sdkInitRequest).execute {
+            result ->
             when (result) {
-                is Resource.Success -> getNonce(result.data.token, amount)
+                is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(price))
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
@@ -66,10 +73,16 @@ class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
                                        )
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
-                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data.nonce, amount)
+                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data
+                        .nonce, amount)
                 is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
         }
+    }
+
+    private fun quotePriceToAmount(price: QuotePrice?): String {
+        val currency = Currency.getInstance(price?.currencyCode?.trim())
+        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
     }
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
@@ -116,7 +129,7 @@ class BraintreeBookingPaymentPresenter(view: PaymentMVP.View,
         view?.refresh()
     }
 
-    override fun initialiseGuestPayment(amount: String) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
     }
 }

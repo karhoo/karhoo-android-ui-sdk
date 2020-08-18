@@ -29,6 +29,7 @@ import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
@@ -409,12 +410,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun initialisePaymentProvider(amount: String) {
-        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(amount)
+    override fun initialisePaymentProvider(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
     }
 
-    override fun initialiseGuestPayment(amount: String) {
-        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(amount)
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
     }
 
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {

@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
@@ -56,9 +57,9 @@ interface GuestBookingMVP {
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
 
-        fun initialisePaymentProvider(amount: String)
+        fun initialisePaymentProvider(price: QuotePrice?)
 
-        fun initialiseGuestPayment(amount: String)
+        fun initialiseGuestPayment(price: QuotePrice?)
 
     }
 

@@ -955,7 +955,7 @@ class ServerRobot {
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
 
-        val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Adyen"))
+        val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Braintree"))
 
         /**
          *

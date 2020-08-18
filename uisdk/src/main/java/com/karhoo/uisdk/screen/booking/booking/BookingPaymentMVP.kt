@@ -2,8 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking
 
 import android.content.Intent
 import androidx.annotation.StringRes
-import com.braintreepayments.api.models.PaymentMethodNonce
-import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.QuotePrice
 
 interface BookingPaymentMVP {
 
@@ -17,9 +16,9 @@ interface BookingPaymentMVP {
 
         fun showError(@StringRes error: Int)
 
-        fun initialisePaymentFlow(amount: String)
+        fun initialisePaymentFlow(price: QuotePrice?)
 
-        fun initialiseGuestPayment(amount: String)
+        fun initialiseGuestPayment(price: QuotePrice?)
 
     }
 

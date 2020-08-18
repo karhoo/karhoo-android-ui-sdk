@@ -13,6 +13,7 @@ import com.braintreepayments.api.dropin.DropInRequest
 import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
@@ -87,12 +88,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         changeCardProgressBar.visibility = View.GONE
     }
 
-    override fun initialisePaymentFlow(amount: String) {
-        paymentPresenter.getPaymentNonce(amount)
+    override fun initialisePaymentFlow(price: QuotePrice?) {
+        paymentPresenter.getPaymentNonce(price)
     }
 
-    override fun initialiseGuestPayment(amount: String) {
-        paymentPresenter.initialiseGuestPayment(amount)
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        paymentPresenter.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {

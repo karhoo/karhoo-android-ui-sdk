@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.QuotePrice
 
 interface PaymentMVP {
 
@@ -27,7 +28,7 @@ interface PaymentMVP {
 
     interface Presenter {
 
-        fun getPaymentNonce(amount: String)
+        fun getPaymentNonce(price: QuotePrice?)
 
         fun sdkInit()
 
@@ -35,7 +36,7 @@ interface PaymentMVP {
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
 
-        fun initialiseGuestPayment(amount: String)
+        fun initialiseGuestPayment(price: QuotePrice?)
 
     }
 
