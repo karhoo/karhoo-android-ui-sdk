@@ -10,16 +10,24 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
+import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Provider
+import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.payment.BraintreeBookingPaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.bookingrequest.BookingRequestPresenterTest
+import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -45,12 +53,15 @@ class BookingPaymentPresenterTest {
     private var userStore: UserStore = mock()
     private var cardView: BookingPaymentMVP.View = mock()
     private var paymentView: PaymentMVP.View = mock()
+    private var price: QuotePrice = mock()
     private val paymentProviderCall: Call<PaymentProvider> = mock()
     private val paymentProviderCaptor = argumentCaptor<(Resource<PaymentProvider>) -> Unit>()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val passBraintreeTokenCall: Call<PaymentsNonce> = mock()
     private val passBraintreeTokenCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
+    private val getNonceCall: Call<PaymentsNonce> = mock()
+    private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
     @Captor
     private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
 
@@ -68,6 +79,8 @@ class BookingPaymentPresenterTest {
 
         whenever(paymentsService.getPaymentProvider()).thenReturn(paymentProviderCall)
         doNothing().whenever(paymentProviderCall).execute(paymentProviderCaptor.capture())
+
+        doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
 
         whenever(paymentsService.addPaymentMethod(any()))
                 .thenReturn(passBraintreeTokenCall)
@@ -281,6 +294,73 @@ class BookingPaymentPresenterTest {
         verify(cardView).showError(any())
     }
 
+    /**
+     * Given:   Book trip flow is initiated
+     * And:     The user is logged in
+     * When:    SDK Init returns an error
+     * Then:    View shows booking error
+     */
+    @Test
+    fun `logged in user sdk init error shows error`() {
+        setAuthenticatedUser()
+
+        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
+
+        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+
+        sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(paymentView).showError(R.string.something_went_wrong)
+    }
+
+    /**
+     * Given:   Book trip flow is initiated
+     * And:     The user is logged in
+     * When:    SDK Init returns success
+     * And:     Get Nonce returns failure
+     * Then:    Show payment dialog
+     */
+    @Test
+    fun `logged in user get nonce failure shows payment dialog`() {
+        setAuthenticatedUser()
+
+        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
+        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
+        whenever(price.highPrice).thenReturn(EXPECTED_AMOUNT_AS_STRING.toInt())
+        whenever(price.currencyCode).thenReturn("GBP")
+
+        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+        getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(paymentView).showPaymentDialog(BRAINTREE_SDK_TOKEN)
+    }
+
+    /**
+     * Given:   Book trip flow is initiated
+     * And:     The user is logged in
+     * When:    SDK Init returns success
+     * And:     Get nonce returns success
+     * Then:    Three D Secure the nonce
+     */
+    @Test
+    fun `logged in user get nonce success shows three d secure`() {
+        setAuthenticatedUser()
+
+        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
+        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
+        whenever(price.highPrice).thenReturn(1500)
+        whenever(price.currencyCode).thenReturn("GBP")
+
+        braintreeBookingPaymentPresenter.getPaymentNonce(price)
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
+
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "15.00")
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
@@ -288,19 +368,21 @@ class BookingPaymentPresenterTest {
     }
 
     companion object {
-        val paymentsNonce = PaymentsNonce(
+        private val paymentsNonce = PaymentsNonce(
                 nonce = "1234557683749328",
                 cardType = CardType.VISA,
                 lastFour = "2345"
                                          )
 
-        val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
+        private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
 
-        val ADYEN_PAYMENT = Provider(id = "Adyen")
+        private val ADYEN_PAYMENT = Provider(id = "Adyen")
 
-        val CARD_ENDING = "....12"
+        private const val CARD_ENDING = "....12"
 
-        val userDetails: UserInfo = UserInfo(firstName = "David",
+        private const val EXPECTED_AMOUNT_AS_STRING = "1500"
+
+        private val userDetails: UserInfo = UserInfo(firstName = "David",
                                              lastName = "Smith",
                                              email = "david.smith@email.com",
                                              phoneNumber = "+441234 56789",
