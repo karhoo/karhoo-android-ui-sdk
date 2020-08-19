@@ -149,7 +149,7 @@ class BookingPaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(cardView, never()).showPaymentUI(any())
+        verify(cardView, never()).showError(any())
         verify(userStore).savedPaymentInfo
 
     }
