@@ -1,19 +1,19 @@
 version: 2
 config_android:
   docker:
-    - image: circleci/android:api-28
+    - image: ccistaging/android:api-28
   working_directory: ~/project
   environment:
-    JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+    JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
     GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
     TERM: dumb
 jobs:
   build_and_setup:
     docker:
-      - image: circleci/android:api-28
+      - image: ccistaging/android:api-28
     working_directory: ~/project
     environment:
-      - JAVA_TOOL_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      - JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
       - GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
       - TERM: dumb
     steps:

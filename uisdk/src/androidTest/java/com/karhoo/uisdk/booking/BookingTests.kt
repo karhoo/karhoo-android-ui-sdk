@@ -10,14 +10,13 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.google.gson.Gson
-import com.karhoo.sdk.api.datastore.user.KarhooUserManager
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.ServerRobot
+import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
@@ -88,7 +87,7 @@ class BookingTests : Launch {
                 .putString("mobile_number", "123")
                 .putString("user_id", "1234")
                 .putString("organisations", Gson().toJson(
-                        listOf(Organisation(id = "a1013897-132a-456c-9be2-636979095ad9",
+                        listOf(Organisation(id = "organisation_id",
                                             name = "B2C DefaultOrgForKarhooAppUsers",
                                             roles = emptyList()))))
                 .putString("locale", "en-GB")
@@ -106,6 +105,7 @@ class BookingTests : Launch {
     fun checkSnackbarErrorText() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.GENERAL_ERROR)
         }
@@ -125,6 +125,7 @@ class BookingTests : Launch {
     fun snackbarShowsToUserWhenNoAvailability() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, ServerRobot.TIMEOUT)
             quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.NO_AVAILABILITY)
@@ -141,6 +142,7 @@ class BookingTests : Launch {
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.NO_AVAILABILITY)
@@ -170,6 +172,7 @@ class BookingTests : Launch {
     fun addressesSwapSuccessfully() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
@@ -192,6 +195,7 @@ class BookingTests : Launch {
     fun fullQuoteListCheckETA() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
@@ -213,6 +217,7 @@ class BookingTests : Launch {
     fun userExpandsQuoteList() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
@@ -239,6 +244,7 @@ class BookingTests : Launch {
     fun userMinimisesQuoteList() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
@@ -267,6 +273,7 @@ class BookingTests : Launch {
     fun checkingForLocalTimeMessageOnPrebook() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -287,6 +294,7 @@ class BookingTests : Launch {
     fun closingPrebookWindow() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -309,6 +317,7 @@ class BookingTests : Launch {
     fun closingPrebookWindowAfterDate() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -334,6 +343,7 @@ class BookingTests : Launch {
     fun prebookWindowClosesAfterSelectingDateAndTime() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -358,6 +368,7 @@ class BookingTests : Launch {
     fun checkReverseGeoAddressInPickUpField() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -408,6 +419,7 @@ class BookingTests : Launch {
     fun pickUpAndDropOffAddressesCannotBeTheSame() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.ADDRESSES_IDENTICAL)
@@ -429,6 +441,7 @@ class BookingTests : Launch {
     fun locateMeDoesNotClearPrebookTime() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
@@ -461,6 +474,7 @@ class BookingTests : Launch {
     fun changeAddressDoesNotClearPrebookTime() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
@@ -498,6 +512,7 @@ class BookingTests : Launch {
     fun bookARideScreenIsDisplayed() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
@@ -521,6 +536,7 @@ class BookingTests : Launch {
     fun closingBookARideScreen() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
@@ -548,6 +564,7 @@ class BookingTests : Launch {
     fun ASAPBookARiddeScreenFullCheck() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
@@ -574,6 +591,7 @@ class BookingTests : Launch {
     fun ASAPBookARideSuccess() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)

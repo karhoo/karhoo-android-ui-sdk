@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking
+package com.karhoo.uisdk.screen.booking.booking.payment
 
 import androidx.annotation.StringRes
 

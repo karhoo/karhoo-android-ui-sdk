@@ -18,6 +18,7 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.ServerRobot
+import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
@@ -95,6 +96,7 @@ class GuestBookingTests : Launch {
     @Test
     fun fullQuoteListCheckGuest() {
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
         }
@@ -113,6 +115,9 @@ class GuestBookingTests : Launch {
      **/
     @Test
     fun emptyBookingScreenGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
         booking(this) {
             sleep()
         } result {
@@ -129,6 +134,9 @@ class GuestBookingTests : Launch {
      **/
     @Test
     fun addressScreenCheckFromPickupGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
         booking(this) {
             clickPickUpAddressField()
         }
@@ -148,6 +156,9 @@ class GuestBookingTests : Launch {
      **/
     @Test
     fun addressScreenCheckFromDestinationGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
         booking(this) {
             clickDestinationAddressField()
         }
@@ -167,6 +178,7 @@ class GuestBookingTests : Launch {
     @Test
     fun searchAddressesTest() {
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
         }
@@ -206,6 +218,7 @@ class GuestBookingTests : Launch {
     @Test
     fun searchAddressesAndGetQuotesTest() {
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
         }
@@ -247,6 +260,9 @@ class GuestBookingTests : Launch {
      **/
     @Test
     fun checkMenuItemsGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
         booking(this) {
             pressMenuButton()
         } result {
@@ -264,6 +280,7 @@ class GuestBookingTests : Launch {
     @Test
     fun flowGuestCheckoutBookingToPickUpAddressToBooking() {
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
         }
@@ -292,6 +309,7 @@ class GuestBookingTests : Launch {
     @Test
     fun closingTheGuestDetailsPage() {
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
         }
@@ -321,6 +339,7 @@ class GuestBookingTests : Launch {
     fun addCardGuestDetailsPageFullCheck() {
         KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)

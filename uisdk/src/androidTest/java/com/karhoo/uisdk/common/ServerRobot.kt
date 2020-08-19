@@ -24,6 +24,7 @@ import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.MeetingPoint
 import com.karhoo.sdk.api.model.Organisation
+import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Place
@@ -33,6 +34,7 @@ import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Price
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteSource
@@ -289,6 +291,14 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.NONCE_METHOD
+                        )
+    }
+
+    fun paymentsProviderResponse(code: Int, response: Any) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.GET_PROVIDERS_METHOD
                         )
     }
 
@@ -944,6 +954,8 @@ class ServerRobot {
                                                              )
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
+
+        val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Braintree"))
 
         /**
          *
