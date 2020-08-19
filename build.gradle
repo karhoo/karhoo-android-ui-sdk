@@ -91,7 +91,7 @@ ext.enableJacoco = { Project project, String variant, String[] projectFileFilter
         toolVersion = '0.8.4'
     }
 
-    tasks.withType(Test) {
+    project.tasks.withType(Test) {
         jacoco.includeNoLocationClasses = true
         jacoco.excludes = ['jdk.internal.*']
     }
