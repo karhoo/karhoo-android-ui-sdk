@@ -29,12 +29,12 @@ import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
@@ -42,8 +42,8 @@ import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.booking.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -72,8 +72,8 @@ import java.util.Currency
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), GuestBookingMVP.View, BookingPaymentMVP.Actions,
-      BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+    : ConstraintLayout(context, attrs, defStyleAttr), GuestBookingMVP.View, PaymentMVP.CardActions,
+      PaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
@@ -175,7 +175,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         })
 
         bookingRequestButton.actions = this
-        bookingRequestPaymentDetailsWidget.actions = this
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestPassengerDetailsWidget.actions = this
     }
 
@@ -295,14 +296,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 people = vehicleAttributes.passengerCapacity)
     }
 
-    override fun showPaymentDialog(braintreeSDKToken: String) {
+    override fun showPaymentFailureDialog() {
         AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.payment_issue)
                 .setMessage(R.string.payment_issue_message)
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
                     cancelButton.isEnabled = true
                     bookingRequestButton.onLoadingComplete()
-                    showPaymentUI(braintreeSDKToken)
+                    showPaymentUI()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -319,8 +320,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.handleError(stringId)
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String) {
-        setToken(braintreeSDKToken)
+    override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
     }
 
@@ -394,7 +394,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         braintreeFragment.addListener(
                 object : BraintreeErrorListener {
                     override fun onError(error: Exception?) {
-                        showPaymentDialog(braintreeSDKToken)
+                        showPaymentFailureDialog()
                     }
                 })
 
@@ -410,13 +410,21 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         }
     }
 
+    override fun initialisePaymentProvider(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
+    }
+
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
+    }
+
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         presenter.updateCardDetails(braintreeSDKNonce)
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 
-    private fun setToken(braintreeSDKToken: String) {
-        presenter.setToken(braintreeSDKToken)
+    override fun showPaymentDialog() {
+        showPaymentFailureDialog()
     }
 
     override fun setPassengerDetailsValidity(isValid: Boolean) {

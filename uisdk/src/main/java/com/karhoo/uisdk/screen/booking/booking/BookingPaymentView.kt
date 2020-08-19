@@ -11,26 +11,26 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.braintreepayments.api.dropin.DropInRequest
 import com.braintreepayments.api.dropin.DropInResult
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
-import com.karhoo.uisdk.BuildConfig
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
-import java.lang.Exception
 
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View {
 
     private lateinit var presenter: BookingPaymentMVP.Presenter
+    private lateinit var paymentPresenter: PaymentMVP.Presenter
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -38,13 +38,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var lineTextStyle: Int = R.style.Text_Action
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
-    var actions: BookingPaymentMVP.Actions? = null
+    var paymentActions: PaymentMVP.PaymentActions? = null
+    var cardActions: PaymentMVP.CardActions? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
             presenter = BookingPaymentPresenter(view = this)
+            paymentPresenter = BraintreePaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }
@@ -78,12 +80,20 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        presenter.changeCard()
+        paymentPresenter.sdkInit()
     }
 
     override fun refresh() {
         cardDetailsVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = View.GONE
+    }
+
+    override fun initialisePaymentFlow(price: QuotePrice?) {
+        paymentPresenter.getPaymentNonce(price)
+    }
+
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        paymentPresenter.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -109,11 +119,11 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showError(error: Int) {
-        actions?.showErrorDialog(error)
+        cardActions?.showErrorDialog(error)
     }
 
-    override fun passBackBraintreeSDKNonce(braintreeSDKNonce: String) {
-        presenter.passBackBraintreeSDKNonce(braintreeSDKNonce)
+    override fun showPaymentDialog(braintreeSDKToken: String) {
+        paymentActions?.showPaymentDialog()
     }
 
     override fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -135,14 +145,18 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(braintreeSDKToken: String) {
-        actions?.showPaymentUI(braintreeSDKToken)
+        paymentActions?.showPaymentUI()
         val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
+    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
+        paymentActions?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+    }
+
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
-        actions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+        paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -150,12 +164,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             when (requestCode) {
                 REQ_CODE_BRAINTREE -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                    paymentPresenter.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        presenter.updateCardDetails(it.description, it.typeLabel)
+                        paymentPresenter.updateCardDetails(it.nonce, it.description, it.typeLabel)
                     }
                     handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }
