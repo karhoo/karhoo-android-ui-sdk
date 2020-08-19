@@ -34,7 +34,6 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
     }
 
     private fun getSDKInitRequest(currencyCode: String): SDKInitRequest {
-        //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val organisationId = KarhooUISDKConfigurationProvider.getGuestOrganisationId()?.let { it }
                 ?: userStore.currentUser.organisations.first().id
         return SDKInitRequest(organisationId = organisationId,
@@ -42,6 +41,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun sdkInit() {
+        //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val sdkInitRequest = getSDKInitRequest("GBP")
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
