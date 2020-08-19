@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking
 
+import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -25,6 +26,6 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
     
     private fun handleGetPaymentProviderSuccess(provider: String) {
-        // TODO: To be filled out another time
+        Log.d("PD36", "Payment provider: $provider")
     }
 }

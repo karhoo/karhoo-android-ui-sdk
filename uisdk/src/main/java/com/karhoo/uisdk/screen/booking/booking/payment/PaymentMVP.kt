@@ -13,6 +13,10 @@ interface PaymentMVP {
 
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
+        fun initialisePaymentFlow(price: QuotePrice?)
+
+        fun initialiseGuestPayment(price: QuotePrice?)
+
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
         fun showError(@StringRes error: Int)
