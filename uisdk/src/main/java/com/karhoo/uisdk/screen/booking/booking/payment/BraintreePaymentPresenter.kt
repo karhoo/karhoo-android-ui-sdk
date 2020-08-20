@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
+import com.braintreepayments.api.dropin.DropInRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
@@ -98,6 +99,8 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                 passBackNonce(braintreeSDKToken)
             }
         } else {
+            val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
+            val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
             view?.showPaymentUI(braintreeSDKToken)
         }
     }
@@ -131,5 +134,10 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
         view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+    }
+
+    companion object {
+        private const val REQ_CODE_BRAINTREE = 301
+        private const val REQ_CODE_BRAINTREE_GUEST = 302
     }
 }

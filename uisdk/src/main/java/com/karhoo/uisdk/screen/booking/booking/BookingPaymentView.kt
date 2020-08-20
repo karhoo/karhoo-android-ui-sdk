@@ -16,7 +16,9 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentFactory
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
@@ -40,13 +42,14 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     var paymentActions: PaymentMVP.PaymentActions? = null
     var cardActions: PaymentMVP.CardActions? = null
+    var viewActions: PaymentMVP.ViewActions? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
             presenter = BookingPaymentPresenter(view = this)
-            paymentPresenter = BraintreePaymentPresenter(view = this)
+            paymentPresenter = PaymentFactory.createPresenter(ProviderType.BRAINTREE, view = this)
             this.setOnClickListener {
                 changeCard()
             }

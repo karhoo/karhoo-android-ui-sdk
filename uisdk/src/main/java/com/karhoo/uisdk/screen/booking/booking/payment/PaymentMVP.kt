@@ -44,9 +44,18 @@ interface PaymentMVP {
 
     }
 
+    interface ViewActions {
+
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+
+        fun showPaymentUI(braintreeSDKToken: String)
+
+    }
+
     interface CardActions {
 
         fun showErrorDialog(@StringRes stringId: Int)
+
     }
 
     interface PaymentActions {
