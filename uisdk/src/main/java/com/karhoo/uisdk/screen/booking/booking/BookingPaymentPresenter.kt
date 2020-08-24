@@ -4,7 +4,6 @@ import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 
 class BookingPaymentPresenter(view: BookingPaymentMVP.View,
@@ -20,12 +19,12 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         paymentsService.getPaymentProvider().execute { result ->
             when (result) {
                 is Resource.Success -> handleGetPaymentProviderSuccess(result.data.provider.id)
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> Log.d("PD36", "${result.error.internalMessage}")
             }
         }
     }
-    
-    private fun handleGetPaymentProviderSuccess(provider: String) {
-        Log.d("PD36", "Payment provider: $provider")
+
+    override fun handleGetPaymentProviderSuccess(provider: String) {
+        view?.handleGetPaymentProviderSuccess(provider)
     }
 }

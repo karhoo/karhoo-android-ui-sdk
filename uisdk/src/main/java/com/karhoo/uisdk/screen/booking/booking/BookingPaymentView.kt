@@ -1,21 +1,16 @@
 package com.karhoo.uisdk.screen.booking.booking
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentFactory
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
@@ -29,9 +24,11 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 open class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                         attrs: AttributeSet? = null,
                                                         defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentMVP.DropInActions {
 
+    //TODO Not going to need this as call to get provider will be made earlier
     private lateinit var presenter: BookingPaymentMVP.Presenter
+    private var paymentPresenter: PaymentMVP.Presenter? = null
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -48,12 +45,16 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
             presenter = BookingPaymentPresenter(view = this)
-            viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE, context =
-            context)
             this.setOnClickListener {
                 changeCard()
             }
         }
+    }
+
+    override fun handleGetPaymentProviderSuccess(provider: String) {
+        paymentPresenter = PaymentFactory.createPresenter(provider = ProviderType.BRAINTREE, view
+        = this)
+        viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE)
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -83,8 +84,7 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-//        paymentPresenter.sdkInit()
-        viewActions?.sdkInit()
+        paymentPresenter?.sdkInit()
     }
 
     override fun refresh() {
@@ -92,14 +92,16 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         changeCardProgressBar.visibility = View.GONE
     }
 
+    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
+        paymentPresenter?.updateCardDetails(nonce, description, typeLabel)
+    }
+
     override fun initialisePaymentFlow(price: QuotePrice?) {
-//        paymentPresenter.getPaymentNonce(price)
-        viewActions?.getPaymentNonce(price)
+        paymentPresenter?.getPaymentNonce(price)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-//        paymentPresenter.initialiseGuestPayment(price)
-        viewActions?.initialiseGuestPayment(price)
+        paymentPresenter?.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -126,6 +128,10 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         viewActions?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun passBackNonce(braintreeSDKNonce: String) {
+        paymentPresenter?.passBackNonce(braintreeSDKNonce)
     }
 
     override fun showError(error: Int) {
@@ -156,10 +162,7 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(braintreeSDKToken: String) {
         paymentActions?.showPaymentUI()
-//        viewActions?.showPaymentUI(braintreeSDKToken)
-        /*val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
-        val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)*/
+        viewActions?.showPaymentUI(braintreeSDKToken, context)
     }
 
     override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
@@ -168,30 +171,5 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
-    }
-
-    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            when (requestCode) {
-                REQ_CODE_BRAINTREE -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    paymentPresenter.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
-                }
-                REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    braintreeResult?.paymentMethodNonce?.let {
-                        paymentPresenter.updateCardDetails(it.nonce, it.description, it.typeLabel)
-                    }
-                    handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
-                }
-            }
-        } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
-            refresh()
-        }
-    }*/
-
-    companion object {
-        private const val REQ_CODE_BRAINTREE = 301
-        private const val REQ_CODE_BRAINTREE_GUEST = 302
     }
 }

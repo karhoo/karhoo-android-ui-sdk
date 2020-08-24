@@ -21,10 +21,10 @@ import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
 
-class BraintreePaymentPresenter(view: PaymentMVP.ViewActions,
+class BraintreePaymentPresenter(view: PaymentMVP.View,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.ViewActions>(), PaymentMVP.Presenter, UserManager
+    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager
 .OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
@@ -100,8 +100,8 @@ class BraintreePaymentPresenter(view: PaymentMVP.ViewActions,
                 passBackNonce(braintreeSDKToken)
             }
         } else {
-            val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
-            val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
+//            val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
+//            val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
             view?.showPaymentUI(braintreeSDKToken)
         }
     }

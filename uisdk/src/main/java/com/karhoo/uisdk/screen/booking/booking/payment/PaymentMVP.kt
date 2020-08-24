@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
+import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -44,9 +45,13 @@ interface PaymentMVP {
 
     interface ViewActions {
 
-        fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun getPaymentNonce(price: QuotePrice?)
+        fun showPaymentUI(braintreeSDKToken: String, context: Context)
+
+    }
+
+    interface DropInActions {
 
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
@@ -54,18 +59,15 @@ interface PaymentMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun sdkInit()
+        fun passBackNonce(braintreeSDKNonce: String)
 
         fun showError(@StringRes error: Int)
 
         fun showPaymentUI(braintreeSDKToken: String)
 
-        fun showPaymentDialog(braintreeSDKToken: String)
-
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
-
         fun refresh()
 
+        fun updateCardDetails(nonce: String, description: String, typeLabel: String)
     }
 
     interface CardActions {

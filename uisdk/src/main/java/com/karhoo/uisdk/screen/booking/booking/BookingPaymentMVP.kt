@@ -11,10 +11,14 @@ interface BookingPaymentMVP {
 
         fun showError(@StringRes error: Int)
 
+        fun handleGetPaymentProviderSuccess(provider: String)
+
     }
 
     interface Presenter {
 
         fun getPaymentProvider()
+
+        fun handleGetPaymentProviderSuccess(provider: String)
     }
 }
