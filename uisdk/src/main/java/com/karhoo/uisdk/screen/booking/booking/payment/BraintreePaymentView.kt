@@ -38,7 +38,7 @@ class BraintreePaymentView constructor(context: Context) : BookingPaymentView(co
                 }
             }
         } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
-//            refresh()
+            refresh()
         }
     }
 
