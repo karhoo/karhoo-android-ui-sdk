@@ -54,7 +54,7 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
     override fun handleGetPaymentProviderSuccess(provider: String) {
         paymentPresenter = PaymentFactory.createPresenter(provider = ProviderType.BRAINTREE, view
         = this)
-        viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE)
+        viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE, this)
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {

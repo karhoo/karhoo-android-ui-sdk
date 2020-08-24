@@ -11,10 +11,18 @@ class PaymentFactory {
             ProviderType.BRAINTREE -> BraintreePaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)
         }
 
-        fun createPaymentView(provider: ProviderType): PaymentMVP.ViewActions = when
+        fun createPaymentView(provider: ProviderType, actions: PaymentMVP.DropInActions): PaymentMVP.ViewActions = when
             (provider) {
-            ProviderType.ADYEN -> BraintreePaymentView()
-            ProviderType.BRAINTREE -> BraintreePaymentView()
+            ProviderType.ADYEN -> {
+                val view = BraintreePaymentView()
+                view.actions = actions
+                view
+            }
+            ProviderType.BRAINTREE -> {
+                val view = BraintreePaymentView()
+                view.actions = actions
+                view
+            }
         }
     }
 }

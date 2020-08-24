@@ -55,13 +55,9 @@ interface PaymentMVP {
 
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
-
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
         fun passBackNonce(braintreeSDKNonce: String)
-
-        fun showError(@StringRes error: Int)
 
         fun showPaymentUI(braintreeSDKToken: String)
 
