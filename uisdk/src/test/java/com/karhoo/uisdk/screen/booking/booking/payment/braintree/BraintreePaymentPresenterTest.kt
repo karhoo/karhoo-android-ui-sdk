@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.booking.payment.braintree
+package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooError
@@ -22,7 +22,6 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentPresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
