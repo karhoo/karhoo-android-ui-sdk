@@ -1,7 +1,8 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
-import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentView
 
 class PaymentFactory {
     companion object {
@@ -11,7 +12,7 @@ class PaymentFactory {
             ProviderType.BRAINTREE -> BraintreePaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)
         }
 
-        fun createPaymentView(provider: ProviderType, actions: PaymentMVP.DropInActions): PaymentMVP.ViewActions = when
+        fun createPaymentView(provider: ProviderType, actions: PaymentDropInMVP.Actions): PaymentDropInMVP.View = when
             (provider) {
             ProviderType.ADYEN -> {
                 val view = BraintreePaymentView()

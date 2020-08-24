@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking
+package com.karhoo.uisdk.screen.booking.booking.booking.payment.braintree
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooError
@@ -20,7 +20,9 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.screen.booking.booking.payment.BraintreePaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentPresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -40,7 +42,7 @@ import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class BookingPaymentPresenterTest {
+class BraintreePaymentPresenterTest {
 
     private var context: Context = mock()
     private var paymentsService: PaymentsService = mock()

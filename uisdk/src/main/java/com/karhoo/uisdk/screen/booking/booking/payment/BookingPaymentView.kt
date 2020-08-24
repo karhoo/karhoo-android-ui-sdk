@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking
+package com.karhoo.uisdk.screen.booking.booking.payment
 
 import android.content.Context
 import android.content.Intent
@@ -11,9 +11,6 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentFactory
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
@@ -24,7 +21,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 open class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                         attrs: AttributeSet? = null,
                                                         defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentMVP.DropInActions {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentDropInMVP.Actions {
 
     //TODO Not going to need this as call to get provider will be made earlier
     private lateinit var presenter: BookingPaymentMVP.Presenter
@@ -38,7 +35,7 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     var paymentActions: PaymentMVP.PaymentActions? = null
     var cardActions: PaymentMVP.CardActions? = null
-    var viewActions: PaymentMVP.ViewActions? = null
+    var viewActions: PaymentDropInMVP.View? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)

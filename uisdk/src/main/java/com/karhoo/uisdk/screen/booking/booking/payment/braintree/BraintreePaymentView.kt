@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.payment
+package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import android.app.Activity
 import android.content.Context
@@ -6,11 +6,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.api.dropin.DropInRequest
 import com.braintreepayments.api.dropin.DropInResult
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.extension.isGuest
 
-class BraintreePaymentView : PaymentMVP.ViewActions {
+class BraintreePaymentView : PaymentDropInMVP.View {
 
-    var actions: PaymentMVP.DropInActions? = null
+    var actions: PaymentDropInMVP.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
@@ -33,7 +34,6 @@ class BraintreePaymentView : PaymentMVP.ViewActions {
     }
 
     override fun showPaymentUI(braintreeSDKToken: String, context: Context) {
-
         val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)

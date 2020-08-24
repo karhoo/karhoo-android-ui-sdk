@@ -43,29 +43,6 @@ interface PaymentMVP {
 
     }
 
-    interface ViewActions {
-
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-
-        fun showPaymentUI(braintreeSDKToken: String, context: Context)
-
-    }
-
-    interface DropInActions {
-
-        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
-
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-
-        fun passBackNonce(braintreeSDKNonce: String)
-
-        fun showPaymentUI(braintreeSDKToken: String)
-
-        fun refresh()
-
-        fun updateCardDetails(nonce: String, description: String, typeLabel: String)
-    }
-
     interface CardActions {
 
         fun showErrorDialog(@StringRes stringId: Int)
