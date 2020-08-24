@@ -26,13 +26,12 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCard
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
 
-class BookingPaymentView @JvmOverloads constructor(context: Context,
-                                                   attrs: AttributeSet? = null,
-                                                   defStyleAttr: Int = 0)
+open class BookingPaymentView @JvmOverloads constructor(context: Context,
+                                                        attrs: AttributeSet? = null,
+                                                        defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View {
 
     private lateinit var presenter: BookingPaymentMVP.Presenter
-    private lateinit var paymentPresenter: PaymentMVP.Presenter
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -49,7 +48,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         getCustomisationParameters(context, attrs, defStyleAttr)
         if (!isInEditMode) {
             presenter = BookingPaymentPresenter(view = this)
-            paymentPresenter = PaymentFactory.createPresenter(ProviderType.BRAINTREE, view = this)
+            viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE, context =
+            context)
             this.setOnClickListener {
                 changeCard()
             }
@@ -83,7 +83,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        paymentPresenter.sdkInit()
+//        paymentPresenter.sdkInit()
+        viewActions?.sdkInit()
     }
 
     override fun refresh() {
@@ -92,11 +93,13 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
-        paymentPresenter.getPaymentNonce(price)
+//        paymentPresenter.getPaymentNonce(price)
+        viewActions?.getPaymentNonce(price)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        paymentPresenter.initialiseGuestPayment(price)
+//        paymentPresenter.initialiseGuestPayment(price)
+        viewActions?.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -119,6 +122,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
         }
         visibility = View.VISIBLE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        viewActions?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showError(error: Int) {
@@ -149,9 +156,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(braintreeSDKToken: String) {
         paymentActions?.showPaymentUI()
-        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
+//        viewActions?.showPaymentUI(braintreeSDKToken)
+        /*val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
+        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)*/
     }
 
     override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
@@ -162,7 +170,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
                 REQ_CODE_BRAINTREE -> {
@@ -180,7 +188,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
             refresh()
         }
-    }
+    }*/
 
     companion object {
         private const val REQ_CODE_BRAINTREE = 301

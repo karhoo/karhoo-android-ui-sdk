@@ -17,8 +17,6 @@ interface PaymentMVP {
 
         fun initialiseGuestPayment(price: QuotePrice?)
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-
         fun showError(@StringRes error: Int)
 
         fun showPaymentDialog(braintreeSDKToken: String)
@@ -34,21 +32,39 @@ interface PaymentMVP {
 
         fun getPaymentNonce(price: QuotePrice?)
 
+        fun initialiseGuestPayment(price: QuotePrice?)
+
         fun sdkInit()
 
         fun passBackNonce(braintreeSDKNonce: String)
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
-
     }
 
     interface ViewActions {
 
+        fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+
+        fun getPaymentNonce(price: QuotePrice?)
+
+        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+
+        fun initialiseGuestPayment(price: QuotePrice?)
+
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
+        fun sdkInit()
+
+        fun showError(@StringRes error: Int)
+
         fun showPaymentUI(braintreeSDKToken: String)
+
+        fun showPaymentDialog(braintreeSDKToken: String)
+
+        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+
+        fun refresh()
 
     }
 
