@@ -176,10 +176,11 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
     }
 
+    override fun threeDSecureNonce(threeDSNonce: String) {
+        paymentActions?.threeDSecureNonce(threeDSNonce)
+    }
+
     override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
-//            return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
-        }
         val braintreeFragment = BraintreeFragment
                 .newInstance(context as AppCompatActivity, braintreeSDKToken)
 
@@ -195,8 +196,6 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
                         paymentActions?.showPaymentFailureDialog()
                     }
                 })
-
-//        holdOpenForPaymentFlow = true
 
         val threeDSecureRequest = ThreeDSecureRequest()
                 .nonce(nonce)

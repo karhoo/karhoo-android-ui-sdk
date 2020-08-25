@@ -8,6 +8,7 @@ import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.service.payments.PaymentsService
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
@@ -19,7 +20,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
-    private var braintreeSDKToken: String = ""
+    private var sdkToken: String = ""
     private var nonce: String = ""
 
     init {
@@ -59,7 +60,15 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+        passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
+    }
+
+    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+            view?.threeDSecureNonce(sdkToken)
+        } else {
+            view?.threeDSecureNonce(sdkToken, nonce, amount)
+        }
     }
 
     private fun quotePriceToAmount(price: QuotePrice?): String {

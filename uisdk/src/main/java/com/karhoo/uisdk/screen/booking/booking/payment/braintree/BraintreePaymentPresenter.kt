@@ -74,10 +74,18 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                                        )
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
-                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data
+                is Resource.Success -> passBackThreeDSecureNonce(result.data
                         .nonce, amount)
                 is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
+        }
+    }
+
+    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+            view?.threeDSecureNonce(braintreeSDKToken)
+        } else {
+            view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
         }
     }
 

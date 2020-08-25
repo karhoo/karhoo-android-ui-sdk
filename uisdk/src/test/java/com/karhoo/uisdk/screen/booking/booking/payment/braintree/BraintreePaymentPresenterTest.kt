@@ -70,9 +70,6 @@ class BraintreePaymentPresenterTest {
                 .thenReturn(sdkInitCall)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
 
-        whenever(paymentsService.getPaymentProvider()).thenReturn(paymentProviderCall)
-        doNothing().whenever(paymentProviderCall).execute(paymentProviderCaptor.capture())
-
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
 
         whenever(paymentsService.addPaymentMethod(any()))
@@ -325,6 +322,32 @@ class BraintreePaymentPresenterTest {
         verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "15.00")
     }
 
+    /**
+     * Given:   Book trip flow is initiated
+     * And:     The user is logged in
+     * When:    SDK Init returns success
+     * And:     Get nonce returns success
+     * Then:    Three D Secure the nonce
+     */
+    @Test
+    fun `logged in user get nonce success for test does not shows three d secure`() {
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser(), handleBraintree = true))
+
+        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
+        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
+        whenever(price.highPrice).thenReturn(1500)
+        whenever(price.currencyCode).thenReturn("GBP")
+
+        braintreePaymentPresenter.getPaymentNonce(price)
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
+
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
@@ -339,8 +362,6 @@ class BraintreePaymentPresenterTest {
                                          )
 
         private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
-
-        private val ADYEN_PAYMENT = Provider(id = "Adyen")
 
         private const val CARD_ENDING = "....12"
 
