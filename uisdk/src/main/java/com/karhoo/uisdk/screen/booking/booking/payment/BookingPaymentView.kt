@@ -7,9 +7,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.KarhooUserStore
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -24,7 +28,6 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentDropInMVP.Actions {
 
     //TODO Not going to need this as call to get provider will be made earlier
-    private lateinit var presenter: BookingPaymentMVP.Presenter
     private var paymentPresenter: PaymentMVP.Presenter? = null
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
@@ -40,18 +43,15 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
+        paymentPresenter = PaymentFactory.createPresenter(KarhooApi.userStore.paymentProvider, view
+        = this)
+        viewActions = PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this)
         if (!isInEditMode) {
-            presenter = BookingPaymentPresenter(view = this)
+            //            presenter = BookingPaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }
         }
-    }
-
-    override fun handleGetPaymentProviderSuccess(provider: String) {
-        paymentPresenter = PaymentFactory.createPresenter(provider = ProviderType.BRAINTREE, view
-        = this)
-        viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE, this)
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {

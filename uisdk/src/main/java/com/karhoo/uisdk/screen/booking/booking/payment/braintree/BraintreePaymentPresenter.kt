@@ -24,8 +24,7 @@ import java.util.Currency
 class BraintreePaymentPresenter(view: PaymentMVP.View,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager
-.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
     private var nonce: String = ""

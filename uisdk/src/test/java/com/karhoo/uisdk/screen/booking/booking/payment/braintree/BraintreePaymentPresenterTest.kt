@@ -21,7 +21,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -63,7 +62,6 @@ class BraintreePaymentPresenterTest {
     @Captor
     private lateinit var sdkInitialisationCaptor: ArgumentCaptor<SDKInitRequest>
 
-    private lateinit var bookingPaymentPresenter: BookingPaymentPresenter
     private lateinit var braintreePaymentPresenter: BraintreePaymentPresenter
 
     @Before
@@ -82,10 +80,6 @@ class BraintreePaymentPresenterTest {
         doNothing().whenever(passBraintreeTokenCall).execute(passBraintreeTokenCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
-
-        bookingPaymentPresenter = BookingPaymentPresenter(
-                paymentsService = paymentsService,
-                view = cardView)
 
         braintreePaymentPresenter = BraintreePaymentPresenter(
                 paymentsService = paymentsService,
@@ -262,31 +256,6 @@ class BraintreePaymentPresenterTest {
         verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
         assertEquals(desc, paymentInfoCaptor.value.lastFour)
-    }
-
-    /**
-     * Given: A request is made to fetch payment providers
-     * Then: Fetch payment providers
-     */
-    @Test
-    fun `fetch payment providers success`() {
-        paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(ADYEN_PAYMENT)))
-
-        verify(paymentsService).getPaymentProvider()
-        verify(cardView, never()).showError(any())
-    }
-
-    /**
-     * Given: A request is made to fetch payment providers
-     * When: Fetch payment providers fails
-     * Then: Show error
-     */
-    @Test
-    fun `fetch payment providers failure`() {
-        paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
-
-        verify(paymentsService).getPaymentProvider()
-        verify(cardView).showError(any())
     }
 
     /**
