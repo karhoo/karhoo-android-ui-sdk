@@ -1,11 +1,11 @@
-package com.karhoo.uisdk.screen.booking.booking
+package com.karhoo.uisdk.screen.booking.booking.payment
 
-import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 
 class BookingPaymentPresenter(view: BookingPaymentMVP.View,
                               private val paymentsService: PaymentsService = KarhooApi.paymentsService)
@@ -24,8 +24,8 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
             }
         }
     }
-    
-    private fun handleGetPaymentProviderSuccess(provider: String) {
-        Log.d("PD36", "Payment provider: $provider")
+
+    override fun handleGetPaymentProviderSuccess(provider: String) {
+        view?.handleGetPaymentProviderSuccess(provider)
     }
 }

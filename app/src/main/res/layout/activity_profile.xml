@@ -65,7 +65,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/userLayout" />
 
-            <com.karhoo.uisdk.screen.booking.booking.BookingPaymentView
+            <com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentView
                 android:id="@+id/bookingPaymentDetailsWidget"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

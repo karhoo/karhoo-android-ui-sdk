@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
+import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -17,8 +18,6 @@ interface PaymentMVP {
 
         fun initialiseGuestPayment(price: QuotePrice?)
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-
         fun showError(@StringRes error: Int)
 
         fun showPaymentDialog(braintreeSDKToken: String)
@@ -34,19 +33,20 @@ interface PaymentMVP {
 
         fun getPaymentNonce(price: QuotePrice?)
 
+        fun initialiseGuestPayment(price: QuotePrice?)
+
         fun sdkInit()
 
         fun passBackNonce(braintreeSDKNonce: String)
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
-
     }
 
     interface CardActions {
 
         fun showErrorDialog(@StringRes stringId: Int)
+
     }
 
     interface PaymentActions {

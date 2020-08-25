@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.karhoo.uisdk.screen.booking.booking.BookingPaymentView
+    <com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentView
         android:id="@+id/bookingRequestPaymentDetailsWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
