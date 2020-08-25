@@ -1,12 +1,20 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import com.braintreepayments.api.BraintreeFragment
+import com.braintreepayments.api.ThreeDSecure
+import com.braintreepayments.api.interfaces.BraintreeErrorListener
+import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
+import com.braintreepayments.api.models.PaymentMethodNonce
+import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.KarhooUserStore
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -16,6 +24,8 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
@@ -162,11 +172,39 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         viewActions?.showPaymentUI(braintreeSDKToken, context)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        paymentActions?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
-    }
-
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    }
+
+    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+//            return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
+        }
+        val braintreeFragment = BraintreeFragment
+                .newInstance(context as AppCompatActivity, braintreeSDKToken)
+
+        braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
+            override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
+                paymentActions?.threeDSecureNonce(paymentMethodNonce?.nonce.orEmpty())
+            }
+        })
+
+        braintreeFragment.addListener(
+                object : BraintreeErrorListener {
+                    override fun onError(error: Exception?) {
+                        paymentActions?.showPaymentFailureDialog()
+                    }
+                })
+
+//        holdOpenForPaymentFlow = true
+
+        val threeDSecureRequest = ThreeDSecureRequest()
+                .nonce(nonce)
+                .amount(amount)
+                .versionRequested(ThreeDSecureRequest.VERSION_2)
+        ThreeDSecure.performVerification(braintreeFragment, threeDSecureRequest)
+        { request, lookup ->
+            ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
+        }
     }
 }

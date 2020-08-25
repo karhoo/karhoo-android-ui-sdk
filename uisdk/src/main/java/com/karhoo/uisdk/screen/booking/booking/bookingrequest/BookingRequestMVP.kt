@@ -55,8 +55,6 @@ interface GuestBookingMVP {
 
         fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
 
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
-
         fun initialisePaymentProvider(price: QuotePrice?)
 
         fun initialiseGuestPayment(price: QuotePrice?)

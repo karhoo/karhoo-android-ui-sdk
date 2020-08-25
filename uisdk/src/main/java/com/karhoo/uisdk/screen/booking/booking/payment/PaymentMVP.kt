@@ -53,10 +53,12 @@ interface PaymentMVP {
 
         fun showPaymentUI()
 
+        fun showPaymentFailureDialog()
+
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
         fun showPaymentDialog()
 
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+        fun threeDSecureNonce(threeDSNonce: String)
     }
 }

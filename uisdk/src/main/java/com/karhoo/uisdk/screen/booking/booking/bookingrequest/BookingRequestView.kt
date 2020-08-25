@@ -377,7 +377,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.bindCardDetails(savedPaymentInfo)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
+    override fun threeDSecureNonce(threeDSNonce: String) {
+        showLoading()
+        presenter.passBackThreeDSecuredNonce(threeDSNonce, passengerDetails, bookingComments)
+    }
+
+    /*override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
         if (KarhooUISDKConfigurationProvider.handleBraintree()) {
             return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
         }
@@ -408,7 +413,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         { request, lookup ->
             ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
         }
-    }
+    }*/
 
     override fun initialisePaymentProvider(price: QuotePrice?) {
         bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
