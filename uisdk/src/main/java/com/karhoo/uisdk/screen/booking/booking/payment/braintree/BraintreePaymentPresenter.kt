@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.payment
+package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -15,6 +15,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
@@ -23,7 +24,8 @@ import java.util.Currency
 class BraintreePaymentPresenter(view: PaymentMVP.View,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager
+.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
     private var nonce: String = ""
@@ -131,5 +133,10 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
         view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+    }
+
+    companion object {
+        private const val REQ_CODE_BRAINTREE = 301
+        private const val REQ_CODE_BRAINTREE_GUEST = 302
     }
 }
