@@ -7,6 +7,8 @@ import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.adyen.AdyenPaymentMethods
+import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.base.BasePresenter
@@ -22,14 +24,26 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     private var sdkToken: String = ""
     private var nonce: String = ""
+    private var paymentMethods: AdyenPaymentMethods? = null
 
     init {
         attachView(view)
         userStore.addSavedPaymentObserver(this)
+        paymentsService.getAdyenPaymentMethods().execute { result ->
+            when (result) {
+                is Resource.Success -> paymentMethods = result.data
+                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
+            }
+        }
     }
 
     override fun sdkInit() {
         Log.d("Adyen", "sdkInit")
+        paymentMethods?.let { methods ->
+            for (method in methods.adyenPaymentMethods) {
+                Log.d("Adyen", method.toString())
+            }
+        }
         //TODO
     }
 
