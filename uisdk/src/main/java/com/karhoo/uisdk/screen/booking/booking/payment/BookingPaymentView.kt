@@ -172,6 +172,10 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         viewActions?.showPaymentUI(braintreeSDKToken, context)
     }
 
+    override fun showPaymentFailureDialog() {
+        paymentActions?.showPaymentFailureDialog()
+    }
+
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
     }
@@ -181,29 +185,6 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        val braintreeFragment = BraintreeFragment
-                .newInstance(context as AppCompatActivity, braintreeSDKToken)
-
-        braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
-            override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
-                paymentActions?.threeDSecureNonce(paymentMethodNonce?.nonce.orEmpty())
-            }
-        })
-
-        braintreeFragment.addListener(
-                object : BraintreeErrorListener {
-                    override fun onError(error: Exception?) {
-                        paymentActions?.showPaymentFailureDialog()
-                    }
-                })
-
-        val threeDSecureRequest = ThreeDSecureRequest()
-                .nonce(nonce)
-                .amount(amount)
-                .versionRequested(ThreeDSecureRequest.VERSION_2)
-        ThreeDSecure.performVerification(braintreeFragment, threeDSecureRequest)
-        { request, lookup ->
-            ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
-        }
+        viewActions?.handleThreeDSecure(context, braintreeSDKToken, nonce, amount)
     }
 }

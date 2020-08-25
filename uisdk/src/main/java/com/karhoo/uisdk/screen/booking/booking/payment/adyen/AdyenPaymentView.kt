@@ -9,6 +9,10 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
     var actions: PaymentDropInMVP.Actions? = null
 
+    override fun handleThreeDSecure(context: Context, braintreeSDKToken: String, nonce: String, amount: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         //TODO
     }

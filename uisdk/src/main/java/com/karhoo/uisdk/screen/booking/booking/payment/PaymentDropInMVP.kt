@@ -7,6 +7,9 @@ interface PaymentDropInMVP {
 
     interface View {
 
+        fun handleThreeDSecure(context: Context, braintreeSDKToken: String, nonce: String, amount:
+        String)
+
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
         fun showPaymentUI(braintreeSDKToken: String, context: Context)
@@ -22,6 +25,10 @@ interface PaymentDropInMVP {
         fun passBackNonce(braintreeSDKNonce: String)
 
         fun showPaymentUI(braintreeSDKToken: String)
+
+        fun showPaymentFailureDialog()
+
+        fun threeDSecureNonce(threeDSNonce: String)
 
         fun refresh()
 
