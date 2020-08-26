@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
@@ -18,13 +19,11 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCard
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
 
-open class BookingPaymentView @JvmOverloads constructor(context: Context,
-                                                        attrs: AttributeSet? = null,
-                                                        defStyleAttr: Int = 0)
+class BookingPaymentView @JvmOverloads constructor(context: Context,
+                                                   attrs: AttributeSet? = null,
+                                                   defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentDropInMVP.Actions {
 
-    //TODO Not going to need this as call to get provider will be made earlier
-    private lateinit var presenter: BookingPaymentMVP.Presenter
     private var paymentPresenter: PaymentMVP.Presenter? = null
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
@@ -35,23 +34,18 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     var paymentActions: PaymentMVP.PaymentActions? = null
     var cardActions: PaymentMVP.CardActions? = null
-    var viewActions: PaymentDropInMVP.View? = null
+    private var viewActions: PaymentDropInMVP.View? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
+        paymentPresenter = PaymentFactory.createPresenter(KarhooApi.userStore.paymentProvider, view = this)
+        viewActions = PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this)
         if (!isInEditMode) {
-            presenter = BookingPaymentPresenter(view = this)
             this.setOnClickListener {
                 changeCard()
             }
         }
-    }
-
-    override fun handleGetPaymentProviderSuccess(provider: String) {
-        paymentPresenter = PaymentFactory.createPresenter(provider = ProviderType.BRAINTREE, view
-        = this)
-        viewActions = PaymentFactory.createPaymentView(ProviderType.BRAINTREE, this)
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -162,11 +156,19 @@ open class BookingPaymentView @JvmOverloads constructor(context: Context,
         viewActions?.showPaymentUI(braintreeSDKToken, context)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        paymentActions?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+    override fun showPaymentFailureDialog() {
+        paymentActions?.showPaymentFailureDialog()
     }
 
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    }
+
+    override fun threeDSecureNonce(threeDSNonce: String) {
+        paymentActions?.threeDSecureNonce(threeDSNonce)
+    }
+
+    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
+        viewActions?.handleThreeDSecure(context, braintreeSDKToken, nonce, amount)
     }
 }

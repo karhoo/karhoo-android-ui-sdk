@@ -1,7 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
-import android.content.Context
-import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.QuotePrice
@@ -25,6 +23,8 @@ interface PaymentMVP {
         fun showPaymentUI(braintreeSDKToken: String)
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+
+        fun threeDSecureNonce(threeDSNonce: String)
 
         fun refresh()
     }
@@ -53,10 +53,12 @@ interface PaymentMVP {
 
         fun showPaymentUI()
 
+        fun showPaymentFailureDialog()
+
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
         fun showPaymentDialog()
 
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+        fun threeDSecureNonce(threeDSNonce: String)
     }
 }

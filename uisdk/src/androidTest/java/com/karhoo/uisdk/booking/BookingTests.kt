@@ -91,6 +91,7 @@ class BookingTests : Launch {
                                             name = "B2C DefaultOrgForKarhooAppUsers",
                                             roles = emptyList()))))
                 .putString("locale", "en-GB")
+                .putString("payment_provider_id", "Braintree")
                 .apply()
         editor.commit()
     }
