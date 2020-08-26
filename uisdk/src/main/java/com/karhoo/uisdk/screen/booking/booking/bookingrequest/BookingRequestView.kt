@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.TaskStackBuilder
@@ -20,12 +19,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.braintreepayments.api.BraintreeFragment
-import com.braintreepayments.api.ThreeDSecure
-import com.braintreepayments.api.interfaces.BraintreeErrorListener
-import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
-import com.braintreepayments.api.models.PaymentMethodNonce
-import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
@@ -36,7 +29,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
@@ -368,7 +360,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         dialog.dismiss()
     }
 
-    fun showLoading() {
+    private fun showLoading() {
         cancelButton.isEnabled = false
         bookingRequestButton.showLoading()
     }
@@ -377,37 +369,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.bindCardDetails(savedPaymentInfo)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
-            return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
-        }
-        val braintreeFragment = BraintreeFragment
-                .newInstance(context as AppCompatActivity, braintreeSDKToken)
-
-        braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
-            override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
-                showLoading()
-                presenter.passBackThreeDSecuredNonce(paymentMethodNonce?.nonce.orEmpty(), passengerDetails, bookingComments)
-            }
-        })
-
-        braintreeFragment.addListener(
-                object : BraintreeErrorListener {
-                    override fun onError(error: Exception?) {
-                        showPaymentFailureDialog()
-                    }
-                })
-
-        holdOpenForPaymentFlow = true
-
-        val threeDSecureRequest = ThreeDSecureRequest()
-                .nonce(nonce)
-                .amount(amount)
-                .versionRequested(ThreeDSecureRequest.VERSION_2)
-        ThreeDSecure.performVerification(braintreeFragment, threeDSecureRequest)
-        { request, lookup ->
-            ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
-        }
+    override fun threeDSecureNonce(threeDSNonce: String) {
+        showLoading()
+        presenter.passBackThreeDSecuredNonce(threeDSNonce, passengerDetails, bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {

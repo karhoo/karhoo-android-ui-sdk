@@ -43,7 +43,6 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
                               private val userStore: UserStore)
     : BasePresenter<GuestBookingMVP.View>(), GuestBookingMVP.Presenter, LifecycleObserver {
 
-//    private var braintreeSDKToken: String = ""
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null

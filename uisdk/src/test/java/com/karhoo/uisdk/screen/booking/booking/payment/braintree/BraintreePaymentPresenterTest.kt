@@ -21,7 +21,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -63,7 +62,6 @@ class BraintreePaymentPresenterTest {
     @Captor
     private lateinit var sdkInitialisationCaptor: ArgumentCaptor<SDKInitRequest>
 
-    private lateinit var bookingPaymentPresenter: BookingPaymentPresenter
     private lateinit var braintreePaymentPresenter: BraintreePaymentPresenter
 
     @Before
@@ -72,9 +70,6 @@ class BraintreePaymentPresenterTest {
                 .thenReturn(sdkInitCall)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
 
-        whenever(paymentsService.getPaymentProvider()).thenReturn(paymentProviderCall)
-        doNothing().whenever(paymentProviderCall).execute(paymentProviderCaptor.capture())
-
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
 
         whenever(paymentsService.addPaymentMethod(any()))
@@ -82,10 +77,6 @@ class BraintreePaymentPresenterTest {
         doNothing().whenever(passBraintreeTokenCall).execute(passBraintreeTokenCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
-
-        bookingPaymentPresenter = BookingPaymentPresenter(
-                paymentsService = paymentsService,
-                view = cardView)
 
         braintreePaymentPresenter = BraintreePaymentPresenter(
                 paymentsService = paymentsService,
@@ -265,31 +256,6 @@ class BraintreePaymentPresenterTest {
     }
 
     /**
-     * Given: A request is made to fetch payment providers
-     * Then: Fetch payment providers
-     */
-    @Test
-    fun `fetch payment providers success`() {
-        paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(ADYEN_PAYMENT)))
-
-        verify(paymentsService).getPaymentProvider()
-        verify(cardView, never()).showError(any())
-    }
-
-    /**
-     * Given: A request is made to fetch payment providers
-     * When: Fetch payment providers fails
-     * Then: Show error
-     */
-    @Test
-    fun `fetch payment providers failure`() {
-        paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
-
-        verify(paymentsService).getPaymentProvider()
-        verify(cardView).showError(any())
-    }
-
-    /**
      * Given:   Book trip flow is initiated
      * And:     The user is logged in
      * When:    SDK Init returns an error
@@ -356,6 +322,32 @@ class BraintreePaymentPresenterTest {
         verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "15.00")
     }
 
+    /**
+     * Given:   Book trip flow is initiated
+     * And:     The user is logged in
+     * When:    SDK Init returns success
+     * And:     Get nonce returns success
+     * Then:    Three D Secure the nonce
+     */
+    @Test
+    fun `logged in user get nonce success for test does not shows three d secure`() {
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser(), handleBraintree = true))
+
+        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
+        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
+        whenever(price.highPrice).thenReturn(1500)
+        whenever(price.currencyCode).thenReturn("GBP")
+
+        braintreePaymentPresenter.getPaymentNonce(price)
+
+        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
+        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
+
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
@@ -370,8 +362,6 @@ class BraintreePaymentPresenterTest {
                                          )
 
         private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
-
-        private val ADYEN_PAYMENT = Provider(id = "Adyen")
 
         private const val CARD_ENDING = "....12"
 

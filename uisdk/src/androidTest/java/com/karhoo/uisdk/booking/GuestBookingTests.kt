@@ -8,8 +8,6 @@ import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.datastore.user.KarhooUserManager
-import com.karhoo.sdk.api.datastore.user.KarhooUserStore
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.CardType
