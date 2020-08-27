@@ -31,8 +31,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     private var sdkToken: String = ""
     private var nonce: String = ""
-    private var paymentsString: String? = null
-    //    private var paymentMethods: AdyenPaymentMethods? = null
 
     init {
         attachView(view)
@@ -40,7 +38,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         paymentsService.getAdyenPaymentMethods().execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    //                    paymentMethods = result.data
                     result.data.let {
                         val paymentsString = Gson().toJson(it)
                         Log.d("Adyen", paymentsString)
