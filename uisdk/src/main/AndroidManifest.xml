@@ -68,6 +68,11 @@
             android:label="@string/title_activity_trip"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".screen.booking.booking.payment.adyen.AdyenDropInService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
     </application>
 
 </manifest>
