@@ -4,6 +4,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN_NO_CARD_REGISTERED
 import com.karhoo.uisdk.common.ServerRobot.Companion.USER_INFO
@@ -18,6 +19,7 @@ class PreferencesRobot {
         serverRobot {
             successfulToken()
             userProfileResponse(HTTP_OK, USER_INFO)
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         loginUser(userInfo)
@@ -27,6 +29,7 @@ class PreferencesRobot {
         serverRobot {
             successfulToken()
             userProfileResponse(HTTP_OK, USER_INFO)
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN_NO_CARD_REGISTERED)
         }
         loginUser(userInfo)
