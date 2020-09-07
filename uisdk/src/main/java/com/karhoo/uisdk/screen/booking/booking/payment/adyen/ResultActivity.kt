@@ -25,5 +25,9 @@ class ResultActivity : AppCompatActivity() {
 
         val res = intent?.getStringExtra(RESULT_KEY) ?: "Processing"
         val type = intent?.getStringExtra(TYPE_KEY)
+
+        if (type != ComponentType.DROPIN.id) {
+
+        }
     }
 }
