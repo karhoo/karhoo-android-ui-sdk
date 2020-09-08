@@ -20,26 +20,16 @@ class AdyenDropInService : DropInService() {
 
     private fun getPayment(paymentComponentData: JSONObject) {
         val paymentMethod = paymentComponentData.getJSONObject("paymentMethod").toString()
-        val storedPaymentMethod = Gson().fromJson(paymentMethod, AdyenStoredPaymentMethod::class.java)
-        val payload = AdyenPaymentsRequestPayload(amount = AdyenAmount(),
-                                                  merchantAccount = "",
-                                                  storedPaymentMethod = storedPaymentMethod,
-                                                  reference = "",
-                                                  returnUrl = "")
-        val request = AdyenPaymentsRequest(paymentsPayload = payload)
-
-        KarhooApi.paymentsService.getAdyenPayments(request).execute { result ->
+        KarhooApi.paymentsService.getAdyenPayments(paymentMethod).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        val paymentsString = Gson().toJson(it)
-                        Log.d("Adyen", paymentsString)
-                        val payments = JSONObject(paymentsString)
+                        Log.d("Adyen", it)
+                        val payments = JSONObject(it)
                         asyncCallback(handlePaymentRequestResult(payments))
                     }
                 }
                 is Resource.Failure -> {
-                    Log.d("Adyen", result.error.userFriendlyMessage)
                     asyncCallback(CallResult(CallResult.ResultType.ERROR, result.error
                             .userFriendlyMessage))
                 }
@@ -53,14 +43,6 @@ class AdyenDropInService : DropInService() {
         // Create the `CallResult` based on the /payments/details response
         return CallResult(CallResult.ResultType.FINISHED, "Authorised")
     }
-
-    /*override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
-        return handlePaymentRequestResult(checkoutApiService.initPayment(paymentComponentData, ComponentType.DROPIN.id))
-    }
-
-    override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        return handlePaymentRequestResult(checkoutApiService.submitAdditionalDetails(actionComponentData))
-    }*/
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {

@@ -39,8 +39,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        val paymentsString = Gson().toJson(it)
-                        Log.d("Adyen", paymentsString)
+                        Log.d("Adyen", it)
                     }
                 }
                 is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
@@ -54,9 +53,8 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        val paymentsString = Gson().toJson(it)
-                        Log.d("Adyen", paymentsString)
-                        view?.showPaymentUI(paymentsString)
+                        Log.d("Adyen", it)
+                        view?.showPaymentUI(it)
                     }
                 }
                 is Resource.Failure -> actions?.showPaymentFailureDialog()
