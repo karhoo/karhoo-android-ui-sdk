@@ -3,12 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
-import com.google.gson.Gson
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.model.adyen.AdyenAmount
-import com.karhoo.sdk.api.model.adyen.AdyenPaymentsRequestPayload
-import com.karhoo.sdk.api.model.adyen.AdyenStoredPaymentMethod
-import com.karhoo.sdk.api.network.request.AdyenPaymentsRequest
 import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
@@ -19,8 +14,15 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun getPayment(paymentComponentData: JSONObject) {
-        val paymentMethod = paymentComponentData.getJSONObject("paymentMethod").toString()
-        KarhooApi.paymentsService.getAdyenPayments(paymentMethod).execute { result ->
+        val paymentMethod = paymentComponentData.getJSONObject("paymentMethod")
+        val payload = JSONObject()
+        payload.put("paymentMethod", paymentMethod)
+        payload.put("returnUrl", "http://karhoo.com")
+        val request = JSONObject()
+        request.put("payments_payload", payload)
+        request.put("return_url_suffix", "/payment")
+        val requestString = request.toString().replace("\\", "")
+        KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
