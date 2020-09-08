@@ -51,7 +51,6 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val dropInConfiguration = DropInConfiguration.Builder(context, intent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
-                .setAmount(amount)
                 .setEnvironment(Environment.TEST)
                 // Optional. Use to set the language rendered in Drop-in, overriding the default device language setting. See list of Supported languages at https://github.com/Adyen/adyen-android/tree/master/card-ui-core/src/main/res
                 // Make sure that you have set the locale in the payment method configuration object as well.

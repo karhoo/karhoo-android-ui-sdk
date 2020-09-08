@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.util.Log
-import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.karhoo.sdk.api.KarhooApi
@@ -15,26 +14,13 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun getPayment(paymentComponentData: JSONObject) {
-        val paymentMethod = paymentComponentData.getJSONObject("paymentMethod")
-        val payload = JSONObject()
-        payload.put("paymentMethod", paymentMethod)
-        payload.put("channel", "Android")
-        payload.put("returnUrl", "http://karhoo.com")
-        val amount = JSONObject()
-        // Optional. In this example, the Pay button will display 10 EUR.
-        amount.put("currency", "GBP")
-        amount.put("value", 1000)
-        payload.put("amount", amount)
-        val request = JSONObject()
-        request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/payment")
-        val requestString = request.toString().replace("\\", "")
+        val requestString = createPaymentRequestString(paymentComponentData.getJSONObject("paymentMethod"))
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
                         Log.d("Adyen", it)
-                        val payments = JSONObject(it)
+                        val payments = JSONObject(it).getJSONObject("payload")
                         asyncCallback(handlePaymentRequestResult(payments))
                     }
                 }
@@ -44,6 +30,23 @@ class AdyenDropInService : DropInService() {
                 }
             }
         }
+    }
+
+    private fun createPaymentRequestString(paymentMethod: JSONObject): String {
+        val amount = JSONObject()
+        amount.put("currency", "GBP")
+        amount.put("value", 1000)
+
+        val payload = JSONObject()
+        payload.put("paymentMethod", paymentMethod)
+        payload.put("channel", "Android")
+        payload.put("returnUrl", "http://karhoo.com")
+        payload.put("amount", amount)
+
+        val request = JSONObject()
+        request.put("payments_payload", payload)
+        request.put("return_url_suffix", "/payment")
+        return request.toString().replace("\\", "")
     }
 
     // Handling for submitting additional payment details
