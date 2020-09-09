@@ -369,4 +369,7 @@
     <string name="passenger_details">Informations sur le passager</string>
     <string name="payment_details">Détails de paiement</string>
     <string name="checkout_as_guest">Commander en mode invité</string>
+
+    <!-- Adyen -->
+    <string name="pay_button">Envoyer</string>
 </resources>

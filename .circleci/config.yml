@@ -33,6 +33,7 @@ jobs:
                     echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
                     echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
+                    echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
                     sudo chmod +x ./gradlew 
                     ./gradlew androidDependencies
       - save_cache:
@@ -52,6 +53,7 @@ jobs:
                     echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
                     echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
+                    echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
                     sudo chmod +x ./gradlew 
                     ./gradlew testDebug lintRelease
       - run:

@@ -42,6 +42,7 @@ function copyEnvVarsToGradleProperties() {
         echo "STAGING_HOST=\"$STAGING_HOST\"" >> $GRADLE_PROPERTIES
         echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> $GRADLE_PROPERTIES
         echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> $GRADLE_PROPERTIES
+        echo "ADYEN_PUBLIC_KEY=\"ADYEN_PUBLIC_KEY\"" >> $GRADLE_PROPERTIES
     fi
 }
 
