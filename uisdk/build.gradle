@@ -31,12 +31,15 @@ android {
         }
         release {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         sandbox {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.sandbox.karhoo.com/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         prodQA {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         debug {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.stg.karhoo.net/follow/"')
