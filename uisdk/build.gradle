@@ -25,6 +25,10 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        def secureProps = new Properties()
+        if (file("../app/secure.properties").exists()) {
+            file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
+        }
         release {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
         }
@@ -36,6 +40,7 @@ android {
         }
         debug {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.stg.karhoo.net/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
     }
     lintOptions {
