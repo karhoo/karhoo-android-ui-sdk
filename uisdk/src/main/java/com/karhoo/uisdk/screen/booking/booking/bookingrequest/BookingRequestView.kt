@@ -189,6 +189,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId)
+        bookingRequestPaymentDetailsWidget.setPaymentAmount(quote?.price)
     }
 
     override fun animateIn() {
@@ -365,8 +366,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.showLoading()
     }
 
-    override fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bookingRequestPaymentDetailsWidget.bindCardDetails(savedPaymentInfo)
+    override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo, quotePrice)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {

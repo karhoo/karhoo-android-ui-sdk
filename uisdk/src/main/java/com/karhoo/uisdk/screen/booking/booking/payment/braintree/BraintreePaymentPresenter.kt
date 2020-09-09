@@ -122,20 +122,24 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
 
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
-                is Resource.Success -> view?.bindCardDetails(userStore.savedPaymentInfo)
+                is Resource.Success -> view?.bindPaymentDetails(userStore.savedPaymentInfo)
                 is Resource.Failure -> view?.showError(R.string.booking_error)
             }
         }
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindCardDetails(userPaymentInfo)
+        view?.bindPaymentDetails(userPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
         this.nonce = nonce
         userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
         view?.refresh()
+    }
+
+    override fun handleAddCard() {
+        sdkInit()
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {

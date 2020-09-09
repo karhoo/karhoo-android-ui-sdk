@@ -10,7 +10,6 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
-import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.SDKInitRequest
@@ -236,7 +235,7 @@ class BraintreePaymentPresenterTest {
     @Test
     fun `user update calls the view to display the new payment info`() {
         braintreePaymentPresenter.onSavedPaymentInfoChanged(SavedPaymentInfo("", CardType.NOT_SET))
-        verify(paymentView).bindCardDetails(any())
+        verify(paymentView).bindPaymentDetails(any())
     }
 
     /**

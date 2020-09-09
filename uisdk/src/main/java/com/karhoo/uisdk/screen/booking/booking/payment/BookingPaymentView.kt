@@ -75,7 +75,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        paymentPresenter?.sdkInit()
+        paymentPresenter?.handleAddCard()
+//        paymentPresenter?.sdkInit()
     }
 
     override fun refresh() {
@@ -85,6 +86,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
         paymentPresenter?.updateCardDetails(nonce, description, typeLabel)
+    }
+
+    override fun setPaymentAmount(price: QuotePrice) {
+
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
@@ -133,7 +138,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentDialog()
     }
 
-    override fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
+    override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
         savedPaymentInfo?.let {
             apply {
                 bindViews(it.cardType, it.lastFour)
@@ -151,9 +156,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String) {
+    override fun showPaymentUI(sdkInitialisationData: String) {
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentUI(braintreeSDKToken, context)
+        viewActions?.showPaymentUI(sdkInitialisationData, context)
     }
 
     override fun showPaymentFailureDialog() {

@@ -2,6 +2,8 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.card.CardConfiguration
@@ -10,6 +12,7 @@ import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
 import org.json.JSONObject
 import java.util.Locale
 
@@ -22,7 +25,15 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //TODO
+        Log.d("Adyen", "$requestCode $resultCode")
+        if(resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            when(data.getStringExtra(RESULT_KEY)) {
+                "Authorised" -> actions?.passBackNonce("")
+                else -> actions?.showPaymentFailureDialog()
+            }
+        } else {
+            actions?.showPaymentFailureDialog()
+        }
     }
 
     override fun showPaymentUI(paymentsString: String, context: Context) {
@@ -35,7 +46,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                         .setShopperLocale(Locale.getDefault())
                         .build()
 
-        val intent = Intent(context, ResultActivity::class.java).apply {
+        val dropInIntent = Intent(context, ResultActivity::class.java).apply {
             putExtra(ResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
         }
 
@@ -45,7 +56,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         amount.value = 1000
 
         //TODO Set up for live envs
-        val dropInConfiguration = DropInConfiguration.Builder(context, intent,
+        val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
                 .setEnvironment(Environment.TEST)

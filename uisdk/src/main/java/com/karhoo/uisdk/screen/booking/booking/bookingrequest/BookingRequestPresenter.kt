@@ -9,6 +9,7 @@ import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -187,8 +188,8 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
     }
 
-    private fun refreshCardDetails() {
-        view?.showUpdatedCardDetails(userStore.savedPaymentInfo)
+    private fun refreshPaymentDetails(quotePrice: QuotePrice?) {
+        view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo, quotePrice)
     }
 
     override fun updateCardDetails(braintreeSDKNonce: String?) {
@@ -198,7 +199,7 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
     }
 
     override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
-        refreshCardDetails()
+        refreshPaymentDetails(quote.price)
         if (origin != null && destination != null) {
             this.quote = quote
             this.outboundTripId = outboundTripId

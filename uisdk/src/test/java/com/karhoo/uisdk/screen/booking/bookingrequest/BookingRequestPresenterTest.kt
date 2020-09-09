@@ -15,9 +15,7 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
@@ -226,7 +224,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.showBookingRequest(quote)
 
-        verify(view).showUpdatedCardDetails(savedPaymentInfo)
+        verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
         verify(view).animateIn()
@@ -332,7 +330,7 @@ class BookingRequestPresenterTest {
         requestPresenter.updateCardDetails(null)
 
         verify(userStore, never()).savedPaymentInfo
-        verify(view, never()).showUpdatedCardDetails(any())
+        verify(view, never()).showUpdatedPaymentDetails(any())
         verify(view).disableBooking()
     }
 

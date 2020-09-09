@@ -53,7 +53,7 @@ interface GuestBookingMVP {
 
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
-        fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+        fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
 
         fun initialisePaymentProvider(price: QuotePrice?)
 

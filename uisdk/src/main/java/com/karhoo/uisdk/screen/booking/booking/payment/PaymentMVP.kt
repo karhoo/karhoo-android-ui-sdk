@@ -8,7 +8,7 @@ interface PaymentMVP {
 
     interface View {
 
-        fun bindCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
 
         fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
 
@@ -40,6 +40,8 @@ interface PaymentMVP {
         fun passBackNonce(braintreeSDKNonce: String)
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
+
+        fun handleAddCard()
 
     }
 

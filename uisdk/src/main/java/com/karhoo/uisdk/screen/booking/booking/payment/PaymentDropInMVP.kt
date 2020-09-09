@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 
 import android.content.Context
 import android.content.Intent
+import com.karhoo.sdk.api.model.QuotePrice
 
 interface PaymentDropInMVP {
 
@@ -33,5 +34,7 @@ interface PaymentDropInMVP {
         fun refresh()
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
+
+        fun setPaymentAmount(price: QuotePrice)
     }
 }

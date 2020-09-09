@@ -40,21 +40,39 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                 is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
             }
         }
+        /*paymentsService.getAdyenPublicKey().execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        Log.d("Adyen", "Public key $it")
+                    }
+                }
+                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
+            }
+        }*/
     }
 
     override fun sdkInit() {
-        Log.d("Adyen", "sdkInit")
         paymentsService.getAdyenPaymentMethods().execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
                         view?.showPaymentUI(it)
                     }
                 }
                 is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
+        /*paymentsService.getAdyenPublicKey().execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        Log.d("Adyen", "Public key $it")
+                    }
+                }
+                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
+            }
+        }*/
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
@@ -74,13 +92,18 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindCardDetails(userPaymentInfo)
+        view?.bindPaymentDetails(userPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
         this.nonce = nonce
         userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
         view?.refresh()
+    }
+
+    override fun handleAddCard() {
+        //TODO Handle getting amount
+        sdkInit()
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
