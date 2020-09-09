@@ -378,4 +378,7 @@
     <string name="passenger_details">Passenger Details</string>
     <string name="payment_details">Payment Details</string>
     <string name="checkout_as_guest">Check-out as guest</string>
+
+    <!-- Adyen -->
+    <string name="pay_button">Submit</string>
 </resources>

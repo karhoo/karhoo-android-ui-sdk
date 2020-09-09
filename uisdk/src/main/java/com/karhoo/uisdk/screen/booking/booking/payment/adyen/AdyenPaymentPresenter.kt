@@ -7,11 +7,11 @@ import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.adyen.AdyenPaymentMethods
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
@@ -22,16 +22,21 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
+    var actions: PaymentDropInMVP.Actions? = null
+
     private var sdkToken: String = ""
     private var nonce: String = ""
-    private var paymentMethods: AdyenPaymentMethods? = null
 
     init {
         attachView(view)
         userStore.addSavedPaymentObserver(this)
         paymentsService.getAdyenPaymentMethods().execute { result ->
             when (result) {
-                is Resource.Success -> paymentMethods = result.data
+                is Resource.Success -> {
+                    result.data.let {
+                        Log.d("Adyen", it)
+                    }
+                }
                 is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
             }
         }
@@ -39,12 +44,17 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     override fun sdkInit() {
         Log.d("Adyen", "sdkInit")
-        paymentMethods?.let { methods ->
-            for (method in methods.adyenPaymentMethods) {
-                Log.d("Adyen", method.toString())
+        paymentsService.getAdyenPaymentMethods().execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        Log.d("Adyen", it)
+                        view?.showPaymentUI(it)
+                    }
+                }
+                is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
-        //TODO
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
@@ -89,4 +99,5 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         val currency = Currency.getInstance(price?.currencyCode?.trim())
         return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
     }
+
 }

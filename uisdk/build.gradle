@@ -25,17 +25,25 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        def secureProps = new Properties()
+        if (file("../app/secure.properties").exists()) {
+            file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
+        }
         release {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         sandbox {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.sandbox.karhoo.com/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         prodQA {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
         debug {
             buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.stg.karhoo.net/follow/"')
+            buildConfigField("String", "ADYEN_PUBLIC_KEY", (secureProps.getProperty("ADYEN_PUBLIC_KEY") ?: ""))
         }
     }
     lintOptions {
@@ -65,7 +73,7 @@ publish {
 
 dependencies {
 
-    api 'com.karhoo:nsdk-canary:1.0.33'
+    api 'com.karhoo:nsdk-canary:1.0.12.08092020-5'
     api 'com.braintreepayments.api:drop-in:4.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
@@ -81,6 +89,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha01'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.2'
+    implementation 'com.adyen.checkout:drop-in:3.6.5'
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
