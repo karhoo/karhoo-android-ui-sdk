@@ -60,5 +60,5 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 }
 
 enum class ComponentType(val id: String) {
-    DROPIN("drop-in"), IDEAL("ideal"), CARD("scheme")
+    DROPIN("drop-in")
 }
