@@ -27,7 +27,7 @@ import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.GuestBookingMVP
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
@@ -57,7 +57,7 @@ import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_supplier.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
-                        TripAllocationMVP.Actions, GuestBookingMVP.Actions {
+                        TripAllocationMVP.Actions, BookingRequestMVP.Actions {
 
     private val categoriesViewModel: CategoriesViewModel by lazy { ViewModelProvider(this).get(CategoriesViewModel::class.java) }
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
@@ -67,8 +67,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private var availabilityProvider: AvailabilityProvider? = null
     private var quote: QuoteV2? = null
-
-    private val MY_PERMISSIONS_REQUEST_LOCATION = 1001
 
     ////////////////////////////////////////////
     private var tripDetails: TripInfo? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
@@ -122,7 +120,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                   } ?: run {
                                       navigationHeaderIcon?.setImageDrawable(getDrawable(R.drawable.uisdk_karhoo_wordmark))
                                   }
-                              }, 100)
+                              }, NAVIGATION_ICON_DELAY)
     }
 
     private fun initAvailability() {
@@ -467,6 +465,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     companion object {
         private const val REQ_CODE_BRAINTREE = 301
         private const val REQ_CODE_BRAINTREE_GUEST = 302
+        private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001
+        private const val NAVIGATION_ICON_DELAY = 100L
     }
 
 }

@@ -43,7 +43,9 @@ class RidesActivity : BaseActivity(), RidesLoading {
         startActivity(intent)
     }
 
-    override fun handleExtras() {}
+    override fun handleExtras() {
+        // Do nothing
+    }
 
     override fun initialiseViews() {
         val pages = arrayOf(LayoutArrayPagerAdapter.Page(getString(R.string.title_page_upcoming), R.layout.uisdk_page_rides_upcoming),

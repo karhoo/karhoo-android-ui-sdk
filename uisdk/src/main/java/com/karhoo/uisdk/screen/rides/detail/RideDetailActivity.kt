@@ -38,10 +38,12 @@ class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
         trip = extras?.getParcelable(EXTRA_TRIP)
     }
 
-    override fun initialiseViews() {}
+    override fun initialiseViews() {
+        // Do nothing
+    }
 
     override fun initialiseViewListeners() {
-
+        // Do nothing
     }
 
     override fun finishActivity() {

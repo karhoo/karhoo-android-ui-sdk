@@ -23,6 +23,8 @@ jobs:
         java-version: 1.8
     - name: Lint
       run: bash ./gradlew lint
+    - name: Detekt
+      run: bash ./gradlew detekt
 
   tests:
     name: Run Unit Tests

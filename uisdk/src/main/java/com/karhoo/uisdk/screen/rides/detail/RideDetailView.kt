@@ -251,7 +251,7 @@ class RideDetailView @JvmOverloads constructor(
         rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage)))
     }
 
-    override fun displayCallToCancelDialog(number: String, Supplier: String) {
+    override fun displayCallToCancelDialog(number: String, supplier: String) {
         AlertDialog.Builder(context, R.style.AlertDialog)
                 .setTitle(R.string.difficulties_cancelling_title)
                 .setMessage(R.string.difficulties_cancelling_message)

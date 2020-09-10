@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackAnswer
 import java.util.Date
 
+@Suppress("TooManyFunctions")
 interface Analytics {
 
     fun appOpened()

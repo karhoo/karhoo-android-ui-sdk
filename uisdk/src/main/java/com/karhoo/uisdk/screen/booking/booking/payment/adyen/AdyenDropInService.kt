@@ -35,7 +35,7 @@ class AdyenDropInService : DropInService() {
     private fun createPaymentRequestString(paymentMethod: JSONObject): String {
         val amount = JSONObject()
         amount.put("currency", "GBP")
-        amount.put("value", 1000)
+        amount.put("value", TEST_VALUE)
 
         val payload = JSONObject()
         payload.put("paymentMethod", paymentMethod)
@@ -66,5 +66,9 @@ class AdyenDropInService : DropInService() {
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
         }
+    }
+
+    companion object {
+        const val TEST_VALUE = 1000
     }
 }

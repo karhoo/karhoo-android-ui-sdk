@@ -2,4 +2,5 @@ package com.karhoo.uisdk.util.extension
 
 import android.content.res.Resources
 
-fun Float.convertDpToPixels() = (this * (Resources.getSystem().displayMetrics.densityDpi / 160f)).toInt()
+const val DENSITY_DPI_FACTOR = 160f
+fun Float.convertDpToPixels() = (this * (Resources.getSystem().displayMetrics.densityDpi / DENSITY_DPI_FACTOR)).toInt()

@@ -42,6 +42,9 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewMode
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationInfoListener
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.MapUtil
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_CAMERA_ZOOM_WIDTH_PADDING
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
@@ -187,12 +190,12 @@ class BookingMapView @JvmOverloads constructor(context: Context,
             addPinToMap(origin, pickupPinRes, R.string.address_pick_up)
             val destination = dropoff?.let { LatLng(dropoff.latitude, dropoff.longitude) }
             destination?.let {
-                googleMap.setMaxZoomPreference(20f)
+                googleMap.setMaxZoomPreference(BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE)
                 addPinToMap(destination, dropOffPinRes, R.string.address_drop_off)
                 googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
-            } ?: googleMap.setMaxZoomPreference(18f)
+            } ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
             pickupPinIcon.visibility = View.GONE
             zoomMapToMarkers(origin, destination)
 
@@ -220,7 +223,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         val bounds = boundsBuilder.build()
         val width = resources.displayMetrics.widthPixels
         val height = resources.displayMetrics.heightPixels
-        val padding = (width * 0.20).toInt()
+        val padding = (width * BOOKING_MAP_CAMERA_ZOOM_WIDTH_PADDING).toInt()
 
         val cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
         googleMap?.moveCamera(cu)
@@ -374,17 +377,25 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     //endregion
 
-    override fun showErrorDialog(stringId: Int) {}
+    override fun showErrorDialog(stringId: Int) {
+        // Do nothing
+    }
 
     override fun showSnackbar(snackbarConfig: SnackbarConfig) {
         actions?.showSnackbar(snackbarConfig)
     }
 
-    override fun dismissSnackbar() {}
+    override fun dismissSnackbar() {
+        // Do nothing
+    }
 
-    override fun showTopBarNotification(stringId: Int) {}
+    override fun showTopBarNotification(stringId: Int) {
+        // Do nothing
+    }
 
-    override fun showTopBarNotification(value: String) {}
+    override fun showTopBarNotification(value: String) {
+        // Do nothing
+    }
 
     override fun resetMap() {
         setupMap()

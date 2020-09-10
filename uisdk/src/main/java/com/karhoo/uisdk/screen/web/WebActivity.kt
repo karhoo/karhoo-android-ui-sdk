@@ -50,9 +50,11 @@ class WebActivity : BaseActivity() {
     }
 
     override fun initialiseViewListeners() {
+        // Do nothing
     }
 
     public override fun handleExtras() {
+        // Do nothing
     }
 
     private inner class KarhooWebViewClient : WebViewClient() {
