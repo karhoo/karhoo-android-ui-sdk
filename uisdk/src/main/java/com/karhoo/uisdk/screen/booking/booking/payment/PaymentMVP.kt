@@ -22,7 +22,7 @@ interface PaymentMVP {
 
         fun showPaymentDialog(braintreeSDKToken: String)
 
-        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
+        fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice?)
 
         fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
 

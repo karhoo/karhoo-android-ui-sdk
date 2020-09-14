@@ -224,7 +224,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.showBookingRequest(quote)
 
-        verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
+        verify(view).showUpdatedPaymentDetails(savedPaymentInfo, quotePrice)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
         verify(view).animateIn()
@@ -330,7 +330,7 @@ class BookingRequestPresenterTest {
         requestPresenter.updateCardDetails(null)
 
         verify(userStore, never()).savedPaymentInfo
-        verify(view, never()).showUpdatedPaymentDetails(any())
+        verify(view, never()).showUpdatedPaymentDetails(any(), any())
         verify(view).disableBooking()
     }
 
