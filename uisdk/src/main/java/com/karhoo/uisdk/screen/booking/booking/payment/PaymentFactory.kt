@@ -7,6 +7,7 @@ import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentPresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymentView
 
+@Suppress("UtilityClassWithPublicConstructor")
 class PaymentFactory {
 
     //TODO Implemented changes for guest checkout

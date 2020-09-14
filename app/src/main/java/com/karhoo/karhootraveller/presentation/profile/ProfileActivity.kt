@@ -34,12 +34,15 @@ class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.A
     }
 
     override fun handleExtras() {
+        // Do nothing
     }
 
     override fun initialiseViews() {
+        // Do nothing
     }
 
     override fun initialiseViewListeners() {
+        // Do nothing
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

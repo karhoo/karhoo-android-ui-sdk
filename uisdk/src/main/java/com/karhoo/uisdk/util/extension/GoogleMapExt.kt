@@ -9,6 +9,9 @@ import java.util.ArrayList
 
 private const val DEFAULT_CURVE_ROUTE_CURVATURE = 0.2
 private const val DEFAULT_CURVE_POINTS = 100
+private const val DEFAULT_CIRCLE_CENTER_HEADING_PAD = 90.0
+private const val DEFAULT_CURVE_WIDTH = 17F
+private const val DEFAULT_SHADOW_WIDTH = 15F
 private const val MAX_LINE_DISTANCE = 1000000
 
 fun GoogleMap.showCurvedPolyline(origin: LatLng, destination: LatLng, lineColor: Int) {
@@ -38,7 +41,7 @@ fun GoogleMap.showCurvedPolyline(origin: LatLng, destination: LatLng, lineColor:
     val midPerpendicularLength = (1 - sqrCurvature) * extraParam
     val r = (1 + sqrCurvature) * extraParam
 
-    val circleCenterPoint = SphericalUtil.computeOffset(midPoint, midPerpendicularLength, heading + 90.0)
+    val circleCenterPoint = SphericalUtil.computeOffset(midPoint, midPerpendicularLength, heading + DEFAULT_CIRCLE_CENTER_HEADING_PAD)
 
     // Calculate heading between circle center and two points
     val headingToOrigin = SphericalUtil.computeHeading(circleCenterPoint, p1)
@@ -53,7 +56,7 @@ fun GoogleMap.showCurvedPolyline(origin: LatLng, destination: LatLng, lineColor:
 
     //Draw polyline
     this.addPolyline(PolylineOptions()
-                             .width(17F)
+                             .width(DEFAULT_CURVE_WIDTH)
                              .color(lineColor)
                              .geodesic(false)
                              .addAll(points)
@@ -70,7 +73,7 @@ fun GoogleMap.showShadowedPolyLine(origin: LatLng, destination: LatLng, lineColo
 
     this.addPolyline(PolylineOptions()
                              .add(origin, destination)
-                             .width(15F)
+                             .width(DEFAULT_SHADOW_WIDTH)
                              .color(lineColor)
                              .endCap(RoundCap())
                              .startCap(RoundCap()))

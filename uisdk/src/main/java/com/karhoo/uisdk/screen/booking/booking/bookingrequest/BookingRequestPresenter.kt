@@ -35,13 +35,13 @@ import org.joda.time.DateTime
 import java.util.Currency
 import java.util.Date
 
-class BookingRequestPresenter(view: GuestBookingMVP.View,
+class BookingRequestPresenter(view: BookingRequestMVP.View,
                               private val analytics: Analytics?,
                               private val paymentsService: PaymentsService,
                               private val preferenceStore: PreferenceStore,
                               private val tripsService: TripsService,
                               private val userStore: UserStore)
-    : BasePresenter<GuestBookingMVP.View>(), GuestBookingMVP.Presenter, LifecycleObserver {
+    : BasePresenter<BookingRequestMVP.View>(), BookingRequestMVP.Presenter, LifecycleObserver {
 
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null

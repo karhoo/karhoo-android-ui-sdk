@@ -16,7 +16,7 @@ import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestState
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import org.joda.time.DateTime
 
-interface GuestBookingMVP {
+interface BookingRequestMVP {
     interface View {
 
         fun animateIn()

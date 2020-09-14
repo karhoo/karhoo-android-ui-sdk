@@ -40,6 +40,8 @@ import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.trip.map.anim.LatLngInterpolator
 import com.karhoo.uisdk.screen.trip.map.anim.MarkerAnimation
 import com.karhoo.uisdk.util.MapUtil
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_MAP_CAMERA_ZOOM_WIDTH_PADDING
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_MAP_DRIVER_ZINDEX
 import com.karhoo.uisdk.util.extension.hasLocationPermission
 import com.karhoo.uisdk.util.extension.orZero
 import com.karumi.dexter.Dexter
@@ -198,13 +200,15 @@ class TripMapView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {}
+    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+        // Do nothing
+    }
 
     override fun animateDriverPositionToLatLng(duration: Int, latitude: Double, longitude: Double) {
         val position = LatLng(latitude, longitude)
         if (driverCar == null) {
             driverCar = googleMap?.addMarker(MarkerOptions()
-                                                     .zIndex(1.5f)
+                                                     .zIndex(TRIP_MAP_DRIVER_ZINDEX)
                                                      .position(position)
                                                      .draggable(false)
                                                      .icon(MapUtil.bitmapDescriptorFromVector(context, R.drawable.uisdk_ic_car)))
@@ -221,7 +225,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
 
         val width = resources.displayMetrics.widthPixels
         val height = resources.displayMetrics.heightPixels
-        val padding = (width * 0.20).toInt()
+        val padding = (width * TRIP_MAP_CAMERA_ZOOM_WIDTH_PADDING).toInt()
 
         val cu = CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), width, height, padding)
         googleMap?.animateCamera(cu, duration, null)

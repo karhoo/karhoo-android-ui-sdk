@@ -3,6 +3,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import androidx.core.os.postDelayed
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
@@ -18,6 +19,7 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
 
+@Suppress("LongParameterList", "ComplexCondition")
 internal class SplashPresenter(view: SplashMVP.View,
                                private val paymentService: PaymentsService,
                                private val locationProvider: LocationProvider,
@@ -50,7 +52,7 @@ internal class SplashPresenter(view: SplashMVP.View,
 
     private fun setDefaultLocation() {
         location?.let {
-            handler.postDelayed({ onPositionUpdated(it) }, 8000)
+            handler.postDelayed({ onPositionUpdated(it) }, SPLASH_SCREEN_LOCATION_DELAY)
         }
     }
 
@@ -67,6 +69,7 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun onLocationServicesDisabled() {
+        // Do nothing
     }
 
     override fun locationUpdatesDenied() {
@@ -74,7 +77,7 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {
-        //do nothing
+        // Do nothing
     }
 
     override fun isAppValid(isValid: Boolean) {
@@ -121,6 +124,7 @@ internal class SplashPresenter(view: SplashMVP.View,
 
     companion object {
         private val handler = Handler(Looper.getMainLooper())
+        private const val SPLASH_SCREEN_LOCATION_DELAY = 8000L
     }
 
 }

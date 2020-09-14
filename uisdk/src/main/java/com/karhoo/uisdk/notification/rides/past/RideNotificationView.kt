@@ -83,6 +83,7 @@ class RideNotificationView : RideNotificationContract.View {
         } else {
             Picasso.with(context).load(trip.fleetInfo?.logoUrl).into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                    // Do nothing
                 }
 
                 override fun onBitmapFailed(errorDrawable: Drawable?) {

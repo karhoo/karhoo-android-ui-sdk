@@ -14,4 +14,3 @@ data class CategoriesViewModel(private val defaultCategories: MutableLiveData<Li
             return defaultCategories
         }
 }
-

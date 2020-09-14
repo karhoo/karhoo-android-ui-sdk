@@ -51,7 +51,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
             val localisedTimeZone = getTimezoneDisplayName(it.timezone)
 
             val calendarMinute = nowDateTime.minuteOfHour
-            val remainderMinutes = calendarMinute % 5
+            val remainderMinutes = calendarMinute % TIME_ROUND_TO_FIVE
             var minutesRoundedToNearestFive = minutesToTheNearestFive(remainderMinutes, calendarMinute)
 
             var minuteRoundingHourExtra = 0
@@ -74,20 +74,20 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     }
 
     private fun minutesToTheNearestFive(remainderMinutes: Int, calendarMinute: Int): Int {
-        return if (remainderMinutes == 0 && calendarMinute < 5 && calendarMinute > 0) {
-            5
+        return if (remainderMinutes == 0 && calendarMinute < TIME_ROUND_TO_FIVE && calendarMinute > 0) {
+            TIME_ROUND_TO_FIVE
         } else if (remainderMinutes == 0) {
             calendarMinute
         } else {
-            calendarMinute + (5 - remainderMinutes)
+            calendarMinute + (TIME_ROUND_TO_FIVE - remainderMinutes)
         }
     }
 
     private fun oneHourAhead(minuteRoundingHourExtra: Int): Int {
         val currentHour = nowDateTime.hourOfDay
         var oneHourAheadOfCurrentHour = minuteRoundingHourExtra + currentHour + 1
-        if (oneHourAheadOfCurrentHour > 23) {
-            oneHourAheadOfCurrentHour -= 24
+        if (oneHourAheadOfCurrentHour > OURS_IN_DAY_MINUS_ONE) {
+            oneHourAheadOfCurrentHour -= OURS_IN_DAY
         }
         return oneHourAheadOfCurrentHour
     }
@@ -150,6 +150,9 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         var minute: Int = 0
 
         const val MAX_MINUTES = 59
+        const val TIME_ROUND_TO_FIVE = 5
+        const val OURS_IN_DAY = 24
+        const val OURS_IN_DAY_MINUS_ONE = OURS_IN_DAY - 1
     }
 
 }
