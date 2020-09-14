@@ -62,6 +62,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequ
 import org.joda.time.DateTime
 import java.util.Currency
 
+@Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
