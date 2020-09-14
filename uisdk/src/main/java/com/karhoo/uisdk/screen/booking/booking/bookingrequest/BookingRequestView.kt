@@ -62,6 +62,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequ
 import org.joda.time.DateTime
 import java.util.Currency
 
+@Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
@@ -183,6 +184,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.isEnabled = true
         bookingButtonLayout.background = ContextCompat.getDrawable(context, R
                 .drawable.uisdk_gradient_enabled)
+    }
+
+    override fun initialiseChangeCard(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
     }
 
     override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
@@ -313,6 +318,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.handleError(stringId)
     }
 
+    override fun handleChangeCard() {
+        presenter.handleChangeCard()
+    }
+
     override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
     }
@@ -366,8 +375,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.showLoading()
     }
 
-    override fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bookingRequestPaymentDetailsWidget.bindCardDetails(savedPaymentInfo)
+    override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo, quotePrice)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {

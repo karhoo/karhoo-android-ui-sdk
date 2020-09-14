@@ -12,6 +12,7 @@ import com.braintreepayments.api.interfaces.BraintreeErrorListener
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.extension.isGuest
 
@@ -39,7 +40,7 @@ class BraintreePaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String, context: Context) {
+    override fun showPaymentUI(braintreeSDKToken: String, paymentData: String?, price: QuotePrice?, context: Context) {
         val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)

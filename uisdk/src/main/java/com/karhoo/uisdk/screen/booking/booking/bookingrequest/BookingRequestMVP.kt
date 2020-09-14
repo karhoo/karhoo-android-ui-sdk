@@ -31,13 +31,19 @@ interface BookingRequestMVP {
 
         fun disableBooking()
 
+        fun displayFlightDetailsField(poiType: PoiType?)
+
         fun enableBooking()
+
+        fun initialiseChangeCard(price: QuotePrice?)
+
+        fun initialiseGuestPayment(price: QuotePrice?)
+
+        fun initialisePaymentProvider(price: QuotePrice?)
 
         fun onError()
 
         fun onTripBookedSuccessfully(tripInfo: TripInfo)
-
-        fun displayFlightDetailsField(poiType: PoiType?)
 
         fun populateFlightDetailsField(flightNumber: String?)
 
@@ -53,11 +59,7 @@ interface BookingRequestMVP {
 
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
-        fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
-
-        fun initialisePaymentProvider(price: QuotePrice?)
-
-        fun initialiseGuestPayment(price: QuotePrice?)
+        fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
 
     }
 
@@ -65,9 +67,7 @@ interface BookingRequestMVP {
 
         fun clearData()
 
-        fun setBookingEnablement(hasValidPaxDetails: Boolean)
-
-        fun setBookingFields(allFieldsValid: Boolean)
+        fun handleChangeCard()
 
         fun handleError(stringId: Int)
 
@@ -77,6 +77,10 @@ interface BookingRequestMVP {
 
         fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails: PassengerDetails?
         = null, comments: String)
+
+        fun setBookingEnablement(hasValidPaxDetails: Boolean)
+
+        fun setBookingFields(allFieldsValid: Boolean)
 
         fun showBookingRequest(quote: QuoteV2, outboundTripId: String? = null)
 
