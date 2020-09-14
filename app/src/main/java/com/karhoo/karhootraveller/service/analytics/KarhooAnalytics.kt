@@ -23,6 +23,7 @@ import com.karhoo.uisdk.util.DateUtil
 import java.util.Date
 import java.util.TimeZone
 
+@Suppress("TooManyFunctions")
 class KarhooAnalytics private constructor() : Analytics {
 
     override fun submitAdditionalFeedback(tripId: String, answers: List<FeedbackAnswer>) {

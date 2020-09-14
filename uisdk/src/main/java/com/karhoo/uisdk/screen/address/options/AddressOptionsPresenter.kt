@@ -31,7 +31,9 @@ class AddressOptionsPresenter(view: AddressOptionsMVP.View,
                 }
             }
 
-            override fun onLocationServicesDisabled() {}
+            override fun onLocationServicesDisabled() {
+                // Do nothing
+            }
 
             override fun onLocationInfoUnavailable(errorMessage: String) {
                 view?.showSnackbar(SnackbarConfig(text = errorMessage))

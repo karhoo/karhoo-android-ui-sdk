@@ -42,7 +42,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val amount = Amount()
         // Optional. In this example, the Pay button will display 10 EUR.
         amount.currency = "GBP"
-        amount.value = 1000
+        amount.value = TEST_VALUE
 
         //TODO Set up for live envs
         val dropInConfiguration = DropInConfiguration.Builder(context, intent,
@@ -56,6 +56,10 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                 .build()
 
         DropIn.startPayment(context, paymentMethods, dropInConfiguration)
+    }
+
+    companion object {
+        const val TEST_VALUE = 1000
     }
 }
 

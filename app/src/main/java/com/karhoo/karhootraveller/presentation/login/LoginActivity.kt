@@ -34,7 +34,9 @@ class LoginActivity : BaseActivity(), LoginView.Actions, ForgotPasswordMVP.Actio
         loginWidget.actions = this
     }
 
-    override fun handleExtras() {}
+    override fun handleExtras() {
+        // Do nothing
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

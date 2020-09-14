@@ -77,7 +77,9 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
         trip = extras?.getParcelable(Builder.EXTRA_TRIP)
     }
 
-    override fun initialiseViews() {}
+    override fun initialiseViews() {
+        // Do nothing
+    }
 
     override fun initialiseViewListeners() {
         locateMeButton?.setOnClickListener { tripMapWidget.locateMe() }

@@ -28,8 +28,8 @@ interface LatLngInterpolator {
             var lngDelta = b.longitude - a.longitude
 
             // Take the shortest path across the 180th meridian.
-            if (Math.abs(lngDelta) > 180) {
-                lngDelta -= Math.signum(lngDelta) * 360
+            if (Math.abs(lngDelta) > LAT_LNG_INTERPOLATOR_MEDIAN_180) {
+                lngDelta -= Math.signum(lngDelta) * LAT_LNG_INTERPOLATOR_MEDIAN_360
             }
             val lng = lngDelta * fraction + a.longitude
             return LatLng(lat, lng)
@@ -51,7 +51,7 @@ interface LatLngInterpolator {
             // Computes Spherical interpolation coefficients.
             val angle = computeAngleBetween(fromLat, fromLng, toLat, toLng)
             val sinAngle = sin(angle)
-            if (sinAngle < 1E-6) {
+            if (sinAngle < SPHERICAL_INTERPOLATOR_COEFFICIENTS_THRESHOLD) {
                 return from
             }
             val a = sin((1 - fraction) * angle) / sinAngle
@@ -74,6 +74,12 @@ interface LatLngInterpolator {
             val dLng = fromLng - toLng
             return 2 * asin(sqrt(pow(sin(dLat / 2), 2.0) + cos(fromLat) * cos(toLat) * pow(sin(dLng / 2), 2.0)))
         }
+    }
+
+    companion object {
+        const val LAT_LNG_INTERPOLATOR_MEDIAN_180 = 180
+        const val LAT_LNG_INTERPOLATOR_MEDIAN_360 = 360
+        const val SPHERICAL_INTERPOLATOR_COEFFICIENTS_THRESHOLD = 1E-6
     }
 
 }
