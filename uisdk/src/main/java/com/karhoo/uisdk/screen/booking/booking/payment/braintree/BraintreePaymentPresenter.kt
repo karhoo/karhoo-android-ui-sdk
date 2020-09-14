@@ -107,7 +107,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                 passBackNonce(braintreeSDKToken)
             }
         } else {
-            view?.showPaymentUI(braintreeSDKToken, null, null)
+            view?.showPaymentUI(braintreeSDKToken)
         }
     }
 
@@ -129,7 +129,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(userPaymentInfo)
+        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
