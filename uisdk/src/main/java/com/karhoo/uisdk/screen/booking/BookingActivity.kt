@@ -14,8 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.adyen.checkout.dropin.DropIn
-import com.adyen.checkout.dropin.DropIn.Companion.DROP_IN_REQUEST_CODE
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.QuoteV2
@@ -30,6 +28,7 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
@@ -290,7 +289,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST ||
-                requestCode == DROP_IN_REQUEST_CODE) {
+                requestCode == REQ_CODE_ADYEN) {
             bookingRequestWidget.onActivityResult(requestCode, resultCode, data)
         } else if (resultCode == RESULT_OK && data != null) {
             when (requestCode) {

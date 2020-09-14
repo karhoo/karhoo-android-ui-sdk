@@ -70,8 +70,13 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
         DropIn.startPayment(context, paymentMethods, dropInConfiguration)
     }
+
+    companion object {
+        const val REQ_CODE_ADYEN = DropIn.Companion.DROP_IN_REQUEST_CODE
+    }
 }
 
 enum class ComponentType(val id: String) {
     DROPIN("drop-in")
 }
+
