@@ -59,6 +59,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         categoriesViewModel.categories.value = categoryViewModels
     }
 
+    @Suppress("NestedBlockDepth")
     private fun requestVehicleAvailability(bookingStatus: BookingStatus?) {
         bookingStatus?.pickup?.let { bookingStatusPickup ->
             bookingStatus.destination?.let { bookingStatusDestination ->

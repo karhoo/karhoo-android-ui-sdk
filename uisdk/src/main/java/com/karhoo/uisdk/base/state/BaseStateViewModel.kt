@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
+@Suppress("VariableNaming")
 open class BaseStateViewModel<STATE, ACTION, EVENT>(application: Application) : AndroidViewModel(application), ViewModelContract<EVENT>  {
 
     val _viewStates: MutableLiveData<STATE> = MutableLiveData()

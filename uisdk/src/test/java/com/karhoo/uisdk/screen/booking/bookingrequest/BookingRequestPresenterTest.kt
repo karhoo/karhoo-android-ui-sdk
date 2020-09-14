@@ -31,7 +31,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.GuestBookingMVP
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -88,7 +88,7 @@ class BookingRequestPresenterTest {
     private val tripsService: TripsService = mock()
     private val paymentsService: PaymentsService = mock()
     private val userStore: UserStore = mock()
-    private var view: GuestBookingMVP.View = mock()
+    private var view: BookingRequestMVP.View = mock()
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()

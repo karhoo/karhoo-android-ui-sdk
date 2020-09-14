@@ -2,6 +2,7 @@ package com.karhoo.karhootraveller.presentation.base
 
 import java.lang.ref.WeakReference
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class BasePresenter<V> protected constructor() {
 
     private var viewReference: WeakReference<V>? = null

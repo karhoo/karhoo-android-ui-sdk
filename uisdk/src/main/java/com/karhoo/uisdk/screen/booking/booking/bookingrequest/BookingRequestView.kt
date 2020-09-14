@@ -43,6 +43,7 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
@@ -64,7 +65,7 @@ import java.util.Currency
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), GuestBookingMVP.View, PaymentMVP.CardActions,
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, PaymentMVP.CardActions,
       PaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
@@ -74,14 +75,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     var holdOpenForPaymentFlow = false
 
-    private var presenter: GuestBookingMVP.Presenter = BookingRequestPresenter(this,
-                                                                               KarhooUISDK.analytics,
-                                                                               KarhooApi.paymentsService,
-                                                                               KarhooPreferenceStore.getInstance(context.applicationContext),
-                                                                               KarhooApi.tripService,
-                                                                               KarhooApi.userStore)
+    private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
+                                                                                 KarhooUISDK.analytics,
+                                                                                 KarhooApi.paymentsService,
+                                                                                 KarhooPreferenceStore.getInstance(context.applicationContext),
+                                                                                 KarhooApi.tripService,
+                                                                                 KarhooApi.userStore)
 
-    var actions: GuestBookingMVP.Actions? = null
+    var actions: BookingRequestMVP.Actions? = null
         set(value) {
             field = value
             bookingRequestTermsWidget.actions = value
@@ -359,7 +360,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                     }
                     .show().window?.setLayout(
                             resources.displayMetrics.widthPixels,
-                            (resources.displayMetrics.heightPixels * 0.6).toInt())
+                            (resources.displayMetrics.heightPixels * BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR).toInt())
         }
     }
 

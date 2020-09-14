@@ -57,6 +57,7 @@ internal class BookingStatusPresenter(view: BookingStatusMVP.View, private val t
         notifyObservers()
     }
 
+    @Suppress("ComplexMethod", "NestedBlockDepth")
     override fun updateBookingStatus(tripDetails: TripInfo) {
         if (tripDetails.tripState != tripState) {
             tripState = tripDetails.tripState

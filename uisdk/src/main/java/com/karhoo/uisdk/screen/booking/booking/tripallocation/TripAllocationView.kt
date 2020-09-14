@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -20,11 +19,17 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.screen.web.WebActivity
 import com.karhoo.uisdk.util.IntentUtils
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_ANIMATION_DURATION
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_ANIMATION_START_DELAY
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_DURATION
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_INITIAL_DELAY
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_LONG
+import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_SHORT
 import com.karhoo.uisdk.util.extension.convertDpToPixels
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationOneLabel
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationTwoLabel
@@ -50,11 +55,11 @@ class TripAllocationView @JvmOverloads constructor(
         val animUpwards = resources.getDimension(R.dimen.spacing_xsmall).convertDpToPixels().toFloat()
         findingYourTripLabel.animate()
                 .translationY(-animUpwards)
-                .setStartDelay(5000L)
-                .setDuration(600L)
+                .setStartDelay(TRIP_ALLOCATION_ANIMATION_START_DELAY)
+                .setDuration(TRIP_ALLOCATION_ANIMATION_DURATION)
                 .start()
 
-        startTextRotationAnimations(5400L)
+        startTextRotationAnimations(TRIP_ALLOCATION_TEXT_ROTATION_ANIM_INITIAL_DELAY)
 
         visibility = View.VISIBLE
         isClickable = true
@@ -69,9 +74,9 @@ class TripAllocationView @JvmOverloads constructor(
     }
 
     private fun startTextRotationAnimations(initialStartOffset: Long) {
-        val animationDuration = 100L
-        val startOffsetShort = 200L
-        val startOffsetLong = 4000L
+        val animationDuration = TRIP_ALLOCATION_TEXT_ROTATION_ANIM_DURATION
+        val startOffsetShort = TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_SHORT
+        val startOffsetLong = TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_LONG
         val reverseInterpolator = Interpolator { paramFloat -> Math.abs(paramFloat - 1f) }
 
         //FOURTH ANIMATION

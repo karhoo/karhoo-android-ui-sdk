@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
+import com.karhoo.uisdk.util.ViewsConstants.DRIVER_PHOTO_ACTIVITY_NAME_ANIM_START_OFFSET
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.driverNameText
@@ -36,7 +37,7 @@ class DriverPhotoActivity : BaseActivity() {
                 super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots)
                 driverNameText.text = extras?.getString(DRIVER_NAME, "")
                 val anim = AnimationUtils.loadAnimation(this@DriverPhotoActivity, R.anim.uisdk_scale_and_translate).apply {
-                    startOffset = 50
+                    startOffset = DRIVER_PHOTO_ACTIVITY_NAME_ANIM_START_OFFSET
                 }
                 driverNameText.startAnimation(anim)
             }
@@ -61,12 +62,15 @@ class DriverPhotoActivity : BaseActivity() {
     }
 
     override fun handleExtras() {
+        // Do nothing
     }
 
     override fun initialiseViews() {
+        // Do nothing
     }
 
     override fun initialiseViewListeners() {
+        // Do nothing
     }
 
     class Builder private constructor() {

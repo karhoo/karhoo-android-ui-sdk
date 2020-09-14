@@ -11,6 +11,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PICKUP_GEOCODE_DELAY
 import java.util.Timer
 import kotlin.concurrent.schedule
 
@@ -71,7 +72,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
             timer = null
         }
         timer = Timer()
-        timer?.schedule(1000) {
+        timer?.schedule(BOOKING_MAP_PICKUP_GEOCODE_DELAY) {
             position?.let {
                 mainPresenter?.mapMoved(it)
             }

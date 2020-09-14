@@ -9,6 +9,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.ViewsConstants.ETA_ELEVATION
 import kotlinx.android.synthetic.main.uisdk_view_eta.view.etaLayout
 import kotlinx.android.synthetic.main.uisdk_view_eta.view.minsText
 
@@ -25,7 +26,7 @@ class EtaView @JvmOverloads constructor(context: Context,
 
         etaLayout.apply {
             isEnabled = false
-            elevation = 10F
+            elevation = ETA_ELEVATION
         }
     }
 

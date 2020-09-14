@@ -101,6 +101,7 @@ class SupplierListItemView @JvmOverloads constructor(context: Context,
                 })
     }
 
+    @Suppress("NestedBlockDepth")
     private fun setPrice(vehicleDetails: QuoteV2?) {
         vehicleDetails?.let {
             if (it.price.highPrice > 0) {
@@ -183,5 +184,3 @@ class SupplierListItemView @JvmOverloads constructor(context: Context,
         supplierProgressBar.visibility = View.GONE
     }
 }
-
-

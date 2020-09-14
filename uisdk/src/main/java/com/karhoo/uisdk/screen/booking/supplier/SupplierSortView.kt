@@ -59,8 +59,12 @@ class SupplierSortView @JvmOverloads constructor(
                     }
                 }
 
-                override fun onTabUnselected(tab: TabLayout.Tab) {}
-                override fun onTabReselected(tab: TabLayout.Tab) {}
+                override fun onTabUnselected(tab: TabLayout.Tab) {
+                    // Do nothing
+                }
+                override fun onTabReselected(tab: TabLayout.Tab) {
+                    // Do nothing
+                }
             })
         }
     }

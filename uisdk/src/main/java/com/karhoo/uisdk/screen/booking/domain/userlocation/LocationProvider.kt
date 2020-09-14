@@ -57,8 +57,8 @@ class LocationProvider(private val context: Context,
     fun listenForLocations(positionListener: PositionListener, numberOfUpdates: Int? = null) {
 
         val locationRequest = LocationRequest().apply {
-            interval = 5000
-            fastestInterval = 5000
+            interval = LOCATION_INTERVAL
+            fastestInterval = LOCATION_FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
             numberOfUpdates?.let { numUpdates = it }
         }
@@ -104,6 +104,11 @@ class LocationProvider(private val context: Context,
 
     fun stopListeningForLocations() {
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
+    }
+
+    companion object {
+        const val LOCATION_INTERVAL = 5000L
+        const val LOCATION_FASTEST_INTERVAL = 5000L
     }
 
 }

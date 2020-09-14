@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.R
 
+@Suppress("ComplexMethod")
 @StringRes
 fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
 

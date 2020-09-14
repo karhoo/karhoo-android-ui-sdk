@@ -55,7 +55,7 @@ class AddressSearchView @JvmOverloads constructor(context: Context,
     }
 
     private fun toggleClearButton(enabled: Boolean) {
-        clearSearchButtonIcon.alpha = if (enabled) 1.0f else 0.2f
+        clearSearchButtonIcon.alpha = if (enabled) ALPHA_MAX else ALPHA_MIN
         clearSearchButtonIcon.isClickable = enabled
     }
 
@@ -63,6 +63,11 @@ class AddressSearchView @JvmOverloads constructor(context: Context,
         fun showRecents()
 
         fun showResults()
+    }
+
+    companion object {
+        private const val ALPHA_MAX = 1.0f
+        private const val ALPHA_MIN = 0.2f
     }
 
 }
