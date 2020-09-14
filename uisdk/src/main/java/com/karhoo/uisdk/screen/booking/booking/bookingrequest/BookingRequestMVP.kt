@@ -31,13 +31,19 @@ interface GuestBookingMVP {
 
         fun disableBooking()
 
+        fun displayFlightDetailsField(poiType: PoiType?)
+
         fun enableBooking()
+
+        fun initialiseChangeCard(price: QuotePrice?)
+
+        fun initialiseGuestPayment(price: QuotePrice?)
+
+        fun initialisePaymentProvider(price: QuotePrice?)
 
         fun onError()
 
         fun onTripBookedSuccessfully(tripInfo: TripInfo)
-
-        fun displayFlightDetailsField(poiType: PoiType?)
 
         fun populateFlightDetailsField(flightNumber: String?)
 
@@ -55,19 +61,13 @@ interface GuestBookingMVP {
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
 
-        fun initialisePaymentProvider(price: QuotePrice?)
-
-        fun initialiseGuestPayment(price: QuotePrice?)
-
     }
 
     interface Presenter {
 
         fun clearData()
 
-        fun setBookingEnablement(hasValidPaxDetails: Boolean)
-
-        fun setBookingFields(allFieldsValid: Boolean)
+        fun handleChangeCard()
 
         fun handleError(stringId: Int)
 
@@ -77,6 +77,10 @@ interface GuestBookingMVP {
 
         fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails: PassengerDetails?
         = null, comments: String)
+
+        fun setBookingEnablement(hasValidPaxDetails: Boolean)
+
+        fun setBookingFields(allFieldsValid: Boolean)
 
         fun showBookingRequest(quote: QuoteV2, outboundTripId: String? = null)
 

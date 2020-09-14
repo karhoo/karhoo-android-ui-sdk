@@ -41,7 +41,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                               currency = currencyCode)
     }
 
-    override fun sdkInit() {
+    override fun sdkInit(price: QuotePrice?) {
         //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
         val sdkInitRequest = getSDKInitRequest("GBP")
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
@@ -107,7 +107,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                 passBackNonce(braintreeSDKToken)
             }
         } else {
-            view?.showPaymentUI(braintreeSDKToken)
+            view?.showPaymentUI(braintreeSDKToken, null, null)
         }
     }
 
@@ -136,10 +136,6 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
         this.nonce = nonce
         userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
         view?.refresh()
-    }
-
-    override fun handleAddCard() {
-        sdkInit()
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {

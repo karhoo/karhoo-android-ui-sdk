@@ -10,6 +10,7 @@ import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
@@ -36,13 +37,12 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentUI(paymentsString: String, context: Context) {
+    override fun showPaymentUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
         val payments = JSONObject(paymentsString)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
-        //TODO Get the correct public key from new endpoint when ready
         val cardConfiguration =
-                CardConfiguration.Builder(context, BuildConfig.ADYEN_PUBLIC_KEY)
+                CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
                         .build()
 
@@ -52,8 +52,11 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
         val amount = Amount()
         // Optional. In this example, the Pay button will display 10 EUR.
-        amount.currency = "GBP"
-        amount.value = 1000
+        price?.let {
+            amount.currency = price.currencyCode
+            amount.value = price.highPrice
+            Log.d("Adyen", "${price.currencyCode} ${price.highPrice}")
+        }
 
         //TODO Set up for live envs
         val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,

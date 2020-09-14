@@ -129,6 +129,10 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
         }
     }
 
+    override fun handleChangeCard() {
+        view?.initialiseChangeCard(quote?.price)
+    }
+
     override fun setBookingFields(allFieldsValid: Boolean) {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             view?.showGuestBookingFields()
@@ -177,11 +181,6 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
                 phoneNumber = user.phoneNumber,
                 email = user.email,
                 locale = user.locale)
-    }
-
-    private fun quotePriceToAmount(quote: QuoteV2?): String {
-        val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, quote?.price?.highPrice.orZero())
     }
 
     override fun resetBooking() {

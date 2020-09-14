@@ -13,7 +13,7 @@ interface PaymentDropInMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun showPaymentUI(braintreeSDKToken: String, context: Context)
+        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?, context: Context)
 
     }
 
@@ -25,7 +25,7 @@ interface PaymentDropInMVP {
 
         fun passBackNonce(braintreeSDKNonce: String)
 
-        fun showPaymentUI(braintreeSDKToken: String)
+        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
 
         fun showPaymentFailureDialog()
 
@@ -34,7 +34,5 @@ interface PaymentDropInMVP {
         fun refresh()
 
         fun updateCardDetails(nonce: String, description: String, typeLabel: String)
-
-        fun setPaymentAmount(price: QuotePrice)
     }
 }

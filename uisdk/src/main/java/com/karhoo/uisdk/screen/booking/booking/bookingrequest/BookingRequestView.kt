@@ -184,12 +184,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .drawable.uisdk_gradient_enabled)
     }
 
+    override fun initialiseChangeCard(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
+    }
+
     override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
         bookingRequestButton.onLoadingComplete()
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId)
-        bookingRequestPaymentDetailsWidget.setPaymentAmount(quote?.price)
     }
 
     override fun animateIn() {
@@ -311,6 +314,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     override fun showErrorDialog(stringId: Int) {
         resetBookingButton()
         presenter.handleError(stringId)
+    }
+
+    override fun handleChangeCard() {
+        presenter.handleChangeCard()
     }
 
     override fun showPaymentUI() {

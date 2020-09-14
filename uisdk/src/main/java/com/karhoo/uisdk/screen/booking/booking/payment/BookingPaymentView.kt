@@ -50,7 +50,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPaymentView,
-                                                        defStyleAttr, R.style.KhPaymentView)
+                defStyleAttr, R.style.KhPaymentView)
         addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus)
@@ -75,8 +75,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = View.GONE
         changeCardProgressBar.visibility = View.VISIBLE
-        paymentPresenter?.handleAddCard()
-//        paymentPresenter?.sdkInit()
+        paymentActions?.handleChangeCard()
     }
 
     override fun refresh() {
@@ -86,10 +85,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
         paymentPresenter?.updateCardDetails(nonce, description, typeLabel)
-    }
-
-    override fun setPaymentAmount(price: QuotePrice) {
-
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
@@ -156,17 +151,22 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun showPaymentUI(sdkInitialisationData: String) {
+    override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentUI(sdkInitialisationData, context)
+        viewActions?.showPaymentUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
     }
 
     override fun showPaymentFailureDialog() {
+        refresh()
         paymentActions?.showPaymentFailureDialog()
     }
 
     override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    }
+
+    override fun initialiseChangeCard(price: QuotePrice?) {
+        paymentPresenter?.sdkInit(price)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {
