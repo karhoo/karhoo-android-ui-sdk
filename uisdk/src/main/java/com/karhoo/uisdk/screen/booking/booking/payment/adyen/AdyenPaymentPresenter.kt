@@ -23,33 +23,38 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     var actions: PaymentDropInMVP.Actions? = null
+    private var adyenKey: String = ""
+    var price: QuotePrice? = null
 
     private var sdkToken: String = ""
     private var nonce: String = ""
 
     init {
         attachView(view)
-        userStore.addSavedPaymentObserver(this)
-        paymentsService.getAdyenPaymentMethods().execute { result ->
+    }
+
+    override fun sdkInit(price: QuotePrice?) {
+        this.price = price
+        paymentsService.getAdyenPublicKey().execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
+                        adyenKey = it.publicKey
+                        getPaymentMethods()
+
                     }
                 }
-                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
+                is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
     }
 
-    override fun sdkInit() {
-        Log.d("Adyen", "sdkInit")
+    private fun getPaymentMethods() {
         paymentsService.getAdyenPaymentMethods().execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
-                        view?.showPaymentUI(it)
+                        view?.showPaymentUI(adyenKey, it, price)
                     }
                 }
                 is Resource.Failure -> actions?.showPaymentFailureDialog()
@@ -74,7 +79,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindCardDetails(userPaymentInfo)
+        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {

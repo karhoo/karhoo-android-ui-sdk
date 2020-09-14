@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 
 import android.content.Context
 import android.content.Intent
+import com.karhoo.sdk.api.model.QuotePrice
 
 interface PaymentDropInMVP {
 
@@ -12,7 +13,7 @@ interface PaymentDropInMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun showPaymentUI(braintreeSDKToken: String, context: Context)
+        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?, context: Context)
 
     }
 
@@ -24,7 +25,7 @@ interface PaymentDropInMVP {
 
         fun passBackNonce(braintreeSDKNonce: String)
 
-        fun showPaymentUI(braintreeSDKToken: String)
+        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
 
         fun showPaymentFailureDialog()
 

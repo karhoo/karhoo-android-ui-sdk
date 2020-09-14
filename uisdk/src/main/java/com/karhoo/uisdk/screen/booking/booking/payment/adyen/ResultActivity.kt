@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,8 +24,11 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.uisdk_activity_base)
 
         val res = intent?.getStringExtra(RESULT_KEY) ?: "Processing"
-        val type = intent?.getStringExtra(TYPE_KEY)
+//        val type = intent?.getStringExtra(TYPE_KEY)
 
+        val data = Intent()
+        data.putExtra(RESULT_KEY, res)
+        setResult(RESULT_OK, data)
         finish()
     }
 }

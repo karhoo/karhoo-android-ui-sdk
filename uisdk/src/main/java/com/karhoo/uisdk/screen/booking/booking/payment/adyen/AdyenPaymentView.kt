@@ -2,14 +2,17 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.karhoo.uisdk.BuildConfig
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
 import org.json.JSONObject
 import java.util.Locale
 
@@ -22,30 +25,40 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //TODO
+        Log.d("Adyen", "$requestCode $resultCode")
+        if(resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            when(data.getStringExtra(RESULT_KEY)) {
+                "Authorised" -> actions?.passBackNonce("")
+                else -> actions?.showPaymentFailureDialog()
+            }
+        } else {
+            actions?.showPaymentFailureDialog()
+        }
     }
 
-    override fun showPaymentUI(paymentsString: String, context: Context) {
+    override fun showPaymentUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
         val payments = JSONObject(paymentsString)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
-        //TODO Get the correct public key from new endpoint when ready
         val cardConfiguration =
-                CardConfiguration.Builder(context, BuildConfig.ADYEN_PUBLIC_KEY)
+                CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
                         .build()
 
-        val intent = Intent(context, ResultActivity::class.java).apply {
+        val dropInIntent = Intent(context, ResultActivity::class.java).apply {
             putExtra(ResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
         }
 
         val amount = Amount()
         // Optional. In this example, the Pay button will display 10 EUR.
-        amount.currency = "GBP"
-        amount.value = TEST_VALUE
+        price?.let {
+            amount.currency = price.currencyCode
+            amount.value = price.highPrice
+            Log.d("Adyen", "${price.currencyCode} ${price.highPrice}")
+        }
 
         //TODO Set up for live envs
-        val dropInConfiguration = DropInConfiguration.Builder(context, intent,
+        val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
                 .setEnvironment(Environment.TEST)
@@ -59,10 +72,11 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     companion object {
-        const val TEST_VALUE = 1000
+        const val REQ_CODE_ADYEN = DropIn.Companion.DROP_IN_REQUEST_CODE
     }
 }
 
 enum class ComponentType(val id: String) {
     DROPIN("drop-in")
 }
+
