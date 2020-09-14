@@ -31,28 +31,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     init {
         attachView(view)
-        userStore.addSavedPaymentObserver(this)
-        /*paymentsService.getAdyenPaymentMethods().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        Log.d("Adyen", it)
-                    }
-                }
-                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
-            }
-        }
-        paymentsService.getAdyenPublicKey().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        Log.d("Adyen", "Public key $it")
-                        adyenKey = it.publicKey
-                    }
-                }
-                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
-            }
-        }*/
     }
 
     override fun sdkInit(price: QuotePrice?) {
@@ -61,13 +39,12 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", "Public key $it")
                         adyenKey = it.publicKey
                         getPaymentMethods()
 
                     }
                 }
-                is Resource.Failure -> Log.d("Adyen", "${result.error.userFriendlyMessage}")
+                is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
     }
