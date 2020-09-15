@@ -14,7 +14,7 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun getPayment(paymentComponentData: JSONObject) {
-        val requestString = createPaymentRequestString(paymentComponentData.getJSONObject("paymentMethod"))
+        val requestString = createPaymentRequestString(paymentComponentData)
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
@@ -32,16 +32,12 @@ class AdyenDropInService : DropInService() {
         }
     }
 
-    private fun createPaymentRequestString(paymentMethod: JSONObject): String {
-        val amount = JSONObject()
-        amount.put("currency", "GBP")
-        amount.put("value", TEST_VALUE)
-
+    private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
         val payload = JSONObject()
-        payload.put("paymentMethod", paymentMethod)
+        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
         payload.put("channel", "Android")
         payload.put("returnUrl", "http://karhoo.com")
-        payload.put("amount", amount)
+        payload.put("amount", paymentComponentData.getJSONObject("amount"))
 
         val request = JSONObject()
         request.put("payments_payload", payload)
@@ -66,9 +62,5 @@ class AdyenDropInService : DropInService() {
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
         }
-    }
-
-    companion object {
-        const val TEST_VALUE = 1000
     }
 }

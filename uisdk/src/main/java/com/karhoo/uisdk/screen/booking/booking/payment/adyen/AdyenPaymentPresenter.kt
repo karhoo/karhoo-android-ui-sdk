@@ -7,6 +7,8 @@ import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.adyen.AdyenAmount
+import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
@@ -15,6 +17,7 @@ import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
+import java.math.BigDecimal
 import java.util.Currency
 
 class AdyenPaymentPresenter(view: PaymentMVP.View,
@@ -41,7 +44,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                     result.data.let {
                         adyenKey = it.publicKey
                         getPaymentMethods()
-
                     }
                 }
                 is Resource.Failure -> actions?.showPaymentFailureDialog()
@@ -50,14 +52,18 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     private fun getPaymentMethods() {
-        paymentsService.getAdyenPaymentMethods().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        view?.showPaymentUI(adyenKey, it, price)
+        val amount = AdyenAmount(price?.currencyCode ?: "GBP", price?.highPrice.orZero())
+        let {
+            val request = AdyenPaymentMethodsRequest(amount = amount)
+            paymentsService.getAdyenPaymentMethods(request).execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.let {
+                            view?.showPaymentUI(adyenKey, it, price)
+                        }
                     }
+                    is Resource.Failure -> actions?.showPaymentFailureDialog()
                 }
-                is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
     }

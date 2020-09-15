@@ -11,9 +11,12 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.adyen.AdyenAmount
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
+import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
+import java.math.BigDecimal
 import java.util.Locale
 
 class AdyenPaymentView : PaymentDropInMVP.View {
@@ -50,17 +53,14 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         }
 
         val amount = Amount()
-        // Optional. In this example, the Pay button will display 10 EUR.
-        price?.let {
-            amount.currency = price.currencyCode
-            amount.value = price.highPrice
-            Log.d("Adyen", "${price.currencyCode} ${price.highPrice}")
-        }
+        amount.currency = price?.currencyCode ?: "GBP"
+        amount.value = price?.highPrice.orZero()
 
         //TODO Set up for live envs
         val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
+                .setAmount(amount)
                 .setEnvironment(Environment.TEST)
                 // Optional. Use to set the language rendered in Drop-in, overriding the default device language setting. See list of Supported languages at https://github.com/Adyen/adyen-android/tree/master/card-ui-core/src/main/res
                 // Make sure that you have set the locale in the payment method configuration object as well.
