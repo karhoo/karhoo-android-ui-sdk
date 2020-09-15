@@ -11,12 +11,10 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.adyen.AdyenAmount
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
-import java.math.BigDecimal
 import java.util.Locale
 
 class AdyenPaymentView : PaymentDropInMVP.View {
@@ -79,4 +77,3 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 enum class ComponentType(val id: String) {
     DROPIN("drop-in")
 }
-
