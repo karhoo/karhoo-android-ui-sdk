@@ -8,6 +8,7 @@ import android.view.MenuItem
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.profile.user.UserProfileMVP
 import com.karhoo.karhootraveller.util.logoutAndResetApp
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import kotlinx.android.synthetic.main.activity_profile.bookingPaymentDetailsWidget
@@ -81,6 +82,11 @@ class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.A
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        bookingPaymentDetailsWidget.bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo, null)
+    }
+
     override fun onResume() {
         super.onResume()
         userProfileView.validateUser()
@@ -118,5 +124,9 @@ class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.A
             val builder: Builder
                 get() = Builder()
         }
+    }
+
+    override fun handleChangeCard() {
+        bookingPaymentDetailsWidget.initialiseChangeCard(null)
     }
 }

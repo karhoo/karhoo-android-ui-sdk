@@ -47,9 +47,34 @@ class AdyenDropInService : DropInService() {
 
     // Handling for submitting additional payment details
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
+        val payload = JSONObject()
+        payload.put("paymentMethod", actionComponentData.getJSONObject("paymentMethod"))
+        payload.put("channel", "Android")
+        payload.put("returnUrl", "http://karhoo.com")
+
+        val request = JSONObject()
+        request.put("payments_payload", payload)
+        request.put("return_url_suffix", "/payment")
+        val requestString = request.toString().replace("\\", "")
         // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
         // Create the `CallResult` based on the /payments/details response
-        return CallResult(CallResult.ResultType.FINISHED, "Authorised")
+        KarhooApi.paymentsService.getAdyenPaymentDetails(requestString).execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        Log.d("Adyen", it)
+                        val response = JSONObject(it)
+                        asyncCallback(handlePaymentRequestResult(response))
+                    }
+                }
+                is Resource.Failure -> {
+                    asyncCallback(CallResult(CallResult.ResultType.ERROR, result.error
+                            .userFriendlyMessage))
+                }
+            }
+        }
+        //        return CallResult(CallResult.ResultType.FINISHED, "Authorised")
+        return CallResult(CallResult.ResultType.WAIT, "")
     }
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {

@@ -49,6 +49,7 @@ interface PaymentMVP {
 
         fun showErrorDialog(@StringRes stringId: Int)
 
+        fun handleChangeCard()
     }
 
     interface PaymentActions {
