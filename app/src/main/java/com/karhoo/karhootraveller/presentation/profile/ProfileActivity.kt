@@ -14,8 +14,7 @@ import kotlinx.android.synthetic.main.activity_profile.bookingPaymentDetailsWidg
 import kotlinx.android.synthetic.main.activity_profile.toolbar
 import kotlinx.android.synthetic.main.activity_profile.userProfileView
 
-class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP
-.Actions {
+class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.Actions {
 
     override val layout: Int = R.layout.activity_profile
 
