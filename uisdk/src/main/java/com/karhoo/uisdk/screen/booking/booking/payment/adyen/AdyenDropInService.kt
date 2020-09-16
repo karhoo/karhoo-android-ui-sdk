@@ -9,17 +9,11 @@ import org.json.JSONObject
 
 class AdyenDropInService : DropInService() {
     override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
-        getPayment(paymentComponentData)
-        return CallResult(CallResult.ResultType.WAIT, "")
-    }
-
-    private fun getPayment(paymentComponentData: JSONObject) {
         val requestString = createPaymentRequestString(paymentComponentData)
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
                         val payments = JSONObject(it).getJSONObject("payload")
                         asyncCallback(handlePaymentRequestResult(payments))
                     }
@@ -30,6 +24,7 @@ class AdyenDropInService : DropInService() {
                 }
             }
         }
+        return CallResult(CallResult.ResultType.WAIT, "")
     }
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
@@ -73,7 +68,6 @@ class AdyenDropInService : DropInService() {
                 }
             }
         }
-        //        return CallResult(CallResult.ResultType.FINISHED, "Authorised")
         return CallResult(CallResult.ResultType.WAIT, "")
     }
 
