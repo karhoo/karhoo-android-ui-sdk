@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
@@ -17,7 +16,6 @@ import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
-import java.math.BigDecimal
 import java.util.Currency
 
 class AdyenPaymentPresenter(view: PaymentMVP.View,
@@ -96,6 +94,10 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
         passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
+    }
+
+    override fun setSavedCardDetails() {
+        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {

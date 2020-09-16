@@ -37,6 +37,8 @@ interface PaymentMVP {
 
         fun initialiseGuestPayment(price: QuotePrice?)
 
+        fun setSavedCardDetails()
+
         fun sdkInit(price: QuotePrice?)
 
         fun passBackNonce(braintreeSDKNonce: String)

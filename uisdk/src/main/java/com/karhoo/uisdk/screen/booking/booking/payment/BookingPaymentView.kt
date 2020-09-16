@@ -45,6 +45,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 changeCard()
             }
         }
+        paymentPresenter?.setSavedCardDetails()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
