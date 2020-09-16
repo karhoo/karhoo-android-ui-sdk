@@ -119,4 +119,8 @@ class ProfileActivity : BaseActivity(), PaymentMVP.CardActions, UserProfileMVP.A
                 get() = Builder()
         }
     }
+
+    override fun handleChangeCard() {
+        bookingPaymentDetailsWidget.initialiseChangeCard(null)
+    }
 }

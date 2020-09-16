@@ -372,4 +372,5 @@
 
     <!-- Adyen -->
     <string name="pay_button">Envoyer</string>
+    <string name="pay_button_with_value">Preauthorise %s</string>
 </resources>

@@ -142,6 +142,10 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
         view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
     }
 
+    override fun setSavedCardDetails() {
+        view?.bindPaymentDetails(userStore.savedPaymentInfo)
+    }
+
     companion object {
         private const val REQ_CODE_BRAINTREE = 301
         private const val REQ_CODE_BRAINTREE_GUEST = 302

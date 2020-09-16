@@ -37,6 +37,8 @@ interface PaymentMVP {
 
         fun initialiseGuestPayment(price: QuotePrice?)
 
+        fun setSavedCardDetails()
+
         fun sdkInit(price: QuotePrice?)
 
         fun passBackNonce(braintreeSDKNonce: String)
@@ -49,6 +51,7 @@ interface PaymentMVP {
 
         fun showErrorDialog(@StringRes stringId: Int)
 
+        fun handleChangeCard()
     }
 
     interface PaymentActions {
