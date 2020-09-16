@@ -11,8 +11,8 @@ import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
@@ -23,7 +23,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
-    var actions: PaymentDropInMVP.Actions? = null
     private var adyenKey: String = ""
     var price: QuotePrice? = null
 
@@ -44,7 +43,8 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                         getPaymentMethods()
                     }
                 }
-                is Resource.Failure -> actions?.showPaymentFailureDialog()
+                //TODO Change error message
+                is Resource.Failure -> view?.showError(R.string.payment_issue_message)
             }
         }
     }
@@ -60,7 +60,8 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                             view?.showPaymentUI(adyenKey, it, price)
                         }
                     }
-                    is Resource.Failure -> actions?.showPaymentFailureDialog()
+                    //TODO Change error message
+                    is Resource.Failure -> view?.showError(R.string.payment_issue_message)
                 }
             }
         }
