@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -46,6 +45,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 changeCard()
             }
         }
+        paymentPresenter?.setSavedCardDetails()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -71,16 +71,17 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     private fun changeCard() {
-        cardDetailsVisibility(View.GONE)
+        cardDetailsVisibility(GONE)
         cardNumberText.isEnabled = false
-        changeCardLabel.visibility = View.GONE
-        changeCardProgressBar.visibility = View.VISIBLE
+        changeCardLabel.visibility = GONE
+        changeCardProgressBar.visibility = VISIBLE
         paymentActions?.handleChangeCard()
+        cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
-        cardDetailsVisibility(View.VISIBLE)
-        changeCardProgressBar.visibility = View.GONE
+        cardDetailsVisibility(VISIBLE)
+        changeCardProgressBar.visibility = GONE
     }
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
@@ -114,7 +115,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             CardType.MASTERCARD -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
         }
-        visibility = View.VISIBLE
+        visibility = VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -137,15 +138,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         savedPaymentInfo?.let {
             apply {
                 bindViews(it.cardType, it.lastFour)
-                changeCardProgressBar.visibility = View.INVISIBLE
-                cardDetailsVisibility(View.VISIBLE)
-                changeCardLabel.visibility = View.VISIBLE
+                changeCardProgressBar.visibility = INVISIBLE
+                cardDetailsVisibility(VISIBLE)
+                changeCardLabel.visibility = VISIBLE
                 paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
                 setCardType(it.cardType)
             }
         } ?: run {
             cardNumberText.text = resources.getString(R.string.add_payment)
-            changeCardLabel.visibility = View.GONE
+            changeCardLabel.visibility = GONE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
             paymentLayout.background = ContextCompat.getDrawable(context, addPaymentBackground)
         }

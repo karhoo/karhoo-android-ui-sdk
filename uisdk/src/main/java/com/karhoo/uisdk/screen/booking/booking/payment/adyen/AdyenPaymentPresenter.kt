@@ -1,17 +1,18 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.adyen.AdyenAmount
+import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
@@ -22,7 +23,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
-    var actions: PaymentDropInMVP.Actions? = null
     private var adyenKey: String = ""
     var price: QuotePrice? = null
 
@@ -41,23 +41,28 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                     result.data.let {
                         adyenKey = it.publicKey
                         getPaymentMethods()
-
                     }
                 }
-                is Resource.Failure -> actions?.showPaymentFailureDialog()
+                //TODO Change error message
+                is Resource.Failure -> view?.showError(R.string.payment_issue_message)
             }
         }
     }
 
     private fun getPaymentMethods() {
-        paymentsService.getAdyenPaymentMethods().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        view?.showPaymentUI(adyenKey, it, price)
+        val amount = AdyenAmount(price?.currencyCode ?: "GBP", price?.highPrice.orZero())
+        let {
+            val request = AdyenPaymentMethodsRequest(amount = amount)
+            paymentsService.getAdyenPaymentMethods(request).execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.let {
+                            view?.showPaymentUI(adyenKey, it, price)
+                        }
                     }
+                    //TODO Change error message
+                    is Resource.Failure -> view?.showError(R.string.payment_issue_message)
                 }
-                is Resource.Failure -> actions?.showPaymentFailureDialog()
             }
         }
     }
@@ -90,6 +95,10 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
         passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
+    }
+
+    override fun setSavedCardDetails() {
+        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
