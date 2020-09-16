@@ -23,7 +23,7 @@ interface PaymentDropInMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun passBackNonce(braintreeSDKNonce: String)
+        fun passBackNonce(sdkNonce: String)
 
         fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
 

@@ -48,6 +48,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
         val dropInIntent = Intent(context, ResultActivity::class.java).apply {
             putExtra(ResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
+            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
 
         val amount = Amount()

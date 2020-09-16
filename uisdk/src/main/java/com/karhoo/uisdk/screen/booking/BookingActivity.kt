@@ -29,6 +29,7 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP

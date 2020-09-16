@@ -79,7 +79,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         //TODO
     }
 
-    override fun passBackNonce(braintreeSDKNonce: String) {
+    override fun passBackNonce(sdkNonce: String) {
         //TODO
     }
 
