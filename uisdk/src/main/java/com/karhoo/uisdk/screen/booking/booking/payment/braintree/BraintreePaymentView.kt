@@ -30,7 +30,8 @@ class BraintreePaymentView : PaymentDropInMVP.View {
                 REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        actions?.updateCardDetails(it.nonce, it.description, it.typeLabel)
+                        actions?.updateCardDetails(nonce = it.nonce, cardNumber = it.description,
+                                                   cardTypeLabel = it.typeLabel)
                     }
                     actions?.handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }

@@ -10,7 +10,7 @@ interface PaymentMVP {
 
         fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
 
-        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+        fun handlePaymentDetailsUpdate(sdkNonce: String?)
 
         fun initialiseChangeCard(price: QuotePrice?)
 
@@ -24,7 +24,7 @@ interface PaymentMVP {
 
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
 
-        fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String)
+        fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
 
         fun threeDSecureNonce(threeDSNonce: String)
 
@@ -43,7 +43,7 @@ interface PaymentMVP {
 
         fun passBackNonce(sdkNonce: String)
 
-        fun updateCardDetails(nonce: String, description: String, typeLabel: String)
+        fun updateCardDetails(nonce: String, description: String? = "", typeLabel: String? = "", paymentData: String? = "")
 
     }
 
@@ -62,7 +62,7 @@ interface PaymentMVP {
 
         fun showPaymentFailureDialog()
 
-        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+        fun handlePaymentDetailsUpdate(sdkNonce: String?)
 
         fun showPaymentDialog()
 

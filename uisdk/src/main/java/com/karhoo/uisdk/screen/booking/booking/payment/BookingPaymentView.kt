@@ -50,7 +50,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPaymentView,
-                defStyleAttr, R.style.KhPaymentView)
+                                                        defStyleAttr, R.style.KhPaymentView)
         addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus)
@@ -84,8 +84,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         changeCardProgressBar.visibility = GONE
     }
 
-    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
-        paymentPresenter?.updateCardDetails(nonce, description, typeLabel)
+    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
+                                   paymentData: String?) {
+        paymentPresenter?.updateCardDetails(nonce, cardNumber, cardTypeLabel, paymentData)
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {

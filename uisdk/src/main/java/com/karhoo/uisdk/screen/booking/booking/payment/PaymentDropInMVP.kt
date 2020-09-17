@@ -33,6 +33,6 @@ interface PaymentDropInMVP {
 
         fun refresh()
 
-        fun updateCardDetails(nonce: String, description: String, typeLabel: String)
+        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")
     }
 }

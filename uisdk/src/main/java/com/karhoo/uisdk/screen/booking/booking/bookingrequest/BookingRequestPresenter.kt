@@ -191,8 +191,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo, quotePrice)
     }
 
-    override fun updateCardDetails(braintreeSDKNonce: String?) {
-        braintreeSDKNonce?.let {
+    override fun updateCardDetails(sdkNonce: String?) {
+        sdkNonce?.let {
             view?.enableBooking()
         } ?: view?.disableBooking()
     }

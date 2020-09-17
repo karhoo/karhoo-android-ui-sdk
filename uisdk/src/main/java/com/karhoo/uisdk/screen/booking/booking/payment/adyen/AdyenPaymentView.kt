@@ -34,13 +34,9 @@ class AdyenPaymentView : PaymentDropInMVP.View {
             val jsonResponse = JSONObject(dataString)
             val transactionId = jsonResponse.optString("transaction_id", "")
             val payload = jsonResponse.getJSONObject("payload")
-            val additionalData = payload.getJSONObject("additionalData")
-            val cardNumber = additionalData.optString("cardSummary", "")
-            val type = additionalData.optString("paymentMethod", "")
-            //TODO Use CardType fromString
-            val cardType = if (type == "mc") CardType.MASTERCARD else CardType.NOT_SET
             when (payload.optString("resultCode", "")) {
-                "Authorised" -> actions?.updateCardDetails(transactionId, cardNumber, cardType.toString())
+                "Authorised" -> actions?.updateCardDetails(nonce = transactionId,
+                                                           paymentResponseData = jsonResponse.optString("payload", ""))
                 else -> actions?.showPaymentFailureDialog()
             }
         } else {

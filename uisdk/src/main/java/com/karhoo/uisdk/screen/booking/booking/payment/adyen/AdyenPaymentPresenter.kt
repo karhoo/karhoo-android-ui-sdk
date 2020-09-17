@@ -17,6 +17,7 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
+import org.json.JSONObject
 import java.util.Currency
 
 class AdyenPaymentPresenter(view: PaymentMVP.View,
@@ -90,11 +91,20 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
-    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
+    override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
+                                   paymentData: String?) {
         this.nonce = nonce
         Log.d("Adyen", "nonce $nonce")
-        val savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
-        view?.bindPaymentDetails(savedPaymentInfo)
+        paymentData?.let {
+            val jsonResponse = JSONObject(paymentData)
+            val additionalData = jsonResponse.getJSONObject("additionalData")
+            val cardNumber = additionalData.optString("cardSummary", "")
+            val type = additionalData.optString("paymentMethod", "")
+            //TODO Use CardType fromString
+            val cardType = if (type == "mc") CardType.MASTERCARD else CardType.NOT_SET
+            val savedPaymentInfo = SavedPaymentInfo(cardNumber, cardType)
+            view?.bindPaymentDetails(savedPaymentInfo)
+        } ?: view?.refresh()
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
