@@ -94,7 +94,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         this.nonce = nonce
         Log.d("Adyen", "nonce $nonce")
         val savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
-        userStore.savedPaymentInfo = savedPaymentInfo
         view?.bindPaymentDetails(savedPaymentInfo)
     }
 
