@@ -42,6 +42,7 @@
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
 
+    <!-- Quick fix for date picker text buttons -->
     <style name="DialogButtonTheme">
         <item name="colorOnPrimary">@color/dark_grey</item>
         <item name="colorOnSecondary">@color/dark_grey</item>
