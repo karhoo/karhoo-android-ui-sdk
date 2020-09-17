@@ -4,6 +4,8 @@ import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
@@ -14,8 +16,16 @@ class AdyenDropInService : DropInService() {
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        val payments = JSONObject(it).getJSONObject("payload")
-                        asyncCallback(handlePaymentRequestResult(payments))
+                        val jsonObject = JSONObject(it)
+//                        val payments = jsonObject.getJSONObject("payload")
+/*                        val cardNumber = payments.optString("cardSummary", "")
+                        val type = payments.optString("paymentMethod", "")
+                        val cardType = if(type == "mc") CardType.MASTERCARD else CardType.NOT_SET
+                        KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(lastFour =
+                                                                                cardNumber,
+                                                                                cardType = cardType)*/
+
+                        asyncCallback(handlePaymentRequestResult(jsonObject))
                     }
                 }
                 is Resource.Failure -> {
@@ -74,7 +84,7 @@ class AdyenDropInService : DropInService() {
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
             if (response.isNull("action")) {
-                CallResult(CallResult.ResultType.FINISHED, response.getString("resultCode"))
+                CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
                 CallResult(CallResult.ResultType.ACTION, response.getString("action"))
             }

@@ -10,9 +10,10 @@ import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.ResultActivity.Companion.RESULT_KEY
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenResultActivity.Companion.RESULT_KEY
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Locale
@@ -21,15 +22,25 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
     var actions: PaymentDropInMVP.Actions? = null
 
-    override fun handleThreeDSecure(context: Context, braintreeSDKToken: String, nonce: String, amount: String) {
-        TODO("Not yet implemented")
+    override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
+    String) {
+        actions?.threeDSecureNonce(sdkToken)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         Log.d("Adyen", "$requestCode $resultCode")
-        if(resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            when(data.getStringExtra(RESULT_KEY)) {
-                "Authorised" -> actions?.passBackNonce("")
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            val dataString = data.getStringExtra(RESULT_KEY)
+            val jsonResponse = JSONObject(dataString)
+            val transactionId = jsonResponse.optString("transaction_id", "")
+            val payload = jsonResponse.getJSONObject("payload")
+            val additionalData = payload.getJSONObject("additionalData")
+            val cardNumber = additionalData.optString("cardSummary", "")
+            val type = additionalData.optString("paymentMethod", "")
+            //TODO Use CardType fromString
+            val cardType = if (type == "mc") CardType.MASTERCARD else CardType.NOT_SET
+            when (payload.optString("resultCode", "")) {
+                "Authorised" -> actions?.updateCardDetails(transactionId, cardNumber, cardType.toString())
                 else -> actions?.showPaymentFailureDialog()
             }
         } else {
@@ -46,8 +57,8 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                         .setShopperLocale(Locale.getDefault())
                         .build()
 
-        val dropInIntent = Intent(context, ResultActivity::class.java).apply {
-            putExtra(ResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
+        val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
+            putExtra(AdyenResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
 

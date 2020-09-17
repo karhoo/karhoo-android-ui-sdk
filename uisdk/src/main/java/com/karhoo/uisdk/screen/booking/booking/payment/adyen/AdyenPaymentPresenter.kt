@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.util.Log
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
@@ -27,7 +28,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     var price: QuotePrice? = null
 
     private var sdkToken: String = ""
-    private var nonce: String = ""
+    private var nonce: String? = ""
 
     init {
         attachView(view)
@@ -68,7 +69,9 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
-        //TODO
+        nonce?.let {
+            passBackThreeDSecureNonce(it, quotePriceToAmount(price))
+        } ?: view?.showError(R.string.payment_issue_message)
     }
 
     private fun getNonce(braintreeSDKToken: String, amount: String) {
@@ -89,8 +92,10 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
     override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
         this.nonce = nonce
-        userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
-        view?.refresh()
+        Log.d("Adyen", "nonce $nonce")
+        val savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
+        userStore.savedPaymentInfo = savedPaymentInfo
+        view?.bindPaymentDetails(savedPaymentInfo)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
