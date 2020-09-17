@@ -1,11 +1,9 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
+import com.adyen.checkout.redirect.RedirectComponent
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
@@ -17,14 +15,6 @@ class AdyenDropInService : DropInService() {
                 is Resource.Success -> {
                     result.data.let {
                         val jsonObject = JSONObject(it)
-//                        val payments = jsonObject.getJSONObject("payload")
-/*                        val cardNumber = payments.optString("cardSummary", "")
-                        val type = payments.optString("paymentMethod", "")
-                        val cardType = if(type == "mc") CardType.MASTERCARD else CardType.NOT_SET
-                        KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(lastFour =
-                                                                                cardNumber,
-                                                                                cardType = cardType)*/
-
                         asyncCallback(handlePaymentRequestResult(jsonObject))
                     }
                 }
@@ -38,15 +28,16 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
+
         val payload = JSONObject()
         payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
         payload.put("channel", "Android")
-        payload.put("returnUrl", "http://karhoo.com")
+        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
         payload.put("amount", paymentComponentData.getJSONObject("amount"))
 
         val request = JSONObject()
         request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/payment")
+//        request.put("return_url_suffix", "/payment")
         return request.toString().replace("\\", "")
     }
 
@@ -55,11 +46,11 @@ class AdyenDropInService : DropInService() {
         val payload = JSONObject()
         payload.put("paymentMethod", actionComponentData.getJSONObject("paymentMethod"))
         payload.put("channel", "Android")
-        payload.put("returnUrl", "http://karhoo.com")
+        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
 
         val request = JSONObject()
         request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/payment")
+//        request.put("return_url_suffix", "/payment")
         val requestString = request.toString().replace("\\", "")
         // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
         // Create the `CallResult` based on the /payments/details response
@@ -67,7 +58,6 @@ class AdyenDropInService : DropInService() {
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
                         val response = JSONObject(it)
                         asyncCallback(handlePaymentRequestResult(response))
                     }

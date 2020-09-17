@@ -22,7 +22,6 @@ class AdyenResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.uisdk_activity_base)
 
-        val dat = intent
         val res = intent?.getStringExtra(RESULT_KEY) ?: "Processing"
         val data = Intent()
         data.putExtra(RESULT_KEY, res)

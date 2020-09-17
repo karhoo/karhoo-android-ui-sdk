@@ -10,7 +10,7 @@ import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.karhoo.sdk.api.model.CardType
+import com.adyen.checkout.redirect.RedirectComponent
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenResultActivity.Companion.RESULT_KEY
@@ -45,6 +45,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     override fun showPaymentUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
+
         val payments = JSONObject(paymentsString)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
@@ -75,6 +76,9 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                 .build()
 
         DropIn.startPayment(context, paymentMethods, dropInConfiguration)
+
+        val returnUrl = RedirectComponent.getReturnUrl(context)
+        Log.d("Adyen", "returnUrl $returnUrl")
     }
 
     companion object {
