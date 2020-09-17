@@ -39,6 +39,13 @@
         <item name="colorAccent">@color/secondary</item>
         <item name="colorControlNormal">@color/primary_green</item>
         <item name="android:textColor">@color/dark_grey</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="DialogButtonTheme">
+        <item name="colorOnPrimary">@color/dark_grey</item>
+        <item name="colorOnSecondary">@color/dark_grey</item>
+        <item name="colorOnSurface">@color/dark_grey</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
