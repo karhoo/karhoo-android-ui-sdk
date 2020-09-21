@@ -15,8 +15,8 @@ class AdyenDropInService : DropInService() {
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        val jsonObject = JSONObject(it)
-                        asyncCallback(handlePaymentRequestResult(jsonObject))
+                        val response = JSONObject(it)
+                        asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
                     }
                 }
                 is Resource.Failure -> {
@@ -73,7 +73,9 @@ class AdyenDropInService : DropInService() {
             if (response.isNull("action")) {
                 CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
-                CallResult(CallResult.ResultType.ACTION, response.getString("action"))
+                val action = response.getString("action")
+                Log.d("Adyen", "action $action")
+                CallResult(CallResult.ResultType.ACTION, action)
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
