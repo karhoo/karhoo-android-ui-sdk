@@ -31,9 +31,12 @@ class AdyenDropInService : DropInService() {
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
         Log.d("Adyen", paymentComponentData.toString())
         val request = JSONObject()
-        paymentComponentData.put("returnUrl", RedirectComponent.getReturnUrl(this))
-        paymentComponentData.put("channel", "Android")
-        request.put("payments_payload", paymentComponentData)
+        val payload = JSONObject()
+        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
+        payload.put("amount", paymentComponentData.getJSONObject("amount"))
+        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
+        payload.put("channel", "Android")
+        request.put("payments_payload", payload)
         request.put("return_url_suffix", "/paymentDetails")
         return request.toString().replace("\\", "")
     }
