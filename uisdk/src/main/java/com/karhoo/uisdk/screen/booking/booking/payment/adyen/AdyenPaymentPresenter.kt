@@ -75,14 +75,6 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         } ?: view?.showError(R.string.payment_issue_message)
     }
 
-    private fun getNonce(braintreeSDKToken: String, amount: String) {
-        //TODO
-    }
-
-    private fun handleChangeCardSuccess(braintreeSDKToken: String) {
-        //TODO
-    }
-
     override fun passBackNonce(sdkNonce: String) {
         //TODO
     }

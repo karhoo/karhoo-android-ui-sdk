@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.adyen.checkout.redirect.RedirectComponent
@@ -28,29 +29,22 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
-
-        val payload = JSONObject()
-        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
-        payload.put("channel", "Android")
-        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
-        payload.put("amount", paymentComponentData.getJSONObject("amount"))
-
+        Log.d("Adyen", paymentComponentData.toString())
         val request = JSONObject()
-        request.put("payments_payload", payload)
-//        request.put("return_url_suffix", "/payment")
+        paymentComponentData.put("returnUrl", RedirectComponent.getReturnUrl(this))
+        paymentComponentData.put("channel", "Android")
+        request.put("payments_payload", paymentComponentData)
+        request.put("return_url_suffix", "/paymentDetails")
         return request.toString().replace("\\", "")
     }
 
     // Handling for submitting additional payment details
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        val payload = JSONObject()
-        payload.put("paymentMethod", actionComponentData.getJSONObject("paymentMethod"))
-        payload.put("channel", "Android")
-        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
-
+        Log.d("Adyen", "makeDetailsCall")
         val request = JSONObject()
-        request.put("payments_payload", payload)
-//        request.put("return_url_suffix", "/payment")
+        request.put("payload", actionComponentData)
+        request.put("transaction_id", actionComponentData)
+
         val requestString = request.toString().replace("\\", "")
         // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
         // Create the `CallResult` based on the /payments/details response
