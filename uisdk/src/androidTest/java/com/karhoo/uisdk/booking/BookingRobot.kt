@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.booking
 
 import android.content.Intent
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
@@ -11,7 +10,8 @@ import org.junit.Assert
 
 fun booking(func: BookingRobot.() -> Unit) = BookingRobot().apply { func() }
 
-fun booking(launch: Launch, intent: Intent? = null, func: BookingRobot.() -> Unit) = BookingRobot().apply {
+fun booking(launch: Launch, intent: Intent? = null, func: BookingRobot.() -> Unit) = BookingRobot()
+        .apply {
     launch.launch(intent)
     tapTurnOnGpsBtn()
     func()
@@ -379,7 +379,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun bothSelectedAddressesAreVisible() {
-        selectedDestinationAddressIsVisible(address = TestData.SELECTED_DESTINATION_ADDRESS)
+        selectedDestinationAddressIsVisible(address = TestData.SELECTED_ADDRESS_EXTRA)
         selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
     }
 

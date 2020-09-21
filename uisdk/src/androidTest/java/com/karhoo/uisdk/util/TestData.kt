@@ -316,7 +316,7 @@ class TestData {
 
         const val REVERSE_GEO_DISPLAY_ADDRESS = "12 Grimmauld Place, OFTP HQ"
 
-        const val SELECTED_DESTINATION_ADDRESS = "368 Oxford St, London W1D 1LU, UK"
+        const val SELECTED_ADDRESS_EXTRA = "368 Oxford St, London W1D 1LU, UK"
 
         const val SELECTED_ADDRESS = "221B Baker St, Marylebone, London NW1 6XE, UK"
 
