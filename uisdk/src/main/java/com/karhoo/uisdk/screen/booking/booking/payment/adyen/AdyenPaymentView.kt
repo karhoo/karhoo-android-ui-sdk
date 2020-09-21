@@ -52,6 +52,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val cardConfiguration =
                 CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
+                        .setHolderNameRequire (true)
                         .build()
 
         val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
