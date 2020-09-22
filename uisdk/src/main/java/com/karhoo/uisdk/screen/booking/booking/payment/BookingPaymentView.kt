@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -154,7 +153,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
-        Log.d("Adyen", "BPV showPaymentUI")
         paymentActions?.showPaymentUI()
         viewActions?.showPaymentDropInUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
     }
@@ -169,7 +167,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
-        Log.d("Adyen", "initialiseChangeCard showPaymentUI")
         paymentPresenter?.sdkInit(price)
     }
 
