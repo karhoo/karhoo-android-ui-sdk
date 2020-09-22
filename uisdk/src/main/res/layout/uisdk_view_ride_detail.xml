@@ -413,7 +413,7 @@
 
             <Button
                 android:id="@+id/reportIssueButton"
-                style="@style/Text.Action"
+                style="@style/NoBackgroundButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_medium_small"
@@ -421,7 +421,7 @@
 
             <Button
                 android:id="@+id/rebookRideButton"
-                style="@style/Text.Action"
+                style="@style/NoBackgroundButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_medium_small"
@@ -430,7 +430,7 @@
 
             <Button
                 android:id="@+id/cancelRideButton"
-                style="@style/Text.Action"
+                style="@style/NoBackgroundButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_medium_small"
@@ -438,7 +438,7 @@
 
             <Button
                 android:id="@+id/contactFleetButton"
-                style="@style/Text.Action"
+                style="@style/NoBackgroundButtonTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/spacing_large"
                 android:layout_marginRight="@dimen/spacing_medium_small"

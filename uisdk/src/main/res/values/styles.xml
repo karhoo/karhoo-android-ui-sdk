@@ -39,6 +39,23 @@
         <item name="colorAccent">@color/secondary</item>
         <item name="colorControlNormal">@color/primary_green</item>
         <item name="android:textColor">@color/dark_grey</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <!-- Quick fix for date picker text buttons -->
+    <style name="DialogButtonTheme">
+        <item name="colorOnPrimary">@color/dark_grey</item>
+        <item name="colorOnSecondary">@color/dark_grey</item>
+        <item name="colorOnSurface">@color/dark_grey</item>
+    </style>
+
+    <!-- Quick fix for no background buttons -->
+    <style name="NoBackgroundButtonTheme">
+        <item name="colorOnSurface">@color/off_white</item>
+        <item name="colorPrimary">@color/off_white</item>
+        <item name="background">@color/off_white</item>
+        <item name="backgroundTint">@color/off_white</item>
+        <item name="android:textColor">@color/uisdk_text_action</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -119,6 +136,14 @@
         <item name="android:textSize">@dimen/text_size_small_medium</item>
         <item name="android:textColor">@color/off_black</item>
         <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="TextButtonWithNoBackground">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/off_black</item>
+        <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
 
     <style name="CancelProgressBar">
@@ -135,6 +160,14 @@
         <item name="android:textSize">@dimen/text_size_small_medium</item>
         <item name="android:textColor">@color/off_black</item>
         <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="PlainTextButtonWithNoBackground">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/off_black</item>
+        <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
 
     <style name="KhVehicleClassTabs" parent="Widget.Design.TabLayout">
@@ -167,6 +200,8 @@
 
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/off_black</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
 
     <style name="KhAddressPickerBackground">
