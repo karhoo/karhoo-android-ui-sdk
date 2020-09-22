@@ -34,12 +34,12 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val dataString = data.getStringExtra(RESULT_KEY)
             val jsonResponse = JSONObject(dataString)
-            val transactionId = jsonResponse.optString("transaction_id", "")
-            val payload = jsonResponse.getJSONObject("payload")
-            when (payload.optString("resultCode", "")) {
+            when (jsonResponse.optString("resultCode", "")) {
                 "Authorised" -> {
+                    val transactionId = jsonResponse.optString("merchantReference", "")
                     actions?.updateCardDetails(nonce = transactionId,
-                                               paymentResponseData = jsonResponse.optString("payload", ""))
+                                               paymentResponseData = dataString)
+                    actions?.passBackNonce(transactionId)
                 }
                 else -> actions?.showPaymentFailureDialog()
             }
@@ -48,9 +48,9 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentDropInUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?) {
         //TODO Move config build logic to Presenter
-        val payments = JSONObject(paymentsString)
+        val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
         val cardConfiguration =

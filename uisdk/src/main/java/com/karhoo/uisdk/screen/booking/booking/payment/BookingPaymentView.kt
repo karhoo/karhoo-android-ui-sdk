@@ -84,8 +84,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
-                                   paymentData: String?) {
-        paymentPresenter?.updateCardDetails(nonce, cardNumber, cardTypeLabel, paymentData)
+                                   paymentResponseData: String?) {
+        paymentPresenter?.updateCardDetails(nonce, cardNumber, cardTypeLabel, paymentResponseData)
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
@@ -122,8 +122,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         viewActions?.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun passBackNonce(braintreeSDKNonce: String) {
-        paymentPresenter?.passBackNonce(braintreeSDKNonce)
+    override fun passBackNonce(sdkNonce: String) {
+        paymentPresenter?.passBackNonce(sdkNonce)
     }
 
     override fun showError(error: Int) {
@@ -154,7 +154,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentDropInUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
+        viewActions?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
+        paymentData, price = price)
     }
 
     override fun showPaymentFailureDialog() {
@@ -162,8 +163,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentFailureDialog()
     }
 
-    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
-        paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
+        paymentActions?.handlePaymentDetailsUpdate(sdkNonce)
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
@@ -174,7 +175,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.threeDSecureNonce(threeDSNonce)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        viewActions?.handleThreeDSecure(context, braintreeSDKToken, nonce, amount)
+    override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
+        viewActions?.handleThreeDSecure(context, sdkToken, nonce, amount)
     }
 }

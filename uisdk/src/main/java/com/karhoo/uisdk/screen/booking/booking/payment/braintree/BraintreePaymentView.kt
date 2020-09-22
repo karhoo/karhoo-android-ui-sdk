@@ -41,15 +41,16 @@ class BraintreePaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentDropInUI(braintreeSDKToken: String, paymentData: String?, price: QuotePrice?, context: Context) {
-        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
+    String?, price: QuotePrice?) {
+        val dropInRequest = DropInRequest().clientToken(sdkToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
-    override fun handleThreeDSecure(context: Context, braintreeSDKToken: String, nonce: String, amount: String) {
+    override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment
-                .newInstance(context as AppCompatActivity, braintreeSDKToken)
+                .newInstance(context as AppCompatActivity, sdkToken)
 
         braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
             override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
