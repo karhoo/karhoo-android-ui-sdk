@@ -54,6 +54,7 @@ import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import java.net.HttpURLConnection
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -778,6 +779,8 @@ class ServerRobot {
 
         val TRIP_POB = TRIP_DER.copy(tripState = TripStatus.PASSENGER_ON_BOARD)
 
+        val TRIP_COMPLETED = TRIP.copy(tripState = TripStatus.COMPLETED)
+
         val TRIP_CANCELLED_BY_FLEET = TRIP_DER.copy(tripState = TripStatus.CANCELLED_BY_DISPATCH)
 
         val TRIP_ALLOCATING = TRIP_DER.copy(tripState = TripStatus.REQUESTED)
@@ -793,6 +796,8 @@ class ServerRobot {
         val TRIP_STATUS_ARRIVED = TripState(TripStatus.ARRIVED)
 
         val TRIP_STATUS_CANCELLED_BY_FLEET = TripState(TripStatus.CANCELLED_BY_DISPATCH)
+
+        val TRIP_STATUS_COMPLETED = TripState(TripStatus.COMPLETED)
 
         /**
          *
