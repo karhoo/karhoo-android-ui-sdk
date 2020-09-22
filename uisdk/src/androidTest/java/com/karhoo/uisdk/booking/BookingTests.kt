@@ -340,7 +340,7 @@ class BookingTests : Launch {
      * Then:    The user is returned to the map screen
      **/
     @Test
-    @AllowFlaky(attempts = 1)
+    @AllowFlaky(attempts = 3)
     fun prebookWindowClosesAfterSelectingDateAndTime() {
         serverRobot {
             successfulToken()
@@ -608,6 +608,7 @@ class BookingTests : Launch {
             pressFirstQuote()
             sleep(MEDIUM)
             pressBookRideButton()
+            waitForTime(5000)
             sleep()
         } result {
             checkDriverDetails()
@@ -615,11 +616,11 @@ class BookingTests : Launch {
     }
 
     override fun launch(intent: Intent?) {
-        intent?.let {
-            activityRule.launchActivity(it)
-        } ?: run {
-            activityRule.launchActivity(this.intent)
-        }
+            intent?.let {
+                activityRule.launchActivity(it)
+            } ?: run {
+                activityRule.launchActivity(this.intent)
+            }
     }
 
     companion object {
