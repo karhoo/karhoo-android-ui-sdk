@@ -76,7 +76,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun passBackNonce(sdkNonce: String) {
-        //TODO
+        this.sdkToken = sdkNonce
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {

@@ -40,7 +40,6 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                 "Authorised" -> {
                     actions?.updateCardDetails(nonce = transactionId,
                                                paymentResponseData = jsonResponse.optString("payload", ""))
-                    actions?.passBackNonce(transactionId)
                 }
                 else -> actions?.showPaymentFailureDialog()
             }

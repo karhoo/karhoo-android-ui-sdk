@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.content.Context
 import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
@@ -18,6 +17,7 @@ class AdyenDropInService : DropInService() {
                 is Resource.Success -> {
                     result.data.let {
                         val response = JSONObject(it)
+                        //TODO Find a better way to store / pass through the transaction id
                         val transactionId = response.getString("transaction_id")
                         val sharedPref = this.getSharedPreferences("transactionId", MODE_PRIVATE)
                         with(sharedPref.edit()) {
@@ -50,7 +50,10 @@ class AdyenDropInService : DropInService() {
         request.put("payments_payload", payload)
         request.put("return_url_suffix", "/paymentDetails")
 
-        return request.toString().replace("\\", "")
+        val requestString= request.toString().replace("\\", "")
+        Log.d("Adyen", "requestString: $requestString")
+
+        return requestString
     }
 
     // Handling for submitting additional payment details
