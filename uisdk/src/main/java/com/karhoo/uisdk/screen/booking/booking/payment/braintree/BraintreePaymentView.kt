@@ -41,7 +41,7 @@ class BraintreePaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String, paymentData: String?, price: QuotePrice?, context: Context) {
+    override fun showPaymentDropInUI(braintreeSDKToken: String, paymentData: String?, price: QuotePrice?, context: Context) {
         val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)

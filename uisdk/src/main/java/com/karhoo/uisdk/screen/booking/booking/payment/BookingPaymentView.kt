@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -75,7 +76,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = GONE
         changeCardProgressBar.visibility = VISIBLE
-        paymentActions?.handleChangeCard()
         cardActions?.handleChangeCard()
     }
 
@@ -154,8 +154,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
+        Log.d("Adyen", "BPV showPaymentUI")
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
+        viewActions?.showPaymentDropInUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
     }
 
     override fun showPaymentFailureDialog() {
@@ -168,6 +169,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
+        Log.d("Adyen", "initialiseChangeCard showPaymentUI")
         paymentPresenter?.sdkInit(price)
     }
 

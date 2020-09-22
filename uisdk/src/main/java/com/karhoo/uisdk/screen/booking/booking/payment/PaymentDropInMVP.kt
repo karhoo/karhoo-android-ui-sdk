@@ -13,7 +13,7 @@ interface PaymentDropInMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?, context: Context)
+        fun showPaymentDropInUI(sdkToken: String, paymentData: String?, price: QuotePrice?, context: Context)
 
     }
 

@@ -49,8 +49,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         }
     }
 
-    override fun showPaymentUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
-
+    override fun showPaymentDropInUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
         //TODO Move config build logic to Presenter
         val payments = JSONObject(paymentsString)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
