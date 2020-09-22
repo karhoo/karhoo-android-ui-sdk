@@ -71,7 +71,6 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
                 KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
 
-        //TODO Set up for live envs
         val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
@@ -84,9 +83,6 @@ class AdyenPaymentView : PaymentDropInMVP.View {
                 .build()
 
         DropIn.startPayment(context, paymentMethods, dropInConfiguration)
-
-        val returnUrl = RedirectComponent.getReturnUrl(context)
-        Log.d("Adyen", "returnUrl $returnUrl")
     }
 
     companion object {
