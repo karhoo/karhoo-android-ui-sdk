@@ -11,7 +11,9 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.adyen.checkout.redirect.RedirectComponent
+import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenResultActivity.Companion.RESULT_KEY
 import com.karhoo.uisdk.util.extension.orZero
@@ -46,13 +48,14 @@ class AdyenPaymentView : PaymentDropInMVP.View {
 
     override fun showPaymentUI(sdkToken: String, paymentsString: String?, price: QuotePrice?, context: Context) {
 
+        //TODO Move config build logic to Presenter
         val payments = JSONObject(paymentsString)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
         val cardConfiguration =
                 CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
-                        .setHolderNameRequire (true)
+                        .setHolderNameRequire(true)
                         .build()
 
         val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
@@ -64,12 +67,15 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         amount.currency = price?.currencyCode ?: "GBP"
         amount.value = price?.highPrice.orZero()
 
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
+                KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
+
         //TODO Set up for live envs
         val dropInConfiguration = DropInConfiguration.Builder(context, dropInIntent,
                                                               AdyenDropInService::class.java)
                 // When you're ready to accept live payments, change the value to one of our live environments.
                 .setAmount(amount)
-                .setEnvironment(Environment.TEST)
+                .setEnvironment(environment)
                 // Optional. Use to set the language rendered in Drop-in, overriding the default device language setting. See list of Supported languages at https://github.com/Adyen/adyen-android/tree/master/card-ui-core/src/main/res
                 // Make sure that you have set the locale in the payment method configuration object as well.
                 .setShopperLocale(Locale.getDefault())

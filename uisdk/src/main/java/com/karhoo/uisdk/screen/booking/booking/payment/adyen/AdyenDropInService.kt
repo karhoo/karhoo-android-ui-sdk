@@ -9,6 +9,8 @@ import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
 class AdyenDropInService : DropInService() {
+    var transactionId: String? = ""
+
     override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
         val requestString = createPaymentRequestString(paymentComponentData)
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
@@ -16,6 +18,8 @@ class AdyenDropInService : DropInService() {
                 is Resource.Success -> {
                     result.data.let {
                         val response = JSONObject(it)
+                        transactionId = response.getString("transaction_id")
+                        Log.d("Adyen", "transactionId 1: $transactionId")
                         asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
                     }
                 }
@@ -44,11 +48,14 @@ class AdyenDropInService : DropInService() {
     // Handling for submitting additional payment details
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
         Log.d("Adyen", "makeDetailsCall")
+        Log.d("Adyen", actionComponentData.toString())
+        Log.d("Adyen", "transactionId: $transactionId")
         val request = JSONObject()
-        request.put("payload", actionComponentData)
-        request.put("transaction_id", actionComponentData)
+        request.put("transaction_id 2", transactionId.orEmpty())
+        request.put("payments_payload", actionComponentData)
 
         val requestString = request.toString().replace("\\", "")
+        Log.d("Adyen", requestString)
         // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
         // Create the `CallResult` based on the /payments/details response
         KarhooApi.paymentsService.getAdyenPaymentDetails(requestString).execute { result ->
