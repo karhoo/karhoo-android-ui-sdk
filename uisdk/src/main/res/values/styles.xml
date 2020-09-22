@@ -204,12 +204,6 @@
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
 
-    <style name="AlertDialogTest" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:colorAccent">@color/off_black</item>
-        <item name="android:textColor">@color/dark_grey</item>
-        <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
-    </style>
-
     <style name="KhAddressPickerBackground">
         <item name="android:background">@drawable/uisdk_addresses_picker_background</item>
     </style>
