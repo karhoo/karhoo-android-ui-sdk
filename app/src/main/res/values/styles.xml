@@ -34,6 +34,13 @@
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
+    <!-- A quick messy fix for Splash Register button -->
+    <style name="SplashRegisterButtonTheme" parent="AppTheme">
+        <item name="backgroundTint">@color/secondary</item>
+        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorOnSurface">@color/secondary</item>
+    </style>
+
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowNoTitle">true</item>
     </style>

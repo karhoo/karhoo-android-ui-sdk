@@ -15,6 +15,7 @@
         android:layout_height="@dimen/button_register_height"
         android:layout_marginBottom="@dimen/spacing_xxxlarge"
         android:background="@drawable/uisdk_background_blue_rounded"
+        style="@style/SplashRegisterButtonTheme"
         android:paddingLeft="@dimen/spacing_small"
         android:paddingRight="@dimen/spacing_small"
         android:text="@string/register"
