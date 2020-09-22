@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.content.Context
 import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
@@ -9,7 +10,6 @@ import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
 class AdyenDropInService : DropInService() {
-    var transactionId: String? = ""
 
     override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
         val requestString = createPaymentRequestString(paymentComponentData)
@@ -18,7 +18,13 @@ class AdyenDropInService : DropInService() {
                 is Resource.Success -> {
                     result.data.let {
                         val response = JSONObject(it)
-                        transactionId = response.getString("transaction_id")
+                        val transactionId = response.getString("transaction_id")
+                        val sharedPref = this.getSharedPreferences("transactionId", MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("transactionId", transactionId)
+                            commit()
+                        }
+
                         Log.d("Adyen", "transactionId 1: $transactionId")
                         asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
                     }
@@ -49,9 +55,11 @@ class AdyenDropInService : DropInService() {
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
         Log.d("Adyen", "makeDetailsCall")
         Log.d("Adyen", actionComponentData.toString())
+        val transactionId = this.getSharedPreferences("transactionId", MODE_PRIVATE)
+                .getString("transactionId", "")
         Log.d("Adyen", "transactionId: $transactionId")
         val request = JSONObject()
-        request.put("transaction_id 2", transactionId.orEmpty())
+        request.put("transaction_id", transactionId)
         request.put("payments_payload", actionComponentData)
 
         val requestString = request.toString().replace("\\", "")
