@@ -608,6 +608,7 @@ class BookingTests : Launch {
             pressFirstQuote()
             sleep(MEDIUM)
             pressBookRideButton()
+            waitForTime(5000)
             sleep()
         } result {
             checkDriverDetails()
