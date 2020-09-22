@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.adyen.checkout.redirect.RedirectComponent
@@ -25,8 +24,7 @@ class AdyenDropInService : DropInService() {
                             commit()
                         }
 
-                        Log.d("Adyen", "transactionId 1: $transactionId")
-                        asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
+                        asyncCallback(handlePaymentRequestResult(response))
                     }
                 }
                 is Resource.Failure -> {
@@ -39,7 +37,6 @@ class AdyenDropInService : DropInService() {
     }
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
-        Log.d("Adyen", paymentComponentData.toString())
         val payload = JSONObject()
         payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
         payload.put("amount", paymentComponentData.getJSONObject("amount"))
@@ -48,30 +45,19 @@ class AdyenDropInService : DropInService() {
 
         val request = JSONObject()
         request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/paymentDetails")
+        request.put("return_url_suffix", "")
 
-        val requestString= request.toString().replace("\\", "")
-        Log.d("Adyen", "requestString: $requestString")
-
-        return requestString
+        return request.toString()
     }
 
-    // Handling for submitting additional payment details
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        Log.d("Adyen", "makeDetailsCall")
-        Log.d("Adyen", actionComponentData.toString())
         val transactionId = this.getSharedPreferences("transactionId", MODE_PRIVATE)
                 .getString("transactionId", "")
-        Log.d("Adyen", "transactionId: $transactionId")
         val request = JSONObject()
         request.put("transaction_id", transactionId)
         request.put("payments_payload", actionComponentData)
 
-        val requestString = request.toString().replace("\\", "")
-        Log.d("Adyen", requestString)
-        // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
-        // Create the `CallResult` based on the /payments/details response
-        KarhooApi.paymentsService.getAdyenPaymentDetails(requestString).execute { result ->
+        KarhooApi.paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
@@ -90,12 +76,11 @@ class AdyenDropInService : DropInService() {
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            if (response.isNull("action")) {
+            val payload = response.getJSONObject("payload")
+            if (payload.isNull("action")) {
                 CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
-                val action = response.getString("action")
-                Log.d("Adyen", "action $action")
-                CallResult(CallResult.ResultType.ACTION, action)
+                CallResult(CallResult.ResultType.ACTION, payload.getString("action"))
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
