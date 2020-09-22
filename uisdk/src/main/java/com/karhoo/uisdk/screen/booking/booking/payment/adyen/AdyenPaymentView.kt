@@ -37,8 +37,11 @@ class AdyenPaymentView : PaymentDropInMVP.View {
             val transactionId = jsonResponse.optString("transaction_id", "")
             val payload = jsonResponse.getJSONObject("payload")
             when (payload.optString("resultCode", "")) {
-                "Authorised" -> actions?.updateCardDetails(nonce = transactionId,
-                                                           paymentResponseData = jsonResponse.optString("payload", ""))
+                "Authorised" -> {
+                    actions?.updateCardDetails(nonce = transactionId,
+                                               paymentResponseData = jsonResponse.optString("payload", ""))
+                    actions?.passBackNonce(transactionId)
+                }
                 else -> actions?.showPaymentFailureDialog()
             }
         } else {
