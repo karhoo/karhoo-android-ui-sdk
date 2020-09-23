@@ -33,7 +33,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         Log.d("Adyen", "$requestCode $resultCode")
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val dataString = data.getStringExtra(RESULT_KEY)
-            val payload = JSONObject(dataString).getJSONObject("payload")
+            val payload = JSONObject(dataString)
             when (payload.optString("resultCode", "")) {
                 "Authorised" -> {
                     val transactionId = payload.optString("merchantReference", "")

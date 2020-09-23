@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.adyen.checkout.redirect.RedirectComponent
@@ -24,7 +25,7 @@ class AdyenDropInService : DropInService() {
                             commit()
                         }
 
-                        asyncCallback(handlePaymentRequestResult(response))
+                        asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
                     }
                 }
                 is Resource.Failure -> {
@@ -34,20 +35,6 @@ class AdyenDropInService : DropInService() {
             }
         }
         return CallResult(CallResult.ResultType.WAIT, "")
-    }
-
-    private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
-        val payload = JSONObject()
-        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
-        payload.put("amount", paymentComponentData.getJSONObject("amount"))
-        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
-        payload.put("channel", "Android")
-
-        val request = JSONObject()
-        request.put("payments_payload", payload)
-        request.put("return_url_suffix", "")
-
-        return request.toString()
     }
 
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
@@ -76,14 +63,27 @@ class AdyenDropInService : DropInService() {
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            val payload = response.getJSONObject("payload")
-            if (payload.isNull("action")) {
+            if (response.isNull("action")) {
                 CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
-                CallResult(CallResult.ResultType.ACTION, payload.getString("action"))
+                CallResult(CallResult.ResultType.ACTION, response.getString("action"))
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
         }
+    }
+
+    private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
+        val payload = JSONObject()
+        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
+        payload.put("amount", paymentComponentData.getJSONObject("amount"))
+        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
+        payload.put("channel", "Android")
+
+        val request = JSONObject()
+        request.put("payments_payload", payload)
+        request.put("return_url_suffix", "")
+
+        return request.toString()
     }
 }
