@@ -15,8 +15,8 @@ class AdyenDropInService : DropInService() {
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    result.data.let {
-                        val response = JSONObject(it)
+                    result.data.let { result ->
+                        val response = JSONObject(result)
                         //TODO Find a better way to store / pass through the transaction id
                         val transactionId = response.getString("transaction_id")
                         val sharedPref = this.getSharedPreferences("transactionId", MODE_PRIVATE)
@@ -24,8 +24,9 @@ class AdyenDropInService : DropInService() {
                             putString("transactionId", transactionId)
                             commit()
                         }
-
-                        asyncCallback(handlePaymentRequestResult(response.getJSONObject("payload")))
+                        response.optJSONObject("payload")?.let { payload ->
+                            asyncCallback(handlePaymentRequestResult(payload))
+                        } ?: asyncCallback(handlePaymentRequestResult(response))
                     }
                 }
                 is Resource.Failure -> {
