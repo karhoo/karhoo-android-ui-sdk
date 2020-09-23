@@ -86,15 +86,14 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
                                    paymentData: String?) {
         this.nonce = nonce
-        Log.d("Adyen", "nonce $nonce")
         paymentData?.let {
-            val jsonResponse = JSONObject(paymentData)
-            val additionalData = jsonResponse.getJSONObject("additionalData")
+            val additionalData = JSONObject(paymentData)
             val cardNumber = additionalData.optString("cardSummary", "")
             val type = additionalData.optString("paymentMethod", "")
             //TODO Use CardType fromString
-            val cardType = if (type == "mc") CardType.MASTERCARD else CardType.NOT_SET
-            val savedPaymentInfo = SavedPaymentInfo(cardNumber, cardType)
+            val savedPaymentInfo = CardType.fromString(type)?.let {
+                SavedPaymentInfo(cardNumber, it)
+            } ?: SavedPaymentInfo(cardNumber, CardType.NOT_SET)
             view?.bindPaymentDetails(savedPaymentInfo)
         } ?: view?.refresh()
     }

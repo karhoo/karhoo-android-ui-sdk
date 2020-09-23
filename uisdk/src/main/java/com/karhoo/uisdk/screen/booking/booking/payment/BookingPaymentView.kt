@@ -97,9 +97,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        if (cardType != CardType.NOT_SET) {
-            cardNumberText.text = if (isGuest()) number else "•••• $number"
-        }
+        cardNumberText.text = if (isGuest()) number else "•••• $number"
         setCardType(cardType)
     }
 
@@ -114,6 +112,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                     .uidsk_ic_card_visa)
             CardType.MASTERCARD -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
+            else -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
         visibility = VISIBLE
     }
