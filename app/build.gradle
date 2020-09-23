@@ -133,7 +133,6 @@ android {
 
 dependencies {
     implementation project(path: ':uisdk')
-//    implementation 'com.karhoo.uisdk:uisdk:1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

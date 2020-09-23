@@ -10,7 +10,6 @@ import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.adyen.checkout.redirect.RedirectComponent
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
