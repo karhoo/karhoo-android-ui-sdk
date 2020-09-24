@@ -1,8 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.content.Intent
-import android.os.IBinder
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.adyen.checkout.redirect.RedirectComponent
@@ -11,43 +8,6 @@ import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
 class AdyenDropInService : DropInService() {
-
-    var transactionId: String? = null
-
-    override fun onCreate() {
-        Log.d("Adyen", "onCreate")
-        super.onCreate()
-    }
-
-    override fun onDestroy() {
-        Log.d("Adyen", "onDestroy")
-        super.onDestroy()
-    }
-
-    override fun onHandleWork(intent: Intent) {
-        Log.d("Adyen", "onHandleWork")
-        super.onHandleWork(intent)
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("Adyen", "onStartCommand")
-        return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onBind(intent: Intent): IBinder? {
-        Log.d("Adyen", "onBind")
-        transactionId = intent.getStringExtra("transactionId")
-        Log.d("Adyen", "transactionId bind $transactionId")
-        Log.d("Adyen", "$transactionId")
-        return super.onBind(intent)
-    }
-
-    override fun onUnbind(intent: Intent): Boolean {
-        Log.d("Adyen", "transactionId unbind $transactionId")
-        intent.putExtra("transactionId", transactionId)
-        Log.d("Adyen", "onUnbind")
-        return super.onUnbind(intent)
-    }
 
     override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
         clearTransactionId()
@@ -58,15 +18,13 @@ class AdyenDropInService : DropInService() {
                     result.data.let { result ->
                         val response = JSONObject(result)
                         //TODO Find a better way to store / pass through the transaction id
-                        transactionId = response.getString("transaction_id")
-                        Log.d("Adyen", "transactionId set $transactionId")
-                        val transactionId = response.getString("transaction_id")
-                        val sharedPref = this.getSharedPreferences("transactionId", MODE_PRIVATE)
+                        val transactionId = response.getString(TRANSACTION_ID)
+                        val sharedPref = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
                         with(sharedPref.edit()) {
-                            putString("transactionId", transactionId)
+                            putString(TRANSACTION_ID, transactionId)
                             commit()
                         }
-                        response.optJSONObject("payload")?.let { payload ->
+                        response.optJSONObject(PAYLOAD)?.let { payload ->
                             asyncCallback(handlePaymentRequestResult(payload))
                         } ?: asyncCallback(handlePaymentRequestResult(response))
                     }
@@ -81,12 +39,11 @@ class AdyenDropInService : DropInService() {
     }
 
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        transactionId = this.getSharedPreferences("transactionId", MODE_PRIVATE)
-                .getString("transactionId", "")
-        Log.d("Adyen", "transactionId 4 $transactionId")
+        val transactionId = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
+                .getString(TRANSACTION_ID, "")
         val request = JSONObject()
-        request.put("transaction_id", transactionId)
-        request.put("payments_payload", actionComponentData)
+        request.put(TRANSACTION_ID, transactionId)
+        request.put(PAYMENTS_PAYLOAD, actionComponentData)
 
         KarhooApi.paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
             when (result) {
@@ -107,11 +64,11 @@ class AdyenDropInService : DropInService() {
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            if (response.isNull("action")) {
+            if (response.isNull(ACTION)) {
                 clearTransactionId()
                 CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
-                CallResult(CallResult.ResultType.ACTION, response.getString("action"))
+                CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
             }
         } catch (e: Exception) {
             clearTransactionId()
@@ -121,19 +78,31 @@ class AdyenDropInService : DropInService() {
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
         val payload = JSONObject()
-        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
-        payload.put("amount", paymentComponentData.getJSONObject("amount"))
-        payload.put("returnUrl", RedirectComponent.getReturnUrl(this))
-        payload.put("channel", "Android")
+        payload.put(PAYMENT_METHOD, paymentComponentData.getJSONObject(PAYMENT_METHOD))
+        payload.put(AMOUNT, paymentComponentData.getJSONObject(AMOUNT))
+        payload.put(RETURN_URL, RedirectComponent.getReturnUrl(this))
+        payload.put(CHANNEL, "Android")
 
         val request = JSONObject()
-        request.put("payments_payload", payload)
-        request.put("return_url_suffix", "")
+        request.put(PAYMENTS_PAYLOAD, payload)
+        request.put(RETURN_URL_SUFFIX, "")
 
         return request.toString()
     }
 
     private fun clearTransactionId() {
-        this.getSharedPreferences("transactionId", MODE_PRIVATE).edit().clear().commit()
+        this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE).edit().clear().commit()
+    }
+
+    companion object {
+        const val ACTION = "action"
+        const val AMOUNT = "amount"
+        const val CHANNEL = "channel"
+        const val PAYLOAD = "payload"
+        const val PAYMENT_METHOD = "paymentMethod"
+        const val PAYMENTS_PAYLOAD = "payments_payload"
+        const val RETURN_URL = "returnUrl"
+        const val RETURN_URL_SUFFIX = "return_url_suffix"
+        const val TRANSACTION_ID = "transaction_id"
     }
 }

@@ -53,9 +53,11 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
+        val locale = Locale.getDefault()
         val cardConfiguration =
                 CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
+                        .setShowStorePaymentField(true)
                         .setHolderNameRequire(true)
                         .build()
 
