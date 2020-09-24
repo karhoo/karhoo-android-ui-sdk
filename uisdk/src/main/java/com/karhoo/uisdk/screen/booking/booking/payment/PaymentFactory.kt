@@ -12,7 +12,7 @@ class PaymentFactory {
 
     //TODO Implemente changes for guest checkout
     companion object {
-        fun createPresenter(provider: Provider?, view: PaymentMVP.View): PaymentDropInMVP.Presenter? {
+        fun createPresenter(provider: Provider?, view: BookingPaymentMVP.View): PaymentDropInMVP.Presenter? {
             return provider?.let {
                 when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                     ProviderType.ADYEN -> AdyenPaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)

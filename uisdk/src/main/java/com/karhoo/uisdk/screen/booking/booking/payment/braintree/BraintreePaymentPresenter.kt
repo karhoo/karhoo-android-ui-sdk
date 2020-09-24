@@ -21,16 +21,16 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
 
-class BraintreePaymentPresenter(view: PaymentMVP.View,
+class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
     private var nonce: String = ""

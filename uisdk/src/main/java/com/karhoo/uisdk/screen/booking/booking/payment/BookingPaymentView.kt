@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentDropInMVP.Actions {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentDropInMVP.Actions {
 
     private var paymentPresenter: PaymentDropInMVP.Presenter? = null
 
@@ -31,8 +31,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var lineTextStyle: Int = R.style.Text_Action
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
-    var paymentActions: PaymentMVP.PaymentActions? = null
-    var cardActions: PaymentMVP.CardActions? = null
+    var paymentActions: BookingPaymentMVP.PaymentActions? = null
+    var cardActions: BookingPaymentMVP.CardActions? = null
     private var viewActions: PaymentDropInMVP.View? = null
 
     init {

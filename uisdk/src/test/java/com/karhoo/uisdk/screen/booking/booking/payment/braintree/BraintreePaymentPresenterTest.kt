@@ -8,7 +8,6 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
-import com.karhoo.sdk.api.model.PaymentProvider
 import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.UserInfo
@@ -20,7 +19,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -44,8 +42,7 @@ class BraintreePaymentPresenterTest {
     private var context: Context = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var cardView: BookingPaymentMVP.View = mock()
-    private var paymentView: PaymentMVP.View = mock()
+    private var paymentView: BookingPaymentMVP.View = mock()
     private var price: QuotePrice = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -138,7 +135,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(cardView, never()).showError(any())
+        verify(paymentView, never()).showError(any())
         verify(userStore).savedPaymentInfo
 
     }

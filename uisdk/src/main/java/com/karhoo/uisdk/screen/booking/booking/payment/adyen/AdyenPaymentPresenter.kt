@@ -7,7 +7,6 @@ import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.card.CardConfiguration
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.braintreepayments.api.dropin.DropInRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -23,17 +22,17 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
 
-class AdyenPaymentPresenter(view: PaymentMVP.View,
+class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                             private val userStore: UserStore = KarhooApi.userStore,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
     var price: QuotePrice? = null
@@ -66,11 +65,8 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
 
         return DropInConfiguration.Builder(context, dropInIntent,
                                            AdyenDropInService::class.java)
-                // When you're ready to accept live payments, change the value to one of our live environments.
                 .setAmount(amount)
                 .setEnvironment(environment)
-                // Optional. Use to set the language rendered in Drop-in, overriding the default device language setting. See list of Supported languages at https://github.com/Adyen/adyen-android/tree/master/card-ui-core/src/main/res
-                // Make sure that you have set the locale in the payment method configuration object as well.
                 .setShopperLocale(Locale.getDefault())
                 .addCardConfiguration(cardConfiguration)
                 .build()
