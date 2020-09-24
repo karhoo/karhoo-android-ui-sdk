@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.api.BraintreeFragment
 import com.braintreepayments.api.ThreeDSecure
 import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
 import com.braintreepayments.api.interfaces.BraintreeErrorListener
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
@@ -27,7 +26,8 @@ class BraintreePaymentView : PaymentDropInMVP.View {
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
     String?, price: QuotePrice?) {
-        val dropInRequest = DropInRequest().clientToken(sdkToken)
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
+                DropInRequest
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }

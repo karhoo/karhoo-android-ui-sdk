@@ -1,7 +1,9 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.braintreepayments.api.dropin.DropInRequest
 import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -164,6 +166,10 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
             (cardTypeLabel))
         }
         view?.refresh()
+    }
+
+    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+        return DropInRequest().clientToken(sdkToken)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {

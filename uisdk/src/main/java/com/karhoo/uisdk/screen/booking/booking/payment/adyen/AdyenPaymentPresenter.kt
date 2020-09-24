@@ -1,9 +1,15 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.adyen.checkout.dropin.DropIn
+import com.adyen.checkout.base.model.payments.Amount
+import com.adyen.checkout.card.CardConfiguration
+import com.adyen.checkout.core.api.Environment
+import com.adyen.checkout.dropin.DropInConfiguration
+import com.braintreepayments.api.dropin.DropInRequest
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -22,6 +28,7 @@ import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Currency
+import java.util.Locale
 
 class AdyenPaymentPresenter(view: PaymentMVP.View,
                             private val userStore: UserStore = KarhooApi.userStore,
@@ -38,20 +45,35 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         attachView(view)
     }
 
-    override fun sdkInit(price: QuotePrice?) {
-        this.price = price
-        paymentsService.getAdyenPublicKey().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        adyenKey = it.publicKey
-                        getPaymentMethods()
-                    }
-                }
-                //TODO Change error message
-                is Resource.Failure -> view?.showError(R.string.payment_issue_message)
-            }
+    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+        val cardConfiguration =
+                CardConfiguration.Builder(context, sdkToken)
+                        .setShopperLocale(Locale.getDefault())
+                        .setHolderNameRequire(true)
+                        .build()
+
+        val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
+            putExtra(AdyenResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
+            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
+
+        val amount = Amount()
+        amount.currency = price?.currencyCode ?: "GBP"
+        amount.value = price?.highPrice.orZero()
+
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
+                KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
+
+        return DropInConfiguration.Builder(context, dropInIntent,
+                                           AdyenDropInService::class.java)
+                // When you're ready to accept live payments, change the value to one of our live environments.
+                .setAmount(amount)
+                .setEnvironment(environment)
+                // Optional. Use to set the language rendered in Drop-in, overriding the default device language setting. See list of Supported languages at https://github.com/Adyen/adyen-android/tree/master/card-ui-core/src/main/res
+                // Make sure that you have set the locale in the payment method configuration object as well.
+                .setShopperLocale(Locale.getDefault())
+                .addCardConfiguration(cardConfiguration)
+                .build()
     }
 
     private fun getPaymentMethods() {
@@ -70,6 +92,12 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
                 }
             }
         }
+    }
+
+    override fun getPaymentNonce(price: QuotePrice?) {
+        nonce?.let {
+            passBackThreeDSecureNonce(it, quotePriceToAmount(price))
+        } ?: view?.showError(R.string.payment_issue_message)
     }
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,18 +119,28 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
         }
     }
 
-    override fun getPaymentNonce(price: QuotePrice?) {
-        nonce?.let {
-            passBackThreeDSecureNonce(it, quotePriceToAmount(price))
-        } ?: view?.showError(R.string.payment_issue_message)
+    override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
+        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
     override fun passBackNonce(sdkNonce: String) {
         this.sdkToken = sdkNonce
     }
 
-    override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
+    override fun sdkInit(price: QuotePrice?) {
+        this.price = price
+        paymentsService.getAdyenPublicKey().execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        adyenKey = it.publicKey
+                        getPaymentMethods()
+                    }
+                }
+                //TODO Change error message
+                is Resource.Failure -> view?.showError(R.string.payment_issue_message)
+            }
+        }
     }
 
     override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
