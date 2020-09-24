@@ -10,6 +10,5 @@ interface BookingPaymentMVP {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
         fun showError(@StringRes error: Int)
-
     }
 }

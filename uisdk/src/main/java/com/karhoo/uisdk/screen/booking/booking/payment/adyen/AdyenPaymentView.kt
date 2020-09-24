@@ -1,20 +1,12 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
-import android.content.Intent
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
-import com.adyen.checkout.base.model.payments.Amount
-import com.adyen.checkout.card.CardConfiguration
-import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
-import java.util.Locale
 
 class AdyenPaymentView : PaymentDropInMVP.View {
 

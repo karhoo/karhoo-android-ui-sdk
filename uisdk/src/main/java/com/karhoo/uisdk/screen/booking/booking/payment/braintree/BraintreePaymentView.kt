@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.api.BraintreeFragment
 import com.braintreepayments.api.ThreeDSecure
@@ -19,14 +18,6 @@ class BraintreePaymentView : PaymentDropInMVP.View {
 
     var presenter: PaymentDropInMVP.Presenter? = null
     var actions: PaymentDropInMVP.Actions? = null
-
-    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
-    String?, price: QuotePrice?) {
-        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
-                DropInRequest
-        val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
-    }
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment
@@ -53,6 +44,14 @@ class BraintreePaymentView : PaymentDropInMVP.View {
         { request, lookup ->
             ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
         }
+    }
+
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
+    String?, price: QuotePrice?) {
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
+                DropInRequest
+        val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
+        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
     companion object {

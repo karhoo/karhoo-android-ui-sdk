@@ -11,7 +11,6 @@ interface PaymentDropInMVP {
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
         fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?)
-
     }
 
     interface Presenter {
@@ -35,9 +34,13 @@ interface PaymentDropInMVP {
 
     interface Actions {
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
+        fun showPaymentFailureDialog()
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun threeDSecureNonce(threeDSNonce: String)
+
+//        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")
+
+        /*fun handlePaymentDetailsUpdate(sdkNonce: String?)
 
         fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
 
@@ -47,6 +50,6 @@ interface PaymentDropInMVP {
 
         fun refresh()
 
-        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")
+        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")*/
     }
 }

@@ -83,11 +83,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         changeCardProgressBar.visibility = GONE
     }
 
-    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
-                                   paymentResponseData: String?) {
-        paymentPresenter?.updateCardDetails(nonce, cardNumber, cardTypeLabel, paymentResponseData)
-    }
-
     override fun initialisePaymentFlow(price: QuotePrice?) {
         paymentPresenter?.getPaymentNonce(price)
     }
