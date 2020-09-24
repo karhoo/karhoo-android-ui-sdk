@@ -299,7 +299,8 @@ class ServerRobot {
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.GET_PROVIDERS_METHOD
+                endpoint = APITemplate.PAYMENT_PROVIDERS_METHOD
+
                         )
     }
 
