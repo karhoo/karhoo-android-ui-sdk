@@ -86,7 +86,7 @@ interface BookingRequestMVP {
 
         fun resetBooking()
 
-        fun updateCardDetails(braintreeSDKNonce: String?)
+        fun updateCardDetails(sdkNonce: String?)
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 

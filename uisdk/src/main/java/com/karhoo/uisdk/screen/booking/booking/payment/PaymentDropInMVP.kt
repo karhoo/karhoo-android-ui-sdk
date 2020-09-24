@@ -8,22 +8,21 @@ interface PaymentDropInMVP {
 
     interface View {
 
-        fun handleThreeDSecure(context: Context, braintreeSDKToken: String, nonce: String, amount:
-        String)
+        fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?, context: Context)
+        fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?)
 
     }
 
     interface Actions {
 
-        fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?)
+        fun handlePaymentDetailsUpdate(sdkNonce: String?)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun passBackNonce(braintreeSDKNonce: String)
+        fun passBackNonce(sdkNonce: String)
 
         fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
 
@@ -33,6 +32,6 @@ interface PaymentDropInMVP {
 
         fun refresh()
 
-        fun updateCardDetails(nonce: String, description: String, typeLabel: String)
+        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")
     }
 }

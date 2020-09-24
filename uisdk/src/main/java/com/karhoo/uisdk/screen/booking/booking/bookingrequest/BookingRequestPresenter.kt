@@ -28,12 +28,10 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewMode
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.service.preference.PreferenceStore
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
-import java.util.Currency
 import java.util.Date
 
 class BookingRequestPresenter(view: BookingRequestMVP.View,
@@ -191,8 +189,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo, quotePrice)
     }
 
-    override fun updateCardDetails(braintreeSDKNonce: String?) {
-        braintreeSDKNonce?.let {
+    override fun updateCardDetails(sdkNonce: String?) {
+        sdkNonce?.let {
             view?.enableBooking()
         } ?: view?.disableBooking()
     }

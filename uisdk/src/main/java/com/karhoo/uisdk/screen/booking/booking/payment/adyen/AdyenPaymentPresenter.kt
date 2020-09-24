@@ -16,6 +16,7 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
+import org.json.JSONObject
 import java.util.Currency
 
 class AdyenPaymentPresenter(view: PaymentMVP.View,
@@ -27,7 +28,7 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     var price: QuotePrice? = null
 
     private var sdkToken: String = ""
-    private var nonce: String = ""
+    private var nonce: String? = ""
 
     init {
         attachView(view)
@@ -68,29 +69,32 @@ class AdyenPaymentPresenter(view: PaymentMVP.View,
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
-        //TODO
+        nonce?.let {
+            passBackThreeDSecureNonce(it, quotePriceToAmount(price))
+        } ?: view?.showError(R.string.payment_issue_message)
     }
 
-    private fun getNonce(braintreeSDKToken: String, amount: String) {
-        //TODO
-    }
-
-    private fun handleChangeCardSuccess(braintreeSDKToken: String) {
-        //TODO
-    }
-
-    override fun passBackNonce(braintreeSDKNonce: String) {
-        //TODO
+    override fun passBackNonce(sdkNonce: String) {
+        this.sdkToken = sdkNonce
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
-    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
+    override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
+                                   paymentData: String?) {
         this.nonce = nonce
-        userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
-        view?.refresh()
+        paymentData?.let {
+            val additionalData = JSONObject(paymentData)
+            val cardNumber = additionalData.optString("cardSummary", "")
+            val type = additionalData.optString("paymentMethod", "")
+            //TODO Use CardType fromString
+            val savedPaymentInfo = CardType.fromString(type)?.let {
+                SavedPaymentInfo(cardNumber, it)
+            } ?: SavedPaymentInfo(cardNumber, CardType.NOT_SET)
+            view?.bindPaymentDetails(savedPaymentInfo)
+        } ?: view?.refresh()
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
