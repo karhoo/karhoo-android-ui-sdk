@@ -33,12 +33,12 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val dataString = data.getStringExtra(RESULT_KEY)
             val payload = JSONObject(dataString)
-            when (payload.optString("resultCode", "")) {
-                "Authorised" -> {
-                    val transactionId = payload.optString("merchantReference", "")
+            when (payload.optString(RESULT_CODE, "")) {
+                AUTHORISED -> {
+                    val transactionId = payload.optString(MERCHANT_REFERENCE, "")
                     actions?.updateCardDetails(nonce = transactionId,
                                                paymentResponseData = payload.optString
-                                               ("additionalData", null))
+                                               (ADDITIONAL_DATA, null))
                     actions?.passBackNonce(transactionId)
                 }
                 else -> actions?.showPaymentFailureDialog()
@@ -88,6 +88,10 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     companion object {
+        const val ADDITIONAL_DATA = "additionalData"
+        const val AUTHORISED = "Authorised"
+        const val MERCHANT_REFERENCE = "merchantReference"
+        const val RESULT_CODE = "resultCode"
         const val REQ_CODE_ADYEN = DropIn.Companion.DROP_IN_REQUEST_CODE
     }
 }
