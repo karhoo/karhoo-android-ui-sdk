@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.base.model.payments.Amount
@@ -29,7 +28,6 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Log.d("Adyen", "$requestCode $resultCode")
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val dataString = data.getStringExtra(RESULT_KEY)
             val payload = JSONObject(dataString)
@@ -53,11 +51,9 @@ class AdyenPaymentView : PaymentDropInMVP.View {
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
-        val locale = Locale.getDefault()
         val cardConfiguration =
                 CardConfiguration.Builder(context, sdkToken)
                         .setShopperLocale(Locale.getDefault())
-                        .setShowStorePaymentField(true)
                         .setHolderNameRequire(true)
                         .build()
 
