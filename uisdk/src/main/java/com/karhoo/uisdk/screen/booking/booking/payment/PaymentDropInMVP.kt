@@ -16,6 +16,23 @@ interface PaymentDropInMVP {
 
     }
 
+    interface Presenter {
+
+        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+
+        fun getPaymentNonce(price: QuotePrice?)
+
+        fun initialiseGuestPayment(price: QuotePrice?)
+
+        fun setSavedCardDetails()
+
+        fun sdkInit(price: QuotePrice?)
+
+        fun passBackNonce(sdkNonce: String)
+
+        fun updateCardDetails(nonce: String, description: String? = "", typeLabel: String? = "", paymentData: String? = "")
+    }
+
     interface Actions {
 
         fun handlePaymentDetailsUpdate(sdkNonce: String?)

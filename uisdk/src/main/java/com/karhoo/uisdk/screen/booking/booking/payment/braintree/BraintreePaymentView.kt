@@ -18,27 +18,11 @@ import com.karhoo.uisdk.util.extension.isGuest
 
 class BraintreePaymentView : PaymentDropInMVP.View {
 
+    var presenter: PaymentDropInMVP.Presenter? = null
     var actions: PaymentDropInMVP.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            when (requestCode) {
-                REQ_CODE_BRAINTREE -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    actions?.passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
-                }
-                REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    braintreeResult?.paymentMethodNonce?.let {
-                        actions?.updateCardDetails(nonce = it.nonce, cardNumber = it.description,
-                                                   cardTypeLabel = it.typeLabel)
-                    }
-                    actions?.handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
-                }
-            }
-        } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
-            actions?.refresh()
-        }
+        presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
@@ -76,7 +60,7 @@ class BraintreePaymentView : PaymentDropInMVP.View {
     }
 
     companion object {
-        private const val REQ_CODE_BRAINTREE = 301
-        private const val REQ_CODE_BRAINTREE_GUEST = 302
+        const val REQ_CODE_BRAINTREE = 301
+        const val REQ_CODE_BRAINTREE_GUEST = 302
     }
 }

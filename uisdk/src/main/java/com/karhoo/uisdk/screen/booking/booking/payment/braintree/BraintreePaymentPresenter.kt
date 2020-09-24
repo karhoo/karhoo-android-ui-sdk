@@ -1,5 +1,8 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import com.braintreepayments.api.dropin.DropInResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
@@ -15,6 +18,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.isGuest
@@ -24,7 +28,7 @@ import java.util.Currency
 class BraintreePaymentPresenter(view: PaymentMVP.View,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentMVP.View>(), PaymentMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
     private var nonce: String = ""
@@ -49,6 +53,27 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
+        }
+    }
+
+    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            when (requestCode) {
+                BraintreePaymentView.REQ_CODE_BRAINTREE -> {
+                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                }
+                BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
+                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    braintreeResult?.paymentMethodNonce?.let {
+                        updateCardDetails(nonce = it.nonce, cardNumber = it.description,
+                                          cardTypeLabel = it.typeLabel)
+                    }
+                    view?.handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
+                }
+            }
+        } else if (requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE || requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST) {
+            view?.refresh()
         }
     }
 
@@ -147,10 +172,5 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
 
     override fun setSavedCardDetails() {
         view?.bindPaymentDetails(userStore.savedPaymentInfo)
-    }
-
-    companion object {
-        private const val REQ_CODE_BRAINTREE = 301
-        private const val REQ_CODE_BRAINTREE_GUEST = 302
     }
 }

@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.card.CardConfiguration
@@ -13,13 +12,13 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenResultActivity.Companion.RESULT_KEY
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Locale
 
 class AdyenPaymentView : PaymentDropInMVP.View {
 
+    var presenter: PaymentDropInMVP.Presenter? = null
     var actions: PaymentDropInMVP.Actions? = null
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
@@ -28,22 +27,7 @@ class AdyenPaymentView : PaymentDropInMVP.View {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            val dataString = data.getStringExtra(RESULT_KEY)
-            val payload = JSONObject(dataString)
-            when (payload.optString(RESULT_CODE, "")) {
-                AUTHORISED -> {
-                    val transactionId = payload.optString(MERCHANT_REFERENCE, "")
-                    actions?.updateCardDetails(nonce = transactionId,
-                                               paymentResponseData = payload.optString
-                                               (ADDITIONAL_DATA, null))
-                    actions?.passBackNonce(transactionId)
-                }
-                else -> actions?.showPaymentFailureDialog()
-            }
-        } else {
-            actions?.showPaymentFailureDialog()
-        }
+        presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?) {

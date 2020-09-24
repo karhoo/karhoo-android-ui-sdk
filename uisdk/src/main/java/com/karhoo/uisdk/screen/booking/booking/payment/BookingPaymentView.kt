@@ -23,7 +23,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentMVP.View, PaymentDropInMVP.Actions {
 
-    private var paymentPresenter: PaymentMVP.Presenter? = null
+    private var paymentPresenter: PaymentDropInMVP.Presenter? = null
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -39,7 +39,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         paymentPresenter = PaymentFactory.createPresenter(KarhooApi.userStore.paymentProvider, view = this)
-        viewActions = PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this)
+        viewActions = paymentPresenter?.let { PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this, it) }
         if (!isInEditMode) {
             this.setOnClickListener {
                 changeCard()
