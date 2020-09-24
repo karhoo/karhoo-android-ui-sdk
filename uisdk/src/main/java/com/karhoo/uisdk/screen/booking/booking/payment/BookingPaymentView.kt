@@ -118,11 +118,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        viewActions?.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun passBackNonce(sdkNonce: String) {
-        paymentPresenter?.passBackNonce(sdkNonce)
+        paymentPresenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun showError(error: Int) {

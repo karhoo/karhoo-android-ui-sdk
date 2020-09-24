@@ -20,10 +20,6 @@ class BraintreePaymentView : PaymentDropInMVP.View {
     var presenter: PaymentDropInMVP.Presenter? = null
     var actions: PaymentDropInMVP.Actions? = null
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter?.handleActivityResult(requestCode, resultCode, data)
-    }
-
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
     String?, price: QuotePrice?) {
         val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
