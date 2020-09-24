@@ -47,12 +47,33 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
                               currency = currencyCode)
     }
 
-    override fun sdkInit(price: QuotePrice?) {
-        //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
-        val sdkInitRequest = getSDKInitRequest("GBP")
+    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+        return DropInRequest().clientToken(sdkToken)
+    }
+
+    private fun getNonce(braintreeSDKToken: String, amount: String) {
+        this.braintreeSDKToken = braintreeSDKToken
+        val user = userStore.currentUser
+        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
+                                                      email = user.email,
+                                                      firstName = user.firstName,
+                                                      lastName = user.lastName),
+                                        organisationId = user.organisations.first().id
+                                       )
+        paymentsService.getNonce(nonceRequest).execute { result ->
+            when (result) {
+                is Resource.Success -> passBackThreeDSecureNonce(result.data
+                                                                         .nonce, amount)
+                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
+            }
+        }
+    }
+
+    override fun getPaymentNonce(price: QuotePrice?) {
+        val sdkInitRequest = getSDKInitRequest(price?.currencyCode.orEmpty())
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
-                is Resource.Success -> handleChangeCardSuccess(result.data.token)
+                is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(price))
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
@@ -79,47 +100,6 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
-    override fun getPaymentNonce(price: QuotePrice?) {
-        val sdkInitRequest = getSDKInitRequest(price?.currencyCode.orEmpty())
-        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(price))
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
-            }
-        }
-    }
-
-    private fun getNonce(braintreeSDKToken: String, amount: String) {
-        this.braintreeSDKToken = braintreeSDKToken
-        val user = userStore.currentUser
-        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
-                                                      email = user.email,
-                                                      firstName = user.firstName,
-                                                      lastName = user.lastName),
-                                        organisationId = user.organisations.first().id
-                                       )
-        paymentsService.getNonce(nonceRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> passBackThreeDSecureNonce(result.data
-                                                                         .nonce, amount)
-                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
-            }
-        }
-    }
-
-    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
-            view?.threeDSecureNonce(braintreeSDKToken)
-        } else {
-            view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
-        }
-    }
-
-    private fun quotePriceToAmount(price: QuotePrice?): String {
-        val currency = Currency.getInstance(price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
-    }
-
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
         this.braintreeSDKToken = braintreeSDKToken
         if (KarhooUISDKConfigurationProvider.handleBraintree()) {
@@ -135,6 +115,14 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
         } else {
             view?.showPaymentUI(braintreeSDKToken)
         }
+    }
+
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+    }
+
+    override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
+        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
     override fun passBackNonce(braintreeSDKNonce: String) {
@@ -154,8 +142,32 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
-    override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
+    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+            view?.threeDSecureNonce(braintreeSDKToken)
+        } else {
+            view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+        }
+    }
+
+    private fun quotePriceToAmount(price: QuotePrice?): String {
+        val currency = Currency.getInstance(price?.currencyCode?.trim())
+        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
+    }
+
+    override fun sdkInit(price: QuotePrice?) {
+        //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
+        val sdkInitRequest = getSDKInitRequest("GBP")
+        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
+            when (result) {
+                is Resource.Success -> handleChangeCardSuccess(result.data.token)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+            }
+        }
+    }
+
+    override fun setSavedCardDetails() {
+        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
@@ -166,17 +178,5 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
             (cardTypeLabel))
         }
         view?.refresh()
-    }
-
-    override fun getDropInConfig(context: Context, sdkToken: String): Any {
-        return DropInRequest().clientToken(sdkToken)
-    }
-
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
-    }
-
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 }

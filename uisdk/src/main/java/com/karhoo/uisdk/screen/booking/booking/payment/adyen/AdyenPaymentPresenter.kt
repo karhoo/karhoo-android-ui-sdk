@@ -115,12 +115,29 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
+    }
+
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
     override fun passBackNonce(sdkNonce: String) {
         this.sdkToken = sdkNonce
+    }
+
+    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
+        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+            view?.threeDSecureNonce(sdkToken)
+        } else {
+            view?.threeDSecureNonce(sdkToken, nonce, amount)
+        }
+    }
+
+    private fun quotePriceToAmount(price: QuotePrice?): String {
+        val currency = Currency.getInstance(price?.currencyCode?.trim())
+        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
     }
 
     override fun sdkInit(price: QuotePrice?) {
@@ -139,6 +156,10 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
+    override fun setSavedCardDetails() {
+        view?.bindPaymentDetails(userStore.savedPaymentInfo)
+    }
+
     override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
                                    paymentData: String?) {
         this.nonce = nonce
@@ -152,27 +173,6 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
             } ?: SavedPaymentInfo(cardNumber, CardType.NOT_SET)
             view?.bindPaymentDetails(savedPaymentInfo)
         } ?: view?.refresh()
-    }
-
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
-    }
-
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
-    }
-
-    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
-            view?.threeDSecureNonce(sdkToken)
-        } else {
-            view?.threeDSecureNonce(sdkToken, nonce, amount)
-        }
-    }
-
-    private fun quotePriceToAmount(price: QuotePrice?): String {
-        val currency = Currency.getInstance(price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
     }
 
     companion object {
