@@ -54,8 +54,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
 
     override fun getPaymentNonce(price: QuotePrice?) {
         val sdkInitRequest = getSDKInitRequest(price?.currencyCode.orEmpty())
-        paymentsService.initialisePaymentSDK(sdkInitRequest).execute {
-            result ->
+        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(price))
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
@@ -75,7 +74,7 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data
-                        .nonce, amount)
+                                                                         .nonce, amount)
                 is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
         }
@@ -132,9 +131,13 @@ class BraintreePaymentPresenter(view: PaymentMVP.View,
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
     }
 
-    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
+    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
+                                   paymentData: String?) {
         this.nonce = nonce
-        userStore.savedPaymentInfo = SavedPaymentInfo(description, CardType.fromString(typeLabel))
+        if (cardNumber != null && cardTypeLabel != null) {
+            userStore.savedPaymentInfo = SavedPaymentInfo(cardNumber, CardType.fromString
+            (cardTypeLabel))
+        }
         view?.refresh()
     }
 

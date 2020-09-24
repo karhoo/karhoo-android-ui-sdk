@@ -68,7 +68,7 @@
             android:label="@string/title_activity_trip"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screen.booking.booking.payment.adyen.ResultActivity"
+        <activity android:name=".screen.booking.booking.payment.adyen.AdyenResultActivity"
             android:label="@string/payment_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

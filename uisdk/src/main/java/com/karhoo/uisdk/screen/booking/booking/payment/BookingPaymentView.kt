@@ -50,7 +50,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPaymentView,
-                defStyleAttr, R.style.KhPaymentView)
+                                                        defStyleAttr, R.style.KhPaymentView)
         addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus)
@@ -75,7 +75,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         cardNumberText.isEnabled = false
         changeCardLabel.visibility = GONE
         changeCardProgressBar.visibility = VISIBLE
-        paymentActions?.handleChangeCard()
         cardActions?.handleChangeCard()
     }
 
@@ -84,8 +83,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         changeCardProgressBar.visibility = GONE
     }
 
-    override fun updateCardDetails(nonce: String, description: String, typeLabel: String) {
-        paymentPresenter?.updateCardDetails(nonce, description, typeLabel)
+    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
+                                   paymentResponseData: String?) {
+        paymentPresenter?.updateCardDetails(nonce, cardNumber, cardTypeLabel, paymentResponseData)
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
@@ -97,9 +97,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        if (cardType != CardType.NOT_SET) {
-            cardNumberText.text = if (isGuest()) number else "•••• $number"
-        }
+        cardNumberText.text = if (isGuest()) number else "•••• $number"
         setCardType(cardType)
     }
 
@@ -114,6 +112,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                     .uidsk_ic_card_visa)
             CardType.MASTERCARD -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
+            else -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
         visibility = VISIBLE
     }
@@ -122,8 +121,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         viewActions?.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun passBackNonce(braintreeSDKNonce: String) {
-        paymentPresenter?.passBackNonce(braintreeSDKNonce)
+    override fun passBackNonce(sdkNonce: String) {
+        paymentPresenter?.passBackNonce(sdkNonce)
     }
 
     override fun showError(error: Int) {
@@ -154,7 +153,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentUI(sdkToken = sdkToken, paymentData = paymentData, price = price, context = context)
+        viewActions?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
+        paymentData, price = price)
     }
 
     override fun showPaymentFailureDialog() {
@@ -162,8 +162,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentFailureDialog()
     }
 
-    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
-        paymentActions?.handlePaymentDetailsUpdate(braintreeSDKNonce)
+    override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
+        paymentActions?.handlePaymentDetailsUpdate(sdkNonce)
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
@@ -174,7 +174,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.threeDSecureNonce(threeDSNonce)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        viewActions?.handleThreeDSecure(context, braintreeSDKToken, nonce, amount)
+    override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
+        viewActions?.handleThreeDSecure(context, sdkToken, nonce, amount)
     }
 }

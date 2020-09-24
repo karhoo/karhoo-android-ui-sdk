@@ -392,8 +392,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
     }
 
-    override fun handlePaymentDetailsUpdate(braintreeSDKNonce: String?) {
-        presenter.updateCardDetails(braintreeSDKNonce)
+    override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
+        presenter.updateCardDetails(sdkNonce)
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 

@@ -1,27 +1,32 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.adyen.checkout.dropin.service.DropInService
+import com.adyen.checkout.redirect.RedirectComponent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import org.json.JSONObject
 
 class AdyenDropInService : DropInService() {
-    override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
-        getPayment(paymentComponentData)
-        return CallResult(CallResult.ResultType.WAIT, "")
-    }
 
-    private fun getPayment(paymentComponentData: JSONObject) {
+    override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
+        clearTransactionId()
         val requestString = createPaymentRequestString(paymentComponentData)
         KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    result.data.let {
-                        Log.d("Adyen", it)
-                        val payments = JSONObject(it).getJSONObject("payload")
-                        asyncCallback(handlePaymentRequestResult(payments))
+                    result.data.let { result ->
+                        val response = JSONObject(result)
+                        //TODO Find a better way to store / pass through the transaction id
+                        val transactionId = response.getString(TRANSACTION_ID)
+                        val sharedPref = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString(TRANSACTION_ID, transactionId)
+                            commit()
+                        }
+                        response.optJSONObject(PAYLOAD)?.let { payload ->
+                            asyncCallback(handlePaymentRequestResult(payload))
+                        } ?: asyncCallback(handlePaymentRequestResult(response))
                     }
                 }
                 is Resource.Failure -> {
@@ -30,39 +35,20 @@ class AdyenDropInService : DropInService() {
                 }
             }
         }
+        return CallResult(CallResult.ResultType.WAIT, "")
     }
 
-    private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
-        val payload = JSONObject()
-        payload.put("paymentMethod", paymentComponentData.getJSONObject("paymentMethod"))
-        payload.put("channel", "Android")
-        payload.put("returnUrl", "http://karhoo.com")
-        payload.put("amount", paymentComponentData.getJSONObject("amount"))
-
-        val request = JSONObject()
-        request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/payment")
-        return request.toString().replace("\\", "")
-    }
-
-    // Handling for submitting additional payment details
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        val payload = JSONObject()
-        payload.put("paymentMethod", actionComponentData.getJSONObject("paymentMethod"))
-        payload.put("channel", "Android")
-        payload.put("returnUrl", "http://karhoo.com")
-
+        val transactionId = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
+                .getString(TRANSACTION_ID, "")
         val request = JSONObject()
-        request.put("payments_payload", payload)
-        request.put("return_url_suffix", "/payment")
-        val requestString = request.toString().replace("\\", "")
-        // See step 4 - Your server should make a /payments/details call containing the `actionComponentData`
-        // Create the `CallResult` based on the /payments/details response
-        KarhooApi.paymentsService.getAdyenPaymentDetails(requestString).execute { result ->
+        request.put(TRANSACTION_ID, transactionId)
+        request.put(PAYMENTS_PAYLOAD, actionComponentData)
+
+        KarhooApi.paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
-                        Log.d("Adyen", it)
                         val response = JSONObject(it)
                         asyncCallback(handlePaymentRequestResult(response))
                     }
@@ -73,19 +59,50 @@ class AdyenDropInService : DropInService() {
                 }
             }
         }
-        //        return CallResult(CallResult.ResultType.FINISHED, "Authorised")
         return CallResult(CallResult.ResultType.WAIT, "")
     }
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            if (response.isNull("action")) {
-                CallResult(CallResult.ResultType.FINISHED, response.getString("resultCode"))
+            if (response.isNull(ACTION)) {
+                clearTransactionId()
+                CallResult(CallResult.ResultType.FINISHED, response.toString())
             } else {
-                CallResult(CallResult.ResultType.ACTION, response.getString("action"))
+                CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
             }
         } catch (e: Exception) {
+            clearTransactionId()
             CallResult(CallResult.ResultType.ERROR, e.toString())
         }
+    }
+
+    private fun createPaymentRequestString(paymentComponentData: JSONObject): String {
+        val payload = JSONObject()
+        payload.put(PAYMENT_METHOD, paymentComponentData.getJSONObject(PAYMENT_METHOD))
+        payload.put(AMOUNT, paymentComponentData.getJSONObject(AMOUNT))
+        payload.put(RETURN_URL, RedirectComponent.getReturnUrl(this))
+        payload.put(CHANNEL, "Android")
+
+        val request = JSONObject()
+        request.put(PAYMENTS_PAYLOAD, payload)
+        request.put(RETURN_URL_SUFFIX, "")
+
+        return request.toString()
+    }
+
+    private fun clearTransactionId() {
+        this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE).edit().clear().commit()
+    }
+
+    companion object {
+        const val ACTION = "action"
+        const val AMOUNT = "amount"
+        const val CHANNEL = "channel"
+        const val PAYLOAD = "payload"
+        const val PAYMENT_METHOD = "paymentMethod"
+        const val PAYMENTS_PAYLOAD = "payments_payload"
+        const val RETURN_URL = "returnUrl"
+        const val RETURN_URL_SUFFIX = "return_url_suffix"
+        const val TRANSACTION_ID = "transaction_id"
     }
 }
