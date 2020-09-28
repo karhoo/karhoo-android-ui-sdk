@@ -23,13 +23,12 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
             when (result) {
                 is Resource.Success -> {
                     result.data.let { result ->
-                        val response = JSONObject(result)
                         //TODO Find a better way to store / pass through the transaction id
-                        val transactionId = response.getString(TRANSACTION_ID)
+                        val transactionId = result.getString(TRANSACTION_ID)
                         view?.storeTransactionId(transactionId)
-                        response.optJSONObject(PAYLOAD)?.let { payload ->
+                        result.optJSONObject(PAYLOAD)?.let { payload ->
                             view?.handleResult(handlePaymentRequestResult(payload))
-                        } ?: view?.handleResult(handlePaymentRequestResult(response))
+                        } ?: view?.handleResult(handlePaymentRequestResult(result))
                     }
                 }
                 is Resource.Failure -> {
@@ -53,8 +52,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 when (result) {
                     is Resource.Success -> {
                         result.data.let {
-                            val response = JSONObject(it)
-                            view?.handleResult(handlePaymentRequestResult(response))
+                            view?.handleResult(handlePaymentRequestResult(it))
                         }
                     }
                     is Resource.Failure -> {

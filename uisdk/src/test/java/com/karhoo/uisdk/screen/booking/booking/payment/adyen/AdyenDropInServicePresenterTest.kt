@@ -33,10 +33,10 @@ class AdyenDropInServicePresenterTest {
     private var amountJson: JSONObject = mock()
     private val service: AdyenDropInServiceMVP.Service = mock()
     private val paymentsService: PaymentsService = mock()
-    private val paymentsCall: Call<String> = mock()
-    private val paymentsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
-    private val paymentsDetailsCall: Call<String> = mock()
-    private val paymentsDetailsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
+    private val paymentsCall: Call<JSONObject> = mock()
+    private val paymentsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
+    private val paymentsDetailsCall: Call<JSONObject> = mock()
+    private val paymentsDetailsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
 
     @Captor
     private lateinit var resultsCaptor: ArgumentCaptor<CallResult>
@@ -45,8 +45,8 @@ class AdyenDropInServicePresenterTest {
 
     @Before
     fun setUp() {
-        whenever(jsonObject.getJSONObject(AdyenDropInServicePresenter.PAYMENT_METHOD)).thenReturn(paymentJson)
-        whenever(jsonObject.getJSONObject(AdyenDropInServicePresenter.AMOUNT)).thenReturn(amountJson)
+        whenever(jsonObject.getJSONObject(PAYMENT_METHOD)).thenReturn(paymentJson)
+        whenever(jsonObject.getJSONObject(AMOUNT)).thenReturn(amountJson)
 
         whenever(paymentsService.getAdyenPayments(any())).thenReturn(paymentsCall)
         doNothing().whenever(paymentsCall).execute(paymentsCaptor.capture())
@@ -84,7 +84,8 @@ class AdyenDropInServicePresenterTest {
     @Test
     fun `finished result returned when Adyen payment retrieval succeeds with no action`() {
 
-        val response = "{\"transaction_id\": \"$TRANSACTION_ID\"}"
+        val response = JSONObject()
+                .put("transaction_id", TRANSACTION_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
@@ -104,7 +105,9 @@ class AdyenDropInServicePresenterTest {
      */
     @Test
     fun `action result returned when Adyen payment retrieval succeeds with an action`() {
-        val response = "{\"action\": \"\",\"transaction_id\": \"$TRANSACTION_ID\"}"
+        val response = JSONObject()
+                .put("action", "some action")
+                .put("transaction_id", TRANSACTION_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
@@ -163,7 +166,8 @@ class AdyenDropInServicePresenterTest {
     @Test
     fun `finished result returned when Adyen payment details retrieval succeeds with no action`() {
 
-        val response = "{\"transaction_id\": \"$TRANSACTION_ID\"}"
+        val response = JSONObject()
+                .put("transaction_id", TRANSACTION_ID)
 
         presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
 
@@ -183,7 +187,10 @@ class AdyenDropInServicePresenterTest {
      */
     @Test
     fun `action result returned when Adyen payment details retrieval succeeds with an action`() {
-        val response = "{\"action\": \"\",\"transaction_id\": \"$TRANSACTION_ID\"}"
+
+        val response = JSONObject()
+                .put("action", "some action")
+                .put("transaction_id", TRANSACTION_ID)
 
         presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
 
