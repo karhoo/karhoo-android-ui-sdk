@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import androidx.core.app.JobIntentService
 import com.adyen.checkout.dropin.service.CallResult
 import org.json.JSONObject
 

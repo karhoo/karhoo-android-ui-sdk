@@ -2,13 +2,15 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
-import com.adyen.checkout.redirect.RedirectComponent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.base.BasePresenter
 import org.json.JSONObject
 
-class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service) : BasePresenter<AdyenDropInServiceMVP
+class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
+                                  private val paymentsService: PaymentsService = KarhooApi.paymentsService) :
+        BasePresenter<AdyenDropInServiceMVP
 .Service>(), AdyenDropInServiceMVP.Presenter {
 
     init {
@@ -18,7 +20,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service) : Base
     override fun getAdyenPayments(paymentComponentData: JSONObject, returnUrl: String) {
         view?.clearTransactionId()
         val requestString = createPaymentRequestString(paymentComponentData, returnUrl)
-        KarhooApi.paymentsService.getAdyenPayments(requestString).execute { result ->
+        paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let { result ->
@@ -48,7 +50,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service) : Base
             request.put(TRANSACTION_ID, transactionId)
             request.put(PAYMENTS_PAYLOAD, actionComponentData)
 
-            KarhooApi.paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
+            paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
                 when (result) {
                     is Resource.Success -> {
                         result.data.let {
