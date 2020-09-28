@@ -37,19 +37,5 @@ interface PaymentDropInMVP {
         fun showPaymentFailureDialog()
 
         fun threeDSecureNonce(threeDSNonce: String)
-
-//        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")
-
-        /*fun handlePaymentDetailsUpdate(sdkNonce: String?)
-
-        fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?)
-
-        fun showPaymentFailureDialog()
-
-        fun threeDSecureNonce(threeDSNonce: String)
-
-        fun refresh()
-
-        fun updateCardDetails(nonce: String, cardNumber: String? = "", cardTypeLabel: String? = "", paymentResponseData: String? = "")*/
     }
 }
