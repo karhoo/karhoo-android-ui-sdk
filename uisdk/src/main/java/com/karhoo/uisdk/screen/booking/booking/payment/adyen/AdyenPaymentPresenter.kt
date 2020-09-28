@@ -167,7 +167,6 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
             val additionalData = JSONObject(paymentData)
             val cardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")
-            //TODO Use CardType fromString
             val savedPaymentInfo = CardType.fromString(type)?.let {
                 SavedPaymentInfo(cardNumber, it)
             } ?: SavedPaymentInfo(cardNumber, CardType.NOT_SET)
