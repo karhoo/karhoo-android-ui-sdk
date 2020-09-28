@@ -301,7 +301,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
                     cancelButton.isEnabled = true
                     bookingRequestButton.onLoadingComplete()
-                    showPaymentUI()
+                    handleChangeCard()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
