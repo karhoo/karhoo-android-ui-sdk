@@ -4,6 +4,7 @@ import com.adyen.checkout.dropin.service.CallResult
 import org.json.JSONObject
 
 interface AdyenDropInServiceMVP {
+
     interface Service {
 
         fun clearTransactionId()

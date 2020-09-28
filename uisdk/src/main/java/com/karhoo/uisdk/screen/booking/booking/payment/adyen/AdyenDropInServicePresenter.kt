@@ -10,8 +10,7 @@ import org.json.JSONObject
 
 class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                                   private val paymentsService: PaymentsService = KarhooApi.paymentsService) :
-        BasePresenter<AdyenDropInServiceMVP
-.Service>(), AdyenDropInServiceMVP.Presenter {
+        BasePresenter<AdyenDropInServiceMVP.Service>(), AdyenDropInServiceMVP.Presenter {
 
     init {
         attachView(service)
