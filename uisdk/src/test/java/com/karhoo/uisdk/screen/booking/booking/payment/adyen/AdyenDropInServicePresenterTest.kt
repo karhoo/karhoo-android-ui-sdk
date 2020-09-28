@@ -5,6 +5,8 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.AMOUNT
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.PAYMENT_METHOD
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -67,6 +69,8 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getAdyenPayments(any())
+        verify(jsonObject).getJSONObject(PAYMENT_METHOD)
+        verify(jsonObject).getJSONObject(AMOUNT)
         verify(service).handleResult(capture(resultsCaptor))
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
