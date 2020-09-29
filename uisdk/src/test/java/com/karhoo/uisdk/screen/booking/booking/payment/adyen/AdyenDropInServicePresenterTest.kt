@@ -16,6 +16,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AdyenDropInServicePresenterTest {
 
-    val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT)
+    val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT, SHOPPER_REFERENCE)
     private var jsonObject: JSONObject = mock()
     private var paymentJson: JSONObject = mock()
     private var amountJson: JSONObject = mock()
@@ -38,6 +40,9 @@ class AdyenDropInServicePresenterTest {
     private val paymentsDetailsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
 
     @Captor
+    private lateinit var requestCaptor: ArgumentCaptor<String>
+
+    @Captor
     private lateinit var resultsCaptor: ArgumentCaptor<CallResult>
 
     private lateinit var presenter: AdyenDropInServicePresenter
@@ -47,7 +52,7 @@ class AdyenDropInServicePresenterTest {
         whenever(jsonObject.keys()).thenReturn(mutableList.iterator())
         whenever(jsonObject.get(PAYMENT_METHOD)).thenReturn(paymentJson)
         whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
-        whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
+        whenever(jsonObject.get(SHOPPER_REFERENCE)).thenReturn("")
 
         whenever(paymentsService.getAdyenPayments(any())).thenReturn(paymentsCall)
         doNothing().whenever(paymentsCall).execute(paymentsCaptor.capture())
@@ -69,10 +74,15 @@ class AdyenDropInServicePresenterTest {
 
         paymentsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(paymentsService).getAdyenPayments(any())
+        verify(paymentsService).getAdyenPayments(capture(requestCaptor))
+        val requestString = requestCaptor.value
+        assertTrue(requestString.contains(PAYMENT_METHOD))
+        assertTrue(requestString.contains(AMOUNT))
+        assertFalse(requestString.contains(SHOPPER_REFERENCE))
         verify(jsonObject).keys()
         verify(jsonObject).get(PAYMENT_METHOD)
         verify(jsonObject).get(AMOUNT)
+        verify(jsonObject).get(SHOPPER_REFERENCE)
         verify(service).handleResult(capture(resultsCaptor))
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
@@ -207,6 +217,7 @@ class AdyenDropInServicePresenterTest {
     companion object {
         private const val ACTION = AdyenDropInServicePresenter.ACTION
         private const val AMOUNT = "amount"
+        private const val SHOPPER_REFERENCE = "shopperReference"
         private const val PAYMENT_METHOD = "paymentMethod"
         private const val TRANSACTION_ID = "1234"
         private const val TRANSACTION_ID_KEY = AdyenDropInServicePresenter.TRANSACTION_ID
