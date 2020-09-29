@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.base.BasePresenter
+import org.json.JSONArray
 import org.json.JSONObject
 
 class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
@@ -78,9 +79,17 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
     private fun createPaymentRequestString(paymentComponentData: JSONObject, returnUrl: String):
             String {
+
         val payload = JSONObject()
-        payload.put(PAYMENT_METHOD, paymentComponentData.getJSONObject(PAYMENT_METHOD))
-        payload.put(AMOUNT, paymentComponentData.getJSONObject(AMOUNT))
+        for (name in paymentComponentData.keys()) {
+            val obj = paymentComponentData.get(name)
+            if (obj !is String) {
+                payload.put(name, obj)
+            } else if (obj.isNotBlank()) {
+                payload.put(name, obj)
+            }
+        }
+
         payload.put(RETURN_URL, returnUrl)
         payload.put(CHANNEL, "Android")
 
