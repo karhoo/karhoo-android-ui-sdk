@@ -23,6 +23,7 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
+import com.karhoo.uisdk.util.GBP
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
@@ -102,7 +103,7 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
         this.braintreeSDKToken = braintreeSDKToken
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
                     updateCardDetails("", it.lastFour, it.cardType.toString().toLowerCase()
@@ -143,7 +144,7 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.handleBraintree()) {
+        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
             view?.threeDSecureNonce(braintreeSDKToken)
         } else {
             view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
@@ -157,7 +158,7 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
 
     override fun sdkInit(price: QuotePrice?) {
         //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
-        val sdkInitRequest = getSDKInitRequest("GBP")
+        val sdkInitRequest = getSDKInitRequest(GBP)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)

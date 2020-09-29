@@ -19,6 +19,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.util.GBP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -285,7 +286,7 @@ class BraintreePaymentPresenterTest {
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
         whenever(price.highPrice).thenReturn(EXPECTED_AMOUNT_AS_STRING.toInt())
-        whenever(price.currencyCode).thenReturn("GBP")
+        whenever(price.currencyCode).thenReturn(GBP)
 
         braintreePaymentPresenter.getPaymentNonce(price)
 

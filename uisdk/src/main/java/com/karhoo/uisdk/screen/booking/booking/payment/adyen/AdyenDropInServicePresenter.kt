@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.util.ANDROID
 import org.json.JSONObject
 
 class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
@@ -42,8 +43,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
     override fun getAdyenPaymentDetails(actionComponentData: JSONObject, transactionId: String?) {
 
         transactionId?.let {
-
-            Log.d("Adyen", "transactionId: $transactionId")
             val request = JSONObject()
             request.put(TRANSACTION_ID, transactionId)
             request.put(PAYMENTS_PAYLOAD, actionComponentData)
@@ -89,7 +88,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
             }
         }
         payload.put(RETURN_URL, returnUrl)
-        payload.put(CHANNEL, "Android")
+        payload.put(CHANNEL, ANDROID)
 
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)

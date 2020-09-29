@@ -53,6 +53,7 @@ import com.karhoo.sdk.api.model.VehiclesV2
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
+import com.karhoo.uisdk.util.GBP
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import java.net.HttpURLConnection
@@ -540,7 +541,7 @@ class ServerRobot {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 3550,
-                        currency = "GBP"
+                        currency = GBP
                                          ))
 
         val FARE_CANCELLED = Fare(
@@ -570,7 +571,7 @@ class ServerRobot {
                 meetingPoint = MeetingPoint(pickupType = PickupType.NOT_SET),
                 quote = Price(
                         total = 500,
-                        currency = "GBP",
+                        currency = GBP,
                         quoteType = QuoteType.METERED
                              ),
                 vehicle = Vehicle(
@@ -860,7 +861,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.METERED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = GBP),
                                 fleet = QUOTE_FLEET.copy(fleetId = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
                                                          name = "QA_base_ex_com_ex_tax_metered",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -876,7 +877,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = GBP),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "iCabbi [Sandbox]",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -893,7 +894,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = GBP),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Third Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -911,7 +912,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = GBP),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Ivcardo",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -929,7 +930,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = GBP),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "A Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/9b7e3ae9-48d0-42f2-9130-d99c5bec431c.png",

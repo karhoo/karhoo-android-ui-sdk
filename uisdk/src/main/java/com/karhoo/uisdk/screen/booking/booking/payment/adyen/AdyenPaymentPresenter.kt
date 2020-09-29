@@ -21,9 +21,10 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.CurrencyUtils
+import com.karhoo.uisdk.util.GBP
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Currency
@@ -52,12 +53,12 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                         .build()
 
         val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
-            putExtra(AdyenResultActivity.TYPE_KEY, ComponentType.DROPIN.id)
+            putExtra(AdyenResultActivity.TYPE_KEY, AdyenComponentType.DROPIN.id)
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
         }
 
         val amount = Amount()
-        amount.currency = price?.currencyCode ?: "GBP"
+        amount.currency = price?.currencyCode ?: GBP
         amount.value = price?.highPrice.orZero()
 
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
@@ -73,7 +74,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     private fun getPaymentMethods() {
-        val amount = AdyenAmount(price?.currencyCode ?: "GBP", price?.highPrice.orZero())
+        val amount = AdyenAmount(price?.currencyCode ?: GBP, price?.highPrice.orZero())
         let {
             val request = AdyenPaymentMethodsRequest(amount = amount)
             paymentsService.getAdyenPaymentMethods(request).execute { result ->

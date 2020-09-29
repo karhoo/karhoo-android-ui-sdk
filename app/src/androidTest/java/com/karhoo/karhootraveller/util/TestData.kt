@@ -34,6 +34,7 @@ import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.request.TripSearch
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.request.UserRegistration
+import com.karhoo.uisdk.util.GBP
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import java.text.SimpleDateFormat
@@ -192,7 +193,7 @@ class TestData {
                 poiType = Poi.NOT_SET)
         val PRICE = Price(
                 total = 3550,
-                currency = "GBP")
+                currency = GBP)
 
         val FLEET_INFO = FleetInfo(
                 fleetId = "FleetID123",
@@ -244,7 +245,7 @@ class TestData {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 0,
-                        currency = "GBP"))
+                        currency = GBP))
 
         val TRIP_COMPLETED = TRIP.copy(
                 origin = TRIP_LOCATION_INFO_PICKUP.copy(displayAddress = ADDRESS_ORIGIN),
@@ -285,7 +286,7 @@ class TestData {
 
         val QUOTE = Quote(availabilityId = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                           categoryName = "Exec",
-                          currencyCode = "GBP",
+                          currencyCode = GBP,
                           fleetId = "someFleetId",
                           supplierName = "someFleetName",
                           highPrice = 779,
