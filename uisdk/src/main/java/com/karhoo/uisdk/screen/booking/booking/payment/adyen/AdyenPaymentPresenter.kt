@@ -84,8 +84,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                             view?.showPaymentUI(adyenKey, it, price)
                         }
                     }
-                    //TODO Change error message
-                    is Resource.Failure -> view?.showError(R.string.payment_issue_message)
+                    is Resource.Failure -> view?.showError(R.string.something_went_wrong)
                 }
             }
         }
@@ -109,6 +108,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                                       (AdyenPaymentView.ADDITIONAL_DATA, null))
                     passBackNonce(transactionId)
                 }
+                //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
             }
         } else {
@@ -162,11 +162,11 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
         this.nonce = nonce
         paymentData?.let {
             val additionalData = JSONObject(paymentData)
-            val cardNumber = additionalData.optString(CARD_SUMMARY, "")
+            val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")
             val savedPaymentInfo = CardType.fromString(type)?.let {
-                SavedPaymentInfo(cardNumber, it)
-            } ?: SavedPaymentInfo(cardNumber, CardType.NOT_SET)
+                SavedPaymentInfo(newCardNumber, it)
+            } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
             view?.bindPaymentDetails(savedPaymentInfo)
         } ?: view?.refresh()
     }
