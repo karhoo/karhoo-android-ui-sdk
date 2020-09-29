@@ -23,7 +23,7 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
-import com.karhoo.uisdk.util.GBP
+import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
@@ -157,8 +157,8 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun sdkInit(price: QuotePrice?) {
-        //currency is temporarily hardcoded to GBP as it isn't used by the backend to fix DROID-1536. Also hardcoded to GBP in the iOS code.
-        val sdkInitRequest = getSDKInitRequest(GBP)
+        //currency is temporarily hardcoded to DEFAULT_CURRENCY as it isn't used by the backend to fix DROID-1536. Also hardcoded to DEFAULT_CURRENCY in the iOS code.
+        val sdkInitRequest = getSDKInitRequest(DEFAULT_CURRENCY)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
