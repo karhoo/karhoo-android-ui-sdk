@@ -6,7 +6,6 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.base.BasePresenter
-import org.json.JSONArray
 import org.json.JSONObject
 
 class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
@@ -89,7 +88,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 payload.put(name, obj)
             }
         }
-
         payload.put(RETURN_URL, returnUrl)
         payload.put(CHANNEL, "Android")
 
@@ -102,10 +100,8 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
     companion object {
         const val ACTION = "action"
-        const val AMOUNT = "amount"
         const val CHANNEL = "channel"
         const val PAYLOAD = "payload"
-        const val PAYMENT_METHOD = "paymentMethod"
         const val PAYMENTS_PAYLOAD = "payments_payload"
         const val RETURN_URL = "returnUrl"
         const val RETURN_URL_SUFFIX = "return_url_suffix"

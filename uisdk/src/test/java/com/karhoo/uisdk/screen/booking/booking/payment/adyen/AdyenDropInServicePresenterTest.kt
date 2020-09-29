@@ -5,8 +5,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.AMOUNT
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.PAYMENT_METHOD
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
@@ -28,6 +26,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AdyenDropInServicePresenterTest {
 
+    val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT)
     private var jsonObject: JSONObject = mock()
     private var paymentJson: JSONObject = mock()
     private var amountJson: JSONObject = mock()
@@ -45,8 +44,10 @@ class AdyenDropInServicePresenterTest {
 
     @Before
     fun setUp() {
-        whenever(jsonObject.getJSONObject(PAYMENT_METHOD)).thenReturn(paymentJson)
-        whenever(jsonObject.getJSONObject(AMOUNT)).thenReturn(amountJson)
+        whenever(jsonObject.keys()).thenReturn(mutableList.iterator())
+        whenever(jsonObject.get(PAYMENT_METHOD)).thenReturn(paymentJson)
+        whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
+        whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
 
         whenever(paymentsService.getAdyenPayments(any())).thenReturn(paymentsCall)
         doNothing().whenever(paymentsCall).execute(paymentsCaptor.capture())
@@ -69,8 +70,9 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(jsonObject).getJSONObject(PAYMENT_METHOD)
-        verify(jsonObject).getJSONObject(AMOUNT)
+        verify(jsonObject).keys()
+        verify(jsonObject).get(PAYMENT_METHOD)
+        verify(jsonObject).get(AMOUNT)
         verify(service).handleResult(capture(resultsCaptor))
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
@@ -85,7 +87,7 @@ class AdyenDropInServicePresenterTest {
     fun `finished result returned when Adyen payment retrieval succeeds with no action`() {
 
         val response = JSONObject()
-                .put("transaction_id", TRANSACTION_ID)
+                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
@@ -106,8 +108,8 @@ class AdyenDropInServicePresenterTest {
     @Test
     fun `action result returned when Adyen payment retrieval succeeds with an action`() {
         val response = JSONObject()
-                .put("action", "some action")
-                .put("transaction_id", TRANSACTION_ID)
+                .put(ACTION, "some action")
+                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
@@ -167,7 +169,7 @@ class AdyenDropInServicePresenterTest {
     fun `finished result returned when Adyen payment details retrieval succeeds with no action`() {
 
         val response = JSONObject()
-                .put("transaction_id", TRANSACTION_ID)
+                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
         presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
 
@@ -189,8 +191,8 @@ class AdyenDropInServicePresenterTest {
     fun `action result returned when Adyen payment details retrieval succeeds with an action`() {
 
         val response = JSONObject()
-                .put("action", "some action")
-                .put("transaction_id", TRANSACTION_ID)
+                .put(ACTION, "some action")
+                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
         presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
 
@@ -203,7 +205,11 @@ class AdyenDropInServicePresenterTest {
     }
 
     companion object {
+        private const val ACTION = AdyenDropInServicePresenter.ACTION
+        private const val AMOUNT = "amount"
+        private const val PAYMENT_METHOD = "paymentMethod"
         private const val TRANSACTION_ID = "1234"
+        private const val TRANSACTION_ID_KEY = AdyenDropInServicePresenter.TRANSACTION_ID
         private const val RETURN_URL = "http://adyen.return.url"
     }
 }
