@@ -310,7 +310,7 @@ class BraintreePaymentPresenterTest {
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
         whenever(price.highPrice).thenReturn(1500)
-        whenever(price.currencyCode).thenReturn("DEFAULT_CURRENCY")
+        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
 
         braintreePaymentPresenter.getPaymentNonce(price)
 
@@ -336,7 +336,7 @@ class BraintreePaymentPresenterTest {
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
         whenever(price.highPrice).thenReturn(1500)
-        whenever(price.currencyCode).thenReturn("DEFAULT_CURRENCY")
+        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
 
         braintreePaymentPresenter.getPaymentNonce(price)
 
