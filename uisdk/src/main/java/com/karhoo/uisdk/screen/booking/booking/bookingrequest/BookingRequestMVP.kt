@@ -3,9 +3,9 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -23,11 +23,11 @@ interface BookingRequestMVP {
 
         fun animateOut()
 
-        fun bindEta(quote: QuoteV2, card: String)
+        fun bindEta(quote: Quote, card: String)
 
-        fun bindPrebook(quote: QuoteV2, card: String, date: DateTime)
+        fun bindPrebook(quote: Quote, card: String, date: DateTime)
 
-        fun bindPriceAndEta(quote: QuoteV2, card: String)
+        fun bindPriceAndEta(quote: Quote, card: String)
 
         fun disableBooking()
 
@@ -82,7 +82,7 @@ interface BookingRequestMVP {
 
         fun setBookingFields(allFieldsValid: Boolean)
 
-        fun showBookingRequest(quote: QuoteV2, outboundTripId: String? = null)
+        fun showBookingRequest(quote: Quote, outboundTripId: String? = null)
 
         fun resetBooking()
 

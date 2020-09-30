@@ -1,13 +1,11 @@
 package com.karhoo.uisdk.screen.booking.domain.supplier
 
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteV2
-import com.karhoo.uisdk.util.extension.orZero
 import java.util.Comparator
 
-class QtaSort : Comparator<QuoteV2> {
+class QtaSort : Comparator<Quote> {
 
-    override fun compare(vehicleOne: QuoteV2, vehicleTwo: QuoteV2) =
+    override fun compare(vehicleOne: Quote, vehicleTwo: Quote) =
             if ((vehicleOne.vehicle.vehicleQta != null || vehicleTwo.vehicle.vehicleQta != null)
                     && vehicleOne.vehicle.vehicleQta.highMinutes != vehicleTwo.vehicle.vehicleQta
                     .highMinutes) {
@@ -16,7 +14,7 @@ class QtaSort : Comparator<QuoteV2> {
                 sortByPrice(vehicleOne, vehicleTwo)
             }
 
-    private fun sortByPrice(vehicleOne: QuoteV2, vehicleTwo: QuoteV2) =
+    private fun sortByPrice(vehicleOne: Quote, vehicleTwo: Quote) =
             vehicleOne.price.highPrice - vehicleTwo.price.highPrice
 
 }

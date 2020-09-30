@@ -9,7 +9,6 @@ import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
@@ -54,9 +53,9 @@ class SupplierListItemView @JvmOverloads constructor(context: Context,
     }
 
     fun bind(listPosition: Int,
-             vehicleDetails: QuoteV2,
+             vehicleDetails: Quote,
              isPrebook: Boolean,
-             itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<QuoteV2>) {
+             itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         supplierNameText.text = vehicleDetails.fleet.name
         categoryText.text = String.format("%s%s",
@@ -102,7 +101,7 @@ class SupplierListItemView @JvmOverloads constructor(context: Context,
     }
 
     @Suppress("NestedBlockDepth")
-    private fun setPrice(vehicleDetails: QuoteV2?) {
+    private fun setPrice(vehicleDetails: Quote?) {
         vehicleDetails?.let {
             if (it.price.highPrice > 0) {
                 if (it.price.currencyCode.isNullOrEmpty()) {

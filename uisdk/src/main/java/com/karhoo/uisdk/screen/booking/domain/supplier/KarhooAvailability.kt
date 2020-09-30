@@ -2,9 +2,9 @@ package com.karhoo.uisdk.screen.booking.domain.supplier
 
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuoteListV2
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.QuoteList
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
@@ -28,12 +28,12 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                          private val bookingStatusStateViewModel: BookingStatusStateViewModel, lifecycleOwner: LifecycleOwner)
     : AvailabilityProvider {
 
-    private var filteredList: MutableList<QuoteV2>? = liveFleetsViewModel.liveFleets.value?.toMutableList()
+    private var filteredList: MutableList<Quote>? = liveFleetsViewModel.liveFleets.value?.toMutableList()
     private var categoryViewModels: MutableList<Category> = mutableListOf()
-    private var availableVehicles: Map<String, List<QuoteV2>> = mutableMapOf()
+    private var availableVehicles: Map<String, List<Quote>> = mutableMapOf()
     private var allCategory: Category? = null
-    private var vehiclesObserver: Observer<Resource<QuoteListV2>>? = null
-    private var vehiclesObservable: Observable<QuoteListV2>? = null
+    private var vehiclesObserver: Observer<Resource<QuoteList>>? = null
+    private var vehiclesObservable: Observable<QuoteList>? = null
     private var currentFilter: String? = null
     private var errorView: WeakReference<ErrorView>? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
@@ -66,7 +66,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                 vehiclesObserver = quotesCallback()
                 vehiclesObserver?.let { observer ->
                     vehiclesObservable = quotesService
-                            .quotesV2(QuotesSearch(
+                            .quotes(QuotesSearch(
                                     origin = bookingStatusPickup,
                                     destination = bookingStatusDestination,
                                     dateScheduled = bookingStatus.date?.toDate()))
@@ -110,7 +110,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         updateFleets(filteredList)
     }
 
-    private fun updateFleets(filteredList: MutableList<QuoteV2>?) {
+    private fun updateFleets(filteredList: MutableList<Quote>?) {
         filteredList?.let {
             liveFleetsViewModel.liveFleets.value = filteredList
         }
@@ -124,7 +124,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         cancelVehicleCallback()
         if (bookingStatus != null && bookingStatus.destination == null
                 && categoryViewModels.isNotEmpty()) {
-            updateVehicles(QuoteListV2(categories = emptyMap(), id = QuoteId()))
+            updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId()))
         } else {
             requestVehicleAvailability(bookingStatus)
         }
@@ -138,8 +138,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         this.availabilityHandler = WeakReference(availabilityHandler)
     }
 
-    private fun quotesCallback() = object : Observer<Resource<QuoteListV2>> {
-        override fun onValueChanged(value: Resource<QuoteListV2>) {
+    private fun quotesCallback() = object : Observer<Resource<QuoteList>> {
+        override fun onValueChanged(value: Resource<QuoteList>) {
             when (value) {
                 is Resource.Success -> updateVehicles(value.data)
                 is Resource.Failure -> handleAvailabilityError(value.error)
@@ -166,7 +166,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                                                     .DestinationAddressEvent(null))
     }
 
-    private fun updateVehicles(vehicles: QuoteListV2) {
+    private fun updateVehicles(vehicles: QuoteList) {
         availabilityHandler?.get()?.hasAvailability = true
         currentCategories(currentCategories = vehicles.categories.keys.toList())
         availableVehicles = vehicles.categories
@@ -211,7 +211,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     private fun isCategoryAvailable(activeCategories: HashMap<String, Boolean>, vehicleDetails:
-    QuoteV2) {
+    Quote) {
         vehicleDetails.vehicle.vehicleClass?.let {
             if (!activeCategories.containsKey(it)) {
                 activeCategories[it] = true
