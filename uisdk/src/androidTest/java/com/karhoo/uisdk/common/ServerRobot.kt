@@ -50,6 +50,7 @@ import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.model.VehiclesV2
+import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
@@ -302,6 +303,24 @@ class ServerRobot {
                 response = response,
                 endpoint = APITemplate.PAYMENT_PROVIDERS_METHOD
 
+                        )
+    }
+
+    fun adyenPublicKeyResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.ADYEN_PUBLIC_KEY_METHOD,
+                delayInMillis = delayInMillis
+                        )
+    }
+
+    fun adyenPaymentMethodsResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.ADYEN_PAYMENTS_METHOD,
+                delayInMillis = delayInMillis
                         )
     }
 
@@ -959,6 +978,10 @@ class ServerRobot {
                 lastFour = "",
                 cardType = CardType.NOT_SET
                                                              )
+
+        val ADYEN_PUBLIC_KEY = AdyenPublicKey("12345678")
+
+        val ADYEN_PROVIDER = PaymentProvider(Provider(id = "Adyen"))
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
 

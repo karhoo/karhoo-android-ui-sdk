@@ -1,0 +1,137 @@
+{
+  "groups": [
+    {
+      "name": "Credit Card",
+      "types": [
+        "visa",
+        "mc"
+      ]
+    }
+  ],
+  "paymentMethods": [
+    {
+      "brands": [
+        "visa",
+        "mc"
+      ],
+      "details": [
+        {
+          "key": "encryptedCardNumber",
+          "type": "cardToken"
+        },
+        {
+          "key": "encryptedSecurityCode",
+          "type": "cardToken"
+        },
+        {
+          "key": "encryptedExpiryMonth",
+          "type": "cardToken"
+        },
+        {
+          "key": "encryptedExpiryYear",
+          "type": "cardToken"
+        },
+        {
+          "key": "holderName",
+          "optional": true,
+          "type": "text"
+        }
+      ],
+      "name": "Credit Card",
+      "type": "scheme"
+    }
+  ],
+  "storedPaymentMethods": [
+    {
+      "brand": "visa",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Test",
+      "id": "8316003539237906",
+      "lastFour": "0000",
+      "name": "VISA",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "mc",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Test",
+      "id": "8316001685915101",
+      "lastFour": "5454",
+      "name": "MasterCard",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "visa",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Test",
+      "id": "8316006832032676",
+      "lastFour": "0006",
+      "name": "VISA",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "mc",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Test",
+      "id": "8316006820804425",
+      "lastFour": "3268",
+      "name": "MasterCard",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "mc",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Test",
+      "id": "8416006819757070",
+      "lastFour": "2311",
+      "name": "MasterCard",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "mc",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Checkout Shopper PlaceHolder",
+      "id": "8416001679165654",
+      "lastFour": "1111",
+      "name": "MasterCard",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    },
+    {
+      "brand": "mc",
+      "expiryMonth": "03",
+      "expiryYear": "2030",
+      "holderName": "Checkout Shopper PlaceHolder",
+      "id": "8415997241406818",
+      "lastFour": "4444",
+      "name": "MasterCard",
+      "supportedShopperInteractions": [
+        "ContAuth"
+      ],
+      "type": "scheme"
+    }
+  ]
+}
