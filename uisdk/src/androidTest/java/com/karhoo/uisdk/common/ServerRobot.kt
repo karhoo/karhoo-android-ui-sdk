@@ -173,7 +173,7 @@ class ServerRobot {
         mockPostResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.BOOKING_METHOD,
+                endpoint = APITemplate.BOOKING_WITH_NONCE_METHOD,
                 delayInMillis = delayInMillis
                         )
     }
@@ -238,7 +238,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=organisation_id&currency=DEFAULT_CURRENCY",
+                        "?organisation_id=organisation_id&currency=$DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }

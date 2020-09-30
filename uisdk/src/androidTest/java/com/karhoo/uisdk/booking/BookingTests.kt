@@ -10,6 +10,8 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.google.gson.Gson
+import com.karhoo.sdk.api.datastore.user.KarhooUserManager
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
@@ -92,6 +94,8 @@ class BookingTests : Launch {
                                             roles = emptyList()))))
                 .putString("locale", "en-GB")
                 .putString("payment_provider_id", "Braintree")
+                .putString("last_four", "1234")
+                .putString("card_type", CardType.MASTERCARD.value)
                 .apply()
         editor.commit()
     }
@@ -562,7 +566,7 @@ class BookingTests : Launch {
      * Book button enabled.
      **/
     @Test
-    fun ASAPBookARiddeScreenFullCheck() {
+    fun asapBookARideScreenFullCheck() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -589,7 +593,7 @@ class BookingTests : Launch {
      * Then:    I can see the following driver details.
      **/
     @Test
-    fun ASAPBookARideSuccess() {
+    fun asapBookARideSuccess() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
