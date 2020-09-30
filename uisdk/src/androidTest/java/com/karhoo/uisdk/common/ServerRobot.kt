@@ -307,7 +307,7 @@ class ServerRobot {
     }
 
     fun adyenPublicKeyResponse(code: Int, response: Any, delayInMillis: Int = 0) {
-        mockPostResponse(
+        mockGetResponse(
                 code = code,
                 response = response,
                 endpoint = APITemplate.ADYEN_PUBLIC_KEY_METHOD,
@@ -316,7 +316,7 @@ class ServerRobot {
     }
 
     fun adyenPaymentMethodsResponse(code: Int, response: Any, delayInMillis: Int = 0) {
-        mockPostResponse(
+        mockGetResponse(
                 code = code,
                 response = response,
                 endpoint = APITemplate.ADYEN_PAYMENTS_METHOD,

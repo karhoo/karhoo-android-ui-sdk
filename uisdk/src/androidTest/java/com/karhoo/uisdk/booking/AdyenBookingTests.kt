@@ -120,8 +120,8 @@ class AdyenBookingTests : Launch {
             sleep()
             pressFirstQuote()
             sleep(MEDIUM)
-
-            pressBookRideButton()
+            pressAddCardButton()
+//            pressBookRideButton()
             waitForTime(5000)
             sleep()
         } result {

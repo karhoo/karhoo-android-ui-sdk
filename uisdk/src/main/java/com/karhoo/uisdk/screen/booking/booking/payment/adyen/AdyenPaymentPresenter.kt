@@ -147,8 +147,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                         getPaymentMethods()
                     }
                 }
-                //TODO Change error message
-                is Resource.Failure -> view?.showError(R.string.payment_issue_message)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
     }

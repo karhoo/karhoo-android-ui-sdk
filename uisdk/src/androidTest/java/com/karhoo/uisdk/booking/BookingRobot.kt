@@ -75,6 +75,10 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.bookingRequestButton)
     }
 
+    fun pressAddCardButton() {
+        clickButton(R.id.bookingRequestPaymentDetailsWidget)
+    }
+
     fun clickOnProfileButton() {
         clickButtonByString(R.string.profile)
     }
