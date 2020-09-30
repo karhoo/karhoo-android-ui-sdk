@@ -53,6 +53,7 @@ import com.karhoo.sdk.api.model.VehiclesV2
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
+import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import java.net.HttpURLConnection
@@ -237,7 +238,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=organisation_id&currency=GBP",
+                        "?organisation_id=organisation_id&currency=DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }
@@ -299,7 +300,8 @@ class ServerRobot {
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.GET_PROVIDERS_METHOD
+                endpoint = APITemplate.PAYMENT_PROVIDERS_METHOD
+
                         )
     }
 
@@ -539,7 +541,7 @@ class ServerRobot {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 3550,
-                        currency = "GBP"
+                        currency = DEFAULT_CURRENCY
                                          ))
 
         val FARE_CANCELLED = Fare(
@@ -569,7 +571,7 @@ class ServerRobot {
                 meetingPoint = MeetingPoint(pickupType = PickupType.NOT_SET),
                 quote = Price(
                         total = 500,
-                        currency = "GBP",
+                        currency = DEFAULT_CURRENCY,
                         quoteType = QuoteType.METERED
                              ),
                 vehicle = Vehicle(
@@ -820,7 +822,7 @@ class ServerRobot {
          */
         val QUOTE_LIST_ID_ASAP = QuoteId(quoteId = "eb00db4d-44bb-11e9-bdab-0a580a04005f")
 
-        val QUOTE_PRICE = QuotePrice(currencyCode = "GBP",
+        val QUOTE_PRICE = QuotePrice(currencyCode = "DEFAULT_CURRENCY",
                                      highPrice = 577,
                                      lowPrice = 577)
 
@@ -859,7 +861,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.METERED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
                                                          name = "QA_base_ex_com_ex_tax_metered",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -875,7 +877,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "iCabbi [Sandbox]",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -892,7 +894,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Third Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -910,7 +912,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Ivcardo",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -928,7 +930,7 @@ class ServerRobot {
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "A Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/9b7e3ae9-48d0-42f2-9130-d99c5bec431c.png",

@@ -35,7 +35,7 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -66,8 +66,8 @@ import java.util.Currency
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, PaymentMVP.CardActions,
-      PaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.CardActions,
+      BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
