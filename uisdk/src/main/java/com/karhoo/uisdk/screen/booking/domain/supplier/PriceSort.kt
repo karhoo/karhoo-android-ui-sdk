@@ -1,17 +1,17 @@
 package com.karhoo.uisdk.screen.booking.domain.supplier
 
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import java.util.Comparator
 
-class PriceSort : Comparator<QuoteV2> {
+class PriceSort : Comparator<Quote> {
 
-    override fun compare(vehicleOne: QuoteV2, vehicleTwo: QuoteV2): Int {
+    override fun compare(vehicleOne: Quote, vehicleTwo: Quote): Int {
         return if (vehicleOne.price.highPrice > 0 || vehicleTwo.price.highPrice > 0) {
             sortNormally(vehicleOne, vehicleTwo)
         } else sortMissingPrice(vehicleOne, vehicleTwo)
     }
 
-    private fun sortNormally(vehicleOne: QuoteV2, vehicleTwo: QuoteV2): Int {
+    private fun sortNormally(vehicleOne: Quote, vehicleTwo: Quote): Int {
         return when {
             vehicleOne.price.highPrice <= 0 -> 1
             vehicleTwo.price.highPrice <= 0 -> -1
@@ -21,7 +21,7 @@ class PriceSort : Comparator<QuoteV2> {
         }
     }
 
-    private fun sortBySupplierName(vehicleOne: QuoteV2, vehicleTwo: QuoteV2): Int {
+    private fun sortBySupplierName(vehicleOne: Quote, vehicleTwo: Quote): Int {
         if (vehicleOne.fleet.name != vehicleTwo.fleet.name) {
             return vehicleOne.fleet.name.orEmpty().compareTo(vehicleTwo.fleet.name.orEmpty(), ignoreCase =
             true)
@@ -29,7 +29,7 @@ class PriceSort : Comparator<QuoteV2> {
         return sortByCategoryName(vehicleOne, vehicleTwo)
     }
 
-    private fun sortMissingPrice(vehicleOne: QuoteV2, vehicleTwo: QuoteV2): Int {
+    private fun sortMissingPrice(vehicleOne: Quote, vehicleTwo: Quote): Int {
         val vehicleOneQta: Int? = vehicleOne.vehicle.vehicleQta.highMinutes
         val vehicleTwoQta: Int? = vehicleTwo.vehicle.vehicleQta.highMinutes
 
@@ -41,7 +41,7 @@ class PriceSort : Comparator<QuoteV2> {
         return -1
     }
 
-    private fun sortByCategoryName(vehicleOne: QuoteV2, vehicleTwo: QuoteV2): Int {
+    private fun sortByCategoryName(vehicleOne: Quote, vehicleTwo: Quote): Int {
         return vehicleOne.vehicle.vehicleClass.orEmpty().compareTo(vehicleTwo.vehicle
                                                                            .vehicleClass.orEmpty(),
                                                                    ignoreCase = true)

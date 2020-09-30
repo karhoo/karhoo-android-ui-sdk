@@ -9,8 +9,8 @@ import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
@@ -32,7 +32,7 @@ import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
-import java.util.Date
+import java.util.*
 
 class BookingRequestPresenter(view: BookingRequestMVP.View,
                               private val analytics: Analytics?,
@@ -48,7 +48,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     private var flightDetails: FlightDetails? = null
     private var origin: LocationInfo? = null
     private var outboundTripId: String? = null
-    private var quote: QuoteV2? = null
+    private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
 
     init {
@@ -195,7 +195,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         } ?: view?.disableBooking()
     }
 
-    override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
         refreshPaymentDetails(quote.price)
         if (origin != null && destination != null) {
             this.quote = quote
@@ -223,7 +223,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                                                       .BookingError(stringId))
     }
 
-    private fun handleBookingType(quote: QuoteV2) {
+    private fun handleBookingType(quote: Quote) {
         if (scheduledDate != null) {
             scheduledDate?.let {
                 view?.bindPrebook(quote, "", it)

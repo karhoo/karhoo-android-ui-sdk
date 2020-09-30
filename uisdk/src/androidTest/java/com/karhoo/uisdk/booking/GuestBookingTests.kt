@@ -20,7 +20,7 @@ import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_V2_ASAP
+import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -96,7 +96,7 @@ class GuestBookingTests : Launch {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -237,7 +237,7 @@ class GuestBookingTests : Launch {
         }
         serverRobot {
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         address {
             search(TestData.SEARCH_ADDRESS_EXTRA)
@@ -309,7 +309,7 @@ class GuestBookingTests : Launch {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -339,7 +339,7 @@ class GuestBookingTests : Launch {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addCardResponse(HTTP_OK, PAYMENTS_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)

@@ -39,7 +39,7 @@ import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripList
@@ -49,8 +49,7 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.model.VehicleAttributes
-import com.karhoo.sdk.api.model.VehiclesV2
-import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
+import com.karhoo.sdk.api.model.Vehicles
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
@@ -156,7 +155,7 @@ class ServerRobot {
     }
 
     fun quoteIdResponse(code: Int, response: Any, endpoint: String = APITemplate
-            .QUOTES_V2_REQUEST_METHOD, delayInMillis: Int = 0) {
+            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
                 response = response,
@@ -169,7 +168,7 @@ class ServerRobot {
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.QUOTES_V2_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId),
+                endpoint = APITemplate.QUOTES_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId),
                 delayInMillis = delayInMillis
                        )
     }
@@ -864,7 +863,7 @@ class ServerRobot {
         val VEHICLE_ATTRIBUTES = VehicleAttributes(passengerCapacity = 4,
                                                    luggageCapacity = 5)
 
-        val QUOTE_V2 = QuoteV2(id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O2VsZWN0cmlj",
+        val QUOTE = Quote(id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O2VsZWN0cmlj",
                                quoteType = QuoteType.ESTIMATED,
                                quoteSource = QuoteSource.FLEET,
                                price = QUOTE_PRICE,
@@ -875,13 +874,13 @@ class ServerRobot {
 
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
-        val VEHICLES_V2_ASAP = VehiclesV2(
+        val VEHICLES_ASAP = Vehicles(
                 status = "PROGRESSING",
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
                 quotes = listOf(
-                        QUOTE_V2,
-                        QUOTE_V2.copy(
+                        QUOTE,
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.METERED,
@@ -897,7 +896,7 @@ class ServerRobot {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
                                                              vehicleQta = QuoteQTA(highMinutes = 5, lowMinutes = 5)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
@@ -914,7 +913,7 @@ class ServerRobot {
                                                              vehicleQta = QuoteQTA(highMinutes = 30,
                                                                                    lowMinutes = 30)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
@@ -932,7 +931,7 @@ class ServerRobot {
                                                                                    lowMinutes =
                                                                                    20)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O21wdg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
@@ -950,7 +949,7 @@ class ServerRobot {
                                                                                    lowMinutes =
                                                                                    30)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,

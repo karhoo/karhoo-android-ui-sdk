@@ -20,7 +20,7 @@ import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_V2_ASAP
+import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -154,7 +154,7 @@ class BookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             pressSwapAddressesButton()
@@ -178,7 +178,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep(TestData.LONG)
@@ -200,7 +200,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -227,7 +227,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -495,7 +495,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -519,7 +519,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()
@@ -547,7 +547,7 @@ class BookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
@@ -573,7 +573,7 @@ class BookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
             bookingWithNonceResponse(HTTP_OK, TRIP)

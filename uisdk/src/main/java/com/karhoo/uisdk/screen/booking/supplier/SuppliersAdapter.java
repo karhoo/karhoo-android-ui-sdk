@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.karhoo.sdk.api.model.Quote;
-import com.karhoo.sdk.api.model.QuoteV2;
 import com.karhoo.uisdk.base.BaseRecyclerAdapter;
 import com.karhoo.uisdk.base.BaseRecyclerView;
 import com.karhoo.uisdk.screen.booking.domain.supplier.PriceSort;
@@ -14,7 +13,7 @@ import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod;
 import java.util.Collections;
 import java.util.List;
 
-public class SuppliersAdapter extends BaseRecyclerAdapter<QuoteV2, SupplierListItemView> {
+public class SuppliersAdapter extends BaseRecyclerAdapter<Quote, SupplierListItemView> {
 
     private Context context;
     private boolean isPrebook;
@@ -32,7 +31,7 @@ public class SuppliersAdapter extends BaseRecyclerAdapter<QuoteV2, SupplierListI
     @Override
     public void onBindViewHolder(BaseRecyclerView<SupplierListItemView> holder, int position) {
         final SupplierListItemView view = holder.getView();
-        final QuoteV2 vehicleDetails = getItems().get(position);
+        final Quote vehicleDetails = getItems().get(position);
 
         view.bind(position, vehicleDetails, isPrebook, getItemClickListener());
     }
@@ -47,7 +46,7 @@ public class SuppliersAdapter extends BaseRecyclerAdapter<QuoteV2, SupplierListI
     }
 
     @Override
-    public void setItems(List<QuoteV2> items) {
+    public void setItems(List<Quote> items) {
         switch (sortMethod) {
             case ETA:
                 Collections.sort(items, new QtaSort());

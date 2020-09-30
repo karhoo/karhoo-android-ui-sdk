@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.supplier
 
 import android.app.Application
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.state.BaseStateViewModel
 
@@ -38,7 +38,7 @@ class BookingSupplierViewModel(application: Application) :
         viewAction = BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange(isVisible)
     }
 
-    private fun showBookingRequest(selectedQuote: QuoteV2) {
+    private fun showBookingRequest(selectedQuote: Quote) {
         viewState = QuoteListStatus(selectedQuote)
         viewAction = BookingSupplierViewContract.BookingSupplierAction.ShowBookingRequest(selectedQuote)
     }

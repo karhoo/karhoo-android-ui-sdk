@@ -5,9 +5,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuoteListV2
+import com.karhoo.sdk.api.model.QuoteList
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.response.Resource
@@ -41,8 +41,8 @@ class KarhooAvailabilityTest {
     private var quotesService: QuotesService = mock()
     private var analytics: Analytics = mock()
     private var lifecycleOwner: LifecycleOwner = mock()
-    private var quotesCall: PollCall<QuoteListV2> = mock()
-    private var observable: Observable<QuoteListV2> = mock()
+    private var quotesCall: PollCall<QuoteList> = mock()
+    private var observable: Observable<QuoteList> = mock()
     private var locationInfo = LocationInfo()
     private lateinit var liveFleetsViewModel: LiveFleetsViewModel
     private lateinit var categoriesViewModel: CategoriesViewModel
@@ -51,7 +51,7 @@ class KarhooAvailabilityTest {
     private lateinit var bookingStatusStateViewModel: BookingStatusStateViewModel
 
     private val lambdaCaptor = argumentCaptor<com.karhoo.sdk.api.network.observable
-    .Observer<Resource<QuoteListV2>>>()
+    .Observer<Resource<QuoteList>>>()
 
     @Before
     fun setUp() {
@@ -82,14 +82,14 @@ class KarhooAvailabilityTest {
      **/
     @Test
     fun `all category gets populated with a full list of quotes`() {
-        whenever(quotesService.quotesV2(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
         observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteListV2(categories =
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
                                                                             CATEGORIES, id = QuoteId())))
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
             assertEquals(7, it?.size)
@@ -103,14 +103,14 @@ class KarhooAvailabilityTest {
      **/
     @Test
     fun `selecting a category filter only returns vehicles of that category`() {
-        whenever(quotesService.quotesV2(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
         observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteListV2(categories =
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
                                                                             CATEGORIES, id = QuoteId())))
 
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
@@ -130,13 +130,13 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `selecting a vehicle category triggers an event if there is a filtered list`() {
-        whenever(quotesService.quotesV2(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
         observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteListV2(categories =
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
                                                                             CATEGORIES, id = QuoteId())))
 
         availability.filterVehicleListByCategory(MPV)
@@ -150,17 +150,17 @@ class KarhooAvailabilityTest {
         const val SALOON = "SALOON"
 
         val CATEGORIES = mapOf(
-                SALOON to mutableListOf<QuoteV2>().apply {
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                SALOON to mutableListOf<Quote>().apply {
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
                 },
-                MPV to mutableListOf<QuoteV2>().apply
+                MPV to mutableListOf<Quote>().apply
                 {
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = MPV)))
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = MPV)))
-                    add(QuoteV2(vehicle = QuoteVehicle(vehicleClass = MPV)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
+                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
                 }
                               )
     }

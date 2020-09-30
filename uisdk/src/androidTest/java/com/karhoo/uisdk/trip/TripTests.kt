@@ -372,7 +372,7 @@ class TripTests : Launch {
             sdkInitResponse(HTTP_OK, ServerRobot.BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, ServerRobot.REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_CREATED, ServerRobot.QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, ServerRobot.VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, ServerRobot.VEHICLES_ASAP)
         }
         trip(this) {
             sleep()
