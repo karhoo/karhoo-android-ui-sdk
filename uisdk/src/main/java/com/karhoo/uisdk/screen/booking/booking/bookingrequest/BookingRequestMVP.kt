@@ -2,7 +2,12 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus

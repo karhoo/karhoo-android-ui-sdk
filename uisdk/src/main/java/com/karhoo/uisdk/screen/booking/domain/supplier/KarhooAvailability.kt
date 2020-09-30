@@ -2,7 +2,10 @@ package com.karhoo.uisdk.screen.booking.domain.supplier
 
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteId
+import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource

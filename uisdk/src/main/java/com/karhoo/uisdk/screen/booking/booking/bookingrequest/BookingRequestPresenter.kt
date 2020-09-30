@@ -5,7 +5,13 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.FlightDetails
+import com.karhoo.sdk.api.model.LocationInfo
+import com.karhoo.sdk.api.model.Poi
+import com.karhoo.sdk.api.model.Price
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
@@ -26,7 +32,7 @@ import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
-import java.util.Date
+import java.util.*
 
 class BookingRequestPresenter(view: BookingRequestMVP.View,
                               private val analytics: Analytics?,

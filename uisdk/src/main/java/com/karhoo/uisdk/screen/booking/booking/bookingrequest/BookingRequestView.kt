@@ -21,7 +21,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -41,21 +46,10 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestFlightDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestLayout
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestSupplierWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
 import org.joda.time.DateTime
-import java.util.Currency
+import java.util.*
 
 @Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
