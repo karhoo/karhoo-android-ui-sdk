@@ -126,10 +126,7 @@ android {
 
     //Add the source set from the UISDK for use in the UI Tests in the App layer
     sourceSets {
-        androidTest {
-            java.srcDirs += ["${project(':uisdk').projectDir}/src/androidTest/java"]
-            assets.srcDirs += ["${project(':uisdk').projectDir}/src/androidTest/assets"]
-        }
+        androidTest.java.srcDirs += ["${project(':uisdk').projectDir}/src/androidTest/java"]
     }
 
 }

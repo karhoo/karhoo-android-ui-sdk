@@ -129,7 +129,11 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        view?.threeDSecureNonce(sdkToken, nonce, amount)
+        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
+            view?.threeDSecureNonce(nonce)
+        } else {
+            view?.threeDSecureNonce(sdkToken, nonce, amount)
+        }
     }
 
     private fun quotePriceToAmount(price: QuotePrice?): String {

@@ -1,8 +1,12 @@
 package com.karhoo.uisdk.util
 
+import android.content.Context
+import androidx.test.platform.app.InstrumentationRegistry
+import com.google.gson.Gson
 import com.karhoo.sdk.api.model.Address
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CancellationReason
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Driver
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Fare
@@ -44,6 +48,9 @@ import kotlin.system.measureTimeMillis
 class TestData {
 
     companion object {
+
+        const val ADYEN = "ADYEN"
+        const val BRAINTREE = "Braintree"
 
         //Requests
         val USER_LOGIN = UserLogin(
@@ -432,5 +439,26 @@ class TestData {
 
         val LONG = measureTimeMillis { 5000 }
 
+        fun setUserInfo(provider: String) {
+            val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+            val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            sharedPreferences.edit()
+                    .putString("first_name", "John")
+                    .putString("last_name", "Smith")
+                    .putString("email", "test@test.test")
+                    .putString("mobile_number", "123")
+                    .putString("user_id", "1234")
+                    .putString("organisations", Gson().toJson(
+                            listOf(Organisation(id = "organisation_id",
+                                                name = "B2C DefaultOrgForKarhooAppUsers",
+                                                roles = emptyList()))))
+                    .putString("locale", "en-GB")
+                    .putString("payment_provider_id", provider)
+                    .putString("last_four", "1234")
+                    .putString("card_type", CardType.MASTERCARD.value)
+                    .apply()
+            editor.commit()
+        }
     }
 }
