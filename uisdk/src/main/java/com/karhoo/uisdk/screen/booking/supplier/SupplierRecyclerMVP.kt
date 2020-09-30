@@ -2,7 +2,7 @@ package com.karhoo.uisdk.screen.booking.supplier
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
 import com.karhoo.uisdk.screen.booking.supplier.category.CategoriesViewModel
@@ -14,7 +14,7 @@ interface SupplierRecyclerMVP {
 
         fun setSortMethod(sortMethod: SortMethod)
 
-        fun updateList(quoteList: List<QuoteV2>)
+        fun updateList(quoteList: List<Quote>)
 
         fun prebook(isPrebook: Boolean)
 

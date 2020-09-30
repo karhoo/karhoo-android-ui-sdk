@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.supplier
 
 import androidx.lifecycle.LifecycleOwner
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityProvider
@@ -20,7 +20,7 @@ interface BookingSupplierViewContract {
 
     sealed class BookingSupplierEvent {
         data class SupplierListVisibilityChanged(val isVisible: Boolean) : BookingSupplierEvent()
-        data class SupplierItemClicked(val quote: QuoteV2) : BookingSupplierEvent()
+        data class SupplierItemClicked(val quote: Quote) : BookingSupplierEvent()
         object Availability : BookingSupplierEvent()
         data class Error(val snackbarConfig: SnackbarConfig) : BookingSupplierEvent()
     }
@@ -29,6 +29,6 @@ interface BookingSupplierViewContract {
         object HideError : BookingSupplierAction()
         data class ShowError(val snackbarConfig: SnackbarConfig) : BookingSupplierAction()
         data class UpdateViewForSupplierListVisibilityChange(val isVisible: Boolean) : BookingSupplierAction()
-        data class ShowBookingRequest(val quote: QuoteV2) : BookingSupplierAction()
+        data class ShowBookingRequest(val quote: Quote) : BookingSupplierAction()
     }
 }
