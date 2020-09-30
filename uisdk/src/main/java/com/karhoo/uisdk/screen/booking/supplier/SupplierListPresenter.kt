@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.supplier
 
 import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
@@ -12,7 +12,7 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
     : BasePresenter<SupplierListMVP.View>(),
       SupplierListMVP.Presenter, AvailabilityHandler {
 
-    private var currentVehicles: List<QuoteV2> = mutableListOf()
+    private var currentVehicles: List<Quote> = mutableListOf()
     private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
@@ -97,7 +97,7 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
         }
     }
 
-    override fun watchVehicles() = Observer<List<QuoteV2>> { vehicleList ->
+    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
         vehicleList?.let {
             currentVehicles = it
             updateList()

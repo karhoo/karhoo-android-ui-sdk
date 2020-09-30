@@ -3,7 +3,6 @@ package com.karhoo.uisdk.analytics
 import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
@@ -61,7 +60,7 @@ interface Analytics {
 
     fun fleetsShown(quoteListId: String?, amountShown: Int)
 
-    fun moreShown(currentVehicles: List<QuoteV2>?, isExpanded: Boolean)
+    fun moreShown(currentVehicles: List<Quote>?, isExpanded: Boolean)
 
     fun fleetsSorted(quoteListId: String?, sortType: String)
 

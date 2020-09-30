@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.widget.TextViewCompat
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.bookingTermsText
@@ -40,7 +40,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(cancellationText, linkTextStyle)
     }
 
-    fun bindViews(vehicle: QuoteV2) {
+    fun bindViews(vehicle: Quote) {
         bookingTermsText.text = String.format(resources.getString(R.string.booking_terms),
                                               vehicle.fleet.name)
         termsConditionsText.setOnClickListener {

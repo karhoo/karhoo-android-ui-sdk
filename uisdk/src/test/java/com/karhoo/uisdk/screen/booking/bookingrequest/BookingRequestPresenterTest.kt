@@ -16,7 +16,7 @@ import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.sdk.api.model.UserInfo
@@ -82,7 +82,7 @@ class BookingRequestPresenterTest {
     private var bookingRequestStateViewModel: BookingRequestStateViewModel = mock()
     private val locationDetails: LocationInfo = LocationInfo()
     private val preferenceStore: PreferenceStore = mock()
-    private val quote: QuoteV2 = mock()
+    private val quote: Quote = mock()
     private val quotePrice: QuotePrice = mock()
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()

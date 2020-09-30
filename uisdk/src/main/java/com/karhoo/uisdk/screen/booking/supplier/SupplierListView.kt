@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.CollapsiblePanelView
@@ -116,7 +116,7 @@ class SupplierListView @JvmOverloads constructor(
         supplierSortWidget.destinationChanged(bookingStatus)
     }
 
-    override fun updateList(quoteList: List<QuoteV2>) {
+    override fun updateList(quoteList: List<Quote>) {
         supplierRecyclerView.updateList(quoteList)
     }
 
