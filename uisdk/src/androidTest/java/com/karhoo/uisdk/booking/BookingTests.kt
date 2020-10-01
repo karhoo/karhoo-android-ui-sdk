@@ -1,16 +1,12 @@
 package com.karhoo.uisdk.booking
 
-import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import androidx.test.espresso.NoActivityResumedException
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.google.gson.Gson
-import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
@@ -29,10 +25,12 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -67,33 +65,13 @@ class BookingTests : Launch {
 
     @Before
     fun setUp() {
-        setUserInfo()
+        setUserInfo(BRAINTREE)
     }
 
     @After
     fun teardown() {
         intent = null
         wireMockRule.resetAll()
-    }
-
-    private fun setUserInfo() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
-        val sharedPreferences = context.getSharedPreferences("user", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        sharedPreferences.edit()
-                .putString("first_name", "John")
-                .putString("last_name", "Smith")
-                .putString("email", "test@test.test")
-                .putString("mobile_number", "123")
-                .putString("user_id", "1234")
-                .putString("organisations", Gson().toJson(
-                        listOf(Organisation(id = "organisation_id",
-                                            name = "B2C DefaultOrgForKarhooAppUsers",
-                                            roles = emptyList()))))
-                .putString("locale", "en-GB")
-                .putString("payment_provider_id", "Braintree")
-                .apply()
-        editor.commit()
     }
 
     /**
@@ -589,7 +567,7 @@ class BookingTests : Launch {
      * Then:    I can see the following driver details.
      **/
     @Test
-    fun ASAPBookARideSuccess() {
+    fun asapBookARideSuccess() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -598,7 +576,7 @@ class BookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
-            bookingResponse(HTTP_OK, TRIP)
+            bookingWithNonceResponse(HTTP_OK, TRIP)
             bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
             driverTrackingResponse(code = HTTP_OK, response = DRIVER_TRACKING, trip = TRIP.tripId)
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
@@ -616,11 +594,11 @@ class BookingTests : Launch {
     }
 
     override fun launch(intent: Intent?) {
-            intent?.let {
-                activityRule.launchActivity(it)
-            } ?: run {
-                activityRule.launchActivity(this.intent)
-            }
+        intent?.let {
+            activityRule.launchActivity(it)
+        } ?: run {
+            activityRule.launchActivity(this.intent)
+        }
     }
 
     companion object {

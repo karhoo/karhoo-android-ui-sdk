@@ -8,6 +8,7 @@ import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -81,7 +82,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService, never()).getAdyenPaymentMethods(any())
         verify(paymentsService).getAdyenPublicKey()
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
     }
 
     /**
@@ -100,7 +101,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
     }
 
     /**

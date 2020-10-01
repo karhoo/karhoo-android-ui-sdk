@@ -343,7 +343,7 @@ class GuestBookingTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addCardResponse(HTTP_OK, PAYMENTS_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
-            bookingResponse(HTTP_OK, TRIP)
+            bookingWithNonceResponse(HTTP_OK, TRIP)
             bookingStatusResponse(code = HTTP_OK, response = ServerRobot.TRIP_STATUS_DER, trip = TRIP.tripId)
             driverTrackingResponse(code = HTTP_OK, response = ServerRobot.DRIVER_TRACKING, trip = TRIP.tripId)
             guestBookingDetailsResponse(code = HTTP_OK, response = ServerRobot.TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)

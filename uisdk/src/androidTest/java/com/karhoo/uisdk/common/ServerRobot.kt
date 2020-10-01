@@ -50,6 +50,7 @@ import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.model.Vehicles
+import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
@@ -65,6 +66,10 @@ fun serverRobot(func: ServerRobot.() -> Unit) = ServerRobot().apply { func() }
 class ServerRobot {
 
     private val gson: Gson = GsonBuilder().registerTypeAdapter(Date::class.java, DateTypeAdapter()).create()
+
+    private fun getResponse(useJson: Boolean, response: Any): String {
+        return if (useJson) gson.toJson(response) else response as String
+    }
 
     fun successfulToken() {
         mockPostResponse(
@@ -169,11 +174,20 @@ class ServerRobot {
                        )
     }
 
-    fun bookingResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+    fun bookingWithoutNonceResponse(code: Int, response: Any, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
                 response = response,
                 endpoint = APITemplate.BOOKING_METHOD,
+                delayInMillis = delayInMillis
+                        )
+    }
+
+    fun bookingWithNonceResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.BOOKING_WITH_NONCE_METHOD,
                 delayInMillis = delayInMillis
                         )
     }
@@ -238,7 +252,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=organisation_id&currency=DEFAULT_CURRENCY",
+                        "?organisation_id=organisation_id&currency=$DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }
@@ -302,51 +316,61 @@ class ServerRobot {
                 response = response,
                 endpoint = APITemplate.PAYMENT_PROVIDERS_METHOD
 
-                        )
+                       )
+    }
+
+    fun adyenPublicKeyResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.ADYEN_PUBLIC_KEY_METHOD,
+                delayInMillis = delayInMillis
+                       )
     }
 
     fun mockTripSuccessResponse(status: Any, tracking: Any, details: TripInfo) {
-        bookingStatusResponse(code = HttpURLConnection.HTTP_OK, response = status, trip = TestData.TRIP.tripId)
-        driverTrackingResponse(code = HttpURLConnection.HTTP_OK, response = tracking, trip = TestData.TRIP.tripId)
-        bookingDetailsResponse(code = HttpURLConnection.HTTP_OK, response = details, trip = TestData.TRIP.tripId)
+        bookingStatusResponse(code = HttpURLConnection.HTTP_OK, response = status, trip = TRIP.tripId)
+        driverTrackingResponse(code = HttpURLConnection.HTTP_OK, response = tracking, trip = TRIP.tripId)
+        bookingDetailsResponse(code = HttpURLConnection.HTTP_OK, response = details, trip = TRIP.tripId)
     }
 
-    private fun mockPostResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockPostResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(post(urlEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
-    private fun mockGetResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockGetResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(get(urlPathEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
-    private fun mockPutResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockPutResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(put(urlEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
     private fun mockGetChainResponsesSuccess(codeFirst: Int, responseFirst: Any,
                                              codeSecond: Int, responseSecond: Any,
-                                             endpoint: String, delayInMillis: Int = 0) {
+                                             endpoint: String, delayInMillis: Int = 0,
+                                             useJson: Boolean = true) {
         val scenario = "scenario1"
         val stageTwo = "stage2"
         givenThat(get(urlEqualTo(endpoint))
@@ -354,15 +378,15 @@ class ServerRobot {
                           .whenScenarioStateIs(Scenario.STARTED)
                           .willSetStateTo(stageTwo)
                           .willReturn(ResponseUtils(
-                                  httpCode = codeFirst, fileName = gson.toJson(responseFirst),
-                                  useJson = true, delayInMillis = delayInMillis)
+                                  httpCode = codeFirst, response = getResponse(useJson, responseFirst),
+                                  useJson = useJson, delayInMillis = delayInMillis)
                                               .createResponse()))
         givenThat(get(urlEqualTo(endpoint))
                           .inScenario(scenario)
                           .whenScenarioStateIs(stageTwo)
                           .willReturn(ResponseUtils(
-                                  httpCode = codeSecond, fileName = gson.toJson(responseSecond),
-                                  useJson = true, delayInMillis = delayInMillis)
+                                  httpCode = codeSecond, response = getResponse(useJson, responseSecond),
+                                  useJson = useJson, delayInMillis = delayInMillis)
                                               .createResponse()))
     }
 
@@ -532,6 +556,7 @@ class ServerRobot {
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
                                               )
+
         /**
          *
          * Ride Details
@@ -959,6 +984,8 @@ class ServerRobot {
                 lastFour = "",
                 cardType = CardType.NOT_SET
                                                              )
+
+        val ADYEN_PUBLIC_KEY = AdyenPublicKey("12345678")
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
 

@@ -75,10 +75,6 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.bookingRequestButton)
     }
 
-    fun clickOnProfileButton() {
-        clickButtonByString(R.string.profile)
-    }
-
     fun clickOnLocateMeButton() {
         clickButton(R.id.locateMeButton)
     }
