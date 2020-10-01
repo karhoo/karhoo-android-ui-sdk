@@ -7,6 +7,8 @@ config_android:
     JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
     GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
     TERM: dumb
+    FASTLANE_LANE_LINT: linting
+    FASTLANE_LANE_TEST: unit_tests
 jobs:
   build_and_setup:
     docker:
@@ -16,30 +18,31 @@ jobs:
       - JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
       - GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 -Djava.util.concurrent.ForkJoinPool.common.parallelism=2 -Dkotlin.incremental=false"
       - TERM: dumb
+      - FASTLANE_LANE_LINT: linting
+      - FASTLANE_LANE_TEST: unit_tests
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
       - run:
           name: Download Dependencies
           command: |
-                    echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
-                    echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
-                    echo "KARHOO_SEGMENT_API_KEY_SANDBOX=\"$KARHOO_SEGMENT_API_KEY_SANDBOX\"" >> app/secure.properties
-                    echo "KARHOO_SEGMENT_API_KEY_PROD=\"$KARHOO_SEGMENT_API_KEY_PROD\"" >> app/secure.properties
-                    echo "GUEST_CHECKOUT_IDENTIFIER=\"$GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
-                    echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
-                    echo "GUEST_CHECKOUT_ORGANISATION_ID=\"$GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
-                    echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
-                    echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
-                    echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
-                    echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
-                    sudo chmod +x ./gradlew 
-                    ./gradlew androidDependencies
+            echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
+            echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
+            echo "KARHOO_SEGMENT_API_KEY_SANDBOX=\"$KARHOO_SEGMENT_API_KEY_SANDBOX\"" >> app/secure.properties
+            echo "KARHOO_SEGMENT_API_KEY_PROD=\"$KARHOO_SEGMENT_API_KEY_PROD\"" >> app/secure.properties
+            echo "GUEST_CHECKOUT_IDENTIFIER=\"$GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+            echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
+            echo "GUEST_CHECKOUT_ORGANISATION_ID=\"$GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
+            echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
+            echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
+            echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
+            echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
+            bundle check || bundle install --path vendor/bundle
       - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
           paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+            - vendor/bundle
       - run:
           name: Build Detekt
           command: |
@@ -61,6 +64,12 @@ jobs:
                     echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
                     sudo chmod +x ./gradlew 
                     ./gradlew testDebug lintRelease
+      - run:
+          name: Run unit test
+          command: bundle exec fastlane $FASTLANE_LANE_TEST
+      - run:
+          name: Run linting
+          command: bundle exec fastlane $FASTLANE_LANE_LINT
       - run:
           name: Save test results
           command: |
