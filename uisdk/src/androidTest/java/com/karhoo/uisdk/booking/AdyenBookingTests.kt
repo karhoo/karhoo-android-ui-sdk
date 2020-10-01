@@ -7,6 +7,7 @@ import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.ServerRobot
 import com.karhoo.uisdk.common.ServerRobot.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
@@ -14,7 +15,7 @@ import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_V2_ASAP
+import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -78,7 +79,7 @@ class AdyenBookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_V2_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
             adyenPublicKeyResponse(HTTP_OK, ADYEN_PUBLIC_KEY)
             bookingWithoutNonceResponse(HTTP_OK, TRIP)
             bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
