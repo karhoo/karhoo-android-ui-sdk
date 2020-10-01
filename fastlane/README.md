@@ -21,6 +21,16 @@ or alternatively using `brew cask install fastlane`
 fastlane android clean
 ```
 Clean
+### android unit_tests
+```
+fastlane android unit_tests
+```
+Runs all the unit tests
+### android linting
+```
+fastlane android linting
+```
+Runs lint and detekt
 ### android pushSandbox
 ```
 fastlane android pushSandbox
@@ -41,6 +51,11 @@ Push Staging to AppCenter
 fastlane android pushAll
 ```
 Push all
+### android slack_result
+```
+fastlane android slack_result
+```
+Messaging
 
 ----
 

@@ -1,12 +1,11 @@
-# fastlane_version "1.97.2"
-# opt_out_usage: true
-# FASTLANE_SKIP_UPDATE_CHECK="1"
+fastlane_require 'dotenv'
 ENV["FASTLANE_SKIP_UPDATE_CHECK"]="1"
 ENV["FASTLANE_OPT_OUT_USAGE"]="1"
-fastlane_version "1.97.2"
-default_platform :android
 FASTLANE_HIDE_CHANGELOG = true
 FASTLANE_SKIP_UPDATE_CHECK = true
+fastlane_version "2.85.0"
+
+default_platform :android
 
 releaseNotes = sh("python GetLastChangelog.py")
 
@@ -14,11 +13,26 @@ default_platform :android
 platform :android do
 
   before_all do
+    ENV["SLACK_URL"] = ENV["SLACK_WEBHOOK_URL"]
+    setup_circle_ci
   end
 
   desc "Clean"
   lane :clean do
     gradle(task: "clean")
+  end
+
+  desc "Runs all the unit tests"
+  lane :unit_tests do
+    gradle(task: "testDebug")
+    slack_result(message: "*Karhoo Android UISDK* passed unit testing")
+  end
+
+  desc "Runs lint and detekt"
+  lane :linting do
+    gradle(task: "lintRelease")
+    gradle(task: "detekt")
+    slack_result(message: "*Karhoo Android UISDK* passed detekt and lint")
   end
 
 # PUSH TO AppCenter
@@ -33,8 +47,7 @@ platform :android do
         notify_testers: true,
         release_notes: releaseNotes
       )
-    end
-
+  end
 
   desc "Push ProdQA to AppCenter"
   lane :pushProdQA do
@@ -67,7 +80,14 @@ platform :android do
     pushStaging
     pushProdQA
   end
+
+  desc "Messaging"
+  lane :slack_result do |values|
+    message_text = values[:message]
+    slack(
+      channel: "#mobile_circleci_results",
+      message: message_text,
+      success: values[:success]
+    )
+  end
  end
-
-
-
