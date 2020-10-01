@@ -136,7 +136,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(paymentView, never()).showError(any())
+        verify(paymentView, never()).showError(R.string.something_went_wrong)
         verify(userStore).savedPaymentInfo
 
     }
@@ -193,7 +193,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
     }
 
     /**
@@ -221,7 +221,7 @@ class BraintreePaymentPresenterTest {
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.booking_error)
     }
 
     /**
