@@ -433,8 +433,8 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun guestDetailsPagePriceCheck() {
-        ETATextIsVisibleGuestDetails(ETA = TestData.QUOTE.qta)
-        estimatedPriceTextIsVisibleGuestDetails(price = TestData.QUOTE.highPrice)
+        ETATextIsVisibleGuestDetails(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
+        estimatedPriceTextIsVisibleGuestDetails(price = TestData.QUOTE.price.highPrice)
     }
 
     fun ETATextIsVisibleGuestDetails(ETA: Int?) {
@@ -523,10 +523,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fullCheckBookARideScreenASAP() {
-        fleetDetailsAreVisible(fleetName = TestData.QUOTE.supplierName)
-        vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicleClass)
-        ETAIsVisible(ETA = TestData.QUOTE.qta)
-        priceDetailsVisible(price = TestData.QUOTE.highPrice)
+        // TODO: Need to set fleet name to non optional
+        fleetDetailsAreVisible(fleetName = TestData.QUOTE.fleet.name.toString())
+        vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicle.vehicleClass)
+        ETAIsVisible(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
+        priceDetailsVisible(price = TestData.QUOTE.price.highPrice)
         paymentFieldIsEnabled()
         termsCheck()
         bookButtonIsEnabled()

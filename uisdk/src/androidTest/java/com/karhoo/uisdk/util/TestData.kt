@@ -24,6 +24,7 @@ import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.model.TripInfo
@@ -39,6 +40,7 @@ import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.request.TripSearch
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.request.UserRegistration
+import com.karhoo.uisdk.common.ServerRobot
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -393,20 +395,14 @@ class TestData {
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
-        val QUOTE = Quote(availabilityId = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                          categoryName = "Exec",
-                          currencyCode = DEFAULT_CURRENCY,
-                          fleetId = "A Taxi Id",
-                          supplierName = "A Taxi Fleet",
-                          highPrice = 577,
-                          phoneNumber = "+123",
-                          qta = 4,
-                          quoteId = "someQuoteId",
+        val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                           quoteType = QuoteType.ESTIMATED,
-                          logoUrl = "someLogoUrl",
-                          termsAndConditions = "someTermsUrl",
-                          vehicleClass = "saloon",
-                          pickupType = PickupType.CURBSIDE)
+                          quoteSource = QuoteSource.FLEET,
+                          price = ServerRobot.QUOTE_PRICE,
+                          fleet = ServerRobot.QUOTE_FLEET,
+                          pickupType = PickupType.CURBSIDE,
+                          vehicle = ServerRobot.QUOTE_VEHICLE,
+                          vehicleAttributes = ServerRobot.VEHICLE_ATTRIBUTES)
 
         val QUOTE_LIST = QuoteList(
                 id = QuoteId(QUOTE_LIST_ID),
