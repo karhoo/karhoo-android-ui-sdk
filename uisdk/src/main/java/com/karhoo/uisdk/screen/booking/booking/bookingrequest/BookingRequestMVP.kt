@@ -61,6 +61,10 @@ interface BookingRequestMVP {
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
 
+        fun onPaymentFailureDialogPositive()
+
+        fun onPaymentFailureDialogCancelled()
+
     }
 
     interface Presenter {
@@ -92,6 +96,10 @@ interface BookingRequestMVP {
 
         fun watchBookingRequest(bookingRequestStateViewModel: BookingRequestStateViewModel)
                 : Observer<BookingRequestStatus>
+
+        fun onPaymentFailureDialogPositive()
+
+        fun onPaymentFailureDialogCancelled()
     }
 
     interface Actions : PaymentActions

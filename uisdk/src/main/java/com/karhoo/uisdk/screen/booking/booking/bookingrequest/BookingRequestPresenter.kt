@@ -234,4 +234,12 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             view?.bindEta(quote, "")
         }
     }
+
+    override fun onPaymentFailureDialogPositive() {
+        handleChangeCard()
+    }
+
+    override fun onPaymentFailureDialogCancelled() {
+            hideBookingRequest()
+    }
 }

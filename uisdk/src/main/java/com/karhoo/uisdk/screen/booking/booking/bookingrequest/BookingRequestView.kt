@@ -239,7 +239,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     private fun hideWindow() {
         if (containerAnimateOut.hasEnded() || !containerAnimateOut.hasStarted()) {
-            presenter.hideBookingRequest()
+            presenter.onPaymentFailureDialogCancelled()
         }
     }
 
@@ -290,13 +290,13 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
                     cancelButton.isEnabled = true
                     bookingRequestButton.onLoadingComplete()
-                    handleChangeCard()
+                    onPaymentFailureDialogPositive()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     cancelButton.isEnabled = true
                     bookingRequestButton.onLoadingComplete()
-                    hideWindow()
+                    onPaymentFailureDialogCancelled()
                     dialog.dismiss()
                 }
                 .show()
@@ -309,6 +309,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun handleChangeCard() {
         presenter.handleChangeCard()
+    }
+
+    override fun onPaymentFailureDialogPositive() {
+        presenter.onPaymentFailureDialogPositive()
+    }
+
+    override fun onPaymentFailureDialogCancelled() {
+        presenter.onPaymentFailureDialogCancelled()
     }
 
     override fun showPaymentUI() {
