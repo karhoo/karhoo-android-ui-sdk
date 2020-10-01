@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.common
 
-import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock
@@ -15,7 +14,6 @@ delayInMillis: Int = 0) {
         } else {
             response
         }
-        Log.d("Adyen", json)
         return WireMock.aResponse()
                 .withStatus(httpCode)
                 .withHeader("Content-Type", "json/application")
