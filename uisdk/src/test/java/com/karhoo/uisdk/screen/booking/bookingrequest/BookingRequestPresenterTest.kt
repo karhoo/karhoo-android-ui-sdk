@@ -536,6 +536,40 @@ class BookingRequestPresenterTest {
     }
 
     /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogPositive is called
+     */
+    @Test
+    fun `Select Positive option on Payment Failure Dialog`() {
+        //TODO add positive option selected and verify if onPaymentFailureDialogPositive is called
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+
+        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
+
+        verify(view).showPaymentFailureDialog()
+    }
+
+    /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogCancelled is called
+     */
+    @Test
+    fun `Select Negative option on Payment Failure Dialog`() {
+        //TODO add positive option selected and verify if onPaymentFailureDialogCancelled is called
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+
+        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
+
+        verify(view).showPaymentFailureDialog()
+    }
+
+    /**
      * Given:   Three D Secure nonce is passed back for booking trip
      * When:    Book trip success
      * Then:    Store last trip in prefs
