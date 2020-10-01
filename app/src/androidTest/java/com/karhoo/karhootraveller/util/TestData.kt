@@ -19,6 +19,7 @@ import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.model.TripInfo
@@ -34,6 +35,9 @@ import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.request.TripSearch
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.request.UserRegistration
+import com.karhoo.uisdk.common.ServerRobot
+import com.karhoo.uisdk.util.DEFAULT_CURRENCY
+import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import java.text.SimpleDateFormat
@@ -192,7 +196,7 @@ class TestData {
                 poiType = Poi.NOT_SET)
         val PRICE = Price(
                 total = 3550,
-                currency = "GBP")
+                currency = DEFAULT_CURRENCY)
 
         val FLEET_INFO = FleetInfo(
                 fleetId = "FleetID123",
@@ -244,7 +248,7 @@ class TestData {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 0,
-                        currency = "GBP"))
+                        currency = DEFAULT_CURRENCY))
 
         val TRIP_COMPLETED = TRIP.copy(
                 origin = TRIP_LOCATION_INFO_PICKUP.copy(displayAddress = ADDRESS_ORIGIN),
@@ -283,20 +287,14 @@ class TestData {
 
         const val REVERSE_GEO_DISPLAY_ADDRESS = "12 Grimmauld Place, OFTP HQ"
 
-        val QUOTE = Quote(availabilityId = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                          categoryName = "Exec",
-                          currencyCode = "GBP",
-                          fleetId = "someFleetId",
-                          supplierName = "someFleetName",
-                          highPrice = 779,
-                          phoneNumber = "+123",
-                          qta = 2,
-                          quoteId = "someQuoteId",
+        val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                           quoteType = QuoteType.ESTIMATED,
-                          logoUrl = "someLogoUrl",
-                          termsAndConditions = "someTermsUrl",
-                          vehicleClass = "saloon",
-                          pickupType = PickupType.CURBSIDE)
+                          quoteSource = QuoteSource.FLEET,
+                          price = ServerRobot.QUOTE_PRICE,
+                          fleet = ServerRobot.QUOTE_FLEET,
+                          pickupType = PickupType.CURBSIDE,
+                         vehicle = ServerRobot.QUOTE_VEHICLE,
+                         vehicleAttributes = ServerRobot.VEHICLE_ATTRIBUTES)
 
         val QUOTE_LIST = QuoteList(
                 id = QuoteId(QUOTE_LIST_ID),

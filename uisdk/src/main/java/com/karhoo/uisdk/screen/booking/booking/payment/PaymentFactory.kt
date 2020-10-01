@@ -10,10 +10,9 @@ import com.karhoo.uisdk.screen.booking.booking.payment.braintree.BraintreePaymen
 @Suppress("UtilityClassWithPublicConstructor")
 class PaymentFactory {
 
-    //TODO Implemented changes for guest checkout
-
+    //TODO Implemente changes for guest checkout
     companion object {
-        fun createPresenter(provider: Provider?, view: PaymentMVP.View): PaymentMVP.Presenter? {
+        fun createPresenter(provider: Provider?, view: BookingPaymentMVP.View): PaymentDropInMVP.Presenter? {
             return provider?.let {
                 when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                     ProviderType.ADYEN -> AdyenPaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)
@@ -22,18 +21,21 @@ class PaymentFactory {
             }
         }
 
-        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions):
+        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions,
+                              presenter: PaymentDropInMVP.Presenter):
                 PaymentDropInMVP.View? {
             return provider?.let {
                 when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                     ProviderType.ADYEN -> {
                         val view = AdyenPaymentView()
                         view.actions = actions
+                        view.presenter = presenter
                         view
                     }
                     ProviderType.BRAINTREE -> {
                         val view = BraintreePaymentView()
                         view.actions = actions
+                        view.presenter = presenter
                         view
                     }
                 }

@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.domain.supplier
 
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import org.junit.Assert.assertEquals
@@ -22,9 +21,9 @@ class QtaSortTest {
      */
     @Test
     fun `sorted by QTA when QTAs are different`() {
-        val v1 = QuoteV2(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)))
-        val v2 = QuoteV2(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 16)))
-        val v3 = QuoteV2(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 4)))
+        val v1 = Quote(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)))
+        val v2 = Quote(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 16)))
+        val v3 = Quote(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 4)))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortOrder = listOf(v3, v1, v2)
 
@@ -40,9 +39,9 @@ class QtaSortTest {
      */
     @Test
     fun `sorted by price when no QTA`() {
-        val v1 = QuoteV2(price = QuotePrice(highPrice = 52))
-        val v2 = QuoteV2(price = QuotePrice(highPrice = 5))
-        val v3 = QuoteV2(price = QuotePrice(highPrice = 15))
+        val v1 = Quote(price = QuotePrice(highPrice = 52))
+        val v2 = Quote(price = QuotePrice(highPrice = 5))
+        val v3 = Quote(price = QuotePrice(highPrice = 15))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortedOrder = listOf(v2, v3, v1)
 
@@ -58,12 +57,12 @@ class QtaSortTest {
      */
     @Test
     fun `sorted by price when QTAs are equal`() {
-        val v1 = QuoteV2(
+        val v1 = Quote(
                 vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)),
                 price = QuotePrice(highPrice = 52))
-        val v2 = QuoteV2(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)),
+        val v2 = Quote(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)),
                          price = QuotePrice(highPrice = 5))
-        val v3 = QuoteV2(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)),
+        val v3 = Quote(vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)),
                          price = QuotePrice(highPrice = 15))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortedOrder = listOf(v2, v3, v1)

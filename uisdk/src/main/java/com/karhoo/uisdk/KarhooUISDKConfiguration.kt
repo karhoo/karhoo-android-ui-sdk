@@ -29,7 +29,7 @@ internal object KarhooUISDKConfigurationProvider {
                 AuthenticationMethod.Guest).organisationId else null
     }
 
-    fun handleBraintree(): Boolean {
+    fun simulateBraintree(): Boolean {
         return configuration.handleBraintree()
     }
 }

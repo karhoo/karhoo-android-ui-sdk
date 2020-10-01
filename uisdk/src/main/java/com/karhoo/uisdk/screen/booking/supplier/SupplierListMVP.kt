@@ -2,7 +2,7 @@ package com.karhoo.uisdk.screen.booking.supplier
 
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
@@ -17,7 +17,7 @@ interface SupplierListMVP {
 
         fun destinationChanged(bookingStatus: BookingStatus)
 
-        fun updateList(quoteList: List<QuoteV2>)
+        fun updateList(quoteList: List<Quote>)
 
         fun setSortMethod(sortMethod: SortMethod)
 
@@ -45,7 +45,7 @@ interface SupplierListMVP {
 
         fun watchBookingStatus(): Observer<BookingStatus>
 
-        fun watchVehicles(): Observer<List<QuoteV2>>
+        fun watchVehicles(): Observer<List<Quote>>
 
         fun sortMethodChanged(sortMethod: SortMethod)
 

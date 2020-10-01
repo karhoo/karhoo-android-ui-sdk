@@ -22,9 +22,9 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -35,7 +35,7 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -46,28 +46,17 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestFlightDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestLayout
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestSupplierWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
 import org.joda.time.DateTime
-import java.util.Currency
+import java.util.*
 
 @Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, PaymentMVP.CardActions,
-      PaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.CardActions,
+      BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
@@ -190,7 +179,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
     }
 
-    override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
         bookingRequestButton.onLoadingComplete()
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
@@ -217,14 +206,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingRequest(bookingRequestStateViewModel))
     }
 
-    override fun bindEta(quote: QuoteV2, card: String) {
+    override fun bindEta(quote: Quote, card: String) {
         bindSupplierAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
                                               context.getString(R.string.estimated_arrival_time),
                                               quote.quoteType)
     }
 
-    override fun bindPrebook(quote: QuoteV2, card: String, date: DateTime) {
+    override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
         bindSupplierAndTerms(quote)
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
@@ -235,14 +224,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                               currency)
     }
 
-    override fun bindPriceAndEta(quote: QuoteV2, card: String) {
+    override fun bindPriceAndEta(quote: Quote, card: String) {
         bindSupplierAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
         bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.estimated_arrival_time), currency)
     }
 
-    private fun bindSupplierAndTerms(vehicle: QuoteV2) {
+    private fun bindSupplierAndTerms(vehicle: Quote) {
         bookingRequestSupplierWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
                                                vehicle.vehicle.vehicleClass.orEmpty())
         bookingRequestTermsWidget.bindViews(vehicle)

@@ -39,7 +39,7 @@ import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripList
@@ -49,10 +49,12 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.model.VehicleAttributes
-import com.karhoo.sdk.api.model.VehiclesV2
+import com.karhoo.sdk.api.model.Vehicles
+import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.client.APITemplate
 import com.karhoo.sdk.api.network.client.DateTypeAdapter
 import com.karhoo.sdk.api.network.request.QuoteQTA
+import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import java.net.HttpURLConnection
@@ -64,6 +66,10 @@ fun serverRobot(func: ServerRobot.() -> Unit) = ServerRobot().apply { func() }
 class ServerRobot {
 
     private val gson: Gson = GsonBuilder().registerTypeAdapter(Date::class.java, DateTypeAdapter()).create()
+
+    private fun getResponse(useJson: Boolean, response: Any): String {
+        return if (useJson) gson.toJson(response) else response as String
+    }
 
     fun successfulToken() {
         mockPostResponse(
@@ -150,7 +156,7 @@ class ServerRobot {
     }
 
     fun quoteIdResponse(code: Int, response: Any, endpoint: String = APITemplate
-            .QUOTES_V2_REQUEST_METHOD, delayInMillis: Int = 0) {
+            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
                 response = response,
@@ -163,16 +169,25 @@ class ServerRobot {
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.QUOTES_V2_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId),
+                endpoint = APITemplate.QUOTES_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId),
                 delayInMillis = delayInMillis
                        )
     }
 
-    fun bookingResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+    fun bookingWithoutNonceResponse(code: Int, response: Any, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
                 response = response,
                 endpoint = APITemplate.BOOKING_METHOD,
+                delayInMillis = delayInMillis
+                        )
+    }
+
+    fun bookingWithNonceResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.BOOKING_WITH_NONCE_METHOD,
                 delayInMillis = delayInMillis
                         )
     }
@@ -237,7 +252,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=organisation_id&currency=GBP",
+                        "?organisation_id=organisation_id&currency=$DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }
@@ -299,52 +314,63 @@ class ServerRobot {
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.GET_PROVIDERS_METHOD
-                        )
+                endpoint = APITemplate.PAYMENT_PROVIDERS_METHOD
+
+                       )
+    }
+
+    fun adyenPublicKeyResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.ADYEN_PUBLIC_KEY_METHOD,
+                delayInMillis = delayInMillis
+                       )
     }
 
     fun mockTripSuccessResponse(status: Any, tracking: Any, details: TripInfo) {
-        bookingStatusResponse(code = HttpURLConnection.HTTP_OK, response = status, trip = TestData.TRIP.tripId)
-        driverTrackingResponse(code = HttpURLConnection.HTTP_OK, response = tracking, trip = TestData.TRIP.tripId)
-        bookingDetailsResponse(code = HttpURLConnection.HTTP_OK, response = details, trip = TestData.TRIP.tripId)
+        bookingStatusResponse(code = HttpURLConnection.HTTP_OK, response = status, trip = TRIP.tripId)
+        driverTrackingResponse(code = HttpURLConnection.HTTP_OK, response = tracking, trip = TRIP.tripId)
+        bookingDetailsResponse(code = HttpURLConnection.HTTP_OK, response = details, trip = TRIP.tripId)
     }
 
-    private fun mockPostResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockPostResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(post(urlEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
-    private fun mockGetResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockGetResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(get(urlPathEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
-    private fun mockPutResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0) {
+    private fun mockPutResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(put(urlEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,
-                                          fileName = gson.toJson(response),
-                                          useJson = true,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
                                           delayInMillis = delayInMillis)
                                           .createResponse()))
     }
 
     private fun mockGetChainResponsesSuccess(codeFirst: Int, responseFirst: Any,
                                              codeSecond: Int, responseSecond: Any,
-                                             endpoint: String, delayInMillis: Int = 0) {
+                                             endpoint: String, delayInMillis: Int = 0,
+                                             useJson: Boolean = true) {
         val scenario = "scenario1"
         val stageTwo = "stage2"
         givenThat(get(urlEqualTo(endpoint))
@@ -352,15 +378,15 @@ class ServerRobot {
                           .whenScenarioStateIs(Scenario.STARTED)
                           .willSetStateTo(stageTwo)
                           .willReturn(ResponseUtils(
-                                  httpCode = codeFirst, fileName = gson.toJson(responseFirst),
-                                  useJson = true, delayInMillis = delayInMillis)
+                                  httpCode = codeFirst, response = getResponse(useJson, responseFirst),
+                                  useJson = useJson, delayInMillis = delayInMillis)
                                               .createResponse()))
         givenThat(get(urlEqualTo(endpoint))
                           .inScenario(scenario)
                           .whenScenarioStateIs(stageTwo)
                           .willReturn(ResponseUtils(
-                                  httpCode = codeSecond, fileName = gson.toJson(responseSecond),
-                                  useJson = true, delayInMillis = delayInMillis)
+                                  httpCode = codeSecond, response = getResponse(useJson, responseSecond),
+                                  useJson = useJson, delayInMillis = delayInMillis)
                                               .createResponse()))
     }
 
@@ -530,6 +556,7 @@ class ServerRobot {
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
                                               )
+
         /**
          *
          * Ride Details
@@ -539,7 +566,7 @@ class ServerRobot {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 3550,
-                        currency = "GBP"
+                        currency = DEFAULT_CURRENCY
                                          ))
 
         val FARE_CANCELLED = Fare(
@@ -569,7 +596,7 @@ class ServerRobot {
                 meetingPoint = MeetingPoint(pickupType = PickupType.NOT_SET),
                 quote = Price(
                         total = 500,
-                        currency = "GBP",
+                        currency = DEFAULT_CURRENCY,
                         quoteType = QuoteType.METERED
                              ),
                 vehicle = Vehicle(
@@ -820,7 +847,7 @@ class ServerRobot {
          */
         val QUOTE_LIST_ID_ASAP = QuoteId(quoteId = "eb00db4d-44bb-11e9-bdab-0a580a04005f")
 
-        val QUOTE_PRICE = QuotePrice(currencyCode = "GBP",
+        val QUOTE_PRICE = QuotePrice(currencyCode = "DEFAULT_CURRENCY",
                                      highPrice = 577,
                                      lowPrice = 577)
 
@@ -837,7 +864,7 @@ class ServerRobot {
         val VEHICLE_ATTRIBUTES = VehicleAttributes(passengerCapacity = 4,
                                                    luggageCapacity = 5)
 
-        val QUOTE_V2 = QuoteV2(id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O2VsZWN0cmlj",
+        val QUOTE = Quote(id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O2VsZWN0cmlj",
                                quoteType = QuoteType.ESTIMATED,
                                quoteSource = QuoteSource.FLEET,
                                price = QUOTE_PRICE,
@@ -848,18 +875,18 @@ class ServerRobot {
 
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
-        val VEHICLES_V2_ASAP = VehiclesV2(
+        val VEHICLES_ASAP = Vehicles(
                 status = "PROGRESSING",
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
                 quotes = listOf(
-                        QUOTE_V2,
-                        QUOTE_V2.copy(
+                        QUOTE,
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.METERED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
                                                          name = "QA_base_ex_com_ex_tax_metered",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -870,12 +897,12 @@ class ServerRobot {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
                                                              vehicleQta = QuoteQTA(highMinutes = 5, lowMinutes = 5)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "iCabbi [Sandbox]",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
@@ -887,12 +914,12 @@ class ServerRobot {
                                                              vehicleQta = QuoteQTA(highMinutes = 30,
                                                                                    lowMinutes = 30)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Third Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -905,12 +932,12 @@ class ServerRobot {
                                                                                    lowMinutes =
                                                                                    20)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O21wdg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Ivcardo",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
@@ -923,12 +950,12 @@ class ServerRobot {
                                                                                    lowMinutes =
                                                                                    30)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
-                        QUOTE_V2.copy(
+                        QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = "GBP"),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "A Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/9b7e3ae9-48d0-42f2-9130-d99c5bec431c.png",
@@ -957,6 +984,8 @@ class ServerRobot {
                 lastFour = "",
                 cardType = CardType.NOT_SET
                                                              )
+
+        val ADYEN_PUBLIC_KEY = AdyenPublicKey("12345678")
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
 

@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
@@ -48,7 +48,7 @@ class SupplierRecyclerView @JvmOverloads constructor(context: Context, attr: Att
         suppliersAdapter.setSelectedSortMethod(sortMethod)
     }
 
-    override fun updateList(quoteList: List<QuoteV2>) {
+    override fun updateList(quoteList: List<Quote>) {
         suppliersAdapter.items = quoteList
         if (suppliersAdapter.itemCount > 0) {
             setQuotesLoaderVisibility(View.GONE)

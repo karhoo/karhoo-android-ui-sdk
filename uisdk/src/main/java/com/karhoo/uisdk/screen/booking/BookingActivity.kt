@@ -16,7 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -67,7 +67,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private val liveFleetsViewModel: LiveFleetsViewModel by lazy { ViewModelProvider(this).get(LiveFleetsViewModel::class.java) }
 
     private var availabilityProvider: AvailabilityProvider? = null
-    private var quote: QuoteV2? = null
+    private var quote: Quote? = null
 
     ////////////////////////////////////////////
     private var tripDetails: TripInfo? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"

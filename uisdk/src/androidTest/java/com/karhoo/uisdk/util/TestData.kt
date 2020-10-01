@@ -1,8 +1,10 @@
 package com.karhoo.uisdk.util
 
+import android.content.Context
+import androidx.test.platform.app.InstrumentationRegistry
+import com.google.gson.Gson
 import com.karhoo.sdk.api.model.Address
-import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.CancellationReason
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Driver
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Fare
@@ -18,23 +20,14 @@ import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
-import com.karhoo.sdk.api.model.TripState
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
-import com.karhoo.sdk.api.network.request.Passengers
-import com.karhoo.sdk.api.network.request.PlaceSearch
-import com.karhoo.sdk.api.network.request.TripBooking
-import com.karhoo.sdk.api.network.request.TripCancellation
-import com.karhoo.sdk.api.network.request.TripSearch
-import com.karhoo.sdk.api.network.request.UserLogin
-import com.karhoo.sdk.api.network.request.UserRegistration
+import com.karhoo.uisdk.common.ServerRobot
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -45,46 +38,8 @@ class TestData {
 
     companion object {
 
-        //Requests
-        val USER_LOGIN = UserLogin(
-                email = "name@email.com",
-                password = "1234567890")
-
-        val PLACE_SEARCH = PlaceSearch(
-                position = Position(
-                        latitude = 0.0,
-                        longitude = 0.0),
-                query = "",
-                sessionToken = "1234567890")
-
-        val USER_REGISTRATION = UserRegistration(
-                firstName = "John",
-                lastName = "Smith",
-                email = "name@email.com",
-                password = "password",
-                phoneNumber = "1234567890",
-                locale = "en-GB")
-
-        const val BOOKING_ID = "BK123"
-
-        val BOOK_TRIP = TripBooking(
-                quoteId = "1234567890",
-                passengers = Passengers(
-                        additionalPassengers = 1,
-                        passengerDetails = listOf()))
-
-        val TRIP_SEARCH = TripSearch()
-
-        val CANCEL = TripCancellation(tripIdentifier = "1234", reason = CancellationReason
-                .OTHER_USER_REASON)
-
-        val QUOTE_SEARCH = QuotesSearch(origin = LocationInfo(placeId = "123",
-                                                              position = Position(1.0, -1.0),
-                                                              address = Address()),
-                                        destination = LocationInfo(placeId = "321",
-                                                                   position = Position(-1.0, 1.0),
-                                                                   address = Address()),
-                                        dateScheduled = null)
+        const val ADYEN = "ADYEN"
+        const val BRAINTREE = "Braintree"
 
         //Responses
         const val LATITUDE = 51.5166744
@@ -188,7 +143,7 @@ class TestData {
 
         val PRICE = Price(
                 total = 3550,
-                currency = "GBP")
+                currency = DEFAULT_CURRENCY)
 
         val FLEET_INFO = FleetInfo(
                 fleetId = "FleetID123",
@@ -246,7 +201,7 @@ class TestData {
                 state = "COMPLETED",
                 breakdown = FareBreakdown(
                         total = 0,
-                        currency = "GBP"))
+                        currency = DEFAULT_CURRENCY))
 
         val TRIP_COMPLETED = TRIP.copy(
                 tripState = TripStatus.COMPLETED)
@@ -292,27 +247,9 @@ class TestData {
                 meetingPoint = MEETING_POINT_UNSET
                                                                     )
 
-        val TRIP_CONFIRMED_AIRPORT_PICKUP = TRIP_CONFIRMED.copy(
-                meetingPoint = MEETING_POINT.copy(
-                        pickupType = PickupType.MEET_AND_GREET)
-                                                               )
-
         val TRIP_DRIVER_EN_ROUTE_POINT_UNSET = TRIP.copy(
                 tripState = TripStatus.DRIVER_EN_ROUTE,
                 meetingPoint = MEETING_POINT_UNSET)
-
-        val TRIP_HISTORY = listOf(TRIP)
-
-        val BLANK_TRIP_HISTORY = listOf<TripInfo>()
-
-        val PAYMENT_TOKEN = BraintreeSDKToken(
-                token = "njfdeilnvbflinvbiurnceernnvbrgtuverosa")
-
-        val BLANK_PAYMENT_TOKEN = BraintreeSDKToken()
-
-        val TRIP_STATE = TripState(TripStatus.NO_DRIVERS)
-
-        const val QUOTE_LIST_ID = "129e51a-bc10-11e8-a821-0a580a0414db"
 
         const val REVERSE_GEO_DISPLAY_ADDRESS = "12 Grimmauld Place, OFTP HQ"
 
@@ -386,40 +323,14 @@ class TestData {
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
-        val QUOTE = Quote(availabilityId = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                          categoryName = "Exec",
-                          currencyCode = "GBP",
-                          fleetId = "A Taxi Id",
-                          supplierName = "A Taxi Fleet",
-                          highPrice = 577,
-                          phoneNumber = "+123",
-                          qta = 4,
-                          quoteId = "someQuoteId",
+        val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                           quoteType = QuoteType.ESTIMATED,
-                          logoUrl = "someLogoUrl",
-                          termsAndConditions = "someTermsUrl",
-                          vehicleClass = "saloon",
-                          pickupType = PickupType.CURBSIDE)
-
-        val QUOTE_LIST = QuoteList(
-                id = QuoteId(QUOTE_LIST_ID),
-                categories = mapOf(
-                        Pair("Saloon", emptyList()),
-                        Pair("Taxi", emptyList()),
-                        Pair("MPV", emptyList()),
-                        Pair("Exec", listOf(QUOTE)),
-                        Pair("Electric", emptyList()),
-                        Pair("Moto", emptyList())))
-
-        val QUOTE_LIST_EMPTY = QuoteList(
-                id = QuoteId(QUOTE_LIST_ID),
-                categories = mapOf(
-                        Pair("Saloon", emptyList()),
-                        Pair("Taxi", emptyList()),
-                        Pair("MPV", emptyList()),
-                        Pair("Exec", emptyList()),
-                        Pair("Electric", emptyList()),
-                        Pair("Moto", emptyList())))
+                          quoteSource = QuoteSource.FLEET,
+                          price = ServerRobot.QUOTE_PRICE,
+                          fleet = ServerRobot.QUOTE_FLEET,
+                          pickupType = PickupType.CURBSIDE,
+                          vehicle = ServerRobot.QUOTE_VEHICLE,
+                          vehicleAttributes = ServerRobot.VEHICLE_ATTRIBUTES)
 
         fun getDate(dateScheduled: String): Date {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
@@ -432,5 +343,26 @@ class TestData {
 
         val LONG = measureTimeMillis { 5000 }
 
+        fun setUserInfo(provider: String) {
+            val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+            val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            sharedPreferences.edit()
+                    .putString("first_name", "John")
+                    .putString("last_name", "Smith")
+                    .putString("email", "test@test.test")
+                    .putString("mobile_number", "123")
+                    .putString("user_id", "1234")
+                    .putString("organisations", Gson().toJson(
+                            listOf(Organisation(id = "organisation_id",
+                                                name = "B2C DefaultOrgForKarhooAppUsers",
+                                                roles = emptyList()))))
+                    .putString("locale", "en-GB")
+                    .putString("payment_provider_id", provider)
+                    .putString("last_four", "1234")
+                    .putString("card_type", CardType.MASTERCARD.value)
+                    .apply()
+            editor.commit()
+        }
     }
 }

@@ -8,7 +8,8 @@ import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.screen.booking.booking.payment.PaymentMVP
+import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -27,7 +28,7 @@ class AdyenPaymentPresenterTest {
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
-    private var paymentView: PaymentMVP.View = mock()
+    private var paymentView: BookingPaymentMVP.View = mock()
     private var price: QuotePrice = mock()
     private val publicKeyCall: Call<AdyenPublicKey> = mock()
     private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
@@ -81,7 +82,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService, never()).getAdyenPaymentMethods(any())
         verify(paymentsService).getAdyenPublicKey()
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
     }
 
     /**
@@ -100,7 +101,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentView).showError(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
     }
 
     /**
