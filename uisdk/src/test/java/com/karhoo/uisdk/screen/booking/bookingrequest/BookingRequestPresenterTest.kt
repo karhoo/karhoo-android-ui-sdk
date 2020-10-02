@@ -536,6 +536,32 @@ class BookingRequestPresenterTest {
     }
 
     /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogPositive is called
+     */
+    @Test
+    fun `Select Positive option on Payment Failure Dialog`() {
+        requestPresenter.onPaymentFailureDialogPositive()
+
+        verify(view).hideLoading()
+        verify(view).initialiseChangeCard(null)
+    }
+
+    /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogCancelled is called
+     */
+    @Test
+    fun `Select Negative option on Payment Failure Dialog`() {
+        requestPresenter.onPaymentFailureDialogCancelled()
+
+        verify(view).hideLoading()
+        verify(view).animateOut()
+    }
+
+    /**
      * Given:   Three D Secure nonce is passed back for booking trip
      * When:    Book trip success
      * Then:    Store last trip in prefs
