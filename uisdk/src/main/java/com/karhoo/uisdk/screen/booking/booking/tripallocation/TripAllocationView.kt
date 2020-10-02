@@ -149,7 +149,7 @@ class TripAllocationView @JvmOverloads constructor(
     override fun displayBookingFailed(fleetName: String) {
         visibility = View.INVISIBLE
         isClickable = false
-        val alertDialogBuilder = AlertDialog.Builder(context, R.style.AlertDialog)
+        val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.booking_failed)
                 .setPositiveButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
         if (fleetName.isBlank()) {
@@ -165,7 +165,7 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.isEnabled = true
         visibility = View.INVISIBLE
         isClickable = false
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.cancel_ride_successful)
                 .setMessage(R.string.cancel_ride_successful_message)
                 .setPositiveButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
@@ -175,7 +175,7 @@ class TripAllocationView @JvmOverloads constructor(
 
     override fun showCallToCancelDialog(number: String, supplier: String) {
         cancelButton.isEnabled = true
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.difficulties_cancelling_title)
                 .setMessage(R.string.difficulties_cancelling_message)
                 .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
