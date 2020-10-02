@@ -288,15 +288,11 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .setTitle(R.string.payment_issue)
                 .setMessage(R.string.payment_issue_message)
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
-                    cancelButton.isEnabled = true
-                    bookingRequestButton.onLoadingComplete()
-                    onPaymentFailureDialogPositive()
+                    onPaymentHandlePostive()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    cancelButton.isEnabled = true
-                    bookingRequestButton.onLoadingComplete()
-                    onPaymentFailureDialogCancelled()
+                    onPaymentHandleCancelled()
                     dialog.dismiss()
                 }
                 .show()
@@ -309,14 +305,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun handleChangeCard() {
         presenter.handleChangeCard()
-    }
-
-    override fun onPaymentFailureDialogPositive() {
-        presenter.onPaymentFailureDialogPositive()
-    }
-
-    override fun onPaymentFailureDialogCancelled() {
-        presenter.onPaymentFailureDialogCancelled()
     }
 
     override fun showPaymentUI() {
@@ -365,6 +353,18 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     private fun finishedBooking(dialog: DialogInterface) {
         presenter.resetBooking()
         dialog.dismiss()
+    }
+
+    private fun onPaymentHandlePostive() {
+        cancelButton.isEnabled = true
+        bookingRequestButton.onLoadingComplete()
+        presenter.onPaymentFailureDialogPositive()
+    }
+
+    private fun onPaymentHandleCancelled() {
+        cancelButton.isEnabled = true
+        bookingRequestButton.onLoadingComplete()
+        presenter.onPaymentFailureDialogCancelled()
     }
 
     private fun showLoading() {

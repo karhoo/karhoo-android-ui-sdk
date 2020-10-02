@@ -240,6 +240,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun onPaymentFailureDialogCancelled() {
-            hideBookingRequest()
+        hideBookingRequest()
     }
 }

@@ -61,10 +61,6 @@ interface BookingRequestMVP {
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
 
-        fun onPaymentFailureDialogPositive()
-
-        fun onPaymentFailureDialogCancelled()
-
     }
 
     interface Presenter {

@@ -542,14 +542,9 @@ class BookingRequestPresenterTest {
      */
     @Test
     fun `Select Positive option on Payment Failure Dialog`() {
-        //TODO add positive option selected and verify if onPaymentFailureDialogPositive is called
-        whenever(tripsService.book(any())).thenReturn(tripCall)
+        requestPresenter.onPaymentFailureDialogPositive()
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
-
-        tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
-
-        verify(view).showPaymentFailureDialog()
+        verify(view).initialiseChangeCard(any())
     }
 
     /**
@@ -559,14 +554,9 @@ class BookingRequestPresenterTest {
      */
     @Test
     fun `Select Negative option on Payment Failure Dialog`() {
-        //TODO add positive option selected and verify if onPaymentFailureDialogCancelled is called
-        whenever(tripsService.book(any())).thenReturn(tripCall)
+        requestPresenter.onPaymentFailureDialogCancelled()
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
-
-        tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
-
-        verify(view).showPaymentFailureDialog()
+        verify(view).animateOut()
     }
 
     /**
