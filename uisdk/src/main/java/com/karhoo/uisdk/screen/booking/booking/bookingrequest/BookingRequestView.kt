@@ -356,16 +356,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     private fun onPaymentHandlePostive() {
-        hideLoading()
         presenter.onPaymentFailureDialogPositive()
     }
 
     private fun onPaymentHandleCancelled() {
-        hideLoading()
         presenter.onPaymentFailureDialogCancelled()
     }
 
-    private fun hideLoading() {
+    override fun hideLoading() {
         cancelButton.isEnabled = true
         bookingRequestButton.onLoadingComplete()
     }

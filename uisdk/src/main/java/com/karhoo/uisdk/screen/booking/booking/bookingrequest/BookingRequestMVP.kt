@@ -60,6 +60,8 @@ interface BookingRequestMVP {
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
+        
+        fun hideLoading()
 
     }
 

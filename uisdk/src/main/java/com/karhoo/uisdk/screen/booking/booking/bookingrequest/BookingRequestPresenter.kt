@@ -236,10 +236,12 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun onPaymentFailureDialogPositive() {
+        view?.hideLoading()
         handleChangeCard()
     }
 
     override fun onPaymentFailureDialogCancelled() {
+        view?.hideLoading()
         hideBookingRequest()
     }
 }

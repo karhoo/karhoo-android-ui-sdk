@@ -544,6 +544,7 @@ class BookingRequestPresenterTest {
     fun `Select Positive option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogPositive()
 
+        verify(view).hideLoading()
         verify(view).initialiseChangeCard(null)
     }
 
@@ -556,6 +557,7 @@ class BookingRequestPresenterTest {
     fun `Select Negative option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogCancelled()
 
+        verify(view).hideLoading()
         verify(view).animateOut()
     }
 
