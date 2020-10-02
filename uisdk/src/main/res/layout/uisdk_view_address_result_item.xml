@@ -26,7 +26,8 @@
         android:ellipsize="marquee"
         android:paddingTop="@dimen/spacing_small"
         android:paddingBottom="@dimen/spacing_small"
-        android:singleLine="true"
+        android:singleLine="false"
+        android:maxLines="2"
         android:textSize="@dimen/text_size_medium"
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
 
