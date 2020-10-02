@@ -35,7 +35,7 @@ interface BookingRequestMVP {
 
         fun enableBooking()
 
-        fun initialiseChangeCard(price: QuotePrice?)
+        fun initialiseChangeCard(price: QuotePrice? = null)
 
         fun initialiseGuestPayment(price: QuotePrice?)
 
@@ -60,6 +60,8 @@ interface BookingRequestMVP {
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
+        
+        fun hideLoading()
 
     }
 
@@ -92,6 +94,10 @@ interface BookingRequestMVP {
 
         fun watchBookingRequest(bookingRequestStateViewModel: BookingRequestStateViewModel)
                 : Observer<BookingRequestStatus>
+
+        fun onPaymentFailureDialogPositive()
+
+        fun onPaymentFailureDialogCancelled()
     }
 
     interface Actions : PaymentActions
