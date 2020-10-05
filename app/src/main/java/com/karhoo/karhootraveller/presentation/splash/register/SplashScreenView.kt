@@ -8,8 +8,12 @@ import android.content.Intent.ACTION_VIEW
 import android.location.Location
 import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -18,6 +22,7 @@ import com.karhoo.karhootraveller.KarhooConfig
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.login.LoginActivity
 import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
+import com.karhoo.karhootraveller.presentation.splash.SplashActivity
 import com.karhoo.karhootraveller.presentation.splash.domain.KarhooAppVersionValidator
 import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
@@ -32,6 +37,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.view_splash.view.guestCheckoutButton
+import kotlinx.android.synthetic.main.view_splash.view.loginTypeSpinner
 import kotlinx.android.synthetic.main.view_splash.view.registerButton
 import kotlinx.android.synthetic.main.view_splash.view.signInButton
 
@@ -39,7 +45,8 @@ class SplashScreenView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), SplashMVP.View, PermissionListener {
+    : LinearLayout(context, attrs, defStyleAttr), SplashMVP.View, PermissionListener,
+      AdapterView.OnItemSelectedListener {
 
     private var presenter: SplashMVP.Presenter? = null
 
@@ -50,6 +57,10 @@ class SplashScreenView @JvmOverloads constructor(
         initialiseListeners()
     }
 
+    override fun onResume() {
+        askForLocationPermission()
+    }
+
     private fun initialiseListeners() {
         signInButton.setOnClickListener { goToLogin() }
         registerButton.setOnClickListener { goToRegistration() }
@@ -58,6 +69,14 @@ class SplashScreenView @JvmOverloads constructor(
             guestCheckoutButton.setOnClickListener { goToGuestBooking() }
         } else {
             guestCheckoutButton.visibility = View.GONE
+        }
+        var loginTypeAdapter = ArrayAdapter<LoginType>(context, android.R.layout
+                .simple_spinner_item, LoginType.values()).also {
+
+        }
+        with(loginTypeSpinner) {
+            adapter = loginTypeAdapter
+            onItemSelectedListener = this@SplashScreenView
         }
     }
 
@@ -104,8 +123,23 @@ class SplashScreenView @JvmOverloads constructor(
         dialog.show()
     }
 
-    override fun onResume() {
-        askForLocationPermission()
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Log.d("Adyen", "On no item selected")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val type = parent?.getItemAtPosition(position)
+        Log.d("Adyen", "type: $type")
+
+        when(type) {
+            LoginType.ADYEN_GUEST -> goToGuestBooking()
+            LoginType.BRAINTREE_GUEST -> goToGuestBooking()
+            LoginType.ADYEN_TOKEN -> Toast.makeText(context, "To be implemented", Toast
+                    .LENGTH_LONG)
+            LoginType.BRAINTREE_TOKEN -> Toast.makeText(context, "To be implemented", Toast
+                    .LENGTH_LONG)
+            LoginType.USERNAME_PASSWORD -> goToLogin()
+        }
     }
 
     //region Permissions
@@ -169,5 +203,11 @@ class SplashScreenView @JvmOverloads constructor(
     }
 
     //endregion
-
+    enum class LoginType(val type: String) {
+        ADYEN_GUEST("Adyen guest"),
+        BRAINTREE_GUEST("Braintree guest"),
+        ADYEN_TOKEN("Adyen token"),
+        BRAINTREE_TOKEN("Braintree token"),
+        USERNAME_PASSWORD("Username/password")
+    }
 }

@@ -36,9 +36,9 @@ class KarhooConfig(val context: Context, private val isGuest: Boolean = false) :
     override fun authenticationMethod(): AuthenticationMethod {
         // For Guest checkout, please update the required configuration parameters in the
         // build.gradle
-        return if (isGuest) AuthenticationMethod.Guest(identifier = BuildConfig.GUEST_CHECKOUT_IDENTIFIER,
+        return if (isGuest) AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
                                                        referer = BuildConfig.GUEST_CHECKOUT_REFERER,
-                                                       organisationId = BuildConfig.GUEST_CHECKOUT_ORGANISATION_ID)
+                                                       organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
         else AuthenticationMethod.KarhooUser()
     }
 
