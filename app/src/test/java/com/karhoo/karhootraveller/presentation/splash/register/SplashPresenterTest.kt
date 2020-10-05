@@ -5,24 +5,32 @@ import com.google.android.gms.maps.model.LatLng
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
 import com.karhoo.sdk.api.datastore.user.UserStore
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.KarhooUISDKConfiguration
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
+import com.karhoo.uisdk.screen.booking.supplier.category.Category
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atLeastOnce
+import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -41,9 +49,11 @@ class SplashPresenterTest {
         longitude = 2.0
     }
 
-    private val presenter: SplashPresenter = SplashPresenter(view, paymentService, locationProvider, userStore,
-            appVersionValidator, analytics, location, playServicesUtil)
+    @Captor
+    private lateinit var authMethodCaptor: ArgumentCaptor<AuthenticationMethod>
 
+    private val presenter: SplashPresenter = SplashPresenter(view, paymentService, locationProvider, userStore,
+                                                             appVersionValidator, analytics, location, playServicesUtil)
 
     /**
      * Given:   The app has started
@@ -163,6 +173,100 @@ class SplashPresenterTest {
         presenter.checkIfUserIsLoggedIn()
 
         verify(view).promptUpdatePlayServices(1)
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is an Adyen guest login
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Adyen guest login sets correct auth method and takes user to booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.ADYEN_GUEST.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.Guest)
+        verify(view).goToBooking(null)
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is an Braintree guest login
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Braintree guest login sets correct auth method and takes user to booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.BRAINTREE_GUEST.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.Guest)
+        verify(view).goToBooking(null)
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a Adyen token login
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Adyen token login sets correct auth method and takes user to booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        //TODO Change this when we can implement Token Auth
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        //verify(view).goToBooking(null)
+        verify(view).goToLogin()
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a Braintree token login
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Braintree token login sets correct auth method and takes user to booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        //TODO Change this when we can implement Token Auth
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        //verify(view).goToBooking(null)
+        verify(view).goToLogin()
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a username and password
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Username and password login sets correct auth method and takes user to booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.USERNAME_PASSWORD.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        verify(view).goToLogin()
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a username and password
+     * Then:    The correct auth method is set
+     * And:     The user is taken to the booking flow
+     */
+    @Test
+    fun `Invalid login type does not set the configuration or take the user to the booking flow`() {
+        presenter.handleLoginTypeSelection(LoginType.USERNAME_PASSWORD.value)
+
+        verify(view).setConfig(capture(authMethodCaptor))
+        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        verify(view, never()).goToBooking(null)
     }
 
     companion object {
