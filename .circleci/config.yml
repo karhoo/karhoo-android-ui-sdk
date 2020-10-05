@@ -31,9 +31,15 @@ jobs:
             echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
             echo "KARHOO_SEGMENT_API_KEY_SANDBOX=\"$KARHOO_SEGMENT_API_KEY_SANDBOX\"" >> app/secure.properties
             echo "KARHOO_SEGMENT_API_KEY_PROD=\"$KARHOO_SEGMENT_API_KEY_PROD\"" >> app/secure.properties
-            echo "GUEST_CHECKOUT_IDENTIFIER=\"$GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+            echo "ADYEN_GUEST_CHECKOUT_IDENTIFIER=\"ADYEN_GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+            echo "ADYEN_GUEST_CHECKOUT_ORGANISATION_ID=\"$ADYEN_GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
+            echo "BRAINTREE_GUEST_CHECKOUT_IDENTIFIER=\"$BRAINTREE_GUEST_CHECKOUT_IDENTIFIER\"" >> app/secure.properties
+            echo "BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID=\"$BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
             echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
-            echo "GUEST_CHECKOUT_ORGANISATION_ID=\"$GUEST_CHECKOUT_ORGANISATION_ID\"" >> app/secure.properties
+            echo "ADYEN_CLIENT_ID=\"ADYEN_CLIENT_ID\"" >> app/secure.properties
+            echo "ADYEN_CLIENT_SCOPE=\"ADYEN_CLIENT_SCOPE\"" >> app/secure.properties
+            echo "BRAINTREE_CLIENT_ID=\"BRAINTREE_CLIENT_ID\"" >> app/secure.properties
+            echo "BRAINTREE_CLIENT_SCOPE=\"BRAINTREE_CLIENT_SCOPE\"" >> app/secure.properties
             echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
             echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
             echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
