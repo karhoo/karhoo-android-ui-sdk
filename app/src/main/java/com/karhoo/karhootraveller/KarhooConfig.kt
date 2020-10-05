@@ -34,12 +34,6 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     }
 
     override fun authenticationMethod(): AuthenticationMethod {
-        // For Guest checkout, please update the required configuration parameters in the
-        // secure.properties
-        /*return if (isGuest) AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
-                                                       referer = BuildConfig.GUEST_CHECKOUT_REFERER,
-                                                       organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
-        else AuthenticationMethod.KarhooUser()*/
         return authMethod
     }
 
