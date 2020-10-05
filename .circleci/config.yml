@@ -55,7 +55,7 @@ jobs:
             sudo chmod +x ./gradlew
             ./gradlew detekt
       - run:
-          name: Build test and lint
+          name: Set properties
           command: |
                     echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
                     echo "GOOGLE_MAPS_API_KEY_RELEASE=$GOOGLE_MAPS_API_KEY_RELEASE" >> app/secure.properties
@@ -74,8 +74,7 @@ jobs:
                     echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
                     echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
-                    sudo chmod +x ./gradlew 
-                    ./gradlew testDebug lintRelease
+                    sudo chmod +x ./gradlew
       - run:
           name: Run unit test
           command: bundle exec fastlane $FASTLANE_LANE_TEST
