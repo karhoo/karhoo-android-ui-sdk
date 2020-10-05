@@ -50,11 +50,6 @@ jobs:
           paths:
             - vendor/bundle
       - run:
-          name: Build Detekt
-          command: |
-            sudo chmod +x ./gradlew
-            ./gradlew detekt
-      - run:
           name: Set properties
           command: |
                     echo "GOOGLE_MAPS_API_KEY_DEBUG=$GOOGLE_MAPS_API_KEY_DEBUG" > app/secure.properties
