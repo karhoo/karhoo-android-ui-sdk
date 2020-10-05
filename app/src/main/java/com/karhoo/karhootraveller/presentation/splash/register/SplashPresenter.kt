@@ -113,7 +113,7 @@ internal class SplashPresenter(view: SplashMVP.View,
             LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.KarhooUser()
             // TODO Implement with clientId and scope
             // AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID,
-            // scope = BuildConfig.ADYEN_CLIENT_SCOPE) LoginType.BRAINTREE_TOKEN
+            // scope = BuildConfig.ADYEN_CLIENT_SCOPE)
             LoginType.BRAINTREE_TOKEN.value -> AuthenticationMethod.KarhooUser()
             // TODO Implement with clientId and scope
             // AuthenticationMethod.TokenExchange(clientId = BuildConfig.BRAINTREE_CLIENT_ID,
