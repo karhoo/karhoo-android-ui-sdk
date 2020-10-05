@@ -1,7 +1,7 @@
 version: 2
 config_android:
   docker:
-    - image: ccistaging/android:api-28
+    - image: circleci/android:api-29
   working_directory: ~/project
   environment:
     JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
@@ -12,7 +12,7 @@ config_android:
 jobs:
   build_and_setup:
     docker:
-      - image: ccistaging/android:api-28
+      - image: circleci/android:api-29
     working_directory: ~/project
     environment:
       - JAVA_TOOL_OPTIONS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=80"
