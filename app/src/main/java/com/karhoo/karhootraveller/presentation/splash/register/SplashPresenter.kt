@@ -3,15 +3,16 @@ package com.karhoo.karhootraveller.presentation.splash.register
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
-import androidx.core.os.postDelayed
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.karhootraveller.BuildConfig
 import com.karhoo.karhootraveller.presentation.base.BasePresenter
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
 import com.karhoo.sdk.api.datastore.user.UserStore
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -97,6 +98,33 @@ internal class SplashPresenter(view: SplashMVP.View,
             proceedIfAble()
         } else if (userStore.isCurrentUserValid) {
             logoutAndResetApp(isAutomaticLogout = true)
+        }
+    }
+
+    override fun handleLoginTypeSelection(loginType: LoginType) {
+        val authMethod: AuthenticationMethod = when (loginType) {
+            LoginType.USERNAME_PASSWORD -> AuthenticationMethod.KarhooUser()
+            LoginType.ADYEN_GUEST -> AuthenticationMethod.Guest(identifier = BuildConfig.ADYEN_GUEST_CHECKOUT_IDENTIFIER,
+                                                                referer = BuildConfig.GUEST_CHECKOUT_REFERER,
+                                                                organisationId = BuildConfig.ADYEN_GUEST_CHECKOUT_ORGANISATION_ID)
+            LoginType.BRAINTREE_GUEST -> AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
+                                                                    referer = BuildConfig.GUEST_CHECKOUT_REFERER,
+                                                                    organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
+            LoginType.ADYEN_TOKEN -> AuthenticationMethod.KarhooUser()
+            // TODO Implement with clientId and scope
+            // AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID,
+            // scope = BuildConfig.ADYEN_CLIENT_SCOPE) LoginType.BRAINTREE_TOKEN
+            LoginType.BRAINTREE_TOKEN -> AuthenticationMethod.KarhooUser()
+            // TODO Implement with clientId and scope
+            // AuthenticationMethod.TokenExchange(clientId = BuildConfig.BRAINTREE_CLIENT_ID,
+            // scope = BuildConfig.BRAINTREE_CLIENT_SCOPE)
+            else -> return
+        }
+        view?.setConfig(authMethod)
+        if (authMethod is AuthenticationMethod.KarhooUser) {
+            view?.goToLogin()
+        } else {
+            view?.goToBooking(null)
         }
     }
 

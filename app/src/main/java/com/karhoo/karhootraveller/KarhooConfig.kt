@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
 
-class KarhooConfig(val context: Context, private val isGuest: Boolean = false) :
+class KarhooConfig(val context: Context, private val authMethod: AuthenticationMethod = AuthenticationMethod.KarhooUser()) :
         KarhooUISDKConfiguration {
 
     override fun logo(): Drawable? {
@@ -35,11 +35,12 @@ class KarhooConfig(val context: Context, private val isGuest: Boolean = false) :
 
     override fun authenticationMethod(): AuthenticationMethod {
         // For Guest checkout, please update the required configuration parameters in the
-        // build.gradle
-        return if (isGuest) AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
+        // secure.properties
+        /*return if (isGuest) AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
                                                        referer = BuildConfig.GUEST_CHECKOUT_REFERER,
                                                        organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
-        else AuthenticationMethod.KarhooUser()
+        else AuthenticationMethod.KarhooUser()*/
+        return authMethod
     }
 
     override fun analyticsProvider(): AnalyticProvider? {

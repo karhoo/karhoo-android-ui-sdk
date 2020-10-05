@@ -22,12 +22,12 @@ import com.karhoo.karhootraveller.KarhooConfig
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.login.LoginActivity
 import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
-import com.karhoo.karhootraveller.presentation.splash.SplashActivity
 import com.karhoo.karhootraveller.presentation.splash.domain.KarhooAppVersionValidator
 import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
 import com.karhoo.karhootraveller.util.playservices.KarhooPlayServicesUtil
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karumi.dexter.Dexter
@@ -36,7 +36,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.view_splash.view.guestCheckoutButton
 import kotlinx.android.synthetic.main.view_splash.view.loginTypeSpinner
 import kotlinx.android.synthetic.main.view_splash.view.registerButton
 import kotlinx.android.synthetic.main.view_splash.view.signInButton
@@ -65,22 +64,19 @@ class SplashScreenView @JvmOverloads constructor(
         signInButton.setOnClickListener { goToLogin() }
         registerButton.setOnClickListener { goToRegistration() }
         if (BuildConfig.BUILD_TYPE == "debug") {
-            guestCheckoutButton.visibility = View.VISIBLE
-            guestCheckoutButton.setOnClickListener { goToGuestBooking() }
+            loginTypeSpinner.visibility = VISIBLE
+            val loginTypeAdapter = ArrayAdapter<LoginType>(context, android.R.layout
+                    .simple_spinner_item, LoginType.values())
+            with(loginTypeSpinner) {
+                adapter = loginTypeAdapter
+                onItemSelectedListener = this@SplashScreenView
+            }
         } else {
-            guestCheckoutButton.visibility = View.GONE
-        }
-        var loginTypeAdapter = ArrayAdapter<LoginType>(context, android.R.layout
-                .simple_spinner_item, LoginType.values()).also {
-
-        }
-        with(loginTypeSpinner) {
-            adapter = loginTypeAdapter
-            onItemSelectedListener = this@SplashScreenView
+            loginTypeSpinner.visibility = GONE
         }
     }
 
-    private fun goToLogin() {
+    override fun goToLogin() {
         val intent = LoginActivity.Builder.builder.build(context)
         splashActions?.startActivity(intent)
     }
@@ -90,9 +86,8 @@ class SplashScreenView @JvmOverloads constructor(
         splashActions?.startActivityForResult(intent, RegistrationActivity.REQ_CODE)
     }
 
-    private fun goToGuestBooking() {
-        KarhooUISDK.setConfiguration(KarhooConfig(context.applicationContext, true))
-        goToBooking(null)
+    override fun setConfig(authenticationMethod: AuthenticationMethod) {
+        KarhooUISDK.setConfiguration(KarhooConfig(context.applicationContext, authenticationMethod))
     }
 
     override fun setLoginRegVisibility(visibility: Boolean) {
@@ -131,15 +126,7 @@ class SplashScreenView @JvmOverloads constructor(
         val type = parent?.getItemAtPosition(position)
         Log.d("Adyen", "type: $type")
 
-        when(type) {
-            LoginType.ADYEN_GUEST -> goToGuestBooking()
-            LoginType.BRAINTREE_GUEST -> goToGuestBooking()
-            LoginType.ADYEN_TOKEN -> Toast.makeText(context, "To be implemented", Toast
-                    .LENGTH_LONG)
-            LoginType.BRAINTREE_TOKEN -> Toast.makeText(context, "To be implemented", Toast
-                    .LENGTH_LONG)
-            LoginType.USERNAME_PASSWORD -> goToLogin()
-        }
+        presenter?.handleLoginTypeSelection(type as LoginType)
     }
 
     //region Permissions
@@ -200,14 +187,5 @@ class SplashScreenView @JvmOverloads constructor(
     companion object {
         const val USER_LOCATION_PREF = "USER_LOCATION"
         const val USER_LOCATION = "users::latlng"
-    }
-
-    //endregion
-    enum class LoginType(val type: String) {
-        ADYEN_GUEST("Adyen guest"),
-        BRAINTREE_GUEST("Braintree guest"),
-        ADYEN_TOKEN("Adyen token"),
-        BRAINTREE_TOKEN("Braintree token"),
-        USERNAME_PASSWORD("Username/password")
     }
 }

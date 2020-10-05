@@ -52,18 +52,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <TextView
-        android:id="@+id/guestCheckoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/guest_checkout"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/off_black"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/signInButton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
