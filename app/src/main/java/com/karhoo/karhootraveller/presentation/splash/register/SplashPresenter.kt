@@ -101,20 +101,20 @@ internal class SplashPresenter(view: SplashMVP.View,
         }
     }
 
-    override fun handleLoginTypeSelection(loginType: LoginType) {
+    override fun handleLoginTypeSelection(loginType: String) {
         val authMethod: AuthenticationMethod = when (loginType) {
-            LoginType.USERNAME_PASSWORD -> AuthenticationMethod.KarhooUser()
-            LoginType.ADYEN_GUEST -> AuthenticationMethod.Guest(identifier = BuildConfig.ADYEN_GUEST_CHECKOUT_IDENTIFIER,
+            LoginType.USERNAME_PASSWORD.value -> AuthenticationMethod.KarhooUser()
+            LoginType.ADYEN_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.ADYEN_GUEST_CHECKOUT_IDENTIFIER,
                                                                 referer = BuildConfig.GUEST_CHECKOUT_REFERER,
                                                                 organisationId = BuildConfig.ADYEN_GUEST_CHECKOUT_ORGANISATION_ID)
-            LoginType.BRAINTREE_GUEST -> AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
+            LoginType.BRAINTREE_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
                                                                     referer = BuildConfig.GUEST_CHECKOUT_REFERER,
                                                                     organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
-            LoginType.ADYEN_TOKEN -> AuthenticationMethod.KarhooUser()
+            LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.KarhooUser()
             // TODO Implement with clientId and scope
             // AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID,
             // scope = BuildConfig.ADYEN_CLIENT_SCOPE) LoginType.BRAINTREE_TOKEN
-            LoginType.BRAINTREE_TOKEN -> AuthenticationMethod.KarhooUser()
+            LoginType.BRAINTREE_TOKEN.value -> AuthenticationMethod.KarhooUser()
             // TODO Implement with clientId and scope
             // AuthenticationMethod.TokenExchange(clientId = BuildConfig.BRAINTREE_CLIENT_ID,
             // scope = BuildConfig.BRAINTREE_CLIENT_SCOPE)

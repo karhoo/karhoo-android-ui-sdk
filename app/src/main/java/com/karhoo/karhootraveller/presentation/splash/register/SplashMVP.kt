@@ -27,7 +27,7 @@ interface SplashMVP {
 
     interface Presenter {
 
-        fun handleLoginTypeSelection(loginType: LoginType)
+        fun handleLoginTypeSelection(loginType: String)
 
         fun checkIfUserIsLoggedIn()
 

@@ -1,6 +1,6 @@
 package com.karhoo.karhootraveller.presentation.splash.register
 
-enum class LoginType(val type: String) {
+enum class LoginType constructor(val value: String) {
     HEADER("Please select a login type"),
     ADYEN_GUEST("Adyen guest"),
     BRAINTREE_GUEST("Braintree guest"),

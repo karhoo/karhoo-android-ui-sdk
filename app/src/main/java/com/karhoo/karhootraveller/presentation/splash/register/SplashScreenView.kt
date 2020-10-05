@@ -65,8 +65,8 @@ class SplashScreenView @JvmOverloads constructor(
         registerButton.setOnClickListener { goToRegistration() }
         if (BuildConfig.BUILD_TYPE == "debug") {
             loginTypeSpinner.visibility = VISIBLE
-            val loginTypeAdapter = ArrayAdapter<LoginType>(context, android.R.layout
-                    .simple_spinner_item, LoginType.values())
+            val loginTypeAdapter = ArrayAdapter<String>(context, android.R.layout
+                    .simple_spinner_dropdown_item, LoginType.values().map { it.value })
             with(loginTypeSpinner) {
                 adapter = loginTypeAdapter
                 onItemSelectedListener = this@SplashScreenView
@@ -126,7 +126,7 @@ class SplashScreenView @JvmOverloads constructor(
         val type = parent?.getItemAtPosition(position)
         Log.d("Adyen", "type: $type")
 
-        presenter?.handleLoginTypeSelection(type as LoginType)
+        presenter?.handleLoginTypeSelection(type as String)
     }
 
     //region Permissions
