@@ -104,7 +104,9 @@ internal class SplashPresenter(view: SplashMVP.View,
 
     override fun handleLoginTypeSelection(loginType: String) {
         Log.d("Adyen", userStore.paymentProvider.toString())
-        userStore.removeCurrentUser()
+        if(loginType != LoginType.USERNAME_PASSWORD.value) {
+            userStore.removeCurrentUser()
+        }
         Log.d("Adyen", userStore.paymentProvider.toString())
         val authMethod: AuthenticationMethod = when (loginType) {
             LoginType.USERNAME_PASSWORD.value -> AuthenticationMethod.KarhooUser()

@@ -26,6 +26,6 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
+//        view?.(userStore.savedPaymentInfo, null)
     }
 }
