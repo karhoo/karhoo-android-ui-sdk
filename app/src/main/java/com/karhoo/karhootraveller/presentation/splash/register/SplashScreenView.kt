@@ -13,7 +13,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -58,6 +57,7 @@ class SplashScreenView @JvmOverloads constructor(
 
     override fun onResume() {
         askForLocationPermission()
+        loginTypeSpinner.setSelection(0)
     }
 
     private fun initialiseListeners() {
