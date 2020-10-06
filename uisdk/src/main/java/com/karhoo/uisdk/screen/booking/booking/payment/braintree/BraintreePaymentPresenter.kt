@@ -171,8 +171,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                    paymentData: String?) {
         this.nonce = nonce
         if (cardNumber != null && cardTypeLabel != null) {
-            userStore.savedPaymentInfo = SavedPaymentInfo(cardNumber, CardType.fromString
-            (cardTypeLabel))
+            val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
+            view?.bindPaymentDetails(userInfo)
         }
         view?.refresh()
     }

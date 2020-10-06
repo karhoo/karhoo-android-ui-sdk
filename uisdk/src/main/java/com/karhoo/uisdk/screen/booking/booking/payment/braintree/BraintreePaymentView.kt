@@ -18,7 +18,7 @@ import com.karhoo.uisdk.util.extension.isGuest
 
 class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentDropInMVP.View {
 
-    var presenter: PaymentDropInMVP.Presenter? = null
+    var presenter: PaymentDropInMVP.Presenter? = BraintreePaymentPresenter(actions)
     var actions: PaymentDropInMVP.Actions? = actions
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
@@ -49,19 +49,19 @@ class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : Paym
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
-        TODO("Not yet implemented")
+        presenter?.sdkInit(price)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        TODO("Not yet implemented")
+        presenter?.initialiseGuestPayment(price)
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
-        TODO("Not yet implemented")
+        presenter?.getPaymentNonce(price)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        TODO("Not yet implemented")
+        presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:

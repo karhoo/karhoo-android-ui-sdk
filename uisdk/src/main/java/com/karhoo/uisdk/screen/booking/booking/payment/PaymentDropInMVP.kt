@@ -56,16 +56,11 @@ interface PaymentDropInMVP {
 
         fun showPaymentDialog(braintreeSDKToken: String)
 
-//        fun showPaymentFailureDialog()
-
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
 
         fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
 
-//        fun threeDSecureNonce(threeDSNonce: String)
-
         fun refresh()
-
 
         fun showPaymentFailureDialog()
 
