@@ -16,37 +16,13 @@ interface BookingPaymentMVP {
         fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
 
         fun showError(@StringRes error: Int)
-
-        /*fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)*/
-
-        /*fun handlePaymentDetailsUpdate(sdkNonce: String?)
-
-        fun initialiseChangeCard(price: QuotePrice?)
-
-        fun initialiseGuestPayment(price: QuotePrice?)
-
-        fun initialisePaymentFlow(price: QuotePrice?)
-
-        fun showError(@StringRes error: Int)
-
-        fun showPaymentDialog(braintreeSDKToken: String)
-
-        fun showPaymentFailureDialog()
-
-        fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
-
-        fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
-
-        fun threeDSecureNonce(threeDSNonce: String)
-
-        fun refresh()*/
     }
 
     interface Presenter {
 
         fun getPaymentProvider()
 
-        fun setSavedCardDetails()
+        fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
     }
 
     interface CardActions {

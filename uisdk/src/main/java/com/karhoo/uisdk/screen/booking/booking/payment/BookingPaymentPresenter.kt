@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -25,7 +26,9 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
-    override fun setSavedCardDetails() {
-//        view?.(userStore.savedPaymentInfo, null)
+    override fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
+        savedPaymentInfo?.let {
+            userStore.savedPaymentInfo = it
+        }
     }
 }

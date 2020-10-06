@@ -203,7 +203,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and bind card details should be called`() {
-        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
 
@@ -217,7 +217,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and an error occurs`() {
-        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 

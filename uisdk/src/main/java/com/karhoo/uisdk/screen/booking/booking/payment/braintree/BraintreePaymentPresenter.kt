@@ -21,7 +21,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.isGuest
@@ -85,7 +84,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
             when (requestCode) {
                 BraintreePaymentView.REQ_CODE_BRAINTREE -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                    setNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
@@ -111,7 +110,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                 }
                 view?.handlePaymentDetailsUpdate(braintreeSDKToken)
             } else {
-                passBackNonce(braintreeSDKToken)
+                setNonce(braintreeSDKToken)
             }
         } else {
             view?.showPaymentUI(braintreeSDKToken)
@@ -124,9 +123,10 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.handlePaymentDetailsUpdate(nonce)
     }
 
-    override fun passBackNonce(braintreeSDKNonce: String) {
+    fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
         val addPaymentRequest = AddPaymentRequest(payer = Payer(id = user.userId,
                                                                 email = user.email,
@@ -137,7 +137,10 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
 
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
-                is Resource.Success -> view?.bindPaymentDetails(userStore.savedPaymentInfo)
+                is Resource.Success -> {
+                    view?.bindPaymentDetails(userStore.savedPaymentInfo)
+                    view?.handlePaymentDetailsUpdate(nonce)
+                }
                 is Resource.Failure -> view?.showError(R.string.booking_error)
             }
         }
@@ -173,6 +176,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         if (cardNumber != null && cardTypeLabel != null) {
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
             view?.bindPaymentDetails(userInfo)
+            view?.handlePaymentDetailsUpdate(nonce)
         }
         view?.refresh()
     }

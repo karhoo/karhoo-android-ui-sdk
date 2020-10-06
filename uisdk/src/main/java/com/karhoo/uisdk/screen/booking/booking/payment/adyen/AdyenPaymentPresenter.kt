@@ -21,7 +21,6 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
@@ -106,7 +105,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                     updateCardDetails(nonce = transactionId,
                                       paymentData = payload.optString
                                       (AdyenPaymentView.ADDITIONAL_DATA, null))
-                    passBackNonce(transactionId)
+                    this.sdkToken = transactionId
                 }
                 //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
@@ -122,10 +121,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
         view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
-    }
-
-    override fun passBackNonce(sdkNonce: String) {
-        this.sdkToken = sdkNonce
+        view?.handlePaymentDetailsUpdate(nonce)
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
@@ -167,6 +163,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 SavedPaymentInfo(newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
             view?.bindPaymentDetails(savedPaymentInfo)
+            view?.handlePaymentDetailsUpdate(nonce)
         } ?: view?.refresh()
     }
 
