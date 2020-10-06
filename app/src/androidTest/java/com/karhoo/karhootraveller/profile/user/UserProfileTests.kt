@@ -9,11 +9,11 @@ import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.karhootraveller.common.preferences
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.profile.ProfileActivity
-import com.karhoo.karhootraveller.util.TestData.Companion.USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.USER_UPDATED_INFO
 import com.karhoo.uisdk.common.serverRobot
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -63,7 +63,7 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            sleep(MEDIUM)
+            sleep()
         } result {
             noProfileChangesFullCheck()
         }
@@ -242,7 +242,7 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            sleep()
+            waitFor(MEDIUM)
         } result {
             fullScreenCheckCardRegistered()
         }
@@ -298,6 +298,7 @@ class UserProfileTests : Launch {
      * Then:    I expect my profile details to be saved.
      */
     @Test
+    @AllowFlaky(attempts = 5)
     fun savingProfileDetailsSuccessShouldShowSnackBarWithSuccess() {
         preferences {
             setUserPreference(USER)
@@ -349,7 +350,7 @@ class UserProfileTests : Launch {
             setUserPreferenceNoCard(USER)
         }
         userProfile(this) {
-            sleep()
+            waitFor(MEDIUM)
         } result {
             fullScreenCheckNoCardRegistered()
         }

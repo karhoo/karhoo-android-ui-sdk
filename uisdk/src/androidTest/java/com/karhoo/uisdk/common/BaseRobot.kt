@@ -36,7 +36,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withHint
@@ -87,7 +86,7 @@ open abstract class BaseTestRobot {
 
     fun fillTextIsDescendant(id: Int, text: String, resId: Int): ViewInteraction =
             onView(allOf(withId(id), isDescendantOfA(withId(resId)))).perform(typeText(text),
-    closeSoftKeyboard())
+                                                                              closeSoftKeyboard())
 
     fun clickButton(resId: Int) {
         clickOn(resId)
@@ -244,11 +243,7 @@ open abstract class BaseTestRobot {
     fun pressDeviceBackButton() {
         Espresso.pressBack()
     }
-    
-    fun waitForTime(millis: Long = 350) {
-        onView(isRoot()).perform(waitFor(millis))
-    }
-    
+
     fun checkTripStatusBarText(resId: Int, text: String): ViewInteraction =
             onView(withId(resId)).check(matches(withText(text)))
 
@@ -345,25 +340,6 @@ open abstract class BaseTestRobot {
 
             override fun matchesSafely(view: View): Boolean {
                 return matcher.matches(view) && currentIndex++ == index
-            }
-        }
-    }
-
-    /**
-     * Perform action of waiting for a specific time.
-     */
-    open fun waitFor(millis: Long): ViewAction? {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return isRoot()
-            }
-
-            override fun getDescription(): String {
-                return "Wait for $millis milliseconds."
-            }
-
-            override fun perform(uiController: UiController, view: View) {
-                uiController.loopMainThreadForAtLeast(millis)
             }
         }
     }
