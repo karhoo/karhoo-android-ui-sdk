@@ -12,30 +12,27 @@ class PaymentFactory {
 
     //TODO Implemente changes for guest checkout
     companion object {
-        fun createPresenter(provider: Provider?, view: BookingPaymentMVP.View): PaymentDropInMVP.Presenter? {
+        /*fun createPresenter(provider: Provider?, view: BookingPaymentMVP.View): PaymentDropInMVP.Presenter? {
             return provider?.let {
                 when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                     ProviderType.ADYEN -> AdyenPaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)
                     ProviderType.BRAINTREE -> BraintreePaymentPresenter(view, KarhooApi.userStore, KarhooApi.paymentsService)
                 }
             }
-        }
+        }*/
 
-        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions,
-                              presenter: PaymentDropInMVP.Presenter):
+        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions):
                 PaymentDropInMVP.View? {
             return provider?.let {
                 when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                     ProviderType.ADYEN -> {
-                        val view = AdyenPaymentView()
+                        val view = AdyenPaymentView(actions)
                         view.actions = actions
-                        view.presenter = presenter
                         view
                     }
                     ProviderType.BRAINTREE -> {
-                        val view = BraintreePaymentView()
+                        val view = BraintreePaymentView(actions)
                         view.actions = actions
-                        view.presenter = presenter
                         view
                     }
                 }

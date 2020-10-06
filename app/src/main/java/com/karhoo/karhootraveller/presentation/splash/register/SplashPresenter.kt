@@ -3,6 +3,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
@@ -102,6 +103,9 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun handleLoginTypeSelection(loginType: String) {
+        Log.d("Adyen", userStore.paymentProvider.toString())
+        userStore.removeCurrentUser()
+        Log.d("Adyen", userStore.paymentProvider.toString())
         val authMethod: AuthenticationMethod = when (loginType) {
             LoginType.USERNAME_PASSWORD.value -> AuthenticationMethod.KarhooUser()
             LoginType.ADYEN_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.ADYEN_GUEST_CHECKOUT_IDENTIFIER,

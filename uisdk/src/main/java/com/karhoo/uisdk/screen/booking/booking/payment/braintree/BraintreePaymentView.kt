@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.api.BraintreeFragment
 import com.braintreepayments.api.ThreeDSecure
@@ -11,13 +12,14 @@ import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.extension.isGuest
 
-class BraintreePaymentView : PaymentDropInMVP.View {
+class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentDropInMVP.View {
 
     var presenter: PaymentDropInMVP.Presenter? = null
-    var actions: PaymentDropInMVP.Actions? = null
+    var actions: PaymentDropInMVP.Actions? = actions
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment
@@ -44,6 +46,22 @@ class BraintreePaymentView : PaymentDropInMVP.View {
         { request, lookup ->
             ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
         }
+    }
+
+    override fun initialiseChangeCard(price: QuotePrice?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun initialisePaymentFlow(price: QuotePrice?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        TODO("Not yet implemented")
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:

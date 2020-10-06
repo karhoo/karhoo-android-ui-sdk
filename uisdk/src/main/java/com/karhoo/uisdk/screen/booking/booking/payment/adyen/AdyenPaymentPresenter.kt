@@ -30,10 +30,10 @@ import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
 
-class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
+class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                             private val userStore: UserStore = KarhooApi.userStore,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
     var price: QuotePrice? = null
@@ -154,10 +154,6 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
-    }
-
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,

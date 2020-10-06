@@ -28,10 +28,10 @@ import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
 
-class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
+class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
     private var nonce: String = ""
@@ -165,10 +165,6 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
                 is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
-    }
-
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
     }
 
     override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,

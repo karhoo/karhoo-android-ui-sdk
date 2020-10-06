@@ -20,6 +20,7 @@ import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -323,10 +324,14 @@ class TestData {
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
+        val QUOTE_PRICE = QuotePrice(currencyCode = "DEFAULT_CURRENCY",
+                                     highPrice = 577,
+                                     lowPrice = 577)
+
         val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                           quoteType = QuoteType.ESTIMATED,
                           quoteSource = QuoteSource.FLEET,
-                          price = ServerRobot.QUOTE_PRICE,
+                          price = QUOTE_PRICE,
                           fleet = ServerRobot.QUOTE_FLEET,
                           pickupType = PickupType.CURBSIDE,
                           vehicle = ServerRobot.QUOTE_VEHICLE,

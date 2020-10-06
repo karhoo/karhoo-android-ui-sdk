@@ -23,7 +23,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentDropInMVP.Actions {
 
-    private var paymentPresenter: PaymentDropInMVP.Presenter? = null
+    private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
     private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
@@ -33,19 +33,23 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     var paymentActions: BookingPaymentMVP.PaymentActions? = null
     var cardActions: BookingPaymentMVP.CardActions? = null
+    private var dropInActions: PaymentDropInMVP.View? = null
     private var viewActions: PaymentDropInMVP.View? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
-        paymentPresenter = PaymentFactory.createPresenter(KarhooApi.userStore.paymentProvider, view = this)
-        viewActions = paymentPresenter?.let { PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this, it) }
+        presenter?.getPaymentProvider()
         if (!isInEditMode) {
             this.setOnClickListener {
                 changeCard()
             }
         }
-        paymentPresenter?.setSavedCardDetails()
+    }
+
+    override fun bindDropInView() {
+        dropInActions = PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this)
+        presenter?.setSavedCardDetails()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -84,11 +88,11 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
-        paymentPresenter?.getPaymentNonce(price)
+        dropInActions?.initialisePaymentFlow(price)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        paymentPresenter?.initialiseGuestPayment(price)
+        dropInActions?.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -113,7 +117,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        paymentPresenter?.handleActivityResult(requestCode, resultCode, data)
+        dropInActions?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showError(error: Int) {
@@ -144,7 +148,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
         paymentActions?.showPaymentUI()
-        viewActions?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
+        dropInActions?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
         paymentData, price = price)
     }
 
@@ -153,12 +157,16 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentFailureDialog()
     }
 
+    override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
+        presenter?.setSavedCardDetails()
+    }
+
     override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
         paymentActions?.handlePaymentDetailsUpdate(sdkNonce)
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
-        paymentPresenter?.sdkInit(price)
+        dropInActions?.initialiseChangeCard(price)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {
@@ -166,6 +174,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
-        viewActions?.handleThreeDSecure(context, sdkToken, nonce, amount)
+        dropInActions?.handleThreeDSecure(context, sdkToken, nonce, amount)
     }
 }

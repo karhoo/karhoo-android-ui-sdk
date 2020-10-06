@@ -11,9 +11,15 @@ interface BookingPaymentMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
+        fun bindDropInView()
+
         fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
+        fun showError(@StringRes error: Int)
+
+        /*fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)*/
+
+        /*fun handlePaymentDetailsUpdate(sdkNonce: String?)
 
         fun initialiseChangeCard(price: QuotePrice?)
 
@@ -33,7 +39,14 @@ interface BookingPaymentMVP {
 
         fun threeDSecureNonce(threeDSNonce: String)
 
-        fun refresh()
+        fun refresh()*/
+    }
+
+    interface Presenter {
+
+        fun getPaymentProvider()
+
+        fun setSavedCardDetails()
     }
 
     interface CardActions {
