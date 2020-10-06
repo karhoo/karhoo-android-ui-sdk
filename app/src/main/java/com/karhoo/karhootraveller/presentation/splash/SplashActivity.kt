@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.transition.Explode
-import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.annotation.StringRes
@@ -241,5 +240,4 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
         private const val DESTINATION_DISPLAY_ADDRESS = "destination_display_address"
     }
 }
-
 

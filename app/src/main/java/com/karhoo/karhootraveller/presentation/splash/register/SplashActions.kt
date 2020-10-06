@@ -3,6 +3,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 import android.content.Intent
 import android.location.Location
 import androidx.annotation.StringRes
+import com.karhoo.karhootraveller.presentation.splash.SplashActivity
 
 interface SplashActions {
 
