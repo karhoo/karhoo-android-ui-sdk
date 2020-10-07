@@ -124,7 +124,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    fun setNonce(braintreeSDKNonce: String) {
+    private fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
         val addPaymentRequest = AddPaymentRequest(payer = Payer(id = user.userId,
                                                                 email = user.email,
@@ -136,10 +136,11 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
+                    //TODO Check if this is already handled by the onSavedPayment method
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
                 }
-                is Resource.Failure -> view?.showError(R.string.booking_error)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
     }

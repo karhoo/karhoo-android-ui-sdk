@@ -2,11 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.os.LocaleList
 import androidx.appcompat.app.AppCompatActivity
-import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -31,7 +27,6 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
 import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
@@ -39,7 +34,6 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.Locale
 
 @RunWith(MockitoJUnitRunner::class)
 class AdyenPaymentPresenterTest {

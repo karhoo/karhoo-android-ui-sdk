@@ -5,7 +5,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.CHANNEL
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.capture
