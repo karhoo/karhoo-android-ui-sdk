@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.QuotePrice
 
 interface BookingPaymentMVP {
@@ -16,9 +17,13 @@ interface BookingPaymentMVP {
         fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun showError(@StringRes error: Int)
+
+        fun setPaymentView(view: PaymentDropInMVP.View?)
     }
 
     interface Presenter {
+
+        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions)
 
         fun getPaymentProvider()
 

@@ -33,8 +33,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     var paymentActions: BookingPaymentMVP.PaymentActions? = null
     var cardActions: BookingPaymentMVP.CardActions? = null
-    private var dropInActions: PaymentDropInMVP.View? = null
-    private var viewActions: PaymentDropInMVP.View? = null
+    private var dropInView: PaymentDropInMVP.View? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_payment, this)
@@ -48,8 +47,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindDropInView() {
-        dropInActions = PaymentFactory.createPaymentView(KarhooApi.userStore.paymentProvider, this)
+        presenter?.createPaymentView(KarhooApi.userStore.paymentProvider, this)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
+    }
+
+    override fun setPaymentView(view: PaymentDropInMVP.View?) {
+        dropInView = view
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -88,11 +91,11 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialisePaymentFlow(price: QuotePrice?) {
-        dropInActions?.initialisePaymentFlow(price)
+        dropInView?.initialisePaymentFlow(price)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        dropInActions?.initialiseGuestPayment(price)
+        dropInView?.initialiseGuestPayment(price)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -117,7 +120,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        dropInActions?.onActivityResult(requestCode, resultCode, data)
+        dropInView?.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showError(error: Int) {
@@ -149,7 +152,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
         paymentActions?.showPaymentUI()
-        dropInActions?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
+        dropInView?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
         paymentData, price = price)
     }
 
@@ -167,7 +170,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {
-        dropInActions?.initialiseChangeCard(price)
+        dropInView?.initialiseChangeCard(price)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {
@@ -175,6 +178,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
-        dropInActions?.handleThreeDSecure(context, sdkToken, nonce, amount)
+        dropInView?.handleThreeDSecure(context, sdkToken, nonce, amount)
     }
 }
