@@ -32,7 +32,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
-    private var braintreeSDKToken: String = ""
+    private var braintreeSDKToken: String? = null
     private var nonce: String? = null
 
     init {
@@ -62,8 +62,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                        )
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
-                is Resource.Success -> passBackThreeDSecureNonce(result.data
-                                                                         .nonce, amount)
+                is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
                 is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
         }
@@ -116,7 +115,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce.orEmpty(), quotePriceToAmount(price))
+        view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce.orEmpty(), quotePriceToAmount(price))
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
@@ -147,9 +146,9 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
         if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
-            view?.threeDSecureNonce(braintreeSDKToken)
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
         } else {
-            view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce, amount)
         }
     }
 

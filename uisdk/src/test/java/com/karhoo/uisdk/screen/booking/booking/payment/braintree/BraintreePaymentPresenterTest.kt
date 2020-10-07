@@ -23,6 +23,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentPresenterTest
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -91,6 +92,20 @@ class BraintreePaymentPresenterTest {
     @After
     fun tearDown() {
         setAuthenticatedUser()
+    }
+
+    /**
+     * Given:   Guest payment is initialisee
+     * Then:    Then the nonce is returned
+     */
+    @Test
+    fun `nonce returned when guest payment is initialised`() {
+        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
+        whenever(price.highPrice).thenReturn(100)
+
+        braintreePaymentPresenter.initialiseGuestPayment(price)
+
+        verify(paymentView).threeDSecureNonce("", "", "1.00")
     }
 
     /**
@@ -486,6 +501,15 @@ class BraintreePaymentPresenterTest {
         verify(paymentsService).addPaymentMethod(any())
         verify(paymentView).updatePaymentDetails(savedPaymentInfo)
         verify(paymentView).handlePaymentDetailsUpdate()
+    }
+
+    private fun setGuestUser(handleBraintree: Boolean = false) {
+        KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                        context = context,
+                        authenticationMethod = AuthenticationMethod.Guest("identifier",
+                                                                          "referer", "guestOrganisationId"),
+                        handleBraintree = handleBraintree))
     }
 
     private fun setAuthenticatedUser() {
