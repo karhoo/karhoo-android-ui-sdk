@@ -43,7 +43,7 @@ class AdyenPaymentPresenterTest {
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
-    private var paymentView: PaymentDropInMVP.Actions = mock()
+    private var paymentDropInActions: PaymentDropInMVP.Actions = mock()
     private var price: QuotePrice = mock()
     private val publicKeyCall: Call<AdyenPublicKey> = mock()
     private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
@@ -68,7 +68,7 @@ class AdyenPaymentPresenterTest {
         adyenPaymentPresenter = AdyenPaymentPresenter(
                 paymentsService = paymentsService,
                 userStore = userStore,
-                view = paymentView)
+                view = paymentDropInActions)
     }
 
     /**
@@ -85,7 +85,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService, never()).getAdyenPaymentMethods(any())
         verify(paymentsService).getAdyenPublicKey()
-        verify(paymentView).showError(R.string.something_went_wrong)
+        verify(paymentDropInActions).showError(R.string.something_went_wrong)
     }
 
     /**
@@ -104,7 +104,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentView).showError(R.string.something_went_wrong)
+        verify(paymentDropInActions).showError(R.string.something_went_wrong)
     }
 
     /**
@@ -124,7 +124,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentView).showPaymentUI(adyenPublicKey.publicKey, paymentData, price)
+        verify(paymentDropInActions).showPaymentUI(adyenPublicKey.publicKey, paymentData, price)
     }
 
     /**
@@ -137,7 +137,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.getPaymentNonce(price)
 
-        verify(paymentView).showError(R.string.payment_issue_message)
+        verify(paymentDropInActions).showError(R.string.payment_issue_message)
     }
 
     /**
@@ -156,7 +156,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.getPaymentNonce(price)
 
-        verify(paymentView).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
+        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
     }
 
     /**
@@ -171,7 +171,7 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_CANCELED,
                 data = null)
 
-        verify(paymentView).showPaymentFailureDialog()
+        verify(paymentDropInActions).showPaymentFailureDialog()
     }
 
     /**
@@ -187,7 +187,7 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = null)
 
-        verify(paymentView).showPaymentFailureDialog()
+        verify(paymentDropInActions).showPaymentFailureDialog()
     }
 
     /**
@@ -204,7 +204,7 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(paymentView).showPaymentFailureDialog()
+        verify(paymentDropInActions).showPaymentFailureDialog()
     }
 
     /**
@@ -271,8 +271,8 @@ class AdyenPaymentPresenterTest {
     fun `payment details updated when saved payment info changes`() {
         adyenPaymentPresenter.onSavedPaymentInfoChanged(userPaymentInfo = savedPaymentInfo)
 
-        verify(paymentView).updatePaymentDetails(savedPaymentInfo)
-        verify(paymentView).handlePaymentDetailsUpdate()
+        verify(paymentDropInActions).updatePaymentDetails(savedPaymentInfo)
+        verify(paymentDropInActions).handlePaymentDetailsUpdate()
     }
 
     /**
@@ -289,7 +289,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.initialiseGuestPayment(price)
 
-        verify(paymentView).threeDSecureNonce(TRANSACTION_ID)
+        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID)
     }
 
     /**
@@ -306,7 +306,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.initialiseGuestPayment(price)
 
-        verify(paymentView).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
+        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
     }
 
     private fun setConfig(handleBraintree: Boolean = false) {
