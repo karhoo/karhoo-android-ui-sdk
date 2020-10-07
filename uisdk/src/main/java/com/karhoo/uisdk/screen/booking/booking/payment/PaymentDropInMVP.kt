@@ -33,8 +33,6 @@ interface PaymentDropInMVP {
 
         fun sdkInit(price: QuotePrice?)
 
-        fun updateCardDetails(nonce: String, description: String? = "", typeLabel: String? = "", paymentData: String? = "")
-
         fun getDropInConfig(context: Context, sdkToken: String): Any
     }
 

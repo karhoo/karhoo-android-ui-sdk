@@ -38,7 +38,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     var price: QuotePrice? = null
 
     private var sdkToken: String = ""
-    private var nonce: String? = ""
+    private var nonce: String? = null
 
     init {
         attachView(view)
@@ -104,9 +104,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 AdyenPaymentView.AUTHORISED -> {
                     val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
                     this.sdkToken = transactionId
-                    updateCardDetails(nonce = transactionId,
-                                      paymentData = payload.optString
-                                      (AdyenPaymentView.ADDITIONAL_DATA, null))
+                    this.nonce = transactionId
+                    updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
                 }
                 //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
@@ -153,8 +152,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         }
     }
 
-    override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
-                                   paymentData: String?) {
+    private fun updateCardDetails(paymentData: String?) {
         this.nonce = nonce
         paymentData?.let {
             val additionalData = JSONObject(paymentData)

@@ -33,7 +33,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
-    private var nonce: String = ""
+    private var nonce: String? = null
 
     init {
         attachView(view)
@@ -89,7 +89,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                 BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        updateCardDetails(nonce = it.nonce, cardNumber = it.description,
+                        this.nonce = it.nonce
+                        updateCardDetails(cardNumber = it.description,
                                           cardTypeLabel = it.typeLabel)
                     }
                 }
@@ -104,8 +105,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
-                    updateCardDetails("", it.lastFour, it.cardType.toString().toLowerCase()
-                            .capitalize())
+                    updateCardDetails(it.lastFour, it.cardType.toString().toLowerCase().capitalize())
                 }
             } else {
                 setNonce(braintreeSDKToken)
@@ -116,7 +116,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+        view?.threeDSecureNonce(braintreeSDKToken, nonce.orEmpty(), quotePriceToAmount(price))
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
@@ -168,9 +168,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         }
     }
 
-    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
-                                   paymentData: String?) {
-        this.nonce = nonce
+    fun updateCardDetails(cardNumber: String?, cardTypeLabel: String?) {
         if (cardNumber != null && cardTypeLabel != null) {
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
             userStore.savedPaymentInfo = userInfo
