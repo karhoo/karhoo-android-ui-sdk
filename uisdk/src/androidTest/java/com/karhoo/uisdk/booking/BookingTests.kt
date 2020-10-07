@@ -32,6 +32,7 @@ import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
@@ -137,7 +138,7 @@ class BookingTests : Launch {
             quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            waitFor(MEDIUM)
             try {
                 //Send app to background
                 pressDeviceBackButton()
@@ -145,7 +146,7 @@ class BookingTests : Launch {
             }
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -478,7 +479,7 @@ class BookingTests : Launch {
             prebookLogoNotVisible()
         }
         booking {
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
             clickPickUpAddressField()
         }
         address {
@@ -486,7 +487,7 @@ class BookingTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
             prebookLogoNotVisible()
@@ -509,9 +510,9 @@ class BookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
             pressFirstQuote()
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
         } result {
             bookARideScreenIsVisible()
         }
@@ -593,12 +594,11 @@ class BookingTests : Launch {
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
             pressFirstQuote()
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
             pressBookRideButton()
-            sleep(LONG)
-            sleep()
+            waitFor(LONG)
         } result {
             checkDriverDetails()
         }

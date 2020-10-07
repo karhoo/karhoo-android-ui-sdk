@@ -14,8 +14,9 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
@@ -118,11 +119,11 @@ class TripFlowTests : Launch {
                 details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            sleep()
+            waitFor(MEDIUM)
             clickBackToolbarButton()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             checkBookingScreenIsShown()
         }
@@ -142,7 +143,7 @@ class TripFlowTests : Launch {
                 details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            sleep(LONG)
+            waitFor(MEDIUM)
         }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_COMPLETED,
@@ -151,10 +152,10 @@ class TripFlowTests : Launch {
                 reverseGeo = Any()
                                )
         trip {
-            sleep(LONG)
+            waitFor(MEDIUM)
         }
         rideDetail {
-            sleep(LONG)
+            waitFor(MEDIUM)
         } result {
             completedRideFullCheckFromTrip()
         }

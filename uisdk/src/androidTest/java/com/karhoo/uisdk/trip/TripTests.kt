@@ -23,6 +23,7 @@ import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_ARRIVED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_FLEET
@@ -378,11 +379,11 @@ class TripTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         trip(this) {
-            sleep()
+            waitFor(SHORT)
             clickAlternativeButton()
         }
         booking {
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
         } result {
             fullASAPQuotesListCheck()
         }
