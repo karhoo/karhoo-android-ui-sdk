@@ -14,11 +14,7 @@ interface BookingPaymentMVP {
 
         fun bindDropInView()
 
-        fun initialiseChangeCard(price: QuotePrice?)
-
-        fun initialiseGuestPayment(price: QuotePrice?)
-
-        fun initialisePaymentFlow(price: QuotePrice?)
+        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun showError(@StringRes error: Int)
 
