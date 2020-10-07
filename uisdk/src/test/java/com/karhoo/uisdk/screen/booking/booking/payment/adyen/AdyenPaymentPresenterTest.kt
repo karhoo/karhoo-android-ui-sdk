@@ -2,7 +2,11 @@ package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.LocaleList
 import androidx.appcompat.app.AppCompatActivity
+import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -27,6 +31,7 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +39,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.Locale
 
 @RunWith(MockitoJUnitRunner::class)
 class AdyenPaymentPresenterTest {
@@ -57,7 +63,6 @@ class AdyenPaymentPresenterTest {
 
     @Before
     fun setUp() {
-
         whenever(paymentsService.getAdyenPublicKey())
                 .thenReturn(publicKeyCall)
         doNothing().whenever(publicKeyCall).execute(publicKeyCaptor.capture())
@@ -212,6 +217,34 @@ class AdyenPaymentPresenterTest {
      * Given:   An activity result is handled
      * When:    The result is RESULT_OK
      * And:     The result code is AUTHORISED
+     * And:     The card type is unknown
+     * Then:    Then the card details are updated with card type of NOT_SET
+     */
+    @Test
+    fun `card details updated as not set for unrecognised card type`() {
+        val additionalData = JSONObject()
+                .put(CARD_SUMMARY, "1234")
+                .put(PAYMENT_METHOD, "")
+        val response = JSONObject()
+                .put(RESULT_CODE, AUTHORISED)
+                .put(MERCHANT_REFERENCE, TRANSACTION_ID)
+                .put(ADDITIONAL_DATA, additionalData)
+
+        whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
+        adyenPaymentPresenter.handleActivityResult(
+                requestCode = REQUEST_CODE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        assertEquals("1234", paymentInfoCaptor.value.lastFour)
+        assertEquals(CardType.NOT_SET, paymentInfoCaptor.value.cardType)
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     The result code is AUTHORISED
      * Then:    Then the card details are updated
      * And:     The transaction id is set as the nonce
      */
@@ -231,7 +264,7 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(userStore).savedPaymentInfo =  capture(paymentInfoCaptor)
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         assertEquals("1234", paymentInfoCaptor.value.lastFour)
         assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
     }
