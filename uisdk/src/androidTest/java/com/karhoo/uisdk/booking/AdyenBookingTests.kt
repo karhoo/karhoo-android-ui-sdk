@@ -7,23 +7,23 @@ import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.ADYEN_PUBLIC_KEY
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
-import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -91,8 +91,7 @@ class AdyenBookingTests : Launch {
             pressFirstQuote()
             sleep(MEDIUM)
             pressBookRideButton()
-            waitForTime(5000)
-            sleep()
+            sleep(LONG)
         } result {
             checkDriverDetails()
         }

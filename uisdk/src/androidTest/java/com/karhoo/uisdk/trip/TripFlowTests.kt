@@ -8,20 +8,22 @@ import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_COMPLETED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_CANCELLED_BY_USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_COMPLETED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_COMPLETED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Rule
@@ -112,21 +114,21 @@ class TripFlowTests : Launch {
     @AllowFlaky(attempts = 5)
     fun checkPOBDriverDetailsElements() {
         mockTripSuccessResponse(
-                status = ServerRobot.TRIP_STATUS_POB,
+                status = TRIP_STATUS_POB,
                 tracking = DRIVER_TRACKING,
-                details = ServerRobot.TRIP_POB,
+                details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            sleep()
+            waitFor(MEDIUM)
             clickBackToolbarButton()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             checkBookingScreenIsShown()
         }
     }
-    
+
     /**
      * Given:   I have a trip in progress
      * When:    The trip completes
@@ -136,12 +138,12 @@ class TripFlowTests : Launch {
     @Test
     fun userIsTakenToCompletedRideScreen() {
         mockTripSuccessResponse(
-                status = ServerRobot.TRIP_STATUS_POB,
+                status = TRIP_STATUS_POB,
                 tracking = DRIVER_TRACKING,
-                details = ServerRobot.TRIP_POB,
+                details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            sleep(LONG)
+            waitFor(MEDIUM)
         }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_COMPLETED,
@@ -150,10 +152,10 @@ class TripFlowTests : Launch {
                 reverseGeo = Any()
                                )
         trip {
-            sleep()
+            waitFor(MEDIUM)
         }
         rideDetail {
-            sleep()
+            waitFor(MEDIUM)
         } result {
             completedRideFullCheckFromTrip()
         }

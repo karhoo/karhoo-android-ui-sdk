@@ -7,9 +7,8 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.login.LoginActivity
-import com.karhoo.uisdk.common.ServerRobot.Companion.PASSWORD_RESET_SUCCESS
 import com.karhoo.uisdk.common.serverRobot
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.PASSWORD_RESET_SUCCESS
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -194,7 +193,7 @@ class LoginTests : Launch {
             userClicksOnForgottenPassword()
             fillValidEmailLogin()
             pressOkButton()
-            sleep(LONG)
+            sleep()
             pressGotItSnackbarButton()
             sleep()
         } result {

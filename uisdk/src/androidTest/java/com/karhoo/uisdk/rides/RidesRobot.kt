@@ -5,10 +5,10 @@ import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
-import com.karhoo.uisdk.util.TestData.Companion.CAR_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.PREBOOK_TIME_DATE
 import com.karhoo.uisdk.util.TestData.Companion.PRICE_TOTAL
-import com.karhoo.uisdk.util.TestData.Companion.ZOO_TEST_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.TEST_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLE_DETAILS
 
 fun rides(func: RidesRobot.() -> Unit) = RidesRobot().apply { func() }
 
@@ -75,7 +75,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun pastBookingHasExpectedPrice(expectedText: Int) {
-    textIsVisibleIsDescendant(expectedText, R.id.priceText)
+        textIsVisibleIsDescendant(expectedText, R.id.priceText)
     }
 
     fun upcomingBookingHasExpectedStatus(expectedText: String) {
@@ -95,7 +95,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun prebookedTripUpcomingRidesFullCheck() {
-        fleetNameIsVisible(ZOO_TEST_FLEET)
+        fleetNameIsVisible(TEST_FLEET)
         fleetLogoIsVisible()
         timeAndDateFieldIsDisplayed()
         timeAndDateOfBookingIsVisible(PREBOOK_TIME_DATE)
@@ -107,7 +107,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun DERTripUpcomingRidesFullCheck() {
-        fleetNameIsVisible(ZOO_TEST_FLEET)
+        fleetNameIsVisible(TEST_FLEET)
         fleetLogoIsVisible()
         timeAndDateFieldIsDisplayed()
         pickUpIconIsVisible()
@@ -115,7 +115,7 @@ class ResultRobot : BaseTestRobot() {
         pickUpAddressIsVisible(ADDRESS_ORIGIN)
         dropOffAddressIsVisible(ADDRESS_DESTINATION)
         callFleetButtonIsEnabled()
-        carDetailsAreVisible(CAR_DETAILS)
+        carDetailsAreVisible(VEHICLE_DETAILS)
         trackDriverButtonIsEnabled()
     }
 
@@ -164,14 +164,14 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun completedTripPastRidesScreenFullCheck() {
-        fleetNameIsVisible(ZOO_TEST_FLEET)
+        fleetNameIsVisible(TEST_FLEET)
         fleetLogoIsVisible()
         timeAndDateFieldIsDisplayed()
         pickUpIconIsVisible()
         pickUpAddressIsVisible(ADDRESS_ORIGIN)
         dropOffAddressIsVisible(ADDRESS_DESTINATION)
         dropOffIconIsVisible()
-        carDetailsAreVisible(CAR_DETAILS)
+        carDetailsAreVisible(VEHICLE_DETAILS)
         pastBookingHasExpectedStatus(R.string.completed)
         priceIsVisible(PRICE_TOTAL)
     }
@@ -181,7 +181,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun cancelledByFleetPrebookedFullCheck() {
-        fleetNameIsVisible(ZOO_TEST_FLEET)
+        fleetNameIsVisible(TEST_FLEET)
         fleetLogoIsVisible()
         timeAndDateFieldIsDisplayed()
         pickUpIconIsVisible()

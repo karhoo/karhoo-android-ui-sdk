@@ -13,29 +13,33 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_ARRIVED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_CANCELLED_BY_FLEET
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_NUMBER_PLATE_AND_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_POB
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_ARRIVED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_CANCELLED_BY_FLEET
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_CANCELLED_BY_USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_POB
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_NUMBER_PLATE_AND_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -369,17 +373,17 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_CANCELLED_BY_FLEET)
         serverRobot {
-            sdkInitResponse(HTTP_OK, ServerRobot.BRAINTREE_TOKEN)
-            reverseGeocodeResponse(HTTP_OK, ServerRobot.REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, ServerRobot.QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, ServerRobot.VEHICLES_ASAP)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         trip(this) {
-            sleep()
+            waitFor(SHORT)
             clickAlternativeButton()
         }
         booking {
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
         } result {
             fullASAPQuotesListCheck()
         }
