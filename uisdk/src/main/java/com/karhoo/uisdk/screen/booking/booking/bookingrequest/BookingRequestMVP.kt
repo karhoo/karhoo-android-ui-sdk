@@ -59,8 +59,8 @@ interface BookingRequestMVP {
 
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
-        fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?)
-        
+        fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
+
         fun hideLoading()
 
     }
@@ -87,8 +87,6 @@ interface BookingRequestMVP {
         fun showBookingRequest(quote: Quote, outboundTripId: String? = null)
 
         fun resetBooking()
-
-        fun updateCardDetails(sdkNonce: String?)
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 

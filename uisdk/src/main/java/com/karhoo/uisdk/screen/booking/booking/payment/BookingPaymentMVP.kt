@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.QuotePrice
 
 interface BookingPaymentMVP {
@@ -11,29 +12,22 @@ interface BookingPaymentMVP {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
+        fun bindDropInView()
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
-
-        fun initialiseChangeCard(price: QuotePrice?)
-
-        fun initialiseGuestPayment(price: QuotePrice?)
-
-        fun initialisePaymentFlow(price: QuotePrice?)
+        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun showError(@StringRes error: Int)
 
-        fun showPaymentDialog(braintreeSDKToken: String)
+        fun setPaymentView(view: PaymentDropInMVP.View?)
+    }
 
-        fun showPaymentFailureDialog()
+    interface Presenter {
 
-        fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
+        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions)
 
-        fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
+        fun getPaymentProvider()
 
-        fun threeDSecureNonce(threeDSNonce: String)
-
-        fun refresh()
+        fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
     }
 
     interface CardActions {
@@ -51,7 +45,7 @@ interface BookingPaymentMVP {
 
         fun showPaymentFailureDialog()
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
+        fun handlePaymentDetailsUpdate()
 
         fun showPaymentDialog()
 

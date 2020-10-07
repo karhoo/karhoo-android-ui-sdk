@@ -19,6 +19,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -43,7 +44,7 @@ class BraintreePaymentPresenterTest {
     private var context: Context = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var paymentView: BookingPaymentMVP.View = mock()
+    private var paymentView: PaymentDropInMVP.Actions = mock()
     private var price: QuotePrice = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -51,6 +52,7 @@ class BraintreePaymentPresenterTest {
     private val passBraintreeTokenCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
     private val getNonceCall: Call<PaymentsNonce> = mock()
     private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
+
     @Captor
     private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
 
@@ -91,9 +93,11 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `change card pressed for guest and correct organisation id is used`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = false))
+        KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                        context = context,
+                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"),
+                        handleBraintree = false))
 
         braintreePaymentPresenter.sdkInit(price)
 
@@ -128,9 +132,11 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `change card pressed and result is successful for test`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
+        KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                        context = context,
+                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"),
+                        handleBraintree = true))
         whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
         braintreePaymentPresenter.sdkInit(price)
 
@@ -158,7 +164,6 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
         verify(paymentView, never()).showPaymentUI(BRAINTREE_SDK_TOKEN, null, price)
-        verify(paymentView).handlePaymentDetailsUpdate(BRAINTREE_SDK_TOKEN)
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
@@ -203,7 +208,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and bind card details should be called`() {
-        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
 
@@ -217,7 +222,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `pass braintree token to BE and an error occurs`() {
-        braintreePaymentPresenter.passBackNonce(BRAINTREE_SDK_TOKEN)
+        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
 
         passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -234,7 +239,8 @@ class BraintreePaymentPresenterTest {
         val savedPaymentInfo = SavedPaymentInfo("", CardType.NOT_SET)
 
         braintreePaymentPresenter.onSavedPaymentInfoChanged(savedPaymentInfo)
-        verify(paymentView).bindPaymentDetails(SavedPaymentInfo("", CardType.NOT_SET), null)
+        verify(paymentView).updatePaymentDetails(SavedPaymentInfo("", CardType.NOT_SET))
+        verify(paymentView).handlePaymentDetailsUpdate()
     }
 
     /**
@@ -245,7 +251,7 @@ class BraintreePaymentPresenterTest {
     fun `card info stored and correct updates made to view if there is payment nonce info`() {
         val desc = "ending in 00"
 
-        braintreePaymentPresenter.updateCardDetails(paymentsNonce.nonce, desc, "Visa")
+        braintreePaymentPresenter.updateCardDetails(desc, "Visa")
 
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         verify(paymentView).refresh()
@@ -357,7 +363,7 @@ class BraintreePaymentPresenterTest {
                 nonce = "1234557683749328",
                 cardType = CardType.VISA,
                 lastFour = "2345"
-                                         )
+                                                 )
 
         private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
 
@@ -366,12 +372,12 @@ class BraintreePaymentPresenterTest {
         private const val EXPECTED_AMOUNT_AS_STRING = "1500"
 
         private val userDetails: UserInfo = UserInfo(firstName = "David",
-                                             lastName = "Smith",
-                                             email = "david.smith@email.com",
-                                             phoneNumber = "+441234 56789",
-                                             userId = "123",
-                                             locale = "en-GB",
-                                             organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
+                                                     lastName = "Smith",
+                                                     email = "david.smith@email.com",
+                                                     phoneNumber = "+441234 56789",
+                                                     userId = "123",
+                                                     locale = "en-GB",
+                                                     organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
 
     }
 

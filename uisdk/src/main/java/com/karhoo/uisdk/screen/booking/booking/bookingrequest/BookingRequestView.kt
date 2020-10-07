@@ -373,8 +373,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.showLoading()
     }
 
-    override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo, quotePrice)
+    override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
+        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String) {
@@ -390,8 +390,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
     }
 
-    override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
-        presenter.updateCardDetails(sdkNonce)
+    override fun handlePaymentDetailsUpdate() {
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 

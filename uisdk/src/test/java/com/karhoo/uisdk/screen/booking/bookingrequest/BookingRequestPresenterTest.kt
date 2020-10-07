@@ -224,7 +224,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.showBookingRequest(quote)
 
-        verify(view).showUpdatedPaymentDetails(savedPaymentInfo, quotePrice)
+        verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
         verify(view).animateIn()
@@ -321,39 +321,6 @@ class BookingRequestPresenterTest {
     }
 
     /**
-     * Given:   A user adds a payment card
-     * When:    The Braintree result does not have payment nonce details
-     * Then:    The view is not updated
-     */
-    @Test
-    fun `no updates made to view if there is no payment nonce info`() {
-        requestPresenter.updateCardDetails(null)
-
-        verify(userStore, never()).savedPaymentInfo
-        verify(view, never()).showUpdatedPaymentDetails(any(), any())
-        verify(view).disableBooking()
-    }
-
-    /**
-     * Given:   A user adds a payment card
-     * When:    The Braintree result has payment nonce details
-     * Then:    The card info is stored and the view is not updated
-     */
-    @Test
-    fun `card info stored and correct updates made to view if there is payment nonce info`() {
-        val desc = "ending in 00"
-
-        whenever(braintreePaymentNonce.nonce).thenReturn(PAYMENTS_NONCE)
-        whenever(braintreePaymentNonce.description).thenReturn(desc)
-        whenever(braintreePaymentNonce.typeLabel).thenReturn(CardType.VISA.toString())
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
-
-        verify(view).enableBooking()
-    }
-
-    /**
      * Given:   A user tries to make a booking
      * When:    And the origin is an airport
      * And:     There are flight details
@@ -374,7 +341,7 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -439,7 +406,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -466,7 +433,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, outboundTripId = "tripId")
 
         requestPresenter.makeBooking()

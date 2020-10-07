@@ -21,20 +21,19 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import java.util.Currency
 
-class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
+class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String = ""
-    private var nonce: String = ""
+    private var nonce: String? = null
 
     init {
         attachView(view)
@@ -85,15 +84,15 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
             when (requestCode) {
                 BraintreePaymentView.REQ_CODE_BRAINTREE -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
+                    setNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
                     val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
-                        updateCardDetails(nonce = it.nonce, cardNumber = it.description,
+                        this.nonce = it.nonce
+                        updateCardDetails(cardNumber = it.description,
                                           cardTypeLabel = it.typeLabel)
                     }
-                    view?.handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }
             }
         } else if (requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE || requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST) {
@@ -106,12 +105,10 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
         if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
-                    updateCardDetails("", it.lastFour, it.cardType.toString().toLowerCase()
-                            .capitalize())
+                    updateCardDetails(it.lastFour, it.cardType.toString().toLowerCase().capitalize())
                 }
-                view?.handlePaymentDetailsUpdate(braintreeSDKToken)
             } else {
-                passBackNonce(braintreeSDKToken)
+                setNonce(braintreeSDKToken)
             }
         } else {
             view?.showPaymentUI(braintreeSDKToken)
@@ -119,14 +116,15 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce, quotePriceToAmount(price))
+        view?.threeDSecureNonce(braintreeSDKToken, nonce.orEmpty(), quotePriceToAmount(price))
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.updatePaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.handlePaymentDetailsUpdate()
     }
 
-    override fun passBackNonce(braintreeSDKNonce: String) {
+    fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
         val addPaymentRequest = AddPaymentRequest(payer = Payer(id = user.userId,
                                                                 email = user.email,
@@ -137,7 +135,10 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
 
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
-                is Resource.Success -> view?.bindPaymentDetails(userStore.savedPaymentInfo)
+                is Resource.Success -> {
+                    view?.updatePaymentDetails(userStore.savedPaymentInfo)
+                    view?.handlePaymentDetailsUpdate()
+                }
                 is Resource.Failure -> view?.showError(R.string.booking_error)
             }
         }
@@ -167,16 +168,10 @@ class BraintreePaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
-    }
-
-    override fun updateCardDetails(nonce: String, cardNumber: String?, cardTypeLabel: String?,
-                                   paymentData: String?) {
-        this.nonce = nonce
+    fun updateCardDetails(cardNumber: String?, cardTypeLabel: String?) {
         if (cardNumber != null && cardTypeLabel != null) {
-            userStore.savedPaymentInfo = SavedPaymentInfo(cardNumber, CardType.fromString
-            (cardTypeLabel))
+            val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
+            userStore.savedPaymentInfo = userInfo
         }
         view?.refresh()
     }
