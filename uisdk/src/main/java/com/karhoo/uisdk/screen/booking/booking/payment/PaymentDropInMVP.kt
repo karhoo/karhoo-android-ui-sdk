@@ -40,9 +40,9 @@ interface PaymentDropInMVP {
 
     interface Actions {
 
-        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
+        fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
+        fun handlePaymentDetailsUpdate()
 
         fun initialiseChangeCard(price: QuotePrice?)
 

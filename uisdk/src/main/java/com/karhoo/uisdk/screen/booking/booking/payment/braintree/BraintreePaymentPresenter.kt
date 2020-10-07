@@ -120,8 +120,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
-        view?.handlePaymentDetailsUpdate(nonce)
+        view?.updatePaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.handlePaymentDetailsUpdate()
     }
 
     fun setNonce(braintreeSDKNonce: String) {
@@ -136,8 +136,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    view?.bindPaymentDetails(userStore.savedPaymentInfo)
-                    view?.handlePaymentDetailsUpdate(nonce)
+                    view?.updatePaymentDetails(userStore.savedPaymentInfo)
+                    view?.handlePaymentDetailsUpdate()
                 }
                 is Resource.Failure -> view?.showError(R.string.booking_error)
             }
@@ -174,8 +174,6 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         if (cardNumber != null && cardTypeLabel != null) {
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
             userStore.savedPaymentInfo = userInfo
-            view?.bindPaymentDetails(userInfo)
-            view?.handlePaymentDetailsUpdate(nonce)
         }
         view?.refresh()
     }

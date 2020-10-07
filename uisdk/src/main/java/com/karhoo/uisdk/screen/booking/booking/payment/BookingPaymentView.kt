@@ -128,7 +128,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentDialog()
     }
 
-    override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
+    override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         savedPaymentInfo?.let {
             apply {
                 bindViews(it.cardType, it.lastFour)
@@ -144,6 +144,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
             paymentLayout.background = ContextCompat.getDrawable(context, addPaymentBackground)
         }
+        paymentActions?.handlePaymentDetailsUpdate()
     }
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
@@ -157,12 +158,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentFailureDialog()
     }
 
-    override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bindPaymentDetails(savedPaymentInfo, null)
+    override fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
+        bindPaymentDetails(savedPaymentInfo)
     }
 
-    override fun handlePaymentDetailsUpdate(sdkNonce: String?) {
-        paymentActions?.handlePaymentDetailsUpdate(sdkNonce)
+    override fun handlePaymentDetailsUpdate() {
+        paymentActions?.handlePaymentDetailsUpdate()
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {

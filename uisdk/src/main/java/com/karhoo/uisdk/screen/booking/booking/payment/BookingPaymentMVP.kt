@@ -13,7 +13,7 @@ interface BookingPaymentMVP {
 
         fun bindDropInView()
 
-        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice? = null)
+        fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun showError(@StringRes error: Int)
     }
@@ -40,7 +40,7 @@ interface BookingPaymentMVP {
 
         fun showPaymentFailureDialog()
 
-        fun handlePaymentDetailsUpdate(sdkNonce: String?)
+        fun handlePaymentDetailsUpdate()
 
         fun showPaymentDialog()
 

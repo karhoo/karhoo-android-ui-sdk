@@ -42,6 +42,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
     init {
         attachView(view)
+        userStore.addSavedPaymentObserver(this)
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
@@ -102,10 +103,10 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
             when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
                     val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
+                    this.sdkToken = transactionId
                     updateCardDetails(nonce = transactionId,
                                       paymentData = payload.optString
                                       (AdyenPaymentView.ADDITIONAL_DATA, null))
-                    this.sdkToken = transactionId
                 }
                 //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
@@ -120,8 +121,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
-        view?.handlePaymentDetailsUpdate(nonce)
+        view?.updatePaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.handlePaymentDetailsUpdate()
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
@@ -162,8 +163,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
             val savedPaymentInfo = CardType.fromString(type)?.let {
                 SavedPaymentInfo(newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
-            view?.bindPaymentDetails(savedPaymentInfo)
-            view?.handlePaymentDetailsUpdate(nonce)
+            userStore.savedPaymentInfo = savedPaymentInfo
         } ?: view?.refresh()
     }
 
