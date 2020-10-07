@@ -11,25 +11,33 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
-import com.karhoo.uisdk.common.ServerRobot.Companion.REVERSE_GEO_SUCCESS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
+import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
+import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
@@ -40,6 +48,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.net.HttpURLConnection
+import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
@@ -86,7 +95,7 @@ class BookingTests : Launch {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-            reverseGeocodeResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.GENERAL_ERROR)
+            reverseGeocodeResponse(HttpURLConnection.HTTP_BAD_REQUEST, GENERAL_ERROR)
         }
         booking(this, null) {
             sleep(MEDIUM)
@@ -101,13 +110,14 @@ class BookingTests : Launch {
      * Then:    I am shown the snackbar about no coverage
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun snackbarShowsToUserWhenNoAvailability() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
-            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, ServerRobot.TIMEOUT)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.NO_AVAILABILITY)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, TIMEOUT)
+            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
             sleep()
@@ -118,16 +128,17 @@ class BookingTests : Launch {
     }
 
     @Test
+    @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.NO_AVAILABILITY)
+            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            waitFor(MEDIUM)
             try {
                 //Send app to background
                 pressDeviceBackButton()
@@ -135,7 +146,7 @@ class BookingTests : Launch {
             }
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -274,7 +285,7 @@ class BookingTests : Launch {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
@@ -297,7 +308,7 @@ class BookingTests : Launch {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
@@ -323,7 +334,7 @@ class BookingTests : Launch {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, ServerRobot.TIMEOUT)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
@@ -395,16 +406,17 @@ class BookingTests : Launch {
      * Then:    I see an error informing me that pick up and drop off cannot be identical
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun pickUpAndDropOffAddressesCannotBeTheSame() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ServerRobot.ADDRESSES_IDENTICAL)
+            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ADDRESSES_IDENTICAL)
         }
         booking(this, IDENTICAL_ADDRESSES_TRIP_INTENT) {
-            sleep()
+            sleep(MEDIUM)
         } result {
             samePickUpAndDestinationErrorIsDisplayed()
         }
@@ -433,7 +445,7 @@ class BookingTests : Launch {
             prebookLogoNotVisible()
         }
         serverRobot {
-            reverseGeocodeResponse(HTTP_OK, ServerRobot.REVERSE_GEO_SUCCESS_ALTERNATIVE)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS_ALTERNATIVE)
         }
         booking {
             clickOnLocateMeButton()
@@ -456,18 +468,18 @@ class BookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
         booking(this) {
             pressPrebookButton()
             pressOKPrebookWindow()
-            sleep()
             pressOKPrebookWindow()
         } result {
             prebookLogoNotVisible()
         }
         booking {
+            waitFor(MEDIUM)
             clickPickUpAddressField()
         }
         address {
@@ -475,7 +487,7 @@ class BookingTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
             prebookLogoNotVisible()
@@ -494,13 +506,13 @@ class BookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
             pressFirstQuote()
-            sleep(1000)
+            waitFor(MEDIUM)
         } result {
             bookARideScreenIsVisible()
         }
@@ -582,12 +594,11 @@ class BookingTests : Launch {
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            waitFor(SHORT)
             pressFirstQuote()
-            sleep(MEDIUM)
+            waitFor(MEDIUM)
             pressBookRideButton()
-            waitForTime(5000)
-            sleep()
+            waitFor(LONG)
         } result {
             checkDriverDetails()
         }

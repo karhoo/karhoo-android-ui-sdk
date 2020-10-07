@@ -15,21 +15,27 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.QUOTE_LIST_ID_ASAP
-import com.karhoo.uisdk.common.ServerRobot.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS_EXTRA
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT_EXTRA
+import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestSDKConfig
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -177,8 +183,8 @@ class GuestBookingTests : Launch {
     fun searchAddressesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
         booking(this) {
             clickPickUpAddressField()
@@ -189,8 +195,8 @@ class GuestBookingTests : Launch {
             clickBakerStreetResult()
         }
         serverRobot {
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT_EXTRA)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS_EXTRA)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
         }
         booking {
             clickDestinationAddressField()
@@ -217,8 +223,8 @@ class GuestBookingTests : Launch {
     fun searchAddressesAndGetQuotesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
         booking(this) {
             clickPickUpAddressField()
@@ -229,8 +235,8 @@ class GuestBookingTests : Launch {
             clickBakerStreetResult()
         }
         serverRobot {
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT_EXTRA)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS_EXTRA)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
         }
         booking {
             clickDestinationAddressField()
@@ -279,8 +285,8 @@ class GuestBookingTests : Launch {
     fun flowGuestCheckoutBookingToPickUpAddressToBooking() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            addressListResponse(HTTP_OK, ServerRobot.PLACE_SEARCH_RESULT)
-            addressDetails(HTTP_OK, ServerRobot.PLACE_DETAILS)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
         booking(this) {
             clickPickUpAddressField()
@@ -344,9 +350,9 @@ class GuestBookingTests : Launch {
             addCardResponse(HTTP_OK, PAYMENTS_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
             bookingWithNonceResponse(HTTP_OK, TRIP)
-            bookingStatusResponse(code = HTTP_OK, response = ServerRobot.TRIP_STATUS_DER, trip = TRIP.tripId)
-            driverTrackingResponse(code = HTTP_OK, response = ServerRobot.DRIVER_TRACKING, trip = TRIP.tripId)
-            guestBookingDetailsResponse(code = HTTP_OK, response = ServerRobot.TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
+            bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
+            driverTrackingResponse(code = HTTP_OK, response = DRIVER_TRACKING, trip = TRIP.tripId)
+            guestBookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             sleep()

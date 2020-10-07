@@ -32,6 +32,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withHint
@@ -290,6 +291,25 @@ open class BaseTestRobot {
                 Press.FINGER,
                 InputDevice.SOURCE_MOUSE,
                 MotionEvent.BUTTON_PRIMARY)
+    }
+
+    /**
+     * Perform action of waiting for a specific time.
+     */
+    open fun waitFor(millis: Long): ViewAction? {
+        return object : ViewAction {
+            override fun getConstraints(): Matcher<View> {
+                return isRoot()
+            }
+
+            override fun getDescription(): String {
+                return "Wait for $millis milliseconds."
+            }
+
+            override fun perform(uiController: UiController, view: View) {
+                uiController.loopMainThreadForAtLeast(millis)
+            }
+        }
     }
 
     fun withIndex(matcher: Matcher<View>, index: Int): Matcher<View> {

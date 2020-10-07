@@ -4,11 +4,11 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
-import com.karhoo.uisdk.common.ServerRobot.Companion.BRAINTREE_PROVIDER
-import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN_NO_CARD_REGISTERED
-import com.karhoo.uisdk.common.ServerRobot.Companion.USER_INFO
 import com.karhoo.uisdk.common.serverRobot
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN_NO_CARD_REGISTERED
+import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import java.net.HttpURLConnection.HTTP_OK
 
 fun preferences(func: PreferencesRobot.() -> Unit) = PreferencesRobot().apply { func() }

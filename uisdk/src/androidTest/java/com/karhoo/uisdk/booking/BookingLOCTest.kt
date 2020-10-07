@@ -10,7 +10,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
 import com.karhoo.uisdk.common.networkServiceRobot
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
@@ -18,7 +17,9 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -60,8 +61,8 @@ class BookingLOCTest : Launch {
     fun snackbarShowsToUserWhenWifiIsDisabledBooking() {
         serverRobot {
             successfulToken()
-            sdkInitResponse(HttpURLConnection.HTTP_OK, ServerRobot.BRAINTREE_TOKEN)
-            reverseGeocodeResponse(HttpURLConnection.HTTP_OK, ServerRobot.REVERSE_GEO_SUCCESS)
+            sdkInitResponse(HttpURLConnection.HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HttpURLConnection.HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, BookingTests.CLEAN_TRIP_INTENT) {
             networkServiceRobot {
