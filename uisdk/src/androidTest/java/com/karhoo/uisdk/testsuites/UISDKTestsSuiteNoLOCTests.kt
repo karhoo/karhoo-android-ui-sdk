@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.testsuites
 
 import com.karhoo.uisdk.address.AddressTests
+import com.karhoo.uisdk.booking.AdyenBookingTests
 import com.karhoo.uisdk.booking.BookingFlowTests
 import com.karhoo.uisdk.booking.BookingTests
 import com.karhoo.uisdk.booking.GuestBookingTests
@@ -16,6 +17,7 @@ import org.junit.runners.Suite
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
         AddressTests::class,
+        AdyenBookingTests::class,
         BookingFlowTests::class,
         BookingTests::class,
         RideDetailTests::class,

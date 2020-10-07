@@ -12,10 +12,10 @@ fun booking(func: BookingRobot.() -> Unit) = BookingRobot().apply { func() }
 
 fun booking(launch: Launch, intent: Intent? = null, func: BookingRobot.() -> Unit) = BookingRobot()
         .apply {
-    launch.launch(intent)
-    tapTurnOnGpsBtn()
-    func()
-}
+            launch.launch(intent)
+            tapTurnOnGpsBtn()
+            func()
+        }
 
 class BookingRobot : BaseTestRobot() {
 

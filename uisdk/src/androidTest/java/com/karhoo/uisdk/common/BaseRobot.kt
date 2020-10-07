@@ -87,7 +87,7 @@ open abstract class BaseTestRobot {
 
     fun fillTextIsDescendant(id: Int, text: String, resId: Int): ViewInteraction =
             onView(allOf(withId(id), isDescendantOfA(withId(resId)))).perform(typeText(text),
-    closeSoftKeyboard())
+                                                                              closeSoftKeyboard())
 
     fun clickButton(resId: Int) {
         clickOn(resId)
@@ -244,11 +244,7 @@ open abstract class BaseTestRobot {
     fun pressDeviceBackButton() {
         Espresso.pressBack()
     }
-    
-    fun waitForTime(millis: Long = 350) {
-        onView(isRoot()).perform(waitFor(millis))
-    }
-    
+
     fun checkTripStatusBarText(resId: Int, text: String): ViewInteraction =
             onView(withId(resId)).check(matches(withText(text)))
 
@@ -349,9 +345,9 @@ open abstract class BaseTestRobot {
         }
     }
 
-    /**
-     * Perform action of waiting for a specific time.
-     */
+    /*
+    * Perform action of waiting for a specific time.
+    */
     open fun waitFor(millis: Long): ViewAction? {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {

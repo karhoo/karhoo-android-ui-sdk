@@ -6,14 +6,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.COULD_NOT_CANCEL_TRIP
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_REQUESTED_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_REQUESTED
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
+import com.karhoo.uisdk.util.TestData.Companion.COULD_NOT_CANCEL_TRIP
+import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_DRIVER_MEETING_POINT_UNSET
@@ -25,6 +23,8 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_DRIVER_EN_ROUTE_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_INCOMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_PREBOOKED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_REQUESTED_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_REQUESTED
 import com.karhoo.uisdk.util.TestData.Companion.USER
 import org.junit.After
 import org.junit.Rule
@@ -82,7 +82,7 @@ class RideDetailTests : Launch {
     fun completedRideCheck() {
         serverRobot {
             successfulToken()
-            fareResponse(code = HTTP_OK, response = ServerRobot.FARE_COMPLETE, tripId = TRIP.tripId)
+            fareResponse(code = HTTP_OK, response = FARE_COMPLETE, tripId = TRIP.tripId)
         }
         rideDetail(this, TRIP_COMPLETED_INTENT) {
             sleep()
