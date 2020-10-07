@@ -129,7 +129,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?, quotePrice: QuotePrice?) {
-        presenter?.setSavedCardDetails(savedPaymentInfo)
         savedPaymentInfo?.let {
             apply {
                 bindViews(it.cardType, it.lastFour)

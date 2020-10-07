@@ -92,7 +92,6 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                         updateCardDetails(nonce = it.nonce, cardNumber = it.description,
                                           cardTypeLabel = it.typeLabel)
                     }
-                    view?.handlePaymentDetailsUpdate(braintreeResult?.paymentMethodNonce?.nonce)
                 }
             }
         } else if (requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE || requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST) {
@@ -108,7 +107,6 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                     updateCardDetails("", it.lastFour, it.cardType.toString().toLowerCase()
                             .capitalize())
                 }
-                view?.handlePaymentDetailsUpdate(braintreeSDKToken)
             } else {
                 setNonce(braintreeSDKToken)
             }
@@ -175,6 +173,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         this.nonce = nonce
         if (cardNumber != null && cardTypeLabel != null) {
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
+            userStore.savedPaymentInfo = userInfo
             view?.bindPaymentDetails(userInfo)
             view?.handlePaymentDetailsUpdate(nonce)
         }
