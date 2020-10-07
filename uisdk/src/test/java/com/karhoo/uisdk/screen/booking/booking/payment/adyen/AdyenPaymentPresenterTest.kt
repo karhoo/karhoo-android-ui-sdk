@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
@@ -19,15 +20,19 @@ import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import junit.framework.Assert.assertEquals
 import org.json.JSONObject
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
+import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -44,6 +49,9 @@ class AdyenPaymentPresenterTest {
     private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
     private val paymentMethodsCall: Call<String> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
+
+    @Captor
+    private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
 
     private lateinit var adyenPaymentPresenter: AdyenPaymentPresenter
 
@@ -93,7 +101,7 @@ class AdyenPaymentPresenterTest {
         adyenPaymentPresenter.sdkInit(price)
 
         publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
-        publicKeyCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
+        paymentMethodsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
@@ -201,6 +209,34 @@ class AdyenPaymentPresenterTest {
     }
 
     /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     The result code is AUTHORISED
+     * Then:    Then the card details are updated
+     * And:     The transaction id is set as the nonce
+     */
+    @Test
+    fun `card details and nonce updated for activity RESULT_OK and the result code is authorised`() {
+        val additionalData = JSONObject()
+                .put(CARD_SUMMARY, "1234")
+                .put(PAYMENT_METHOD, "mc")
+        val response = JSONObject()
+                .put(RESULT_CODE, AUTHORISED)
+                .put(MERCHANT_REFERENCE, TRANSACTION_ID)
+                .put(ADDITIONAL_DATA, additionalData)
+
+        whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
+        adyenPaymentPresenter.handleActivityResult(
+                requestCode = REQUEST_CODE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        verify(userStore).savedPaymentInfo =  capture(paymentInfoCaptor)
+        assertEquals("1234", paymentInfoCaptor.value.lastFour)
+        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
+    }
+
+    /**
      * Given:   Saved payment info has changed
      * Then:    The view is updated with the payment details
      */
@@ -269,7 +305,10 @@ class AdyenPaymentPresenterTest {
     companion object {
         private val adyenPublicKey: AdyenPublicKey = AdyenPublicKey("12345678")
         private val guestAuth: AuthenticationMethod.Guest = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")
+        private const val ADDITIONAL_DATA = AdyenPaymentView.ADDITIONAL_DATA
         private const val AUTHORISED = AdyenPaymentView.AUTHORISED
+        private const val CARD_SUMMARY = AdyenPaymentPresenter.CARD_SUMMARY
+        private const val PAYMENT_METHOD = AdyenPaymentPresenter.PAYMENT_METHOD
         private const val TRANSACTION_ID = "1234"
         private const val MERCHANT_REFERENCE = AdyenPaymentView.MERCHANT_REFERENCE
         private const val RESULT_KEY = AdyenResultActivity.RESULT_KEY
