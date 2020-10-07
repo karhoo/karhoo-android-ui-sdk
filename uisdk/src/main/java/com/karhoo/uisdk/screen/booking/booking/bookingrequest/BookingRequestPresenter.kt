@@ -185,18 +185,12 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
     }
 
-    private fun refreshPaymentDetails(quotePrice: QuotePrice?) {
-        view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo, quotePrice)
-    }
-
-    override fun updateCardDetails(sdkNonce: String?) {
-        sdkNonce?.let {
-            view?.enableBooking()
-        } ?: view?.disableBooking()
+    private fun refreshPaymentDetails() {
+        view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 
     override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
-        refreshPaymentDetails(quote.price)
+        refreshPaymentDetails()
         if (origin != null && destination != null) {
             this.quote = quote
             this.outboundTripId = outboundTripId

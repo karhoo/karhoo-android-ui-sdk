@@ -21,7 +21,6 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
@@ -30,19 +29,20 @@ import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
 
-class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
+class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                             private val userStore: UserStore = KarhooApi.userStore,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<BookingPaymentMVP.View>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
     var price: QuotePrice? = null
 
     private var sdkToken: String = ""
-    private var nonce: String? = ""
+    private var nonce: String? = null
 
     init {
         attachView(view)
+        userStore.addSavedPaymentObserver(this)
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
@@ -103,10 +103,9 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
             when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
                     val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
-                    updateCardDetails(nonce = transactionId,
-                                      paymentData = payload.optString
-                                      (AdyenPaymentView.ADDITIONAL_DATA, null))
-                    passBackNonce(transactionId)
+                    this.sdkToken = transactionId
+                    this.nonce = transactionId
+                    updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
                 }
                 //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
@@ -121,11 +120,8 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
-        view?.bindPaymentDetails(savedPaymentInfo = userPaymentInfo)
-    }
-
-    override fun passBackNonce(sdkNonce: String) {
-        this.sdkToken = sdkNonce
+        view?.updatePaymentDetails(savedPaymentInfo = userPaymentInfo)
+        view?.handlePaymentDetailsUpdate()
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
@@ -156,12 +152,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 
-    override fun setSavedCardDetails() {
-        view?.bindPaymentDetails(userStore.savedPaymentInfo)
-    }
-
-    override fun updateCardDetails(nonce: String, cardNumber: String?, typeLabel: String?,
-                                   paymentData: String?) {
+    private fun updateCardDetails(paymentData: String?) {
         this.nonce = nonce
         paymentData?.let {
             val additionalData = JSONObject(paymentData)
@@ -170,7 +161,7 @@ class AdyenPaymentPresenter(view: BookingPaymentMVP.View,
             val savedPaymentInfo = CardType.fromString(type)?.let {
                 SavedPaymentInfo(newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
-            view?.bindPaymentDetails(savedPaymentInfo)
+            userStore.savedPaymentInfo = savedPaymentInfo
         } ?: view?.refresh()
     }
 
