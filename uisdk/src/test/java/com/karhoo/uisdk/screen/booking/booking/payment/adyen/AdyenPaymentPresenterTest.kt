@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -27,8 +28,7 @@ class AdyenPaymentPresenterTest {
 
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var savedPaymentInfo: SavedPaymentInfo = mock()
-    private var paymentView: BookingPaymentMVP.View = mock()
+    private var paymentView: PaymentDropInMVP.Actions = mock()
     private var price: QuotePrice = mock()
     private val publicKeyCall: Call<AdyenPublicKey> = mock()
     private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
@@ -51,21 +51,6 @@ class AdyenPaymentPresenterTest {
                 paymentsService = paymentsService,
                 userStore = userStore,
                 view = paymentView)
-    }
-
-    /**
-     * Given:   A request is made to change card
-     * When:    The public key retrieval fails
-     * Then:    Then an error is shown
-     */
-    @Test
-    fun `setting saved card details updates the view`() {
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        adyenPaymentPresenter.setSavedCardDetails()
-
-        verify(userStore).savedPaymentInfo
-        verify(paymentView).bindPaymentDetails(savedPaymentInfo)
     }
 
     /**

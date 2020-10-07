@@ -19,6 +19,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -43,7 +44,7 @@ class BraintreePaymentPresenterTest {
     private var context: Context = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var paymentView: BookingPaymentMVP.View = mock()
+    private var paymentView: PaymentDropInMVP.Actions = mock()
     private var price: QuotePrice = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -158,7 +159,6 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
         verify(paymentView, never()).showPaymentUI(BRAINTREE_SDK_TOKEN, null, price)
-        verify(paymentView).handlePaymentDetailsUpdate(BRAINTREE_SDK_TOKEN)
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
@@ -234,7 +234,8 @@ class BraintreePaymentPresenterTest {
         val savedPaymentInfo = SavedPaymentInfo("", CardType.NOT_SET)
 
         braintreePaymentPresenter.onSavedPaymentInfoChanged(savedPaymentInfo)
-        verify(paymentView).bindPaymentDetails(SavedPaymentInfo("", CardType.NOT_SET), null)
+        verify(paymentView).updatePaymentDetails(SavedPaymentInfo("", CardType.NOT_SET))
+        verify(paymentView).handlePaymentDetailsUpdate()
     }
 
     /**
