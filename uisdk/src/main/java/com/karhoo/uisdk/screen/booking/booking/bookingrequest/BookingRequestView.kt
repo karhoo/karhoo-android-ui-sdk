@@ -67,7 +67,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
                                                                                  KarhooUISDK.analytics,
-                                                                                 KarhooApi.paymentsService,
                                                                                  KarhooPreferenceStore.getInstance(context.applicationContext),
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)

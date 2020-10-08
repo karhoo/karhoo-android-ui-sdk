@@ -10,13 +10,11 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
-import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
@@ -32,11 +30,10 @@ import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
-import java.util.*
+import java.util.Date
 
 class BookingRequestPresenter(view: BookingRequestMVP.View,
                               private val analytics: Analytics?,
-                              private val paymentsService: PaymentsService,
                               private val preferenceStore: PreferenceStore,
                               private val tripsService: TripsService,
                               private val userStore: UserStore)
