@@ -306,6 +306,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.handleChangeCard()
     }
 
+    override fun handleViewVisibility(visibility: Int) {
+        bookingRequestPaymentDetailsWidget.visibility = visibility
+    }
+
     override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
     }

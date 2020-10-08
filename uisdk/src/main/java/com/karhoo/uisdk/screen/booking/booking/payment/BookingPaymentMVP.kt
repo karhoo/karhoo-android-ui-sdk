@@ -9,7 +9,7 @@ interface BookingPaymentMVP {
 
     interface Widget {
 
-        fun updatePaymentViewVisibility()
+        fun setPaymentViewVisibility()
     }
 
     interface View {
@@ -45,6 +45,8 @@ interface BookingPaymentMVP {
         fun showErrorDialog(@StringRes stringId: Int)
 
         fun handleChangeCard()
+
+        fun handleViewVisibility(visibility: Int)
     }
 
     interface PaymentActions {

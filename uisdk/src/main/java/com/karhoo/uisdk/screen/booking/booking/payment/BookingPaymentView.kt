@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -46,11 +45,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 changeCard()
             }
         }
-        Log.d("Adyen", "BPV init")
     }
 
     override fun bindDropInView() {
-        Log.d("Adyen", "BPV bindDropInView")
         presenter?.createPaymentView(KarhooApi.userStore.paymentProvider, this)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
@@ -60,11 +57,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun setViewVisibility(visibility: Int) {
-        this.visibility = visibility
+        cardActions?.handleViewVisibility(visibility)
     }
 
-    override fun updatePaymentViewVisibility() {
-        Log.d("Adyen", "BPV updatePaymentViewVisibility")
+    override fun setPaymentViewVisibility() {
         presenter?.getPaymentViewVisibility()
     }
 
