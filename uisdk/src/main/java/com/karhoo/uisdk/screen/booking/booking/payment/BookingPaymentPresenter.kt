@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.karhoo.sdk.api.KarhooApi
@@ -40,6 +41,7 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun getPaymentViewVisibility() {
+        Log.d("Adyen", userStore.paymentProvider?.id)
         val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true))
             GONE else VISIBLE
         view?.setViewVisibility(visibility)

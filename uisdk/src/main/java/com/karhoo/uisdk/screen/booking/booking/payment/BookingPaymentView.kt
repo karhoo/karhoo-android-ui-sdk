@@ -125,7 +125,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
             else -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
-        visibility = VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
