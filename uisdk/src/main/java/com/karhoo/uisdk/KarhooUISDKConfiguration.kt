@@ -5,7 +5,7 @@ import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.api.KarhooSDKConfiguration
 import com.karhoo.sdk.api.model.AuthenticationMethod
 
-interface KarhooUISDKConfiguration : KarhooSDKConfiguration, BraintreeConfig {
+interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConfig {
 
     fun logo(): Drawable?
 
@@ -29,7 +29,7 @@ internal object KarhooUISDKConfigurationProvider {
                 AuthenticationMethod.Guest).organisationId else null
     }
 
-    fun simulateBraintree(): Boolean {
-        return configuration.handleBraintree()
+    fun simulatePaymentProvider(): Boolean {
+        return configuration.simulatePaymentProvider()
     }
 }

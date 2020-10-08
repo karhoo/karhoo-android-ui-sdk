@@ -24,6 +24,7 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
+import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Currency
@@ -75,25 +76,27 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun getPaymentMethods() {
         val amount = AdyenAmount(price?.currencyCode ?: DEFAULT_CURRENCY, price?.highPrice.orZero())
-        let {
-            val request = AdyenPaymentMethodsRequest(amount = amount)
-            paymentsService.getAdyenPaymentMethods(request).execute { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        result.data.let {
-                            view?.showPaymentUI(adyenKey, it, price)
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
+            view?.threeDSecureNonce(sdkToken)
+        } else {
+            let {
+                val request = AdyenPaymentMethodsRequest(amount = amount)
+                paymentsService.getAdyenPaymentMethods(request).execute { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data.let {
+                                view?.showPaymentUI(this.adyenKey, it, this.price)
+                            }
                         }
+                        is Resource.Failure -> view?.showError(R.string.something_went_wrong)
                     }
-                    is Resource.Failure -> view?.showError(R.string.something_went_wrong)
                 }
             }
         }
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
-        nonce?.let {
-            passBackThreeDSecureNonce(it, quotePriceToAmount(price))
-        } ?: view?.showError(R.string.payment_issue_message)
+        passBackThreeDSecureNonce(price)
     }
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -116,7 +119,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        passBackThreeDSecureNonce(sdkToken, quotePriceToAmount(price))
+        passBackThreeDSecureNonce(price)
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
@@ -124,11 +127,14 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
-            view?.threeDSecureNonce(nonce)
+    private fun passBackThreeDSecureNonce(price: QuotePrice?) {
+        val amount = quotePriceToAmount(price)
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
+            view?.threeDSecureNonce(sdkToken)
         } else {
-            view?.threeDSecureNonce(sdkToken, nonce, amount)
+            nonce?.let {
+                view?.threeDSecureNonce(sdkToken, sdkToken, amount)
+            } ?: view?.showError(R.string.payment_issue_message)
         }
     }
 
