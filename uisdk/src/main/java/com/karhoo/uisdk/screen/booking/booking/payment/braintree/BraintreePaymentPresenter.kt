@@ -32,7 +32,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
     : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
-    private var braintreeSDKToken: String = ""
+    private var braintreeSDKToken: String? = null
     private var nonce: String? = null
 
     init {
@@ -62,8 +62,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                                        )
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
-                is Resource.Success -> passBackThreeDSecureNonce(result.data
-                                                                         .nonce, amount)
+                is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
                 is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
             }
         }
@@ -116,7 +115,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken, nonce.orEmpty(), quotePriceToAmount(price))
+        view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce.orEmpty(), quotePriceToAmount(price))
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
@@ -124,7 +123,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    fun setNonce(braintreeSDKNonce: String) {
+    private fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
         val addPaymentRequest = AddPaymentRequest(payer = Payer(id = user.userId,
                                                                 email = user.email,
@@ -136,19 +135,20 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
+                    //TODO Check if this is already handled by the onSavedPayment method
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
                 }
-                is Resource.Failure -> view?.showError(R.string.booking_error)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
             }
         }
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(braintreeSDKToken)
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
         } else {
-            view?.threeDSecureNonce(braintreeSDKToken, nonce, amount)
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce, amount)
         }
     }
 

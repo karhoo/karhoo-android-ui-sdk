@@ -47,12 +47,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
-        val cardConfiguration =
-                CardConfiguration.Builder(context, sdkToken)
-                        .setShopperLocale(Locale.getDefault())
-                        .setHolderNameRequire(true)
-                        .build()
-
         val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
             putExtra(AdyenResultActivity.TYPE_KEY, AdyenComponentType.DROPIN.id)
             addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
@@ -64,6 +58,12 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
                 KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
+
+        val cardConfiguration =
+                CardConfiguration.Builder(context, sdkToken)
+                        .setShopperLocale(Locale.getDefault())
+                        .setHolderNameRequire(true)
+                        .build()
 
         return DropInConfiguration.Builder(context, dropInIntent,
                                            AdyenDropInService::class.java)
