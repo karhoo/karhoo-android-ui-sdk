@@ -15,7 +15,7 @@ class TestSDKConfig(val context: Context, private val authenticationMethod: Auth
         return KarhooEnvironment.Custom(host = "http://127.0.0.1:8089", authHost = "", guestHost = "")
     }
 
-    override fun handleBraintree(): Boolean {
+    override fun simulatePaymentProvider(): Boolean {
         return true
     }
 

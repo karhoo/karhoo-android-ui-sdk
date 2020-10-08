@@ -27,7 +27,7 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
         }
     }
 
-    override fun handleBraintree(): Boolean = false
+    override fun simulatePaymentProvider(): Boolean = false
 
     override fun context(): Context {
         return context

@@ -101,7 +101,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
         this.braintreeSDKToken = braintreeSDKToken
-        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
                     updateCardDetails(it.lastFour, it.cardType.toString().toLowerCase().capitalize())
@@ -145,7 +145,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
-        if (KarhooUISDKConfigurationProvider.simulateBraintree()) {
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
         } else {
             view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce, amount)

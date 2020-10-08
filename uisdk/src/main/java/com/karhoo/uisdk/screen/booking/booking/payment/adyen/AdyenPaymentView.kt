@@ -6,7 +6,6 @@ import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import org.json.JSONObject
 
