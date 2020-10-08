@@ -116,6 +116,7 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `payment view shown when change card pressed and payment methods retrieved successfully`() {
         val paymentData: String = "{paymentMethods: []}"
+        setConfig()
 
         adyenPaymentPresenter.sdkInit(price)
 
@@ -134,6 +135,10 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown when retrieval of a nonce is attempted and it is null`() {
+        setConfig()
+
+        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
+        whenever(price.highPrice).thenReturn(100)
 
         adyenPaymentPresenter.getPaymentNonce(price)
 

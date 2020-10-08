@@ -805,6 +805,8 @@ class TestData {
                 cardType = CardType.NOT_SET
                                                              )
 
+        val ADYEN_PROVIDER = PaymentProvider(Provider(id = "Adyen"))
+
         val ADYEN_PUBLIC_KEY = AdyenPublicKey("12345678")
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
