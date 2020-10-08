@@ -11,6 +11,7 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
@@ -76,7 +77,7 @@ class AdyenBookingTests : Launch {
     fun asapBookARideSuccess() {
         serverRobot {
             successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            paymentsProviderResponse(HTTP_OK, ADYEN_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)

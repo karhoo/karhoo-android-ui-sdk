@@ -15,7 +15,7 @@ AuthenticationMethod =
         return null
     }
 
-    override fun handleBraintree(): Boolean {
+    override fun simulatePaymentProvider(): Boolean {
         return handleBraintree
     }
 
