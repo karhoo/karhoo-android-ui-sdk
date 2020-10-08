@@ -3,6 +3,7 @@ package com.karhoo.karhootraveller.presentation.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.karhoo.karhootraveller.R
@@ -84,6 +85,8 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfi
     override fun onResume() {
         super.onResume()
         userProfileView.validateUser()
+        Log.d("Adyen", "PV onCreate")
+        bookingPaymentDetailsWidget.updatePaymentViewVisibility()
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -45,7 +45,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         userStore.addSavedPaymentObserver(this)
     }
 
-    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+    override fun getDropInConfig(context: Context, publicKey: String): Any {
         val amount = Amount()
         amount.currency = price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = price?.highPrice.orZero()
@@ -63,7 +63,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 .setAmount(amount)
                 .setEnvironment(environment)
                 .setShopperLocale(Locale.getDefault())
-                .addCardConfiguration(createCardConfig(context))
+                .addCardConfiguration(createCardConfig(context, publicKey))
                 .build()
     }
 
@@ -114,9 +114,9 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         }
     }
 
-    private fun createCardConfig(context: Context): CardConfiguration {
+    private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
         val saveCard = !KarhooUISDKConfigurationProvider.isGuest()
-        return CardConfiguration.Builder(context, sdkToken)
+        return CardConfiguration.Builder(context, publicKey)
                 .setShopperLocale(Locale.getDefault())
                 .setHolderNameRequire(true)
                 .setShowStorePaymentField(saveCard)

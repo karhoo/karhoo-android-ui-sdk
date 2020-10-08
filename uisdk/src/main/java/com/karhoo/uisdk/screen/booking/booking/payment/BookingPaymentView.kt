@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -21,7 +22,8 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentDropInMVP.Actions {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View,
+      BookingPaymentMVP.Widget, PaymentDropInMVP.Actions {
 
     private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
 
@@ -44,15 +46,26 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 changeCard()
             }
         }
+        Log.d("Adyen", "BPV init")
     }
 
     override fun bindDropInView() {
+        Log.d("Adyen", "BPV bindDropInView")
         presenter?.createPaymentView(KarhooApi.userStore.paymentProvider, this)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 
     override fun setPaymentView(view: PaymentDropInMVP.View?) {
         dropInView = view
+    }
+
+    override fun setViewVisibility(visibility: Int) {
+        this.visibility = visibility
+    }
+
+    override fun updatePaymentViewVisibility() {
+        Log.d("Adyen", "BPV updatePaymentViewVisibility")
+        presenter?.getPaymentViewVisibility()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -167,6 +180,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun handlePaymentDetailsUpdate() {
         paymentActions?.handlePaymentDetailsUpdate()
+    }
+
+    override fun updatePaymentViewVisbility(visibility: Int) {
+        paymentLayout.visibility = visibility
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {

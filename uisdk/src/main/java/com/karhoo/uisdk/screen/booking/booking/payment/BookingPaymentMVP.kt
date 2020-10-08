@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.Provider
-import com.karhoo.sdk.api.model.QuotePrice
 
 interface BookingPaymentMVP {
+
+    interface Widget {
+
+        fun updatePaymentViewVisibility()
+    }
 
     interface View {
 
@@ -19,6 +23,10 @@ interface BookingPaymentMVP {
         fun showError(@StringRes error: Int)
 
         fun setPaymentView(view: PaymentDropInMVP.View?)
+
+        fun setViewVisibility(visibility: Int)
+
+        fun updatePaymentViewVisbility(visibility: Int)
     }
 
     interface Presenter {
@@ -28,6 +36,8 @@ interface BookingPaymentMVP {
         fun getPaymentProvider()
 
         fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
+
+        fun getPaymentViewVisibility()
     }
 
     interface CardActions {
