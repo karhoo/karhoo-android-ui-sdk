@@ -1,6 +1,10 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.braintree
 
 import android.content.Context
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import com.braintreepayments.api.dropin.DropInResult
+import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -18,8 +22,8 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentPresenterTest
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -42,14 +46,18 @@ import org.mockito.junit.MockitoJUnitRunner
 class BraintreePaymentPresenterTest {
 
     private var context: Context = mock()
+    private var data: Intent = mock()
+    private var dropInResult: DropInResult = mock()
+    private var paymentMethodNonce: PaymentMethodNonce = mock()
     private var paymentsService: PaymentsService = mock()
+    private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var userStore: UserStore = mock()
     private var paymentView: PaymentDropInMVP.Actions = mock()
     private var price: QuotePrice = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
-    private val passBraintreeTokenCall: Call<PaymentsNonce> = mock()
-    private val passBraintreeTokenCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
+    private val addPaymentCall: Call<PaymentsNonce> = mock()
+    private val addPaymentCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
     private val getNonceCall: Call<PaymentsNonce> = mock()
     private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
 
@@ -70,8 +78,8 @@ class BraintreePaymentPresenterTest {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
 
         whenever(paymentsService.addPaymentMethod(any()))
-                .thenReturn(passBraintreeTokenCall)
-        doNothing().whenever(passBraintreeTokenCall).execute(passBraintreeTokenCaptor.capture())
+                .thenReturn(addPaymentCall)
+        doNothing().whenever(addPaymentCall).execute(addPaymentCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
 
@@ -84,6 +92,20 @@ class BraintreePaymentPresenterTest {
     @After
     fun tearDown() {
         setAuthenticatedUser()
+    }
+
+    /**
+     * Given:   Guest payment is initialisee
+     * Then:    Then the nonce is returned
+     */
+    @Test
+    fun `nonce returned when guest payment is initialised`() {
+        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
+        whenever(price.highPrice).thenReturn(100)
+
+        braintreePaymentPresenter.initialiseGuestPayment(price)
+
+        verify(paymentView).threeDSecureNonce("", "", "1.00")
     }
 
     /**
@@ -199,34 +221,6 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(paymentView).showError(R.string.something_went_wrong)
-    }
-
-    /**
-     * Given:   A request is made to pass the braintree token to the BE
-     * When:    The request is successful
-     * Then:    The view should be asked to bind the card details
-     */
-    @Test
-    fun `pass braintree token to BE and bind card details should be called`() {
-        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
-
-        passBraintreeTokenCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
-
-        verify(paymentsService).addPaymentMethod(any())
-    }
-
-    /**
-     * Given:   A request is made to pass the braintree token to the BE
-     * When:    The request is successful
-     * Then:    The view should be asked to show an error
-     */
-    @Test
-    fun `pass braintree token to BE and an error occurs`() {
-        braintreePaymentPresenter.setNonce(BRAINTREE_SDK_TOKEN)
-
-        passBraintreeTokenCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(paymentView).showError(R.string.booking_error)
     }
 
     /**
@@ -352,6 +346,172 @@ class BraintreePaymentPresenterTest {
         verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
     }
 
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is not RESULT_OK
+     * And:     There is data
+     * And:     It is a logged in Braintree user request
+     * Then:    The payment view is refreshed
+     */
+    @Test
+    fun `view refreshed for activity result not RESULT_OK for logged in Braintree user`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_CANCELED,
+                data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(paymentView).refresh()
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is not RESULT_OK
+     * And:     There is data
+     * And:     It is a guest Braintree user request
+     * Then:    The payment view is refreshed
+     */
+    @Test
+    fun `view refreshed for activity result not RESULT_OK for guest Braintree user`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
+                resultCode = AppCompatActivity.RESULT_CANCELED,
+                data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(paymentView).refresh()
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is no data
+     * And:     It is a logged in Braintree user request
+     * Then:    The payment view is refreshed
+     */
+    @Test
+    fun `view refreshed for activity result RESULT_OK with no data for logged in Braintree user`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = null)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(paymentView).refresh()
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is data
+     * And:     It is a guest Braintree user request
+     * Then:    The payment view is refreshed
+     */
+    @Test
+    fun `view refreshed for activity result RESULT_OK with no data for guest Braintree user`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = null)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(paymentView).refresh()
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is data
+     * And:     It is a guest Braintree user request
+     * Then:    The card details are update
+     */
+    @Test
+    fun `card details updated for activity result RESULT_OK for guest Braintree user`() {
+        whenever(data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT))
+                .thenReturn(dropInResult)
+        whenever(dropInResult.paymentMethodNonce).thenReturn(paymentMethodNonce)
+        whenever(paymentMethodNonce.nonce).thenReturn(BRAINTREE_SDK_TOKEN)
+        whenever(paymentMethodNonce.description).thenReturn(CARD_ENDING)
+        whenever(paymentMethodNonce.typeLabel).thenReturn(CardType.MASTERCARD.value)
+
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
+        assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is data
+     * And:     It is a logged in Braintree user request
+     * Then:    The add payment method call is made
+     */
+    @Test
+    fun `add payment call is made if result if RESULT_OK for logged in Braintree user`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        verify(paymentsService).addPaymentMethod(any())
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The add payment method call is made
+     * And:     The call fails
+     * Then:    An error is shown
+     */
+    @Test
+    fun `error shown if the add payment call fails`() {
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        addPaymentCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(paymentsService).addPaymentMethod(any())
+        verify(paymentView).showError(R.string.something_went_wrong)
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The add payment method call is made
+     * And:     The call succeeds
+     * Then:    The payment details are updated
+     */
+    @Test
+    fun `payment details are updated if the add payment call succeeds`() {
+        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
+
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        addPaymentCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
+
+        verify(paymentsService).addPaymentMethod(any())
+        verify(paymentView).updatePaymentDetails(savedPaymentInfo)
+        verify(paymentView).handlePaymentDetailsUpdate()
+    }
+
+    private fun setGuestUser(handleBraintree: Boolean = false) {
+        KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                        context = context,
+                        authenticationMethod = AuthenticationMethod.Guest("identifier",
+                                                                          "referer", "guestOrganisationId"),
+                        handleBraintree = handleBraintree))
+    }
+
     private fun setAuthenticatedUser() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
@@ -359,17 +519,14 @@ class BraintreePaymentPresenterTest {
     }
 
     companion object {
+        private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
+        private const val CARD_ENDING = "....12"
+        private const val EXPECTED_AMOUNT_AS_STRING = "1500"
+
         private val paymentsNonce = PaymentsNonce(
                 nonce = "1234557683749328",
                 cardType = CardType.VISA,
-                lastFour = "2345"
-                                                 )
-
-        private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
-
-        private const val CARD_ENDING = "....12"
-
-        private const val EXPECTED_AMOUNT_AS_STRING = "1500"
+                lastFour = "2345")
 
         private val userDetails: UserInfo = UserInfo(firstName = "David",
                                                      lastName = "Smith",

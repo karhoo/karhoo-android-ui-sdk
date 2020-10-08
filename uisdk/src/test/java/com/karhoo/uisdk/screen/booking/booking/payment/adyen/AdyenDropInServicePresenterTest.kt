@@ -28,7 +28,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AdyenDropInServicePresenterTest {
 
-    val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT, SHOPPER_REFERENCE)
+    private val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT, SHOPPER_REFERENCE, RANDOM)
     private var jsonObject: JSONObject = mock()
     private var paymentJson: JSONObject = mock()
     private var amountJson: JSONObject = mock()
@@ -53,6 +53,7 @@ class AdyenDropInServicePresenterTest {
         whenever(jsonObject.get(PAYMENT_METHOD)).thenReturn(paymentJson)
         whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
         whenever(jsonObject.get(SHOPPER_REFERENCE)).thenReturn("")
+        whenever(jsonObject.get(RANDOM)).thenReturn("{}")
 
         whenever(paymentsService.getAdyenPayments(any())).thenReturn(paymentsCall)
         doNothing().whenever(paymentsCall).execute(paymentsCaptor.capture())
@@ -78,11 +79,13 @@ class AdyenDropInServicePresenterTest {
         val requestString = requestCaptor.value
         assertTrue(requestString.contains(PAYMENT_METHOD))
         assertTrue(requestString.contains(AMOUNT))
+        assertTrue(requestString.contains(RANDOM))
         assertFalse(requestString.contains(SHOPPER_REFERENCE))
         verify(jsonObject).keys()
         verify(jsonObject).get(PAYMENT_METHOD)
         verify(jsonObject).get(AMOUNT)
         verify(jsonObject).get(SHOPPER_REFERENCE)
+        verify(jsonObject).get(RANDOM)
         verify(service).handleResult(capture(resultsCaptor))
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
@@ -152,6 +155,14 @@ class AdyenDropInServicePresenterTest {
      * When:    There is no transaction id
      * Then:    Then an error result is returned
      */
+    @Test
+    fun `error shown when Adyen payment details retrieval is attempted with no transaction id`() {
+        presenter.getAdyenPaymentDetails(jsonObject, null)
+
+        verify(paymentsService, never()).getAdyenPaymentDetails(any())
+        verify(service).handleResult(capture(resultsCaptor))
+        assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
+    }
 
     /**
      * Given:   A request is made to retrieve Adyen payment details
@@ -160,7 +171,7 @@ class AdyenDropInServicePresenterTest {
      */
     @Test
     fun `error shown when Adyen payment details retrieval fails`() {
-        presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
+        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
@@ -181,7 +192,7 @@ class AdyenDropInServicePresenterTest {
         val response = JSONObject()
                 .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
-        presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
+        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
@@ -204,7 +215,7 @@ class AdyenDropInServicePresenterTest {
                 .put(ACTION, "some action")
                 .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
 
-        presenter.getAdyenPaymentDetails(jsonObject, RETURN_URL)
+        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
@@ -217,6 +228,7 @@ class AdyenDropInServicePresenterTest {
     companion object {
         private const val ACTION = AdyenDropInServicePresenter.ACTION
         private const val AMOUNT = "amount"
+        private const val RANDOM = "RANDOM"
         private const val SHOPPER_REFERENCE = "shopperReference"
         private const val PAYMENT_METHOD = "paymentMethod"
         private const val TRANSACTION_ID = "1234"
