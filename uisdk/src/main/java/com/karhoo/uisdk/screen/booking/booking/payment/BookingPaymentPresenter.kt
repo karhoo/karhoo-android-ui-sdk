@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.network.response.Resource
@@ -22,23 +21,8 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         attachView(view)
     }
 
-    override fun getPaymentProvider() {
-        paymentsService.getPaymentProvider().execute { result ->
-            when (result) {
-                is Resource.Success -> view?.bindDropInView()
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
-            }
-        }
-    }
-
-    override fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        savedPaymentInfo?.let {
-            userStore.savedPaymentInfo = it
-        }
-    }
-
-    override fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions) {
-        val paymentView = provider?.let {
+    override fun createPaymentView(actions: PaymentDropInMVP.Actions) {
+        val paymentView = userStore.paymentProvider?.let {
             when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
                 ProviderType.ADYEN -> {
                     val view = AdyenPaymentView(actions)
@@ -59,6 +43,15 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true))
             GONE else VISIBLE
         view?.setViewVisibility(visibility)
+    }
+
+    override fun getPaymentProvider() {
+        paymentsService.getPaymentProvider().execute { result ->
+            when (result) {
+                is Resource.Success -> view?.bindDropInView()
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+            }
+        }
     }
 }
 

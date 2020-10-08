@@ -55,7 +55,7 @@ import java.util.*
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.CardActions,
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions,
       BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)

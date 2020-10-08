@@ -31,16 +31,14 @@ interface BookingPaymentMVP {
 
     interface Presenter {
 
-        fun createPaymentView(provider: Provider?, actions: PaymentDropInMVP.Actions)
+        fun createPaymentView(actions: PaymentDropInMVP.Actions)
 
         fun getPaymentProvider()
-
-        fun setSavedCardDetails(savedPaymentInfo: SavedPaymentInfo?)
 
         fun getPaymentViewVisibility()
     }
 
-    interface CardActions {
+    interface PaymentViewActions {
 
         fun showErrorDialog(@StringRes stringId: Int)
 

@@ -33,7 +33,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
     var paymentActions: BookingPaymentMVP.PaymentActions? = null
-    var cardActions: BookingPaymentMVP.CardActions? = null
+    var cardActions: BookingPaymentMVP.PaymentViewActions? = null
     private var dropInView: PaymentDropInMVP.View? = null
 
     init {
@@ -48,7 +48,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindDropInView() {
-        presenter?.createPaymentView(KarhooApi.userStore.paymentProvider, this)
+        presenter?.createPaymentView(this)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 

@@ -7,9 +7,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doNothing
-import com.nhaarman.mockitokotlin2.firstValue
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
@@ -21,8 +19,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -38,12 +34,8 @@ class AdyenDropInServicePresenterTest {
     private val paymentsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
     private val paymentsDetailsCall: Call<JSONObject> = mock()
     private val paymentsDetailsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
-
-    @Captor
-    private lateinit var requestCaptor: ArgumentCaptor<String>
-
-    @Captor
-    private lateinit var resultsCaptor: ArgumentCaptor<CallResult>
+    private val requestCaptor = argumentCaptor<String>()
+    private val resultsCaptor = argumentCaptor<CallResult>()
 
     private lateinit var presenter: AdyenDropInServicePresenter
 
@@ -75,8 +67,8 @@ class AdyenDropInServicePresenterTest {
 
         paymentsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(paymentsService).getAdyenPayments(capture(requestCaptor))
-        val requestString = requestCaptor.value
+        verify(paymentsService).getAdyenPayments(requestCaptor.capture())
+        val requestString = requestCaptor.firstValue
         assertTrue(requestString.contains(PAYMENT_METHOD))
         assertTrue(requestString.contains(AMOUNT))
         assertTrue(requestString.contains(RANDOM))
@@ -86,7 +78,7 @@ class AdyenDropInServicePresenterTest {
         verify(jsonObject).get(AMOUNT)
         verify(jsonObject).get(SHOPPER_REFERENCE)
         verify(jsonObject).get(RANDOM)
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
 
@@ -108,7 +100,7 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPayments(any())
         verify(service).storeTransactionId(TRANSACTION_ID)
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
 
@@ -130,7 +122,7 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPayments(any())
         verify(service).storeTransactionId(TRANSACTION_ID)
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
 
@@ -146,7 +138,7 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
 
@@ -160,7 +152,7 @@ class AdyenDropInServicePresenterTest {
         presenter.getAdyenPaymentDetails(jsonObject, null)
 
         verify(paymentsService, never()).getAdyenPaymentDetails(any())
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
 
@@ -176,7 +168,7 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
     }
 
@@ -198,7 +190,7 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service, never()).storeTransactionId(TRANSACTION_ID)
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
 
@@ -221,7 +213,7 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service, never()).storeTransactionId(TRANSACTION_ID)
-        verify(service).handleResult(capture(resultsCaptor))
+        verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
 

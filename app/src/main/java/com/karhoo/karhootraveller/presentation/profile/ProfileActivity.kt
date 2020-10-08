@@ -3,7 +3,6 @@ package com.karhoo.karhootraveller.presentation.profile
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.karhoo.karhootraveller.R
@@ -16,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_profile.paymentCardLabel
 import kotlinx.android.synthetic.main.activity_profile.toolbar
 import kotlinx.android.synthetic.main.activity_profile.userProfileView
 
-class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfileMVP.Actions {
+class ProfileActivity : BaseActivity(), BookingPaymentMVP.PaymentViewActions, UserProfileMVP.Actions {
 
     override val layout: Int = R.layout.activity_profile
 
