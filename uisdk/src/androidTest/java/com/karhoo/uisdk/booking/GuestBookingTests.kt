@@ -92,6 +92,246 @@ class GuestBookingTests : Launch {
     }
 
     /**
+     * Given:   I can see some quotes, ETA selected as default
+     * When:    I check all the elements
+     * Then:    I can see all elements expected: expand chevron, ETA and Price tabs, fleet logo holder,
+    fleet name, Price, Fare type, car category, category tabs
+     **/
+    @Test
+    fun fullQuoteListCheckGuest() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            sleep()
+        } result {
+            fullASAPQuotesListCheckGuest()
+        }
+    }
+
+    /**
+     * Given:   I land on the booking screen as a guest user
+     * When:    I check all the elements on the screen
+     * Then:    I can see: Burger menu button enabled, "Add pick up" and "Add destination" in
+    address fields, NO rides button, NO locate me button, NO prebook icon.
+     **/
+    @Test
+    fun emptyBookingScreenGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
+        booking(this) {
+            sleep()
+        } result {
+            guestCheckoutEmptyFullCheck()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout booking screen
+     * When:    I select the pickup field
+     * Then:    I am taken to the address page
+     * And:     I can check the following: Enter pickup in toolbar, powered by google logo is
+    visible, set pin on map and use current location buttons are not visible.
+     **/
+    @Test
+    fun addressScreenCheckFromPickupGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            sleep()
+        } result {
+            checkAddressScreenFromPickupGuestCheckout()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout booking screen
+     * When:    I select the destination field
+     * Then:    I am taken to the address page
+     * And:     I can check the following: Enter destination in toolbar, powered by google logo is
+    visible, set pin on map and use current location buttons are not visible.
+     **/
+    @Test
+    fun addressScreenCheckFromDestinationGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
+        booking(this) {
+            clickDestinationAddressField()
+        }
+        address {
+            sleep()
+        } result {
+            checkAddressScreenFromDestinationGuestCheckout()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout mode
+     * When:    I search for pick up and destination addresses
+     * And:     I select them
+     * Then:    I can see both addresses populated in the correct fields on the booking screen
+     **/
+    @Test
+    fun searchAddressesTest() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
+        }
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(SEARCH_ADDRESS)
+            sleep()
+            clickBakerStreetResult()
+        }
+        serverRobot {
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
+        }
+        booking {
+            clickDestinationAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+            sleep()
+            clickOxfordStreetResult()
+        }
+        booking {
+            sleep()
+        } result {
+            bothSelectedAddressesAreVisible()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout mode
+     * When:    I search for pick up and destination addresses
+     * And:     I select them
+     * Then:    The booking screen populates the quotes as expecte
+     **/
+    @Test
+    fun searchAddressesAndGetQuotesTest() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
+        }
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS)
+            sleep()
+            clickBakerStreetResult()
+        }
+        serverRobot {
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
+        }
+        booking {
+            clickDestinationAddressField()
+        }
+        serverRobot {
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+            sleep()
+            clickOxfordStreetResult()
+        }
+        booking {
+            sleep()
+        } result {
+            fullASAPQuotesListCheckGuest()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout booking screen
+     * When:    I select the menu button
+     * Then:    I can see the following options in the menu: Feedback, Help, About
+     **/
+    @Test
+    fun checkMenuItemsGuestCheckout() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+        }
+        booking(this) {
+            pressMenuButton()
+        } result {
+            checkSideMenuGuestCheckoutIsShown()
+        }
+    }
+
+    /**
+     * Given:   I am on the guest checkout booking screen
+     * When:    I select the pick up address field
+     * And:     I select an address
+     * Then:    I am returned to the booking screen and can see the following: Address in pickup
+     * field, pickup pin not present, Add destination field visible, prebook button enabled
+     **/
+    @Test
+    fun flowGuestCheckoutBookingToPickUpAddressToBooking() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
+        }
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS)
+            sleep()
+            clickBakerStreetResult()
+        }
+        booking {
+            sleep()
+        } result {
+            flowBookingPickupBookingCheck()
+            // TODO check pickupPinIcon
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode
+     * And:     I am on the guest details page
+     * When:    I press the close button
+     * Then:    I am returned to the quote screen
+     **/
+    @Test
+    fun closingTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            sleep()
+            pressFirstQuote()
+            sleep()
+        } result {
+            checkGuestDetailsPageIsShown()
+        }
+        booking {
+            pressCloseGuestDetailsPage()
+        } result {
+            fullASAPQuotesListCheckGuest()
+        }
+    }
+
+    /**
      * Given:   I am on the guest booking details screen
      * When:    I check all the elements before entering any details
      * Then:    I can see: Fleet logo and name, Vehicle capacity details, Close button enabled,
