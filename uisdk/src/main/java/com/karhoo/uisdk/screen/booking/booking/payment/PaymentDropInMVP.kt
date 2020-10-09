@@ -42,6 +42,8 @@ interface PaymentDropInMVP {
 
         fun handlePaymentDetailsUpdate()
 
+        fun updatePaymentViewVisbility(visibility: Int)
+
         fun initialiseChangeCard(price: QuotePrice?)
 
         fun initialiseGuestPayment(price: QuotePrice?)

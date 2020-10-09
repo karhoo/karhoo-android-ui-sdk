@@ -124,7 +124,6 @@ class SplashScreenView @JvmOverloads constructor(
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val type = parent?.getItemAtPosition(position)
-        Log.d("Adyen", "type: $type")
 
         presenter?.handleLoginTypeSelection(type as String)
     }

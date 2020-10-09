@@ -102,7 +102,7 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun handleLoginTypeSelection(loginType: String) {
-        if (loginType != LoginType.USERNAME_PASSWORD.value) {
+        if (!userStore.isCurrentUserValid && loginType != LoginType.USERNAME_PASSWORD.value) {
             userStore.removeCurrentUser()
         }
         val authMethod: AuthenticationMethod = when (loginType) {

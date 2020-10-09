@@ -11,10 +11,11 @@ import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import kotlinx.android.synthetic.main.activity_profile.bookingPaymentDetailsWidget
+import kotlinx.android.synthetic.main.activity_profile.paymentCardLabel
 import kotlinx.android.synthetic.main.activity_profile.toolbar
 import kotlinx.android.synthetic.main.activity_profile.userProfileView
 
-class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfileMVP.Actions {
+class ProfileActivity : BaseActivity(), BookingPaymentMVP.PaymentViewActions, UserProfileMVP.Actions {
 
     override val layout: Int = R.layout.activity_profile
 
@@ -84,6 +85,7 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfi
     override fun onResume() {
         super.onResume()
         userProfileView.validateUser()
+        bookingPaymentDetailsWidget.setPaymentViewVisibility()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -122,5 +124,10 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.CardActions, UserProfi
 
     override fun handleChangeCard() {
         bookingPaymentDetailsWidget.initialiseChangeCard(null)
+    }
+
+    override fun handleViewVisibility(visibility: Int) {
+        bookingPaymentDetailsWidget.visibility = visibility
+        paymentCardLabel.visibility = visibility
     }
 }

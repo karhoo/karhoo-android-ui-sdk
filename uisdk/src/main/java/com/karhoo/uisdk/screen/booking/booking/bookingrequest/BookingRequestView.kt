@@ -46,16 +46,27 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestCommentsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestFlightDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestLayout
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestSupplierWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 import org.joda.time.DateTime
-import java.util.*
+import java.util.Currency
 
 @Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.CardActions,
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions,
       BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
@@ -67,7 +78,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
                                                                                  KarhooUISDK.analytics,
-                                                                                 KarhooApi.paymentsService,
                                                                                  KarhooPreferenceStore.getInstance(context.applicationContext),
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)
@@ -305,6 +315,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun handleChangeCard() {
         presenter.handleChangeCard()
+    }
+
+    override fun handleViewVisibility(visibility: Int) {
+        bookingRequestPaymentDetailsWidget.visibility = visibility
     }
 
     override fun showPaymentUI() {

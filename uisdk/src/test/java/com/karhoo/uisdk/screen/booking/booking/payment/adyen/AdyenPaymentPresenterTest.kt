@@ -20,19 +20,16 @@ import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import junit.framework.Assert.assertEquals
 import org.json.JSONObject
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -42,16 +39,15 @@ class AdyenPaymentPresenterTest {
     private var data: Intent = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
+    private var price: QuotePrice = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var paymentDropInActions: PaymentDropInMVP.Actions = mock()
-    private var price: QuotePrice = mock()
-    private val publicKeyCall: Call<AdyenPublicKey> = mock()
-    private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
+
+    private val paymentInfoCaptor = argumentCaptor<SavedPaymentInfo>()
     private val paymentMethodsCall: Call<String> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
-
-    @Captor
-    private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
+    private val publicKeyCall: Call<AdyenPublicKey> = mock()
+    private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
 
     private lateinit var adyenPaymentPresenter: AdyenPaymentPresenter
 
@@ -235,9 +231,9 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        assertEquals("1234", paymentInfoCaptor.value.lastFour)
-        assertEquals(CardType.NOT_SET, paymentInfoCaptor.value.cardType)
+        verify(userStore).savedPaymentInfo = paymentInfoCaptor.capture()
+        assertEquals("1234", paymentInfoCaptor.firstValue.lastFour)
+        assertEquals(CardType.NOT_SET, paymentInfoCaptor.firstValue.cardType)
     }
 
     /**
@@ -263,9 +259,9 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        assertEquals("1234", paymentInfoCaptor.value.lastFour)
-        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
+        verify(userStore).savedPaymentInfo = paymentInfoCaptor.capture()
+        assertEquals("1234", paymentInfoCaptor.firstValue.lastFour)
+        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.firstValue.cardType)
     }
 
     /**

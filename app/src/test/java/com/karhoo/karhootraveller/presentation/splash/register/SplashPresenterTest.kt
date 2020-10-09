@@ -11,14 +11,12 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.KarhooUISDKConfiguration
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
-import com.karhoo.uisdk.screen.booking.supplier.category.Category
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.atLeastOnce
-import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
@@ -28,9 +26,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.anyInt
-import org.mockito.Captor
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -49,8 +45,7 @@ class SplashPresenterTest {
         longitude = 2.0
     }
 
-    @Captor
-    private lateinit var authMethodCaptor: ArgumentCaptor<AuthenticationMethod>
+    private val authMethodCaptor = argumentCaptor<AuthenticationMethod>()
 
     private val presenter: SplashPresenter = SplashPresenter(view, paymentService, locationProvider, userStore,
                                                              appVersionValidator, analytics, location, playServicesUtil)
@@ -185,8 +180,8 @@ class SplashPresenterTest {
     fun `Adyen guest login sets correct auth method and takes user to booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.ADYEN_GUEST.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.Guest)
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.Guest)
         verify(view).goToBooking(null)
     }
 
@@ -200,8 +195,8 @@ class SplashPresenterTest {
     fun `Braintree guest login sets correct auth method and takes user to booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.BRAINTREE_GUEST.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.Guest)
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.Guest)
         verify(view).goToBooking(null)
     }
 
@@ -215,9 +210,9 @@ class SplashPresenterTest {
     fun `Adyen token login sets correct auth method and takes user to booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
+        verify(view).setConfig(authMethodCaptor.capture())
         //TODO Change this when we can implement Token Auth
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
         //verify(view).goToBooking(null)
         verify(view).goToLogin()
     }
@@ -232,9 +227,9 @@ class SplashPresenterTest {
     fun `Braintree token login sets correct auth method and takes user to booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
+        verify(view).setConfig(authMethodCaptor.capture())
         //TODO Change this when we can implement Token Auth
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
         //verify(view).goToBooking(null)
         verify(view).goToLogin()
     }
@@ -249,8 +244,8 @@ class SplashPresenterTest {
     fun `Username and password login sets correct auth method and takes user to booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.USERNAME_PASSWORD.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
         verify(view).goToLogin()
     }
 
@@ -264,8 +259,8 @@ class SplashPresenterTest {
     fun `Invalid login type does not set the configuration or take the user to the booking flow`() {
         presenter.handleLoginTypeSelection(LoginType.USERNAME_PASSWORD.value)
 
-        verify(view).setConfig(capture(authMethodCaptor))
-        assertTrue(authMethodCaptor.value is AuthenticationMethod.KarhooUser)
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
         verify(view, never()).goToBooking(null)
     }
 
