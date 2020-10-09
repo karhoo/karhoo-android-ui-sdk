@@ -109,8 +109,8 @@ class BookingRequestPresenterTest {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        requestPresenter = BookingRequestPresenter(view, analytics, paymentsService,
-                                                   preferenceStore, tripsService, userStore)
+        requestPresenter = BookingRequestPresenter(view, analytics, preferenceStore, tripsService,
+                                                   userStore)
     }
 
     /**

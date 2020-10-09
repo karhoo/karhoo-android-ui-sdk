@@ -21,7 +21,8 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLay
 class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View, PaymentDropInMVP.Actions {
+    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View,
+      BookingPaymentMVP.Widget, PaymentDropInMVP.Actions {
 
     private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
 
@@ -32,7 +33,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var linkTextStyle: Int = R.style.Text_Action_Primary
 
     var paymentActions: BookingPaymentMVP.PaymentActions? = null
-    var cardActions: BookingPaymentMVP.CardActions? = null
+    var cardActions: BookingPaymentMVP.PaymentViewActions? = null
     private var dropInView: PaymentDropInMVP.View? = null
 
     init {
@@ -47,12 +48,20 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindDropInView() {
-        presenter?.createPaymentView(KarhooApi.userStore.paymentProvider, this)
+        presenter?.createPaymentView(this)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 
     override fun setPaymentView(view: PaymentDropInMVP.View?) {
         dropInView = view
+    }
+
+    override fun setViewVisibility(visibility: Int) {
+        cardActions?.handleViewVisibility(visibility)
+    }
+
+    override fun setPaymentViewVisibility() {
+        presenter?.getPaymentViewVisibility()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -116,7 +125,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
             else -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
-        visibility = VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -167,6 +175,10 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     override fun handlePaymentDetailsUpdate() {
         paymentActions?.handlePaymentDetailsUpdate()
+    }
+
+    override fun updatePaymentViewVisbility(visibility: Int) {
+        paymentLayout.visibility = visibility
     }
 
     override fun initialiseChangeCard(price: QuotePrice?) {

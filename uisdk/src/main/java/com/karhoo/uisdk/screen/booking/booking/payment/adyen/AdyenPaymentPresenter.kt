@@ -24,7 +24,6 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
-import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import org.json.JSONObject
 import java.util.Currency
@@ -46,12 +45,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         userStore.addSavedPaymentObserver(this)
     }
 
-    override fun getDropInConfig(context: Context, sdkToken: String): Any {
-        val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
-            putExtra(AdyenResultActivity.TYPE_KEY, AdyenComponentType.DROPIN.id)
-            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-        }
-
+    override fun getDropInConfig(context: Context, publicKey: String): Any {
         val amount = Amount()
         amount.currency = price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = price?.highPrice.orZero()
@@ -59,40 +53,18 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
                 KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
 
-        val cardConfiguration =
-                CardConfiguration.Builder(context, sdkToken)
-                        .setShopperLocale(Locale.getDefault())
-                        .setHolderNameRequire(true)
-                        .build()
+        val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
+            putExtra(AdyenResultActivity.TYPE_KEY, AdyenComponentType.DROPIN.id)
+            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+        }
 
         return DropInConfiguration.Builder(context, dropInIntent,
                                            AdyenDropInService::class.java)
                 .setAmount(amount)
                 .setEnvironment(environment)
                 .setShopperLocale(Locale.getDefault())
-                .addCardConfiguration(cardConfiguration)
+                .addCardConfiguration(createCardConfig(context, publicKey))
                 .build()
-    }
-
-    private fun getPaymentMethods() {
-        val amount = AdyenAmount(price?.currencyCode ?: DEFAULT_CURRENCY, price?.highPrice.orZero())
-        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(sdkToken)
-        } else {
-            let {
-                val request = AdyenPaymentMethodsRequest(amount = amount)
-                paymentsService.getAdyenPaymentMethods(request).execute { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            result.data.let {
-                                view?.showPaymentUI(this.adyenKey, it, this.price)
-                            }
-                        }
-                        is Resource.Failure -> view?.showError(R.string.something_went_wrong)
-                    }
-                }
-            }
-        }
     }
 
     override fun getPaymentNonce(price: QuotePrice?) {
@@ -127,6 +99,51 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
+    override fun sdkInit(price: QuotePrice?) {
+        this.price = price
+        paymentsService.getAdyenPublicKey().execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    result.data.let {
+                        adyenKey = it.publicKey
+                        getPaymentMethods()
+                    }
+                }
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+            }
+        }
+    }
+
+    private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
+        val saveCard = !KarhooUISDKConfigurationProvider.isGuest()
+        return CardConfiguration.Builder(context, publicKey)
+                .setShopperLocale(Locale.getDefault())
+                .setHolderNameRequire(true)
+                .setShowStorePaymentField(saveCard)
+                .build()
+    }
+
+    private fun getPaymentMethods() {
+        val amount = AdyenAmount(price?.currencyCode ?: DEFAULT_CURRENCY, price?.highPrice.orZero())
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
+            view?.threeDSecureNonce(sdkToken)
+        } else {
+            let {
+                val request = AdyenPaymentMethodsRequest(amount = amount)
+                paymentsService.getAdyenPaymentMethods(request).execute { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data.let {
+                                view?.showPaymentUI(this.adyenKey, it, this.price)
+                            }
+                        }
+                        is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                    }
+                }
+            }
+        }
+    }
+
     private fun passBackThreeDSecureNonce(price: QuotePrice?) {
         val amount = quotePriceToAmount(price)
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
@@ -141,21 +158,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     private fun quotePriceToAmount(price: QuotePrice?): String {
         val currency = Currency.getInstance(price?.currencyCode?.trim())
         return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
-    }
-
-    override fun sdkInit(price: QuotePrice?) {
-        this.price = price
-        paymentsService.getAdyenPublicKey().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        adyenKey = it.publicKey
-                        getPaymentMethods()
-                    }
-                }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
-            }
-        }
     }
 
     private fun updateCardDetails(paymentData: String?) {
