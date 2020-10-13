@@ -24,6 +24,7 @@ import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
@@ -32,6 +33,7 @@ import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT_EXTRA
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
@@ -191,7 +193,7 @@ class GuestBookingTests : Launch {
         }
         address {
             search(SEARCH_ADDRESS)
-            sleep()
+            waitFor(MEDIUM)
             clickBakerStreetResult()
         }
         serverRobot {
@@ -203,11 +205,11 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS_EXTRA)
-            sleep()
+            waitFor(SHORT)
             clickOxfordStreetResult()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             bothSelectedAddressesAreVisible()
         }
@@ -231,7 +233,7 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS)
-            sleep()
+            waitFor(SHORT)
             clickBakerStreetResult()
         }
         serverRobot {
@@ -247,11 +249,11 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS_EXTRA)
-            sleep()
+            waitFor(SHORT)
             clickOxfordStreetResult()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             fullASAPQuotesListCheckGuest()
         }
@@ -355,19 +357,19 @@ class GuestBookingTests : Launch {
             guestBookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            waitFor(MEDIUM)
             pressFirstQuote()
-            sleep()
+            waitFor(MEDIUM)
             fillCorrectInfoGuestDetails()
             enterCardDetails()
-            sleep(LONG)
+            waitFor(LONG)
         } result {
             fullCheckFilledGuestDetailsPage()
             guestBookingCheckCardDetails()
         }
         booking {
             pressBookRideButton()
-            sleep()
+            waitFor(MEDIUM)
         } result {
             checkWebViewDisplayed()
         }
