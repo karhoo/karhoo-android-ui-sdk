@@ -36,7 +36,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun clickDestinationAddressField() {
-        clickButton(R.id.dropoffLayout)
+        clickButton(R.id.dropOffLabel)
     }
 
     fun pressMenuButton() {

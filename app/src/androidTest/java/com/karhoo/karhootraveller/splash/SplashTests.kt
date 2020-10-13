@@ -15,6 +15,7 @@ import com.karhoo.karhootraveller.profile.user.userProfile
 import com.karhoo.karhootraveller.registration.registration
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.serverRobot
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
@@ -124,6 +125,7 @@ class SplashTests : Launch {
     fun userIsSuccessfullyLoggedOut() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -237,6 +239,7 @@ class SplashTests : Launch {
     fun logInWithADifferentUser() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -262,6 +265,7 @@ class SplashTests : Launch {
         }
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             userProfileResponse(HTTP_OK, USER_UPDATED_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -296,6 +300,7 @@ class SplashTests : Launch {
     fun userSuccessfullyLogsIn() {
         serverRobot {
             successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)

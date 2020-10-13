@@ -6,6 +6,7 @@ import com.karhoo.karhootraveller.common.BaseTestRobot
 import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.uisdk.util.TestData.Companion.CARD_ENDING
 import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import com.karhoo.uisdk.util.TestData.Companion.USER_PHONE_CODE
 import com.karhoo.uisdk.util.TestData.Companion.USER_PHONE_NUMBER
 import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED
@@ -198,7 +199,7 @@ class ResultRobot : BaseTestRobot() {
         addCardIsVisible()
     }
 
-    fun fullScreenCheckCardRegistered() {
+    fun fullScreenCheckCardRegisteredBraintree() {
         firstNameFieldIsVisible()
         userFirstNameIsVisible()
         lastNameFieldIsVisible()
@@ -214,12 +215,26 @@ class ResultRobot : BaseTestRobot() {
         changeCardIsVisible()
     }
 
+    fun fullScreenCheckCardRegisteredAdyen() {
+        firstNameFieldIsVisible()
+        userFirstNameIsVisible()
+        lastNameFieldIsVisible()
+        userLastNameIsVisible()
+        emailFieldIsVisible()
+        userEmailIsVisible()
+        countryCodeFieldIsVisible()
+        userCountryCodeIsVisible()
+        phoneNumberFieldIsVisible()
+        userPhoneNumberIsVisible()
+        paymentCardFieldIsNotVisible()
+    }
+
     fun firstNameFieldIsVisible() {
         viewIsVisible(R.id.firstNameLayout)
     }
 
     fun userFirstNameIsVisible() {
-        matchString(R.id.firstNameInput, USER.firstName)
+        matchString(R.id.firstNameInput, USER_INFO.firstName)
     }
 
     fun lastNameFieldIsVisible() {
@@ -227,7 +242,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun userLastNameIsVisible() {
-        matchString(R.id.lastNameInput, USER.lastName)
+        matchString(R.id.lastNameInput, USER_INFO.lastName)
     }
 
     fun emailFieldIsVisible() {
@@ -256,6 +271,10 @@ class ResultRobot : BaseTestRobot() {
 
     fun paymentCardFieldIsVisible() {
         viewIsVisible(R.id.paymentCardLabel)
+    }
+
+    fun paymentCardFieldIsNotVisible() {
+        viewIsNotVisible(R.id.paymentCardLabel)
     }
 
     fun addCardIsVisible() {

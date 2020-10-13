@@ -377,6 +377,12 @@ class BookingTests : Launch {
     @Test
     @AllowFlaky(attempts = 1)
     fun closeSideMenuByClickingOnMap() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         booking(this, CLEAN_TRIP_INTENT) {
             pressMenuButton()
             sleep()
@@ -392,7 +398,13 @@ class BookingTests : Launch {
      * Then:    I cannot see the prebook button
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun noPrebookButtonVisibleWhenNoAddressEntered() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+        }
         booking(this, null) {
             sleep()
         } result {
@@ -552,7 +564,8 @@ class BookingTests : Launch {
      * Book button enabled.
      **/
     @Test
-    fun ASAPBookARiddeScreenFullCheck() {
+    @AllowFlaky(attempts = 5)
+    fun ASAPBookARideScreenFullCheck() {
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)

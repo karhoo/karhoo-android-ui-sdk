@@ -41,7 +41,6 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun getPaymentViewVisibility() {
-        Log.d("Adyen", userStore.paymentProvider?.id)
         val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true))
             GONE else VISIBLE
         view?.setViewVisibility(visibility)

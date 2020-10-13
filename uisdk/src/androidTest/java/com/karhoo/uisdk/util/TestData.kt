@@ -818,12 +818,19 @@ class TestData {
          * User
          *
          */
+
+        val USER_PHONE_CODE = "+44"
+        val USER_PHONE_NUMBER = "7777111111"
+        val USER_UPDATED_PHONE_CODE = "+44"
+        val USER_UPDATED_PHONE_NUMBER = "7910000000"
+
         val USER_INFO = UserInfo(
                 userId = "1234",
                 email = "name@email.com",
                 firstName = "John",
                 lastName = "Smith",
-                phoneNumber = "7777111111",
+                countryCode = USER_PHONE_CODE,
+                phoneNumber = USER_PHONE_NUMBER,
                 locale = "en-GB",
                 primaryOrganisationId = "Karhoo",
                 organisations = listOf(Organisation(
@@ -836,8 +843,17 @@ class TestData {
         val USER_UPDATED_INFO = USER_INFO.copy(
                 firstName = "Jeremy",
                 lastName = "Peter",
-                phoneNumber = "7910000000"
+                countryCode = USER_UPDATED_PHONE_CODE,
+                phoneNumber = USER_UPDATED_PHONE_NUMBER
                                               )
+
+        val USER_INFO_ADYEN = USER_INFO.copy(
+                organisations = listOf(Organisation(
+                        id = "0987",
+                        name = "Karhoo",
+                        roles = listOf("TRIP_ADMIN", "PAYMENT_ADYEN_USER")
+                                                   ))
+                                       )
 
         val PASSWORD_RESET_SUCCESS = ""
 
@@ -914,9 +930,6 @@ class TestData {
                                     )
                                                       )
 
-        val USER_PHONE_CODE = "+44"
-        val USER_PHONE_NUMBER = "7777111111"
-
         val USER = UserInfo(
                 firstName = "John",
                 lastName = "Smith",
@@ -929,9 +942,6 @@ class TestData {
                         name = "Karhoo",
                         roles = listOf("TRIP_ADMIN")))
                            )
-
-        val USER_UPDATED_PHONE_CODE = "+44"
-        val USER_UPDATED_PHONE_NUMBER = "7910000000"
 
         val USER_UPDATED = UserInfo(
                 firstName = "Jeremy",
