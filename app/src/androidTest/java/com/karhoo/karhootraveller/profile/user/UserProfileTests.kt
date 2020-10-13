@@ -240,8 +240,8 @@ class UserProfileTests : Launch {
     @Test
     @AllowFlaky(attempts = 10)
     fun fullCheckProfilePageCardRegistered() {
-        serverRobot {
-
+        preferences {
+            setUserPreference(USER)
         }
         userProfile(this) {
             waitFor(MEDIUM)
