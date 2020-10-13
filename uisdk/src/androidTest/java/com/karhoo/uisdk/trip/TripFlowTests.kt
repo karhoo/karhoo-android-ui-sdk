@@ -57,6 +57,13 @@ class TripFlowTests : Launch {
      **/
     @Test
     fun userNavigatesFromTripDERToBookingScreen() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
+            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
@@ -80,6 +87,13 @@ class TripFlowTests : Launch {
      **/
     @Test
     fun userNavigatesFromTripToBookingScreenAfterCancellation() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
+            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
@@ -113,6 +127,13 @@ class TripFlowTests : Launch {
     @Test
     @AllowFlaky(attempts = 5)
     fun checkPOBDriverDetailsElements() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
+            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_POB,
                 tracking = DRIVER_TRACKING,
@@ -137,6 +158,13 @@ class TripFlowTests : Launch {
      **/
     @Test
     fun userIsTakenToCompletedRideScreen() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
+            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_POB,
                 tracking = DRIVER_TRACKING,

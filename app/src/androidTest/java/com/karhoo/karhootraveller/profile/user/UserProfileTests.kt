@@ -17,6 +17,7 @@ import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -39,6 +40,13 @@ class UserProfileTests : Launch {
     @get:Rule
     var chain: RuleChain = RuleChain.outerRule(flakyRule)
             .around(activityRule)
+
+    @Before
+    fun clearUser() {
+        preferences {
+            clearUserPreference()
+        }
+    }
 
     @After
     fun tearDown() {
@@ -230,10 +238,10 @@ class UserProfileTests : Launch {
     }
 
     /**
-     * Given:   I have a card linked to my account
+     * Given:   I have a card linked to my account using Adyen payment as provider
      * When:    I am on the profile screen
      * Then:    I can see: First Name, Last Name, email, country code, mobile number, change card
-     * button,
+     * button (add card) is not visible.
      **/
     @Test
     @AllowFlaky(attempts = 10)
@@ -244,7 +252,7 @@ class UserProfileTests : Launch {
         userProfile(this) {
             waitFor(MEDIUM)
         } result {
-            fullScreenCheckCardRegistered()
+            fullScreenCheckCardRegisteredBraintree()
         }
     }
 
