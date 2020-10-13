@@ -261,6 +261,7 @@ class RidesTests : Launch {
      * Then:    I cannot see the pickup type on the upcoming ride
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun airportMeetingPointNotVisibleOnDropoffUpcoming() {
         serverRobot {
             successfulToken()

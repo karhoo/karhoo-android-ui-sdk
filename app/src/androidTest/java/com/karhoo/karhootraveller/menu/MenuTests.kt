@@ -12,7 +12,6 @@ import com.karhoo.karhootraveller.profile.user.userProfile
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.USER

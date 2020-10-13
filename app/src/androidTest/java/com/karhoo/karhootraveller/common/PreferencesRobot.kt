@@ -43,7 +43,7 @@ class PreferencesRobot {
             successfulToken()
             userProfileResponse(HTTP_OK, USER_INFO_ADYEN)
             paymentsProviderResponse(HTTP_OK, ADYEN_PROVIDER)
-            sdkInitResponse(HTTP_OK, ADYEN_PUBLIC_KEY)
+            paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         loginUser(userInfo)
     }

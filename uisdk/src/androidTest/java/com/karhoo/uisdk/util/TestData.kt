@@ -853,7 +853,7 @@ class TestData {
                         name = "Karhoo",
                         roles = listOf("TRIP_ADMIN", "PAYMENT_ADYEN_USER")
                                                    ))
-                                       )
+                                            )
 
         val PASSWORD_RESET_SUCCESS = ""
 

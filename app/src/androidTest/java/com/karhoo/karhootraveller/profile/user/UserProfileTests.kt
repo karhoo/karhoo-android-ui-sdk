@@ -13,12 +13,11 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.USER
-import com.karhoo.uisdk.util.TestData.Companion.USER_INFO_ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
-import org.junit.Ignore
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -41,6 +40,13 @@ class UserProfileTests : Launch {
     @get:Rule
     var chain: RuleChain = RuleChain.outerRule(flakyRule)
             .around(activityRule)
+
+    @Before
+    fun clearUser() {
+        preferences {
+            clearUserPreference()
+        }
+    }
 
     @After
     fun tearDown() {
@@ -355,25 +361,6 @@ class UserProfileTests : Launch {
             waitFor(MEDIUM)
         } result {
             fullScreenCheckNoCardRegistered()
-        }
-    }
-
-    /**
-     * Given: I have no card linked to my account
-     * When:  I am on the profile screen
-     * Then:  I can see: First Name, Last Name, email, country code, mobile number, add card button
-     **/
-    @Ignore
-    @Test
-    @AllowFlaky(attempts = 10)
-    fun fullCheckProfilePageAdyenUser() {
-        preferences {
-            setUserPreferenceAdyen(USER_INFO_ADYEN)
-        }
-        userProfile(this) {
-            waitFor(MEDIUM)
-        } result {
-            fullScreenCheckCardRegisteredAdyen()
         }
     }
 }
