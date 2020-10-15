@@ -35,6 +35,9 @@ interface BookingMapMVP {
 
         fun locationPermissionGranted()
 
+        fun hideLocateUserButton()
+
+        fun showLocateUserButton()
     }
 
     interface Presenter {
@@ -53,6 +56,7 @@ interface BookingMapMVP {
 
         fun locationPermissionGranted()
 
+        fun checkLocateUser()
     }
 
     interface Actions : ErrorView

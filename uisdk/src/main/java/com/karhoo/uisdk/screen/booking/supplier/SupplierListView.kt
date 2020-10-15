@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.supplier
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
@@ -29,9 +28,7 @@ import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.ContactSupplier
 import com.karhoo.uisdk.screen.booking.supplier.category.CategoriesViewModel
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
-import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_supplier.view.collapsiblePanelView
-import kotlinx.android.synthetic.main.uisdk_view_supplier.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_supplier_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_supplier_list.view.chevronIcon
 import kotlinx.android.synthetic.main.uisdk_view_supplier_list.view.supplierRecyclerView
@@ -48,14 +45,14 @@ class SupplierListView @JvmOverloads constructor(
 
     private var presenter = SupplierListPresenter(this, KarhooUISDK.analytics)
 
-    var isSupplierListVisible = false
+    private var isSupplierListVisible = false
         private set
 
     init {
         inflate(context, R.layout.uisdk_view_supplier, this)
 
         collapsiblePanelView.enable()
-        showLocateMeButton()
+        hideListInitially()
 
         supplierSortWidget.setListener(this)
         chevronIcon.setOnClickListener { presenter.showMore() }
@@ -183,17 +180,6 @@ class SupplierListView @JvmOverloads constructor(
     override fun hideNoAvailability() {
         bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
                                                   .Availability)
-    }
-
-    private fun showLocateMeButton() {
-        if (isGuest()) {
-            locateMeButton.visibility = View.INVISIBLE
-            locateMeButton.isClickable = false
-        } else {
-            locateMeButton.visibility = View.VISIBLE
-            locateMeButton.isClickable = true
-        }
-        hideListInitially()
     }
 
     override fun setSupplierListVisibility() {

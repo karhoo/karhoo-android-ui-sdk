@@ -32,6 +32,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider.isGuest
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -49,6 +50,7 @@ import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
 import com.karhoo.uisdk.util.extension.showShadowedPolyLine
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
@@ -87,6 +89,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     init {
         getCustomisationParameters(context, attrs, defStyleAttr)
         View.inflate(context, R.layout.uisdk_view_booking_map, this)
+        presenter.checkLocateUser()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -195,7 +198,8 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
-            } ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
+            }
+                    ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
             pickupPinIcon.visibility = View.GONE
             zoomMapToMarkers(origin, destination)
 
@@ -404,5 +408,15 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     override fun locationPermissionGranted() {
         presenter.locationPermissionGranted()
+    }
+
+    override fun hideLocateUserButton() {
+        locateMeButton.visibility = View.INVISIBLE
+        locateMeButton.isClickable = false
+    }
+
+    override fun showLocateUserButton() {
+        locateMeButton.visibility = View.VISIBLE
+        locateMeButton.isClickable = true
     }
 }

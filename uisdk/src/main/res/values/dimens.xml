@@ -44,7 +44,7 @@
     <dimen name="collapsible_panel_collapsed_trip_info">225dp</dimen>
 
     <!-- Quotes list height -->
-    <dimen name="quote_list_height">260dp</dimen>
+    <dimen name="quote_list_height">320dp</dimen>
 
     <dimen name="logo_size">32dp</dimen>
     <dimen name="driver_photo_size">48dp</dimen>

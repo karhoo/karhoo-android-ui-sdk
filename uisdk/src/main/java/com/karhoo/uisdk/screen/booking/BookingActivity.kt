@@ -55,7 +55,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidg
 import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestPassengerDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
-import kotlinx.android.synthetic.main.uisdk_view_supplier.locateMeButton
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationMVP.Actions, BookingRequestMVP.Actions {
