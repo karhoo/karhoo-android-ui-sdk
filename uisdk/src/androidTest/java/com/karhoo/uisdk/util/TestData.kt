@@ -813,6 +813,8 @@ class TestData {
 
         val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Braintree"))
 
+        val ADYEN_PAYMENT_METHODS_EMPTY = ""
+
         /**
          *
          * User

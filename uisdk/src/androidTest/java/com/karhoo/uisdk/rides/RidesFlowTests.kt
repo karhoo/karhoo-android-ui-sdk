@@ -11,7 +11,6 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
@@ -20,7 +19,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.net.HttpURLConnection
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)

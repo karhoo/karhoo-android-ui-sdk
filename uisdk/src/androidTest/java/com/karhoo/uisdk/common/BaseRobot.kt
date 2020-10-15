@@ -345,9 +345,9 @@ open abstract class BaseTestRobot {
         }
     }
 
-    /*
-    * Perform action of waiting for a specific time.
-    */
+    /**
+     * Perform action of waiting for a specific time.
+     */
     open fun waitFor(millis: Long): ViewAction? {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {

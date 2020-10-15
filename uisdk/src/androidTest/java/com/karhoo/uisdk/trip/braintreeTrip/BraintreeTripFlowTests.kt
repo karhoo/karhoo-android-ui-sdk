@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.trip
+package com.karhoo.uisdk.trip.braintreeTrip
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +12,14 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
-import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.trip.trip
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.SHORT
+import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
@@ -24,16 +27,19 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_USER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_COMPLETED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
+import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
+import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.net.HttpURLConnection
+import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
-class TripFlowTests : Launch {
+class BraintreeTripFlowTests : Launch {
 
     @get:Rule
     val activityRule: ActivityTestRule<TripActivity> =
@@ -42,8 +48,19 @@ class TripFlowTests : Launch {
     @get:Rule
     var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
+    private var flakyRule = FlakyTestRule()
+
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
+
+    @Before
+    fun setUp() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+        }
+    }
 
     @After
     fun tearDown() {
@@ -58,10 +75,7 @@ class TripFlowTests : Launch {
     @Test
     fun userNavigatesFromTripDERToBookingScreen() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
-            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         mockTripSuccessResponse(
@@ -73,7 +87,7 @@ class TripFlowTests : Launch {
             clickBackToolbarButton()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
             result {
                 checkBookingScreenIsShown()
             }
@@ -88,10 +102,7 @@ class TripFlowTests : Launch {
     @Test
     fun userNavigatesFromTripToBookingScreenAfterCancellation() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
-            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         mockTripSuccessResponse(
@@ -101,19 +112,19 @@ class TripFlowTests : Launch {
                 reverseGeo = REVERSE_GEO_SUCCESS)
         serverRobot {
             cancelResponse(
-                    code = HttpURLConnection.HTTP_CREATED,
+                    code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
-                    trip = TestData.TRIP.tripId)
+                    trip = TRIP.tripId)
         }
         trip(this) {
-            sleep()
+            waitFor(SHORT)
             clickOnDriverDetails()
             clickOnCancelRide()
             clickConfirmCancellation()
             clickOKOnCancelledConfirmation()
         }
         booking {
-            sleep()
+            waitFor(SHORT)
         } result {
             checkBookingScreenIsShown()
         }
@@ -128,10 +139,7 @@ class TripFlowTests : Launch {
     @AllowFlaky(attempts = 5)
     fun checkPOBDriverDetailsElements() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
-            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         mockTripSuccessResponse(
@@ -159,10 +167,7 @@ class TripFlowTests : Launch {
     @Test
     fun userIsTakenToCompletedRideScreen() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, TestData.BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, TestData.BRAINTREE_TOKEN)
-            userProfileResponse(HTTP_OK, TestData.USER_INFO)
+            userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         mockTripSuccessResponse(
@@ -192,9 +197,9 @@ class TripFlowTests : Launch {
     private fun mockTripSuccessResponse(status: Any, tracking: Any, details: Any, reverseGeo: Any) {
         serverRobot {
             successfulToken()
-            bookingStatusResponse(code = HTTP_OK, response = status, trip = TestData.TRIP.tripId)
-            driverTrackingResponse(code = HTTP_OK, response = tracking, trip = TestData.TRIP.tripId)
-            bookingDetailsResponse(code = HTTP_OK, response = details, trip = TestData.TRIP.tripId)
+            bookingStatusResponse(code = HTTP_OK, response = status, trip = TRIP.tripId)
+            driverTrackingResponse(code = HTTP_OK, response = tracking, trip = TRIP.tripId)
+            bookingDetailsResponse(code = HTTP_OK, response = details, trip = TRIP.tripId)
             reverseGeocodeResponse(code = HTTP_OK, response = reverseGeo)
         }
     }
@@ -206,7 +211,7 @@ class TripFlowTests : Launch {
     companion object {
         val INTENT = Intent().apply {
             putExtras(Bundle().apply {
-                putParcelable(TripActivity.Builder.EXTRA_TRIP, TestData.TRIP)
+                putParcelable(TripActivity.Builder.EXTRA_TRIP, TRIP)
             })
         }
     }

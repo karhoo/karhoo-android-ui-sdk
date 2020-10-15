@@ -39,6 +39,7 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestSDKConfig
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
@@ -182,6 +183,7 @@ class GuestBookingTests : Launch {
      * Then:    I can see both addresses populated in the correct fields on the booking screen
      **/
     @Test
+    @AllowFlaky(attempts = 10)
     fun searchAddressesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -222,6 +224,7 @@ class GuestBookingTests : Launch {
      * Then:    The booking screen populates the quotes as expecte
      **/
     @Test
+    @AllowFlaky(attempts = 10)
     fun searchAddressesAndGetQuotesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -342,6 +345,7 @@ class GuestBookingTests : Launch {
      * conditions text is visible, Book ride button is disabled.
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun addCardGuestDetailsPageFullCheck() {
         KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
