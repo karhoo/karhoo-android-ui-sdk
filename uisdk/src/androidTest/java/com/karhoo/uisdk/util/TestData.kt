@@ -969,12 +969,6 @@ class TestData {
             return formatter.parse(dateScheduled)
         }
 
-        val SHORT = measureTimeMillis { 350 }
-
-        val MEDIUM = measureTimeMillis { 1000 }
-
-        val LONG = measureTimeMillis { 5000 }
-
         fun setUserInfo(provider: String) {
             val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
             val sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE)

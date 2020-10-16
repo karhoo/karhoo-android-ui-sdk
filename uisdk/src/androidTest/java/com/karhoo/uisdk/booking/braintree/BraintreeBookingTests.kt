@@ -25,8 +25,6 @@ import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.FLEET_INFO_ALT
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.util.TestData.Companion.LONG
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
@@ -38,7 +36,6 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.THIRD_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
@@ -108,7 +105,7 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_BAD_REQUEST, GENERAL_ERROR)
         }
         booking(this, null) {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             checkSnackbarWithText(R.string.K0001)
         }
@@ -127,7 +124,7 @@ class BraintreeBookingTests : Launch {
             quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -142,7 +139,7 @@ class BraintreeBookingTests : Launch {
             quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            waitFor(MEDIUM)
+            mediumSleep()
             try {
                 //Send app to background
                 pressDeviceBackButton()
@@ -150,7 +147,7 @@ class BraintreeBookingTests : Launch {
             }
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -190,7 +187,7 @@ class BraintreeBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             fullASAPQuotesListCheck()
         }
@@ -209,7 +206,7 @@ class BraintreeBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             quotesListNotExpanded(THIRD_FLEET)
         }
@@ -233,7 +230,7 @@ class BraintreeBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressExpandListButton()
         } result {
             FLEET_INFO_ALT.name?.let { quotesListIsExpanded(it) }
@@ -258,7 +255,7 @@ class BraintreeBookingTests : Launch {
         }
         booking(this, CLEAN_TRIP_INTENT) {
             pressPrebookButton()
-            waitFor(SHORT)
+            shortSleep()
         } result {
             localTimeMessageIsDisplayed()
         }
@@ -275,9 +272,9 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            waitFor(SHORT)
+            shortSleep()
             pressPrebookButton()
-            waitFor(SHORT)
+            shortSleep()
             pressCancelPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -295,11 +292,11 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            waitFor(SHORT)
+            shortSleep()
             pressPrebookButton()
-            waitFor(SHORT)
+            shortSleep()
             pressOKPrebookWindow()
-            waitFor(SHORT)
+            shortSleep()
             pressCancelPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -318,11 +315,11 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            waitFor(SHORT)
+            shortSleep()
             pressPrebookButton()
-            waitFor(SHORT)
+            shortSleep()
             pressOKPrebookWindow()
-            waitFor(SHORT)
+            shortSleep()
             pressOKPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -340,7 +337,7 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -359,7 +356,7 @@ class BraintreeBookingTests : Launch {
         }
         booking(this, CLEAN_TRIP_INTENT) {
             pressMenuButton()
-            waitFor(SHORT)
+            shortSleep()
             pressOutOfSideMenu()
         } result {
             sideMenuIsNotVisible()
@@ -375,7 +372,7 @@ class BraintreeBookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun noPrebookButtonVisibleWhenNoAddressEntered() {
         booking(this, null) {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             prebookButtonIsNotVisible()
         }
@@ -394,7 +391,7 @@ class BraintreeBookingTests : Launch {
             quoteIdResponse(HTTP_BAD_REQUEST, ADDRESSES_IDENTICAL)
         }
         booking(this, IDENTICAL_ADDRESSES_TRIP_INTENT) {
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             samePickUpAndDestinationErrorIsDisplayed()
         }
@@ -414,7 +411,7 @@ class BraintreeBookingTests : Launch {
         booking(this) {
             pressPrebookButton()
             pressOKPrebookWindow()
-            waitFor(SHORT)
+            shortSleep()
             pressOKPrebookWindow()
         } result {
             prebookLogoNotVisible()
@@ -424,7 +421,7 @@ class BraintreeBookingTests : Launch {
         }
         booking {
             clickOnLocateMeButton()
-            waitFor(SHORT)
+            shortSleep()
         } result {
             prebookLogoNotVisible()
         }
@@ -451,7 +448,7 @@ class BraintreeBookingTests : Launch {
             prebookLogoNotVisible()
         }
         booking {
-            waitFor(MEDIUM)
+            mediumSleep()
             clickPickUpAddressField()
         }
         address {
@@ -459,7 +456,7 @@ class BraintreeBookingTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
             prebookLogoNotVisible()
@@ -480,9 +477,9 @@ class BraintreeBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             bookARideScreenIsVisible()
         }
@@ -501,9 +498,9 @@ class BraintreeBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(SHORT)
+            shortSleep()
             pressCloseBookARideScreen()
         } result {
             fullASAPQuotesListCheck()
@@ -529,9 +526,9 @@ class BraintreeBookingTests : Launch {
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             fullCheckBookARideScreenASAP()
         }
@@ -557,11 +554,11 @@ class BraintreeBookingTests : Launch {
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
             pressBookRideButton()
-            waitFor(LONG)
+            longSleep()
         } result {
             checkDriverDetails()
         }

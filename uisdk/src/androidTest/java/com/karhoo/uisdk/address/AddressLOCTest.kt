@@ -12,7 +12,6 @@ import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -61,7 +60,7 @@ class AddressLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

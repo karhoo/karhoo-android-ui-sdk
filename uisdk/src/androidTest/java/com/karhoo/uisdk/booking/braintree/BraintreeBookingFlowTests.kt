@@ -13,11 +13,9 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.rides.rides
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_DISPLAY_ADDRESS
@@ -26,7 +24,6 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
@@ -89,7 +86,7 @@ class BraintreeBookingFlowTests : Launch {
             pressRidesButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
         }
@@ -154,7 +151,7 @@ class BraintreeBookingFlowTests : Launch {
         }
         address {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             enterDestinationHintIsVisible()
@@ -296,7 +293,7 @@ class BraintreeBookingFlowTests : Launch {
             clickDestinationAddressField()
         }
         address {
-            sleep()
+            shortSleep()
         } result {
             checkAddressDestinationPageIsShown()
             setLocationOnMapButtonIsEnabled()
@@ -325,14 +322,14 @@ class BraintreeBookingFlowTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
             clickOnLocateMeButton()
-            waitFor(SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -360,7 +357,7 @@ class BraintreeBookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -387,7 +384,7 @@ class BraintreeBookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisibleDropOff(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -415,7 +412,7 @@ class BraintreeBookingFlowTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
         }

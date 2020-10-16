@@ -12,7 +12,6 @@ import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.TestData.Companion.COULD_NOT_CANCEL_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_DRIVER_MEETING_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_KARHOO_MEETING_POINT_UNSET
@@ -87,7 +86,7 @@ class RideDetailTests : Launch {
             fareResponse(code = HTTP_OK, response = FARE_COMPLETE, tripId = TRIP.tripId)
         }
         rideDetail(this, TRIP_COMPLETED_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             completedRideFullCheck()
         }
@@ -106,7 +105,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_CONFIRMED_INTENT_MEETING_POINT_UNSET) {
-            sleep()
+            shortSleep()
         } result {
             confirmedRideFullCheck()
         }
@@ -125,7 +124,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_DER_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             upcomingDriverEnRouteRideFullCheck()
         }
@@ -144,7 +143,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_POB_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             upcomingPassengerOnBoardRideDetailsFullCheck()
         }
@@ -163,7 +162,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_PREBOOKED_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             upcomingPrebookedRideDetailsFullCheck()
         }
@@ -198,7 +197,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_CANCELLED_BY_USER_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             cancelledByUserRideFullCheck()
         }
@@ -217,7 +216,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_CANCELLED_BY_DRIVER_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             cancelledByDriverRideFullCheck()
         }
@@ -236,7 +235,7 @@ class RideDetailTests : Launch {
             successfulToken()
         }
         rideDetail(this, TRIP_CANCELLED_BY_KARHOO_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             cancelledByKarhooRideFullCheck()
         }
@@ -255,7 +254,7 @@ class RideDetailTests : Launch {
         }
         rideDetail(this, TRIP_CONFIRMED_INTENT_MEETING_POINT_UNSET) {
             clickCancelRideDetails()
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnDismiss()
         } result {
             cancelDialogIsNotVisible()
@@ -276,7 +275,7 @@ class RideDetailTests : Launch {
         }
         rideDetail(this, TRIP_COMPLETED_INTENT) {
             clickOnReportIssue()
-            sleep()
+            shortSleep()
         } result {
             reportIssueWithRideElementsChecks()
         }

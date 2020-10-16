@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.trip.braintreeTrip
+package com.karhoo.uisdk.trip
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,13 +12,10 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
-import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
@@ -39,7 +36,7 @@ import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
-class BraintreeTripFlowTests : Launch {
+class TripFlowTests : Launch {
 
     @get:Rule
     val activityRule: ActivityTestRule<TripActivity> =
@@ -87,7 +84,7 @@ class BraintreeTripFlowTests : Launch {
             clickBackToolbarButton()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
             result {
                 checkBookingScreenIsShown()
             }
@@ -117,14 +114,14 @@ class BraintreeTripFlowTests : Launch {
                     trip = TRIP.tripId)
         }
         trip(this) {
-            waitFor(SHORT)
+            shortSleep()
             clickOnDriverDetails()
             clickOnCancelRide()
             clickConfirmCancellation()
             clickOKOnCancelledConfirmation()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             checkBookingScreenIsShown()
         }
@@ -148,11 +145,11 @@ class BraintreeTripFlowTests : Launch {
                 details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            waitFor(MEDIUM)
+            mediumSleep()
             clickBackToolbarButton()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             checkBookingScreenIsShown()
         }
@@ -176,7 +173,7 @@ class BraintreeTripFlowTests : Launch {
                 details = TRIP_POB,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         trip(this) {
-            waitFor(MEDIUM)
+            mediumSleep()
         }
         mockTripSuccessResponse(
                 status = TRIP_STATUS_COMPLETED,
@@ -185,10 +182,10 @@ class BraintreeTripFlowTests : Launch {
                 reverseGeo = Any()
                                )
         trip {
-            waitFor(MEDIUM)
+            mediumSleep()
         }
         rideDetail {
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             completedRideFullCheckFromTrip()
         }

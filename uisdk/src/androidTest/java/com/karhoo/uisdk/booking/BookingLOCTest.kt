@@ -19,7 +19,6 @@ import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import org.junit.After
 import org.junit.Rule
@@ -69,7 +68,7 @@ class BookingLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

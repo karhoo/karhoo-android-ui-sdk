@@ -9,7 +9,6 @@ import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.karhootraveller.common.networkServiceRobot
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.splash.SplashActivity
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,7 +35,7 @@ class SplashLOCTest : Launch {
     @Test
     fun snackbarShowsToTheUserWhenWifiIsDisabledSplashScreen() {
         splash(this) {
-            sleep(MEDIUM)
+            mediumSleep()
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }

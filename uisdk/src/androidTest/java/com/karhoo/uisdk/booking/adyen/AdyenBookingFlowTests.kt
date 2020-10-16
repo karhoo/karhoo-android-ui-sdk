@@ -17,16 +17,13 @@ import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
-import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS_EXTRA
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_DISPLAY_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
@@ -88,7 +85,7 @@ class AdyenBookingFlowTests : Launch {
             pressRidesButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
         }
@@ -153,7 +150,7 @@ class AdyenBookingFlowTests : Launch {
         }
         address {
             search(TestData.SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             enterDestinationHintIsVisible()
@@ -295,7 +292,7 @@ class AdyenBookingFlowTests : Launch {
             clickDestinationAddressField()
         }
         address {
-            sleep()
+            shortSleep()
         } result {
             checkAddressDestinationPageIsShown()
             setLocationOnMapButtonIsEnabled()
@@ -325,7 +322,7 @@ class AdyenBookingFlowTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            waitFor(LONG)
+            longSleep()
             clickOnLocateMeButton()
         } result {
             reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
@@ -354,7 +351,7 @@ class AdyenBookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            waitFor(TestData.SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -381,7 +378,7 @@ class AdyenBookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            waitFor(TestData.SHORT)
+            shortSleep()
         } result {
             reverseGeoAddressVisibleDropOff(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
@@ -405,11 +402,11 @@ class AdyenBookingFlowTests : Launch {
             clickPickUpAddressField()
         }
         address {
-            search(TestData.SEARCH_ADDRESS)
+            search(SEARCH_ADDRESS)
             clickBakerStreetResult()
         }
         booking {
-            waitFor(TestData.SHORT)
+            shortSleep()
         } result {
             selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
         }

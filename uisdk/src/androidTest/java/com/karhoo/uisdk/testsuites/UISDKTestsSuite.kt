@@ -9,10 +9,8 @@ import com.karhoo.uisdk.booking.adyen.AdyenBookingFlowTests
 import com.karhoo.uisdk.ridedetail.RideDetailTests
 import com.karhoo.uisdk.rides.RidesFlowTests
 import com.karhoo.uisdk.rides.RidesTests
-import com.karhoo.uisdk.trip.adyenTrip.AdyenTripFlowTests
-import com.karhoo.uisdk.trip.adyenTrip.AdyenTripTests
-import com.karhoo.uisdk.trip.braintreeTrip.BraintreeTripFlowTests
-import com.karhoo.uisdk.trip.braintreeTrip.BraintreeTripTests
+import com.karhoo.uisdk.trip.TripFlowTests
+import com.karhoo.uisdk.trip.TripTests
 import junit.framework.TestSuite
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
@@ -22,15 +20,13 @@ import org.junit.runners.Suite
         AddressTests::class,
         AdyenBookingTests::class,
         AdyenBookingFlowTests::class,
-        AdyenTripFlowTests::class,
-        AdyenTripTests::class,
         BraintreeBookingFlowTests::class,
         BraintreeBookingTests::class,
         RideDetailTests::class,
         RidesFlowTests::class,
         RidesTests::class,
-        BraintreeTripFlowTests::class,
-        BraintreeTripTests::class,
+        TripFlowTests::class,
+        TripTests::class,
         GuestBookingTests::class
                    )
 

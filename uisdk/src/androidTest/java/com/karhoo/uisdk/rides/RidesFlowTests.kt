@@ -84,7 +84,7 @@ class RidesFlowTests : Launch {
         }
         rides {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
             clickBookRideButton()
         }
         booking {
