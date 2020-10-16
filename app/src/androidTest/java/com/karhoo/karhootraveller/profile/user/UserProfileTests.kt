@@ -11,7 +11,6 @@ import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.profile.ProfileActivity
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.USER
 import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
@@ -71,7 +70,7 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            sleep()
+            shortSleep()
         } result {
             noProfileChangesFullCheck()
         }
@@ -250,7 +249,7 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             fullScreenCheckCardRegisteredBraintree()
         }
@@ -317,7 +316,7 @@ class UserProfileTests : Launch {
         }
         userProfile(this) {
             updateUserProfileWithDefaultInfo()
-            sleep()
+            shortSleep()
         } result {
             updatedProfileChangesFullCheck()
             checkSnackbarWithText(R.string.profile_update_successful)
@@ -340,7 +339,7 @@ class UserProfileTests : Launch {
         }
         userProfile(this) {
             updateUserProfileWithDefaultInfo()
-            sleep()
+            shortSleep()
         } result {
             checkSnackbarWithText(R.string.K0001)
         }
@@ -358,7 +357,7 @@ class UserProfileTests : Launch {
             setUserPreferenceNoCard(USER)
         }
         userProfile(this) {
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             fullScreenCheckNoCardRegistered()
         }

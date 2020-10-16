@@ -144,6 +144,10 @@ class BookingRobot : BaseTestRobot() {
     fun pressCloseBookARideScreen() {
         clickButtonIsDescendant(R.id.cancelButton, R.id.bookingRequestLayout)
     }
+
+    fun pressAddPaymentField() {
+        clickButton(R.id.bookingRequestPaymentDetailsWidget)
+    }
 }
 
 class ResultRobot : BaseTestRobot() {
@@ -600,4 +604,9 @@ class ResultRobot : BaseTestRobot() {
     fun checkWebViewDisplayed() {
         viewIsVisible(R.id.activityWebView)
     }
+
+    fun checkAdyenWidgetIsShown() {
+        textIsVisible(R.string.change_payment_method)
+    }
+
 }

@@ -10,7 +10,6 @@ import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.EMAIL_ALREADY_IN_USE
 import com.karhoo.uisdk.util.TestData.Companion.INVALID_PHONE_NUMBER
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.REGISTRATION_FAILED
 import org.junit.Rule
 import org.junit.Test
@@ -42,7 +41,7 @@ class RegistrationTests : Launch {
         registration(this) {
             clickOnTermsAndConditionsButton()
         } result {
-            sleep()
+            shortSleep()
             termsAndConditionsPageIsShown()
         }
     }
@@ -74,7 +73,7 @@ class RegistrationTests : Launch {
         }
         registration(this) {
             enterRegistrationDetailsAlreadyUsedEmail()
-            waitFor(LONG)
+            mediumSleep()
         } result {
             cannotRegisterUserErrorIsShown()
         }
@@ -193,7 +192,7 @@ class RegistrationTests : Launch {
             fillInvalidPhoneNumberRegistration()
             enterRegistrationDetailsInvalidNumber()
         } result {
-            sleep()
+            shortSleep()
             invalidNumberErrorIsShown()
             continueButtonIsDisabled()
         }

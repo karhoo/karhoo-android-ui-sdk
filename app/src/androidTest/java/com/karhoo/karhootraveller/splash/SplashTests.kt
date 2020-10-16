@@ -17,7 +17,6 @@ import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
@@ -73,7 +72,7 @@ class SplashTests : Launch {
     @Test
     fun userOpensRegistrationScreenFromSplash() {
         splash(this) {
-            sleep()
+            shortSleep()
             clickOnRequestInviteButton()
         } result {
             registrationPageIsShown()
@@ -109,7 +108,7 @@ class SplashTests : Launch {
     @Test
     fun userOpensSignInScreenFromSplash() {
         splash(this) {
-            sleep()
+            shortSleep()
             clickOnSignInButton()
         } result {
             loginPageIsShown()
@@ -131,7 +130,7 @@ class SplashTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         splash(this) {
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnSignInButton()
         }
         login {
@@ -149,7 +148,7 @@ class SplashTests : Launch {
             clickSignOutButton()
         }
         splash {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             splashScreenIsVisible()
         }
@@ -163,7 +162,7 @@ class SplashTests : Launch {
     @Test
     fun userReturnsToSplashFromLoginPageBackButton() {
         splash(this) {
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnSignInButton()
         }
         login {
@@ -183,7 +182,7 @@ class SplashTests : Launch {
     @Test
     fun userReturnsToSplashFromLoginPageCancelButton() {
         splash(this) {
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnSignInButton()
         }
         login {
@@ -216,13 +215,13 @@ class SplashTests : Launch {
             clickContinueButtonRegistration()
         }
         splash {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             registrationConfirmationMessageIsShown()
         }
         splash {
             clickGotItButton()
-            sleep()
+            shortSleep()
         } result {
             splashScreenIsVisible()
         }
@@ -245,7 +244,7 @@ class SplashTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         splash(this) {
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnSignInButton()
         }
         login {
@@ -253,7 +252,7 @@ class SplashTests : Launch {
             userClicksOnSignInButton()
         }
         booking {
-            sleep(MEDIUM)
+            mediumSleep()
             pressMenuButton()
         }
         menu {
@@ -271,7 +270,7 @@ class SplashTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         splash {
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnSignInButton()
         }
         login {
@@ -285,7 +284,7 @@ class SplashTests : Launch {
             clickOnProfileButton()
         }
         userProfile {
-            sleep()
+            shortSleep()
         } result {
             updatedProfileChangesFullCheck()
         }
@@ -306,7 +305,7 @@ class SplashTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         splash(this) {
-            sleep(MEDIUM)
+            shortSleep()
             clickOnSignInButton()
         }
         login {
@@ -314,7 +313,7 @@ class SplashTests : Launch {
             userClicksOnSignInButton()
         }
         booking {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             checkBookingScreenIsShown()
         }

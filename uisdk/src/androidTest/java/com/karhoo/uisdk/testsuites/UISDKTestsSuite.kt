@@ -1,10 +1,11 @@
 package com.karhoo.uisdk.testsuites
 
 import com.karhoo.uisdk.address.AddressTests
-import com.karhoo.uisdk.booking.AdyenBookingTests
-import com.karhoo.uisdk.booking.BookingFlowTests
-import com.karhoo.uisdk.booking.BookingTests
+import com.karhoo.uisdk.booking.adyen.AdyenBookingTests
+import com.karhoo.uisdk.booking.braintree.BraintreeBookingFlowTests
+import com.karhoo.uisdk.booking.braintree.BraintreeBookingTests
 import com.karhoo.uisdk.booking.GuestBookingTests
+import com.karhoo.uisdk.booking.adyen.AdyenBookingFlowTests
 import com.karhoo.uisdk.ridedetail.RideDetailTests
 import com.karhoo.uisdk.rides.RidesFlowTests
 import com.karhoo.uisdk.rides.RidesTests
@@ -18,8 +19,9 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
         AddressTests::class,
         AdyenBookingTests::class,
-        BookingFlowTests::class,
-        BookingTests::class,
+        AdyenBookingFlowTests::class,
+        BraintreeBookingFlowTests::class,
+        BraintreeBookingTests::class,
         RideDetailTests::class,
         RidesFlowTests::class,
         RidesTests::class,
@@ -28,4 +30,4 @@ import org.junit.runners.Suite
         GuestBookingTests::class
                    )
 
-class UISDKTestsSuiteNoLOCTests : TestSuite()
+class UISDKTestsSuite : TestSuite()

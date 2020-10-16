@@ -4,7 +4,6 @@ import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.common.BaseTestRobot
 import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.uisdk.util.TestData.Companion.FILL_EMAIL
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.SHOW_PASSWORD
 import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED
 
@@ -49,7 +48,7 @@ class LoginRobot : BaseTestRobot() {
 
     fun validEmailAndPasswordLogin() {
         fillValidEmailLogin()
-        sleep(MEDIUM)
+        mediumSleep()
         fillValidPasswordLogin()
     }
 
