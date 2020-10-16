@@ -14,7 +14,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
-import com.karhoo.uisdk.booking.braintree.BraintreeBookingTests
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
@@ -393,7 +392,7 @@ class AdyenBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_BAD_REQUEST, ADDRESSES_IDENTICAL)
         }
-        booking(this, BraintreeBookingTests.IDENTICAL_ADDRESSES_TRIP_INTENT) {
+        booking(this, IDENTICAL_ADDRESSES_TRIP_INTENT) {
             shortSleep()
         } result {
             samePickUpAndDestinationErrorIsDisplayed()
