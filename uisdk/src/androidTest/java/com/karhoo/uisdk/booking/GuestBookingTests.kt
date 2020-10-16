@@ -23,8 +23,6 @@ import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.LONG
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
@@ -33,12 +31,12 @@ import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT_EXTRA
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestSDKConfig
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
@@ -107,7 +105,7 @@ class GuestBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             fullASAPQuotesListCheckGuest()
         }
@@ -125,7 +123,7 @@ class GuestBookingTests : Launch {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
         }
         booking(this) {
-            sleep()
+            shortSleep()
         } result {
             guestCheckoutEmptyFullCheck()
         }
@@ -147,7 +145,7 @@ class GuestBookingTests : Launch {
             clickPickUpAddressField()
         }
         address {
-            sleep()
+            shortSleep()
         } result {
             checkAddressScreenFromPickupGuestCheckout()
         }
@@ -169,7 +167,7 @@ class GuestBookingTests : Launch {
             clickDestinationAddressField()
         }
         address {
-            sleep()
+            shortSleep()
         } result {
             checkAddressScreenFromDestinationGuestCheckout()
         }
@@ -182,6 +180,7 @@ class GuestBookingTests : Launch {
      * Then:    I can see both addresses populated in the correct fields on the booking screen
      **/
     @Test
+    @AllowFlaky(attempts = 10)
     fun searchAddressesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -193,7 +192,7 @@ class GuestBookingTests : Launch {
         }
         address {
             search(SEARCH_ADDRESS)
-            waitFor(MEDIUM)
+            mediumSleep()
             clickBakerStreetResult()
         }
         serverRobot {
@@ -205,11 +204,11 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS_EXTRA)
-            waitFor(SHORT)
+            shortSleep()
             clickOxfordStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             bothSelectedAddressesAreVisible()
         }
@@ -222,6 +221,7 @@ class GuestBookingTests : Launch {
      * Then:    The booking screen populates the quotes as expecte
      **/
     @Test
+    @AllowFlaky(attempts = 10)
     fun searchAddressesAndGetQuotesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -233,7 +233,7 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS)
-            waitFor(SHORT)
+            shortSleep()
             clickBakerStreetResult()
         }
         serverRobot {
@@ -249,11 +249,11 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS_EXTRA)
-            waitFor(SHORT)
+            shortSleep()
             clickOxfordStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             fullASAPQuotesListCheckGuest()
         }
@@ -295,11 +295,11 @@ class GuestBookingTests : Launch {
         }
         address {
             search(TestData.SEARCH_ADDRESS)
-            sleep()
+            shortSleep()
             clickBakerStreetResult()
         }
         booking {
-            sleep()
+            shortSleep()
         } result {
             flowBookingPickupBookingCheck()
             // TODO check pickupPinIcon
@@ -320,9 +320,9 @@ class GuestBookingTests : Launch {
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
             pressFirstQuote()
-            sleep()
+            shortSleep()
         } result {
             checkGuestDetailsPageIsShown()
         }
@@ -342,6 +342,7 @@ class GuestBookingTests : Launch {
      * conditions text is visible, Book ride button is disabled.
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun addCardGuestDetailsPageFullCheck() {
         KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
@@ -357,19 +358,19 @@ class GuestBookingTests : Launch {
             guestBookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(MEDIUM)
+            mediumSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
             fillCorrectInfoGuestDetails()
             enterCardDetails()
-            waitFor(LONG)
+            longSleep()
         } result {
             fullCheckFilledGuestDetailsPage()
             guestBookingCheckCardDetails()
         }
         booking {
             pressBookRideButton()
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             checkWebViewDisplayed()
         }

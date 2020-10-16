@@ -193,9 +193,9 @@ class LoginTests : Launch {
             userClicksOnForgottenPassword()
             fillValidEmailLogin()
             pressOkButton()
-            sleep()
+            shortSleep()
             pressGotItSnackbarButton()
-            sleep()
+            shortSleep()
         } result {
             resetPasswordConfirmationIsNotVisible()
         }

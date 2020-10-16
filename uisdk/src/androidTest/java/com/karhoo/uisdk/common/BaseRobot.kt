@@ -237,7 +237,15 @@ open abstract class BaseTestRobot {
         onView(allOf(withId(listRes), isDescendantOfA(withId(parentRes)))).check(RecyclerMatcher(listSize))
     }
 
-    fun sleep(millis: Long = 350) = apply {
+    fun shortSleep(millis: Long = 350) = apply {
+        Thread.sleep(millis)
+    }
+
+    fun mediumSleep(millis: Long = 1000) = apply {
+        Thread.sleep(millis)
+    }
+
+    fun longSleep(millis: Long = 5000) = apply {
         Thread.sleep(millis)
     }
 
@@ -341,25 +349,6 @@ open abstract class BaseTestRobot {
 
             override fun matchesSafely(view: View): Boolean {
                 return matcher.matches(view) && currentIndex++ == index
-            }
-        }
-    }
-
-    /*
-    * Perform action of waiting for a specific time.
-    */
-    open fun waitFor(millis: Long): ViewAction? {
-        return object : ViewAction {
-            override fun getConstraints(): Matcher<View> {
-                return isRoot()
-            }
-
-            override fun getDescription(): String {
-                return "Wait for $millis milliseconds."
-            }
-
-            override fun perform(uiController: UiController, view: View) {
-                uiController.loopMainThreadForAtLeast(millis)
             }
         }
     }

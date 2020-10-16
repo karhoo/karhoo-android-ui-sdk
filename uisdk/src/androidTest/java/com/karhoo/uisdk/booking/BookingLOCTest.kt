@@ -9,6 +9,7 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.booking.braintree.BraintreeBookingTests
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.networkServiceRobot
 import com.karhoo.uisdk.common.serverRobot
@@ -18,7 +19,6 @@ import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import org.junit.After
 import org.junit.Rule
@@ -64,11 +64,11 @@ class BookingLOCTest : Launch {
             sdkInitResponse(HttpURLConnection.HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HttpURLConnection.HTTP_OK, REVERSE_GEO_SUCCESS)
         }
-        booking(this, BookingTests.CLEAN_TRIP_INTENT) {
+        booking(this, BraintreeBookingTests.CLEAN_TRIP_INTENT) {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

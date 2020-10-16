@@ -1,30 +1,34 @@
-package com.karhoo.uisdk.booking
+package com.karhoo.uisdk.booking.adyen
 
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
+import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.address.address
+import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.rides.rides
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
-import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_DISPLAY_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -32,8 +36,7 @@ import org.junit.runner.RunWith
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
-class BookingFlowTests : Launch {
-
+class AdyenBookingFlowTests : Launch {
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
@@ -48,9 +51,19 @@ class BookingFlowTests : Launch {
             .around(activityRule)
 
     @get:Rule
-    var wireMockRule = WireMockRule(options().port(UiSDKTestConfig.PORT_NUMBER), false)
+    var wireMockRule = WireMockRule(WireMockConfiguration.options().port(UiSDKTestConfig.PORT_NUMBER), false)
 
     private val intent = Intent()
+
+    @Before
+    fun setUp() {
+        setUserInfo(ADYEN)
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, ADYEN_PROVIDER)
+            sdkInitResponse(HTTP_OK, ADYEN_PUBLIC_KEY)
+        }
+    }
 
     @After
     fun tearDown() {
@@ -66,16 +79,13 @@ class BookingFlowTests : Launch {
     @AllowFlaky(attempts = 5)
     fun userNavigatesFromBookingToRides() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
             pressRidesButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
         }
@@ -90,9 +100,6 @@ class BookingFlowTests : Launch {
     @AllowFlaky(attempts = 5)
     fun userNavigatesFromBookingToRidesToBooking() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -116,9 +123,6 @@ class BookingFlowTests : Launch {
     @Test
     fun userNavigatesFromBookingToAddressDestination() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -139,17 +143,14 @@ class BookingFlowTests : Launch {
     @Test
     fun checkDestinationFieldIsClearedAfterEnteringText() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
             clickDestinationAddressField()
         }
         address {
-            search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            search(TestData.SEARCH_GENERAL_ADDRESS)
+            shortSleep()
             clearAddressSearchList()
         } result {
             enterDestinationHintIsVisible()
@@ -164,9 +165,6 @@ class BookingFlowTests : Launch {
     @Test
     fun clearButtonIsNotClickableIfNoTextEnteredInPickUpSearch() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -186,9 +184,6 @@ class BookingFlowTests : Launch {
     @Test
     fun userNavigatesFromBookingToAddressToBooking() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -212,9 +207,6 @@ class BookingFlowTests : Launch {
     @Test
     fun userNavigatesFromBookingToAddressPickup() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -235,9 +227,6 @@ class BookingFlowTests : Launch {
     @Test
     fun openSideMenuByClicking() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -256,9 +245,6 @@ class BookingFlowTests : Launch {
     @Test
     fun userNavigatesToMapFromAddressPickUp() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -280,9 +266,6 @@ class BookingFlowTests : Launch {
     @Test
     fun userNavigatesToMapFromAddressDestination() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
@@ -303,16 +286,13 @@ class BookingFlowTests : Launch {
     @Test
     fun userIsPromptedToEnterDestinationAddress() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
             clickDestinationAddressField()
         }
         address {
-            sleep()
+            shortSleep()
         } result {
             checkAddressDestinationPageIsShown()
             setLocationOnMapButtonIsEnabled()
@@ -326,12 +306,10 @@ class BookingFlowTests : Launch {
      * Then:    The pick up address is overwritten with my current location
      **/
     @Test
-    @AllowFlaky(attempts = 5)
+    @AllowFlaky(attempts = 10)
     fun locateMeOverwritesEnteredAddress() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, PLACE_DETAILS)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -340,20 +318,14 @@ class BookingFlowTests : Launch {
             clickPickUpAddressField()
         }
         address {
-            search(TestData.SEARCH_ADDRESS)
+            search(SEARCH_ADDRESS)
             clickBakerStreetResult()
         }
         booking {
-            sleep()
-        } result {
-            selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
-        }
-        booking {
-            sleep(MEDIUM)
+            longSleep()
             clickOnLocateMeButton()
-            sleep()
         } result {
-            reverseGeoAddressVisiblePickUp(address = TestData.REVERSE_GEO_DISPLAY_ADDRESS)
+            reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
     }
 
@@ -366,9 +338,6 @@ class BookingFlowTests : Launch {
     @AllowFlaky(attempts = 5)
     fun setCurrentLocationButtonReverseGeolocationPickUp() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS_ALTERNATIVE)
         }
@@ -382,9 +351,9 @@ class BookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            sleep()
+            shortSleep()
         } result {
-            reverseGeoAddressVisiblePickUp(address = TestData.REVERSE_GEO_DISPLAY_ADDRESS)
+            reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
     }
 
@@ -396,9 +365,6 @@ class BookingFlowTests : Launch {
     @Test
     fun setCurrentLocationButtonReverseGeolocationDropOff() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS_ALTERNATIVE)
         }
@@ -412,9 +378,9 @@ class BookingFlowTests : Launch {
             clickGetCurrentLocation()
         }
         booking {
-            sleep()
+            shortSleep()
         } result {
-            reverseGeoAddressVisibleDropOff(address = TestData.REVERSE_GEO_DISPLAY_ADDRESS)
+            reverseGeoAddressVisibleDropOff(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
     }
 
@@ -428,9 +394,6 @@ class BookingFlowTests : Launch {
     @Test
     fun selectingPickUpAddressFlow() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, PLACE_DETAILS)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -443,9 +406,9 @@ class BookingFlowTests : Launch {
             clickBakerStreetResult()
         }
         booking {
-            sleep()
+            shortSleep()
         } result {
-            selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
+            selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
         }
     }
 

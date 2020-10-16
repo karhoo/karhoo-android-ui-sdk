@@ -813,6 +813,8 @@ class TestData {
 
         val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Braintree"))
 
+        val ADYEN_PAYMENT_METHODS_EMPTY = ""
+
         /**
          *
          * User
@@ -966,12 +968,6 @@ class TestData {
             }
             return formatter.parse(dateScheduled)
         }
-
-        val SHORT = measureTimeMillis { 350 }
-
-        val MEDIUM = measureTimeMillis { 1000 }
-
-        val LONG = measureTimeMillis { 5000 }
 
         fun setUserInfo(provider: String) {
             val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext

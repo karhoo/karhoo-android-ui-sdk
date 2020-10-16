@@ -17,7 +17,6 @@ import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import org.junit.After
@@ -68,7 +67,7 @@ class TripLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

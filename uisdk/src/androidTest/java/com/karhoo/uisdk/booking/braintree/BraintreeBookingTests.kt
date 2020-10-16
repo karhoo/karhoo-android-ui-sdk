@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.booking
+package com.karhoo.uisdk.booking.braintree
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,29 +10,33 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
+import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
+import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
+import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.FLEET_INFO_ALT
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.util.TestData.Companion.LONG
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_RESULT
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_DISPLAY_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
-import com.karhoo.uisdk.util.TestData.Companion.SHORT
+import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.THIRD_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
@@ -48,11 +52,12 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.net.HttpURLConnection
+import java.net.HttpURLConnection.HTTP_BAD_REQUEST
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
-class BookingTests : Launch {
+class BraintreeBookingTests : Launch {
 
     @get:Rule
     val activityRule: ActivityTestRule<BookingActivity> =
@@ -75,6 +80,11 @@ class BookingTests : Launch {
     @Before
     fun setUp() {
         setUserInfo(BRAINTREE)
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+        }
     }
 
     @After
@@ -92,13 +102,10 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 3)
     fun checkSnackbarErrorText() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-            reverseGeocodeResponse(HttpURLConnection.HTTP_BAD_REQUEST, GENERAL_ERROR)
+            reverseGeocodeResponse(HTTP_BAD_REQUEST, GENERAL_ERROR)
         }
         booking(this, null) {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             checkSnackbarWithText(R.string.K0001)
         }
@@ -113,14 +120,11 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun snackbarShowsToUserWhenNoAvailability() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, TIMEOUT)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, NO_AVAILABILITY)
+            quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            sleep()
+            shortSleep()
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -131,14 +135,11 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, NO_AVAILABILITY)
+            quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            waitFor(MEDIUM)
+            mediumSleep()
             try {
                 //Send app to background
                 pressDeviceBackButton()
@@ -146,7 +147,7 @@ class BookingTests : Launch {
             }
         }
         booking(this, CLEAN_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
         } result {
             checkErrorIsShown(R.string.no_availability)
             contactButtonSnackbarIsEnabled()
@@ -161,17 +162,14 @@ class BookingTests : Launch {
     @Test
     fun addressesSwapSuccessfully() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             pressSwapAddressesButton()
         } result {
-            pickUpisNowDropoff(dropoffAddress = TestData.ADDRESS_ORIGIN)
-            dropoffIsNowPickUp(pickupAddress = TestData.ADDRESS_DESTINATION)
+            pickUpisNowDropoff(dropoffAddress = ADDRESS_ORIGIN)
+            dropoffIsNowPickUp(pickupAddress = ADDRESS_DESTINATION)
         }
     }
 
@@ -184,15 +182,12 @@ class BookingTests : Launch {
     @Test
     fun fullQuoteListCheckETA() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep(TestData.LONG)
+            mediumSleep()
         } result {
             fullASAPQuotesListCheck()
         }
@@ -206,22 +201,19 @@ class BookingTests : Launch {
     @Test
     fun userExpandsQuoteList() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
         } result {
-            quotesListNotExpanded(TestData.THIRD_FLEET)
+            quotesListNotExpanded(THIRD_FLEET)
         }
         booking {
             pressExpandListButton()
         } result {
-            quotesListIsExpanded(TestData.THIRD_FLEET)
+            quotesListIsExpanded(THIRD_FLEET)
         }
     }
 
@@ -233,23 +225,20 @@ class BookingTests : Launch {
     @Test
     fun userMinimisesQuoteList() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
             pressExpandListButton()
         } result {
-            TestData.FLEET_INFO_ALT.name?.let { quotesListIsExpanded(it) }
+            FLEET_INFO_ALT.name?.let { quotesListIsExpanded(it) }
         }
         booking {
             pressExpandListButton()
         } result {
-            TestData.FLEET_INFO_ALT.name?.let { quotesListNotExpanded(it) }
+            FLEET_INFO_ALT.name?.let { quotesListNotExpanded(it) }
         }
     }
 
@@ -262,14 +251,11 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 1)
     fun checkingForLocalTimeMessageOnPrebook() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, CLEAN_TRIP_INTENT) {
             pressPrebookButton()
-            sleep()
+            shortSleep()
         } result {
             localTimeMessageIsDisplayed()
         }
@@ -283,15 +269,12 @@ class BookingTests : Launch {
     @Test
     fun closingPrebookWindow() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            sleep()
+            shortSleep()
             pressPrebookButton()
-            sleep()
+            shortSleep()
             pressCancelPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -306,17 +289,14 @@ class BookingTests : Launch {
     @Test
     fun closingPrebookWindowAfterDate() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            sleep()
+            shortSleep()
             pressPrebookButton()
-            sleep()
+            shortSleep()
             pressOKPrebookWindow()
-            sleep()
+            shortSleep()
             pressCancelPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -332,17 +312,14 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 3)
     fun prebookWindowClosesAfterSelectingDateAndTime() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN, TIMEOUT)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            sleep()
+            shortSleep()
             pressPrebookButton()
-            sleep()
+            shortSleep()
             pressOKPrebookWindow()
-            sleep()
+            shortSleep()
             pressOKPrebookWindow()
         } result {
             prebookWindowNotVisible()
@@ -357,15 +334,12 @@ class BookingTests : Launch {
     @Test
     fun checkReverseGeoAddressInPickUpField() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, null) {
-            sleep()
+            shortSleep()
         } result {
-            reverseGeoAddressVisiblePickUp(address = TestData.REVERSE_GEO_DISPLAY_ADDRESS)
+            reverseGeoAddressVisiblePickUp(address = REVERSE_GEO_DISPLAY_ADDRESS)
         }
     }
 
@@ -378,14 +352,11 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 1)
     fun closeSideMenuByClickingOnMap() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, CLEAN_TRIP_INTENT) {
             pressMenuButton()
-            sleep()
+            shortSleep()
             pressOutOfSideMenu()
         } result {
             sideMenuIsNotVisible()
@@ -400,13 +371,8 @@ class BookingTests : Launch {
     @Test
     @AllowFlaky(attempts = 5)
     fun noPrebookButtonVisibleWhenNoAddressEntered() {
-        serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-        }
         booking(this, null) {
-            sleep()
+            shortSleep()
         } result {
             prebookButtonIsNotVisible()
         }
@@ -421,14 +387,11 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun pickUpAndDropOffAddressesCannotBeTheSame() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_BAD_REQUEST, ADDRESSES_IDENTICAL)
+            quoteIdResponse(HTTP_BAD_REQUEST, ADDRESSES_IDENTICAL)
         }
         booking(this, IDENTICAL_ADDRESSES_TRIP_INTENT) {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             samePickUpAndDestinationErrorIsDisplayed()
         }
@@ -443,15 +406,12 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun locateMeDoesNotClearPrebookTime() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this) {
             pressPrebookButton()
             pressOKPrebookWindow()
-            sleep()
+            shortSleep()
             pressOKPrebookWindow()
         } result {
             prebookLogoNotVisible()
@@ -461,7 +421,7 @@ class BookingTests : Launch {
         }
         booking {
             clickOnLocateMeButton()
-            sleep()
+            shortSleep()
         } result {
             prebookLogoNotVisible()
         }
@@ -476,9 +436,6 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun changeAddressDoesNotClearPrebookTime() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
             addressDetails(HTTP_OK, PLACE_DETAILS)
@@ -491,17 +448,17 @@ class BookingTests : Launch {
             prebookLogoNotVisible()
         }
         booking {
-            waitFor(MEDIUM)
+            mediumSleep()
             clickPickUpAddressField()
         }
         address {
-            search(TestData.SEARCH_ADDRESS)
+            search(SEARCH_ADDRESS)
             clickBakerStreetResult()
         }
         booking {
-            waitFor(SHORT)
+            shortSleep()
         } result {
-            selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
+            selectedPickupAddressIsVisible(address = SELECTED_ADDRESS)
             prebookLogoNotVisible()
         }
     }
@@ -512,19 +469,17 @@ class BookingTests : Launch {
      * Then:    I can see the Book a Ride screen
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun bookARideScreenIsDisplayed() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
         } result {
             bookARideScreenIsVisible()
         }
@@ -538,17 +493,14 @@ class BookingTests : Launch {
     @Test
     fun closingBookARideScreen() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
             pressFirstQuote()
-            sleep()
+            shortSleep()
             pressCloseBookARideScreen()
         } result {
             fullASAPQuotesListCheck()
@@ -567,9 +519,6 @@ class BookingTests : Launch {
     @AllowFlaky(attempts = 5)
     fun ASAPBookARideScreenFullCheck() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
@@ -577,9 +526,9 @@ class BookingTests : Launch {
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            sleep()
+            shortSleep()
             pressFirstQuote()
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             fullCheckBookARideScreenASAP()
         }
@@ -594,8 +543,6 @@ class BookingTests : Launch {
     @Test
     fun asapBookARideSuccess() {
         serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
@@ -607,11 +554,11 @@ class BookingTests : Launch {
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
         booking(this, INITIAL_TRIP_INTENT) {
-            waitFor(SHORT)
+            shortSleep()
             pressFirstQuote()
-            waitFor(MEDIUM)
+            mediumSleep()
             pressBookRideButton()
-            waitFor(LONG)
+            longSleep()
         } result {
             checkDriverDetails()
         }

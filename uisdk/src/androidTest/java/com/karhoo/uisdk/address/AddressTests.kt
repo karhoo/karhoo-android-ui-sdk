@@ -63,7 +63,7 @@ class AddressTests : Launch {
     @Test
     fun userIsPromptedToEnterPickupAddress() {
         address(this) {
-            sleep()
+            shortSleep()
         } result {
             checkAddressPickUpPageIsShown()
             setLocationOnMapButtonIsEnabled()
@@ -85,7 +85,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             areAddressesAvailable()
             setLocationOnMapButtonIsEnabled()
@@ -107,7 +107,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_INCORRECT_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             noAddressesFound()
             setLocationOnMapButtonIsEnabled()
@@ -141,7 +141,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             noAddressesFound()
@@ -164,7 +164,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             noAddressesFound()
@@ -172,7 +172,7 @@ class AddressTests : Launch {
 
         address {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             areAddressesAvailable()
         }
@@ -193,7 +193,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             poweredByGoogleFound()
         }
@@ -214,7 +214,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_INCORRECT_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             poweredByGoogleFound()
         }
@@ -295,7 +295,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             enterPickupHintIsVisible()

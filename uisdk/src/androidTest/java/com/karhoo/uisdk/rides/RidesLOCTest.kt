@@ -10,7 +10,6 @@ import com.karhoo.uisdk.common.networkServiceRobot
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import org.junit.After
 import org.junit.Rule
@@ -54,9 +53,9 @@ class RidesLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
-            sleep()
+            shortSleep()
             checkErrorIsShown(R.string.network_error)
         }
     }

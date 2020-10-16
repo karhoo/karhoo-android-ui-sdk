@@ -16,7 +16,6 @@ import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.FARE_CANCELLED
 import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_DRIVER
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_KARHOO
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_USER
@@ -68,7 +67,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             checkNoUpcomingBookings()
         }
@@ -87,7 +86,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep(3000)
+            shortSleep()
         } result {
             checkNoPastBookings()
         }
@@ -106,7 +105,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.completed)
         }
@@ -125,7 +124,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -144,7 +143,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -164,7 +163,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -183,7 +182,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedPrice(R.string.cancelled)
         }
@@ -231,7 +230,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_INTERNAL_ERROR, GENERAL_ERROR)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             checkErrorMessageIsShown(R.string.K0001)
         }
@@ -249,7 +248,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_DER_AIRPORT_PICKUP)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeVisibleRidesScreen("Meet and Greet")
         }
@@ -268,7 +267,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_CONFIRMED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffUpcoming()
         }
@@ -305,7 +304,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffPast()
         }
@@ -323,11 +322,11 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
         }
         serverRobot {
             cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
@@ -354,11 +353,11 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
         }
         serverRobot {
             cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
@@ -371,7 +370,7 @@ class RidesTests : Launch {
             clickOnDismiss()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkNoUpcomingBookings()
         }
@@ -392,7 +391,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             cancelledByFleetPrebookedFullCheck()
         }
@@ -414,7 +413,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             cancelledByUserPrebookedFullCheck()
         }
@@ -434,7 +433,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_DER)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             DERTripUpcomingRidesFullCheck()
         }
@@ -453,7 +452,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             prebookedTripUpcomingRidesFullCheck()
         }
@@ -475,7 +474,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             completedTripPastRidesScreenFullCheck()
         }
@@ -494,15 +493,15 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
             pressDeviceBackButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
             prebookedTripUpcomingRidesFullCheck()
@@ -523,14 +522,14 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
             pressDeviceBackButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
             completedTripPastRidesScreenFullCheck()
@@ -554,11 +553,11 @@ class RidesTests : Launch {
                                    )
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnTrackDriver()
         }
         trip {
-            sleep(LONG)
+            longSleep()
         } result {
             DERFullScreenCheck(pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
                                destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty())

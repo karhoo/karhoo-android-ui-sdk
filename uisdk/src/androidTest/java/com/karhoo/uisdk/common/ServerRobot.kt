@@ -288,6 +288,14 @@ class ServerRobot {
                        )
     }
 
+    fun adyenPaymentMethods(code: Int, response: Any) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.ADYEN_PAYMENT_METHODS_METHOD
+                        )
+    }
+
     fun mockTripSuccessResponse(status: Any, tracking: Any, details: TripInfo) {
         bookingStatusResponse(code = HttpURLConnection.HTTP_OK, response = status, trip = TRIP.tripId)
         driverTrackingResponse(code = HttpURLConnection.HTTP_OK, response = tracking, trip = TRIP.tripId)
