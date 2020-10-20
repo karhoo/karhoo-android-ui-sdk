@@ -66,6 +66,12 @@ class SupplierListView @JvmOverloads constructor(
 
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
+        if (collapsiblePanelView.panelState == PanelState.EXPANDED) {
+            bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent.SupplierListExpanded)
+        } else {
+            bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
+                                                      .SupplierListCollapsed)
+        }
     }
 
     override fun setSortMethod(sortMethod: SortMethod) {
@@ -74,6 +80,7 @@ class SupplierListView @JvmOverloads constructor(
 
     override fun onUserChangedSortMethod(sortMethod: SortMethod) {
         presenter.sortMethodChanged(sortMethod)
+
     }
 
     override fun sortChoiceRequiresDestination() {
@@ -136,9 +143,9 @@ class SupplierListView @JvmOverloads constructor(
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isSupplierListVisible = true
-                        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
-                                                                  .SupplierListVisibilityChanged
-                                                                  (isVisible = true))
+                        bookingSupplierViewModel?.process(
+                                BookingSupplierViewContract.BookingSupplierEvent
+                                        .SupplierListVisibilityChanged(isVisible = true, panelState = collapsiblePanelView.panelState))
                     }
         }
     }
@@ -157,9 +164,10 @@ class SupplierListView @JvmOverloads constructor(
                     .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
-                        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
-                                                                  .SupplierListVisibilityChanged
-                                                                  (isVisible = false))
+                        bookingSupplierViewModel?.process(
+                                BookingSupplierViewContract.BookingSupplierEvent
+                                        .SupplierListVisibilityChanged(isVisible = false, panelState =
+                                        collapsiblePanelView.panelState))
                     }
                     .withEndAction {
                         isSupplierListVisible = false
@@ -187,13 +195,14 @@ class SupplierListView @JvmOverloads constructor(
     override fun hideNoAvailability() {
         Log.d("PD36", "hideNoAvailability")
         bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
-                                                  .SupplierListVisibilityChanged(false))
+                                                  .SupplierListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun setSupplierListVisibility() {
         Log.d("PD36", "setSupplierListVisibility")
-        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
-                                                  .SupplierListVisibilityChanged(isVisible = isVisible))
+        bookingSupplierViewModel?.process(
+                BookingSupplierViewContract.BookingSupplierEvent
+                        .SupplierListVisibilityChanged(isVisible = isVisible, panelState = collapsiblePanelView.panelState))
     }
 
 }

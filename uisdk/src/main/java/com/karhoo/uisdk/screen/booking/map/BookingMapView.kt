@@ -378,7 +378,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
         recentreMapIfDestinationIsNull()
 
-        animateLocateMeButton(R.dimen.spacing_small)
+        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_suppliers)
     }
 
     fun setDefaultPadding() {
@@ -386,20 +386,23 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
 
-        animateLocateMeButton(R.dimen.quote_list_height)
+        /*val bottomMarginRes = when (panelState) {
+            CollapsiblePanelView.PanelState.COLLAPSED -> R.dimen.quote_list_height
+            CollapsiblePanelView.PanelState.EXPANDED -> R.dimen.collapsible_pane_expanded_height
+        }*/
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_suppliers)
     }
 
-    private fun animateLocateMeButton(bottomMarginRes: Int) {
+    private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
 
-        val constraintSet2 = ConstraintSet()
-        constraintSet2.clone(bookingMapLayout)
-        constraintSet2.setMargin(R.id.locateMeButton, ConstraintSet.BOTTOM, resources
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(bookingMapLayout)
+        constraintSet.setMargin(R.id.locateMeButton, ConstraintSet.BOTTOM, resources
                 .getDimension(bottomMarginRes).toInt())
-
-        constraintSet2.applyTo(bookingMapLayout)
+        constraintSet.applyTo(bookingMapLayout)
 
         val transition = AutoTransition()
-        transition.duration = resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong()
+        transition.duration = resources.getInteger(durationRes).toLong()
         TransitionManager.beginDelayedTransition(
                 bookingMapLayout, transition)
     }
@@ -443,5 +446,13 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun showLocateUserButton() {
         locateMeButton.visibility = View.VISIBLE
         locateMeButton.isClickable = true
+    }
+
+    override fun updateMapViewForSupplierListVisibilityCollapsed() {
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
+    }
+
+    override fun updateMapViewForSupplierListVisibilityExpanded() {
+        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
     }
 }

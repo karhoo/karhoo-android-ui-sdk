@@ -84,11 +84,11 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
                     showMore()
                 }
                 hideList()
-                hideNoAvailability()
+//                hideNoAvailability()
             }
             hasAvailability -> view?.apply {
                 showList()
-                hideNoAvailability()
+//                hideNoAvailability()
             }
             else -> view?.apply {
                 hideList()
