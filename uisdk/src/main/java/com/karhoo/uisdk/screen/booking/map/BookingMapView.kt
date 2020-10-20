@@ -8,17 +8,21 @@ import android.location.Location
 import android.os.Bundle
 import android.provider.Settings
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -32,7 +36,6 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.uisdk.KarhooUISDK
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider.isGuest
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -50,6 +53,7 @@ import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
 import com.karhoo.uisdk.util.extension.showShadowedPolyLine
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.bookingMapLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
@@ -370,13 +374,36 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     //region Map Padding
 
     fun setNoBottomPadding() {
+        Log.d("PD36", "setNoBottomPadding")
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
         recentreMapIfDestinationIsNull()
+
+        animateLocateMeButton(R.dimen.spacing_small)
     }
 
     fun setDefaultPadding() {
+        Log.d("PD36", "setDefaultPadding")
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+
+        animateLocateMeButton(R.dimen.quote_list_height)
+    }
+
+    private fun animateLocateMeButton(bottomMarginRes: Int) {
+        val constraintSet1 = ConstraintSet()
+        constraintSet1.clone(bookingMapLayout)
+
+        val constraintSet2 = ConstraintSet()
+        constraintSet2.clone(bookingMapLayout)
+        constraintSet2.setMargin(R.id.locateMeButton, ConstraintSet.BOTTOM, resources
+                .getDimension(bottomMarginRes).toInt())
+
+        constraintSet2.applyTo(bookingMapLayout)
+
+        val transition = AutoTransition()
+        transition.duration = resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong()
+        TransitionManager.beginDelayedTransition(
+                bookingMapLayout, transition)
     }
 
     //endregion
