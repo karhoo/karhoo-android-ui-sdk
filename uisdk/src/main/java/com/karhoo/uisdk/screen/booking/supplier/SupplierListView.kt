@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.supplier
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
@@ -136,7 +135,6 @@ class SupplierListView @JvmOverloads constructor(
 
     override fun showList() {
         if (!isSupplierListVisible) {
-            Log.d("PD36", "showList")
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
@@ -152,7 +150,6 @@ class SupplierListView @JvmOverloads constructor(
 
     override fun hideList() {
         if (isSupplierListVisible) {
-            Log.d("PD36", "hideList")
 
             val translation = when (collapsiblePanelView.panelState) {
                 PanelState.COLLAPSED -> resources.getDimension(R.dimen.quote_list_height)
@@ -193,13 +190,11 @@ class SupplierListView @JvmOverloads constructor(
     }
 
     override fun hideNoAvailability() {
-        Log.d("PD36", "hideNoAvailability")
         bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
                                                   .SupplierListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun setSupplierListVisibility() {
-        Log.d("PD36", "setSupplierListVisibility")
         bookingSupplierViewModel?.process(
                 BookingSupplierViewContract.BookingSupplierEvent
                         .SupplierListVisibilityChanged(isVisible = isVisible, panelState = collapsiblePanelView.panelState))

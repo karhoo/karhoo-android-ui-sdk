@@ -8,7 +8,6 @@ import android.location.Location
 import android.os.Bundle
 import android.provider.Settings
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
@@ -374,7 +373,6 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     //region Map Padding
 
     fun setNoBottomPadding() {
-        Log.d("PD36", "setNoBottomPadding")
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
         recentreMapIfDestinationIsNull()
 
@@ -382,14 +380,9 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     fun setDefaultPadding() {
-        Log.d("PD36", "setDefaultPadding")
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
 
-        /*val bottomMarginRes = when (panelState) {
-            CollapsiblePanelView.PanelState.COLLAPSED -> R.dimen.quote_list_height
-            CollapsiblePanelView.PanelState.EXPANDED -> R.dimen.collapsible_pane_expanded_height
-        }*/
         animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_suppliers)
     }
 
