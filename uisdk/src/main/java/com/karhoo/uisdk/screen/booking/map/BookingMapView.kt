@@ -59,6 +59,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 private const val MAP_DEFAULT_ZOOM = 16.0f
 
+@Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(context: Context,
                                                attrs: AttributeSet? = null,
                                                @AttrRes defStyleAttr: Int = 0)
