@@ -134,7 +134,7 @@ class SupplierListView @JvmOverloads constructor(
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
-                    .withEndAction {
+                    .withStartAction {
                         isSupplierListVisible = true
                         bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
                                                                   .SupplierListVisibilityChanged
@@ -156,11 +156,15 @@ class SupplierListView @JvmOverloads constructor(
                     .translationY(translation)
                     .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
+                    .withStartAction {
+                        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
+                                                                  .SupplierListVisibilityChanged
+                                                                  (isVisible = false))
+                    }
                     .withEndAction {
                         isSupplierListVisible = false
-                        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
-                                                                  .SupplierListVisibilityChanged(isVisible = false))
                     }
+
         }
     }
 

@@ -390,8 +390,6 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     private fun animateLocateMeButton(bottomMarginRes: Int) {
-        val constraintSet1 = ConstraintSet()
-        constraintSet1.clone(bookingMapLayout)
 
         val constraintSet2 = ConstraintSet()
         constraintSet2.clone(bookingMapLayout)
