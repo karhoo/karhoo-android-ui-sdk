@@ -4,7 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import com.karhoo.karhootraveller.R
 
-class EmailDialog(context: Context, actions: EmailViewMVP.Actions?) : AlertDialog(context, R.style.AlertDialog), ValidEmailChangedListener {
+class EmailDialog(context: Context, actions: EmailViewMVP.Actions?) : AlertDialog(context, R.style.DialogTheme), ValidEmailChangedListener {
 
     private val emailView = EmailView(context)
 
