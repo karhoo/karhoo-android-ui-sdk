@@ -122,13 +122,6 @@ class SupplierListView @JvmOverloads constructor(
         }
     }
 
-    private fun bindAvailability() {
-        availabilityProvider?.apply {
-            setAvailabilityHandler(presenter)
-            categorySelectorWidget.bindAvailability(this)
-        }
-    }
-
     override fun destinationChanged(bookingStatus: BookingStatus) {
         supplierSortWidget.destinationChanged(bookingStatus)
     }
@@ -222,7 +215,8 @@ class SupplierListView @JvmOverloads constructor(
                 //TODO Handle errors
                 //            setErrorView(lifecycleOwner)
                 setAllCategory(resources.getString(R.string.all_category))
-                bindAvailability()
+                setAvailabilityHandler(presenter)
+                categorySelectorWidget.bindAvailability(this)
             }
         }
     }
