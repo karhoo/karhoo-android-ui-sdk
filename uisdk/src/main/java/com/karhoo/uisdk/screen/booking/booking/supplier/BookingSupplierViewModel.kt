@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.supplier
 
 import android.app.Application
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.uisdk.base.CollapsiblePanelView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.state.BaseStateViewModel
 
@@ -17,7 +18,11 @@ class BookingSupplierViewModel(application: Application) :
         super.process(viewEvent)
         when (viewEvent) {
             is BookingSupplierViewContract.BookingSupplierEvent.SupplierListVisibilityChanged ->
-                setSupplierListVisibility(viewEvent.isVisible)
+                setSupplierListVisibility(viewEvent.isVisible, viewEvent.panelState)
+            is BookingSupplierViewContract.BookingSupplierEvent.SupplierListCollapsed ->
+                setSupplierListCollapsed()
+            is BookingSupplierViewContract.BookingSupplierEvent.SupplierListExpanded ->
+                setSupplierListExpanded()
             is BookingSupplierViewContract.BookingSupplierEvent.SupplierItemClicked ->
                 showBookingRequest(viewEvent.quote)
             is BookingSupplierViewContract.BookingSupplierEvent.Availability -> setHideNoAvailability()
@@ -34,8 +39,17 @@ class BookingSupplierViewModel(application: Application) :
         viewAction = BookingSupplierViewContract.BookingSupplierAction.HideError
     }
 
-    private fun setSupplierListVisibility(isVisible: Boolean) {
-        viewAction = BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange(isVisible)
+    private fun setSupplierListCollapsed() {
+        viewAction = BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed
+    }
+
+    private fun setSupplierListExpanded() {
+        viewAction = BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded
+    }
+
+    private fun setSupplierListVisibility(isVisible: Boolean, panelState: CollapsiblePanelView.PanelState) {
+        viewAction = BookingSupplierViewContract.BookingSupplierAction
+                .UpdateViewForSupplierListVisibilityChange(isVisible, panelState)
     }
 
     private fun showBookingRequest(selectedQuote: Quote) {

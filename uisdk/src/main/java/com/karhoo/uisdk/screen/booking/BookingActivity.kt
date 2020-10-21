@@ -26,8 +26,8 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
 import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
@@ -55,7 +55,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidg
 import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestPassengerDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
-import kotlinx.android.synthetic.main.uisdk_view_supplier.locateMeButton
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationMVP.Actions, BookingRequestMVP.Actions {
@@ -275,6 +275,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingSupplierViewContract.BookingSupplierAction.HideError -> dismissSnackbar()
                 is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange ->
                     updateMapViewForSupplierListVisibilityChange(actions.isVisible)
+                is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed ->
+                    bookingMapWidget.updateMapViewForSupplierListVisibilityCollapsed()
+                is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded ->
+                    bookingMapWidget.updateMapViewForSupplierListVisibilityExpanded()
                 is BookingSupplierViewContract.BookingSupplierAction.ShowBookingRequest -> {
                     this.quote = actions.quote
                     bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId)
