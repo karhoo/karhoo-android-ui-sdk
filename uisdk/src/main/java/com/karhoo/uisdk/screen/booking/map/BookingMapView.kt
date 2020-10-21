@@ -14,11 +14,14 @@ import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -49,11 +52,14 @@ import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
 import com.karhoo.uisdk.util.extension.showShadowedPolyLine
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.bookingMapLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 private const val MAP_DEFAULT_ZOOM = 16.0f
 
+@Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(context: Context,
                                                attrs: AttributeSet? = null,
                                                @AttrRes defStyleAttr: Int = 0)
@@ -87,6 +93,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     init {
         getCustomisationParameters(context, attrs, defStyleAttr)
         View.inflate(context, R.layout.uisdk_view_booking_map, this)
+        presenter.checkLocateUser()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -195,7 +202,8 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
-            } ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
+            }
+                    ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
             pickupPinIcon.visibility = View.GONE
             zoomMapToMarkers(origin, destination)
 
@@ -368,11 +376,29 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun setNoBottomPadding() {
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
         recentreMapIfDestinationIsNull()
+
+        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_suppliers)
     }
 
     fun setDefaultPadding() {
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_suppliers)
+    }
+
+    private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
+
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(bookingMapLayout)
+        constraintSet.setMargin(R.id.locateMeButton, ConstraintSet.BOTTOM, resources
+                .getDimension(bottomMarginRes).toInt())
+        constraintSet.applyTo(bookingMapLayout)
+
+        val transition = AutoTransition()
+        transition.duration = resources.getInteger(durationRes).toLong()
+        TransitionManager.beginDelayedTransition(
+                bookingMapLayout, transition)
     }
 
     //endregion
@@ -404,5 +430,23 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     override fun locationPermissionGranted() {
         presenter.locationPermissionGranted()
+    }
+
+    override fun hideLocateUserButton() {
+        locateMeButton.visibility = View.INVISIBLE
+        locateMeButton.isClickable = false
+    }
+
+    override fun showLocateUserButton() {
+        locateMeButton.visibility = View.VISIBLE
+        locateMeButton.isClickable = true
+    }
+
+    override fun updateMapViewForSupplierListVisibilityCollapsed() {
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
+    }
+
+    override fun updateMapViewForSupplierListVisibilityExpanded() {
+        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
     }
 }
