@@ -14,7 +14,6 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.CollapsiblePanelView
-import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
@@ -42,7 +41,7 @@ class SupplierListView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), SupplierSortView.Listener,
-      SupplierListMVP.View, BookingSupplierViewContract.BookingSupplierWidget, ErrorView {
+      SupplierListMVP.View, BookingSupplierViewContract.BookingSupplierWidget {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -200,6 +199,11 @@ class SupplierListView @JvmOverloads constructor(
                                                   .SupplierListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
+    override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
+        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
+                                                  .Error(snackbarConfig))
+    }
+
     override fun setSupplierListVisibility() {
         bookingSupplierViewModel?.process(
                 BookingSupplierViewContract.BookingSupplierEvent
@@ -220,25 +224,4 @@ class SupplierListView @JvmOverloads constructor(
             }
         }
     }
-
-    override fun showSnackbar(snackbarConfig: SnackbarConfig) {
-        TODO("Not yet implemented")
-    }
-
-    override fun showTopBarNotification(stringId: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun showTopBarNotification(value: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun showErrorDialog(stringId: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun dismissSnackbar() {
-        TODO("Not yet implemented")
-    }
-
 }

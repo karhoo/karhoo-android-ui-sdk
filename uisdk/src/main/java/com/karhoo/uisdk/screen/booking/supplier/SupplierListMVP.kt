@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.listener.ErrorView
+import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
 
@@ -32,6 +33,8 @@ interface SupplierListMVP {
         fun showNoAvailability()
 
         fun hideNoAvailability()
+
+        fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
     }
 

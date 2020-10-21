@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
@@ -26,6 +27,10 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
     init {
         attachView(view)
         this.currentVehicles = mutableListOf()
+    }
+
+    override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
+        view?.showSnackbarError(snackbarConfig)
     }
 
     override fun showMore() {
