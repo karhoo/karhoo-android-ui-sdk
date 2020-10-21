@@ -216,8 +216,6 @@ class SupplierListView @JvmOverloads constructor(
             availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
                                                       KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
                                                       it, lifecycleOwner).apply {
-                //TODO Handle errors
-                //            setErrorView(lifecycleOwner)
                 setAllCategory(resources.getString(R.string.all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)

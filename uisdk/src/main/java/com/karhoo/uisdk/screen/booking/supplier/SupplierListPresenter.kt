@@ -40,10 +40,6 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
         view?.setChevronState(isExpanded)
     }
 
-    override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
-        analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
-    }
-
     override fun sortMethodChanged(sortMethod: SortMethod) {
         if (currentVehicles.isNotEmpty()) {
             analytics?.fleetsSorted(
@@ -65,6 +61,10 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
         }
     }
 
+    override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
+        analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
+    }
+
     override fun watchBookingStatus() = Observer<BookingStatus> { currentStatus ->
         currentStatus?.let {
             isPrebook = it.date != null
@@ -79,6 +79,13 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
             if (!hasDestination) {
                 shouldShowSupplierList()
             }
+            updateList()
+        }
+    }
+
+    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
+        vehicleList?.let {
+            currentVehicles = it
             updateList()
         }
     }
@@ -98,13 +105,6 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
                 hideList()
                 showNoAvailability()
             }
-        }
-    }
-
-    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
-        vehicleList?.let {
-            currentVehicles = it
-            updateList()
         }
     }
 
