@@ -3,15 +3,13 @@ package com.karhoo.uisdk.screen.booking.supplier
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
 
 interface SupplierListMVP {
 
     interface View {
-
-        fun bindAvailability(availabilityProvider: AvailabilityProvider)
 
         fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?)
 
@@ -50,4 +48,6 @@ interface SupplierListMVP {
         fun sortMethodChanged(sortMethod: SortMethod)
 
     }
+
+    interface Actions : ErrorView
 }

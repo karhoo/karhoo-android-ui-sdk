@@ -15,7 +15,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
-import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -35,11 +34,7 @@ import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
-import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityProvider
-import com.karhoo.uisdk.screen.booking.domain.supplier.KarhooAvailability
-import com.karhoo.uisdk.screen.booking.domain.supplier.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
-import com.karhoo.uisdk.screen.booking.supplier.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
@@ -60,13 +55,10 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationMVP.Actions, BookingRequestMVP.Actions {
 
-    private val categoriesViewModel: CategoriesViewModel by lazy { ViewModelProvider(this).get(CategoriesViewModel::class.java) }
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
     private val bookingSupplierViewModel: BookingSupplierViewModel by lazy { ViewModelProvider(this).get(BookingSupplierViewModel::class.java) }
-    private val liveFleetsViewModel: LiveFleetsViewModel by lazy { ViewModelProvider(this).get(LiveFleetsViewModel::class.java) }
 
-    private var availabilityProvider: AvailabilityProvider? = null
     private var quote: Quote? = null
 
     ////////////////////////////////////////////
@@ -108,7 +100,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onResume() {
         super.onResume()
         if (tripAllocationWidget.visibility != View.VISIBLE) {
-            initAvailability()
+            supplierListWidget.initAvailability(this)
         }
         setWatchers()
         setNavHeaderImage()
@@ -122,17 +114,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                       navigationHeaderIcon?.setImageDrawable(getDrawable(R.drawable.uisdk_karhoo_wordmark))
                                   }
                               }, NAVIGATION_ICON_DELAY)
-    }
-
-    private fun initAvailability() {
-        availabilityProvider?.cleanup()
-        availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
-                                                  KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
-                                                  bookingStatusStateViewModel, this).apply {
-            setErrorView(this@BookingActivity)
-            setAllCategory(getString(R.string.all_category))
-            supplierListWidget.bindAvailability(this)
-        }
     }
 
     private fun setWatchers() {
@@ -151,7 +132,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onStop() {
-        availabilityProvider?.cleanup()
+        supplierListWidget?.cleanup()
         super.onStop()
     }
 
@@ -185,8 +166,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        supplierListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel,
-                                          categoriesViewModel, liveFleetsViewModel, bookingSupplierViewModel)
+        supplierListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingSupplierViewModel)
         bookingRequestWidget.apply {
             bindViewToBookingStatus(this@BookingActivity, bookingStatusStateViewModel)
             bindViewToBookingRequest(this@BookingActivity, bookingRequestStateViewModel)
@@ -318,7 +298,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun waitForTripAllocation() {
         supplierListWidget.hideList()
-        availabilityProvider?.cleanup()
+        supplierListWidget?.cleanup()
         addressBarWidget.visibility = View.INVISIBLE
         bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
@@ -349,8 +329,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBookingCancelledOrFinished() {
-        initAvailability()
-        availabilityProvider?.let { supplierListWidget.bindAvailability(it) }
+        supplierListWidget.initAvailability(this)
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)

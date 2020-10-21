@@ -16,6 +16,7 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
     private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
+
     override var hasAvailability: Boolean = false
         set(value) {
             field = value
