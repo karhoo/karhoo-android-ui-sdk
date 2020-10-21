@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
 
         val isAutomaticLogout = intent.extras?.getBoolean(EXTRA_AUTOMATIC_LOGOUT) ?: false
         if (isAutomaticLogout) {
-            AlertDialog.Builder(this, R.style.AlertDialog)
+            AlertDialog.Builder(this, R.style.DialogTheme)
                     .setMessage(R.string.automatic_logout_message)
                     .setPositiveButton(android.R.string.ok) { _, _ -> }
                     .create()

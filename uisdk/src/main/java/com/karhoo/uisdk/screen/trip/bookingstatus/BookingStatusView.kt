@@ -88,7 +88,7 @@ class BookingStatusView @JvmOverloads constructor(
     }
 
     override fun showCancellationDialog(tripDetails: TripInfo) {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.title_dispatch_cancelled)
                 .setMessage(String.format(context
                                                   .getString(R.string.dispatch_cancelled),
