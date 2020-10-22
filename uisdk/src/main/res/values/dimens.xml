@@ -101,7 +101,7 @@
     <dimen name="trip_address_height">50dp</dimen>
 
     <!--Supplier Recycler-->
-    <dimen name="supplier_height">226dp</dimen>
+    <dimen name="supplier_height">286dp</dimen>
     <dimen name="supplier_padding_bottom">90dp</dimen>
 
     <!--Trip Allocation-->

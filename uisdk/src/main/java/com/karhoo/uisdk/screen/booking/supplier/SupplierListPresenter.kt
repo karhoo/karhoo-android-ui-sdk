@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
@@ -16,6 +17,7 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
     private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
+
     override var hasAvailability: Boolean = false
         set(value) {
             field = value
@@ -27,15 +29,15 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
         this.currentVehicles = mutableListOf()
     }
 
+    override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
+        view?.showSnackbarError(snackbarConfig)
+    }
+
     override fun showMore() {
         analytics?.moreShown(currentVehicles, !isExpanded)
         isExpanded = !isExpanded
         view?.togglePanelState()
         view?.setChevronState(isExpanded)
-    }
-
-    override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
-        analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
     }
 
     override fun sortMethodChanged(sortMethod: SortMethod) {
@@ -59,6 +61,10 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
         }
     }
 
+    override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
+        analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
+    }
+
     override fun watchBookingStatus() = Observer<BookingStatus> { currentStatus ->
         currentStatus?.let {
             isPrebook = it.date != null
@@ -73,6 +79,13 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
             if (!hasDestination) {
                 shouldShowSupplierList()
             }
+            updateList()
+        }
+    }
+
+    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
+        vehicleList?.let {
+            currentVehicles = it
             updateList()
         }
     }
@@ -92,13 +105,6 @@ internal class SupplierListPresenter(view: SupplierListMVP.View, private val ana
                 hideList()
                 showNoAvailability()
             }
-        }
-    }
-
-    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
-        vehicleList?.let {
-            currentVehicles = it
-            updateList()
         }
     }
 

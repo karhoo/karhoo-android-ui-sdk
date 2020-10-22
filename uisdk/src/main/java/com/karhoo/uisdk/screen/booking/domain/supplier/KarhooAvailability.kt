@@ -11,7 +11,6 @@ import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
@@ -35,7 +34,6 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private var vehiclesObserver: Observer<Resource<QuoteList>>? = null
     private var vehiclesObservable: Observable<QuoteList>? = null
     private var currentFilter: String? = null
-    private var errorView: WeakReference<ErrorView>? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
 
     private val observer = createObservable()
@@ -46,7 +44,6 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     override fun cleanup() {
         bookingStatusStateViewModel.viewStates().removeObserver(observer)
-        errorView = null
         cancelVehicleCallback()
     }
 
@@ -130,10 +127,6 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         }
     }
 
-    override fun setErrorView(snackbar: ErrorView) {
-        this.errorView = WeakReference(snackbar)
-    }
-
     override fun setAvailabilityHandler(availabilityHandler: AvailabilityHandler) {
         this.availabilityHandler = WeakReference(availabilityHandler)
     }
@@ -155,9 +148,11 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             }
             KarhooError.OriginAndDestinationIdentical -> {
                 clearDestination()
-                errorView?.get()?.showSnackbar(SnackbarConfig(text = null, stringId = returnErrorStringOrLogoutIfRequired(error)))
+                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
+                returnErrorStringOrLogoutIfRequired(error)))
             }
-            else -> errorView?.get()?.showSnackbar(SnackbarConfig(text = null, stringId = returnErrorStringOrLogoutIfRequired(error)))
+            else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
+            returnErrorStringOrLogoutIfRequired(error)))
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
@@ -23,6 +24,7 @@ import com.karhoo.uisdk.screen.booking.booking.supplier.QuoteListStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.supplier.AvailabilityProvider
+import com.karhoo.uisdk.screen.booking.domain.supplier.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.supplier.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.supplier.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.ContactSupplier
@@ -41,7 +43,11 @@ class SupplierListView @JvmOverloads constructor(
     : CollapsiblePanelView(context, attrs, defStyleAttr), SupplierSortView.Listener,
       SupplierListMVP.View, BookingSupplierViewContract.BookingSupplierWidget {
 
+    private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
+    private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private var bookingSupplierViewModel: BookingSupplierViewModel? = null
+    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var availabilityProvider: AvailabilityProvider? = null
 
     private var presenter = SupplierListPresenter(this, KarhooUISDK.analytics)
 
@@ -65,7 +71,7 @@ class SupplierListView @JvmOverloads constructor(
 
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
-        if (collapsiblePanelView.panelState == PanelState.EXPANDED) {
+        if (collapsiblePanelView.panelState == CollapsiblePanelView.PanelState.EXPANDED) {
             bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent.SupplierListExpanded)
         } else {
             bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
@@ -89,11 +95,11 @@ class SupplierListView @JvmOverloads constructor(
                                                                              .destination_price_error))))
     }
 
-    override fun bindViewToData(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel:
-    BookingStatusStateViewModel,
-                                categoriesViewModel: CategoriesViewModel, vehicles:
-                                LiveFleetsViewModel, bookingSupplierViewModel: BookingSupplierViewModel) {
-        vehicles.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
+    override fun bindViewToData(lifecycleOwner: LifecycleOwner,
+                                bookingStatusStateViewModel: BookingStatusStateViewModel,
+                                bookingSupplierViewModel: BookingSupplierViewModel) {
+        liveFleetsViewModel.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
+        this.bookingStatusStateViewModel = bookingStatusStateViewModel
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
         categorySelectorWidget.bindViewToData(lifecycleOwner, categoriesViewModel, bookingStatusStateViewModel)
         supplierRecyclerView.watchCategories(lifecycleOwner, categoriesViewModel)
@@ -103,17 +109,16 @@ class SupplierListView @JvmOverloads constructor(
         bookingSupplierViewModel.viewStates().observe(lifecycleOwner, watchBookingSupplierStatus())
     }
 
+    override fun cleanup() {
+        availabilityProvider?.cleanup()
+    }
+
     private fun watchBookingSupplierStatus(): Observer<in QuoteListStatus> {
         return Observer { quoteListStatus ->
             quoteListStatus?.let {
                 it.selectedQuote
             }
         }
-    }
-
-    override fun bindAvailability(availabilityProvider: AvailabilityProvider) {
-        availabilityProvider.setAvailabilityHandler(presenter)
-        categorySelectorWidget.bindAvailability(availabilityProvider)
     }
 
     override fun destinationChanged(bookingStatus: BookingStatus) {
@@ -194,10 +199,27 @@ class SupplierListView @JvmOverloads constructor(
                                                   .SupplierListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
+    override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
+        bookingSupplierViewModel?.process(BookingSupplierViewContract.BookingSupplierEvent
+                                                  .Error(snackbarConfig))
+    }
+
     override fun setSupplierListVisibility() {
         bookingSupplierViewModel?.process(
                 BookingSupplierViewContract.BookingSupplierEvent
                         .SupplierListVisibilityChanged(isVisible = isVisible, panelState = collapsiblePanelView.panelState))
     }
 
+    override fun initAvailability(lifecycleOwner: LifecycleOwner) {
+        availabilityProvider?.cleanup()
+        bookingStatusStateViewModel?.let {
+            availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
+                                                      KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
+                                                      it, lifecycleOwner).apply {
+                setAllCategory(resources.getString(R.string.all_category))
+                setAvailabilityHandler(presenter)
+                categorySelectorWidget.bindAvailability(this)
+            }
+        }
+    }
 }
