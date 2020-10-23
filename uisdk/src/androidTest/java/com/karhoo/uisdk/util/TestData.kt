@@ -100,7 +100,7 @@ class TestData {
 
         const val INVALID_PHONE = "Invalid phone number"
 
-        const val THIRD_FLEET = "Third Fleet"
+        const val LAST_FLEET = "Last Fleet"
 
         const val TEST_FLEET = "KarhooTestFleet"
 
@@ -708,7 +708,7 @@ class TestData {
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
                                                          currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
-                                                         name = "QA_base_ex_com_ex_tax_metered",
+                                                         name = "Second Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
                                                          description = "Some fleet description",
                                                          phoneNumber = "+447715364890",
@@ -718,21 +718,22 @@ class TestData {
                                                              vehicleQta = QuoteQTA(highMinutes = 5, lowMinutes = 5)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
                         QUOTE.copy(
-                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
-                                price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
+                                price = QUOTE_PRICE.copy(highPrice = 2500, lowPrice = 2500,
                                                          currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
-                                                         name = "iCabbi [Sandbox]",
-                                                         logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
+                                                         name = "Last Fleet",
+                                                         logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                                          description = "Some fleet description",
-                                                         phoneNumber = "+447904839920",
+                                                         phoneNumber = "+442999999",
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
-                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Saloon",
-                                                             vehicleQta = QuoteQTA(highMinutes = 30,
-                                                                                   lowMinutes = 30)),
+                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
+                                                             vehicleQta = QuoteQTA(highMinutes = 20,
+                                                                                   lowMinutes =
+                                                                                   20)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
@@ -748,27 +749,27 @@ class TestData {
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
-                                                             vehicleQta = QuoteQTA(highMinutes = 20,
+                                                             vehicleQta = QuoteQTA(highMinutes = 15,
                                                                                    lowMinutes =
-                                                                                   20)),
+                                                                                   15)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
                         QUOTE.copy(
-                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O21wdg==",
+                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
                                                          currencyCode = DEFAULT_CURRENCY),
                                 fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
-                                                         name = "Ivcardo",
+                                                         name = "Fourth Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                                          description = "Some fleet description",
-                                                         phoneNumber = "+447904839920",
+                                                         phoneNumber = "+442999999",
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
-                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "MPV",
-                                                             vehicleQta = QuoteQTA(highMinutes = 30,
+                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
+                                                             vehicleQta = QuoteQTA(highMinutes = 18,
                                                                                    lowMinutes =
-                                                                                   30)),
+                                                                                   18)),
                                 vehicleAttributes = VEHICLE_ATTRIBUTES),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",

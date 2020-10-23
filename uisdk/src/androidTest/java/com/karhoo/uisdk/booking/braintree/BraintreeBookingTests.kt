@@ -36,7 +36,7 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.THIRD_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.LAST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
@@ -208,12 +208,12 @@ class BraintreeBookingTests : Launch {
         booking(this, INITIAL_TRIP_INTENT) {
             shortSleep()
         } result {
-            quotesListNotExpanded(THIRD_FLEET)
+            quotesListNotExpanded(LAST_FLEET)
         }
         booking {
             pressExpandListButton()
         } result {
-            quotesListIsExpanded(THIRD_FLEET)
+            quotesListIsExpanded(LAST_FLEET)
         }
     }
 
@@ -233,12 +233,12 @@ class BraintreeBookingTests : Launch {
             shortSleep()
             pressExpandListButton()
         } result {
-            FLEET_INFO_ALT.name?.let { quotesListIsExpanded(it) }
+            quotesListIsExpanded(LAST_FLEET)
         }
         booking {
             pressExpandListButton()
         } result {
-            FLEET_INFO_ALT.name?.let { quotesListNotExpanded(it) }
+            quotesListNotExpanded(LAST_FLEET)
         }
     }
 
