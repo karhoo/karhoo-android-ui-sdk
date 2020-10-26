@@ -38,8 +38,10 @@ jobs:
             echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
             echo "ADYEN_CLIENT_ID=\"ADYEN_CLIENT_ID\"" >> app/secure.properties
             echo "ADYEN_CLIENT_SCOPE=\"ADYEN_CLIENT_SCOPE\"" >> app/secure.properties
+            echo "ADYEN_AUTH_TOKEN=\"ADYEN_AUTH_TOKEN\"" >> app/secure.properties
             echo "BRAINTREE_CLIENT_ID=\"BRAINTREE_CLIENT_ID\"" >> app/secure.properties
             echo "BRAINTREE_CLIENT_SCOPE=\"BRAINTREE_CLIENT_SCOPE\"" >> app/secure.properties
+            echo "BRAINTREE_AUTH_TOKEN=\"BRAINTREE_AUTH_TOKEN\"" >> app/secure.properties
             echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
             echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
             echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
@@ -63,8 +65,10 @@ jobs:
                     echo "GUEST_CHECKOUT_REFERER=\"$GUEST_CHECKOUT_REFERER\"" >> app/secure.properties
                     echo "ADYEN_CLIENT_ID=\"ADYEN_CLIENT_ID\"" >> app/secure.properties
                     echo "ADYEN_CLIENT_SCOPE=\"ADYEN_CLIENT_SCOPE\"" >> app/secure.properties
+                    echo "ADYEN_AUTH_TOKEN=\"ADYEN_AUTH_TOKEN\"" >> app/secure.properties
                     echo "BRAINTREE_CLIENT_ID=\"BRAINTREE_CLIENT_ID\"" >> app/secure.properties
                     echo "BRAINTREE_CLIENT_SCOPE=\"BRAINTREE_CLIENT_SCOPE\"" >> app/secure.properties
+                    echo "BRAINTREE_AUTH_TOKEN=\"BRAINTREE_AUTH_TOKEN\"" >> app/secure.properties
                     echo "STAGING_HOST=\"$STAGING_HOST\"" >> app/secure.properties
                     echo "STAGING_AUTH_HOST=\"$STAGING_AUTH_HOST\"" >> app/secure.properties
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
