@@ -69,4 +69,8 @@
     <!-- Icon -->
     <color name="icon_blue">#181A47</color>
 
+
+    <!-- Adyen -->
+    <color name="primaryColor">@color/primary</color>
+
 </resources>
