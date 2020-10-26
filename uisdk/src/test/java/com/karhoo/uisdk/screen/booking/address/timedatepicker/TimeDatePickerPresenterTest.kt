@@ -53,7 +53,7 @@ class TimeDatePickerPresenterTest {
 
     @Before
     fun setUp() {
-        DateTimeZone.setDefault(DateTimeZone.UTC)
+        DateTimeZone.setDefault(timezoneAmsterdam)
         timePickerPresenter = TimeDatePickerPresenter(view, analytics)
         timePickerPresenter.subscribeToBookingStatus(bookingStatusStateViewModel)
     }
@@ -115,7 +115,7 @@ class TimeDatePickerPresenterTest {
         whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
         whenever(bookingStatusStateViewModel.currentState.pickup).thenReturn(LOCATION_AMSTERDAM)
 
-        val now = DateTime.now()
+        val now = DateTime.now(DateTimeZone.getDefault())
 
         timePickerPresenter.datePickerClicked()
 
@@ -125,10 +125,6 @@ class TimeDatePickerPresenterTest {
         val twoHoursAhead = now.plusHours(2)
         val oneYearAhead = now.plusYears(1)
         val oneYearOneDayAhead = now.plusYears(1).plusDays(1)
-
-        val diff = 1635241908679 - 1635245508679
-        val seconds = diff/1000
-        val mins = seconds/60
 
         assertThat(longArgumentCaptor.firstValue).isGreaterThanOrEqualTo(oneHourAhead.millis)
         assertThat(longArgumentCaptor.firstValue).isLessThanOrEqualTo(twoHoursAhead.millis)
