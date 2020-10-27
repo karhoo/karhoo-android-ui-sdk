@@ -82,7 +82,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                     this.nonce = transactionId
                     updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
                 }
-                //TODO Need to check if all other result codes should map to failure
                 else -> view?.showPaymentFailureDialog()
             }
         } else {
