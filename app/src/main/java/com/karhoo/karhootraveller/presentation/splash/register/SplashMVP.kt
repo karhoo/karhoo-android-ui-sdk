@@ -16,6 +16,8 @@ interface SplashMVP {
 
         fun goToLogin()
 
+        fun showError()
+
         fun onResume()
 
         fun appInvalid()

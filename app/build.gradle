@@ -83,6 +83,7 @@ android {
         buildConfigField("String", "GUEST_CHECKOUT_REFERER", (secureProps.getProperty("GUEST_CHECKOUT_REFERER") ?: ""))
         buildConfigField("String", "ADYEN_CLIENT_ID", (secureProps.getProperty("ADYEN_CLIENT_ID") ?: ""))
         buildConfigField("String", "ADYEN_CLIENT_SCOPE", (secureProps.getProperty("ADYEN_CLIENT_SCOPE") ?: ""))
+        buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: ""))
         buildConfigField("String", "BRAINTREE_CLIENT_ID", (secureProps.getProperty("BRAINTREE_CLIENT_ID") ?: ""))
         buildConfigField("String", "BRAINTREE_CLIENT_SCOPE", (secureProps.getProperty("BRAINTREE_CLIENT_SCOPE") ?: ""))
 
