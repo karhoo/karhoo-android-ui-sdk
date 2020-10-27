@@ -3,7 +3,6 @@ package com.karhoo.karhootraveller.presentation.splash.register
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
