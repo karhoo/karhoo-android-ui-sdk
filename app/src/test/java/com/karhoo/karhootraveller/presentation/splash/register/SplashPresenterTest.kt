@@ -4,11 +4,14 @@ import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.UserInfo
+import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.auth.AuthService
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.analytics.Analytics
@@ -24,6 +27,7 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
@@ -40,15 +44,25 @@ class SplashPresenterTest {
     private val playServicesUtil: PlayServicesUtil = mock()
     private val paymentService: PaymentsService = mock()
     private val paymentCall: Call<PaymentsNonce> = mock()
+    private val authService: AuthService = mock()
+    private var call: Call<UserInfo> = mock()
     private val location: Location = Location("").apply {
         latitude = 1.0
         longitude = 2.0
     }
 
+    private val lambdaCaptor = argumentCaptor<(Resource<UserInfo>) -> Unit>()
+
     private val authMethodCaptor = argumentCaptor<AuthenticationMethod>()
 
     private val presenter: SplashPresenter = SplashPresenter(view, paymentService, locationProvider, userStore,
-                                                             appVersionValidator, analytics, location, playServicesUtil)
+                                                             appVersionValidator, analytics,
+                                                             location, authService, playServicesUtil)
+
+    @Before
+    fun setUp() {
+        doNothing().whenever(call).execute(lambdaCaptor.capture())
+    }
 
     /**
      * Given:   The app has started
@@ -208,13 +222,13 @@ class SplashPresenterTest {
      */
     @Test
     fun `Adyen token login sets correct auth method and takes user to booking flow`() {
+        whenever(authService.login(any())).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
+        lambdaCaptor.firstValue.invoke(Resource.Success(userInfo))
 
         verify(view).setConfig(authMethodCaptor.capture())
-        //TODO Change this when we can implement Token Auth
-        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
-        //verify(view).goToBooking(null)
-        verify(view).goToLogin()
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
+        verify(view).goToBooking(null)
     }
 
     /**
@@ -225,13 +239,47 @@ class SplashPresenterTest {
      */
     @Test
     fun `Braintree token login sets correct auth method and takes user to booking flow`() {
+        whenever(authService.login(any())).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
+        lambdaCaptor.firstValue.invoke(Resource.Success(userInfo))
 
         verify(view).setConfig(authMethodCaptor.capture())
-        //TODO Change this when we can implement Token Auth
-        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.KarhooUser)
-        //verify(view).goToBooking(null)
-        verify(view).goToLogin()
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
+        verify(view).goToBooking(null)
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a Adyen token login
+     * Then:    A invalid token is passed through
+     * And:     An error is presented on screen
+     */
+    @Test
+    fun `Adyen token login failure with invalid token`() {
+        whenever(authService.login(any())).thenReturn(call)
+        presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
+        lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
+        verify(view, atLeastOnce()).showError()
+    }
+
+    /**
+     * Given:   A login type has been chosen
+     * When:    When it is a Braintree token login
+     * Then:    A invalid token is passed through
+     * And:     An error is presented on screen
+     */
+    @Test
+    fun `Braintree token login failure with invalid token`() {
+        whenever(authService.login(any())).thenReturn(call)
+        presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
+        lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(view).setConfig(authMethodCaptor.capture())
+        assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
+        verify(view, atLeastOnce()).showError()
     }
 
     /**
