@@ -1,8 +1,11 @@
 package com.karhoo.karhootraveller.presentation.splash.register
 
+import android.app.Activity
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
@@ -11,10 +14,12 @@ import com.karhoo.karhootraveller.presentation.base.BasePresenter
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
+import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
@@ -120,6 +125,13 @@ internal class SplashPresenter(view: SplashMVP.View,
         view?.setConfig(authMethod)
         if (authMethod is AuthenticationMethod.KarhooUser) {
             view?.goToLogin()
+        } else if (authMethod is AuthenticationMethod.TokenExchange) {
+            KarhooApi.authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
+                when (result) {
+                    is Resource.Success -> view?.goToBooking(null)
+                    is Resource.Failure -> Log.e("Token Failure", "Token Failure")
+                }
+            }
         } else {
             view?.goToBooking(null)
         }
