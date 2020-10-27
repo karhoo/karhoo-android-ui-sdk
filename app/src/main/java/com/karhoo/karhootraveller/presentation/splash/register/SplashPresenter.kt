@@ -113,14 +113,10 @@ internal class SplashPresenter(view: SplashMVP.View,
             LoginType.BRAINTREE_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
                                                                           referer = BuildConfig.GUEST_CHECKOUT_REFERER,
                                                                           organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
-            LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.KarhooUser()
-            // TODO Implement with clientId and scope
-            // AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID,
-            // scope = BuildConfig.ADYEN_CLIENT_SCOPE)
+//            LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.KarhooUser()
+            LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID, scope = BuildConfig.ADYEN_CLIENT_SCOPE)
             LoginType.BRAINTREE_TOKEN.value -> AuthenticationMethod.KarhooUser()
             // TODO Implement with clientId and scope
-            // AuthenticationMethod.TokenExchange(clientId = BuildConfig.BRAINTREE_CLIENT_ID,
-            // scope = BuildConfig.BRAINTREE_CLIENT_SCOPE)
             else -> return
         }
         view?.setConfig(authMethod)
