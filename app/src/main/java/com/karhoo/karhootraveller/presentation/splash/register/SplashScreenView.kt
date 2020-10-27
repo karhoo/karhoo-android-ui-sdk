@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -81,6 +82,10 @@ class SplashScreenView @JvmOverloads constructor(
         splashActions?.startActivity(intent)
     }
 
+    override fun showError() {
+        Toast.makeText(context, "Invalid Token User", Toast.LENGTH_LONG)
+    }
+
     private fun goToRegistration() {
         val intent = RegistrationActivity.Builder.builder.build(context)
         splashActions?.startActivityForResult(intent, RegistrationActivity.REQ_CODE)
@@ -142,7 +147,7 @@ class SplashScreenView @JvmOverloads constructor(
                                     KarhooApi.paymentsService,
                                     LocationProvider(context, KarhooApi.addressService),
                                     KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
-                                    KarhooAnalytics.INSTANCE, fallbackLocation, KarhooPlayServicesUtil(context))
+                                    KarhooAnalytics.INSTANCE, fallbackLocation, KarhooApi.authService, KarhooPlayServicesUtil(context))
         presenter?.getUsersLocation()
         presenter?.checkIfUserIsLoggedIn()
     }
@@ -156,8 +161,7 @@ class SplashScreenView @JvmOverloads constructor(
                                     KarhooApi.paymentsService,
                                     LocationProvider(context, KarhooApi.addressService),
                                     KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
-                                    KarhooAnalytics.INSTANCE, null, KarhooPlayServicesUtil
-                                    (context))
+                                    KarhooAnalytics.INSTANCE, null, KarhooApi.authService, KarhooPlayServicesUtil(context))
         presenter?.checkIfUserIsLoggedIn()
     }
 

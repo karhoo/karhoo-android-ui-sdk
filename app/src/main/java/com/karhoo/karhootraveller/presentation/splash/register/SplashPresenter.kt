@@ -1,11 +1,8 @@
 package com.karhoo.karhootraveller.presentation.splash.register
 
-import android.app.Activity
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
@@ -20,6 +17,7 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
 import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.auth.AuthService
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
@@ -33,6 +31,7 @@ internal class SplashPresenter(view: SplashMVP.View,
                                private val appVersionValidator: AppVersionValidator,
                                private val analytics: Analytics,
                                private var location: Location?,
+                               private val authService: AuthService = KarhooApi.authService,
                                private val playServicesUtil: PlayServicesUtil)
     : BasePresenter<SplashMVP.View>(),
       SplashMVP.Presenter,
@@ -126,10 +125,10 @@ internal class SplashPresenter(view: SplashMVP.View,
         if (authMethod is AuthenticationMethod.KarhooUser) {
             view?.goToLogin()
         } else if (authMethod is AuthenticationMethod.TokenExchange) {
-            KarhooApi.authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
+            authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
                 when (result) {
                     is Resource.Success -> view?.goToBooking(null)
-                    is Resource.Failure -> Log.e("Token Failure", "Token Failure")
+                    is Resource.Failure -> view?.showError()
                 }
             }
         } else {
