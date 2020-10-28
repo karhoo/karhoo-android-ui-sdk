@@ -122,17 +122,22 @@ internal class SplashPresenter(view: SplashMVP.View,
             else -> return
         }
         view?.setConfig(authMethod)
-        if (authMethod is AuthenticationMethod.KarhooUser) {
-            view?.goToLogin()
-        } else if (authMethod is AuthenticationMethod.TokenExchange) {
-            authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
-                when (result) {
-                    is Resource.Success -> view?.goToBooking(null)
-                    is Resource.Failure -> view?.showError()
-                }
+
+        when (authMethod) {
+            is AuthenticationMethod.KarhooUser -> view?.goToLogin()
+            is AuthenticationMethod.Guest -> view?.goToBooking(null)
+            is AuthenticationMethod.TokenExchange -> handleTokenExchange(loginType)
+            else -> view?.showError()
+        }
+    }
+
+    private fun handleTokenExchange(loginType: String) {
+        val token: String = if (loginType == LoginType.ADYEN_TOKEN.value) BuildConfig.ADYEN_AUTH_TOKEN else BuildConfig.BRAINTREE_AUTH_TOKEN
+        authService.login(token).execute { result ->
+            when (result) {
+                is Resource.Success -> view?.goToBooking(null)
+                is Resource.Failure -> view?.showError()
             }
-        } else {
-            view?.goToBooking(null)
         }
     }
 
