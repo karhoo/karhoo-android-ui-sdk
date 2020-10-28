@@ -86,6 +86,7 @@ android {
         buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: ""))
         buildConfigField("String", "BRAINTREE_CLIENT_ID", (secureProps.getProperty("BRAINTREE_CLIENT_ID") ?: ""))
         buildConfigField("String", "BRAINTREE_CLIENT_SCOPE", (secureProps.getProperty("BRAINTREE_CLIENT_SCOPE") ?: ""))
+        buildConfigField("String", "BRAINTREE_AUTH_TOKEN", (secureProps.getProperty("BRAINTREE_AUTH_TOKEN") ?: ""))
 
         buildConfigField("String", "STAGING_HOST", (secureProps.getProperty("STAGING_HOST") ?: ""))
         buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: ""))

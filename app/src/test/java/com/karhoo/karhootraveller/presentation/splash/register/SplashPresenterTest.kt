@@ -2,6 +2,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.karhootraveller.BuildConfig
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
 import com.karhoo.sdk.api.KarhooError
@@ -222,7 +223,7 @@ class SplashPresenterTest {
      */
     @Test
     fun `Adyen token login sets correct auth method and takes user to booking flow`() {
-        whenever(authService.login(any())).thenReturn(call)
+        whenever(authService.login(BuildConfig.ADYEN_AUTH_TOKEN)).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
         lambdaCaptor.firstValue.invoke(Resource.Success(userInfo))
 
@@ -239,7 +240,7 @@ class SplashPresenterTest {
      */
     @Test
     fun `Braintree token login sets correct auth method and takes user to booking flow`() {
-        whenever(authService.login(any())).thenReturn(call)
+        whenever(authService.login(BuildConfig.BRAINTREE_AUTH_TOKEN)).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
         lambdaCaptor.firstValue.invoke(Resource.Success(userInfo))
 
@@ -256,7 +257,7 @@ class SplashPresenterTest {
      */
     @Test
     fun `Adyen token login failure with invalid token`() {
-        whenever(authService.login(any())).thenReturn(call)
+        whenever(authService.login(BuildConfig.ADYEN_AUTH_TOKEN)).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.ADYEN_TOKEN.value)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -273,7 +274,7 @@ class SplashPresenterTest {
      */
     @Test
     fun `Braintree token login failure with invalid token`() {
-        whenever(authService.login(any())).thenReturn(call)
+        whenever(authService.login(BuildConfig.BRAINTREE_AUTH_TOKEN)).thenReturn(call)
         presenter.handleLoginTypeSelection(LoginType.BRAINTREE_TOKEN.value)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
