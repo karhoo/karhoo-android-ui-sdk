@@ -40,9 +40,9 @@ class ServerRobot {
 
         mockPostResponse(
                 code = 200,
-                response = TOKEN,
-                endpoint = APITemplate.TOKEN_REFRESH_METHOD
-                        )
+        response = TOKEN,
+        endpoint = APITemplate.TOKEN_REFRESH_METHOD
+        )
     }
 
     fun unsuccessfulToken() {
