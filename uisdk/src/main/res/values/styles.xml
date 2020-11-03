@@ -244,7 +244,7 @@
     </style>
 
     <style name="KhSupplierListItemView">
-        <item name="layout">@layout/uisdk_view_supplier_item</item>
+        <item name="layout">@layout/uisdk_view_quotes_item</item>
     </style>
 
     <style name="KhBookingMapViewStyle">
@@ -290,7 +290,7 @@
     </style>
 
     <style name="KhSupplierListView">
-        <item name="android:background">@drawable/uisdk_supplier_list_bg</item>
+        <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
     </style>
 
     <style name="KhBookingSupplierView">

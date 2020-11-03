@@ -33,7 +33,7 @@
                 android:src="@drawable/uisdk_ic_close"
                 android:layout_gravity="end" />
 
-            <com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierView
+            <com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesView
                 android:id="@+id/bookingRequestSupplierWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

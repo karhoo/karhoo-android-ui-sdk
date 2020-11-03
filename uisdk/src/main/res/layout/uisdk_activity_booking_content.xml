@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-    <com.karhoo.uisdk.screen.booking.supplier.SupplierListView
+    <com.karhoo.uisdk.screen.booking.quotes.QuotesListView
         android:id="@+id/supplierListWidget"
         android:layout_width="0dp"
         android:layout_height="@dimen/collapsible_pane_expanded_height"

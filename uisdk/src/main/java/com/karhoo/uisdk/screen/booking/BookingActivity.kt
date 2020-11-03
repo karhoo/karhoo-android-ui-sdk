@@ -28,8 +28,8 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
-import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewContract
-import com.karhoo.uisdk.screen.booking.booking.supplier.BookingSupplierViewModel
+import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
+import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
@@ -57,7 +57,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
-    private val bookingSupplierViewModel: BookingSupplierViewModel by lazy { ViewModelProvider(this).get(BookingSupplierViewModel::class.java) }
+    private val bookingQuotesViewModel: BookingQuotesViewModel by lazy { ViewModelProvider(this).get(BookingQuotesViewModel::class.java) }
 
     private var quote: Quote? = null
 
@@ -166,7 +166,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        supplierListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingSupplierViewModel)
+        supplierListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
         bookingRequestWidget.apply {
             bindViewToBookingStatus(this@BookingActivity, bookingStatusStateViewModel)
             bindViewToBookingRequest(this@BookingActivity, bookingRequestStateViewModel)
@@ -224,7 +224,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         bookingStatusStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         bookingRequestStateViewModel.viewActions().observe(this, bindToBookingRequestOutputs())
-        bookingSupplierViewModel.viewActions().observe(this, bindToBookingSupplierOutputs())
+        bookingQuotesViewModel.viewActions().observe(this, bindToBookingSupplierOutputs())
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
@@ -247,19 +247,19 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingSupplierOutputs(): Observer<in BookingSupplierViewContract.BookingSupplierAction> {
+    private fun bindToBookingSupplierOutputs(): Observer<in BookingQuotesViewContract.BookingSupplierAction> {
         return Observer { actions ->
             when (actions) {
-                is BookingSupplierViewContract.BookingSupplierAction.ShowError ->
+                is BookingQuotesViewContract.BookingSupplierAction.ShowError                                 ->
                     showSnackbar(actions.snackbarConfig)
-                is BookingSupplierViewContract.BookingSupplierAction.HideError -> dismissSnackbar()
-                is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange ->
+                is BookingQuotesViewContract.BookingSupplierAction.HideError                                 -> dismissSnackbar()
+                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange ->
                     updateMapViewForSupplierListVisibilityChange(actions.isVisible)
-                is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed ->
+                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed        ->
                     bookingMapWidget.updateMapViewForSupplierListVisibilityCollapsed()
-                is BookingSupplierViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded ->
+                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded         ->
                     bookingMapWidget.updateMapViewForSupplierListVisibilityExpanded()
-                is BookingSupplierViewContract.BookingSupplierAction.ShowBookingRequest -> {
+                is BookingQuotesViewContract.BookingSupplierAction.ShowBookingRequest                        -> {
                     this.quote = actions.quote
                     bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId)
                 }
