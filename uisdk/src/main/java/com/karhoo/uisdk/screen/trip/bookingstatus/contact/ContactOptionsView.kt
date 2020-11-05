@@ -53,7 +53,7 @@ class ContactOptionsView @JvmOverloads constructor(
                 .show()
     }
 
-    override fun showCallToCancelDialog(number: String, supplier: String) {
+    override fun showCallToCancelDialog(number: String, quote: String) {
         AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.difficulties_cancelling_title)
                 .setMessage(R.string.difficulties_cancelling_message)

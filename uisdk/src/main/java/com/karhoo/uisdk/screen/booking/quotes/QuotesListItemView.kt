@@ -27,8 +27,8 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.loadingIcon
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImage
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.pickupTypeText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.supplierNameText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.supplierProgressBar
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteNameText
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteProgressBar
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
@@ -44,9 +44,9 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.SupplierListItem,
-                                                        defStyleAttr, R.style.KhSupplierListItemView)
-        val layout = typedArray.getResourceId(R.styleable.SupplierListItem_layout, R
+        val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesListItem,
+                                                        defStyleAttr, R.style.KhQuoteListItemView)
+        val layout = typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
                 .layout.uisdk_view_quotes_item)
         typedArray.recycle()
         return layout
@@ -57,7 +57,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              isPrebook: Boolean,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
-        supplierNameText.text = vehicleDetails.fleet.name
+        quoteNameText.text = vehicleDetails.fleet.name
         categoryText.text = String.format("%s%s",
                                           vehicleDetails.vehicle.vehicleClass?.substring(0, 1)?.toUpperCase(),
                                           vehicleDetails.vehicle.vehicleClass?.substring(1))
@@ -175,11 +175,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
     private fun startLoading() {
         loadingIcon.visibility = View.VISIBLE
-        supplierProgressBar.visibility = View.VISIBLE
+        quoteProgressBar.visibility = View.VISIBLE
     }
 
     private fun stopLoading() {
         loadingIcon.visibility = View.GONE
-        supplierProgressBar.visibility = View.GONE
+        quoteProgressBar.visibility = View.GONE
     }
 }

@@ -16,14 +16,14 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.noDestinationLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.noDestinationVehiclesLabel
+import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesListRecycler
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingProgressBar
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.supplierListRecycler
 
 class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: AttributeSet? = null, defStyleAttr: Int = 0)
     : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerMVP.View {
 
-    private val suppliersAdapter = QuotesAdapter(context)
+    private val quotesAdapter = QuotesAdapter(context)
     private val presenter: QuotesRecyclerMVP.Presenter = QuotesRecyclerPresenter(this)
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
@@ -32,25 +32,25 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
         inflate(context, R.layout.uisdk_view_quotes_recycler, this)
 
         if (!isInEditMode) {
-            suppliersAdapter.setItemClickListener { _, _, item ->
-                bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent.SupplierItemClicked(item))
+            quotesAdapter.setItemClickListener { _, _, item ->
+                bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked(item))
             }
-            supplierListRecycler.apply {
+            quotesListRecycler.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 itemAnimator = DefaultItemAnimator()
-                adapter = suppliersAdapter
+                adapter = quotesAdapter
             }
         }
     }
 
     override fun setSortMethod(sortMethod: SortMethod) {
-        suppliersAdapter.setSelectedSortMethod(sortMethod)
+        quotesAdapter.setSelectedSortMethod(sortMethod)
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        suppliersAdapter.items = quoteList
-        if (suppliersAdapter.itemCount > 0) {
+        quotesAdapter.items = quoteList
+        if (quotesAdapter.itemCount > 0) {
             setQuotesLoaderVisibility(View.GONE)
         }
     }
@@ -66,11 +66,11 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     }
 
     override fun prebook(isPrebook: Boolean) {
-        suppliersAdapter.prebook(isPrebook)
+        quotesAdapter.prebook(isPrebook)
     }
 
     override fun setListVisibility(visible: Boolean) {
-        supplierListRecycler.visibility = if (visible) View.VISIBLE else View.GONE
+        quotesListRecycler.visibility = if (visible) View.VISIBLE else View.GONE
         noDestinationLabel.visibility = if (visible) View.GONE else View.VISIBLE
         noDestinationVehiclesLabel?.visibility = if (visible) View.GONE else View.VISIBLE
         setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)

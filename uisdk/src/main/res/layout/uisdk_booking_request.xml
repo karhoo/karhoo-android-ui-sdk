@@ -34,7 +34,7 @@
                 android:layout_gravity="end" />
 
             <com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesView
-                android:id="@+id/bookingRequestSupplierWidget"
+                android:id="@+id/bookingRequestQuotesWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_grid_first_column"

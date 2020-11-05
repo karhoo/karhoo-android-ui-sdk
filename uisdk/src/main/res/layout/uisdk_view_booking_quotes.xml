@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="@dimen/supplier_logo_size"
-        android:layout_height="@dimen/supplier_logo_size"
+        android:layout_width="@dimen/quotes_logo_size"
+        android:layout_height="@dimen/quotes_logo_size"
         android:layout_gravity="center_vertical|left"
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,8 +25,8 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/supplierNameText"
-        style="@style/KhBookingSupplierView"
+        android:id="@+id/quoteNameText"
+        style="@style/KhBookingQuotesView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_small"
@@ -41,11 +41,11 @@
 
     <TextView
         android:id="@+id/categoryText"
-        style="@style/KhBookingSupplierView"
+        style="@style/KhBookingQuotesView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
-        app:layout_constraintStart_toStartOf="@id/supplierNameText"
+        app:layout_constraintStart_toStartOf="@id/quoteNameText"
         app:layout_constraintTop_toBottomOf="@id/guidelineCentre"
         tools:text="Car" />
 

@@ -55,8 +55,8 @@
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/supplierSortTabLayout"
-        style="@style/KhSupplierSortTabs"
+        android:id="@+id/quotesSortTabLayout"
+        style="@style/KhQuotesSortTabs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

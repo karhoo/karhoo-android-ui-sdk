@@ -6,14 +6,14 @@
     android:layout_height="wrap_content">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/supplierListRecycler"
+        android:id="@+id/quotesListRecycler"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/supplier_height"
+        android:layout_height="@dimen/quotes_height"
         android:layout_marginStart="@dimen/spacing_xsmall"
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:layout_marginEnd="@dimen/spacing_xsmall"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/supplier_padding_bottom"
+        android:paddingBottom="@dimen/quotes_padding_bottom"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

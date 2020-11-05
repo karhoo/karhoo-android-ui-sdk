@@ -9,7 +9,7 @@
     android:elevation="@dimen/spacing_xxxsmall">
 
     <include
-        android:id="@+id/supplierWidget"
+        android:id="@+id/quoteWidget"
         layout="@layout/uisdk_view_quotes_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

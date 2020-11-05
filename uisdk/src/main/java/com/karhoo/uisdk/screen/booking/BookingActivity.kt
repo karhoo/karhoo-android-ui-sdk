@@ -42,7 +42,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.addressBarWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingMapWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingRequestWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.supplierListWidget
+import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
@@ -100,7 +100,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onResume() {
         super.onResume()
         if (tripAllocationWidget.visibility != View.VISIBLE) {
-            supplierListWidget.initAvailability(this)
+            quotesListWidget.initAvailability(this)
         }
         setWatchers()
         setNavHeaderImage()
@@ -132,7 +132,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onStop() {
-        supplierListWidget?.cleanup()
+        quotesListWidget?.cleanup()
         super.onStop()
     }
 
@@ -166,7 +166,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        supplierListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
+        quotesListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
         bookingRequestWidget.apply {
             bindViewToBookingStatus(this@BookingActivity, bookingStatusStateViewModel)
             bindViewToBookingRequest(this@BookingActivity, bookingRequestStateViewModel)
@@ -224,7 +224,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         bookingStatusStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         bookingRequestStateViewModel.viewActions().observe(this, bindToBookingRequestOutputs())
-        bookingQuotesViewModel.viewActions().observe(this, bindToBookingSupplierOutputs())
+        bookingQuotesViewModel.viewActions().observe(this, bindToBookingQuoteOutputs())
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
@@ -247,19 +247,19 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingSupplierOutputs(): Observer<in BookingQuotesViewContract.BookingSupplierAction> {
+    private fun bindToBookingQuoteOutputs(): Observer<in BookingQuotesViewContract.BookingQuotesAction> {
         return Observer { actions ->
             when (actions) {
-                is BookingQuotesViewContract.BookingSupplierAction.ShowError                                 ->
+                is BookingQuotesViewContract.BookingQuotesAction.ShowError                               ->
                     showSnackbar(actions.snackbarConfig)
-                is BookingQuotesViewContract.BookingSupplierAction.HideError                                 -> dismissSnackbar()
-                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListVisibilityChange ->
-                    updateMapViewForSupplierListVisibilityChange(actions.isVisible)
-                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed        ->
-                    bookingMapWidget.updateMapViewForSupplierListVisibilityCollapsed()
-                is BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded         ->
-                    bookingMapWidget.updateMapViewForSupplierListVisibilityExpanded()
-                is BookingQuotesViewContract.BookingSupplierAction.ShowBookingRequest                        -> {
+                is BookingQuotesViewContract.BookingQuotesAction.HideError                               -> dismissSnackbar()
+                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListVisibilityChange ->
+                    updateMapViewForQuoteListVisibilityChange(actions.isVisible)
+                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed        ->
+                    bookingMapWidget.updateMapViewForQuotesListVisibilityCollapsed()
+                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded         ->
+                    bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
+                is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest                      -> {
                     this.quote = actions.quote
                     bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId)
                 }
@@ -297,8 +297,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     private fun waitForTripAllocation() {
-        supplierListWidget.hideList()
-        supplierListWidget?.cleanup()
+        quotesListWidget.hideList()
+        quotesListWidget?.cleanup()
         addressBarWidget.visibility = View.INVISIBLE
         bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
@@ -329,7 +329,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBookingCancelledOrFinished() {
-        supplierListWidget.initAvailability(this)
+        quotesListWidget.initAvailability(this)
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -338,11 +338,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun dismissSnackbar() {
-        supplierListWidget.setSupplierListVisibility()
+        quotesListWidget.setQuotesListVisibility()
         super.dismissSnackbar()
     }
 
-    private fun updateMapViewForSupplierListVisibilityChange(isVisible: Boolean) {
+    private fun updateMapViewForQuoteListVisibilityChange(isVisible: Boolean) {
         if (isVisible) {
             bookingMapWidget.setDefaultPadding()
         } else {

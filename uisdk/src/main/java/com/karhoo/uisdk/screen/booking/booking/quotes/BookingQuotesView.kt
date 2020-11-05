@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.categoryText
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.supplierNameText
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteNameText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 
 class BookingQuotesView @JvmOverloads constructor(context: Context,
@@ -28,7 +28,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingQuotesView,
-                                                        defStyleAttr, R.style.KhBookingSupplierView)
+                                                        defStyleAttr, R.style.KhBookingQuotesView)
         headerTextStyle = typedArray.getResourceId(R.styleable
                                                            .BookingQuotesView_headerText, R
                                                            .style
@@ -36,13 +36,13 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         detailsTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_detailsText, R
                 .style
                 .Text_Alternative_XSmall)
-        TextViewCompat.setTextAppearance(supplierNameText, headerTextStyle)
+        TextViewCompat.setTextAppearance(quoteNameText, headerTextStyle)
         TextViewCompat.setTextAppearance(categoryText, detailsTextStyle)
     }
 
-    fun bindViews(url: String?, supplierName: String, category: String) {
+    fun bindViews(url: String?, quoteName: String, category: String) {
         url?.let { loadImage(it) }
-        supplierNameText.text = supplierName
+        quoteNameText.text = quoteName
         categoryText.text = String.format("%s%s",
                                           category.substring(0, 1).toUpperCase(),
                                           category.substring(1))

@@ -6,7 +6,7 @@
         <attr name="field_id" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="SupplierListItem">
+    <declare-styleable name="QuotesListItem">
         <attr name="layout" format="reference" />
     </declare-styleable>
 
@@ -55,8 +55,8 @@
     </declare-styleable>
 
     <declare-styleable name="BookingPriceView">
-        <attr name="supplierHeaderText" format="reference" />
-        <attr name="supplierDetailsText" format="reference" />
+        <attr name="quotesHeaderText" format="reference" />
+        <attr name="quotesDetailsText" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="BookingQuotesView">

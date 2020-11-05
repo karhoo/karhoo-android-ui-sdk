@@ -21,7 +21,7 @@ class PriceSort : Comparator<Quote> {
         }
     }
 
-    private fun sortBySupplierName(vehicleOne: Quote, vehicleTwo: Quote): Int {
+    private fun sortByQuoteName(vehicleOne: Quote, vehicleTwo: Quote): Int {
         if (vehicleOne.fleet.name != vehicleTwo.fleet.name) {
             return vehicleOne.fleet.name.orEmpty().compareTo(vehicleTwo.fleet.name.orEmpty(), ignoreCase =
             true)
@@ -34,7 +34,7 @@ class PriceSort : Comparator<Quote> {
         val vehicleTwoQta: Int? = vehicleTwo.vehicle.vehicleQta.highMinutes
 
         if (vehicleOneQta == null || vehicleTwoQta == null || vehicleOneQta == vehicleTwoQta) {
-            return sortBySupplierName(vehicleOne, vehicleTwo)
+            return sortByQuoteName(vehicleOne, vehicleTwo)
         } else if (vehicleOneQta > vehicleTwoQta) {
             return 1
         }

@@ -7,53 +7,53 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.state.BaseStateViewModel
 
 class BookingQuotesViewModel(application: Application) :
-        BaseStateViewModel<QuoteListStatus, BookingQuotesViewContract.BookingSupplierAction,
-                BookingQuotesViewContract.BookingSupplierEvent>(application) {
+        BaseStateViewModel<QuoteListStatus, BookingQuotesViewContract.BookingQuotesAction,
+                BookingQuotesViewContract.BookingQuotesEvent>(application) {
 
     init {
         viewState = QuoteListStatus(null)
     }
 
-    override fun process(viewEvent: BookingQuotesViewContract.BookingSupplierEvent) {
+    override fun process(viewEvent: BookingQuotesViewContract.BookingQuotesEvent) {
         super.process(viewEvent)
         when (viewEvent) {
-            is BookingQuotesViewContract.BookingSupplierEvent.SupplierListVisibilityChanged ->
-                setSupplierListVisibility(viewEvent.isVisible, viewEvent.panelState)
-            is BookingQuotesViewContract.BookingSupplierEvent.SupplierListCollapsed         ->
-                setSupplierListCollapsed()
-            is BookingQuotesViewContract.BookingSupplierEvent.SupplierListExpanded          ->
-                setSupplierListExpanded()
-            is BookingQuotesViewContract.BookingSupplierEvent.SupplierItemClicked           ->
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListVisibilityChanged ->
+                setQuotesListVisibility(viewEvent.isVisible, viewEvent.panelState)
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListCollapsed         ->
+                setQuotesListCollapsed()
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded          ->
+                setQuotesListExpanded()
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked           ->
                 showBookingRequest(viewEvent.quote)
-            is BookingQuotesViewContract.BookingSupplierEvent.Availability                  -> setHideNoAvailability()
-            is BookingQuotesViewContract.BookingSupplierEvent.Error                         ->
+            is BookingQuotesViewContract.BookingQuotesEvent.Availability                -> setHideNoAvailability()
+            is BookingQuotesViewContract.BookingQuotesEvent.Error                       ->
                 setShowNoAvailability(viewEvent.snackbarConfig)
         }
     }
 
     private fun setShowNoAvailability(snackbarConfig: SnackbarConfig) {
-        viewAction = BookingQuotesViewContract.BookingSupplierAction.ShowError(snackbarConfig)
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.ShowError(snackbarConfig)
     }
 
     private fun setHideNoAvailability() {
-        viewAction = BookingQuotesViewContract.BookingSupplierAction.HideError
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.HideError
     }
 
-    private fun setSupplierListCollapsed() {
-        viewAction = BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListCollapsed
+    private fun setQuotesListCollapsed() {
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed
     }
 
-    private fun setSupplierListExpanded() {
-        viewAction = BookingQuotesViewContract.BookingSupplierAction.UpdateViewForSupplierListExpanded
+    private fun setQuotesListExpanded() {
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded
     }
 
-    private fun setSupplierListVisibility(isVisible: Boolean, panelState: CollapsiblePanelView.PanelState) {
-        viewAction = BookingQuotesViewContract.BookingSupplierAction
-                .UpdateViewForSupplierListVisibilityChange(isVisible, panelState)
+    private fun setQuotesListVisibility(isVisible: Boolean, panelState: CollapsiblePanelView.PanelState) {
+        viewAction = BookingQuotesViewContract.BookingQuotesAction
+                .UpdateViewForQuotesListVisibilityChange(isVisible, panelState)
     }
 
     private fun showBookingRequest(selectedQuote: Quote) {
         viewState = QuoteListStatus(selectedQuote)
-        viewAction = BookingQuotesViewContract.BookingSupplierAction.ShowBookingRequest(selectedQuote)
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest(selectedQuote)
     }
 }

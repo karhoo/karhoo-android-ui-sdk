@@ -21,7 +21,7 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
     override var hasAvailability: Boolean = false
         set(value) {
             field = value
-            shouldShowSupplierList()
+            shouldShowQuotesList()
         }
 
     init {
@@ -77,7 +77,7 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
             }
 
             if (!hasDestination) {
-                shouldShowSupplierList()
+                shouldShowQuotesList()
             }
             updateList()
         }
@@ -90,7 +90,7 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
         }
     }
 
-    private fun shouldShowSupplierList() {
+    private fun shouldShowQuotesList() {
         when {
             !hasDestination -> view?.apply {
                 if (isExpanded) {

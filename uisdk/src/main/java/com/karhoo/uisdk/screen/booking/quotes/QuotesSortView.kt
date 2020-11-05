@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLayout
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.priceLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.priceLayout
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.supplierSortTabLayout
+import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.quotesSortTabLayout
 
 class QuotesSortView @JvmOverloads constructor(
         context: Context,
@@ -47,9 +47,9 @@ class QuotesSortView @JvmOverloads constructor(
             setOnClickListener { priceClicked() }
         }
 
-        supplierSortTabLayout.apply {
-            addTab(supplierSortTabLayout.newTab())
-            addTab(supplierSortTabLayout.newTab())
+        quotesSortTabLayout.apply {
+            addTab(quotesSortTabLayout.newTab())
+            addTab(quotesSortTabLayout.newTab())
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     if (tab.position == 0) {
@@ -71,7 +71,7 @@ class QuotesSortView @JvmOverloads constructor(
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesSortView,
-                                                        defStyleAttr, R.style.KhSupplierSortView)
+                                                        defStyleAttr, R.style.KhQuotesSortView)
         val rightBackground = typedArray.getResourceId(R.styleable
                                                                .QuotesSortView_rightBackground, R
                                                                .drawable.uisdk_sort_right_background)

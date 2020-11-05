@@ -8,28 +8,28 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewMode
 
 interface BookingQuotesViewContract {
 
-    interface BookingSupplierWidget {
+    interface BookingQuotesWidget {
         fun initAvailability(lifecycleOwner: LifecycleOwner)
-        fun setSupplierListVisibility()
+        fun setQuotesListVisibility()
         fun bindViewToData(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
         fun cleanup()
     }
 
-    sealed class BookingSupplierEvent {
-        data class SupplierListVisibilityChanged(val isVisible: Boolean, val panelState: CollapsiblePanelView.PanelState) : BookingSupplierEvent()
-        object SupplierListCollapsed : BookingSupplierEvent()
-        object SupplierListExpanded : BookingSupplierEvent()
-        data class SupplierItemClicked(val quote: Quote) : BookingSupplierEvent()
-        object Availability : BookingSupplierEvent()
-        data class Error(val snackbarConfig: SnackbarConfig) : BookingSupplierEvent()
+    sealed class BookingQuotesEvent {
+        data class QuotesListVisibilityChanged(val isVisible: Boolean, val panelState: CollapsiblePanelView.PanelState) : BookingQuotesEvent()
+        object QuotesListCollapsed : BookingQuotesEvent()
+        object QuotesListExpanded : BookingQuotesEvent()
+        data class QuotesItemClicked(val quote: Quote) : BookingQuotesEvent()
+        object Availability : BookingQuotesEvent()
+        data class Error(val snackbarConfig: SnackbarConfig) : BookingQuotesEvent()
     }
 
-    sealed class BookingSupplierAction {
-        object HideError : BookingSupplierAction()
-        data class ShowError(val snackbarConfig: SnackbarConfig) : BookingSupplierAction()
-        data class UpdateViewForSupplierListVisibilityChange(val isVisible: Boolean, val panelState: CollapsiblePanelView.PanelState) : BookingSupplierAction()
-        object UpdateViewForSupplierListCollapsed : BookingSupplierAction()
-        object UpdateViewForSupplierListExpanded : BookingSupplierAction()
-        data class ShowBookingRequest(val quote: Quote) : BookingSupplierAction()
+    sealed class BookingQuotesAction {
+        object HideError : BookingQuotesAction()
+        data class ShowError(val snackbarConfig: SnackbarConfig) : BookingQuotesAction()
+        data class UpdateViewForQuotesListVisibilityChange(val isVisible: Boolean, val panelState: CollapsiblePanelView.PanelState) : BookingQuotesAction()
+        object UpdateViewForQuotesListCollapsed : BookingQuotesAction()
+        object UpdateViewForQuotesListExpanded : BookingQuotesAction()
+        data class ShowBookingRequest(val quote: Quote) : BookingQuotesAction()
     }
 }

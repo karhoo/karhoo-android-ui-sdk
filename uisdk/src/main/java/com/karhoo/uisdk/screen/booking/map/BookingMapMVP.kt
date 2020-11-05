@@ -39,9 +39,9 @@ interface BookingMapMVP {
 
         fun showLocateUserButton()
 
-        fun updateMapViewForSupplierListVisibilityCollapsed()
+        fun updateMapViewForQuotesListVisibilityCollapsed()
 
-        fun updateMapViewForSupplierListVisibilityExpanded()
+        fun updateMapViewForQuotesListVisibilityExpanded()
     }
 
     interface Presenter {

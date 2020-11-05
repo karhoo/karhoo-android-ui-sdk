@@ -30,13 +30,13 @@ class CategorySelectorPresenterTest {
     private lateinit var presenter: CategorySelectorPresenter
 
     /**
-     * Given    A request has been made for suppliers
+     * Given    A request has been made for quotes
      * When     A successful response is returned
      * And      The list object is null
      * Then     The categories should be deactivated
      */
     @Test
-    fun `null list not returned when requesting suppliers`() {
+    fun `null list not returned when requesting quotes`() {
         val observer = presenter.subscribeToAvailableCategories()
 
         presenter.availabilityProvider = availabilityProvider
@@ -49,13 +49,13 @@ class CategorySelectorPresenterTest {
     }
 
     /**
-     * Given    A request has been made for suppliers
+     * Given    A request has been made for quotes
      * When     A successful response is returned
-     * And      There are no suppliers available
+     * And      There are no quotes available
      * Then     The list should be empty
      */
     @Test
-    fun `empty supplier list returned when requesting suppliers`() {
+    fun `empty quotes list returned when requesting quotes`() {
         val observer = presenter.subscribeToAvailableCategories()
         val observerBooking = presenter.subscribeToBookingStatus()
 
@@ -74,9 +74,9 @@ class CategorySelectorPresenterTest {
     }
 
     /**
-     * Given    A request has been made for suppliers
+     * Given    A request has been made for quotes
      * When     A successful response is returned
-     * And      There are suppliers available
+     * And      There are quotes available
      * Then     The populated category list should contain the added vehicle as available
      */
     @Test
@@ -86,7 +86,7 @@ class CategorySelectorPresenterTest {
 
         presenter.availabilityProvider = availabilityProvider
 
-        doAnswer { observer.onChanged(createSupplierAvailableMockList()) }
+        doAnswer { observer.onChanged(createQuoteAvailableMockList()) }
                 .whenever(availabilityProvider).filterVehicleListByCategory("MPV")
 
         observerBooking.onChanged(BookingStatus(mock(), mock(), null))
@@ -108,12 +108,12 @@ class CategorySelectorPresenterTest {
             Category("Any", false)
                                                  )
 
-    private fun createSupplierAvailableMockList() = listOf(
+    private fun createQuoteAvailableMockList() = listOf(
             Category("Human", true),
             Category("Animal", true),
             Category("Pet", false),
             Category("MPV", true),
             Category("Any", false)
-                                                          )
+                                                       )
 
 }

@@ -74,10 +74,10 @@ class PriceSortTest {
     /**
      * Given:   a list of vehicles with equal prices and no QTAs
      * When:    sorted using PriceSort
-     * Then:    vehicles should be sorted by supplier name
+     * Then:    vehicles should be sorted by quote name
      */
     @Test
-    fun `sorted by supplier name when equal prices and no QTAs`() {
+    fun `sorted by quote name when equal prices and no QTAs`() {
         val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "B Cars"))
         val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "Z Cars"))
         val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"))
@@ -90,12 +90,12 @@ class PriceSortTest {
     }
 
     /**
-     * Given:   a list of vehicles with same supplier, equal prices and no QTAs
+     * Given:   a list of vehicles with same quotes, equal prices and no QTAs
      * When:    sorted using PriceSort
      * Then:    vehicles should be sorted alphabetically by category name
      */
     @Test
-    fun `sorted alphabetically by category name when supplier is same, equal prices and no QTAs`() {
+    fun `sorted alphabetically by category name when quote is same, equal prices and no QTAs`() {
         val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"),
                          vehicle = QuoteVehicle(vehicleClass = "ABC"))
         val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"),

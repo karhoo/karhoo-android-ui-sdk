@@ -13,7 +13,7 @@ interface BookingStatusMVP {
 
         fun setCancelEnabled(enabled: Boolean)
 
-        fun updateStatus(@StringRes status: Int, supplier: String)
+        fun updateStatus(@StringRes status: Int, quote: String)
 
         fun showTemporaryError(error: String)
 

@@ -53,7 +53,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestL
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestSupplierWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
@@ -153,7 +153,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     private fun attachListeners() {
-        bookingRequestSupplierWidget.setOnClickListener {}
+        bookingRequestQuotesWidget.setOnClickListener {}
         cancelButton.setOnClickListener {
             disableBooking()
             presenter.clearData()
@@ -217,14 +217,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindEta(quote: Quote, card: String) {
-        bindSupplierAndTerms(quote)
+        bindQuoteAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
                                               context.getString(R.string.estimated_arrival_time),
                                               quote.quoteType)
     }
 
     override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
-        bindSupplierAndTerms(quote)
+        bindQuoteAndTerms(quote)
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
@@ -235,14 +235,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
-        bindSupplierAndTerms(quote)
+        bindQuoteAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
         bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.estimated_arrival_time), currency)
     }
 
-    private fun bindSupplierAndTerms(vehicle: Quote) {
-        bookingRequestSupplierWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
+    private fun bindQuoteAndTerms(vehicle: Quote) {
+        bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
                                                vehicle.vehicle.vehicleClass.orEmpty())
         bookingRequestTermsWidget.bindViews(vehicle)
     }
@@ -288,7 +288,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun setCapacity(vehicleAttributes: VehicleAttributes) {
-        bookingRequestSupplierWidget.setCapacity(
+        bookingRequestQuotesWidget.setCapacity(
                 luggage = vehicleAttributes.luggageCapacity,
                 people = vehicleAttributes.passengerCapacity)
     }

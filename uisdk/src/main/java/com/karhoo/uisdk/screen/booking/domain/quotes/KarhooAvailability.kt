@@ -76,7 +76,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private fun cancelVehicleCallback() {
         vehiclesObserver?.let { vehiclesObservable?.apply { unsubscribe(it) } }
         availableVehicles = mutableMapOf()
-        currentAvailableSuppliers()
+        currentAvailableQuotes()
         updateFleets(mutableListOf())
     }
 
@@ -165,7 +165,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         availabilityHandler?.get()?.hasAvailability = true
         currentCategories(currentCategories = vehicles.categories.keys.toList())
         availableVehicles = vehicles.categories
-        currentAvailableSuppliers()
+        currentAvailableQuotes()
         filterVehicles()
     }
 
@@ -179,7 +179,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         }
     }
 
-    private fun currentAvailableSuppliers() {
+    private fun currentAvailableQuotes() {
         if (bookingStatusStateViewModel.currentState.date != null) {
             setAvailableCategories(handlePrebookCategories())
         } else {

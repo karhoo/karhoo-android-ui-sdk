@@ -33,15 +33,15 @@ import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.supplierRecyclerView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.supplierSortWidget
+import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesRecyclerView
+import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesSortWidget
 
 class QuotesListView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), QuotesSortView.Listener,
-      QuotesListMVP.View, BookingQuotesViewContract.BookingSupplierWidget {
+      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -51,7 +51,7 @@ class QuotesListView @JvmOverloads constructor(
 
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
 
-    private var isSupplierListVisible = false
+    private var isQuotesListVisible = false
         private set
 
     init {
@@ -60,7 +60,7 @@ class QuotesListView @JvmOverloads constructor(
         collapsiblePanelView.enable()
         hideListInitially()
 
-        supplierSortWidget.setListener(this)
+        quotesSortWidget.setListener(this)
         chevronIcon.setOnClickListener { presenter.showMore() }
     }
 
@@ -72,15 +72,15 @@ class QuotesListView @JvmOverloads constructor(
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
         if (collapsiblePanelView.panelState == CollapsiblePanelView.PanelState.EXPANDED) {
-            bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent.SupplierListExpanded)
+            bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
-            bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent
-                                                      .SupplierListCollapsed)
+            bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
+                                                      .QuotesListCollapsed)
         }
     }
 
     override fun setSortMethod(sortMethod: SortMethod) {
-        supplierRecyclerView.setSortMethod(sortMethod)
+        quotesRecyclerView.setSortMethod(sortMethod)
     }
 
     override fun onUserChangedSortMethod(sortMethod: SortMethod) {
@@ -89,7 +89,7 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun sortChoiceRequiresDestination() {
-        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent
+        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(SnackbarConfig(text = resources
                                                           .getString(R.string
                                                                              .destination_price_error))))
@@ -102,18 +102,18 @@ class QuotesListView @JvmOverloads constructor(
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
         categorySelectorWidget.bindViewToData(lifecycleOwner, categoriesViewModel, bookingStatusStateViewModel)
-        supplierRecyclerView.watchCategories(lifecycleOwner, categoriesViewModel)
-        supplierRecyclerView.watchQuoteListStatus(lifecycleOwner, bookingQuotesViewModel)
+        quotesRecyclerView.watchCategories(lifecycleOwner, categoriesViewModel)
+        quotesRecyclerView.watchQuoteListStatus(lifecycleOwner, bookingQuotesViewModel)
 
         this.bookingQuotesViewModel = bookingQuotesViewModel
-        bookingQuotesViewModel.viewStates().observe(lifecycleOwner, watchBookingSupplierStatus())
+        bookingQuotesViewModel.viewStates().observe(lifecycleOwner, watchBookingQuotesStatus())
     }
 
     override fun cleanup() {
         availabilityProvider?.cleanup()
     }
 
-    private fun watchBookingSupplierStatus(): Observer<in QuoteListStatus> {
+    private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
         return Observer { quoteListStatus ->
             quoteListStatus?.let {
                 it.selectedQuote
@@ -122,39 +122,40 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun destinationChanged(bookingStatus: BookingStatus) {
-        supplierSortWidget.destinationChanged(bookingStatus)
+        quotesSortWidget.destinationChanged(bookingStatus)
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        supplierRecyclerView.updateList(quoteList)
+        quotesRecyclerView.updateList(quoteList)
     }
 
     override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) {
-        supplierRecyclerView.setListVisibility(pickup != null && destination != null)
+        quotesRecyclerView.setListVisibility(pickup != null && destination != null)
     }
 
     override fun prebook(isPrebook: Boolean) {
-        supplierRecyclerView.prebook(isPrebook)
-        supplierSortWidget.prebookChanged(isPrebook)
+        quotesRecyclerView.prebook(isPrebook)
+        quotesSortWidget.prebookChanged(isPrebook)
     }
 
     override fun showList() {
-        if (!isSupplierListVisible) {
+        if (!isQuotesListVisible) {
             animate()
                     .translationY(0F)
-                    .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
+                    .setDuration(resources.getInteger(R.integer
+                                                              .animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
-                        isSupplierListVisible = true
+                        isQuotesListVisible = true
                         bookingQuotesViewModel?.process(
-                                BookingQuotesViewContract.BookingSupplierEvent
-                                        .SupplierListVisibilityChanged(isVisible = true, panelState = collapsiblePanelView.panelState))
+                                BookingQuotesViewContract.BookingQuotesEvent
+                                        .QuotesListVisibilityChanged(isVisible = true, panelState = collapsiblePanelView.panelState))
                     }
         }
     }
 
     override fun hideList() {
-        if (isSupplierListVisible) {
+        if (isQuotesListVisible) {
 
             val translation = when (collapsiblePanelView.panelState) {
                 PanelState.COLLAPSED -> resources.getDimension(R.dimen.quote_list_height)
@@ -163,16 +164,16 @@ class QuotesListView @JvmOverloads constructor(
 
             animate()
                     .translationY(translation)
-                    .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_suppliers).toLong())
+                    .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         bookingQuotesViewModel?.process(
-                                BookingQuotesViewContract.BookingSupplierEvent
-                                        .SupplierListVisibilityChanged(isVisible = false, panelState =
+                                BookingQuotesViewContract.BookingQuotesEvent
+                                        .QuotesListVisibilityChanged(isVisible = false, panelState =
                                         collapsiblePanelView.panelState))
                     }
                     .withEndAction {
-                        isSupplierListVisible = false
+                        isQuotesListVisible = false
                     }
 
         }
@@ -189,25 +190,25 @@ class QuotesListView @JvmOverloads constructor(
                                             priority = SnackbarPriority.NORMAL,
                                             action = SnackbarAction(resources.getString(R.string.contact)) { (context as Activity).startActivity(supplierFeedback.createEmail()) },
                                             text = resources.getString(R.string.no_availability))
-        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent
+        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(snackbarConfig))
 
     }
 
     override fun hideNoAvailability() {
-        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent
-                                                  .SupplierListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
+        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
+                                                  .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
-        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingSupplierEvent
+        bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(snackbarConfig))
     }
 
-    override fun setSupplierListVisibility() {
+    override fun setQuotesListVisibility() {
         bookingQuotesViewModel?.process(
-                BookingQuotesViewContract.BookingSupplierEvent
-                        .SupplierListVisibilityChanged(isVisible = isVisible, panelState = collapsiblePanelView.panelState))
+                BookingQuotesViewContract.BookingQuotesEvent
+                        .QuotesListVisibilityChanged(isVisible = isVisible, panelState = collapsiblePanelView.panelState))
     }
 
     override fun initAvailability(lifecycleOwner: LifecycleOwner) {
