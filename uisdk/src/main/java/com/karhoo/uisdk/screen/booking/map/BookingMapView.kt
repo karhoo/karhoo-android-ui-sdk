@@ -377,14 +377,14 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
         recentreMapIfDestinationIsNull()
 
-        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_suppliers)
+        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
     }
 
     fun setDefaultPadding() {
         googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
 
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_suppliers)
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_quotes)
     }
 
     private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
@@ -442,11 +442,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         locateMeButton.isClickable = true
     }
 
-    override fun updateMapViewForSupplierListVisibilityCollapsed() {
+    override fun updateMapViewForQuotesListVisibilityCollapsed() {
         animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
     }
 
-    override fun updateMapViewForSupplierListVisibilityExpanded() {
+    override fun updateMapViewForQuotesListVisibilityExpanded() {
         animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
     }
 }

@@ -6,7 +6,7 @@
     <string name="permission_rationale_location">Pour que nous pouvions vous localiser avec l\'aide de votre téléphone, veuillez  activer les services de localisation.</string>
     <string name="settings">Paramètres</string>
 
-    <!-- Supplier List -->
+    <!-- Quotes List -->
     <string name="sorter_nearest">Proximité</string>
     <string name="sorter_cheapest">Prix</string>
     <string name="address_pick_up">Départ</string>
@@ -234,7 +234,7 @@
     <!-- Current Trip -->
     <string name="retrieving_pickup">Récupération de l\'adresse de départ</string>
     <string name="retrieving_dropoff">Récupération de l\'adresse d\'arrivée</string>
-    <string name="supplier">Le fournisseur</string>
+    <string name="quote">Le fournisseur</string>
     <string name="cancel_ride">Annuler</string>
     <string name="cancelling_ride">Annulation de la course</string>
     <string name="contact_fleet">Contacter le fournisseur</string>

@@ -173,7 +173,7 @@ class TripAllocationView @JvmOverloads constructor(
         actions?.onBookingCancelledOrFinished()
     }
 
-    override fun showCallToCancelDialog(number: String, supplier: String) {
+    override fun showCallToCancelDialog(number: String, quote: String) {
         cancelButton.isEnabled = true
         AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.difficulties_cancelling_title)

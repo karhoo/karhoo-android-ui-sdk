@@ -79,7 +79,7 @@ class RideNotificationView : RideNotificationContract.View {
 
     private fun loadFleetLogo(contentView: RemoteViews) {
         if (trip.fleetInfo?.logoUrl.isNullOrBlank()) {
-            contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_supplier_logo_empty)
+            contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_quotes_logo_empty)
         } else {
             Picasso.with(context).load(trip.fleetInfo?.logoUrl).into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
@@ -87,7 +87,7 @@ class RideNotificationView : RideNotificationContract.View {
                 }
 
                 override fun onBitmapFailed(errorDrawable: Drawable?) {
-                    contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_supplier_logo_empty)
+                    contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_quotes_logo_empty)
                 }
 
                 override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {

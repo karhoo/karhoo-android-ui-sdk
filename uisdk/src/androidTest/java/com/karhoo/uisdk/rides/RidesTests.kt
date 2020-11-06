@@ -379,7 +379,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride cancelled by the fleet
      * When:    I look at the ride in past Rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     Cancelled Price, cancelled status.
      **/
     @Test
@@ -400,7 +400,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride cancelled by the user
      * When:    I look at the ride in past Rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     Cancelled Price, cancelled status.
      **/
     @Test
@@ -422,7 +422,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a ride in Progress (DER)
      * When:    I look at the ride summary in Upcoming rides
-     * Then:    I can see the following: Supplier name and logo, Date, category of car and reg
+     * Then:    I can see the following: Quote name and logo, Date, category of car and reg
     number, contact driver (or fleet), track driver button, addresses
      **/
     @Test
@@ -442,7 +442,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride
      * When:    I look at the ride summary in Upcoming rides
-     * Then:    I can see the following: Addresses, Supplier name and logo, Date, contact
+     * Then:    I can see the following: Addresses, Quote name and logo, Date, contact
     fleet
      **/
     @Test
@@ -461,7 +461,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a completed past ride
      * When:    I look at the ride summary in past rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     category of car and reg, number, contact driver (or fleet), Price, trip id, report issue,
     rebook ride, trip status, addresses
      **/

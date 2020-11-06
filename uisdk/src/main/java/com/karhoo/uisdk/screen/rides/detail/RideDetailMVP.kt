@@ -84,7 +84,7 @@ interface RideDetailMVP {
 
         fun displayError(@StringRes errorMessage: Int)
 
-        fun displayCallToCancelDialog(number: String, supplier: String)
+        fun displayCallToCancelDialog(number: String, quote: String)
 
         fun displayBaseFareDialog()
 
