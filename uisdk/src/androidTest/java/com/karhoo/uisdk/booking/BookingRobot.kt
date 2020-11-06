@@ -68,7 +68,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressFirstQuote() {
-        pressItemInList(R.id.supplierListRecycler, 0)
+        pressItemInList(R.id.quotesListRecycler, 0)
     }
 
     fun pressBookRideButton() {
@@ -260,7 +260,7 @@ class ResultRobot : BaseTestRobot() {
         expandChevronIsVisibleAndEnabled()
         tabsAreVisibleAndButtonsEnabled()
         fleetLogoIsVisible()
-        supplierNameVisible()
+        quoteNameVisible()
         ETATextVisible()
         categoryTextVisible()
         priceTextVisible()
@@ -281,46 +281,46 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fleetLogoIsVisible() {
-        viewIsVisibleIsDescendant(R.id.logoImage, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.logoImage, R.id.quotesListRecycler)
     }
 
     fun fleetLogoIsVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestQuotesWidget)
     }
 
-    fun supplierNameVisible() {
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.supplierListRecycler)
+    fun quoteNameVisible() {
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.quotesListRecycler)
     }
 
-    fun supplierNameVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.bookingRequestSupplierWidget)
+    fun quoteNameVisibleGuestDetails() {
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.bookingRequestQuotesWidget)
     }
 
     fun ETATextVisible() {
-        viewIsVisibleIsDescendant(R.id.etaText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.etaText, R.id.quotesListRecycler)
     }
 
     fun capacityChecksGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestQuotesWidget)
     }
 
     fun categoryTextVisible() {
-        viewIsVisibleIsDescendant(R.id.categoryText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.categoryText, R.id.quotesListRecycler)
     }
 
     fun categoryTextVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.categoryText, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.categoryText, R.id.bookingRequestQuotesWidget)
     }
 
     fun priceTextVisible() {
-        viewIsVisibleIsDescendant(R.id.priceText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.priceText, R.id.quotesListRecycler)
     }
 
     fun fareTypeVisible() {
-        viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.quotesListRecycler)
     }
 
     fun allCategoriesAreVisible() {
@@ -431,7 +431,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun guestDetailsPageFleetCheck() {
         fleetLogoIsVisibleGuestDetails()
-        supplierNameVisibleGuestDetails()
+        quoteNameVisibleGuestDetails()
         capacityChecksGuestDetails()
         categoryTextVisibleGuestDetails()
     }
@@ -539,7 +539,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun fleetDetailsAreVisible(fleetName: String) {
         viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestLayout)
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.bookingRequestLayout)
         textStringIsVisibleIsDescendant(fleetName, R.id.bookingRequestLayout)
     }
 

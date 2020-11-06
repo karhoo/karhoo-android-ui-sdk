@@ -5,7 +5,7 @@
     <string name="permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
     <string name="settings">Settings</string>
 
-    <!-- Supplier List -->
+    <!-- Quotes List -->
     <string name="sorter_nearest">ETA</string>
     <string name="sorter_cheapest">PRICE</string>
     <string name="address_pick_up">Pick up</string>
@@ -233,7 +233,7 @@
     <!-- Current Trip -->
     <string name="retrieving_pickup">Getting pickup location</string>
     <string name="retrieving_dropoff">Getting dropoff location</string>
-    <string name="supplier">The supplier</string>
+    <string name="quote">The supplier</string>
     <string name="cancel_ride">Cancel Ride</string>
     <string name="cancelling_ride">Cancelling Ride</string>
     <string name="contact_fleet">Contact Fleet</string>

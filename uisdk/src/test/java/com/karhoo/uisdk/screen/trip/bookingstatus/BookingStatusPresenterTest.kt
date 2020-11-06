@@ -92,7 +92,7 @@ class BookingStatusPresenterTest {
 
     /**
      * Given:   A trip has been cancelled by the dispatch
-     * When:    Trying to book a trip with a supplier
+     * When:    Trying to book a trip with a quote
      * Then:    A call to display the cancellation dialog should happen
      */
     @Test

@@ -6,11 +6,11 @@
         <attr name="field_id" format="string" />
     </declare-styleable>
 
-    <declare-styleable name="SupplierListItem">
+    <declare-styleable name="QuotesListItem">
         <attr name="layout" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="SupplierSortView">
+    <declare-styleable name="QuotesSortView">
         <attr name="leftBackground" format="reference" />
         <attr name="rightBackground" format="reference" />
         <attr name="leftBackgroundDisabled" format="reference" />
@@ -36,7 +36,7 @@
     <attr name="addressPickerFlip" format="reference" />
     <attr name="addressPickerPrebookIcon" format="reference" />
 
-    <declare-styleable name="SupplierListView">
+    <declare-styleable name="QuotesListView">
         <attr name="listBackground" format="reference" />
     </declare-styleable>
 
@@ -55,11 +55,11 @@
     </declare-styleable>
 
     <declare-styleable name="BookingPriceView">
-        <attr name="supplierHeaderText" format="reference" />
-        <attr name="supplierDetailsText" format="reference" />
+        <attr name="quotesHeaderText" format="reference" />
+        <attr name="quotesDetailsText" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="BookingSupplierView">
+    <declare-styleable name="BookingQuotesView">
         <attr name="headerText" format="reference" />
         <attr name="detailsText" format="reference" />
     </declare-styleable>

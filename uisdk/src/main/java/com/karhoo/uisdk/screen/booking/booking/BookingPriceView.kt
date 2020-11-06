@@ -32,10 +32,10 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPriceView,
                                                         defStyleAttr, R.style.KhBookingETAPriceView)
-        headerTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_supplierHeaderText, R
+        headerTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_quotesHeaderText, R
                 .style
                 .Text_White_Small)
-        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_supplierDetailsText, R
+        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_quotesDetailsText, R
                 .style
                 .Text_White_XXLarge_Bold)
         TextViewCompat.setTextAppearance(etaTypeText, headerTextStyle)
