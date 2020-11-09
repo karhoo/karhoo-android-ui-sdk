@@ -103,7 +103,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
 
-    override fun showGuestBookingFields() {
+    override fun showGuestBookingFields(details: PassengerDetails) {
         val constraintSet = ConstraintSet()
         constraintSet.constrainHeight(R.id.bookingRequestScrollView, 0)
         constraintSet.clone(bookingRequestLayout)
@@ -115,6 +115,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
         passengerDetailsHeading.visibility = VISIBLE
+        bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
     }
 
     override fun showAuthenticatedUserBookingFields() {
