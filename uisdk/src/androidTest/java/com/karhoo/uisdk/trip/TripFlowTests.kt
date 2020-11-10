@@ -97,6 +97,7 @@ class TripFlowTests : Launch {
      * Then:    I am taken back to the booking screen
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun userNavigatesFromTripToBookingScreenAfterCancellation() {
         serverRobot {
             userProfileResponse(HTTP_OK, USER_INFO)

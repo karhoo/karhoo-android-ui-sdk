@@ -334,6 +334,7 @@ class AdyenBookingTests : Launch {
      * Then:    I can see the address in pickup field
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun checkReverseGeoAddressInPickUpField() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
