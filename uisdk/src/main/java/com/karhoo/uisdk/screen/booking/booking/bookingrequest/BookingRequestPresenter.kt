@@ -11,8 +11,6 @@ import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
-import com.karhoo.uisdk.KarhooUISDK
-import com.karhoo.uisdk.KarhooUISDKConfiguration
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -126,12 +124,14 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
-        when {
-            KarhooUISDKConfigurationProvider.isGuest() -> {
+        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
+
+        when (authMethod) {
+            is AuthenticationMethod.Guest -> {
                 view?.showGuestBookingFields()
                 setBookingEnablement(allFieldsValid)
             }
-            KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange -> {
+            is AuthenticationMethod.TokenExchange -> {
                 view?.showGuestBookingFields(details = getPassengerDetails())
                 setBookingEnablement(allFieldsValid)
             }
