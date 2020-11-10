@@ -65,8 +65,8 @@ android {
         applicationId "com.karhoo.karhootraveller"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 139
-        versionName "1.11.0"
+        versionCode 140
+        versionName "1.11.1"
         testInstrumentationRunner "com.karhoo.karhootraveller.common.testrunner.TravellerTestRunner"
 
         def secureProps = new Properties()
