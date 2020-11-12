@@ -19,8 +19,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2 
+        versionName "1.1.0"
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -55,7 +55,7 @@ android {
 publish {
     def groupProjectID = 'com.karhoo'
     def artifactProjectID = 'uisdk-canary'
-    def publishVersionID = '1.0.25.22102020-1'
+    def publishVersionID = '1.1.0'
     def repoNameID = 'Android'
 
     userOrg = 'flit-tech'
