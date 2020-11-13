@@ -438,15 +438,15 @@ class TestData {
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
                         position = Position(
-                                latitude = 0.0,
-                                longitude = 0.0
+                                latitude = 51.523767,
+                                longitude = -0.1585557
                                            ),
                         instructions = "",
                         pickupType = PickupType.NOT_SET
                                            ),
                 position = Position(
-                        longitude = 51.523767,
-                        latitude = -0.1585557
+                        longitude = 0.0,
+                        latitude = 0.0
                                    ),
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
@@ -472,15 +472,15 @@ class TestData {
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
                         position = Position(
-                                latitude = 0.0,
-                                longitude = 0.0
+                                latitude = 51.5144314,
+                                longitude = -0.1499791
                                            ),
                         instructions = "",
                         pickupType = PickupType.NOT_SET
                                            ),
                 position = Position(
-                        longitude = 51.5155617,
-                        latitude = -0.1746889
+                        longitude = 0.0,
+                        latitude = 0.0
                                    ),
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
@@ -962,6 +962,7 @@ class TestData {
         val DRIVER_TRACKING_INFO = DriverTrackingInfo(position = Position(LATITUDE, LONGITUDE),
                                                       originEta = 5,
                                                       destinationEta = 10)
+
 
         fun getDate(dateScheduled: String): Date {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
