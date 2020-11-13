@@ -438,8 +438,8 @@ class TestData {
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
                         position = Position(
-                                latitude = 0.0,
-                                longitude = 0.0
+                                latitude = 51.523767,
+                                longitude = -0.1585557
                                            ),
                         instructions = "",
                         pickupType = PickupType.NOT_SET
@@ -472,8 +472,8 @@ class TestData {
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
                         position = Position(
-                                latitude = 0.0,
-                                longitude = 0.0
+                                latitude = 51.5144314,
+                                longitude = -0.1499791
                                            ),
                         instructions = "",
                         pickupType = PickupType.NOT_SET
@@ -962,6 +962,15 @@ class TestData {
         val DRIVER_TRACKING_INFO = DriverTrackingInfo(position = Position(LATITUDE, LONGITUDE),
                                                       originEta = 5,
                                                       destinationEta = 10)
+
+        /**
+         *
+         * EndtoEnd
+         *
+         */
+        
+
+
 
         fun getDate(dateScheduled: String): Date {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
