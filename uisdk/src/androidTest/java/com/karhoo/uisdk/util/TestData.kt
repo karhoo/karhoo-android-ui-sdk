@@ -445,8 +445,8 @@ class TestData {
                         pickupType = PickupType.NOT_SET
                                            ),
                 position = Position(
-                        longitude = 51.523767,
-                        latitude = -0.1585557
+                        longitude = 0.0,
+                        latitude = 0.0
                                    ),
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
@@ -479,8 +479,8 @@ class TestData {
                         pickupType = PickupType.NOT_SET
                                            ),
                 position = Position(
-                        longitude = 51.5155617,
-                        latitude = -0.1746889
+                        longitude = 0.0,
+                        latitude = 0.0
                                    ),
                 poiType = Poi.NOT_SET,
                 timezone = "Europe/London"
@@ -962,14 +962,6 @@ class TestData {
         val DRIVER_TRACKING_INFO = DriverTrackingInfo(position = Position(LATITUDE, LONGITUDE),
                                                       originEta = 5,
                                                       destinationEta = 10)
-
-        /**
-         *
-         * EndtoEnd
-         *
-         */
-        
-
 
 
         fun getDate(dateScheduled: String): Date {
