@@ -66,15 +66,16 @@ import java.util.Currency
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions,
-      BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.Actions,
+      BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+      BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
     private var backgroundFade: TransitionDrawable? = null
     private var isGuest: Boolean = false
 
-    var holdOpenForPaymentFlow = false
+    private var holdOpenForPaymentFlow = false
 
     private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
                                                                                  KarhooUISDK.analytics,
@@ -82,16 +83,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)
 
-    var actions: BookingRequestMVP.Actions? = null
-        set(value) {
-            field = value
-            bookingRequestTermsWidget.actions = value
-        }
-
-    val passengerDetails: PassengerDetails
+    private val passengerDetails: PassengerDetails
         get() = bookingRequestPassengerDetailsWidget.getPassengerDetails()
 
-    val bookingComments: String
+    private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
     init {
@@ -171,6 +166,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestPassengerDetailsWidget.actions = this
+        bookingRequestTermsWidget.actions = this
     }
 
     override fun disableBooking() {
@@ -243,7 +239,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     private fun bindQuoteAndTerms(vehicle: Quote) {
         bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
-                                               vehicle.vehicle.vehicleClass.orEmpty())
+                                             vehicle.vehicle.vehicleClass.orEmpty())
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
@@ -298,7 +294,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .setTitle(R.string.payment_issue)
                 .setMessage(R.string.payment_issue_message)
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
-                    onPaymentHandlePostive()
+                    onPaymentHandlePositive()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -369,7 +365,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         dialog.dismiss()
     }
 
-    private fun onPaymentHandlePostive() {
+    private fun onPaymentHandlePositive() {
         presenter.onPaymentFailureDialogPositive()
     }
 
@@ -418,5 +414,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun showWebView(url: String?) {
+        presenter.onTermsAndConditionsRequested(url)
     }
 }

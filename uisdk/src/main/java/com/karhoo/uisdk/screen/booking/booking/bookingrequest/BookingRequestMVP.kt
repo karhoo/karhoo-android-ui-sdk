@@ -96,6 +96,8 @@ interface BookingRequestMVP {
         fun onPaymentFailureDialogPositive()
 
         fun onPaymentFailureDialogCancelled()
+
+        fun onTermsAndConditionsRequested(url: String?)
     }
 
     interface Actions : PaymentActions

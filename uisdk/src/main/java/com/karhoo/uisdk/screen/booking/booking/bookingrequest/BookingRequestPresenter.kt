@@ -235,4 +235,12 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         view?.hideLoading()
         hideBookingRequest()
     }
+
+    override fun onTermsAndConditionsRequested(url: String?) {
+        url?.let {
+        bookingRequestStateViewModel?.process(BookingRequestViewContract
+                                                      .BookingRequestEvent
+                                                      .TermsAndConditionsRequested(it))
+        }
+    }
 }
