@@ -64,9 +64,9 @@
     <string name="destination_price_error">Selecciona un destino para ver las tarifas</string>
 
     <!-- Terms and Conditions -->
-    <string name="booking_terms">Al reservar con %1$s</string>
-    <string name="label_terms_and_conditions"> estás aceptando sus Condiciones Generales</string>
-    <string name="label_cancellation_policy">su Política de Cancelación</string>
+    <string name="booking_terms">Al reservar con %1$s estás aceptando sus</string>
+    <string name="label_terms_and_conditions">Condiciones Generales</string>
+    <string name="label_cancellation_policy">Política de Cancelación</string>
     <string name="label_and">&#160;y&#160;</string>
 
     <!-- Booking Confirmation -->
