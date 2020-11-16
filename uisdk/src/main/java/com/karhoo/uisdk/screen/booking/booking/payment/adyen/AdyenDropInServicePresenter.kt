@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
@@ -65,10 +64,10 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            if (response.isNull(ACTION)) {
-                CallResult(CallResult.ResultType.FINISHED, response.toString())
-            } else {
+            if (response.has(ACTION)) {
                 CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
+            } else {
+                CallResult(CallResult.ResultType.FINISHED, response.toString())
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
