@@ -18,6 +18,8 @@ class BookingRequestStateViewModel(application: Application) : BaseStateViewMode
     override fun process(viewEvent: BookingRequestViewContract.BookingRequestEvent) {
         super.process(viewEvent)
         when (viewEvent) {
+            is BookingRequestViewContract.BookingRequestEvent.TermsAndConditionsRequested ->
+                showTermsAndConditions(viewEvent.url)
             is BookingRequestViewContract.BookingRequestEvent.BookingSuccess ->
                 updateBookingRequestStatus(viewEvent.tripInfo)
             is BookingRequestViewContract.BookingRequestEvent.BookingError ->
@@ -27,6 +29,10 @@ class BookingRequestStateViewModel(application: Application) : BaseStateViewMode
 
     private fun handleBookingError(@StringRes stringId: Int) {
         viewAction = BookingRequestViewContract.BookingRequestAction.HandleBookingError(stringId)
+    }
+
+    private fun showTermsAndConditions(url: String) {
+        viewAction = BookingRequestViewContract.BookingRequestAction.ShowTermsAndConditions(url)
     }
 
     private fun updateBookingRequestStatus(tripInfo: TripInfo) {
