@@ -103,7 +103,6 @@ class BookingRequestPresenterTest {
     fun setUp() {
         setAuthenticatedUser()
 
-        whenever(userStore.currentUser).thenReturn(userDetails)
         whenever(quote.price).thenReturn(quotePrice)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
@@ -142,7 +141,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(false)
 
-        verify(view).showGuestBookingFields()
+        verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).disableBooking()
     }
 
@@ -161,7 +160,26 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(true)
 
-        verify(view).showGuestBookingFields()
+        verify(view).showGuestBookingFields(PassengerDetails())
+        verify(view).enableBooking()
+    }
+
+    /**
+     * Given:   A user see the booking screen
+     * When:    They are a token exchange user
+     * And:     The input fields are all valid
+     * Then:    The correct input fields are displayed
+     * And:     The booking button is enabled
+     */
+    @Test
+    fun `token exchange user sees the correct input fields and booking button is enabled`() {
+        setTokenUser()
+
+        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
+
+        requestPresenter.setBookingFields(true)
+
+        verify(view).showGuestBookingFields(passengerDetails)
         verify(view).enableBooking()
     }
 
@@ -581,12 +599,21 @@ class BookingRequestPresenterTest {
     }
 
     private fun setGuestUser() {
+        whenever(userStore.currentUser).thenReturn(UserInfo())
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
     }
 
+    private fun setTokenUser() {
+        whenever(userStore.currentUser).thenReturn(userDetails)
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+        context,
+                authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
+    }
+
     private fun setAuthenticatedUser() {
+        whenever(userStore.currentUser).thenReturn(userDetails)
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.KarhooUser()))

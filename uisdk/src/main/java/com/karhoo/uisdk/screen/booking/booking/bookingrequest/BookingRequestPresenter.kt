@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
@@ -129,12 +130,21 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
-        if (KarhooUISDKConfigurationProvider.isGuest()) {
-            view?.showGuestBookingFields()
-            setBookingEnablement(allFieldsValid)
-        } else {
-            view?.showAuthenticatedUserBookingFields()
-            setBookingEnablement(true)
+        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
+
+        when (authMethod) {
+            is AuthenticationMethod.Guest -> {
+                view?.showGuestBookingFields()
+                setBookingEnablement(allFieldsValid)
+            }
+            is AuthenticationMethod.TokenExchange -> {
+                view?.showGuestBookingFields(details = getPassengerDetails())
+                setBookingEnablement(allFieldsValid)
+            }
+            else -> {
+                view?.showAuthenticatedUserBookingFields()
+                setBookingEnablement(true)
+            }
         }
     }
 
