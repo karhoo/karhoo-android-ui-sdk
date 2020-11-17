@@ -103,7 +103,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
     companion object {
         const val ACTION = "action"
         const val ALLOW_3DS = "allow3DS2"
-        const val ALLOW_3DS_TRUE = true
+        const val ALLOW_3DS_TRUE = "true"
         const val ADDITIONAL_DATA = "additionalData"
         const val CHANNEL = "channel"
         const val PAYLOAD = "payload"
