@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ADDITIONAL_DATA
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ALLOW_3DS
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.PAYMENTS_PAYLOAD
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -72,11 +73,14 @@ class AdyenDropInServicePresenterTest {
         verify(paymentsService).getAdyenPayments(requestCaptor.capture())
 
         val payloadJson = JSONObject(requestCaptor.firstValue).getJSONObject(PAYMENTS_PAYLOAD)
-        assertTrue(payloadJson.has(ADDITIONAL_DATA))
         assertTrue(payloadJson.has(AMOUNT))
         assertTrue(payloadJson.has(PAYMENT_METHOD))
         assertTrue(payloadJson.has(RANDOM))
         assertFalse(payloadJson.has(SHOPPER_REFERENCE))
+        assertTrue(payloadJson.has(ADDITIONAL_DATA))
+        val additionalData = payloadJson.getJSONObject(ADDITIONAL_DATA)
+        assertTrue(additionalData.has(ALLOW_3DS))
+        assertEquals("true", additionalData.get(ALLOW_3DS))
         verify(jsonObject).keys()
         verify(jsonObject).get(PAYMENT_METHOD)
         verify(jsonObject).get(AMOUNT)
