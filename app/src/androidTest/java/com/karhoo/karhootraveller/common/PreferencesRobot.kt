@@ -6,7 +6,6 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
-import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN_NO_CARD_REGISTERED
@@ -61,6 +60,9 @@ class PreferencesRobot {
     }
 
     fun clearUserPreference() {
+        serverRobot {
+            deleteRefreshToken()
+        }
         KarhooApi.userService.logout()
     }
 }
