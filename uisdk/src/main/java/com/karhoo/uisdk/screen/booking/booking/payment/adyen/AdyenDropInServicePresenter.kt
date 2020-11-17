@@ -90,7 +90,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         payload.put(CHANNEL, ANDROID)
 
         val additionalData = JSONObject()
-        additionalData.put(ALLOW_3DS, true)
+        additionalData.put(ALLOW_3DS, ALLOW_3DS_TRUE)
         payload.put(ADDITIONAL_DATA, additionalData)
 
         val request = JSONObject()
@@ -103,6 +103,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
     companion object {
         const val ACTION = "action"
         const val ALLOW_3DS = "allow3DS2"
+        const val ALLOW_3DS_TRUE = true
         const val ADDITIONAL_DATA = "additionalData"
         const val CHANNEL = "channel"
         const val PAYLOAD = "payload"
