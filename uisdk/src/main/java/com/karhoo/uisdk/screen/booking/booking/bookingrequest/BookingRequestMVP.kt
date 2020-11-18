@@ -49,7 +49,7 @@ interface BookingRequestMVP {
 
         fun setCapacity(vehicleAttributes: VehicleAttributes)
 
-        fun showGuestBookingFields()
+        fun showGuestBookingFields(details: PassengerDetails = PassengerDetails())
 
         fun showAuthenticatedUserBookingFields()
 

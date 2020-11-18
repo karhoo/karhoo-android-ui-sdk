@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.common
 
+import com.github.tomakehurst.wiremock.client.WireMock.delete
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.givenThat
 import com.github.tomakehurst.wiremock.client.WireMock.post
@@ -33,16 +34,16 @@ class ServerRobot {
 
     fun successfulToken() {
         mockPostResponse(
-                code = 200,
+                code = 201,
                 response = TOKEN,
                 endpoint = APITemplate.TOKEN_METHOD
                         )
 
         mockPostResponse(
-                code = 200,
-        response = TOKEN,
-        endpoint = APITemplate.TOKEN_REFRESH_METHOD
-        )
+                code = 201,
+                response = TOKEN,
+                endpoint = APITemplate.TOKEN_REFRESH_METHOD
+                        )
     }
 
     fun unsuccessfulToken() {
@@ -51,6 +52,14 @@ class ServerRobot {
                 response = INVALID_TOKEN,
                 endpoint = APITemplate.TOKEN_METHOD
                         )
+    }
+
+    fun deleteRefreshToken() {
+        mockDeleteResponse(
+                code = 204,
+                response = "",
+                endpoint = APITemplate.TOKEN_REFRESH_METHOD
+                          )
     }
 
     fun passwordResetResponse(code: Int, response: Any, delayInMillis: Int = 0) {
@@ -315,6 +324,17 @@ class ServerRobot {
 
     private fun mockGetResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
         givenThat(get(urlPathEqualTo(endpoint))
+                          .willReturn(
+                                  ResponseUtils(
+                                          httpCode = code,
+                                          response = getResponse(useJson, response),
+                                          useJson = useJson,
+                                          delayInMillis = delayInMillis)
+                                          .createResponse()))
+    }
+
+    private fun mockDeleteResponse(code: Int, response: Any, endpoint: String, delayInMillis: Int = 0, useJson: Boolean = true) {
+        givenThat(delete(urlEqualTo(endpoint))
                           .willReturn(
                                   ResponseUtils(
                                           httpCode = code,

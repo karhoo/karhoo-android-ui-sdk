@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
-import android.util.Log
 import com.adyen.checkout.dropin.service.CallResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
@@ -65,10 +64,10 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
     private fun handlePaymentRequestResult(response: JSONObject): CallResult {
         return try {
-            if (response.isNull(ACTION)) {
-                CallResult(CallResult.ResultType.FINISHED, response.toString())
-            } else {
+            if (response.has(ACTION)) {
                 CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
+            } else {
+                CallResult(CallResult.ResultType.FINISHED, response.toString())
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
@@ -90,6 +89,10 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         payload.put(RETURN_URL, returnUrl)
         payload.put(CHANNEL, ANDROID)
 
+        val additionalData = JSONObject()
+        additionalData.put(ALLOW_3DS, ALLOW_3DS_TRUE)
+        payload.put(ADDITIONAL_DATA, additionalData)
+
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)
         request.put(RETURN_URL_SUFFIX, "")
@@ -99,6 +102,9 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
     companion object {
         const val ACTION = "action"
+        const val ALLOW_3DS = "allow3DS2"
+        const val ALLOW_3DS_TRUE = "true"
+        const val ADDITIONAL_DATA = "additionalData"
         const val CHANNEL = "channel"
         const val PAYLOAD = "payload"
         const val PAYMENTS_PAYLOAD = "payments_payload"
