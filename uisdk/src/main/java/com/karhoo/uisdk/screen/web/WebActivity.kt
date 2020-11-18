@@ -50,9 +50,11 @@ class WebActivity : BaseActivity() {
     }
 
     override fun initialiseViewListeners() {
+        // Do nothing
     }
 
     public override fun handleExtras() {
+        // Do nothing
     }
 
     private inner class KarhooWebViewClient : WebViewClient() {
@@ -64,7 +66,7 @@ class WebActivity : BaseActivity() {
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(this@WebActivity, R.style.AlertDialog)
+            AlertDialog.Builder(this@WebActivity, R.style.DialogTheme)
                     .setMessage(R.string.notification_error_ssl_cert_invalid)
                     .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
                     .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }

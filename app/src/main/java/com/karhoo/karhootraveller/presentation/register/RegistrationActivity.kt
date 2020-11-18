@@ -32,7 +32,9 @@ class RegistrationActivity : BaseActivity(), RegistrationView.Actions {
         registrationWidget.actions = this
     }
 
-    override fun handleExtras() {}
+    override fun handleExtras() {
+        // Do nothing
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

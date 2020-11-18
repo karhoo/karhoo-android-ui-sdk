@@ -22,7 +22,7 @@ interface TripAllocationMVP {
 
         fun displayWebTracking(followCode: String)
 
-        fun showCallToCancelDialog(number: String, supplier: String)
+        fun showCallToCancelDialog(number: String, quote: String)
 
     }
 

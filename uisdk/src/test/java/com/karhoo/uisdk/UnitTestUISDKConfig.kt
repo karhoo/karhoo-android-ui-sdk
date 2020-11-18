@@ -8,11 +8,15 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 
 class UnitTestUISDKConfig(private val context: Context, private val authenticationMethod:
 AuthenticationMethod =
-        AuthenticationMethod.KarhooUser()) :
+        AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true) :
         KarhooUISDKConfiguration {
 
     override fun logo(): Drawable? {
         return null
+    }
+
+    override fun simulatePaymentProvider(): Boolean {
+        return handleBraintree
     }
 
     override fun environment(): KarhooEnvironment {

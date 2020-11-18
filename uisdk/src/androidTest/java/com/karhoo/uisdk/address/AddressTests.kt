@@ -7,18 +7,18 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.NO_ADDRESS_FOUND
-import com.karhoo.uisdk.common.ServerRobot.Companion.PLACE_SEARCH
-import com.karhoo.uisdk.common.ServerRobot.Companion.PLACE_SEARCH_AIRPORT
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.address.AddressActivity
-import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.NO_ADDRESS_FOUND
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH
+import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH_AIRPORT
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_AIRPORT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_INCORRECT_ADDRESS
+import com.karhoo.uisdk.util.TestData.Companion.USER
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Before
@@ -46,7 +46,7 @@ class AddressTests : Launch {
     @Before
     fun setUp() {
         preferences {
-            setUserPreference(TestData.USER)
+            setUserPreference(USER)
         }
     }
 
@@ -63,7 +63,7 @@ class AddressTests : Launch {
     @Test
     fun userIsPromptedToEnterPickupAddress() {
         address(this) {
-            sleep()
+            shortSleep()
         } result {
             checkAddressPickUpPageIsShown()
             setLocationOnMapButtonIsEnabled()
@@ -85,7 +85,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             areAddressesAvailable()
             setLocationOnMapButtonIsEnabled()
@@ -107,7 +107,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_INCORRECT_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             noAddressesFound()
             setLocationOnMapButtonIsEnabled()
@@ -141,7 +141,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             noAddressesFound()
@@ -164,7 +164,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             noAddressesFound()
@@ -172,7 +172,7 @@ class AddressTests : Launch {
 
         address {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             areAddressesAvailable()
         }
@@ -193,7 +193,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             poweredByGoogleFound()
         }
@@ -214,7 +214,7 @@ class AddressTests : Launch {
 
         address(this) {
             search(SEARCH_INCORRECT_ADDRESS)
-            sleep()
+            shortSleep()
         } result {
             poweredByGoogleFound()
         }
@@ -295,7 +295,7 @@ class AddressTests : Launch {
         }
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
-            sleep()
+            shortSleep()
             clearAddressSearchList()
         } result {
             enterPickupHintIsVisible()

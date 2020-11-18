@@ -137,7 +137,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     private fun displayCancellationConfirmationDialog() {
-        cancellationDialog = AlertDialog.Builder(context, R.style.AlertDialog)
+        cancellationDialog = AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.cancel_your_ride)
                 .setMessage(R.string.cancellation_fee)
                 .setPositiveButton(R.string.cancel) { _, _ -> presenter?.cancelTrip() }
@@ -240,7 +240,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayTripCancelledDialog() {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.cancel_ride_successful)
                 .setMessage(R.string.cancel_ride_successful_message)
                 .setPositiveButton(R.string.dismiss) { _, _ -> rideDetailActions?.finishActivity() }
@@ -251,8 +251,8 @@ class RideDetailView @JvmOverloads constructor(
         rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage)))
     }
 
-    override fun displayCallToCancelDialog(number: String, Supplier: String) {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+    override fun displayCallToCancelDialog(number: String, quote: String) {
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.difficulties_cancelling_title)
                 .setMessage(R.string.difficulties_cancelling_message)
                 .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
@@ -282,7 +282,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayBaseFareDialog() {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setView(BaseFareView(context))
                 .setPositiveButton(R.string.got_it) { dialogInterface, _ -> dialogInterface.dismiss() }
                 .show()

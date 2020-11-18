@@ -6,12 +6,11 @@ import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
 import com.karhoo.uisdk.common.networkServiceRobot
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -48,15 +47,15 @@ class RidesLOCTest : Launch {
     fun snackbarShowsToUserWhenWifiIsDisabledRides() {
         serverRobot {
             successfulToken()
-            pastRidesResponse(HttpURLConnection.HTTP_OK, ServerRobot.TRIP_HISTORY_EMPTY)
+            pastRidesResponse(HttpURLConnection.HTTP_OK, TRIP_HISTORY_EMPTY)
         }
         rides(this) {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
-            sleep()
+            shortSleep()
             checkErrorIsShown(R.string.network_error)
         }
     }

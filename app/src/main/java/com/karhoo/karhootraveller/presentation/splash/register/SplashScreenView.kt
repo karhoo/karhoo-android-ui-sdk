@@ -8,8 +8,12 @@ import android.content.Intent.ACTION_VIEW
 import android.location.Location
 import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
@@ -23,6 +27,7 @@ import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
 import com.karhoo.karhootraveller.util.playservices.KarhooPlayServicesUtil
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karumi.dexter.Dexter
@@ -31,7 +36,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.view_splash.view.guestCheckoutButton
+import kotlinx.android.synthetic.main.view_splash.view.loginTypeSpinner
 import kotlinx.android.synthetic.main.view_splash.view.registerButton
 import kotlinx.android.synthetic.main.view_splash.view.signInButton
 
@@ -39,7 +44,8 @@ class SplashScreenView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), SplashMVP.View, PermissionListener {
+    : LinearLayout(context, attrs, defStyleAttr), SplashMVP.View, PermissionListener,
+      AdapterView.OnItemSelectedListener {
 
     private var presenter: SplashMVP.Presenter? = null
 
@@ -50,20 +56,34 @@ class SplashScreenView @JvmOverloads constructor(
         initialiseListeners()
     }
 
+    override fun onResume() {
+        askForLocationPermission()
+        loginTypeSpinner.setSelection(0)
+    }
+
     private fun initialiseListeners() {
         signInButton.setOnClickListener { goToLogin() }
         registerButton.setOnClickListener { goToRegistration() }
         if (BuildConfig.BUILD_TYPE == "debug") {
-            guestCheckoutButton.visibility = View.VISIBLE
-            guestCheckoutButton.setOnClickListener { goToGuestBooking() }
+            loginTypeSpinner.visibility = VISIBLE
+            val loginTypeAdapter = ArrayAdapter<String>(context, android.R.layout
+                    .simple_spinner_dropdown_item, LoginType.values().map { it.value })
+            with(loginTypeSpinner) {
+                adapter = loginTypeAdapter
+                onItemSelectedListener = this@SplashScreenView
+            }
         } else {
-            guestCheckoutButton.visibility = View.GONE
+            loginTypeSpinner.visibility = GONE
         }
     }
 
-    private fun goToLogin() {
+    override fun goToLogin() {
         val intent = LoginActivity.Builder.builder.build(context)
         splashActions?.startActivity(intent)
+    }
+
+    override fun showError() {
+        Toast.makeText(context, "Invalid Token User", Toast.LENGTH_LONG)
     }
 
     private fun goToRegistration() {
@@ -71,9 +91,8 @@ class SplashScreenView @JvmOverloads constructor(
         splashActions?.startActivityForResult(intent, RegistrationActivity.REQ_CODE)
     }
 
-    private fun goToGuestBooking() {
-        KarhooUISDK.setConfiguration(KarhooConfig(context.applicationContext, true))
-        goToBooking(null)
+    override fun setConfig(authenticationMethod: AuthenticationMethod) {
+        KarhooUISDK.setConfiguration(KarhooConfig(context.applicationContext, authenticationMethod))
     }
 
     override fun setLoginRegVisibility(visibility: Boolean) {
@@ -104,8 +123,14 @@ class SplashScreenView @JvmOverloads constructor(
         dialog.show()
     }
 
-    override fun onResume() {
-        askForLocationPermission()
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Log.d("Adyen", "On no item selected")
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val type = parent?.getItemAtPosition(position)
+
+        presenter?.handleLoginTypeSelection(type as String)
     }
 
     //region Permissions
@@ -122,7 +147,7 @@ class SplashScreenView @JvmOverloads constructor(
                                     KarhooApi.paymentsService,
                                     LocationProvider(context, KarhooApi.addressService),
                                     KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
-                                    KarhooAnalytics.INSTANCE, fallbackLocation, KarhooPlayServicesUtil(context))
+                                    KarhooAnalytics.INSTANCE, fallbackLocation, KarhooApi.authService, KarhooPlayServicesUtil(context))
         presenter?.getUsersLocation()
         presenter?.checkIfUserIsLoggedIn()
     }
@@ -136,8 +161,7 @@ class SplashScreenView @JvmOverloads constructor(
                                     KarhooApi.paymentsService,
                                     LocationProvider(context, KarhooApi.addressService),
                                     KarhooApi.userStore, KarhooAppVersionValidator(BuildConfig.VERSION_CODE, KarhooPreferenceStore.getInstance(context)),
-                                    KarhooAnalytics.INSTANCE, null, KarhooPlayServicesUtil
-                                    (context))
+                                    KarhooAnalytics.INSTANCE, null, KarhooApi.authService, KarhooPlayServicesUtil(context))
         presenter?.checkIfUserIsLoggedIn()
     }
 
@@ -167,7 +191,4 @@ class SplashScreenView @JvmOverloads constructor(
         const val USER_LOCATION_PREF = "USER_LOCATION"
         const val USER_LOCATION = "users::latlng"
     }
-
-    //endregion
-
 }

@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.TaskStackBuilder
@@ -20,31 +19,23 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.braintreepayments.api.BraintreeFragment
-import com.braintreepayments.api.ThreeDSecure
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
-import com.braintreepayments.api.interfaces.BraintreeErrorListener
-import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
-import com.braintreepayments.api.models.PaymentMethodNonce
-import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.booking.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -52,6 +43,7 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
@@ -61,7 +53,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestL
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestSupplierWidget
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
@@ -70,10 +62,12 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequ
 import org.joda.time.DateTime
 import java.util.Currency
 
+@Suppress("TooManyFunctions")
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), GuestBookingMVP.View, BookingPaymentMVP.Actions,
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.Actions,
+      BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
       BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
@@ -81,25 +75,18 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     private var backgroundFade: TransitionDrawable? = null
     private var isGuest: Boolean = false
 
-    var holdOpenForPaymentFlow = false
+    private var holdOpenForPaymentFlow = false
 
-    private var presenter: GuestBookingMVP.Presenter = BookingRequestPresenter(this,
-                                                                               KarhooUISDK.analytics,
-                                                                               KarhooApi.paymentsService,
-                                                                               KarhooPreferenceStore.getInstance(context.applicationContext),
-                                                                               KarhooApi.tripService,
-                                                                               KarhooApi.userStore)
+    private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
+                                                                                 KarhooUISDK.analytics,
+                                                                                 KarhooPreferenceStore.getInstance(context.applicationContext),
+                                                                                 KarhooApi.tripService,
+                                                                                 KarhooApi.userStore)
 
-    var actions: GuestBookingMVP.Actions? = null
-        set(value) {
-            field = value
-            bookingRequestTermsWidget.actions = value
-        }
-
-    val passengerDetails: PassengerDetails
+    private val passengerDetails: PassengerDetails
         get() = bookingRequestPassengerDetailsWidget.getPassengerDetails()
 
-    val bookingComments: String
+    private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
     init {
@@ -111,7 +98,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
 
-    override fun showGuestBookingFields() {
+    override fun showGuestBookingFields(details: PassengerDetails) {
         val constraintSet = ConstraintSet()
         constraintSet.constrainHeight(R.id.bookingRequestScrollView, 0)
         constraintSet.clone(bookingRequestLayout)
@@ -123,6 +110,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
         passengerDetailsHeading.visibility = VISIBLE
+        bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
     }
 
     override fun showAuthenticatedUserBookingFields() {
@@ -161,7 +149,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     private fun attachListeners() {
-        bookingRequestSupplierWidget.setOnClickListener {}
+        bookingRequestQuotesWidget.setOnClickListener {}
         cancelButton.setOnClickListener {
             disableBooking()
             presenter.clearData()
@@ -176,8 +164,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         })
 
         bookingRequestButton.actions = this
-        bookingRequestPaymentDetailsWidget.actions = this
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestPassengerDetailsWidget.actions = this
+        bookingRequestTermsWidget.actions = this
     }
 
     override fun disableBooking() {
@@ -192,7 +182,11 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .drawable.uisdk_gradient_enabled)
     }
 
-    override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
+    override fun initialiseChangeCard(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
+    }
+
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
         bookingRequestButton.onLoadingComplete()
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
@@ -219,15 +213,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingRequest(bookingRequestStateViewModel))
     }
 
-    override fun bindEta(quote: QuoteV2, card: String) {
-        bindSupplierAndTerms(quote)
+    override fun bindEta(quote: Quote, card: String) {
+        bindQuoteAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
                                               context.getString(R.string.estimated_arrival_time),
                                               quote.quoteType)
     }
 
-    override fun bindPrebook(quote: QuoteV2, card: String, date: DateTime) {
-        bindSupplierAndTerms(quote)
+    override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
+        bindQuoteAndTerms(quote)
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
@@ -237,22 +231,22 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                               currency)
     }
 
-    override fun bindPriceAndEta(quote: QuoteV2, card: String) {
-        bindSupplierAndTerms(quote)
+    override fun bindPriceAndEta(quote: Quote, card: String) {
+        bindQuoteAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
         bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.estimated_arrival_time), currency)
     }
 
-    private fun bindSupplierAndTerms(vehicle: QuoteV2) {
-        bookingRequestSupplierWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
-                                               vehicle.vehicle.vehicleClass.orEmpty())
+    private fun bindQuoteAndTerms(vehicle: Quote) {
+        bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
+                                             vehicle.vehicle.vehicleClass.orEmpty())
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
     private fun hideWindow() {
         if (containerAnimateOut.hasEnded() || !containerAnimateOut.hasStarted()) {
-            presenter.hideBookingRequest()
+            presenter.onPaymentFailureDialogCancelled()
         }
     }
 
@@ -291,26 +285,21 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun setCapacity(vehicleAttributes: VehicleAttributes) {
-        bookingRequestSupplierWidget.setCapacity(
+        bookingRequestQuotesWidget.setCapacity(
                 luggage = vehicleAttributes.luggageCapacity,
                 people = vehicleAttributes.passengerCapacity)
     }
 
-    override fun showPaymentDialog(braintreeSDKToken: String) {
+    override fun showPaymentFailureDialog() {
         AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.payment_issue)
                 .setMessage(R.string.payment_issue_message)
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
-                    cancelButton.isEnabled = true
-                    bookingRequestButton.onLoadingComplete()
-                    showPaymentUI(braintreeSDKToken)
+                    onPaymentHandlePositive()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    cancelButton.isEnabled = true
-                    //TODO Replace with hideWindow
-                    bookingRequestButton.onLoadingComplete()
-                    hideWindow()
+                    onPaymentHandleCancelled()
                     dialog.dismiss()
                 }
                 .show()
@@ -321,12 +310,16 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.handleError(stringId)
     }
 
-    override fun showPaymentUI(braintreeSDKToken: String) {
-        val dropInRequest = DropInRequest().clientToken(braintreeSDKToken)
-        setToken(braintreeSDKToken)
+    override fun handleChangeCard() {
+        presenter.handleChangeCard()
+    }
+
+    override fun handleViewVisibility(visibility: Int) {
+        bookingRequestPaymentDetailsWidget.visibility = visibility
+    }
+
+    override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
-        val requestCode = if (isGuest) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
     }
 
     override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
@@ -364,7 +357,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                     }
                     .show().window?.setLayout(
                             resources.displayMetrics.widthPixels,
-                            (resources.displayMetrics.heightPixels * 0.6).toInt())
+                            (resources.displayMetrics.heightPixels * BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR).toInt())
         }
     }
 
@@ -373,88 +366,58 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         dialog.dismiss()
     }
 
-    private fun refreshPayments() {
-        bookingRequestPaymentDetailsWidget.refresh()
+    private fun onPaymentHandlePositive() {
+        presenter.onPaymentFailureDialogPositive()
     }
 
-    fun showLoading() {
+    private fun onPaymentHandleCancelled() {
+        presenter.onPaymentFailureDialogCancelled()
+    }
+
+    override fun hideLoading() {
+        cancelButton.isEnabled = true
+        bookingRequestButton.onLoadingComplete()
+    }
+
+    private fun showLoading() {
         cancelButton.isEnabled = false
         bookingRequestButton.showLoading()
     }
 
-    override fun showUpdatedCardDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bookingRequestPaymentDetailsWidget.bindCardDetails(savedPaymentInfo)
+    override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
+        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
     }
 
-    override fun threeDSecureNonce(braintreeSDKToken: String, nonce: String, amount: String) {
-        if (BuildConfig.IS_TESTING.get()) {
-            return presenter.passBackThreeDSecuredNonce(braintreeSDKToken, passengerDetails, bookingComments)
-        }
-        val braintreeFragment = BraintreeFragment
-                .newInstance(context as AppCompatActivity, braintreeSDKToken)
-
-        braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
-            override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
-                showLoading()
-                presenter.passBackThreeDSecuredNonce(paymentMethodNonce?.nonce.orEmpty(), passengerDetails, bookingComments)
-            }
-        })
-
-        braintreeFragment.addListener(
-                object : BraintreeErrorListener {
-                    override fun onError(error: Exception?) {
-                        showPaymentDialog(braintreeSDKToken)
-                    }
-                })
-
-        holdOpenForPaymentFlow = true
-
-        val threeDSecureRequest = ThreeDSecureRequest()
-                .nonce(nonce)
-                .amount(amount)
-                .versionRequested(ThreeDSecureRequest.VERSION_2)
-        ThreeDSecure.performVerification(braintreeFragment, threeDSecureRequest)
-        { request, lookup ->
-            ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
-        }
+    override fun threeDSecureNonce(threeDSNonce: String) {
+        showLoading()
+        presenter.passBackThreeDSecuredNonce(threeDSNonce, passengerDetails, bookingComments)
     }
 
-    override fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?) {
-        presenter.updateCardDetails(braintreeSDKNonce)
+    override fun initialisePaymentProvider(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
+    }
+
+    override fun initialiseGuestPayment(price: QuotePrice?) {
+        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
+    }
+
+    override fun handlePaymentDetailsUpdate() {
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 
-    private fun setToken(braintreeSDKToken: String) {
-        presenter.setToken(braintreeSDKToken)
+    override fun showPaymentDialog() {
+        showPaymentFailureDialog()
     }
 
     override fun setPassengerDetailsValidity(isValid: Boolean) {
         presenter.setBookingEnablement(isValid)
     }
 
-    private fun passBackBraintreeSDKNonce(braintreeSDKNonce: String) {
-        bookingRequestPaymentDetailsWidget.passBackBraintreeSDKNonce(braintreeSDKNonce)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            when (requestCode) {
-                REQ_CODE_BRAINTREE -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    passBackBraintreeSDKNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
-                }
-                REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    updateCardDetails(braintreeResult?.paymentMethodNonce)
-                }
-            }
-        } else if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST) {
-            refreshPayments()
-        }
+        bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
     }
 
-    companion object {
-        private const val REQ_CODE_BRAINTREE = 301
-        private const val REQ_CODE_BRAINTREE_GUEST = 302
+    override fun showWebView(url: String?) {
+        presenter.onTermsAndConditionsRequested(url)
     }
 }

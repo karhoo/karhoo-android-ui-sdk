@@ -37,7 +37,7 @@ class ContactOptionsView @JvmOverloads constructor(
     }
 
     override fun showCancelConfirmationDialog() {
-        cancellationDialog = AlertDialog.Builder(context, R.style.AlertDialog)
+        cancellationDialog = AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.cancel_your_ride)
                 .setMessage(R.string.cancellation_fee)
                 .setPositiveButton(R.string.cancel) { _, _ -> presenter.cancelTrip() }
@@ -46,15 +46,15 @@ class ContactOptionsView @JvmOverloads constructor(
     }
 
     override fun showTripCancelledDialog() {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.cancel_ride_successful)
                 .setMessage(R.string.cancel_ride_successful_message)
                 .setPositiveButton(R.string.ok) { _, _ -> actions?.goToCleanBooking() }
                 .show()
     }
 
-    override fun showCallToCancelDialog(number: String, supplier: String) {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+    override fun showCallToCancelDialog(number: String, quote: String) {
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.difficulties_cancelling_title)
                 .setMessage(R.string.difficulties_cancelling_message)
                 .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }

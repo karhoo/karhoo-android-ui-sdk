@@ -9,14 +9,14 @@ import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.karhootraveller.common.preferences
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.profile.ProfileActivity
-import com.karhoo.karhootraveller.util.TestData.Companion.USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.USER_UPDATED_INFO
 import com.karhoo.uisdk.common.serverRobot
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_INFO
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -39,6 +39,13 @@ class UserProfileTests : Launch {
     @get:Rule
     var chain: RuleChain = RuleChain.outerRule(flakyRule)
             .around(activityRule)
+
+    @Before
+    fun clearUser() {
+        preferences {
+            clearUserPreference()
+        }
+    }
 
     @After
     fun tearDown() {
@@ -63,7 +70,7 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            sleep(MEDIUM)
+            shortSleep()
         } result {
             noProfileChangesFullCheck()
         }
@@ -230,10 +237,10 @@ class UserProfileTests : Launch {
     }
 
     /**
-     * Given:   I have a card linked to my account
+     * Given:   I have a card linked to my account using Adyen payment as provider
      * When:    I am on the profile screen
      * Then:    I can see: First Name, Last Name, email, country code, mobile number, change card
-     * button,
+     * button (add card) is not visible.
      **/
     @Test
     @AllowFlaky(attempts = 10)
@@ -242,9 +249,9 @@ class UserProfileTests : Launch {
             setUserPreference(USER)
         }
         userProfile(this) {
-            sleep()
+            mediumSleep()
         } result {
-            fullScreenCheckCardRegistered()
+            fullScreenCheckCardRegisteredBraintree()
         }
     }
 
@@ -298,6 +305,7 @@ class UserProfileTests : Launch {
      * Then:    I expect my profile details to be saved.
      */
     @Test
+    @AllowFlaky(attempts = 5)
     fun savingProfileDetailsSuccessShouldShowSnackBarWithSuccess() {
         preferences {
             setUserPreference(USER)
@@ -308,7 +316,7 @@ class UserProfileTests : Launch {
         }
         userProfile(this) {
             updateUserProfileWithDefaultInfo()
-            sleep()
+            shortSleep()
         } result {
             updatedProfileChangesFullCheck()
             checkSnackbarWithText(R.string.profile_update_successful)
@@ -331,7 +339,7 @@ class UserProfileTests : Launch {
         }
         userProfile(this) {
             updateUserProfileWithDefaultInfo()
-            sleep()
+            shortSleep()
         } result {
             checkSnackbarWithText(R.string.K0001)
         }
@@ -349,7 +357,7 @@ class UserProfileTests : Launch {
             setUserPreferenceNoCard(USER)
         }
         userProfile(this) {
-            sleep()
+            mediumSleep()
         } result {
             fullScreenCheckNoCardRegistered()
         }

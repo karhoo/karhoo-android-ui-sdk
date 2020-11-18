@@ -84,7 +84,7 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(context, R.style.AlertDialog)
+            AlertDialog.Builder(context, R.style.DialogTheme)
                     .setMessage(R.string.notification_error_ssl_cert_invalid)
                     .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
                     .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }

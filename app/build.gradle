@@ -65,8 +65,8 @@ android {
         applicationId "com.karhoo.karhootraveller"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 139
-        versionName "1.11.0"
+        versionCode 140
+        versionName "1.11.1"
         testInstrumentationRunner "com.karhoo.karhootraveller.common.testrunner.TravellerTestRunner"
 
         def secureProps = new Properties()
@@ -76,9 +76,18 @@ android {
         buildConfigField("String", "KARHOO_SEGMENT_API_KEY_SANDBOX", (secureProps.getProperty("KARHOO_SEGMENT_API_KEY_SANDBOX") ?: ""))
         buildConfigField("String", "KARHOO_SEGMENT_API_KEY_PROD", (secureProps.getProperty("KARHOO_SEGMENT_API_KEY_PROD") ?: ""))
 
-        buildConfigField("String", "GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("GUEST_CHECKOUT_IDENTIFIER") ?: ""))
+        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
+        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
+        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
+        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
         buildConfigField("String", "GUEST_CHECKOUT_REFERER", (secureProps.getProperty("GUEST_CHECKOUT_REFERER") ?: ""))
-        buildConfigField("String", "GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
+        buildConfigField("String", "ADYEN_CLIENT_ID", (secureProps.getProperty("ADYEN_CLIENT_ID") ?: ""))
+        buildConfigField("String", "ADYEN_CLIENT_SCOPE", (secureProps.getProperty("ADYEN_CLIENT_SCOPE") ?: ""))
+        buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: ""))
+        buildConfigField("String", "BRAINTREE_CLIENT_ID", (secureProps.getProperty("BRAINTREE_CLIENT_ID") ?: ""))
+        buildConfigField("String", "BRAINTREE_CLIENT_SCOPE", (secureProps.getProperty("BRAINTREE_CLIENT_SCOPE") ?: ""))
+        buildConfigField("String", "BRAINTREE_AUTH_TOKEN", (secureProps.getProperty("BRAINTREE_AUTH_TOKEN") ?: ""))
+
         buildConfigField("String", "STAGING_HOST", (secureProps.getProperty("STAGING_HOST") ?: ""))
         buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: ""))
         buildConfigField("String", "STAGING_GUEST_HOST", (secureProps.getProperty("STAGING_GUEST_HOST") ?: ""))
@@ -133,35 +142,35 @@ android {
 
 dependencies {
     implementation project(path: ':uisdk')
-//    implementation 'com.karhoo.uisdk:uisdk:1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //noinspection OutdatedLibrary
     implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
         transitive = true
     }
     implementation "com.segment.analytics.android:analytics:4.3.0-RC2"
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.karumi:dexter:4.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    implementation 'androidx.appcompat:appcompat:1.3.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
     testImplementation 'junit:junit:4.12'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation 'org.assertj:assertj-core:3.13.2'
 
-    androidTestImplementation 'com.github.tomakehurst:wiremock-standalone:2.25.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'com.github.tomakehurst:wiremock-standalone:2.27.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation project(path: ':uisdk')
     androidTestImplementation 'com.schibsted.spain:barista:3.2.0'
 }

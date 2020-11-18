@@ -13,7 +13,6 @@ import com.karhoo.sdk.analytics.Payloader
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
@@ -23,6 +22,7 @@ import com.karhoo.uisdk.util.DateUtil
 import java.util.Date
 import java.util.TimeZone
 
+@Suppress("TooManyFunctions")
 class KarhooAnalytics private constructor() : Analytics {
 
     override fun submitAdditionalFeedback(tripId: String, answers: List<FeedbackAnswer>) {
@@ -203,7 +203,7 @@ class KarhooAnalytics private constructor() : Analytics {
                                            .build())
     }
 
-    override fun moreShown(currentVehicles: List<QuoteV2>?, isExpanded: Boolean) {
+    override fun moreShown(currentVehicles: List<Quote>?, isExpanded: Boolean) {
         var quoteListId: String? = null
         if (currentVehicles != null && currentVehicles.isNotEmpty()) {
             quoteListId = currentVehicles[0].id

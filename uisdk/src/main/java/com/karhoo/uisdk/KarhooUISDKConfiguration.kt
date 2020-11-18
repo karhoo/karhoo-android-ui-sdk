@@ -5,7 +5,7 @@ import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.api.KarhooSDKConfiguration
 import com.karhoo.sdk.api.model.AuthenticationMethod
 
-interface KarhooUISDKConfiguration : KarhooSDKConfiguration {
+interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConfig {
 
     fun logo(): Drawable?
 
@@ -27,5 +27,9 @@ internal object KarhooUISDKConfigurationProvider {
     fun getGuestOrganisationId(): String? {
         return if (isGuest()) (configuration.authenticationMethod() as
                 AuthenticationMethod.Guest).organisationId else null
+    }
+
+    fun simulatePaymentProvider(): Boolean {
+        return configuration.simulatePaymentProvider()
     }
 }

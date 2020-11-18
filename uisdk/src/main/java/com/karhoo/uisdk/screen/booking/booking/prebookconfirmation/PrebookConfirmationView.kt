@@ -65,6 +65,8 @@ class PrebookConfirmationView @JvmOverloads constructor(
         bookingDateText.text = DateUtil.getDateFormat(date)
     }
 
-    override fun displayNoDateAvailable() {}
+    override fun displayNoDateAvailable() {
+        // Do nothing
+    }
 
 }

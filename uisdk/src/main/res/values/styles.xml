@@ -39,6 +39,23 @@
         <item name="colorAccent">@color/secondary</item>
         <item name="colorControlNormal">@color/primary_green</item>
         <item name="android:textColor">@color/dark_grey</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <!-- Quick fix for date picker text buttons -->
+    <style name="DialogButtonTheme">
+        <item name="colorOnPrimary">@color/dark_grey</item>
+        <item name="colorOnSecondary">@color/dark_grey</item>
+        <item name="colorOnSurface">@color/dark_grey</item>
+    </style>
+
+    <!-- Quick fix for no background buttons -->
+    <style name="NoBackgroundButtonTheme">
+        <item name="colorOnSurface">@color/off_white</item>
+        <item name="colorPrimary">@color/off_white</item>
+        <item name="background">@color/off_white</item>
+        <item name="backgroundTint">@color/off_white</item>
+        <item name="android:textColor">@color/uisdk_text_action</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -119,6 +136,14 @@
         <item name="android:textSize">@dimen/text_size_small_medium</item>
         <item name="android:textColor">@color/off_black</item>
         <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="TextButtonWithNoBackground">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/off_black</item>
+        <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
 
     <style name="CancelProgressBar">
@@ -135,6 +160,14 @@
         <item name="android:textSize">@dimen/text_size_small_medium</item>
         <item name="android:textColor">@color/off_black</item>
         <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
+    </style>
+
+    <style name="PlainTextButtonWithNoBackground">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/off_black</item>
+        <item name="android:background">@null</item>
+        <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
 
     <style name="KhVehicleClassTabs" parent="Widget.Design.TabLayout">
@@ -163,10 +196,6 @@
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/lightGrey</item>
         <item name="colorControlActivated">@color/duskYellow</item>
-    </style>
-
-    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:colorAccent">@color/off_black</item>
     </style>
 
     <style name="KhAddressPickerBackground">
@@ -214,8 +243,8 @@
         <item name="android:paddingTop">@dimen/spacing_none</item>
     </style>
 
-    <style name="KhSupplierListItemView">
-        <item name="layout">@layout/uisdk_view_supplier_item</item>
+    <style name="KhQuoteListItemView">
+        <item name="layout">@layout/uisdk_view_quotes_item</item>
     </style>
 
     <style name="KhBookingMapViewStyle">
@@ -241,7 +270,7 @@
         <item name="android:backgroundTint">@color/off_white</item>
     </style>
 
-    <style name="KhSupplierSortTabs" parent="Widget.Design.TabLayout">
+    <style name="KhQuotesSortTabs" parent="Widget.Design.TabLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">26dp</item>
         <item name="tabSelectedTextColor">@color/tab_indicator</item>
@@ -253,20 +282,20 @@
         <item name="tabMode">fixed</item>
     </style>
 
-    <style name="KhSupplierSortView">
+    <style name="KhQuotesSortView">
         <item name="leftBackground">@drawable/uisdk_sort_left_background</item>
         <item name="rightBackground">@drawable/uisdk_sort_right_background</item>
         <item name="selectedTextColor">@color/off_white</item>
         <item name="unselectedTextColor">@color/off_black</item>
     </style>
 
-    <style name="KhSupplierListView">
-        <item name="android:background">@drawable/uisdk_supplier_list_bg</item>
+    <style name="KhSQuotesListView">
+        <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
     </style>
 
-    <style name="KhBookingSupplierView">
-        <item name="supplierHeaderText">@style/Text.Black.Medium.Bold</item>
-        <item name="supplierDetailsText">@style/Text.Alternative.XSmall</item>
+    <style name="KhBookingQuotesView">
+        <item name="quotesHeaderText">@style/Text.Black.Medium.Bold</item>
+        <item name="quotesDetailsText">@style/Text.Alternative.XSmall</item>
     </style>
 
     <style name="KhBookingETAPriceView">

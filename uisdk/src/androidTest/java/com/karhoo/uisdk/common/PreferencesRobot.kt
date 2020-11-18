@@ -5,8 +5,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.UserLogin
-import com.karhoo.uisdk.common.ServerRobot.Companion.PAYMENTS_TOKEN
-import com.karhoo.uisdk.common.ServerRobot.Companion.USER_INFO
+import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 
 fun preferences(func: PreferencesRobot.() -> Unit) = PreferencesRobot().apply { func() }
 

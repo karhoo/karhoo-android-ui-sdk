@@ -15,10 +15,10 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.util.VersionUtil
-import com.karhoo.karhootraveller.util.formattedTripId
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.web.prepopulateForUser
+import com.karhoo.uisdk.util.formattedTripId
 import kotlinx.android.synthetic.main.activity_web.progressBar
 import kotlinx.android.synthetic.main.activity_web.webView
 
@@ -68,9 +68,11 @@ class KarhooWebActivity : BaseActivity() {
     }
 
     override fun initialiseViewListeners() {
+        // Do nothing
     }
 
     override fun handleExtras() {
+        // Do nothing
     }
 
     private inner class KarhooWebViewClient : WebViewClient() {
@@ -82,7 +84,7 @@ class KarhooWebActivity : BaseActivity() {
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(this@KarhooWebActivity, R.style.AlertDialog)
+            AlertDialog.Builder(this@KarhooWebActivity, R.style.DialogTheme)
                     .setMessage(R.string.notification_error_ssl_cert_invalid)
                     .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
                     .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }

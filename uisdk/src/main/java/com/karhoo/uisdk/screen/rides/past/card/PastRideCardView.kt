@@ -68,7 +68,7 @@ class PastRideCardView @JvmOverloads constructor(
     private fun loadFleetLogo(trip: TripInfo) {
         if (trip.fleetInfo?.logoUrl.isNullOrBlank()) {
             Picasso.with(context)
-                    .load(R.drawable.uisdk_ic_supplier_logo_empty)
+                    .load(R.drawable.uisdk_ic_quotes_logo_empty)
                     .into(logoImage)
         } else {
             Picasso.with(context)

@@ -112,7 +112,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     }
 
     override fun showErrorDialog(stringId: Int) {
-        AlertDialog.Builder(this, R.style.AlertDialog)
+        AlertDialog.Builder(this, R.style.DialogTheme)
                 .setMessage(stringId)
                 .setPositiveButton(R.string.ok) { dialog, _ -> dialog.cancel() }
                 .setCancelable(true)

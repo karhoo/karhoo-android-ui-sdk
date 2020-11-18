@@ -79,6 +79,24 @@ class ResultRobot : BaseTestRobot() {
         pastTripReportIssueButtonVisibleAndEnabled()
     }
 
+    fun completedRideFullCheckFromTrip() {
+        pastRideFleetNameVisible(TEST_FLEET)
+        pastRideFleetLogoVisible()
+        pastRideDateAndTimeVisible(PAST_DATE_TIME)
+        pastRidePickUpAddressVisible(ADDRESS_ORIGIN)
+        pastRideDropOffAddressVisible(ADDRESS_DESTINATION)
+        pastRideVehicleDetailsVisible(VEHICLE_DETAILS)
+        pastRideStateIconVisible()
+        pastRideStatusLabelVisible()
+        pastRideStatusVisible(R.string.completed)
+        pastRideBaseFareLabelIsVisible()
+        pastRideKarhooIdLabelVisible()
+        pastRideKarhooIdVisible(TRIP_ID)
+        pastTripRatingFieldsVisible()
+        pastTripRebookButtonVisibleAndEnabled()
+        pastTripReportIssueButtonVisibleAndEnabled()
+    }
+
     fun pastRideFleetNameVisible(expectedText: String) {
         stringIsVisibleIsDescendant(expectedText, R.id.bookingTermsText)
     }
@@ -121,6 +139,10 @@ class ResultRobot : BaseTestRobot() {
 
     fun pastRidePriceLabelVisible() {
         textIsVisible(R.string.price)
+    }
+
+    fun baseFareLabelIsVisible() {
+        textIsVisible(R.string.faretype_info_base)
     }
 
     fun pastRideBaseFareLabelIsVisible() {

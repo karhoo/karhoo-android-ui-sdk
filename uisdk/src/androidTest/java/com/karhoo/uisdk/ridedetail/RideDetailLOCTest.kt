@@ -11,7 +11,6 @@ import com.karhoo.uisdk.common.networkServiceRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.LONG
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -50,7 +49,7 @@ class RideDetailLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(LONG)
+            longSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

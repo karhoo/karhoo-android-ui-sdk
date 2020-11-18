@@ -8,5 +8,4 @@ fun LocationInfo.toTripLocationDetails() = TripLocationInfo(
         position = this.position,
         placeId = this.placeId,
         poiType = this.poiType,
-        timezone = this.timezone
-                                                           )
+        timezone = this.timezone)

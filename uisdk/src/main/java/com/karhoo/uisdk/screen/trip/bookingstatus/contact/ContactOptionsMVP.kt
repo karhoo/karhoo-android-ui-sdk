@@ -11,7 +11,7 @@ interface ContactOptionsMVP {
 
         fun showTripCancelledDialog()
 
-        fun showCallToCancelDialog(number: String, Supplier: String)
+        fun showCallToCancelDialog(number: String, quote: String)
 
         fun enableCallDriver()
 
