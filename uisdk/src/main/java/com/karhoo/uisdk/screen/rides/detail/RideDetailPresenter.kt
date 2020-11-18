@@ -31,6 +31,7 @@ private val LIVE_STATES = arrayOf(
         TripStatus.PASSENGER_ON_BOARD,
         TripStatus.INCOMPLETE)
 
+@Suppress("LongParameterList")
 class RideDetailPresenter(view: RideDetailMVP.View,
                           private var trip: TripInfo,
                           private val tripsService: TripsService,

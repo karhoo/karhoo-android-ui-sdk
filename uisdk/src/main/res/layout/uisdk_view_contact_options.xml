@@ -7,7 +7,7 @@
 
     <Button
         android:id="@+id/contactFleetButton"
-        style="@style/PlainTextButton"
+        style="@style/PlainTextButtonWithNoBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_fleet"
@@ -16,7 +16,7 @@
 
     <Button
         android:id="@+id/contactDriverButton"
-        style="@style/PlainTextButton"
+        style="@style/PlainTextButtonWithNoBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/contact_driver"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/cancelButton"
-        style="@style/TextButton"
+        style="@style/TextButtonWithNoBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"

@@ -10,11 +10,12 @@ import org.junit.Assert
 
 fun booking(func: BookingRobot.() -> Unit) = BookingRobot().apply { func() }
 
-fun booking(launch: Launch, intent: Intent? = null, func: BookingRobot.() -> Unit) = BookingRobot().apply {
-    launch.launch(intent)
-    tapTurnOnGpsBtn()
-    func()
-}
+fun booking(launch: Launch, intent: Intent? = null, func: BookingRobot.() -> Unit) = BookingRobot()
+        .apply {
+            launch.launch(intent)
+            tapTurnOnGpsBtn()
+            func()
+        }
 
 class BookingRobot : BaseTestRobot() {
 
@@ -35,7 +36,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun clickDestinationAddressField() {
-        clickButton(R.id.dropoffLayout)
+        clickButton(R.id.dropOffLabel)
     }
 
     fun pressMenuButton() {
@@ -67,15 +68,11 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressFirstQuote() {
-        pressItemInList(R.id.supplierListRecycler, 0)
+        pressItemInList(R.id.quotesListRecycler, 0)
     }
 
     fun pressBookRideButton() {
         clickButton(R.id.bookingRequestButton)
-    }
-
-    fun clickOnProfileButton() {
-        clickButtonByString(R.string.profile)
     }
 
     fun clickOnLocateMeButton() {
@@ -122,7 +119,7 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.mobileNumberInput)
         fillText(
                 resId = R.id.mobileNumberInput,
-                text = TestData.USER.phoneNumber
+                text = TestData.USER_PHONE_NUMBER
                 )
     }
 
@@ -146,6 +143,10 @@ class BookingRobot : BaseTestRobot() {
 
     fun pressCloseBookARideScreen() {
         clickButtonIsDescendant(R.id.cancelButton, R.id.bookingRequestLayout)
+    }
+
+    fun pressAddPaymentField() {
+        clickButton(R.id.bookingRequestPaymentDetailsWidget)
     }
 }
 
@@ -259,7 +260,7 @@ class ResultRobot : BaseTestRobot() {
         expandChevronIsVisibleAndEnabled()
         tabsAreVisibleAndButtonsEnabled()
         fleetLogoIsVisible()
-        supplierNameVisible()
+        quoteNameVisible()
         ETATextVisible()
         categoryTextVisible()
         priceTextVisible()
@@ -280,46 +281,46 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fleetLogoIsVisible() {
-        viewIsVisibleIsDescendant(R.id.logoImage, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.logoImage, R.id.quotesListRecycler)
     }
 
     fun fleetLogoIsVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestQuotesWidget)
     }
 
-    fun supplierNameVisible() {
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.supplierListRecycler)
+    fun quoteNameVisible() {
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.quotesListRecycler)
     }
 
-    fun supplierNameVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.bookingRequestSupplierWidget)
+    fun quoteNameVisibleGuestDetails() {
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.bookingRequestQuotesWidget)
     }
 
     fun ETATextVisible() {
-        viewIsVisibleIsDescendant(R.id.etaText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.etaText, R.id.quotesListRecycler)
     }
 
     fun capacityChecksGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestSupplierWidget)
-        viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestQuotesWidget)
     }
 
     fun categoryTextVisible() {
-        viewIsVisibleIsDescendant(R.id.categoryText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.categoryText, R.id.quotesListRecycler)
     }
 
     fun categoryTextVisibleGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.categoryText, R.id.bookingRequestSupplierWidget)
+        viewIsVisibleIsDescendant(R.id.categoryText, R.id.bookingRequestQuotesWidget)
     }
 
     fun priceTextVisible() {
-        viewIsVisibleIsDescendant(R.id.priceText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.priceText, R.id.quotesListRecycler)
     }
 
     fun fareTypeVisible() {
-        viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.supplierListRecycler)
+        viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.quotesListRecycler)
     }
 
     fun allCategoriesAreVisible() {
@@ -378,7 +379,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun bothSelectedAddressesAreVisible() {
-        selectedDestinationAddressIsVisible(address = TestData.SELECTED_DESTINATION_ADDRESS)
+        selectedDestinationAddressIsVisible(address = TestData.SELECTED_ADDRESS_EXTRA)
         selectedPickupAddressIsVisible(address = TestData.SELECTED_ADDRESS)
     }
 
@@ -424,16 +425,20 @@ class ResultRobot : BaseTestRobot() {
         checkoutAsGuestButtonIsDisabled()
     }
 
+    fun guestBookingCheckCardDetails() {
+        paymentCardDetailsCheck()
+    }
+
     fun guestDetailsPageFleetCheck() {
         fleetLogoIsVisibleGuestDetails()
-        supplierNameVisibleGuestDetails()
+        quoteNameVisibleGuestDetails()
         capacityChecksGuestDetails()
         categoryTextVisibleGuestDetails()
     }
 
     fun guestDetailsPagePriceCheck() {
-        ETATextIsVisibleGuestDetails(ETA = TestData.QUOTE.qta)
-        estimatedPriceTextIsVisibleGuestDetails(price = TestData.QUOTE.highPrice)
+        ETATextIsVisibleGuestDetails(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
+        estimatedPriceTextIsVisibleGuestDetails(price = TestData.QUOTE.price.highPrice)
     }
 
     fun ETATextIsVisibleGuestDetails(ETA: Int?) {
@@ -481,6 +486,13 @@ class ResultRobot : BaseTestRobot() {
         textIsVisibleIsDescendant(R.string.add_payment, R.id.cardNumberText)
     }
 
+    fun paymentCardDetailsCheck() {
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.payment_details, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
+        textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
+    }
+
     fun termsGuestDetailsCheck() {
         viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingRequestWidget)
         textIsVisibleIsDescendant(R.string.booking_terms, R.id.bookingRequestTermsWidget)
@@ -515,10 +527,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fullCheckBookARideScreenASAP() {
-        fleetDetailsAreVisible(fleetName = TestData.QUOTE.supplierName)
-        vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicleClass)
-        ETAIsVisible(ETA = TestData.QUOTE.qta)
-        priceDetailsVisible(price = TestData.QUOTE.highPrice)
+        // TODO: Need to set fleet name to non optional
+        fleetDetailsAreVisible(fleetName = TestData.QUOTE.fleet.name.toString())
+        vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicle.vehicleClass)
+        ETAIsVisible(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
+        priceDetailsVisible(price = TestData.QUOTE.price.highPrice)
         paymentFieldIsEnabled()
         termsCheck()
         bookButtonIsEnabled()
@@ -526,7 +539,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun fleetDetailsAreVisible(fleetName: String) {
         viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestLayout)
-        viewIsVisibleIsDescendant(R.id.supplierNameText, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.bookingRequestLayout)
         textStringIsVisibleIsDescendant(fleetName, R.id.bookingRequestLayout)
     }
 
@@ -587,4 +600,13 @@ class ResultRobot : BaseTestRobot() {
     fun checkDriverDetails() {
         viewIsVisible(R.id.rideOptionsLabel)
     }
+
+    fun checkWebViewDisplayed() {
+        viewIsVisible(R.id.activityWebView)
+    }
+
+    fun checkAdyenWidgetIsShown() {
+        textIsVisible(R.string.change_payment_method)
+    }
+
 }

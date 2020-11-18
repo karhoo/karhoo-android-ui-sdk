@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quotesListRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/quotes_height"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/quotes_padding_bottom"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/quotesLoadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/noDestinationVehiclesLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/address_picker_width"
+        android:gravity="center_horizontal"
+        android:text="@string/enter_destination_for_vehicles"
+        android:textColor="@color/med_grey"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/quotesLoadingLabel"
+        android:layout_width="@dimen/spacing_none"
+        android:layout_height="@dimen/spacing_none"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/spacing_xxsmall"
+        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:gravity="center"
+        android:padding="@dimen/spacing_xxsmall"
+        android:text="@string/retrieving_quotes"
+        android:textColor="@color/med_grey"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/quotesLoadingProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/noDestinationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/spacing_small"
+        android:text="@string/no_destination"
+        android:textColor="@color/med_grey"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/noDestinationVehiclesLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

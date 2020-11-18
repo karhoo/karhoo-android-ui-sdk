@@ -2,6 +2,8 @@ package com.karhoo.karhootraveller.presentation.base
 
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
+import com.karhoo.uisdk.base.ScheduledDateView
+import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.nhaarman.mockitokotlin2.eq
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone

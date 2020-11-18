@@ -3,12 +3,13 @@ package com.karhoo.karhootraveller.registration
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.common.BaseTestRobot
 import com.karhoo.karhootraveller.common.Launch
-import com.karhoo.karhootraveller.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.FILL_EMAIL
 import com.karhoo.uisdk.util.TestData.Companion.INVALID_PHONE
 import com.karhoo.uisdk.util.TestData.Companion.KARHOO_PRIVACY
 import com.karhoo.uisdk.util.TestData.Companion.KARHOO_TCS
 import com.karhoo.uisdk.util.TestData.Companion.SHOW_PASSWORD
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_PHONE_NUMBER
 
 fun registration(func: RegistrationRobot.() -> Unit) = RegistrationRobot().apply {
     func()
@@ -119,27 +120,27 @@ class RegistrationRobot : BaseTestRobot() {
     fun fillFirstNameRegistration() {
         fillEditText(
                 resId = R.id.firstNameInput,
-                text = TestData.USER_UPDATED.firstName)
+                text = USER_UPDATED.firstName)
     }
 
     fun fillLastNameRegistration() {
         fillEditText(
                 resId = R.id.lastNameInput,
-                text = TestData.USER_UPDATED.lastName
+                text = USER_UPDATED.lastName
                     )
     }
 
     fun fillEmailRegistration() {
         fillEditText(
                 resId = R.id.emailInput,
-                text = TestData.USER_UPDATED.email
+                text = USER_UPDATED.email
                     )
     }
 
     fun fillPhoneNumberRegistration() {
         fillEditText(
                 resId = R.id.mobileNumberInput,
-                text = TestData.USER_UPDATED.phoneNumber
+                text = USER_UPDATED_PHONE_NUMBER
                     )
     }
 

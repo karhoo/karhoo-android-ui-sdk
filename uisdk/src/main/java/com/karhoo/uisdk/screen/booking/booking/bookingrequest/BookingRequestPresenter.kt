@@ -1,30 +1,22 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.CardType
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
-import com.karhoo.sdk.api.network.request.Payer
-import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
-import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.api.service.trips.TripsService
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -32,34 +24,29 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
-import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.service.preference.PreferenceStore
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
-import java.util.Currency
 import java.util.Date
 
-class BookingRequestPresenter(view: GuestBookingMVP.View,
+class BookingRequestPresenter(view: BookingRequestMVP.View,
                               private val analytics: Analytics?,
-                              private val paymentsService: PaymentsService,
                               private val preferenceStore: PreferenceStore,
                               private val tripsService: TripsService,
                               private val userStore: UserStore)
-    : BasePresenter<GuestBookingMVP.View>(), GuestBookingMVP.Presenter, LifecycleObserver {
+    : BasePresenter<BookingRequestMVP.View>(), BookingRequestMVP.Presenter, LifecycleObserver {
 
-    private var braintreeSDKToken: String = ""
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
     private var flightDetails: FlightDetails? = null
-    private var nonce: String? = null
     private var origin: LocationInfo? = null
     private var outboundTripId: String? = null
-    private var quote: QuoteV2? = null
+    private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
 
     init {
@@ -93,9 +80,9 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             analytics?.bookingRequested(currentTripInfo(), outboundTripId)
-            view?.threeDSecureNonce(braintreeSDKToken, nonce!!, quotePriceToAmount(quote))
+            view?.initialiseGuestPayment(quote?.price)
         } else {
-            sdkInit()
+            view?.initialisePaymentProvider(quote?.price)
         }
     }
 
@@ -126,7 +113,7 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
 
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
-            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentDialog(braintreeSDKToken)
+            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog()
             KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error)
             else -> handleError(returnErrorStringOrLogoutIfRequired(error))
         }
@@ -138,13 +125,26 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
         }
     }
 
+    override fun handleChangeCard() {
+        view?.initialiseChangeCard(quote?.price)
+    }
+
     override fun setBookingFields(allFieldsValid: Boolean) {
-        if (KarhooUISDKConfigurationProvider.isGuest()) {
-            view?.showGuestBookingFields()
-            setBookingEnablement(allFieldsValid)
-        } else {
-            view?.showAuthenticatedUserBookingFields()
-            setBookingEnablement(true)
+        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
+
+        when (authMethod) {
+            is AuthenticationMethod.Guest -> {
+                view?.showGuestBookingFields()
+                setBookingEnablement(allFieldsValid)
+            }
+            is AuthenticationMethod.TokenExchange -> {
+                view?.showGuestBookingFields(details = getPassengerDetails())
+                setBookingEnablement(allFieldsValid)
+            }
+            else -> {
+                view?.showAuthenticatedUserBookingFields()
+                setBookingEnablement(true)
+            }
         }
     }
 
@@ -153,34 +153,6 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
             view?.enableBooking()
         } else {
             view?.disableBooking()
-        }
-    }
-
-    private fun sdkInit() {
-        val sdkInitRequest = SDKInitRequest(organisationId = userStore.currentUser.organisations.first().id,
-                                            currency = quote?.price?.currencyCode.orEmpty())
-        paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> getNonce(result.data.token)
-                is Resource.Failure -> handleError(R.string.booking_error)
-            }
-        }
-    }
-
-    private fun getNonce(braintreeSDKToken: String) {
-        this.braintreeSDKToken = braintreeSDKToken
-        val user = userStore.currentUser
-        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
-                                                      email = user.email,
-                                                      firstName = user.firstName,
-                                                      lastName = user.lastName),
-                                        organisationId = user.organisations.first().id
-                                       )
-        paymentsService.getNonce(nonceRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> view?.threeDSecureNonce(braintreeSDKToken, result.data.nonce, quotePriceToAmount(quote))
-                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
-            }
         }
     }
 
@@ -216,35 +188,16 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
                 locale = user.locale)
     }
 
-    private fun quotePriceToAmount(quote: QuoteV2?): String {
-        val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, quote?.price?.highPrice.orZero())
-    }
-
     override fun resetBooking() {
         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
     }
 
-    private fun refreshCardDetails() {
-        view?.showUpdatedCardDetails(userStore.savedPaymentInfo)
+    private fun refreshPaymentDetails() {
+        view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 
-    override fun setToken(braintreeSDKToken: String) {
-        this.braintreeSDKToken = braintreeSDKToken
-    }
-
-    override fun updateCardDetails(braintreeSDKNonce: PaymentMethodNonce?) {
-        braintreeSDKNonce?.let {
-            nonce = braintreeSDKNonce.nonce
-            userStore.savedPaymentInfo = SavedPaymentInfo(braintreeSDKNonce.description,
-                                                          CardType.fromString(braintreeSDKNonce.typeLabel))
-            refreshCardDetails()
-            view?.enableBooking()
-        } ?: view?.disableBooking()
-    }
-
-    override fun showBookingRequest(quote: QuoteV2, outboundTripId: String?) {
-        refreshCardDetails()
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
+        refreshPaymentDetails()
         if (origin != null && destination != null) {
             this.quote = quote
             this.outboundTripId = outboundTripId
@@ -271,7 +224,7 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
                                                       .BookingError(stringId))
     }
 
-    private fun handleBookingType(quote: QuoteV2) {
+    private fun handleBookingType(quote: Quote) {
         if (scheduledDate != null) {
             scheduledDate?.let {
                 view?.bindPrebook(quote, "", it)
@@ -280,6 +233,24 @@ class BookingRequestPresenter(view: GuestBookingMVP.View,
             view?.bindPriceAndEta(quote, "")
         } else {
             view?.bindEta(quote, "")
+        }
+    }
+
+    override fun onPaymentFailureDialogPositive() {
+        view?.hideLoading()
+        handleChangeCard()
+    }
+
+    override fun onPaymentFailureDialogCancelled() {
+        view?.hideLoading()
+        hideBookingRequest()
+    }
+
+    override fun onTermsAndConditionsRequested(url: String?) {
+        url?.let {
+        bookingRequestStateViewModel?.process(BookingRequestViewContract
+                                                      .BookingRequestEvent
+                                                      .TermsAndConditionsRequested(it))
         }
     }
 }

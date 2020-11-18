@@ -16,8 +16,7 @@ import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.sdk.api.model.UserInfo
@@ -32,7 +31,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.GuestBookingMVP
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -60,6 +59,7 @@ class BookingRequestPresenterTest {
             tripId = "tripId1234",
             origin = TripLocationInfo(placeId = "placeId1234"),
             destination = TripLocationInfo(placeId = "placeId4321"))
+    private val price: QuotePrice = QuotePrice(highPrice = 10, currencyCode = "GBP")
     private val userDetails: UserInfo = UserInfo(firstName = "David",
                                                  lastName = "Smith",
                                                  email = "test.test@test.test",
@@ -82,13 +82,13 @@ class BookingRequestPresenterTest {
     private var bookingRequestStateViewModel: BookingRequestStateViewModel = mock()
     private val locationDetails: LocationInfo = LocationInfo()
     private val preferenceStore: PreferenceStore = mock()
-    private val quote: QuoteV2 = mock()
+    private val quote: Quote = mock()
     private val quotePrice: QuotePrice = mock()
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()
     private val paymentsService: PaymentsService = mock()
     private val userStore: UserStore = mock()
-    private var view: GuestBookingMVP.View = mock()
+    private var view: BookingRequestMVP.View = mock()
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -103,14 +103,13 @@ class BookingRequestPresenterTest {
     fun setUp() {
         setAuthenticatedUser()
 
-        whenever(userStore.currentUser).thenReturn(userDetails)
         whenever(quote.price).thenReturn(quotePrice)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        requestPresenter = BookingRequestPresenter(view, analytics, paymentsService,
-                                                   preferenceStore, tripsService, userStore)
+        requestPresenter = BookingRequestPresenter(view, analytics, preferenceStore, tripsService,
+                                                   userStore)
     }
 
     /**
@@ -142,7 +141,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(false)
 
-        verify(view).showGuestBookingFields()
+        verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).disableBooking()
     }
 
@@ -161,7 +160,26 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(true)
 
-        verify(view).showGuestBookingFields()
+        verify(view).showGuestBookingFields(PassengerDetails())
+        verify(view).enableBooking()
+    }
+
+    /**
+     * Given:   A user see the booking screen
+     * When:    They are a token exchange user
+     * And:     The input fields are all valid
+     * Then:    The correct input fields are displayed
+     * And:     The booking button is enabled
+     */
+    @Test
+    fun `token exchange user sees the correct input fields and booking button is enabled`() {
+        setTokenUser()
+
+        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
+
+        requestPresenter.setBookingFields(true)
+
+        verify(view).showGuestBookingFields(passengerDetails)
         verify(view).enableBooking()
     }
 
@@ -224,7 +242,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.showBookingRequest(quote)
 
-        verify(view).showUpdatedCardDetails(savedPaymentInfo)
+        verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
         verify(view).animateIn()
@@ -321,40 +339,6 @@ class BookingRequestPresenterTest {
     }
 
     /**
-     * Given:   A user adds a payment card
-     * When:    The Braintree result does not have payment nonce details
-     * Then:    The view is not updated
-     */
-    @Test
-    fun `no updates made to view if there is no payment nonce info`() {
-        requestPresenter.updateCardDetails(null)
-
-        verify(userStore, never()).savedPaymentInfo
-        verify(view, never()).updateCardDetails(any())
-        verify(view).disableBooking()
-    }
-
-    /**
-     * Given:   A user adds a payment card
-     * When:    The Braintree result has payment nonce details
-     * Then:    The card info is stored and the view is not updated
-     */
-    @Test
-    fun `card info stored and correct updates made to view if there is payment nonce info`() {
-        val desc = "ending in 00"
-
-        whenever(braintreePaymentNonce.description).thenReturn(desc)
-        whenever(braintreePaymentNonce.typeLabel).thenReturn(CardType.VISA.toString())
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
-
-        verify(userStore).savedPaymentInfo
-        verify(view).showUpdatedCardDetails(savedPaymentInfo)
-        verify(view).enableBooking()
-    }
-
-    /**
      * Given:   A user tries to make a booking
      * When:    And the origin is an airport
      * And:     There are flight details
@@ -375,13 +359,13 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(any())
     }
 
     /**
@@ -420,85 +404,6 @@ class BookingRequestPresenterTest {
     }
 
     /**
-     * Given:   Book trip flow is initiated
-     * And:     The user is logged in
-     * When:    SDK Init returns an error
-     * Then:    View shows booking error
-     */
-    @Test
-    fun `logged in user sdk init error shows error`() {
-        setAuthenticatedUser()
-
-        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-
-        requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
-
-        requestPresenter.makeBooking()
-
-        sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(view).onError()
-        verify(bookingRequestStateViewModel).process(BookingRequestViewContract
-                                                             .BookingRequestEvent
-                                                             .BookingError(R.string.booking_error))
-    }
-
-    /**
-     * Given:   Book trip flow is initiated
-     * And:     The user is logged in
-     * When:    SDK Init returns success
-     * And:     Get Nonce returns failure
-     * Then:    Show payment dialog
-     */
-    @Test
-    fun `logged in user get nonce failure shows payment dialog`() {
-        setAuthenticatedUser()
-
-        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-
-        requestPresenter.makeBooking()
-
-        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
-        getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(view).showPaymentDialog(BRAINTREE_SDK_TOKEN)
-    }
-
-    /**
-     * Given:   Book trip flow is initiated
-     * And:     The user is logged in
-     * When:    SDK Init returns success
-     * And:     Get nonce returns success
-     * Then:    Three D Secure the nonce
-     */
-    @Test
-    fun `logged in user get nonce success shows three d secure`() {
-        setAuthenticatedUser()
-
-        val quote = QuoteV2(
-                price = QuotePrice(
-                        currencyCode = "GBP",
-                        highPrice = 150),
-                quoteType = QuoteType.FIXED,
-                id = QUOTE_ID,
-                vehicleAttributes = vehicleAttributes)
-
-        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-        val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
-        requestPresenter.showBookingRequest(quote)
-
-        requestPresenter.makeBooking()
-
-        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
-        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(PAYMENTS_NONCE, CardType.VISA)))
-
-        verify(view).threeDSecureNonce(BRAINTREE_SDK_TOKEN, PAYMENTS_NONCE, EXPECTED_AMOUNT_AS_STRING)
-    }
-
-    /**
      * Given:   A guest user tries to make a booking
      * When:    And the destination is an airport
      * And:     There are flight details
@@ -517,16 +422,15 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
-        whenever(quote.price.currencyCode).thenReturn("GBP")
-        whenever(quote.price.highPrice).thenReturn(10)
+        whenever(quote.price).thenReturn(price)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(price)
     }
 
     /**
@@ -545,16 +449,15 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
-        whenever(quote.price.currencyCode).thenReturn("GBP")
-        whenever(quote.price.highPrice).thenReturn(10)
+        whenever(quote.price).thenReturn(price)
 
-        requestPresenter.updateCardDetails(braintreePaymentNonce)
+//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, outboundTripId = "tripId")
 
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).threeDSecureNonce(anyString(), anyString(), anyString())
+        verify(view).initialiseGuestPayment(price)
     }
 
     /**
@@ -614,7 +517,33 @@ class BookingRequestPresenterTest {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
-        verify(view).showPaymentDialog(anyString())
+        verify(view).showPaymentFailureDialog()
+    }
+
+    /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogPositive is called
+     */
+    @Test
+    fun `Select Positive option on Payment Failure Dialog`() {
+        requestPresenter.onPaymentFailureDialogPositive()
+
+        verify(view).hideLoading()
+        verify(view).initialiseChangeCard(null)
+    }
+
+    /**
+     * Given: Three D Secure nonce is passed back for booking trip
+     * When: Book trip failure with CouldNotPaymentPreAuthFailed and payment dialog appears
+     * Then: onPaymentFailureDialogCancelled is called
+     */
+    @Test
+    fun `Select Negative option on Payment Failure Dialog`() {
+        requestPresenter.onPaymentFailureDialogCancelled()
+
+        verify(view).hideLoading()
+        verify(view).animateOut()
     }
 
     /**
@@ -670,22 +599,28 @@ class BookingRequestPresenterTest {
     }
 
     private fun setGuestUser() {
+        whenever(userStore.currentUser).thenReturn(UserInfo())
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
     }
 
+    private fun setTokenUser() {
+        whenever(userStore.currentUser).thenReturn(userDetails)
+        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+        context,
+                authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
+    }
+
     private fun setAuthenticatedUser() {
+        whenever(userStore.currentUser).thenReturn(userDetails)
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.KarhooUser()))
     }
 
     companion object {
-        private const val QUOTE_ID = "quote1234"
         private const val THREE_D_SECURE_NONCE = "threeDSecureNonce"
-        private const val BRAINTREE_SDK_TOKEN = "braintreeSdkToken"
         private const val PAYMENTS_NONCE = "paymentsNonce"
-        private const val EXPECTED_AMOUNT_AS_STRING = "1.50"
     }
 }

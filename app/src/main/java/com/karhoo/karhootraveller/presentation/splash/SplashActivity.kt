@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.transition.Explode
-import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.annotation.StringRes
@@ -55,7 +54,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
 
         val isAutomaticLogout = intent.extras?.getBoolean(EXTRA_AUTOMATIC_LOGOUT) ?: false
         if (isAutomaticLogout) {
-            AlertDialog.Builder(this, R.style.AlertDialog)
+            AlertDialog.Builder(this, R.style.DialogTheme)
                     .setMessage(R.string.automatic_logout_message)
                     .setPositiveButton(android.R.string.ok) { _, _ -> }
                     .create()
@@ -95,7 +94,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
 
     // Fix for system navigation hiding the invite snackbar (MOB-2016)
     override fun goFullScreen() {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val decorView = window.decorView
             val uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
             decorView.systemUiVisibility = uiOptions
@@ -123,7 +122,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
             }
             startActivity(builder.build(this))
             if (!isGuest()) {
-                Handler().postDelayed({ finish() }, 2500)
+                Handler().postDelayed({ finish() }, SPLASH_SCREEN_DELAY)
             }
         }
     }
@@ -194,6 +193,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
         } ?: run { journeyInfo = null }
     }
 
+    @Suppress("NestedBlockDepth")
     private fun getTripTrackingDeepLinkData() {
         intent?.data?.apply {
             val tripId = getQueryParameter(TRIP_ID)?.let {
@@ -229,6 +229,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
 
     companion object {
         const val EXTRA_AUTOMATIC_LOGOUT = "SplashActivity.AutomaticLogout"
+        private const val SPLASH_SCREEN_DELAY = 2500L
         private const val ORIGIN_LATITUDE = "origin_latitude"
         private const val ORIGIN_LONGITUDE = "origin_longitude"
         private const val DESTINATION_LATITUDE = "destination_latitude"
@@ -239,5 +240,4 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
         private const val DESTINATION_DISPLAY_ADDRESS = "destination_display_address"
     }
 }
-
 

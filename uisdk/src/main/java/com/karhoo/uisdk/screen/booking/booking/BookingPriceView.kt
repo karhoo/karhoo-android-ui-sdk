@@ -7,7 +7,6 @@ import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteV2
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.CurrencyUtils
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
@@ -33,10 +32,10 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPriceView,
                                                         defStyleAttr, R.style.KhBookingETAPriceView)
-        headerTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_supplierHeaderText, R
+        headerTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_quotesHeaderText, R
                 .style
                 .Text_White_Small)
-        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_supplierDetailsText, R
+        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingPriceView_quotesDetailsText, R
                 .style
                 .Text_White_XXLarge_Bold)
         TextViewCompat.setTextAppearance(etaTypeText, headerTextStyle)
@@ -45,7 +44,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(priceText, detailsTextStyle)
     }
 
-    fun bindViews(vehicle: QuoteV2,
+    fun bindViews(vehicle: Quote,
                   typeEta: String,
                   currency: Currency) {
         etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
@@ -54,14 +53,14 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
-    fun bindPrebook(vehicle: QuoteV2, time: String,
+    fun bindPrebook(vehicle: Quote, time: String,
                     typeEta: String,
                     currency: Currency) {
         etaText.text = time
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
-    private fun bindRemainingViews(vehicle: QuoteV2, typeEta: String, currency: Currency) {
+    private fun bindRemainingViews(vehicle: Quote, typeEta: String, currency: Currency) {
         when (vehicle.quoteSource) {
             QuoteSource.FLEET -> {
                 priceText.text = CurrencyUtils.intToPrice(currency, vehicle.price.highPrice)

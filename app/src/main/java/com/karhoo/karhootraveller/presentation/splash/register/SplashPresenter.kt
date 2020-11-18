@@ -6,18 +6,24 @@ import android.os.Looper
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.karhootraveller.BuildConfig
 import com.karhoo.karhootraveller.presentation.base.BasePresenter
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.Payer
+import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.auth.AuthService
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
 
+@Suppress("LongParameterList", "ComplexCondition")
 internal class SplashPresenter(view: SplashMVP.View,
                                private val paymentService: PaymentsService,
                                private val locationProvider: LocationProvider,
@@ -25,6 +31,7 @@ internal class SplashPresenter(view: SplashMVP.View,
                                private val appVersionValidator: AppVersionValidator,
                                private val analytics: Analytics,
                                private var location: Location?,
+                               private val authService: AuthService = KarhooApi.authService,
                                private val playServicesUtil: PlayServicesUtil)
     : BasePresenter<SplashMVP.View>(),
       SplashMVP.Presenter,
@@ -50,7 +57,7 @@ internal class SplashPresenter(view: SplashMVP.View,
 
     private fun setDefaultLocation() {
         location?.let {
-            handler.postDelayed({ onPositionUpdated(it) }, 8000)
+            handler.postDelayed({ onPositionUpdated(it) }, SPLASH_SCREEN_LOCATION_DELAY)
         }
     }
 
@@ -67,6 +74,7 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun onLocationServicesDisabled() {
+        // Do nothing
     }
 
     override fun locationUpdatesDenied() {
@@ -74,7 +82,7 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {
-        //do nothing
+        // Do nothing
     }
 
     override fun isAppValid(isValid: Boolean) {
@@ -94,6 +102,42 @@ internal class SplashPresenter(view: SplashMVP.View,
             proceedIfAble()
         } else if (userStore.isCurrentUserValid) {
             logoutAndResetApp(isAutomaticLogout = true)
+        }
+    }
+
+    override fun handleLoginTypeSelection(loginType: String) {
+        if (!userStore.isCurrentUserValid && loginType != LoginType.USERNAME_PASSWORD.value) {
+            userStore.removeCurrentUser()
+        }
+        val authMethod: AuthenticationMethod = when (loginType) {
+            LoginType.USERNAME_PASSWORD.value -> AuthenticationMethod.KarhooUser()
+            LoginType.ADYEN_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.ADYEN_GUEST_CHECKOUT_IDENTIFIER,
+                                                                      referer = BuildConfig.GUEST_CHECKOUT_REFERER,
+                                                                      organisationId = BuildConfig.ADYEN_GUEST_CHECKOUT_ORGANISATION_ID)
+            LoginType.BRAINTREE_GUEST.value -> AuthenticationMethod.Guest(identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
+                                                                          referer = BuildConfig.GUEST_CHECKOUT_REFERER,
+                                                                          organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID)
+            LoginType.ADYEN_TOKEN.value -> AuthenticationMethod.TokenExchange(clientId = BuildConfig.ADYEN_CLIENT_ID, scope = BuildConfig.ADYEN_CLIENT_SCOPE)
+            LoginType.BRAINTREE_TOKEN.value -> AuthenticationMethod.TokenExchange(clientId = BuildConfig.BRAINTREE_CLIENT_ID, scope = BuildConfig.BRAINTREE_CLIENT_SCOPE)
+            else -> return
+        }
+        view?.setConfig(authMethod)
+
+        when (authMethod) {
+            is AuthenticationMethod.KarhooUser -> view?.goToLogin()
+            is AuthenticationMethod.Guest -> view?.goToBooking(null)
+            is AuthenticationMethod.TokenExchange -> handleTokenExchange(loginType)
+            else -> view?.showError()
+        }
+    }
+
+    private fun handleTokenExchange(loginType: String) {
+        val token: String = if (loginType == LoginType.ADYEN_TOKEN.value) BuildConfig.ADYEN_AUTH_TOKEN else BuildConfig.BRAINTREE_AUTH_TOKEN
+        authService.login(token).execute { result ->
+            when (result) {
+                is Resource.Success -> view?.goToBooking(null)
+                is Resource.Failure -> view?.showError()
+            }
         }
     }
 
@@ -121,6 +165,7 @@ internal class SplashPresenter(view: SplashMVP.View,
 
     companion object {
         private val handler = Handler(Looper.getMainLooper())
+        private const val SPLASH_SCREEN_LOCATION_DELAY = 8000L
     }
 
 }

@@ -9,7 +9,6 @@ import com.karhoo.karhootraveller.common.Launch
 import com.karhoo.karhootraveller.common.networkServiceRobot
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.presentation.login.LoginActivity
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,7 +37,7 @@ class LoginLOCTest : Launch {
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             checkSnackbarWithText(R.string.network_error)
         }

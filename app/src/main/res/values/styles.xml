@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/secondary</item>
@@ -32,6 +32,13 @@
         <item name="colorPrimaryDark">@color/transparent</item>
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <!-- A quick messy fix for Splash Register button -->
+    <style name="SplashRegisterButtonTheme" parent="AppTheme">
+        <item name="backgroundTint">@color/secondary</item>
+        <item name="colorPrimary">@color/secondary</item>
+        <item name="colorOnSurface">@color/secondary</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
@@ -95,7 +102,7 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
     <style name="HelperTextAppearanceError" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@android:color/holo_red_dark</item>
@@ -108,7 +115,7 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="AlertDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="android:colorAccent">@color/off_black</item>
     </style>
 

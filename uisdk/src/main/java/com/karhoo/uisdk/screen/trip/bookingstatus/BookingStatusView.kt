@@ -65,10 +65,10 @@ class BookingStatusView @JvmOverloads constructor(
         }
     }
 
-    override fun updateStatus(@StringRes status: Int, supplier: String) {
+    override fun updateStatus(@StringRes status: Int, quote: String) {
         var text = resources.getString(status)
         if (text.contains("%s")) {
-            text = String.format(text, supplier)
+            text = String.format(text, quote)
         }
         actions?.showTopBarNotification(text)
     }
@@ -88,11 +88,11 @@ class BookingStatusView @JvmOverloads constructor(
     }
 
     override fun showCancellationDialog(tripDetails: TripInfo) {
-        AlertDialog.Builder(context, R.style.AlertDialog)
+        AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.title_dispatch_cancelled)
                 .setMessage(String.format(context
                                                   .getString(R.string.dispatch_cancelled),
-                                          if (tripDetails.fleetInfo == null) context.getString(R.string.supplier) else tripDetails.fleetInfo?.name))
+                                          if (tripDetails.fleetInfo == null) context.getString(R.string.quote) else tripDetails.fleetInfo?.name))
                 .setPositiveButton(R.string.ok) { _, _ -> actions?.goToCleanBooking() }
                 .setNegativeButton(R.string.alternative) { _, _ -> actions?.goToPrefilledBooking(tripDetails) }
                 .setCancelable(false)

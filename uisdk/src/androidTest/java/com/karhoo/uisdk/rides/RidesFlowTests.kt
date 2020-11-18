@@ -8,13 +8,18 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.RidesActivity
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
 class RidesFlowTests : Launch {
@@ -47,6 +52,12 @@ class RidesFlowTests : Launch {
      **/
     @Test
     fun userNavigatesFromUpcomingRidesToBooking() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         rides {
             clickUpcomingBookingsTabButton()
             clickBookRideButton()
@@ -65,9 +76,15 @@ class RidesFlowTests : Launch {
      **/
     @Test
     fun userNavigatesFromPastRidesToBooking() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
         rides {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
             clickBookRideButton()
         }
         booking {

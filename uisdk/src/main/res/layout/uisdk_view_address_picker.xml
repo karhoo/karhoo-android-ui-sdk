@@ -154,7 +154,7 @@
                 android:gravity="center|top"
                 android:maxLines="1"
                 android:textColor="@color/dark_grey"
-                android:textSize="@dimen/text_size_small_medium"
+                android:textSize="@dimen/text_size_small"
                 android:visibility="gone" />
         </LinearLayout>
 

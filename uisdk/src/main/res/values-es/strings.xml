@@ -5,7 +5,7 @@
     <string name="permission_rationale_location">Para poder ubicarte en el mapa necesitamos acceso a tu localización. Por favor, activa el permiso de localización.</string>
     <string name="settings">Ajustes</string>
 
-    <!-- Supplier List -->
+    <!-- Quotes List -->
     <string name="sorter_nearest">Proximidad</string>
     <string name="sorter_cheapest">Tarifa</string>
     <string name="address_pick_up">Recogida</string>
@@ -114,7 +114,7 @@
     <!-- Current Trip -->
     <string name="retrieving_pickup">Buscando punto de recogida</string>
     <string name="retrieving_dropoff">Buscando destino</string>
-    <string name="supplier">El proveedor</string>
+    <string name="quote">El proveedor</string>
     <string name="cancel_ride">Cancelar Reserva</string>
     <string name="cancelling_ride">Cancelando viaje</string>
     <string name="contact_fleet">Llamar a la flota</string>
@@ -364,4 +364,8 @@
     <string name="passenger_details">Detalles del pasajero</string>
     <string name="payment_details">Detalles del pago</string>
     <string name="checkout_as_guest">Ordenar como invitado</string>
+
+    <!-- Adyen -->
+    <string name="pay_button">Enviar</string>
+    <string name="pay_button_with_value">Preauthorise %s</string>
 </resources>

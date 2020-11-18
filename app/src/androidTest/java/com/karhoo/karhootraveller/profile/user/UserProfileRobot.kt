@@ -4,9 +4,14 @@ import androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu
 import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.common.BaseTestRobot
 import com.karhoo.karhootraveller.common.Launch
-import com.karhoo.karhootraveller.util.TestData
-import com.karhoo.karhootraveller.util.TestData.Companion.USER_UPDATED_PHONE_CODE
 import com.karhoo.uisdk.util.TestData.Companion.CARD_ENDING
+import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
+import com.karhoo.uisdk.util.TestData.Companion.USER_PHONE_CODE
+import com.karhoo.uisdk.util.TestData.Companion.USER_PHONE_NUMBER
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_PHONE_CODE
+import com.karhoo.uisdk.util.TestData.Companion.USER_UPDATED_PHONE_NUMBER
 
 fun userProfile(func: UserProfileRobot.() -> Unit) = UserProfileRobot().apply {
     func()
@@ -72,14 +77,14 @@ class UserProfileRobot : BaseTestRobot() {
     fun fillFirstNameField(): UserProfileRobot {
         fillEditText(
                 resId = R.id.firstNameInput,
-                text = TestData.USER_UPDATED.firstName)
+                text = USER_UPDATED.firstName)
         return this
     }
 
     fun fillLastNameField(): UserProfileRobot {
         fillEditText(
                 resId = R.id.lastNameInput,
-                text = TestData.USER_UPDATED.lastName
+                text = USER_UPDATED.lastName
                     )
         return this
     }
@@ -87,7 +92,7 @@ class UserProfileRobot : BaseTestRobot() {
     fun fillMobileNumberField(): UserProfileRobot {
         fillEditText(
                 resId = R.id.mobileNumberInput,
-                text = TestData.USER_UPDATED_PHONE_NUMBER
+                text = USER_UPDATED_PHONE_NUMBER
                     )
         return this
     }
@@ -128,19 +133,19 @@ class UserProfileRobot : BaseTestRobot() {
 class ResultRobot : BaseTestRobot() {
 
     fun noProfileChangesFullCheck() {
-        stringIsVisible(TestData.USER.firstName)
-        stringIsVisible(TestData.USER.lastName)
-        stringIsVisible(TestData.USER_PHONE_NUMBER)
-        stringIsVisible(TestData.USER_PHONE_CODE)
-        stringIsVisible(TestData.USER.email)
+        stringIsVisible(USER.firstName)
+        stringIsVisible(USER.lastName)
+        stringIsVisible(USER_PHONE_NUMBER)
+        stringIsVisible(USER_PHONE_CODE)
+        stringIsVisible(USER.email)
     }
 
     fun updatedProfileChangesFullCheck() {
-        stringIsVisible(TestData.USER_UPDATED.firstName)
-        stringIsVisible(TestData.USER_UPDATED.lastName)
-        stringIsVisible(TestData.USER_UPDATED_PHONE_NUMBER)
+        stringIsVisible(USER_UPDATED.firstName)
+        stringIsVisible(USER_UPDATED.lastName)
+        stringIsVisible(USER_UPDATED_PHONE_NUMBER)
         stringIsVisible(USER_UPDATED_PHONE_CODE)
-        stringIsVisible(TestData.USER_UPDATED.email)
+        stringIsVisible(USER_UPDATED.email)
     }
 
     fun checkFirstNameFieldIsNotFocused() {
@@ -194,7 +199,7 @@ class ResultRobot : BaseTestRobot() {
         addCardIsVisible()
     }
 
-    fun fullScreenCheckCardRegistered() {
+    fun fullScreenCheckCardRegisteredBraintree() {
         firstNameFieldIsVisible()
         userFirstNameIsVisible()
         lastNameFieldIsVisible()
@@ -210,12 +215,26 @@ class ResultRobot : BaseTestRobot() {
         changeCardIsVisible()
     }
 
+    fun fullScreenCheckCardRegisteredAdyen() {
+        firstNameFieldIsVisible()
+        userFirstNameIsVisible()
+        lastNameFieldIsVisible()
+        userLastNameIsVisible()
+        emailFieldIsVisible()
+        userEmailIsVisible()
+        countryCodeFieldIsVisible()
+        userCountryCodeIsVisible()
+        phoneNumberFieldIsVisible()
+        userPhoneNumberIsVisible()
+        paymentCardFieldIsNotVisible()
+    }
+
     fun firstNameFieldIsVisible() {
         viewIsVisible(R.id.firstNameLayout)
     }
 
     fun userFirstNameIsVisible() {
-        matchString(R.id.firstNameInput, TestData.USER.firstName)
+        matchString(R.id.firstNameInput, USER_INFO.firstName)
     }
 
     fun lastNameFieldIsVisible() {
@@ -223,7 +242,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun userLastNameIsVisible() {
-        matchString(R.id.lastNameInput, TestData.USER.lastName)
+        matchString(R.id.lastNameInput, USER_INFO.lastName)
     }
 
     fun emailFieldIsVisible() {
@@ -231,7 +250,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun userEmailIsVisible() {
-        matchString(R.id.emailInput, TestData.USER.email)
+        matchString(R.id.emailInput, USER.email)
     }
 
     fun countryCodeFieldIsVisible() {
@@ -239,7 +258,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun userCountryCodeIsVisible() {
-        matchString(R.id.countryDiallingCodeText, USER_UPDATED_PHONE_CODE)
+        matchString(R.id.countryDiallingCodeText, USER_PHONE_CODE)
     }
 
     fun phoneNumberFieldIsVisible() {
@@ -247,11 +266,15 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun userPhoneNumberIsVisible() {
-        matchString(R.id.mobileNumberInput, TestData.USER.phoneNumber)
+        matchString(R.id.mobileNumberInput, USER_PHONE_NUMBER)
     }
 
     fun paymentCardFieldIsVisible() {
         viewIsVisible(R.id.paymentCardLabel)
+    }
+
+    fun paymentCardFieldIsNotVisible() {
+        viewIsNotVisible(R.id.paymentCardLabel)
     }
 
     fun addCardIsVisible() {

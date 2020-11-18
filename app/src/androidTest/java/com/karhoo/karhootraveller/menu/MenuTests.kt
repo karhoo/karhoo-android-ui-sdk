@@ -6,13 +6,14 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.github.tomakehurst.wiremock.junit.WireMockRule
+import com.karhoo.karhootraveller.common.preferences
 import com.karhoo.karhootraveller.common.testrunner.TravellerTestConfig
 import com.karhoo.karhootraveller.profile.user.userProfile
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,7 +44,11 @@ class MenuTests : Launch {
      * Then:    I am returned to the booking/map screen
      **/
     @Test
+    @AllowFlaky(attempts = 3)
     fun userClosesProfileScreen() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
@@ -52,7 +57,7 @@ class MenuTests : Launch {
         }
         userProfile {
             clickBackToolbarButton()
-            sleep()
+            shortSleep()
         }
         booking {
         } result {
@@ -67,12 +72,15 @@ class MenuTests : Launch {
      **/
     @Test
     fun userSeesHelpPageFromSideMenu() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
         menu {
             clickOnHelpButton()
-            sleep(LONG)
+            longSleep()
         } result {
             helpPageIsShown()
         }
@@ -86,6 +94,9 @@ class MenuTests : Launch {
      **/
     @Test
     fun aboutPageElementsCheckSideMenu() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
@@ -103,6 +114,9 @@ class MenuTests : Launch {
      **/
     @Test
     fun termsAndConditionsShownAboutScreen() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
@@ -121,6 +135,9 @@ class MenuTests : Launch {
      **/
     @Test
     fun privacyPolicyShownAboutScreen() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
@@ -139,6 +156,9 @@ class MenuTests : Launch {
      **/
     @Test
     fun licenceAttributionShownAboutScreen() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
@@ -157,12 +177,15 @@ class MenuTests : Launch {
      **/
     @Test
     fun userReturnsToBookingScreenFromAbout() {
+        preferences {
+            setUserPreference(USER)
+        }
         booking(this) {
             pressMenuButton()
         }
         menu {
             clickOnAboutButton()
-            sleep()
+            shortSleep()
             clickBackToolbarButton()
         }
         booking {

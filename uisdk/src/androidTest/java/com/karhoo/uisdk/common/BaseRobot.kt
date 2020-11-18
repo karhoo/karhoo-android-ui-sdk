@@ -36,6 +36,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withHint
@@ -86,7 +87,7 @@ open abstract class BaseTestRobot {
 
     fun fillTextIsDescendant(id: Int, text: String, resId: Int): ViewInteraction =
             onView(allOf(withId(id), isDescendantOfA(withId(resId)))).perform(typeText(text),
-    closeSoftKeyboard())
+                                                                              closeSoftKeyboard())
 
     fun clickButton(resId: Int) {
         clickOn(resId)
@@ -236,7 +237,15 @@ open abstract class BaseTestRobot {
         onView(allOf(withId(listRes), isDescendantOfA(withId(parentRes)))).check(RecyclerMatcher(listSize))
     }
 
-    fun sleep(millis: Long = 350) = apply {
+    fun shortSleep(millis: Long = 350) = apply {
+        Thread.sleep(millis)
+    }
+
+    fun mediumSleep(millis: Long = 1000) = apply {
+        Thread.sleep(millis)
+    }
+
+    fun longSleep(millis: Long = 5000) = apply {
         Thread.sleep(millis)
     }
 

@@ -6,32 +6,31 @@ import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.FARE_CANCELLED
-import com.karhoo.uisdk.common.ServerRobot.Companion.FARE_COMPLETE
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_CANCELLED_DRIVER
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_CANCELLED_KARHOO
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_CANCELLED_USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_COMPLETED
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_COMPLETED_AIRPORT_PICKUP
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_CONFIRMED
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_DER_AIRPORT_PICKUP
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_INCOMPLETE
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_PREBOOKED
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_FLEET
-import com.karhoo.uisdk.common.ServerRobot.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_HISTORY_EMPTY
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.LONG
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.FARE_CANCELLED
+import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_DRIVER
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_KARHOO
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CANCELLED_USER
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_COMPLETED
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_COMPLETED_AIRPORT_PICKUP
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_CONFIRMED
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_DER
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_DER_AIRPORT_PICKUP
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_INCOMPLETE
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Rule
@@ -68,7 +67,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             checkNoUpcomingBookings()
         }
@@ -87,7 +86,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep(3000)
+            shortSleep()
         } result {
             checkNoPastBookings()
         }
@@ -106,7 +105,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.completed)
         }
@@ -125,7 +124,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -144,7 +143,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -164,7 +163,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedStatus(R.string.cancelled)
         }
@@ -183,7 +182,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pastBookingHasExpectedPrice(R.string.cancelled)
         }
@@ -231,7 +230,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_INTERNAL_ERROR, GENERAL_ERROR)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             checkErrorMessageIsShown(R.string.K0001)
         }
@@ -249,7 +248,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_DER_AIRPORT_PICKUP)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeVisibleRidesScreen("Meet and Greet")
         }
@@ -261,13 +260,14 @@ class RidesTests : Launch {
      * Then:    I cannot see the pickup type on the upcoming ride
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun airportMeetingPointNotVisibleOnDropoffUpcoming() {
         serverRobot {
             successfulToken()
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_CONFIRMED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffUpcoming()
         }
@@ -304,7 +304,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffPast()
         }
@@ -322,11 +322,11 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
         }
         serverRobot {
             cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
@@ -353,11 +353,11 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
         }
         serverRobot {
             cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
@@ -370,7 +370,7 @@ class RidesTests : Launch {
             clickOnDismiss()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkNoUpcomingBookings()
         }
@@ -379,7 +379,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride cancelled by the fleet
      * When:    I look at the ride in past Rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     Cancelled Price, cancelled status.
      **/
     @Test
@@ -391,7 +391,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             cancelledByFleetPrebookedFullCheck()
         }
@@ -400,7 +400,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride cancelled by the user
      * When:    I look at the ride in past Rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     Cancelled Price, cancelled status.
      **/
     @Test
@@ -413,7 +413,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             cancelledByUserPrebookedFullCheck()
         }
@@ -422,7 +422,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a ride in Progress (DER)
      * When:    I look at the ride summary in Upcoming rides
-     * Then:    I can see the following: Supplier name and logo, Date, category of car and reg
+     * Then:    I can see the following: Quote name and logo, Date, category of car and reg
     number, contact driver (or fleet), track driver button, addresses
      **/
     @Test
@@ -433,7 +433,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_DER)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             DERTripUpcomingRidesFullCheck()
         }
@@ -442,7 +442,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a prebooked ride
      * When:    I look at the ride summary in Upcoming rides
-     * Then:    I can see the following: Addresses, Supplier name and logo, Date, contact
+     * Then:    I can see the following: Addresses, Quote name and logo, Date, contact
     fleet
      **/
     @Test
@@ -452,7 +452,7 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
         } result {
             prebookedTripUpcomingRidesFullCheck()
         }
@@ -461,7 +461,7 @@ class RidesTests : Launch {
     /**
      * Given:   I have a completed past ride
      * When:    I look at the ride summary in past rides
-     * Then:    I can see the following: Supplier name and logo, Date and time of booking,
+     * Then:    I can see the following: Quote name and logo, Date and time of booking,
     category of car and reg, number, contact driver (or fleet), Price, trip id, report issue,
     rebook ride, trip status, addresses
      **/
@@ -474,7 +474,7 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
         } result {
             completedTripPastRidesScreenFullCheck()
         }
@@ -493,15 +493,15 @@ class RidesTests : Launch {
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
-            sleep()
+            shortSleep()
             pressDeviceBackButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
             prebookedTripUpcomingRidesFullCheck()
@@ -522,14 +522,14 @@ class RidesTests : Launch {
         }
         rides(this) {
             clickPastBookingsTabButton()
-            sleep()
+            shortSleep()
             clickOnFirstRide()
         }
         rideDetail {
             pressDeviceBackButton()
         }
         rides {
-            sleep()
+            shortSleep()
         } result {
             checkRidesScreenIsShown()
             completedTripPastRidesScreenFullCheck()
@@ -553,11 +553,11 @@ class RidesTests : Launch {
                                    )
         }
         rides(this) {
-            sleep()
+            shortSleep()
             clickOnTrackDriver()
         }
         trip {
-            sleep(LONG)
+            longSleep()
         } result {
             DERFullScreenCheck(pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
                                destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty())

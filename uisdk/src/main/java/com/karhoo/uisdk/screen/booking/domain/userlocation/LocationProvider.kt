@@ -5,11 +5,13 @@ import android.content.Context
 import android.location.Location
 import android.os.Looper
 import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.SettingsClient
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
@@ -18,10 +20,9 @@ import com.karhoo.sdk.api.service.address.AddressService
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 
 class LocationProvider(private val context: Context,
-                       private val addressService: AddressService = KarhooApi.addressService) {
-
-    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context.applicationContext)
-    private val settingsClient = LocationServices.getSettingsClient(context)
+                       private val addressService: AddressService = KarhooApi.addressService,
+                       private val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context.applicationContext),
+                       private val settingsClient: SettingsClient = LocationServices.getSettingsClient(context)) {
 
     private var locationCallback: LocationCallback? = null
 
@@ -56,8 +57,8 @@ class LocationProvider(private val context: Context,
     fun listenForLocations(positionListener: PositionListener, numberOfUpdates: Int? = null) {
 
         val locationRequest = LocationRequest().apply {
-            interval = 5000
-            fastestInterval = 5000
+            interval = LOCATION_INTERVAL
+            fastestInterval = LOCATION_FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
             numberOfUpdates?.let { numUpdates = it }
         }
@@ -103,6 +104,11 @@ class LocationProvider(private val context: Context,
 
     fun stopListeningForLocations() {
         locationCallback?.let { fusedLocationClient.removeLocationUpdates(it) }
+    }
+
+    companion object {
+        const val LOCATION_INTERVAL = 5000L
+        const val LOCATION_FASTEST_INTERVAL = 5000L
     }
 
 }

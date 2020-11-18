@@ -13,32 +13,37 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.ServerRobot
-import com.karhoo.uisdk.common.ServerRobot.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.common.ServerRobot.Companion.GENERAL_ERROR
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_ARRIVED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_CANCELLED_BY_FLEET
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_NUMBER_PLATE
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_DER_NO_VEHICLE_NUMBER_PLATE_AND_DRIVER_DETAILS
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_POB
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_ARRIVED
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_CANCELLED_BY_FLEET
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_CANCELLED_BY_USER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.common.ServerRobot.Companion.TRIP_STATUS_POB
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.MEDIUM
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
+import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
+import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_VEHICLE_NUMBER_PLATE_AND_DRIVER_DETAILS
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_FLEET
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
+import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -70,6 +75,15 @@ class TripTests : Launch {
     val grantPermissionRule: GrantPermissionRule =
             GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
+    @Before
+    fun setUp() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+        }
+    }
+
     @After
     fun tearDown() {
         wireMockRule.resetAll()
@@ -88,7 +102,7 @@ class TripTests : Launch {
                 tracking = GENERAL_ERROR,
                 details = GENERAL_ERROR)
         trip(this) {
-            sleep()
+            shortSleep()
         } result {
             checkSnackbarWithText(R.string.K0001)
         }
@@ -109,7 +123,7 @@ class TripTests : Launch {
                 details = TRIP_DER)
         trip(this) {
             clickOnDriverDetails()
-            sleep()
+            shortSleep()
         } result {
             driverDERDetailsFullCheck()
         }
@@ -130,8 +144,8 @@ class TripTests : Launch {
         trip(this) {
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
         }
     }
@@ -149,7 +163,7 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_ARRIVED)
         trip(this) {
-            sleep()
+            shortSleep()
             clickOnDriverDetails()
         } result {
             driverArrivedDetailsFullCheck()
@@ -169,11 +183,11 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_ARRIVED)
         trip(this) {
-            sleep()
+            shortSleep()
         } result {
             ArrivedFullScreenCheck(
-                    pickupText = TestData.TRIP_ARRIVED.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_ARRIVED.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_ARRIVED.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_ARRIVED.destination?.displayAddress.orEmpty()
                                   )
         }
     }
@@ -210,7 +224,7 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_POB)
         trip(this) {
-            sleep()
+            shortSleep()
         } result {
             fullScreenCheckPOB(
                     pickupText = TestData.TRIP_ARRIVED.origin?.displayAddress.orEmpty(),
@@ -233,7 +247,7 @@ class TripTests : Launch {
                 details = TRIP_ARRIVED)
         trip(this) {
             clickOnDriverDetails()
-            sleep(MEDIUM)
+            mediumSleep()
             clickOnDriverDetails()
         } result {
             driverDetailsNoLongerExpanded()
@@ -331,7 +345,7 @@ class TripTests : Launch {
             clickOnDriverDetails()
             clickOnCancelRide()
             clickOnCancelYourRideCancellation()
-            sleep()
+            shortSleep()
         } result {
             checkRideInProgress()
         }
@@ -362,6 +376,7 @@ class TripTests : Launch {
      * Then:    I see a message that the booking is not cancelled for cause of no drivers, alternative option is available
      **/
     @Test
+    @Ignore
     @AllowFlaky(attempts = 5)
     fun alternativeAfterFleetCancelledWhenDER() {
         mockTripSuccessResponse(
@@ -369,17 +384,19 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_CANCELLED_BY_FLEET)
         serverRobot {
-            sdkInitResponse(HTTP_OK, ServerRobot.BRAINTREE_TOKEN)
-            reverseGeocodeResponse(HTTP_OK, ServerRobot.REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, ServerRobot.QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, ServerRobot.VEHICLES_V2_ASAP)
+            successfulToken()
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         trip(this) {
-            sleep()
+            shortSleep()
             clickAlternativeButton()
         }
         booking {
-            sleep(MEDIUM)
+            mediumSleep()
         } result {
             fullASAPQuotesListCheck()
         }
@@ -401,8 +418,8 @@ class TripTests : Launch {
             clickOnDriverDetails()
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noDriverDetailsDERCheck()
         }
@@ -424,8 +441,8 @@ class TripTests : Launch {
             clickOnDriverDetails()
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noVehicleDetailsDERCheck()
         }
@@ -447,8 +464,8 @@ class TripTests : Launch {
             clickOnDriverDetails()
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noVehicleAndDriverDetailsDERCheck()
         }
@@ -470,8 +487,8 @@ class TripTests : Launch {
             clickOnDriverDetails()
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noVehicleDetailsNumberPlateAndDriverDetailsDERCheck()
         }
@@ -493,8 +510,8 @@ class TripTests : Launch {
             clickOnDriverDetails()
         } result {
             DERFullScreenCheck(
-                    pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                    destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty()
+                    pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                    destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noNumberPlateDERCheck()
         }
