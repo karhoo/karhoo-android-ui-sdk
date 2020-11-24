@@ -390,7 +390,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading()
-        presenter.passBackIdentifier(threeDSNonce, tripId, passengerDetails, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengerDetails, bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {

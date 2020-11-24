@@ -38,7 +38,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     var price: QuotePrice? = null
 
     private var tripId: String = ""
-    private var nonce: String? = null
 
     init {
         attachView(view)
@@ -81,7 +80,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 AdyenPaymentView.AUTHORISED -> {
                     val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
                     this.tripId = transactionId
-                    this.nonce = transactionId
                     updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
                 }
                 else -> view?.showPaymentFailureDialog()
@@ -150,7 +148,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
         } else {
-            nonce?.let {
+            tripId?.let {
                 view?.threeDSecureNonce(tripId, tripId, amount)
             } ?: view?.showError(R.string.payment_issue_message)
         }
@@ -162,7 +160,6 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     private fun updateCardDetails(paymentData: String?) {
-        this.nonce = nonce
         paymentData?.let {
             val additionalData = JSONObject(paymentData)
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")

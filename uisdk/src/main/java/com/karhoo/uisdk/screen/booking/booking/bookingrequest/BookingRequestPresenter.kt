@@ -156,7 +156,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackIdentifier(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
+    override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
         val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
             getPassengerDetails()
         passengerDetails?.let {

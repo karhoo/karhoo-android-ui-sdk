@@ -475,7 +475,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -498,7 +498,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
@@ -517,7 +517,7 @@ class BookingRequestPresenterTest {
     fun `book trip CouldNotBookPaymentPreAuthFailed failure shows payment dialog`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
@@ -562,7 +562,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -586,7 +586,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -609,7 +609,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
