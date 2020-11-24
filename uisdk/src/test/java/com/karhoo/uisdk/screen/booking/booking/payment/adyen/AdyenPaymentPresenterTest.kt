@@ -172,7 +172,8 @@ class AdyenPaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_CANCELED,
                 data = null)
 
-        verify(paymentDropInActions).showPaymentFailureDialog()
+        verify(paymentDropInActions, never()).showPaymentFailureDialog()
+        verify(paymentDropInActions).refresh()
     }
 
     /**

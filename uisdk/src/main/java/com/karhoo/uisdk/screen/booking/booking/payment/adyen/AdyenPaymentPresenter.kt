@@ -72,7 +72,9 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+        if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
+            view?.showPaymentFailureDialog()
+        } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY)
             val payload = JSONObject(dataString)
             when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
@@ -85,7 +87,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 else -> view?.showPaymentFailureDialog()
             }
         } else {
-            return
+            view?.refresh()
         }
     }
 
