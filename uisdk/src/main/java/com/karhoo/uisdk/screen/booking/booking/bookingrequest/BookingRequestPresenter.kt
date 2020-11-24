@@ -22,7 +22,6 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -157,20 +156,17 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackIdentifier(identifier: String, passengerDetails:
-    PassengerDetails?, comments: String) {
+    override fun passBackIdentifier(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
         val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
             getPassengerDetails()
-        //The identifier is a nonce if it is Braintree or the trip id if it's Adyen
         passengerDetails?.let {
-            val metadata = if (userStore.paymentProvider?.id.equals(ProviderType.ADYEN.name, true))
-                hashMapOf(TRIP_ID to identifier) else null
+            val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
 
             tripsService.book(TripBooking(
                     comments = comments,
                     flightNumber = flightDetails?.flightNumber,
                     meta = metadata,
-                    nonce = identifier,
+                    nonce = nonce,
                     quoteId = quote?.id?.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,

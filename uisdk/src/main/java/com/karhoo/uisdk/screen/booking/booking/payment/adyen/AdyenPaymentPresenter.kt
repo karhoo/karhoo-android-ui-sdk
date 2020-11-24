@@ -37,7 +37,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     private var adyenKey: String = ""
     var price: QuotePrice? = null
 
-    private var sdkToken: String = ""
+    private var tripId: String = ""
     private var nonce: String? = null
 
     init {
@@ -80,7 +80,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
             when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
                     val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
-                    this.sdkToken = transactionId
+                    this.tripId = transactionId
                     this.nonce = transactionId
                     updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
                 }
@@ -127,7 +127,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     private fun getPaymentMethods() {
         val amount = AdyenAmount(price?.currencyCode ?: DEFAULT_CURRENCY, price?.highPrice.orZero())
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(sdkToken)
+            view?.threeDSecureNonce(tripId, tripId)
         } else {
             let {
                 val request = AdyenPaymentMethodsRequest(amount = amount)
@@ -148,10 +148,10 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     private fun passBackThreeDSecureNonce(price: QuotePrice?) {
         val amount = quotePriceToAmount(price)
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(sdkToken)
+            view?.threeDSecureNonce(tripId, tripId)
         } else {
             nonce?.let {
-                view?.threeDSecureNonce(sdkToken, sdkToken, amount)
+                view?.threeDSecureNonce(tripId, tripId, amount)
             } ?: view?.showError(R.string.payment_issue_message)
         }
     }

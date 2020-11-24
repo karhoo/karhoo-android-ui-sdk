@@ -62,6 +62,6 @@ interface PaymentDropInMVP {
 
         fun showPaymentFailureDialog()
 
-        fun threeDSecureNonce(threeDSNonce: String)
+        fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
     }
 }

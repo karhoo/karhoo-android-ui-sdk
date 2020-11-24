@@ -146,7 +146,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), null)
         } else {
             view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce, amount)
         }
