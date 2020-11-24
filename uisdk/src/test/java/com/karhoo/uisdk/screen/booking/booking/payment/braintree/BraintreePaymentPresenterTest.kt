@@ -23,7 +23,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentPresenterTest
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -343,7 +342,7 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
 
-        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, null)
     }
 
     /**

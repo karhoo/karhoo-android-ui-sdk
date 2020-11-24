@@ -145,12 +145,16 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun passBackThreeDSecureNonce(price: QuotePrice?) {
         val amount = quotePriceToAmount(price)
-        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
-            view?.threeDSecureNonce(tripId, tripId)
-        } else {
-            tripId?.let {
+        when {
+            KarhooUISDKConfigurationProvider.simulatePaymentProvider() -> {
+                view?.threeDSecureNonce(tripId, tripId)
+            }
+            tripId.isNotBlank() -> {
                 view?.threeDSecureNonce(tripId, tripId, amount)
-            } ?: view?.showError(R.string.payment_issue_message)
+            }
+            else -> {
+                view?.showError(R.string.payment_issue_message)
+            }
         }
     }
 

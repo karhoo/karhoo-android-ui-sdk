@@ -77,7 +77,8 @@ interface BookingRequestMVP {
 
         fun makeBooking()
 
-        fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails? = null, comments: String)
+        fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
+                                       passengerDetails: PassengerDetails? = null, comments: String)
 
         fun setBookingEnablement(hasValidPaxDetails: Boolean)
 
