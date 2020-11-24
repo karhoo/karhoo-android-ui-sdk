@@ -261,6 +261,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     companion object {
-        private const val TRIP_ID = "trip_id"
+        const val TRIP_ID = "trip_id"
     }
 }
