@@ -7,7 +7,6 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Organisation
@@ -15,8 +14,8 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.sdk.api.model.UserInfo
@@ -30,9 +29,9 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -471,7 +470,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -494,7 +493,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
@@ -513,7 +512,7 @@ class BookingRequestPresenterTest {
     fun `book trip CouldNotBookPaymentPreAuthFailed failure shows payment dialog`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
@@ -559,7 +558,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 

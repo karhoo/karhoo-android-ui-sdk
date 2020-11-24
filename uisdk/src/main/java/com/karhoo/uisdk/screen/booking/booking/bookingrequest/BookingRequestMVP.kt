@@ -77,7 +77,7 @@ interface BookingRequestMVP {
 
         fun makeBooking()
 
-        fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails: PassengerDetails?
+        fun passBackIdentifier(identifier: String, passengerDetails: PassengerDetails?
         = null, comments: String)
 
         fun setBookingEnablement(hasValidPaxDetails: Boolean)

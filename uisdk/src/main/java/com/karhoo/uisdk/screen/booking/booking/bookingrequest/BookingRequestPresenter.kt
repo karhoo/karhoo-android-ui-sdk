@@ -22,6 +22,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
+import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -156,19 +157,24 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails:
+    override fun passBackIdentifier(identifier: String, passengerDetails:
     PassengerDetails?, comments: String) {
         val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
             getPassengerDetails()
+        //The identifier is a nonce if it is Braintree or the trip id if it's Adyen
         passengerDetails?.let {
+            val metadata = if (userStore.paymentProvider?.id.equals(ProviderType.ADYEN.name, true))
+                hashMapOf(TRIP_ID to identifier) else null
+
             tripsService.book(TripBooking(
-                    nonce = threeDSNonce,
+                    comments = comments,
+                    flightNumber = flightDetails?.flightNumber,
+                    meta = metadata,
+                    nonce = identifier,
                     quoteId = quote?.id?.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,
-                            passengerDetails = listOf(passengerDetails)),
-                    flightNumber = flightDetails?.flightNumber,
-                    comments = comments))
+                            passengerDetails = listOf(passengerDetails))))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> onTripBookSuccess(result.data)
@@ -248,9 +254,13 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     override fun onTermsAndConditionsRequested(url: String?) {
         url?.let {
-        bookingRequestStateViewModel?.process(BookingRequestViewContract
-                                                      .BookingRequestEvent
-                                                      .TermsAndConditionsRequested(it))
+            bookingRequestStateViewModel?.process(BookingRequestViewContract
+                                                          .BookingRequestEvent
+                                                          .TermsAndConditionsRequested(it))
         }
+    }
+
+    companion object {
+        private const val TRIP_ID = "trip_id"
     }
 }
