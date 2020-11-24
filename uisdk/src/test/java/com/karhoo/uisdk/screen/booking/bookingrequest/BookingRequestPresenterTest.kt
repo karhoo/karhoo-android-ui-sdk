@@ -7,7 +7,6 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Organisation
@@ -15,24 +14,26 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
 import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
-import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -45,6 +46,9 @@ import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.joda.time.DateTime
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -86,7 +90,6 @@ class BookingRequestPresenterTest {
     private val quotePrice: QuotePrice = mock()
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()
-    private val paymentsService: PaymentsService = mock()
     private val userStore: UserStore = mock()
     private var view: BookingRequestMVP.View = mock()
 
@@ -94,6 +97,7 @@ class BookingRequestPresenterTest {
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val getNonceCall: Call<PaymentsNonce> = mock()
     private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
+    private val tripBookingCaptor = argumentCaptor<TripBooking>()
     private val tripCall: Call<TripInfo> = mock()
     private val tripCaptor = argumentCaptor<(Resource<TripInfo>) -> Unit>()
 
@@ -359,7 +363,7 @@ class BookingRequestPresenterTest {
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
 
-//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+        //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -424,7 +428,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
 
-//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+        //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, "tripId")
 
         requestPresenter.makeBooking()
@@ -451,7 +455,7 @@ class BookingRequestPresenterTest {
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
 
-//        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
+        //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         requestPresenter.showBookingRequest(quote, outboundTripId = "tripId")
 
         requestPresenter.makeBooking()
@@ -471,7 +475,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -494,7 +498,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
@@ -513,7 +517,7 @@ class BookingRequestPresenterTest {
     fun `book trip CouldNotBookPaymentPreAuthFailed failure shows payment dialog`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
@@ -547,7 +551,53 @@ class BookingRequestPresenterTest {
     }
 
     /**
-     * Given:   Three D Secure nonce is passed back for booking trip
+     * Given:   The payment identifier (nonce or trip id) is passed back for booking trip
+     * When:    It is an Adyen payment
+     * And:     The trip is is sent through in the meta field
+     */
+    @Test
+    fun `Adyen booking request has trip id in meta`() {
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+        whenever(userStore.paymentProvider).thenReturn(Provider("Adyen"))
+
+        requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
+
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Success(trip))
+
+        verify(tripsService).book(tripBookingCaptor.capture())
+        val tripBooking: TripBooking = tripBookingCaptor.firstValue
+        assertNotNull(tripBooking.meta)
+        assertEquals(IDENTIFIER, tripBooking.meta?.get(TRIP_ID))
+        assertEquals(IDENTIFIER, tripBooking.nonce)
+    }
+
+    /**
+     * Given:   The payment identifier (nonce or trip id) is passed back for booking trip
+     * When:    It is a Braintree payment
+     * The:     The nonce is sent through on the request
+     * And:     The trip id is not sent through in the meta field
+     */
+    @Test
+    fun `Braintree booking request has null meta`() {
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+        whenever(userStore.paymentProvider).thenReturn(Provider("Braintree"))
+
+        requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
+
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Success(trip))
+
+        verify(tripsService).book(tripBookingCaptor.capture())
+        val tripBooking: TripBooking = tripBookingCaptor.firstValue
+        assertNull(tripBooking.meta)
+        assertEquals(IDENTIFIER, tripBooking.nonce)
+    }
+
+    /**
+     * Given:   The payment identifier (nonce or trip id) is passed back for booking trip
      * When:    Book trip success
      * Then:    Store last trip in prefs
      * And:     Hide request booking
@@ -559,7 +609,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        requestPresenter.passBackThreeDSecuredNonce(THREE_D_SECURE_NONCE, passengerDetails, bookingComment)
+        requestPresenter.passBackIdentifier(IDENTIFIER, passengerDetails, bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -608,8 +658,8 @@ class BookingRequestPresenterTest {
     private fun setTokenUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-        context,
-                authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
+                                                                                       context,
+                                                                                       authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
     }
 
     private fun setAuthenticatedUser() {
@@ -620,7 +670,6 @@ class BookingRequestPresenterTest {
     }
 
     companion object {
-        private const val THREE_D_SECURE_NONCE = "threeDSecureNonce"
-        private const val PAYMENTS_NONCE = "paymentsNonce"
+        private const val IDENTIFIER = "3dsNonceOrTripId"
     }
 }
