@@ -166,7 +166,7 @@ class AdyenPaymentPresenterTest {
      * Then:    Then an error is shown
      */
     @Test
-    fun `error shown is activity result is not RESULT_OK`() {
+    fun `error shown is activity result is not RESULT_OK or RESULT_CANCELLED`() {
         adyenPaymentPresenter.handleActivityResult(
                 requestCode = REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_CANCELED,

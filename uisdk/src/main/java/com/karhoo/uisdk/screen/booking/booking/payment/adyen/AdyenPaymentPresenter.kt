@@ -85,7 +85,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 else -> view?.showPaymentFailureDialog()
             }
         } else {
-            view?.showPaymentFailureDialog()
+            return
         }
     }
 
