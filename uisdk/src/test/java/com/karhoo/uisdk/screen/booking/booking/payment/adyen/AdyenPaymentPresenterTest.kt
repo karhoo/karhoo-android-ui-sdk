@@ -291,7 +291,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.initialiseGuestPayment(price)
 
-        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID)
+        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID)
     }
 
     /**
