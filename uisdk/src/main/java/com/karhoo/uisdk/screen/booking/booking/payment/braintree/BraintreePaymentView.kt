@@ -27,7 +27,7 @@ class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : Paym
 
         braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
             override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
-                actions?.threeDSecureNonce(paymentMethodNonce?.nonce.orEmpty(), null)
+                actions?.threeDSecureNonce(paymentMethodNonce?.nonce.orEmpty())
             }
         })
 

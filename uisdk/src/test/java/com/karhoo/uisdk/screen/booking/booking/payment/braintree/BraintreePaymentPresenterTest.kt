@@ -342,7 +342,7 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
 
-        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, null)
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
     }
 
     /**
