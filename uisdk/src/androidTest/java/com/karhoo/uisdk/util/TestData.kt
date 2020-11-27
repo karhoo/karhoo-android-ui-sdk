@@ -42,14 +42,12 @@ import com.karhoo.sdk.api.model.TripState
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.model.Vehicles
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
-import kotlin.system.measureTimeMillis
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TestData {
@@ -259,10 +257,9 @@ class TestData {
                                     termsConditionsUrl = "http://www.google.com")
 
         val QUOTE_VEHICLE = QuoteVehicle(vehicleClass = "Electric",
-                                         vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1))
-
-        val VEHICLE_ATTRIBUTES = VehicleAttributes(passengerCapacity = 4,
-                                                   luggageCapacity = 5)
+                                         vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1),
+                                         luggageCapacity = 2,
+                                         passengerCapacity = 2)
 
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
@@ -318,8 +315,7 @@ class TestData {
                           price = QUOTE_PRICE,
                           fleet = QUOTE_FLEET,
                           pickupType = PickupType.CURBSIDE,
-                          vehicle = QUOTE_VEHICLE,
-                          vehicleAttributes = VEHICLE_ATTRIBUTES)
+                          vehicle = QUOTE_VEHICLE)
 
         /**
          * Address Payloads
@@ -715,8 +711,10 @@ class TestData {
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                                             vehicleQta = QuoteQTA(highMinutes = 5, lowMinutes = 5)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                             vehicleQta = QuoteQTA(highMinutes =
+                                                                                   5, lowMinutes = 5),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -732,9 +730,9 @@ class TestData {
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 20,
-                                                                                   lowMinutes =
-                                                                                   20)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   lowMinutes = 20),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -751,8 +749,9 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 15,
                                                                                    lowMinutes =
-                                                                                   15)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   15),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -769,8 +768,9 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 18,
                                                                                    lowMinutes =
-                                                                                   18)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   18),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
@@ -786,8 +786,9 @@ class TestData {
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Saloon",
                                                              vehicleQta = QuoteQTA(highMinutes = 4,
-                                                                                   lowMinutes = 4)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES))
+                                                                                   lowMinutes = 4),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)))
                                     )
 
         /**
