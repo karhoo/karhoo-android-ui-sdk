@@ -9,7 +9,7 @@ import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.VehicleAttributes
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.CurrencyUtils
@@ -67,7 +67,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setPrice(vehicleDetails)
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setPickupType(vehicleDetails.pickupType)
-        setCapacity(vehicleDetails.vehicleAttributes)
+        setCapacity(vehicleDetails.vehicle)
 
         tag = vehicleDetails
 
@@ -167,10 +167,10 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         }
     }
 
-    private fun setCapacity(vehicleAttributes: VehicleAttributes) {
+    private fun setCapacity(vehicle: QuoteVehicle) {
         capacityWidget.setCapacity(
-                luggage = vehicleAttributes.luggageCapacity,
-                people = vehicleAttributes.passengerCapacity)
+                luggage = vehicle.luggageCapacity,
+                people = vehicle.passengerCapacity)
     }
 
     private fun startLoading() {

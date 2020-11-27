@@ -25,8 +25,8 @@ import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -284,10 +284,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         flightNumber?.let { bookingRequestFlightDetailsWidget.setBookingOptionalInfo(it) }
     }
 
-    override fun setCapacity(vehicleAttributes: VehicleAttributes) {
+    override fun setCapacity(vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
-                luggage = vehicleAttributes.luggageCapacity,
-                people = vehicleAttributes.passengerCapacity)
+                luggage = vehicle.luggageCapacity,
+                people = vehicle.passengerCapacity)
     }
 
     override fun showPaymentFailureDialog() {

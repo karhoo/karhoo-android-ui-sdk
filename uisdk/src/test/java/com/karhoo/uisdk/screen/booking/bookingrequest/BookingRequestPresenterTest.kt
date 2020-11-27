@@ -17,10 +17,10 @@ import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.sdk.api.model.UserInfo
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
@@ -58,7 +58,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner.Silent::class)
 class BookingRequestPresenterTest {
 
-    private val vehicleAttributes: VehicleAttributes = VehicleAttributes(2, 2)
+    private val vehicleAttributes: QuoteVehicle = QuoteVehicle(passengerCapacity = 2,
+                                                               luggageCapacity = 2)
     private val trip: TripInfo = TripInfo(
             tripId = "tripId1234",
             origin = TripLocationInfo(placeId = "placeId1234"),
@@ -239,7 +240,7 @@ class BookingRequestPresenterTest {
     fun `selected quote updates view with correct info for quote with non zero highest price`() {
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
         whenever(quote.price.highPrice).thenReturn(150)
-        whenever(quote.vehicleAttributes).thenReturn(vehicleAttributes)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
 
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
@@ -261,7 +262,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `selected quote updates view with correct info for quote with zero highest price`() {
         whenever(quote.price.highPrice).thenReturn(0)
-        whenever(quote.vehicleAttributes).thenReturn(vehicleAttributes)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
 
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
@@ -281,7 +282,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `selected quote updates view with the correct info for prebooking`() {
         val scheduledDate = DateTime.now()
-        whenever(quote.vehicleAttributes).thenReturn(vehicleAttributes)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
 
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, scheduledDate))

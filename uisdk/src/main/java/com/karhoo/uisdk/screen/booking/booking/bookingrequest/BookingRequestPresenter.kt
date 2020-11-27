@@ -210,7 +210,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                 }
                 else -> view?.displayFlightDetailsField(null)
             }
-            view?.setCapacity(quote.vehicleAttributes)
+            view?.setCapacity(quote.vehicle)
             view?.animateIn()
         } else if (origin == null) {
             handleError(R.string.origin_book_error)
