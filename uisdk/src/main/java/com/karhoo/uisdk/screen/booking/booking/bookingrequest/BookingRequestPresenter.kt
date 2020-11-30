@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
@@ -170,7 +171,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                     quoteId = quote?.id?.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,
-                            passengerDetails = listOf(passengerDetails))))
+                            passengerDetails = listOf(passengerDetails),
+                            luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> onTripBookSuccess(result.data)
