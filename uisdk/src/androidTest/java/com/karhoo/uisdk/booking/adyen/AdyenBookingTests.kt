@@ -436,7 +436,7 @@ class AdyenBookingTests : Launch {
      * Then:    The time should not be cleared
      **/
     @Test
-    @AllowFlaky(attempts = 10)
+    @AllowFlaky(attempts = 5)
     fun changeAddressDoesNotClearPrebookTime() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)

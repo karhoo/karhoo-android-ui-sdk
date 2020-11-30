@@ -81,7 +81,6 @@ class EndToEndBraintreeUserTest : Launch {
      **/
     @Test
     fun endToEndTestWithBraintreeUser() {
-        //        setUserInfo(BRAINTREE)
         serverRobot {
             successfulToken()
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
