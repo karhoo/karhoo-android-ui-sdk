@@ -24,7 +24,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 is Resource.Success -> {
                     result.data.let { result ->
                         //TODO Find a better way to store / pass through the transaction id
-                        val transactionId = result.getString(TRANSACTION_ID)
+                        val transactionId = result.getString(TRIP_ID)
                         view?.storeTransactionId(transactionId)
                         result.optJSONObject(PAYLOAD)?.let { payload ->
                             view?.handleResult(handlePaymentRequestResult(payload, transactionId))
@@ -43,7 +43,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
         transactionId?.let {
             val request = JSONObject()
-            request.put(TRANSACTION_ID, transactionId)
+            request.put(TRIP_ID, transactionId)
             request.put(PAYMENTS_PAYLOAD, actionComponentData)
 
             paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
@@ -68,7 +68,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
             } else {
                 transactionId?.let {
-                    response.put(TRANSACTION_ID, transactionId)
+                    response.put(TRIP_ID, transactionId)
                     CallResult(CallResult.ResultType.FINISHED, response.toString())
                 } ?: CallResult(CallResult.ResultType.ERROR, "Invalid transaction id")
             }
@@ -113,6 +113,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         const val PAYMENTS_PAYLOAD = "payments_payload"
         const val RETURN_URL = "returnUrl"
         const val RETURN_URL_SUFFIX = "return_url_suffix"
-        const val TRANSACTION_ID = AdyenDropInService.TRANSACTION_ID
+        const val TRIP_ID = AdyenDropInService.TRIP_ID
     }
 }

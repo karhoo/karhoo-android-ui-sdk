@@ -115,14 +115,14 @@ class AdyenDropInServicePresenterTest {
     fun `finished result returned when Adyen payment retrieval succeeds with no action`() {
 
         val response = JSONObject()
-                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
+                .put(TRIP_ID_KEY, TRIP_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTransactionId(TRANSACTION_ID)
+        verify(service).storeTransactionId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -137,14 +137,14 @@ class AdyenDropInServicePresenterTest {
     fun `action result returned when Adyen payment retrieval succeeds with an action`() {
         val response = JSONObject()
                 .put(ACTION, "some action")
-                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
+                .put(TRIP_ID_KEY, TRIP_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
 
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTransactionId(TRANSACTION_ID)
+        verify(service).storeTransactionId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
@@ -186,7 +186,7 @@ class AdyenDropInServicePresenterTest {
      */
     @Test
     fun `error shown when Adyen payment details retrieval fails`() {
-        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
+        presenter.getAdyenPaymentDetails(jsonObject, TRIP_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
@@ -205,14 +205,14 @@ class AdyenDropInServicePresenterTest {
     fun `finished result returned when Adyen payment details retrieval succeeds with no action`() {
 
         val response = JSONObject()
-                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
+                .put(TRIP_ID_KEY, TRIP_ID)
 
-        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
+        presenter.getAdyenPaymentDetails(jsonObject, TRIP_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTransactionId(TRANSACTION_ID)
+        verify(service, never()).storeTransactionId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -228,14 +228,14 @@ class AdyenDropInServicePresenterTest {
 
         val response = JSONObject()
                 .put(ACTION, "some action")
-                .put(TRANSACTION_ID_KEY, TRANSACTION_ID)
+                .put(TRIP_ID_KEY, TRIP_ID)
 
-        presenter.getAdyenPaymentDetails(jsonObject, TRANSACTION_ID)
+        presenter.getAdyenPaymentDetails(jsonObject, TRIP_ID)
 
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTransactionId(TRANSACTION_ID)
+        verify(service, never()).storeTransactionId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
@@ -246,8 +246,8 @@ class AdyenDropInServicePresenterTest {
         private const val RANDOM = "RANDOM"
         private const val SHOPPER_REFERENCE = "shopperReference"
         private const val PAYMENT_METHOD = "paymentMethod"
-        private const val TRANSACTION_ID = "1234"
-        private const val TRANSACTION_ID_KEY = AdyenDropInServicePresenter.TRANSACTION_ID
+        private const val TRIP_ID = "1234"
+        private const val TRIP_ID_KEY = AdyenDropInServicePresenter.TRIP_ID
         private const val RETURN_URL = "http://adyen.return.url"
     }
 }
