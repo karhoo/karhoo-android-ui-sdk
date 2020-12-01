@@ -27,8 +27,8 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                         val transactionId = result.getString(TRANSACTION_ID)
                         view?.storeTransactionId(transactionId)
                         result.optJSONObject(PAYLOAD)?.let { payload ->
-                            view?.handleResult(handlePaymentRequestResult(payload))
-                        } ?: view?.handleResult(handlePaymentRequestResult(result))
+                            view?.handleResult(handlePaymentRequestResult(payload, transactionId))
+                        } ?: view?.handleResult(handlePaymentRequestResult(result, transactionId))
                     }
                 }
                 is Resource.Failure -> {
@@ -50,7 +50,7 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 when (result) {
                     is Resource.Success -> {
                         result.data.let {
-                            view?.handleResult(handlePaymentRequestResult(it))
+                            view?.handleResult(handlePaymentRequestResult(it, transactionId))
                         }
                     }
                     is Resource.Failure -> {
@@ -62,12 +62,15 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         } ?: view?.handleResult(CallResult(CallResult.ResultType.ERROR, "Invalid transactionId"))
     }
 
-    private fun handlePaymentRequestResult(response: JSONObject): CallResult {
+    private fun handlePaymentRequestResult(response: JSONObject, transactionId: String?): CallResult {
         return try {
             if (response.has(ACTION)) {
                 CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
             } else {
-                CallResult(CallResult.ResultType.FINISHED, response.toString())
+                transactionId?.let {
+                    response.put(TRANSACTION_ID, transactionId)
+                    CallResult(CallResult.ResultType.FINISHED, response.toString())
+                } ?: CallResult(CallResult.ResultType.ERROR, "Invalid transaction id")
             }
         } catch (e: Exception) {
             CallResult(CallResult.ResultType.ERROR, e.toString())
@@ -110,6 +113,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         const val PAYMENTS_PAYLOAD = "payments_payload"
         const val RETURN_URL = "returnUrl"
         const val RETURN_URL_SUFFIX = "return_url_suffix"
-        const val TRANSACTION_ID = "transaction_id"
+        const val TRANSACTION_ID = AdyenDropInService.TRANSACTION_ID
     }
 }

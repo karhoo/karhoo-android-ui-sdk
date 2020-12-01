@@ -22,6 +22,8 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.TRANSACTION_ID
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
@@ -78,9 +80,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
             val payload = JSONObject(dataString)
             when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
-                    val transactionId = payload.optString(AdyenPaymentView.MERCHANT_REFERENCE, "")
-                    this.tripId = transactionId
-                    updateCardDetails(paymentData = payload.optString(AdyenPaymentView.ADDITIONAL_DATA, null))
+                    this.tripId = payload.optString(TRANSACTION_ID, "")
+                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, null))
                 }
                 else -> view?.showPaymentFailureDialog()
             }
