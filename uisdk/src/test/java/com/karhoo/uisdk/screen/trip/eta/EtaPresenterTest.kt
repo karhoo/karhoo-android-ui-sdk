@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.eta
 
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripState
@@ -200,7 +201,8 @@ class EtaPresenterTest {
         private val DRIVER_POSITION = DriverTrackingInfo(
                 position = Position(0.5, 0.4),
                 originEta = ORIGIN_ETA,
-                destinationEta = DESTINATION_ETA)
+                destinationEta = DESTINATION_ETA,
+                direction = Direction(kph = 10, heading = 180))
         private val TRIP_NULL_STATE = TripState(TripStatus.COMPLETED)
 
         private fun tripWithState(state: TripStatus) = TripState(state)

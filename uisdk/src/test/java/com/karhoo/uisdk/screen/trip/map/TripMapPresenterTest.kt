@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.map
 
 import android.location.Location
+import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripInfo
@@ -350,7 +351,10 @@ class TripMapPresenterTest {
         private val TRIP_ID = "1234"
         private val LAT = 0.534
         private val LNG = 1.432
-        private val DRIVER_POSITION = DriverTrackingInfo(position = Position(LAT, LNG))
+        private val KPH = 10
+        private val HEADING = 180
+        private val DRIVER_POSITION = DriverTrackingInfo(position = Position(LAT, LNG), direction
+        = Direction(kph = KPH, heading = HEADING))
         private val ORIGIN = Position(0.111, 0.222)
         private val DESTINATION = Position(0.333, 0.444)
 
