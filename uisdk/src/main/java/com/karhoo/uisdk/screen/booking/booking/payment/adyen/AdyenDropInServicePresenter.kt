@@ -24,11 +24,11 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
                 is Resource.Success -> {
                     result.data.let { result ->
                         //TODO Find a better way to store / pass through the transaction id
-                        val transactionId = result.getString(TRIP_ID)
-                        view?.storeTransactionId(transactionId)
+                        val tripId = result.getString(TRIP_ID)
+                        view?.storeTripId(tripId)
                         result.optJSONObject(PAYLOAD)?.let { payload ->
-                            view?.handleResult(handlePaymentRequestResult(payload, transactionId))
-                        } ?: view?.handleResult(handlePaymentRequestResult(result, transactionId))
+                            view?.handleResult(handlePaymentRequestResult(payload, tripId))
+                        } ?: view?.handleResult(handlePaymentRequestResult(result, tripId))
                     }
                 }
                 is Resource.Failure -> {
@@ -39,18 +39,18 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         }
     }
 
-    override fun getAdyenPaymentDetails(actionComponentData: JSONObject, transactionId: String?) {
+    override fun getAdyenPaymentDetails(actionComponentData: JSONObject, tripId: String?) {
 
-        transactionId?.let {
+        tripId?.let {
             val request = JSONObject()
-            request.put(TRIP_ID, transactionId)
+            request.put(TRIP_ID, tripId)
             request.put(PAYMENTS_PAYLOAD, actionComponentData)
 
             paymentsService.getAdyenPaymentDetails(request.toString()).execute { result ->
                 when (result) {
                     is Resource.Success -> {
                         result.data.let {
-                            view?.handleResult(handlePaymentRequestResult(it, transactionId))
+                            view?.handleResult(handlePaymentRequestResult(it, tripId))
                         }
                     }
                     is Resource.Failure -> {

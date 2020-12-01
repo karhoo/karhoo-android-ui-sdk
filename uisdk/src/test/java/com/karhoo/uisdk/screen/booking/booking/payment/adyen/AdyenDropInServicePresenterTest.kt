@@ -122,7 +122,7 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTransactionId(TRIP_ID)
+        verify(service).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -144,7 +144,7 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTransactionId(TRIP_ID)
+        verify(service).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
@@ -212,7 +212,7 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTransactionId(TRIP_ID)
+        verify(service, never()).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -235,7 +235,7 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTransactionId(TRIP_ID)
+        verify(service, never()).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }

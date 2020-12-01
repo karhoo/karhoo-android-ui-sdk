@@ -16,16 +16,16 @@ class AdyenDropInService : DropInService(), AdyenDropInServiceMVP.Service {
     }
 
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        val transactionId = this.getSharedPreferences(TRIP_ID, MODE_PRIVATE)
+        val tripId = this.getSharedPreferences(TRIP_ID, MODE_PRIVATE)
                 .getString(TRIP_ID, "")
-        presenter.getAdyenPaymentDetails(actionComponentData, transactionId)
+        presenter.getAdyenPaymentDetails(actionComponentData, tripId)
         return CallResult(CallResult.ResultType.WAIT, "")
     }
 
-    override fun storeTransactionId(transactionId: String) {
+    override fun storeTripId(tripId: String) {
         val sharedPref = this.getSharedPreferences(TRIP_ID, MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putString(TRIP_ID, transactionId)
+            putString(TRIP_ID, tripId)
             commit()
         }
     }
