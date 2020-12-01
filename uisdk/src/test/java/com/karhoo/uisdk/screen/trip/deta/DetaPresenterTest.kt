@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.deta
 
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripState
@@ -114,7 +115,8 @@ class DetaPresenterTest {
     fun `show minimum 1 min deta when trip state is POB`() {
         val driverPosition = DriverTrackingInfo(
                 position = Position(1.0, 2.0),
-                destinationEta = -1)
+                destinationEta = -1,
+                direction = Direction(1, 2))
 
         presenter.monitorDeta(TRIP_ID, LONDON_TIMEZONE)
         observerTripStateCaptor.firstValue.onValueChanged(Resource.Success(tripWithState(TripStatus.PASSENGER_ON_BOARD)))
@@ -228,7 +230,8 @@ class DetaPresenterTest {
 
         private val DRIVER_POSITION = DriverTrackingInfo(
                 position = Position(0.5, 0.4),
-                destinationEta = DESTINATION_ETA)
+                destinationEta = DESTINATION_ETA,
+                direction = Direction(1, 2))
 
         private fun tripWithState(state: TripStatus) = TripState(state)
 
