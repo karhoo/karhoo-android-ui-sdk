@@ -411,7 +411,7 @@ class TestData {
                         Place(
                                 placeId = "ChIJ3QDsadsaPI0DjT6SU",
                                 displayAddress = "Terminal 1, Heathrow Airport, UK",
-                                type = PoiType.NOT_SET)
+                                type = PoiDetailsType.AIRPORT)
                                   )
                                          )
 
