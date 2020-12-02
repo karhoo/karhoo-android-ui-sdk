@@ -16,22 +16,22 @@ class AdyenDropInService : DropInService(), AdyenDropInServiceMVP.Service {
     }
 
     override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        val transactionId = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
-                .getString(TRANSACTION_ID, "")
-        presenter.getAdyenPaymentDetails(actionComponentData, transactionId)
+        val tripId = this.getSharedPreferences(TRIP_ID, MODE_PRIVATE)
+                .getString(TRIP_ID, "")
+        presenter.getAdyenPaymentDetails(actionComponentData, tripId)
         return CallResult(CallResult.ResultType.WAIT, "")
     }
 
-    override fun storeTransactionId(transactionId: String) {
-        val sharedPref = this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE)
+    override fun storeTripId(tripId: String) {
+        val sharedPref = this.getSharedPreferences(TRIP_ID, MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putString(TRANSACTION_ID, transactionId)
+            putString(TRIP_ID, tripId)
             commit()
         }
     }
 
     override fun clearTransactionId() {
-        this.getSharedPreferences(TRANSACTION_ID, MODE_PRIVATE).edit().clear().commit()
+        this.getSharedPreferences(TRIP_ID, MODE_PRIVATE).edit().clear().commit()
     }
 
     override fun handleResult(callResult: CallResult) {
@@ -39,6 +39,6 @@ class AdyenDropInService : DropInService(), AdyenDropInServiceMVP.Service {
     }
 
     companion object {
-        const val TRANSACTION_ID = "transaction_id"
+        const val TRIP_ID = "trip_id"
     }
 }

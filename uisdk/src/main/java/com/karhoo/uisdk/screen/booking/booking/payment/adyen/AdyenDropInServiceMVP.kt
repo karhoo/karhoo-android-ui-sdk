@@ -11,7 +11,7 @@ interface AdyenDropInServiceMVP {
 
         fun handleResult(callResult: CallResult)
 
-        fun storeTransactionId(transactionId: String)
+        fun storeTripId(transactionId: String)
     }
 
     interface Presenter {

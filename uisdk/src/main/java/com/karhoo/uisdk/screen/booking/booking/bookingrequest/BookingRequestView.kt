@@ -21,12 +21,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -271,12 +272,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestLayout.setOnClickListener { hideWindow() }
     }
 
-    override fun displayFlightDetailsField(poiType: PoiType?) {
-        when (poiType) {
-            PoiType.AIRPORT -> {
+    override fun displayFlightDetailsField(poiDetailsType: PoiDetailsType?) {
+        when (poiDetailsType) {
+            PoiDetailsType.AIRPORT -> {
                 bookingRequestFlightDetailsWidget.visibility = View.VISIBLE
             }
-            else -> bookingRequestFlightDetailsWidget.visibility = View.GONE
+            else                        -> bookingRequestFlightDetailsWidget.visibility = View.GONE
         }
     }
 
@@ -284,10 +285,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         flightNumber?.let { bookingRequestFlightDetailsWidget.setBookingOptionalInfo(it) }
     }
 
-    override fun setCapacity(vehicleAttributes: VehicleAttributes) {
+    override fun setCapacity(vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
-                luggage = vehicleAttributes.luggageCapacity,
-                people = vehicleAttributes.passengerCapacity)
+                luggage = vehicle.luggageCapacity,
+                people = vehicle.passengerCapacity)
     }
 
     override fun showPaymentFailureDialog() {
@@ -388,9 +389,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
     }
 
-    override fun threeDSecureNonce(threeDSNonce: String) {
+    override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading()
-        presenter.passBackThreeDSecuredNonce(threeDSNonce, passengerDetails, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengerDetails, bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {

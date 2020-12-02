@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.model.AvailabilityVehicle
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Credentials
+import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.Driver
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Fare
@@ -23,8 +24,8 @@ import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Place
 import com.karhoo.sdk.api.model.Places
-import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
+import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Price
@@ -42,14 +43,12 @@ import com.karhoo.sdk.api.model.TripState
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.model.Vehicles
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
-import kotlin.system.measureTimeMillis
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class TestData {
@@ -143,14 +142,14 @@ class TestData {
                 position = TRIP_POSITION_PICKUP,
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 timezone = "Europe/London",
-                poiType = Poi.NOT_SET)
+                poiType = PoiType.NOT_SET)
 
         val TRIP_LOCATION_INFO_DROPOFF = TripLocationInfo(
                 displayAddress = "368 Oxford St, London W1D 1LU, UK",
                 position = TRIP_POSITION_DROPOFF,
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 timezone = "Europe/London",
-                poiType = Poi.NOT_SET)
+                poiType = PoiType.NOT_SET)
 
         val PRICE = Price(
                 total = 3550,
@@ -259,10 +258,9 @@ class TestData {
                                     termsConditionsUrl = "http://www.google.com")
 
         val QUOTE_VEHICLE = QuoteVehicle(vehicleClass = "Electric",
-                                         vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1))
-
-        val VEHICLE_ATTRIBUTES = VehicleAttributes(passengerCapacity = 4,
-                                                   luggageCapacity = 5)
+                                         vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1),
+                                         luggageCapacity = 2,
+                                         passengerCapacity = 2)
 
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
@@ -318,8 +316,7 @@ class TestData {
                           price = QUOTE_PRICE,
                           fleet = QUOTE_FLEET,
                           pickupType = PickupType.CURBSIDE,
-                          vehicle = QUOTE_VEHICLE,
-                          vehicleAttributes = VEHICLE_ATTRIBUTES)
+                          vehicle = QUOTE_VEHICLE)
 
         /**
          * Address Payloads
@@ -378,7 +375,7 @@ class TestData {
                 details = PoiDetails(
                         iata = "",
                         terminal = "",
-                        type = PoiType.NOT_SET
+                        type = PoiDetailsType.NOT_SET
                                     ),
                 placeId = "ChIJzfg7uaWMdUgRe0RpO1Y_oXc",
                 meetingPoint = MeetingPoint(
@@ -393,7 +390,7 @@ class TestData {
                         longitude = 51.51313379690047,
                         latitude = -0.131489597260952
                                    ),
-                poiType = Poi.NOT_SET,
+                poiType = PoiType.NOT_SET,
                 timezone = "Europe/London"
                                               )
 
@@ -405,7 +402,7 @@ class TestData {
                         longitude = -0.1585557
                                    ),
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
-                poiType = Poi.NOT_SET,
+                poiType = PoiType.NOT_SET,
                 timezone = "Europe/London"
                                                                       )
 
@@ -414,7 +411,7 @@ class TestData {
                         Place(
                                 placeId = "ChIJ3QDsadsaPI0DjT6SU",
                                 displayAddress = "Terminal 1, Heathrow Airport, UK",
-                                type = PoiType.AIRPORT)
+                                type = PoiDetailsType.AIRPORT)
                                   )
                                          )
 
@@ -433,7 +430,7 @@ class TestData {
                 details = PoiDetails(
                         iata = "",
                         terminal = "",
-                        type = PoiType.NOT_SET
+                        type = PoiDetailsType.NOT_SET
                                     ),
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
@@ -448,7 +445,7 @@ class TestData {
                         longitude = 0.0,
                         latitude = 0.0
                                    ),
-                poiType = Poi.NOT_SET,
+                poiType = PoiType.NOT_SET,
                 timezone = "Europe/London"
                                         )
 
@@ -467,7 +464,7 @@ class TestData {
                 details = PoiDetails(
                         iata = "",
                         terminal = "",
-                        type = PoiType.NOT_SET
+                        type = PoiDetailsType.NOT_SET
                                     ),
                 placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
                 meetingPoint = MeetingPoint(
@@ -482,7 +479,7 @@ class TestData {
                         longitude = 0.0,
                         latitude = 0.0
                                    ),
-                poiType = Poi.NOT_SET,
+                poiType = PoiType.NOT_SET,
                 timezone = "Europe/London"
                                               )
 
@@ -692,7 +689,9 @@ class TestData {
                         longitude = -0.1769328
                                    ),
                 destinationEta = 10,
-                originEta = 5
+                originEta = 5,
+                direction = Direction(kph = 5, 
+                                      heading = 10)
                                                 )
 
         val VEHICLES_ASAP = Vehicles(
@@ -715,8 +714,10 @@ class TestData {
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                                             vehicleQta = QuoteQTA(highMinutes = 5, lowMinutes = 5)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                             vehicleQta = QuoteQTA(highMinutes =
+                                                                                   5, lowMinutes = 5),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -732,9 +733,9 @@ class TestData {
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 20,
-                                                                                   lowMinutes =
-                                                                                   20)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   lowMinutes = 20),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -751,8 +752,9 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 15,
                                                                                    lowMinutes =
-                                                                                   15)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   15),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -769,8 +771,9 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 18,
                                                                                    lowMinutes =
-                                                                                   18)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES),
+                                                                                   18),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
@@ -786,8 +789,9 @@ class TestData {
                                 pickupType = PickupType.NOT_SET,
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Saloon",
                                                              vehicleQta = QuoteQTA(highMinutes = 4,
-                                                                                   lowMinutes = 4)),
-                                vehicleAttributes = VEHICLE_ATTRIBUTES))
+                                                                                   lowMinutes = 4),
+                                                            luggageCapacity = 2,
+                                                            passengerCapacity = 2)))
                                     )
 
         /**
@@ -913,7 +917,7 @@ class TestData {
 
         val LOCATION_INFO = LocationInfo(position = Position(LATITUDE, LONGITUDE),
                                          placeId = "123",
-                                         poiType = Poi.REGULATED,
+                                         poiType = PoiType.REGULATED,
                                          address = ADDRESS,
                                          timezone = "UK",
                                          details = PoiDetails(iata = "iata",
@@ -929,7 +933,7 @@ class TestData {
                 details = PoiDetails(
                         iata = "iata",
                         terminal = "terminal",
-                        type = PoiType.AIRPORT
+                        type = PoiDetailsType.AIRPORT
                                     )
                                                       )
 
@@ -961,8 +965,9 @@ class TestData {
 
         val DRIVER_TRACKING_INFO = DriverTrackingInfo(position = Position(LATITUDE, LONGITUDE),
                                                       originEta = 5,
-                                                      destinationEta = 10)
-
+                                                      destinationEta = 10,
+                                                     direction = Direction(kph = 5,
+                                                                           heading = 10))
 
         fun getDate(dateScheduled: String): Date {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
