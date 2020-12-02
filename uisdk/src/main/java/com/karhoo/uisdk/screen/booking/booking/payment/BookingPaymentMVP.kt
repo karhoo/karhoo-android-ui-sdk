@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.Provider
 
 interface BookingPaymentMVP {
 
@@ -59,6 +58,6 @@ interface BookingPaymentMVP {
 
         fun showPaymentDialog()
 
-        fun threeDSecureNonce(threeDSNonce: String)
+        fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
     }
 }

@@ -185,8 +185,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         dropInView?.initialiseChangeCard(price)
     }
 
-    override fun threeDSecureNonce(threeDSNonce: String) {
-        paymentActions?.threeDSecureNonce(threeDSNonce)
+    override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
+        paymentActions?.threeDSecureNonce(threeDSNonce, tripId)
     }
 
     override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
