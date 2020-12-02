@@ -21,6 +21,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
@@ -271,9 +272,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestLayout.setOnClickListener { hideWindow() }
     }
 
-    override fun displayFlightDetailsField(poiType: PoiType?) {
-        when (poiType) {
-            PoiType.AIRPORT -> {
+    override fun displayFlightDetailsField(poiDetailsType: PoiDetailsType?) {
+        when (poiDetailsType) {
+            PoiDetailsType.AIRPORT -> {
                 bookingRequestFlightDetailsWidget.visibility = View.VISIBLE
             }
             else                        -> bookingRequestFlightDetailsWidget.visibility = View.GONE

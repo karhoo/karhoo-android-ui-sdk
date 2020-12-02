@@ -157,7 +157,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.getPaymentNonce(price)
 
-        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
+        verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID, "1.00")
     }
 
     /**
@@ -223,7 +223,7 @@ class AdyenPaymentPresenterTest {
                 .put(PAYMENT_METHOD, "")
         val response = JSONObject()
                 .put(RESULT_CODE, AUTHORISED)
-                .put(MERCHANT_REFERENCE, TRANSACTION_ID)
+                .put(MERCHANT_REFERENCE, TRIP_ID)
                 .put(ADDITIONAL_DATA, additionalData)
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
@@ -251,7 +251,7 @@ class AdyenPaymentPresenterTest {
                 .put(PAYMENT_METHOD, "mc")
         val response = JSONObject()
                 .put(RESULT_CODE, AUTHORISED)
-                .put(MERCHANT_REFERENCE, TRANSACTION_ID)
+                .put(MERCHANT_REFERENCE, TRIP_ID)
                 .put(ADDITIONAL_DATA, additionalData)
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
@@ -291,7 +291,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.initialiseGuestPayment(price)
 
-        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID)
+        verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID)
     }
 
     /**
@@ -308,7 +308,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.initialiseGuestPayment(price)
 
-        verify(paymentDropInActions).threeDSecureNonce(TRANSACTION_ID, TRANSACTION_ID, "1.00")
+        verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID, "1.00")
     }
 
     private fun setConfig(handleBraintree: Boolean = false) {
@@ -322,7 +322,7 @@ class AdyenPaymentPresenterTest {
     private fun setMockNonce() {
         val payload = JSONObject()
                 .put(RESULT_CODE, AUTHORISED)
-                .put(TRANSACTION_ID_KEY, TRANSACTION_ID).toString()
+                .put(TRIP_ID_KEY, TRIP_ID).toString()
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(payload)
 
         adyenPaymentPresenter.handleActivityResult(
@@ -338,8 +338,8 @@ class AdyenPaymentPresenterTest {
         private const val AUTHORISED = AdyenPaymentView.AUTHORISED
         private const val CARD_SUMMARY = AdyenPaymentPresenter.CARD_SUMMARY
         private const val PAYMENT_METHOD = AdyenPaymentPresenter.PAYMENT_METHOD
-        private const val TRANSACTION_ID = "1234"
-        private const val TRANSACTION_ID_KEY = AdyenDropInServicePresenter.TRANSACTION_ID
+        private const val TRIP_ID = "1234"
+        private const val TRIP_ID_KEY = AdyenDropInServicePresenter.TRIP_ID
         private const val MERCHANT_REFERENCE = AdyenPaymentView.MERCHANT_REFERENCE
         private const val RESULT_KEY = AdyenResultActivity.RESULT_KEY
         private const val REQUEST_CODE = AdyenPaymentView.REQ_CODE_ADYEN

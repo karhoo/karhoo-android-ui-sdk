@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
@@ -31,7 +32,7 @@ interface BookingRequestMVP {
 
         fun disableBooking()
 
-        fun displayFlightDetailsField(poiType: PoiType?)
+        fun displayFlightDetailsField(poiDetailsType: PoiDetailsType?)
 
         fun enableBooking()
 
