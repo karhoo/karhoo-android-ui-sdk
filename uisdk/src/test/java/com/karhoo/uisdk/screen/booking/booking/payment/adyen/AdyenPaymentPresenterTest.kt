@@ -322,7 +322,7 @@ class AdyenPaymentPresenterTest {
     private fun setMockNonce() {
         val payload = JSONObject()
                 .put(RESULT_CODE, AUTHORISED)
-                .put(MERCHANT_REFERENCE, TRANSACTION_ID).toString()
+                .put(TRANSACTION_ID_KEY, TRANSACTION_ID).toString()
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(payload)
 
         adyenPaymentPresenter.handleActivityResult(
@@ -339,6 +339,7 @@ class AdyenPaymentPresenterTest {
         private const val CARD_SUMMARY = AdyenPaymentPresenter.CARD_SUMMARY
         private const val PAYMENT_METHOD = AdyenPaymentPresenter.PAYMENT_METHOD
         private const val TRANSACTION_ID = "1234"
+        private const val TRANSACTION_ID_KEY = AdyenDropInServicePresenter.TRANSACTION_ID
         private const val MERCHANT_REFERENCE = AdyenPaymentView.MERCHANT_REFERENCE
         private const val RESULT_KEY = AdyenResultActivity.RESULT_KEY
         private const val REQUEST_CODE = AdyenPaymentView.REQ_CODE_ADYEN
