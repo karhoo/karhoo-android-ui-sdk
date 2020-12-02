@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Poi
+import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
@@ -207,10 +207,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             this.outboundTripId = outboundTripId
             handleBookingType(quote)
             when (origin?.poiType) {
-                Poi.ENRICHED -> {
+                PoiType.ENRICHED -> {
                     view?.displayFlightDetailsField(origin?.details?.type)
                 }
-                else -> view?.displayFlightDetailsField(null)
+                else                  -> view?.displayFlightDetailsField(null)
             }
             view?.setCapacity(quote.vehicle)
             view?.animateIn()
