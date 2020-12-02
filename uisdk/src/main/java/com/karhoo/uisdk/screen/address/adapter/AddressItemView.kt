@@ -8,7 +8,6 @@ import androidx.annotation.DrawableRes
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Place
-import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
@@ -32,7 +31,7 @@ class AddressItemView @JvmOverloads constructor(context: Context,
         itemIcon.setImageResource(icon)
         addressText.text = place.displayAddress
 
-        if (place.type == PoiDetailsType.AIRPORT) {
+        if (place.type == PoiType.AIRPORT) {
             itemIcon.setImageResource(R.drawable.uisdk_ic_airport)
         } else {
             itemIcon.setImageResource(icon)
