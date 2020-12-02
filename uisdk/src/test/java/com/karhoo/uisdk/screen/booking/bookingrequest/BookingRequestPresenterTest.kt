@@ -11,8 +11,8 @@ import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentsNonce
+import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.PoiDetails
-import com.karhoo.sdk.api.model.PoiDetailsType
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.Quote
@@ -353,7 +353,7 @@ class BookingRequestPresenterTest {
     fun `guest booking for airport origin with flight details triggers payment`() {
         setGuestUser()
 
-        val origin = LocationInfo(poiType = PoiType.ENRICHED, details = PoiDetails(type = PoiDetailsType.AIRPORT))
+        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
@@ -381,8 +381,8 @@ class BookingRequestPresenterTest {
      **/
     @Test
     fun `display and populate flight number field when pickup address has airport POI`() {
-        val origin = LocationInfo(poiType = PoiType.ENRICHED, details = PoiDetails(type =
-                                                                                PoiDetailsType.AIRPORT))
+        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
+                                                                                PoiType.AIRPORT))
         whenever(flightDetails.flightNumber).thenReturn("flight number")
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
@@ -399,8 +399,8 @@ class BookingRequestPresenterTest {
      **/
     @Test
     fun `display flight number field when pickup address has airport POI`() {
-        val origin = LocationInfo(poiType = PoiType.ENRICHED, details = PoiDetails(type =
-                                                                                PoiDetailsType.AIRPORT))
+        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
+                                                                                PoiType.AIRPORT))
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
 
@@ -420,8 +420,8 @@ class BookingRequestPresenterTest {
     fun `guest booking for airport destination with flight details triggers payment`() {
         setGuestUser()
 
-        val origin = LocationInfo(poiType = PoiType.NOT_SET)
-        val destination = LocationInfo(poiType = PoiType.ENRICHED, details = PoiDetails(type = PoiDetailsType.AIRPORT))
+        val origin = LocationInfo(poiType = Poi.NOT_SET)
+        val destination = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, destination, null))
