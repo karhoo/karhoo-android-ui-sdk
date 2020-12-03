@@ -32,7 +32,7 @@ class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentD
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
     String) {
-        actions?.threeDSecureNonce(sdkToken)
+        actions?.threeDSecureNonce(sdkToken, sdkToken)
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?) {

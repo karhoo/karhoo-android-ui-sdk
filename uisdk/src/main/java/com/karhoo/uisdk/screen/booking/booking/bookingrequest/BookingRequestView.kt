@@ -25,8 +25,8 @@ import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.VehicleAttributes
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -66,15 +66,16 @@ import java.util.Currency
 class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions,
-      BookingPaymentMVP.PaymentActions, BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+    : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.Actions,
+      BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+      BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
     private var backgroundFade: TransitionDrawable? = null
     private var isGuest: Boolean = false
 
-    var holdOpenForPaymentFlow = false
+    private var holdOpenForPaymentFlow = false
 
     private var presenter: BookingRequestMVP.Presenter = BookingRequestPresenter(this,
                                                                                  KarhooUISDK.analytics,
@@ -82,16 +83,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)
 
-    var actions: BookingRequestMVP.Actions? = null
-        set(value) {
-            field = value
-            bookingRequestTermsWidget.actions = value
-        }
-
-    val passengerDetails: PassengerDetails
+    private val passengerDetails: PassengerDetails
         get() = bookingRequestPassengerDetailsWidget.getPassengerDetails()
 
-    val bookingComments: String
+    private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
     init {
@@ -103,7 +98,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
 
-    override fun showGuestBookingFields() {
+    override fun showGuestBookingFields(details: PassengerDetails) {
         val constraintSet = ConstraintSet()
         constraintSet.constrainHeight(R.id.bookingRequestScrollView, 0)
         constraintSet.clone(bookingRequestLayout)
@@ -115,6 +110,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
         passengerDetailsHeading.visibility = VISIBLE
+        bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
     }
 
     override fun showAuthenticatedUserBookingFields() {
@@ -171,6 +167,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestPassengerDetailsWidget.actions = this
+        bookingRequestTermsWidget.actions = this
     }
 
     override fun disableBooking() {
@@ -243,7 +240,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     private fun bindQuoteAndTerms(vehicle: Quote) {
         bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
-                                               vehicle.vehicle.vehicleClass.orEmpty())
+                                             vehicle.vehicle.vehicleClass.orEmpty())
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
@@ -279,7 +276,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
             PoiType.AIRPORT -> {
                 bookingRequestFlightDetailsWidget.visibility = View.VISIBLE
             }
-            else -> bookingRequestFlightDetailsWidget.visibility = View.GONE
+            else                        -> bookingRequestFlightDetailsWidget.visibility = View.GONE
         }
     }
 
@@ -287,10 +284,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         flightNumber?.let { bookingRequestFlightDetailsWidget.setBookingOptionalInfo(it) }
     }
 
-    override fun setCapacity(vehicleAttributes: VehicleAttributes) {
+    override fun setCapacity(vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
-                luggage = vehicleAttributes.luggageCapacity,
-                people = vehicleAttributes.passengerCapacity)
+                luggage = vehicle.luggageCapacity,
+                people = vehicle.passengerCapacity)
     }
 
     override fun showPaymentFailureDialog() {
@@ -298,7 +295,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .setTitle(R.string.payment_issue)
                 .setMessage(R.string.payment_issue_message)
                 .setPositiveButton(R.string.add_card) { dialog, _ ->
-                    onPaymentHandlePostive()
+                    onPaymentHandlePositive()
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
@@ -369,7 +366,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         dialog.dismiss()
     }
 
-    private fun onPaymentHandlePostive() {
+    private fun onPaymentHandlePositive() {
         presenter.onPaymentFailureDialogPositive()
     }
 
@@ -391,9 +388,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
     }
 
-    override fun threeDSecureNonce(threeDSNonce: String) {
+    override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading()
-        presenter.passBackThreeDSecuredNonce(threeDSNonce, passengerDetails, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengerDetails, bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {
@@ -418,5 +415,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun showWebView(url: String?) {
+        presenter.onTermsAndConditionsRequested(url)
     }
 }

@@ -25,7 +25,6 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
@@ -53,7 +52,7 @@ import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
-                        TripAllocationMVP.Actions, BookingRequestMVP.Actions {
+                        TripAllocationMVP.Actions {
 
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
@@ -216,7 +215,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViewListeners() {
-        bookingRequestWidget.actions = this
         bookingMapWidget.actions = this
         tripAllocationWidget.actions = this
 
@@ -239,6 +237,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun bindToBookingRequestOutputs(): Observer<in BookingRequestViewContract.BookingRequestAction> {
         return Observer { actions ->
             when (actions) {
+                is BookingRequestViewContract.BookingRequestAction.ShowTermsAndConditions ->
+                    showWebView(actions.url)
                 is BookingRequestViewContract.BookingRequestAction.WaitForTripAllocation ->
                     waitForTripAllocation()
                 is BookingRequestViewContract.BookingRequestAction.HandleBookingError ->
@@ -250,16 +250,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun bindToBookingQuoteOutputs(): Observer<in BookingQuotesViewContract.BookingQuotesAction> {
         return Observer { actions ->
             when (actions) {
-                is BookingQuotesViewContract.BookingQuotesAction.ShowError                               ->
+                is BookingQuotesViewContract.BookingQuotesAction.ShowError ->
                     showSnackbar(actions.snackbarConfig)
-                is BookingQuotesViewContract.BookingQuotesAction.HideError                               -> dismissSnackbar()
+                is BookingQuotesViewContract.BookingQuotesAction.HideError -> dismissSnackbar()
                 is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListVisibilityChange ->
                     updateMapViewForQuoteListVisibilityChange(actions.isVisible)
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed        ->
+                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed ->
                     bookingMapWidget.updateMapViewForQuotesListVisibilityCollapsed()
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded         ->
+                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded ->
                     bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
-                is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest                      -> {
+                is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
                     bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId)
                 }
@@ -290,10 +290,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    override fun showWebView(url: String?) {
-        url?.let {
-            khWebView?.show(url = it)
-        }
+    private fun showWebView(url: String) {
+        khWebView?.show(url)
     }
 
     private fun waitForTripAllocation() {

@@ -5,12 +5,15 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
+import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
+import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
@@ -129,12 +132,21 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
-        if (KarhooUISDKConfigurationProvider.isGuest()) {
-            view?.showGuestBookingFields()
-            setBookingEnablement(allFieldsValid)
-        } else {
-            view?.showAuthenticatedUserBookingFields()
-            setBookingEnablement(true)
+        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
+
+        when (authMethod) {
+            is AuthenticationMethod.Guest -> {
+                view?.showGuestBookingFields()
+                setBookingEnablement(allFieldsValid)
+            }
+            is AuthenticationMethod.TokenExchange -> {
+                view?.showGuestBookingFields(details = getPassengerDetails())
+                setBookingEnablement(allFieldsValid)
+            }
+            else -> {
+                view?.showAuthenticatedUserBookingFields()
+                setBookingEnablement(true)
+            }
         }
     }
 
@@ -146,19 +158,22 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackThreeDSecuredNonce(threeDSNonce: String, passengerDetails:
-    PassengerDetails?, comments: String) {
+    override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
         val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
             getPassengerDetails()
         passengerDetails?.let {
+            val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
+
             tripsService.book(TripBooking(
-                    nonce = threeDSNonce,
+                    comments = comments,
+                    flightNumber = flightDetails?.flightNumber,
+                    meta = metadata,
+                    nonce = nonce,
                     quoteId = quote?.id?.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,
-                            passengerDetails = listOf(passengerDetails)),
-                    flightNumber = flightDetails?.flightNumber,
-                    comments = comments))
+                            passengerDetails = listOf(passengerDetails),
+                            luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> onTripBookSuccess(result.data)
@@ -196,9 +211,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                 Poi.ENRICHED -> {
                     view?.displayFlightDetailsField(origin?.details?.type)
                 }
-                else -> view?.displayFlightDetailsField(null)
+                else         -> view?.displayFlightDetailsField(null)
             }
-            view?.setCapacity(quote.vehicleAttributes)
+            view?.setCapacity(quote.vehicle)
             view?.animateIn()
         } else if (origin == null) {
             handleError(R.string.origin_book_error)
@@ -234,5 +249,17 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     override fun onPaymentFailureDialogCancelled() {
         view?.hideLoading()
         hideBookingRequest()
+    }
+
+    override fun onTermsAndConditionsRequested(url: String?) {
+        url?.let {
+            bookingRequestStateViewModel?.process(BookingRequestViewContract
+                                                          .BookingRequestEvent
+                                                          .TermsAndConditionsRequested(it))
+        }
+    }
+
+    companion object {
+        const val TRIP_ID = "trip_id"
     }
 }
