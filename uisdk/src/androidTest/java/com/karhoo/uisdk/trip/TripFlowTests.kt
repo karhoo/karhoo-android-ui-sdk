@@ -163,6 +163,7 @@ class TripFlowTests : Launch {
      * And:     All completed ride checks are verified
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun userIsTakenToCompletedRideScreen() {
         serverRobot {
             userProfileResponse(HTTP_OK, USER_INFO)

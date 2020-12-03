@@ -14,6 +14,8 @@ import com.karhoo.karhootraveller.splash.splash
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.serverRobot
+import com.karhoo.uisdk.ridedetail.rideDetail
+import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
@@ -27,10 +29,17 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS_EXTRA
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
-import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_ARRIVED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_COMPLETED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
 import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
@@ -80,6 +89,7 @@ class EndToEndBraintreeUserTest : Launch {
      * Then:    I can go through from login to ride completed with no issues
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun endToEndTestWithBraintreeUser() {
         serverRobot {
             successfulToken()
@@ -99,8 +109,6 @@ class EndToEndBraintreeUserTest : Launch {
         }
         booking {
             mediumSleep()
-        } result {
-            checkBookingScreenIsShown()
         }
         serverRobot {
             addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
@@ -125,10 +133,13 @@ class EndToEndBraintreeUserTest : Launch {
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
             bookingWithNonceResponse(HTTP_OK, TRIP)
-            bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
-            driverTrackingResponse(code = HTTP_OK, response = DRIVER_TRACKING, trip = TRIP.tripId)
-            bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
         }
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_DER,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_DER,
+                reverseGeo = REVERSE_GEO_SUCCESS
+                               )
         address {
             search(SEARCH_ADDRESS_EXTRA)
             mediumSleep()
@@ -139,9 +150,52 @@ class EndToEndBraintreeUserTest : Launch {
             pressFirstQuote()
             mediumSleep()
             pressBookRideButton()
-            longSleep()
+            shortSleep()
+        }
+        trip {
+            mediumSleep()
+        }
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_ARRIVED,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_ARRIVED,
+                reverseGeo = REVERSE_GEO_SUCCESS
+                               )
+        trip {
+            mediumSleep()
+        }
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_POB,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_POB,
+                reverseGeo = REVERSE_GEO_SUCCESS
+                               )
+        trip {
+            mediumSleep()
+        }
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_COMPLETED,
+                tracking = Any(),
+                details = TRIP_COMPLETED,
+                reverseGeo = Any()
+                               )
+        trip {
+            mediumSleep()
+        }
+        rideDetail {
+            mediumSleep()
         } result {
-            checkDriverDetails()
+            completedRideFullCheckFromTrip()
+        }
+    }
+
+    private fun mockTripSuccessResponse(status: Any, tracking: Any, details: Any, reverseGeo: Any) {
+        serverRobot {
+            successfulToken()
+            bookingStatusResponse(code = HTTP_OK, response = status, trip = TRIP.tripId)
+            driverTrackingResponse(code = HTTP_OK, response = tracking, trip = TRIP.tripId)
+            bookingDetailsResponse(code = HTTP_OK, response = details, trip = TRIP.tripId)
+            reverseGeocodeResponse(code = HTTP_OK, response = reverseGeo)
         }
     }
 }
