@@ -65,7 +65,5 @@
 
     <!-- Karhoo Labs -->
     <string name="guest_checkout">Guest Checkout</string>
-    <string name="dark_mode" translatable="false">Dark Mode</string>
-
 
 </resources>

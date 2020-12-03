@@ -22,7 +22,6 @@ class FeatureFlagStore constructor(context: Context) {
 
         private const val KEY_PREF_STORE = "PREF_STORE"
         const val KEY_GUEST_CHECKOUT = "guestCheckout"
-        const val KEY_DARK_MODE = "darkMode"
 
         private var INSTANCE: FeatureFlagStore? = null
 

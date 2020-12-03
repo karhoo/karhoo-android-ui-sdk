@@ -32,17 +32,6 @@
         app:layout_constraintStart_toEndOf="@+id/karhooLabsIcon"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <Switch
-        android:id="@+id/darkModeSwitch"
-        style="@style/Text.Primary.Medium"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/spacing_xlarge"
-        android:layout_marginStart="32dp"
-        android:text="@string/dark_mode"
-        app:layout_constraintEnd_toEndOf="@+id/toolbar"
-        app:layout_constraintStart_toEndOf="@+id/karhooLabsIcon"
-        app:layout_constraintTop_toBottomOf="@+id/guestCheckoutSwitch" />
-
     <ImageView
         android:id="@+id/karhooLabsIcon"
         android:layout_width="wrap_content"
@@ -52,16 +41,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/guestCheckoutSwitch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <ImageView
-        android:id="@+id/dayNightIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:src="@drawable/uisdk_ic_dark_mode"
-        app:layout_constraintBottom_toBottomOf="@+id/darkModeSwitch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/darkModeSwitch" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
