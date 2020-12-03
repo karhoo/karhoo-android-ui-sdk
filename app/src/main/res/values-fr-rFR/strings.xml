@@ -44,8 +44,6 @@
     <string name="licence_attribution">Licences logicielles</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
-
     <string name="reset_password_info">Veuillez entrer votre adresse email ci-dessous pour réinitialiser votre mot de passe.</string>
     <string name="forgot_password">Mot de passe oublié?</string>
     <string name="password_reset_success">Veuillez vérifier votre compte email pour compléter la réinitialisation du mot de passe.</string>

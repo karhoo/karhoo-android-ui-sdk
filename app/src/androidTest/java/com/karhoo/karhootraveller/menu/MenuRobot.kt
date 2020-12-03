@@ -23,10 +23,6 @@ class MenuRobot : BaseTestRobot() {
         clickButtonByString(R.string.profile)
     }
 
-    fun clickOnHelpButton() {
-        clickButtonByString(R.string.help)
-    }
-
     fun clickOnAboutButton() {
         clickButtonByString(R.string.about)
     }

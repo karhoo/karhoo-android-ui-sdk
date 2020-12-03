@@ -15,7 +15,11 @@ object VersionUtil {
         } catch (e: Exception) {
             return ""
         }
+    }
 
+    @Nullable
+    fun getAppNameString(context: Context): String? {
+        return context.getApplicationInfo().loadLabel(context.getPackageManager()).toString()
     }
 
     @Nullable
@@ -26,7 +30,6 @@ object VersionUtil {
         } catch (e: Exception) {
             return null
         }
-
     }
 
     fun appAndDeviceInfo(): String {

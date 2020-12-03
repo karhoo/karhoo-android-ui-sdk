@@ -7,12 +7,10 @@ import android.view.MenuItem
 import com.karhoo.karhootraveller.presentation.about.AboutActivity
 import com.karhoo.karhootraveller.presentation.karhooLabs.KarhooLabsActivity
 import com.karhoo.karhootraveller.presentation.profile.ProfileActivity
-import com.karhoo.karhootraveller.presentation.web.KarhooWebActivity
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.MenuHandler
-import com.karhoo.uisdk.screen.booking.domain.support.FeedbackSupplier
+import com.karhoo.uisdk.screen.booking.domain.support.ContactEmailProvider
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 
 class KHMenuHandler : MenuHandler {
 
@@ -23,16 +21,9 @@ class KHMenuHandler : MenuHandler {
                         .build(context)
                 context.startActivity(profileIntent)
             }
-            R.id.action_help -> {
-                val webIntent = KarhooWebActivity.Builder.builder
-                        .setScrollable(true)
-                        .url(context.getString(R.string.link_customer_support))
-                        .build(context)
-                context.startActivity(webIntent)
-            }
             R.id.action_feedback -> {
-                val feedbackSupport = FeedbackSupplier(context as Activity, KarhooPreferenceStore.getInstance(context))
-                context.startActivity(feedbackSupport.createEmail())
+                val feedbackSupport = ContactEmailProvider(context as Activity)
+                context.startActivity(feedbackSupport.createFeedbackEmail())
             }
             R.id.action_rides -> {
                 val ridesIntent = RidesActivity.Builder.builder

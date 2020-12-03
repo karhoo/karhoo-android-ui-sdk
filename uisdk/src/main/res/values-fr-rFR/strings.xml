@@ -184,10 +184,11 @@
     <string name="change">Modifier</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
     <string name="feedback">Contactez-nous</string>
+    <string name="support">Assistance</string>
     <string name="support_email">support@karhoo.com</string>
     <string name="supplier_email">suppliers@karhoo.com</string>
+    <string name="feedback_email">support@karhoo.com</string>
     <string name="title_activity_intent_chooser_send_email">Envoyer email</string>
     <string name="trip_id">Référence course: %1$s</string>
     <string name="last_trip_id">Référence derniere course: %1$s</string>

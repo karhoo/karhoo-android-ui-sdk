@@ -82,10 +82,11 @@
     <string name="dispatch_cancelled">Disculpa, %s no tiene conductores disponibles ahora</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
+    <string name="feedback_email">support@karhoo.com</string>
     <string name="support_email">support@karhoo.com</string>
     <string name="supplier_email">suppliers@karhoo.com</string>
     <string name="feedback">Realimentación</string>
+    <string name="support">Asistencia</string>
     <string name="title_activity_intent_chooser_send_email">Enviar Email</string>
     <string name="all_category">Todo</string>
     <string name="saloon">Salón</string>

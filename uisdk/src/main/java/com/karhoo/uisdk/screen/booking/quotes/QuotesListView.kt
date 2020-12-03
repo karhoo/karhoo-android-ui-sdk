@@ -27,9 +27,8 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import com.karhoo.uisdk.screen.booking.domain.support.ContactSupplier
+import com.karhoo.uisdk.screen.booking.domain.support.ContactEmailProvider
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
@@ -184,11 +183,13 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun showNoAvailability() {
-        val supplierFeedback = ContactSupplier(context as Activity, KarhooPreferenceStore.getInstance(context.applicationContext))
+        val supplierFeedback = ContactEmailProvider(context as Activity)
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
                                             priority = SnackbarPriority.NORMAL,
-                                            action = SnackbarAction(resources.getString(R.string.contact)) { (context as Activity).startActivity(supplierFeedback.createEmail()) },
+                                            action = SnackbarAction(resources.getString(R.string.contact)) {
+                                                (context as Activity).startActivity(supplierFeedback.createSupplierEmail())
+                                            },
                                             text = resources.getString(R.string.no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(snackbarConfig))
