@@ -27,7 +27,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import com.karhoo.uisdk.screen.booking.domain.support.ContactEmailProvider
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
@@ -183,12 +183,12 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun showNoAvailability() {
-        val supplierFeedback = ContactEmailProvider(context as Activity)
+        val emailComposer = KarhooFeedbackEmailComposer(context as Activity)
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
                                             priority = SnackbarPriority.NORMAL,
                                             action = SnackbarAction(resources.getString(R.string.contact)) {
-                                                (context as Activity).startActivity(supplierFeedback.createSupplierEmail())
+                                                emailComposer.showNoCoverageEmail()
                                             },
                                             text = resources.getString(R.string.no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent

@@ -9,7 +9,7 @@ import com.karhoo.karhootraveller.presentation.karhooLabs.KarhooLabsActivity
 import com.karhoo.karhootraveller.presentation.profile.ProfileActivity
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.MenuHandler
-import com.karhoo.uisdk.screen.booking.domain.support.ContactEmailProvider
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.rides.RidesActivity
 
 class KHMenuHandler : MenuHandler {
@@ -22,8 +22,8 @@ class KHMenuHandler : MenuHandler {
                 context.startActivity(profileIntent)
             }
             R.id.action_feedback -> {
-                val feedbackSupport = ContactEmailProvider(context as Activity)
-                context.startActivity(feedbackSupport.createFeedbackEmail())
+                val emailComposer = KarhooFeedbackEmailComposer(context as Activity)
+                emailComposer.showFeedbackMail()
             }
             R.id.action_rides -> {
                 val ridesIntent = RidesActivity.Builder.builder

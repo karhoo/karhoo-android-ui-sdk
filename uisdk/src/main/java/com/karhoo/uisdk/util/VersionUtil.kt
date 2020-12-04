@@ -37,6 +37,6 @@ object VersionUtil {
         val model = Build.MODEL
         val manufacturer = Build.MANUFACTURER
 
-        return "Device: " + manufacturer.toUpperCase() + " " + model.toUpperCase() + " (Android OS: " + apiLevel + ")\n"
+        return "Device: " + manufacturer.toUpperCase() + " " + model.toUpperCase() + " (Android OS: " + apiLevel + ")"
     }
 }

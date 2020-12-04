@@ -9,16 +9,43 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.VersionUtil
 import java.lang.ref.WeakReference
 
-class ContactEmailProvider(activity: Activity) {
+class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
 
     private val activity: WeakReference<Activity> = WeakReference(activity)
 
-    fun createFeedbackEmail(): Intent {
+    override fun showFeedbackMail(): Boolean {
+        activity.get()?.let {
+            it.startActivity(createFeedbackEmail())
+            return true
+        } ?: run {
+            return false
+        }
+    }
+
+    override fun reportIssueWith(trip: TripInfo): Boolean {
+        activity.get()?.let {
+            it.startActivity(createSupportForTripEmail(trip))
+            return true
+        } ?: run {
+            return false
+        }
+    }
+
+    override fun showNoCoverageEmail(): Boolean {
+        activity.get()?.let {
+            it.startActivity(createSupplierEmail())
+            return true
+        } ?: run {
+            return false
+        }
+    }
+
+    private fun createFeedbackEmail(): Intent {
         val emailTo = activity.get()?.getString(R.string.feedback_email)
         val emailSubject = activity.get()?.getString(R.string.feedback)
 
         val headline = activity.get()?.getString(R.string.email_info).orEmpty()
-        val emailFooter = getUserDetails(headline)
+        val emailFooter = mailMetaInfo(headline)
 
         val data = parse("mailto:?subject=$emailSubject" +
                                  "&body=$emailFooter" +
@@ -29,14 +56,15 @@ class ContactEmailProvider(activity: Activity) {
                                     activity.get()?.getString(R.string.title_activity_intent_chooser_send_email))
     }
 
-    fun createSupportForTripEmail(tripInfo: TripInfo?): Intent {
+    private fun createSupportForTripEmail(tripInfo: TripInfo?): Intent {
         val headline = activity.get()?.getString(R.string.email_info).orEmpty()
 
-        var emailFooter = getUserDetails(headline)
-        emailFooter += getTripDetails(tripInfo)
+        var emailFooter = getTripDetails(tripInfo)
+        emailFooter += mailMetaInfo(headline)
 
         val emailTo = activity.get()?.getString(R.string.support_email)
-        val emailSubject = activity.get()?.getString(R.string.support)
+        val emailSubject = "${activity.get()?.getString(R.string.support_report_issue)}: " +
+                "${tripInfo?.displayTripId}"
 
         val data = parse("mailto:?subject=$emailSubject" +
                                  "&body=$emailFooter" +
@@ -47,7 +75,7 @@ class ContactEmailProvider(activity: Activity) {
                                     activity.get()?.getString(R.string.title_activity_intent_chooser_send_email))
     }
 
-    fun createSupplierEmail(): Intent {
+    private fun createSupplierEmail(): Intent {
         val headline = activity.get()?.getString(R.string.fleet_recommendation_body).orEmpty()
 
         val emailTo = activity.get()?.getString(R.string.supplier_email)
@@ -63,28 +91,42 @@ class ContactEmailProvider(activity: Activity) {
     }
 
     private fun getTripDetails(tripInfo: TripInfo?): String {
-        var text = ""
+        var text = activity.get()?.getString(R.string.email_report_issue_message) ?: ""
         val lastTripId = tripInfo?.displayTripId
 
         text += lastTripId.let {
-            "\nTrip ID: $lastTripId \n-------------------------------------\n"
+            "\n-------------------------------------\n" +
+                    "\"Trip: $lastTripId " +
+                    "\n-------------------------------------\n"
         }
         return text
     }
 
-    private fun getUserDetails(headline: String): String {
+    private fun mailMetaInfo(headline: String): String {
         var details = ""
-        val userStore = KarhooApi.userStore
+        val user = KarhooApi.userStore.currentUser
 
         activity.get()?.let {
-            details = "\n\n\n\n\n$headline" +
+            details = "\n\n\n\n\n\n\n$headline" +
                     "\n-------------------------------------\n" +
                     "Application: ${VersionUtil.getAppNameString(it)} v ${VersionUtil
                             .createBuildVersionString(it)} \n"
             details += "${VersionUtil.appAndDeviceInfo()}\n"
-            details += "Email: ${userStore.currentUser.email}\n"
-
+            details += "Locale: ${user.locale}\n"
+            details += userInfo()
         }
         return details
+    }
+
+    private fun userInfo(): String {
+        val user = KarhooApi.userStore.currentUser
+
+        return if (user.firstName.isNotEmpty()) {
+            "Email: ${user.email}\nMobile phone: ${user.phoneNumber}\nFirst name: ${user
+                    .firstName}\nLast name: " +
+                    "${user.lastName}\n "
+        } else {
+            ""
+        }
     }
 }

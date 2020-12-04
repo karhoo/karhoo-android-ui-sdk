@@ -7,7 +7,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
-import com.karhoo.uisdk.screen.booking.domain.support.ContactEmailProvider
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity.Companion.EXTRA_TRIP
 import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.rideDetailWidget
 import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.toolbar
@@ -56,8 +56,8 @@ class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
 
     override fun showCustomerSupport(tripId: String) {
         trip?.let {
-            val feedbackSupport = ContactEmailProvider(this)
-            startActivity(feedbackSupport.createSupportForTripEmail(tripInfo = it))
+            val emailComposer = KarhooFeedbackEmailComposer(this)
+            emailComposer.reportIssueWith(trip = it)
         }
     }
 
