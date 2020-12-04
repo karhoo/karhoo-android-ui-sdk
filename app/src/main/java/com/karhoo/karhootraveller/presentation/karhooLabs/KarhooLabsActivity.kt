@@ -18,7 +18,7 @@ class KarhooLabsActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { finish() }
         featureFlag = FeatureFlag(this)
         initialiseFeatureFlags()
-        guestCheckoutSwitch.setOnCheckedChangeListener { buttonView, isChecked -> guestCheckoutClicked()}
+        guestCheckoutSwitch.setOnCheckedChangeListener { buttonView, isChecked -> guestCheckoutClicked() }
     }
 
     fun initialiseFeatureFlags() {

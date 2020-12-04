@@ -248,7 +248,7 @@ class BraintreeBookingTests : Launch {
      * Then:    I can see the info that the prebook time will be in local time
      **/
     @Test
-    @AllowFlaky(attempts = 1)
+    @AllowFlaky(attempts = 5)
     fun checkingForLocalTimeMessageOnPrebook() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)

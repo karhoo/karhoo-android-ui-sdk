@@ -14,8 +14,10 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -51,6 +53,7 @@ class RidesFlowTests : Launch {
      * Then:    I am taken to the booking screen
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun userNavigatesFromUpcomingRidesToBooking() {
         serverRobot {
             successfulToken()
@@ -60,6 +63,7 @@ class RidesFlowTests : Launch {
         }
         rides {
             clickUpcomingBookingsTabButton()
+            mediumSleep()
             clickBookRideButton()
         }
         booking {
