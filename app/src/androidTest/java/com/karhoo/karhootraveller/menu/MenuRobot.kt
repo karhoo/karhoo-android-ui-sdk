@@ -46,10 +46,6 @@ class MenuRobot : BaseTestRobot() {
 
 class ResultRobot : BaseTestRobot() {
 
-    fun helpPageIsShown() {
-        stringIsVisibleIsDescendant(HELP_TEXT, R.id.webView)
-    }
-
     fun versionElementIsVisible() {
         textIsVisible(R.string.version)
         viewIsVisible(R.id.versionCodeText)
