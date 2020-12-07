@@ -22,8 +22,12 @@ class KHMenuHandler : MenuHandler {
                 context.startActivity(profileIntent)
             }
             R.id.action_feedback -> {
-                val emailComposer = KarhooFeedbackEmailComposer(context as Activity)
-                emailComposer.showFeedbackMail()
+                val activity = context as Activity
+                val emailComposer = KarhooFeedbackEmailComposer(context)
+                val showFeedbackMail = emailComposer.showFeedbackMail()
+                showFeedbackMail?.let { intent ->
+                    activity.startActivity(intent)
+                }
             }
             R.id.action_rides -> {
                 val ridesIntent = RidesActivity.Builder.builder

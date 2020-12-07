@@ -1,102 +1,97 @@
 package com.karhoo.uisdk.screen.booking.domain.support
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.net.Uri.parse
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.EmailClient
+import com.karhoo.uisdk.util.KarhooEmailClient
 import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.VersionUtilContact
 import java.lang.ref.WeakReference
 
-class KarhooFeedbackEmailComposer(activity: Activity, private val userStore: UserStore =
-        KarhooApi.userStore, private val versionUtil: VersionUtilContact = VersionUtil) :
+class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserStore =
+        KarhooApi.userStore, private val versionUtil: VersionUtilContact = VersionUtil,
+                                  private val emailClient: EmailClient = KarhooEmailClient()) :
         FeedbackEmailComposer {
 
-    private val activity: WeakReference<Activity> = WeakReference(activity)
+    private val contextWeakRef: WeakReference<Context> = WeakReference(context)
 
-    override fun showFeedbackMail(): Boolean {
-        activity.get()?.let {
-            it.startActivity(createFeedbackEmail())
-            return true
+    override fun showFeedbackMail(): Intent? {
+        contextWeakRef.get()?.let {
+            return createFeedbackEmail()
         } ?: run {
-            return false
+            return null
         }
     }
 
-    override fun reportIssueWith(trip: TripInfo): Boolean {
-        activity.get()?.let {
-            it.startActivity(createSupportForTripEmail(trip))
-            return true
+    override fun reportIssueWith(trip: TripInfo): Intent? {
+        contextWeakRef.get()?.let {
+            return createSupportForTripEmail(trip)
         } ?: run {
-            return false
+            return null
         }
     }
 
-    override fun showNoCoverageEmail(): Boolean {
-        activity.get()?.let {
-            it.startActivity(createSupplierEmail())
-            return true
+    override fun showNoCoverageEmail(): Intent? {
+        contextWeakRef.get()?.let {
+            return createSupplierEmail()
         } ?: run {
-            return false
+            return null
         }
     }
 
-    fun createFeedbackEmail(): Intent {
-        val emailTo = "mo@mo.copm"//activity.get()?.getString(R.string.feedback_email)
-        val emailSubject = "subject" //activity.get()?.getString(R.string.feedback)
+    fun createFeedbackEmail(): Intent? {
+        val emailTo = contextWeakRef.get()?.getString(R.string.feedback_email)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.feedback)
 
-        val headline = "headline"//activity.get()?.getString(R.string.email_info).orEmpty()
+        val headline = contextWeakRef.get()?.getString(R.string.email_info).orEmpty()
         val emailFooter = mailMetaInfo(headline)
 
-        val data = parse("mailto:?subject=$emailSubject" +
-                                 "&body=$emailFooter" +
-                                 "&to=$emailTo")
-        val sendEmailIntent = Intent(Intent.ACTION_VIEW)
-        sendEmailIntent.data = data
-        val chooserTitle = "title"//activity.get()?.getString(R.string
-//                                                           .title_activity_intent_chooser_send_email)
-        return Intent.createChooser(sendEmailIntent, chooserTitle)
+        val data = "mailto:?subject=$emailSubject" +
+                "&body=$emailFooter" +
+                "&to=$emailTo"
+        return sendEmailIntent(data)
     }
 
-    private fun createSupportForTripEmail(tripInfo: TripInfo?): Intent {
-        val headline = activity.get()?.getString(R.string.email_info).orEmpty()
+    private fun createSupportForTripEmail(tripInfo: TripInfo?): Intent? {
+        val headline = contextWeakRef.get()?.getString(R.string.email_info).orEmpty()
 
         var emailFooter = getTripDetails(tripInfo)
         emailFooter += mailMetaInfo(headline)
 
-        val emailTo = activity.get()?.getString(R.string.support_email)
-        val emailSubject = "${activity.get()?.getString(R.string.support_report_issue)}: " +
+        val emailTo = contextWeakRef.get()?.getString(R.string.support_email)
+        val emailSubject = "${contextWeakRef.get()?.getString(R.string.support_report_issue)}: " +
                 "${tripInfo?.displayTripId}"
 
-        val data = parse("mailto:?subject=$emailSubject" +
-                                 "&body=$emailFooter" +
-                                 "&to=$emailTo")
-        val sendEmailIntent = Intent(Intent.ACTION_VIEW)
-        sendEmailIntent.data = data
-        return Intent.createChooser(sendEmailIntent,
-                                    activity.get()?.getString(R.string.title_activity_intent_chooser_send_email))
+        val data = "mailto:?subject=$emailSubject" +
+                "&body=$emailFooter" +
+                "&to=$emailTo"
+        return sendEmailIntent(data)
     }
 
-    private fun createSupplierEmail(): Intent {
-        val headline = activity.get()?.getString(R.string.fleet_recommendation_body).orEmpty()
+    private fun createSupplierEmail(): Intent? {
+        val headline = contextWeakRef.get()?.getString(R.string.fleet_recommendation_body).orEmpty()
 
-        val emailTo = activity.get()?.getString(R.string.supplier_email)
-        val emailSubject = activity.get()?.getString(R.string.fleet_recommendation_subject)
+        val emailTo = contextWeakRef.get()?.getString(R.string.supplier_email)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.fleet_recommendation_subject)
 
-        val data = parse("mailto:?subject=$emailSubject" +
-                                 "&body=$headline" +
-                                 "&to=$emailTo")
-        val sendEmailIntent = Intent(Intent.ACTION_VIEW)
-        sendEmailIntent.data = data
-        return Intent.createChooser(sendEmailIntent,
-                                    activity.get()?.getString(R.string.title_activity_intent_chooser_send_email))
+        val data = "mailto:?subject=$emailSubject" +
+                "&body=$headline" +
+                "&to=$emailTo"
+        return sendEmailIntent(data)
+    }
+
+    private fun sendEmailIntent(data: String): Intent? {
+        return contextWeakRef.get()?.let {
+            emailClient.getSendEmailIntent(context = it, data = data)
+        }
     }
 
     private fun getTripDetails(tripInfo: TripInfo?): String {
-        var text = activity.get()?.getString(R.string.email_report_issue_message) ?: ""
+        var text = contextWeakRef.get()?.getString(R.string.email_report_issue_message) ?: ""
         val lastTripId = tripInfo?.displayTripId
 
         text += lastTripId.let {
@@ -111,7 +106,7 @@ class KarhooFeedbackEmailComposer(activity: Activity, private val userStore: Use
         var details = ""
         val user = userStore.currentUser
 
-        activity.get()?.let {
+        contextWeakRef.get()?.let {
             details = "\n\n\n\n\n\n\n$headline" +
                     "\n-------------------------------------\n" +
                     "Application: ${versionUtil.getAppNameString(it)} v ${versionUtil

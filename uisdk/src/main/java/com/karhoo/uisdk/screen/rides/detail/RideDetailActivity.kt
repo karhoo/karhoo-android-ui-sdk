@@ -57,7 +57,10 @@ class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
     override fun showCustomerSupport(tripId: String) {
         trip?.let {
             val emailComposer = KarhooFeedbackEmailComposer(this)
-            emailComposer.reportIssueWith(trip = it)
+            val reportIssueWithIntent = emailComposer.reportIssueWith(trip = it)
+            reportIssueWithIntent?.let { intent ->
+                startActivity(intent)
+            }
         }
     }
 
