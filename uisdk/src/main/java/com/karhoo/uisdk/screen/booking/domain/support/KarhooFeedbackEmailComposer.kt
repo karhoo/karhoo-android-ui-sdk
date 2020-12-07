@@ -4,12 +4,16 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri.parse
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.VersionUtil
+import com.karhoo.uisdk.util.VersionUtilContact
 import java.lang.ref.WeakReference
 
-class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
+class KarhooFeedbackEmailComposer(activity: Activity, private val userStore: UserStore =
+        KarhooApi.userStore, private val versionUtil: VersionUtilContact = VersionUtil) :
+        FeedbackEmailComposer {
 
     private val activity: WeakReference<Activity> = WeakReference(activity)
 
@@ -40,11 +44,11 @@ class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
         }
     }
 
-    private fun createFeedbackEmail(): Intent {
-        val emailTo = activity.get()?.getString(R.string.feedback_email)
-        val emailSubject = activity.get()?.getString(R.string.feedback)
+    fun createFeedbackEmail(): Intent {
+        val emailTo = "mo@mo.copm"//activity.get()?.getString(R.string.feedback_email)
+        val emailSubject = "subject" //activity.get()?.getString(R.string.feedback)
 
-        val headline = activity.get()?.getString(R.string.email_info).orEmpty()
+        val headline = "headline"//activity.get()?.getString(R.string.email_info).orEmpty()
         val emailFooter = mailMetaInfo(headline)
 
         val data = parse("mailto:?subject=$emailSubject" +
@@ -52,8 +56,9 @@ class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
                                  "&to=$emailTo")
         val sendEmailIntent = Intent(Intent.ACTION_VIEW)
         sendEmailIntent.data = data
-        return Intent.createChooser(sendEmailIntent,
-                                    activity.get()?.getString(R.string.title_activity_intent_chooser_send_email))
+        val chooserTitle = "title"//activity.get()?.getString(R.string
+//                                                           .title_activity_intent_chooser_send_email)
+        return Intent.createChooser(sendEmailIntent, chooserTitle)
     }
 
     private fun createSupportForTripEmail(tripInfo: TripInfo?): Intent {
@@ -104,14 +109,14 @@ class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
 
     private fun mailMetaInfo(headline: String): String {
         var details = ""
-        val user = KarhooApi.userStore.currentUser
+        val user = userStore.currentUser
 
         activity.get()?.let {
             details = "\n\n\n\n\n\n\n$headline" +
                     "\n-------------------------------------\n" +
-                    "Application: ${VersionUtil.getAppNameString(it)} v ${VersionUtil
+                    "Application: ${versionUtil.getAppNameString(it)} v ${versionUtil
                             .createBuildVersionString(it)} \n"
-            details += "${VersionUtil.appAndDeviceInfo()}\n"
+            details += "${versionUtil.appAndDeviceInfo()}\n"
             details += "Locale: ${user.locale}\n"
             details += userInfo()
         }
@@ -119,7 +124,7 @@ class KarhooFeedbackEmailComposer(activity: Activity) : FeedbackEmailComposer {
     }
 
     private fun userInfo(): String {
-        val user = KarhooApi.userStore.currentUser
+        val user = userStore.currentUser
 
         return if (user.firstName.isNotEmpty()) {
             "Email: ${user.email}\nMobile phone: ${user.phoneNumber}\nFirst name: ${user

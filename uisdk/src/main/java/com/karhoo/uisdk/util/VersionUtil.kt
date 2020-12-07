@@ -5,10 +5,23 @@ import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 
-object VersionUtil {
+interface VersionUtilContact {
+    @NonNull
+    fun createBuildVersionString(context: Context): String
+
+    @Nullable
+    fun getAppNameString(context: Context): String?
+
+    @Nullable
+    fun getVersionString(context: Context): String?
+
+    fun appAndDeviceInfo(): String
+}
+
+object VersionUtil: VersionUtilContact {
 
     @NonNull
-    fun createBuildVersionString(context: Context): String {
+    override fun createBuildVersionString(context: Context): String {
         try {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
             return packageInfo.versionName + " (" + packageInfo.versionCode + ")"
@@ -18,12 +31,12 @@ object VersionUtil {
     }
 
     @Nullable
-    fun getAppNameString(context: Context): String? {
+    override fun getAppNameString(context: Context): String? {
         return context.getApplicationInfo().loadLabel(context.getPackageManager()).toString()
     }
 
     @Nullable
-    fun getVersionString(context: Context): String? {
+    override fun getVersionString(context: Context): String? {
         try {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
             return "Version: " + packageInfo.versionName
@@ -32,7 +45,7 @@ object VersionUtil {
         }
     }
 
-    fun appAndDeviceInfo(): String {
+    override fun appAndDeviceInfo(): String {
         val apiLevel = Build.VERSION.SDK_INT
         val model = Build.MODEL
         val manufacturer = Build.MANUFACTURER
