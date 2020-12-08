@@ -12,7 +12,7 @@ import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -108,7 +108,7 @@ Last name: last name
     fun showFeedbackMail() {
         composer.showFeedbackMail()
         verify(emailClient).getSendEmailIntent(any(), intentCapture.capture())
-        Assert.assertEquals(feedbackEmailDataUri, intentCapture.firstValue)
+        assertEquals(feedbackEmailDataUri, intentCapture.firstValue)
     }
 
     @Test
@@ -116,13 +116,13 @@ Last name: last name
         composer.reportIssueWith(tripInfo)
         verify(emailClient).getSendEmailIntent(any(), intentCapture.capture())
 
-        Assert.assertEquals(reportIssueEmailDataUri, intentCapture.firstValue)
+        assertEquals(reportIssueEmailDataUri, intentCapture.firstValue)
     }
 
     @Test
     fun showNoCoverageEmail() {
         composer.showNoCoverageEmail()
         verify(emailClient).getSendEmailIntent(any(), intentCapture.capture())
-        Assert.assertEquals(reportNoCoverageEmailDataUri, intentCapture.firstValue)
+        assertEquals(reportNoCoverageEmailDataUri, intentCapture.firstValue)
     }
 }
