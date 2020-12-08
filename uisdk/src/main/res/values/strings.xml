@@ -181,17 +181,18 @@
     <string name="dispatch_cancelled" formatted="false">Apologies, %s has no available drivers at the moment.</string>
     <string name="change">CHANGE</string>
 
-
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
     <string name="feedback">Feedback</string>
+    <string name="support_report_issue">Report Issue</string>
     <string name="support_email">support@karhoo.com</string>
+    <string name="feedback_email">support@karhoo.com</string>
     <string name="supplier_email">suppliers@karhoo.com</string>
     <string name="title_activity_intent_chooser_send_email">Send Email</string>
     <string name="trip_id">Trip ID: %1$s</string>
     <string name="last_trip_id">Last Trip ID: %1$s</string>
     <string name="last_trip_id_not_set">Last Trip ID: Not yet set</string>
-    <string name="email_info">Please leave the information below. It helps us to work on the right part of the app.</string>
+    <string name="email_info">Please do not delete this information as it helps us improve the app.</string>
+    <string name="email_report_issue_message">Please use the space below to report a specific issue with your ride.</string>
 
     <!-- Email -->
     <string name="fleet_recommendation_body">Thank you for recommending a fleet in your area. To get coverage in your area as fast as possible, please provide us with area and the name of transportation company.

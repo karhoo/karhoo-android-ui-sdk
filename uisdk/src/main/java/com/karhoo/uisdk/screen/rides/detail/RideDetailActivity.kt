@@ -7,9 +7,8 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity.Companion.EXTRA_TRIP
-import com.karhoo.uisdk.screen.web.KarhooWebView
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.rideDetailWidget
 import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.toolbar
 
@@ -56,7 +55,13 @@ class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
     }
 
     override fun showCustomerSupport(tripId: String) {
-        khWebView?.show(url = KarhooWebView.INTERCEPT_HELP_STRING, tripId = tripId)
+        trip?.let {
+            val emailComposer = KarhooFeedbackEmailComposer(this)
+            val reportIssueWithIntent = emailComposer.reportIssueWith(trip = it)
+            reportIssueWithIntent?.let { intent ->
+                startActivity(intent)
+            }
+        }
     }
 
     /**

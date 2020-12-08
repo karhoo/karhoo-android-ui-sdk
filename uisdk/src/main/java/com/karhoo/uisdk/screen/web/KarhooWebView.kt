@@ -126,6 +126,7 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
     }
 
     companion object {
+        @Deprecated("Use ContactEmailProvider instead")
         const val INTERCEPT_HELP_STRING = "CreateRecordForm"
         const val TYPE_TEXT_HTML = "text/html"
         const val UTF_8 = "UTF-8"

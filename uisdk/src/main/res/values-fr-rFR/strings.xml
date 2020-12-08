@@ -184,15 +184,17 @@
     <string name="change">Modifier</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
-    <string name="feedback">Contactez-nous</string>
+    <string name="feedback">Remarques</string>
+    <string name="support_report_issue">Signaler un problème</string>
     <string name="support_email">support@karhoo.com</string>
     <string name="supplier_email">suppliers@karhoo.com</string>
+    <string name="feedback_email">support@karhoo.com</string>
     <string name="title_activity_intent_chooser_send_email">Envoyer email</string>
     <string name="trip_id">Référence course: %1$s</string>
     <string name="last_trip_id">Référence derniere course: %1$s</string>
     <string name="last_trip_id_not_set">Aucune référence pour dernière course</string>
-    <string name="email_info">Veuillez laisser les informations ci-dessous. Cela nous aide à travailler sur un partie précise de l\'application.</string>
+    <string name="email_info">Veuillez ne pas supprimer ces informations car elles nous aident à améliorer l\'application.</string>
+    <string name="email_report_issue_message">Veuillez laisser vos commentaires regardant un problème spécifique dans l\'espace ci-dessous.</string>
 
     <!-- Email -->
     <string name="fleet_recommendation_body">Nous vous remercions de vouloir recommander une flotte. Pour que cela s\'effectue le plus rapidement possible veuillez nous donner le nom de la flotte ainsi que la zone qu\'elle dessert.
