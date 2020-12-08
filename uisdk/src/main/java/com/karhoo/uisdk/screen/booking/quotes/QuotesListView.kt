@@ -183,12 +183,16 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun showNoAvailability() {
-        val emailComposer = KarhooFeedbackEmailComposer(context as Activity)
+        val activity = context as Activity
+        val emailComposer = KarhooFeedbackEmailComposer(context)
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
                                             priority = SnackbarPriority.NORMAL,
                                             action = SnackbarAction(resources.getString(R.string.contact)) {
-                                                emailComposer.showNoCoverageEmail()
+                                                val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
+                                                showNoCoverageEmail?.let {intent ->
+                                                    activity.startActivity(intent)
+                                                }
                                             },
                                             text = resources.getString(R.string.no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
