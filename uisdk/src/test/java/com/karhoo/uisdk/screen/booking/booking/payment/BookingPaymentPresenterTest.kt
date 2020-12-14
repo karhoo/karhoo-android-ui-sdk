@@ -81,6 +81,7 @@ class BookingPaymentPresenterTest {
         presenter.getPaymentProvider()
 
         verify(paymentsService, never()).getPaymentProvider()
+        verify(view).bindDropInView()
     }
 
     /**

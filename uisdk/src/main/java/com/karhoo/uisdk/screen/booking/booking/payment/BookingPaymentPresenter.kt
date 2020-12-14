@@ -52,6 +52,8 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
                     is Resource.Failure -> view?.showError(R.string.something_went_wrong)
                 }
             }
+        } else {
+            view?.bindDropInView()
         }
     }
 }
