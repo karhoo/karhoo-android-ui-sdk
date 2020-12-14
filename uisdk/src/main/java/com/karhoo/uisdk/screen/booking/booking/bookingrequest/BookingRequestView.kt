@@ -94,7 +94,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         isGuest = isGuest()
         attachListeners()
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.add_flight_details))
-        val isValid = bookingRequestPassengerDetailsWidget.allFieldsValid()
         presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
@@ -267,6 +266,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun onError() {
         bookingRequestButton.onLoadingComplete()
+        cancelButton.isEnabled = true
     }
 
     override fun resetBookingButton() {
