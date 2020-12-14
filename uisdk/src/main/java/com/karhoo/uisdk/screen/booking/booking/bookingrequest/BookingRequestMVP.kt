@@ -63,6 +63,8 @@ interface BookingRequestMVP {
 
         fun hideLoading()
 
+        fun updateBookingButtonForGuest()
+
     }
 
     interface Presenter {

@@ -106,11 +106,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                               ConstraintSet.TOP, 0)
         constraintSet.applyTo(bookingRequestLayout)
 
-        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
         bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
         passengerDetailsHeading.visibility = VISIBLE
         bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
+    }
+
+    override fun updateBookingButtonForGuest() {
+        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
     }
 
     override fun showAuthenticatedUserBookingFields() {

@@ -131,6 +131,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showAuthenticatedUserBookingFields()
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -148,6 +149,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).disableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -167,6 +169,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).enableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -186,6 +189,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(passengerDetails)
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**

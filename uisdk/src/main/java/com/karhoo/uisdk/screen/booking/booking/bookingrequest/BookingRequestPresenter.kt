@@ -9,7 +9,6 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
-import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
@@ -132,10 +131,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
-        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
 
-        when (authMethod) {
+        when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
+                view?.updateBookingButtonForGuest()
                 view?.showGuestBookingFields()
                 setBookingEnablement(allFieldsValid)
             }
