@@ -159,8 +159,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
-        val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
-            getPassengerDetails()
+        val passengerDetails = if (KarhooUISDKConfigurationProvider.configuration
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser)
+            getPassengerDetails() else passengerDetails
+
         passengerDetails?.let {
             val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
 

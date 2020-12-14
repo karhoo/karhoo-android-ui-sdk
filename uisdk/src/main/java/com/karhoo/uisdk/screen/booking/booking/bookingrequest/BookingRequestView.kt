@@ -83,9 +83,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)
 
-    private val passengerDetails: PassengerDetails
-        get() = bookingRequestPassengerDetailsWidget.getPassengerDetails()
-
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
@@ -396,7 +393,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading()
-        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengerDetails, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId,
+                                             bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {
