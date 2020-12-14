@@ -9,7 +9,6 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
-import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
@@ -132,10 +131,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
-        val authMethod = KarhooUISDKConfigurationProvider.configuration.authenticationMethod()
 
-        when (authMethod) {
+        when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
+                view?.updateBookingButtonForGuest()
                 view?.showGuestBookingFields()
                 setBookingEnablement(allFieldsValid)
             }
@@ -151,7 +150,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingEnablement(hasValidPaxDetails: Boolean) {
-        if (!KarhooUISDKConfigurationProvider.isGuest() || (hasValidPaxDetails && userStore.savedPaymentInfo != null)) {
+        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.KarhooUser
+                || (hasValidPaxDetails && userStore.savedPaymentInfo != null)) {
             view?.enableBooking()
         } else {
             view?.disableBooking()
@@ -159,8 +159,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
-        val passengerDetails = if (KarhooUISDKConfigurationProvider.isGuest()) passengerDetails else
-            getPassengerDetails()
+        val passengerDetails = if (KarhooUISDKConfigurationProvider.configuration
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser)
+            getPassengerDetails() else passengerDetails
+
         passengerDetails?.let {
             val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
 
@@ -211,7 +213,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                 Poi.ENRICHED -> {
                     view?.displayFlightDetailsField(origin?.details?.type)
                 }
-                else         -> view?.displayFlightDetailsField(null)
+                else -> view?.displayFlightDetailsField(null)
             }
             view?.setCapacity(quote.vehicle)
             view?.animateIn()
@@ -224,6 +226,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     override fun handleError(@StringRes stringId: Int) {
         view?.onError()
+        view?.enableCancelButton()
         bookingRequestStateViewModel?.process(BookingRequestViewContract
                                                       .BookingRequestEvent
                                                       .BookingError(stringId))

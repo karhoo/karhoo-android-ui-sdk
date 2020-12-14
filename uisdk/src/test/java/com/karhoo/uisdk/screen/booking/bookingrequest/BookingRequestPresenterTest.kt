@@ -131,6 +131,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showAuthenticatedUserBookingFields()
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -148,6 +149,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).disableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -167,6 +169,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).enableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -186,6 +189,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(passengerDetails)
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -484,6 +488,7 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError()
+        verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string.K0001))
@@ -621,6 +626,7 @@ class BookingRequestPresenterTest {
         verify(preferenceStore).lastTrip = trip
         verify(view).animateOut()
         verify(view).onTripBookedSuccessfully(trip)
+        verify(view, never()).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent.BookingSuccess(trip))
     }

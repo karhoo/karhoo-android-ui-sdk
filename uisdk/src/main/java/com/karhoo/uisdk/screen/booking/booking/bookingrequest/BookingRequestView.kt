@@ -83,9 +83,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                                                  KarhooApi.tripService,
                                                                                  KarhooApi.userStore)
 
-    private val passengerDetails: PassengerDetails
-        get() = bookingRequestPassengerDetailsWidget.getPassengerDetails()
-
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
@@ -106,11 +103,14 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                               ConstraintSet.TOP, 0)
         constraintSet.applyTo(bookingRequestLayout)
 
-        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
         bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
         passengerDetailsHeading.visibility = VISIBLE
         bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
+    }
+
+    override fun updateBookingButtonForGuest() {
+        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
     }
 
     override fun showAuthenticatedUserBookingFields() {
@@ -258,7 +258,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
         bookingRequestButton.onLoadingComplete()
-        cancelButton.isEnabled = true
     }
 
     override fun onError() {
@@ -269,6 +268,10 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.onLoadingComplete()
         cancelButton.isEnabled = true
         bookingRequestLayout.setOnClickListener { hideWindow() }
+    }
+
+    override fun enableCancelButton() {
+        cancelButton.isEnabled = true
     }
 
     override fun displayFlightDetailsField(poiType: PoiType?) {
@@ -390,7 +393,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading()
-        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengerDetails, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId,
+                                             bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
     }
 
     override fun initialisePaymentProvider(price: QuotePrice?) {
