@@ -150,8 +150,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingEnablement(hasValidPaxDetails: Boolean) {
-        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.KarhooUser
-                || (hasValidPaxDetails && userStore.savedPaymentInfo != null)) {
+        if (userStore.savedPaymentInfo == null) {
+            view?.disableBooking()
+        } else if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
+                        AuthenticationMethod.KarhooUser || hasValidPaxDetails) {
             view?.enableBooking()
         } else {
             view?.disableBooking()

@@ -137,9 +137,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         isGuest = isGuest()
-        if (!isGuest) {
-            presenter.setBookingEnablement(true)
-        }
+        presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -279,7 +277,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
             PoiType.AIRPORT -> {
                 bookingRequestFlightDetailsWidget.visibility = View.VISIBLE
             }
-            else                        -> bookingRequestFlightDetailsWidget.visibility = View.GONE
+            else -> bookingRequestFlightDetailsWidget.visibility = View.GONE
         }
     }
 
