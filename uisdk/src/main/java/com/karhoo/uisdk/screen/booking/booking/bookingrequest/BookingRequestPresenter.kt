@@ -224,6 +224,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     override fun handleError(@StringRes stringId: Int) {
         view?.onError()
+        view?.enableCancelButton()
         bookingRequestStateViewModel?.process(BookingRequestViewContract
                                                       .BookingRequestEvent
                                                       .BookingError(stringId))

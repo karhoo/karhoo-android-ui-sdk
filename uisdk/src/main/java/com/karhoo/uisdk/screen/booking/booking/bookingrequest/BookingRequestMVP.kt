@@ -35,6 +35,8 @@ interface BookingRequestMVP {
 
         fun enableBooking()
 
+        fun enableCancelButton()
+
         fun initialiseChangeCard(price: QuotePrice? = null)
 
         fun initialiseGuestPayment(price: QuotePrice?)

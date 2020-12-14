@@ -261,18 +261,20 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
         bookingRequestButton.onLoadingComplete()
-        cancelButton.isEnabled = true
     }
 
     override fun onError() {
         bookingRequestButton.onLoadingComplete()
-        cancelButton.isEnabled = true
     }
 
     override fun resetBookingButton() {
         bookingRequestButton.onLoadingComplete()
         cancelButton.isEnabled = true
         bookingRequestLayout.setOnClickListener { hideWindow() }
+    }
+
+    override fun enableCancelButton() {
+        cancelButton.isEnabled = true
     }
 
     override fun displayFlightDetailsField(poiType: PoiType?) {

@@ -488,6 +488,7 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError()
+        verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string.K0001))
@@ -625,6 +626,7 @@ class BookingRequestPresenterTest {
         verify(preferenceStore).lastTrip = trip
         verify(view).animateOut()
         verify(view).onTripBookedSuccessfully(trip)
+        verify(view, never()).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent.BookingSuccess(trip))
     }
