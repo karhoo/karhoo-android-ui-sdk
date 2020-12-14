@@ -150,7 +150,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun setBookingEnablement(hasValidPaxDetails: Boolean) {
-        if (!KarhooUISDKConfigurationProvider.isGuest() || (hasValidPaxDetails && userStore.savedPaymentInfo != null)) {
+        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.KarhooUser
+                || (hasValidPaxDetails && userStore.savedPaymentInfo != null)) {
             view?.enableBooking()
         } else {
             view?.disableBooking()
@@ -210,7 +211,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                 Poi.ENRICHED -> {
                     view?.displayFlightDetailsField(origin?.details?.type)
                 }
-                else         -> view?.displayFlightDetailsField(null)
+                else -> view?.displayFlightDetailsField(null)
             }
             view?.setCapacity(quote.vehicle)
             view?.animateIn()

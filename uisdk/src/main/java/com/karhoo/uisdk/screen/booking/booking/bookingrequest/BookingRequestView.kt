@@ -94,6 +94,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         isGuest = isGuest()
         attachListeners()
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.add_flight_details))
+        val isValid = bookingRequestPassengerDetailsWidget.allFieldsValid()
         presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
