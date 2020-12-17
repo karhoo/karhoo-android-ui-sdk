@@ -7,9 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.karhoo.karhootraveller.common.preferences
-import com.karhoo.karhootraveller.menu.menu
-import com.karhoo.karhootraveller.profile.user.userProfile
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
@@ -26,8 +23,8 @@ import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.FLEET_INFO_ALT
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
+import com.karhoo.uisdk.util.TestData.Companion.LAST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_DETAILS
@@ -38,12 +35,10 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.LAST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.util.TestData.Companion.USER_INFO_ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
@@ -568,7 +563,7 @@ class AdyenBookingTests : Launch {
      * When:  I am on the profile screen
      * Then:  I can see: First Name, Last Name, email, country code, mobile number, add card
      * button is not visible
-     **/
+     **
     @Test
     @AllowFlaky(attempts = 10)
     fun fullCheckProfilePageAdyenUser() {
@@ -586,7 +581,7 @@ class AdyenBookingTests : Launch {
         } result {
             fullScreenCheckCardRegisteredAdyen()
         }
-    }
+    }**/
 
     override fun launch(intent: Intent?) {
         intent?.let {
