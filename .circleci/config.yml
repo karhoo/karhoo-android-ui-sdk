@@ -74,29 +74,13 @@ jobs:
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
                     echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
                     sudo chmod +x ./gradlew
-      - run:
-          name: Run unit test
-          command: bundle exec fastlane $FASTLANE_LANE_TEST
-      - run:
-          name: Run linting
-          command: bundle exec fastlane $FASTLANE_LANE_LINT
-      - run:
-          name: Save test results
-          command: |
-            mkdir -p ~/junit/
-            find . -type f -regex "./.*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/junit
-      - store_artifacts:
-          path: ~/junit
-          destination: tests
+      
       - run:
           name: "Install Sauce Connect Client"
           command: |
             sudo apt-get update
             sudo apt-get -y install curl lsof
-            curl https://eu-central-1.saucelabs.com/downloads/sc-4.6.2-linux.tar.gz -o saucelabs.tar.gz
+            curl https://eu-central-1.saucelabs.com/downloads/sc-4.6.3-linux.tar.gz -o saucelabs.tar.gz
             tar -xzf saucelabs.tar.gz
       - run:
           name: "Launch Tunnel"
