@@ -24,9 +24,8 @@ platform :android do
 
   desc "Build Android test"
     lane :build_tests do
-      gradle(task: "./gradlew assembleDebug")
-      gradle(task: "./gradlew assembleAndroidTest")
-      slack_result(message: "*Karhoo Android UISDK* passed unit testing")
+      gradle(task: "assembleDebug")
+      gradle(task: "assembleAndroidTest")
     end
 
   desc "Runs all the unit tests"
