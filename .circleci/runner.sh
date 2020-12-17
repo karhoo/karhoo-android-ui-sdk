@@ -3,6 +3,7 @@
    -u "$SAUCE_USERNAME" \
    -k "$SAUCE_ACCESS_KEY" \
    -f espresso \
+   -i 'class com.karhoo.uisdk.address.AddressTests' \
    --data-center eu-central-1 \
    -a ../app/build/outputs/apk/debug/app-debug.apk \
    -t ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
