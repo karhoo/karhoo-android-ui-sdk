@@ -91,6 +91,30 @@ jobs:
       - store_artifacts:
           path: ~/junit
           destination: tests
+      - run:
+          name: "Install Sauce Connect Client"
+          command: |
+            sudo apt-get update
+            sudo apt-get -y install curl lsof
+            curl https://eu-central-1.saucelabs.com/downloads/sc-4.6.2-linux.tar.gz -o saucelabs.tar.gz
+            tar -xzf saucelabs.tar.gz
+      - run:
+          name: "Launch Tunnel"
+          background: true
+          command: |
+            cd sc-*
+            bin/sc --pidfile /tmp/sc.pid1 -u ${SAUCE_USERNAME} -k ${SAUCE_ACCESS_KEY} -i demo-js-tunnel --no-remove-colliding-tunnels --se-port 4445
+      - run:
+          name: "Run Espresso Tests on Virtual Devices"
+          command: |
+            while ! lsof -i:4445 -t; do sleep 3; done
+            cd .circleci/
+            sudo chmod +x ./runner.sh ./sauce-runner-virtual-0.1.2-linux/bin/sauce-runner-virtual
+            ./runner.sh
+      - run:
+          name: "Shut Down Sauce Connect Tunnel"
+          command: |
+            kill -9 'cat /tmp/sc.pid1'
       - store_artifacts:
           path: ./app/build/reports
           destination: reports/
