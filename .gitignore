@@ -44,3 +44,6 @@ gen/
 target/
 *.iml
 *.DS_Store
+
+# CircleCI
+.circleci
