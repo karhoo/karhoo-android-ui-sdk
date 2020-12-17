@@ -9,6 +9,7 @@ config_android:
     TERM: dumb
     FASTLANE_LANE_LINT: linting
     FASTLANE_LANE_TEST: unit_tests
+    FASTLANE_LANE_BUILD_TESTS: build_tests
 jobs:
   build_and_setup:
     docker:
@@ -20,6 +21,7 @@ jobs:
       - TERM: dumb
       - FASTLANE_LANE_LINT: linting
       - FASTLANE_LANE_TEST: unit_tests
+      - FASTLANE_LANE_BUILD_TESTS: build_tests
     steps:
       - checkout
       - restore_cache:
@@ -74,7 +76,10 @@ jobs:
                     echo "STAGING_GUEST_HOST=\"$STAGING_GUEST_HOST\"" >> app/secure.properties
                     echo "ADYEN_PUBLIC_KEY=\"$ADYEN_PUBLIC_KEY\"" >> app/secure.properties
                     sudo chmod +x ./gradlew
-      
+
+      - run:
+          name: Build Android test
+          command: bundle exec fastlane $FASTLANE_LANE_BUILD_TESTS
       - run:
           name: "Install Sauce Connect Client"
           command: |
