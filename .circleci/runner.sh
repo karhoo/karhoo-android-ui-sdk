@@ -7,5 +7,5 @@
    --data-center eu-central-1 \
    -a ../app/build/outputs/apk/debug/app-debug.apk \
    -t ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-   -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=8.1'
-   -v DEBUG
+   -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=8.1' \
+   --verbose DEBUG
