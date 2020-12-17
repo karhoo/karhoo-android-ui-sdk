@@ -5,6 +5,6 @@
    -f espresso \
    --include-tests='class com.karhoo.uisdk.address.AddressTests' \
    --data-center eu-central-1 \
-   -a ../KarhooTraveller/app/build/outputs/apk/debug/app-debug.apk \
-   -t ../KarhooTraveller/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+   -a ../app/build/outputs/apk/debug/app-debug.apk \
+   -t ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
    -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=8.1'
