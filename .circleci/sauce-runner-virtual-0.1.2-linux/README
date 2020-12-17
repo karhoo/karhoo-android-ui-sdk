@@ -1,0 +1,16 @@
+Sauce Runner for Virtual devices
+---------------------------------
+
+Sauce runner for virtual devices is used to run Espresso tests on sauce emulators. Here is an example to test on two devices.
+
+./sauce-runner-virtual \
+  -u test_user \
+  -k 1234-1235 \
+  -f espresso \
+  -a ./helloworld.apk \
+  -t ./helloworld-AndroidTest.apk \
+  -d 'deviceName=Samsung Galaxy S8 HD GoogleAPI Emulator,platformVersion=7.0' \
+  -d 'deviceName=Google Pixel GoogleAPI Emulator,platformVersion=7.1'  
+
+Please refer to the following link for documentation:
+https://wiki.saucelabs.com/display/DOCS/Command+Reference+for+Sauce+Runner+for+Virtual+Devices 
