@@ -80,6 +80,8 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get -y install curl lsof
+            ping saucelabs.com
+            curl -v https://saucelabs.com/
             curl https://eu-central-1.saucelabs.com/downloads/sc-4.6.3-linux.tar.gz -o saucelabs.tar.gz
             tar -xzf saucelabs.tar.gz
       - run:
