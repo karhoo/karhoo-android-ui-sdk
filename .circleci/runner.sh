@@ -5,4 +5,5 @@ java -jar runner.jar espresso \
    --datacenter EU \
    --app ../app/build/outputs/apk/debug/app-debug.apk \
    --test ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-   --device 'deviceNameQuery=Samsung Galaxy S10,platformVersion=10'
+   --device 'deviceNameQuery=Samsung Galaxy S10,platformVersion=10' \
+   --help
