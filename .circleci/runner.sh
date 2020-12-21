@@ -1,6 +1,5 @@
 #!/bin/bash
 java -jar runner.jar espresso \
-   -u "$SAUCE_USERNAME" \
    --apikey "$SAUCE_ACCESS_KEY" \
    --e 'class com.karhoo.uisdk.address.AddressTests' \
    --data-center EU \
