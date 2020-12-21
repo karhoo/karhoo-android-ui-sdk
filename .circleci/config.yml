@@ -98,7 +98,7 @@ jobs:
           command: |
             while ! lsof -i:4445 -t; do sleep 3; done
             cd .circleci/
-            sudo chmod +x ./runner.sh ./sauce-runner-virtual-0.1.2-linux/bin/sauce-runner-virtual
+            sudo chmod +x ./runner.sh
             ./runner.sh
       - run:
           name: "Shut Down Sauce Connect Tunnel"
