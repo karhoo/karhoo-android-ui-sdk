@@ -6,5 +6,4 @@ java -jar runner.jar espresso \
    --test ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
    --platformVersion 10 \
    --device Samsung_Galaxy_S10_real \
-   --e class com.karhoo.uisdk.address.AddressTests \
-   --help
+   --e class com.karhoo.uisdk.address.AddressTests
