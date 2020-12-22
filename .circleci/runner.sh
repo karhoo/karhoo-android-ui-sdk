@@ -5,6 +5,6 @@ java -jar runner.jar espresso \
    --app ../app/build/outputs/apk/debug/app-debug.apk \
    --test ../app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
    --platformVersion 10 \
-   --deviceNameQuery Samsung Galaxy.*
+   --deviceNameQuery Samsung Galaxy.* \
    --e class com.karhoo.uisdk.address.AddressTests \
    --help
