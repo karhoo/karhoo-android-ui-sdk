@@ -46,7 +46,6 @@
             android:layout_width="@dimen/spacing_none"
             android:layout_height="wrap_content"
             android:background="@color/opacity_off_white"
-            android:elevation="@dimen/spacing_xsmall"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
