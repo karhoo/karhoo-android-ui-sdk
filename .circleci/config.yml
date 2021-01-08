@@ -27,16 +27,15 @@ jobs:
       - run:
           name: Download Dependencies
           command: |
-            echo 'export SECURE_PROPERTIES="SECURE_PROPERTIES"' >> $BASH_ENV
-            echo SECURE_PROPERTIES | base64 -di > app/secure.properties
             bundle check || bundle install --path vendor/bundle
       - save_cache:
           key: 1-gems-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
       - run:
-          name: Decode ecure.properties
+          name: Decode secure.properties
           command: |
+            echo 'export SECURE_PROPERTIES="SECURE_PROPERTIES"' >> $BASH_ENV
             echo SECURE_PROPERTIES | base64 -di > app/secure.properties
             sudo chmod +x ./gradlew
       - run:
