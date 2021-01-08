@@ -35,8 +35,8 @@ jobs:
       - run:
           name: Decode secure.properties
           command: |
-            echo 'export SECURE_PROPERTIES="SECURE_PROPERTIES"' >> $BASH_ENV
-            echo SECURE_PROPERTIES | base64 -di > app/secure.properties
+            echo 'export SECURE_PROPERTIES="$SECURE_PROPERTIES"' >> $BASH_ENV
+            echo $SECURE_PROPERTIES | base64 -di > app/secure.properties
             sudo chmod +x ./gradlew
       - run:
           # Export base64 encoded google-services.json
