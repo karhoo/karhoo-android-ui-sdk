@@ -64,5 +64,7 @@
 
     <!-- Karhoo Labs -->
     <string name="guest_checkout">Guest Checkout</string>
+    <string name="labs_force_a_crash" translatable="false">Force a Crash</string>
+    <string name="labs_send_analytics_event" translatable="false">Log an Analytics Event</string>
 
 </resources>

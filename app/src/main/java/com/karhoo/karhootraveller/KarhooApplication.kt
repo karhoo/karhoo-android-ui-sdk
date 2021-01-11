@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.provider.Settings
-import com.crashlytics.android.Crashlytics
 import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
 import com.karhoo.karhootraveller.util.KHMenuHandler
@@ -15,7 +14,6 @@ import com.karhoo.uisdk.notification.KarhooNotificationContract
 import com.karhoo.uisdk.notification.rides.past.RideNotificationView
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
-import io.fabric.sdk.android.Fabric
 import java.util.UUID
 
 open class KarhooApplication : Application() {
@@ -23,7 +21,6 @@ open class KarhooApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        Fabric.with(this, Crashlytics())
 
         KarhooUISDK.apply {
             setConfiguration(KarhooConfig(applicationContext))
