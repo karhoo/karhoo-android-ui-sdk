@@ -5,6 +5,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
@@ -121,7 +122,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         cancelVehicleCallback()
         if (bookingStatus != null && bookingStatus.destination == null
                 && categoryViewModels.isNotEmpty()) {
-            updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId()))
+            updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
         } else {
             requestVehicleAvailability(bookingStatus)
         }
@@ -162,6 +163,12 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     private fun updateVehicles(vehicles: QuoteList) {
+        if (vehicles.status == QuoteStatus.COMPLETED) {
+            cancelVehicleCallback()
+            if (vehicles.validity >= 5) {
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 5000L) }
+            }
+        }
         availabilityHandler?.get()?.hasAvailability = true
         currentCategories(currentCategories = vehicles.categories.keys.toList())
         availableVehicles = vehicles.categories
