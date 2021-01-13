@@ -57,7 +57,3 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
         }
     }
 }
-
-enum class ProviderType {
-    ADYEN, BRAINTREE
-}
