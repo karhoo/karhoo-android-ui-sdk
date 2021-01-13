@@ -24,7 +24,7 @@ The demo app require that you add your own set of API keys:
 - Create a file in the app directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
 - Add the API keys and configurations to secure.properties. You can also take a look at the `secure.properties.template` as an example.
     - [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-    -  Get a Segment API key (Optional)
+    - Enable Firebase analytics/crashlytics and add config file to the project (google-service.json) (Optional)
     - Add GUEST CHECKOUT configuration for your account in order to enable the guest checkout journey
     - Add Staging environment configuration in order to be able to use Staging environment
 - Update fabric API key in app/build.gradle 
