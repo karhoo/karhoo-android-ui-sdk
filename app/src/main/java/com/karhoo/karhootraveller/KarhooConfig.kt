@@ -2,7 +2,7 @@ package com.karhoo.karhootraveller
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import com.karhoo.karhootraveller.service.analytics.SegmentProvider
+import com.karhoo.karhootraveller.service.analytics.GoogleAnalyticsProvider
 import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
@@ -38,6 +38,6 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
-        return SegmentProvider(context)
+        return GoogleAnalyticsProvider()
     }
 }

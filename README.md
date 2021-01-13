@@ -19,7 +19,7 @@ The UI SDK extends on our [**Network SDK**](https://github.com/karhoo/karhoo-and
 
 <hr />
 
-## Introduction
+# Introduction
 
 The KarhooUISDK extends upon the Karhoo network SDK to give you the UI side of a ride hailing/booking experience. This is useful for Whitelabel applications or faster integration into existing applications. The UISDK provides entry points for View Controllers (screens) and components (views), that interact with the KarhooAPI to give out of the box experiences for users.
 You create the many different views found in the Traveller App. This could be the bookings screen, rides screen, profile screen, etc. Any of them all come from here, the UISDK. 
@@ -44,7 +44,7 @@ The demo app require that you add your own set of API keys:
 - Create a file in the app directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
 - Add the API keys and configurations to secure.properties. You can also take a look at the `secure.properties.template` as an example.
     - [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-    - Get a Segment API key (Optional)
+    - Enable Firebase analytics/crashlytics and add config file to the project (google-service.json) (Optional)
     - Add GUEST CHECKOUT configuration for your account in order to enable the guest checkout journey
     - Add Staging environment configuration in order to be able to use Staging environment
 - Update fabric API key in app/build.gradle 

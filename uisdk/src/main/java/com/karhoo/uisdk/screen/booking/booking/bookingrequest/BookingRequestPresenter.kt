@@ -80,11 +80,11 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
-            analytics?.bookingRequested(currentTripInfo(), outboundTripId)
             view?.initialiseGuestPayment(quote?.price)
         } else {
             view?.initialisePaymentProvider(quote?.price)
         }
+        analytics?.bookingRequested(currentTripInfo(), outboundTripId)
     }
 
     override fun hideBookingRequest() {
