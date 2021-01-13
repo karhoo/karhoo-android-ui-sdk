@@ -20,6 +20,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.auth.AuthService
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.analytics.Analytics
+import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
 
@@ -150,16 +151,20 @@ internal class SplashPresenter(view: SplashMVP.View,
     }
 
     private fun refreshUserNonce() {
-        userStore.currentUser.let {
-            val payer = Payer(id = it.userId,
-                              email = it.email,
-                              firstName = it.firstName,
-                              lastName = it.lastName)
+        userStore.paymentProvider?.let { provider ->
+            if (enumValueOf<ProviderType>(provider.id.toUpperCase()).equals(ProviderType.BRAINTREE)) {
+                userStore.currentUser.let { userInfo ->
+                    val payer = Payer(id = userInfo.userId,
+                                      email = userInfo.email,
+                                      firstName = userInfo.firstName,
+                                      lastName = userInfo.lastName)
 
-            val getNonceRequest = NonceRequest(payer = payer,
-                                               organisationId = it.organisations[0].id)
+                    val getNonceRequest = NonceRequest(payer = payer,
+                                                       organisationId = userInfo.organisations[0].id)
 
-            paymentService.getNonce(request = getNonceRequest).execute { }
+                    paymentService.getNonce(request = getNonceRequest).execute { }
+                }
+            }
         }
     }
 
