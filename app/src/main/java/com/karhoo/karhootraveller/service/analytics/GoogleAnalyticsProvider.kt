@@ -8,7 +8,8 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 
 class GoogleAnalyticsProvider : AnalyticProvider {
 
-    fun Map<String, Any?>.toBundle(): Bundle = bundleOf(*this.toList().toTypedArray())
+    @SuppressWarnings("SpreadOperator")
+    private fun Map<String, Any?>.toBundle(): Bundle = bundleOf(*this.toList().toTypedArray())
 
     override fun trackEvent(event: String) {
         Firebase.analytics.logEvent(event, null)
