@@ -19,6 +19,9 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewMode
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 private const val MAX_ACCEPTABLE_QTA = 20
@@ -162,13 +165,24 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                                                     .DestinationAddressEvent(null))
     }
 
-    private fun updateVehicles(vehicles: QuoteList) {
-        if (vehicles.status == QuoteStatus.COMPLETED) {
-            cancelVehicleCallback()
-            if (vehicles.validity >= 5) {
-                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 5000L) }
+    private fun handleVehicleValidity(vehicles: QuoteList) {
+        if (vehicles.validity >= 5) {
+            GlobalScope.launch {
+                delay(vehicles.validity.times(1000L))
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
             }
         }
+    }
+    
+    private fun handleVehiclePolling(vehicles: QuoteList) {
+        if (vehicles.status == QuoteStatus.COMPLETED) {
+            cancelVehicleCallback()
+            handleVehicleValidity(vehicles)
+        }
+    }
+
+    private fun updateVehicles(vehicles: QuoteList) {
+        handleVehiclePolling(vehicles)
         availabilityHandler?.get()?.hasAvailability = true
         currentCategories(currentCategories = vehicles.categories.keys.toList())
         availableVehicles = vehicles.categories
