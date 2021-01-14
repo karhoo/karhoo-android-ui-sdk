@@ -22,6 +22,6 @@ object ViewsConstants {
         const val BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR = 0.6
 
         const val VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR = 1000L
-        const val VALIDITY_DEFAULT_INTERVAL = 5000L
+        const val VALIDITY_DEFAULT_INTERVAL = 5
 
 }

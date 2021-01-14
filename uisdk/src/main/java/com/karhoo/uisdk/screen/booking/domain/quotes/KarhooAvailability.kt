@@ -169,9 +169,12 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     @Suppress("MagicNumber")
     private fun handleVehicleValidity(vehicles: QuoteList) {
-        val secondsToMilliseconds = VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
-        val minValidity = 5
-        val refreshDelay = if (vehicles.validity >= minValidity) vehicles.validity.times(secondsToMilliseconds) else VALIDITY_DEFAULT_INTERVAL
+
+        val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
+            vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        } else {
+            VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        }
 
         GlobalScope.launch {
             delay(refreshDelay)
