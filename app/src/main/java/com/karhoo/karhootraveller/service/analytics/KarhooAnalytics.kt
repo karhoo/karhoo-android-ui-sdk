@@ -123,22 +123,6 @@ class KarhooAnalytics private constructor() : Analytics {
                                            .build())
     }
 
-    override fun etaDisplayed(eta: Int, tripId: String) {
-        AnalyticsManager.fireEvent(Event.ETA_DISPLAYED,
-                                   Payloader.Builder.builder
-                                           .addCurrentEta(eta)
-                                           .tripId(tripId)
-                                           .build())
-    }
-
-    override fun detaDisplayed(deta: Int, tripId: String) {
-        AnalyticsManager.fireEvent(Event.TIME_TO_ARRIVAL,
-                                   Payloader.Builder.builder
-                                           .addTimeToArrival(deta)
-                                           .tripId(tripId)
-                                           .build())
-    }
-
     override fun userCancelTrip(trip: TripInfo?) {
         AnalyticsManager.fireEvent(Event.USER_CANCEL_TRIP, Payloader.Builder
                 .builder

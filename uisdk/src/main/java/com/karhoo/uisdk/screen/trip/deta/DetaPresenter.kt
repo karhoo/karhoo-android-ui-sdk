@@ -8,14 +8,12 @@ import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.drivertracking.DriverTrackingService
 import com.karhoo.sdk.api.service.trips.TripsService
-import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import java.util.Date
 import java.util.TimeZone
 
 class DetaPresenter(view: DetaMVP.View, private val driverTrackingService: DriverTrackingService,
-                    private val tripsService: TripsService,
-                    private val analytics: Analytics?)
+                    private val tripsService: TripsService)
     : BasePresenter<DetaMVP.View>(), DetaMVP.Presenter {
 
     private var driverPositionObserver: Observer<Resource<DriverTrackingInfo>>? = null
@@ -60,7 +58,6 @@ class DetaPresenter(view: DetaMVP.View, private val driverTrackingService: Drive
                 destinationEta = 1
             }
             view?.showDeta(destinationEta, offsetMilliseconds)
-            analytics?.detaDisplayed(destinationEta, tripId)
         }
     }
 

@@ -34,10 +34,6 @@ interface Analytics {
 
     fun tripStateChanged(tripState: TripInfo?)
 
-    fun etaDisplayed(eta: Int, tripId: String)
-
-    fun detaDisplayed(deta: Int, tripId: String)
-
     fun userCancelTrip(trip: TripInfo?)
 
     fun amountAddressesShown(amount: Int)

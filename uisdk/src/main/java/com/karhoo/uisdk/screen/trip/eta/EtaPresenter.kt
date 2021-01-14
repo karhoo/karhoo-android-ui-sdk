@@ -8,12 +8,10 @@ import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.drivertracking.DriverTrackingService
 import com.karhoo.sdk.api.service.trips.TripsService
-import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 
 class EtaPresenter(view: EtaMVP.View, private val driverTrackingService: DriverTrackingService,
-                   private val tripsService: TripsService,
-                   private val analytics: Analytics?)
+                   private val tripsService: TripsService)
     : BasePresenter<EtaMVP.View>(), EtaMVP.Presenter {
 
     private var driverPositionObserver: Observer<Resource<DriverTrackingInfo>>? = null
@@ -53,7 +51,6 @@ class EtaPresenter(view: EtaMVP.View, private val driverTrackingService: DriverT
         if (tripState == TripStatus.DRIVER_EN_ROUTE) {
             val originEta = driverTrackingInfo.originEta
             view?.showEta(originEta)
-            analytics?.etaDisplayed(originEta, tripId)
         }
     }
 
