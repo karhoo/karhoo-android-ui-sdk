@@ -166,9 +166,12 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     private fun handleVehicleValidity(vehicles: QuoteList) {
-        if (vehicles.validity >= 5) {
+        val multiplyValue = 1000L
+        val minValidity = 5
+
+        if (vehicles.validity >= minValidity) {
             GlobalScope.launch {
-                delay(vehicles.validity.times(1000L))
+                delay(vehicles.validity.times(multiplyValue))
                 vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
             }
         }
