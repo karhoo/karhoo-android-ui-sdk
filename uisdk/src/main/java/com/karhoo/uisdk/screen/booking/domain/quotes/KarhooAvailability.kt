@@ -173,7 +173,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             }
         }
     }
-    
+
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
             cancelVehicleCallback()
