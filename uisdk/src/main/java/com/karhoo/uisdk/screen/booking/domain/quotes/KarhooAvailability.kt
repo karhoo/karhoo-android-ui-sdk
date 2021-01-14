@@ -18,7 +18,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
-import com.karhoo.uisdk.util.ViewsConstants
+import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -168,12 +168,12 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     @Suppress("MagicNumber")
     private fun handleVehicleValidity(vehicles: QuoteList) {
-        val SECONDS_TO_MILLISECONDS = ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
+        val secondsToMilliseconds = VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
         val minValidity = 5
 
         if (vehicles.validity >= minValidity) {
             GlobalScope.launch {
-                delay(vehicles.validity.times(SECONDS_TO_MILLISECONDS))
+                delay(vehicles.validity.times(secondsToMilliseconds))
                 vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
             }
         }
