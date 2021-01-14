@@ -166,8 +166,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                     .DestinationAddressEvent(null))
     }
-
-    @Suppress("MagicNumber")
+    
     private fun handleVehicleValidity(vehicles: QuoteList) {
 
         val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
