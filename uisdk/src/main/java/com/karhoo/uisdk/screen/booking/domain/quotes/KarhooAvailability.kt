@@ -165,6 +165,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                                                     .DestinationAddressEvent(null))
     }
 
+    @Suppress("MagicNumber")
     private fun handleVehicleValidity(vehicles: QuoteList) {
         val multiplyValue = 1000L
         val minValidity = 5
