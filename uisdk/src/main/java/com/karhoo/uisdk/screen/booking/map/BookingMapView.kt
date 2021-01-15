@@ -122,7 +122,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     override fun zoomMapToOriginAndDestination(origin: Position, destination: Position?) {
         googleMap?.let {
-            it.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
+            it.setPadding(0, 0,
                           0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
             val destinationLatLng = destination?.let {
                 LatLng(destination.latitude, destination
@@ -144,7 +144,6 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 uiSettings.isMapToolbarEnabled = false
                 setOnCameraIdleListener(this@BookingMapView)
                 setOnCameraMoveStartedListener(this@BookingMapView)
-                setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
                 with(TypedValue()) {
                     resources.getValue(R.dimen.map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
@@ -374,14 +373,14 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     //region Map Padding
 
     fun setNoBottomPadding() {
-        googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, 0)
+        googleMap?.setPadding(0, 0, 0, 0)
         recentreMapIfDestinationIsNull()
 
         animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
     }
 
     fun setDefaultPadding() {
-        googleMap?.setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
+        googleMap?.setPadding(0, 0,
                               0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
 
         animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_quotes)

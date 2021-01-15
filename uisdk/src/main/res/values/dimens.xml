@@ -73,7 +73,6 @@
     <dimen name="map_padding_bottom">225dp</dimen>
     <dimen name="map_padding_bottom_snackbar">85dp</dimen>
     <dimen name="map_padding_bottom_trip">185dp</dimen>
-    <dimen name="map_padding_top">120dp</dimen>
 
     <dimen name="elevation_default">5dp</dimen>
     <dimen name="full_width_button_height">48dp</dimen>

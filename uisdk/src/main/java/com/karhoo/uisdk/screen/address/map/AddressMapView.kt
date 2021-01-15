@@ -110,7 +110,6 @@ class AddressMapView @JvmOverloads constructor(context: Context,
                 uiSettings.isMapToolbarEnabled = false
                 setOnCameraIdleListener(this@AddressMapView)
                 setOnCameraMoveStartedListener(this@AddressMapView)
-                setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top), 0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
                 with(TypedValue()) {
                     resources.getValue(R.dimen.map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)

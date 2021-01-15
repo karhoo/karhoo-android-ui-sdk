@@ -14,8 +14,7 @@
     <FrameLayout
         android:id="@+id/pickupIconLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/map_padding_top">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/pickupPinIcon"
