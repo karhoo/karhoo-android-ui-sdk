@@ -34,6 +34,7 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteSource
+import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
@@ -695,7 +696,7 @@ class TestData {
                                                 )
 
         val VEHICLES_ASAP = Vehicles(
-                status = "PROGRESSING",
+                status = QuoteStatus.PROGRESSING,
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
                 quotes = listOf(
