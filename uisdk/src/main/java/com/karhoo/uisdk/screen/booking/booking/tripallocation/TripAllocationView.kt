@@ -186,7 +186,7 @@ class TripAllocationView @JvmOverloads constructor(
 
     override fun showAllocationDelayAlert() {
         val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.allocation_delay)
+                .setTitle(R.string.allocation_delay_title)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
                     dialog.cancel()
                     presenter?.unsubscribeFromUpdates()
@@ -197,7 +197,7 @@ class TripAllocationView @JvmOverloads constructor(
                                                   .build(context))
                     actions?.onBookingCancelledOrFinished()
                 }
-        alertDialogBuilder.setMessage("It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.")
+        alertDialogBuilder.setMessage(R.string.allocation_delay_text)
         alertDialogBuilder.show()
     }
 
