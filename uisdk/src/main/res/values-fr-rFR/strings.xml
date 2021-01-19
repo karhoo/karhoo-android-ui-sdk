@@ -263,6 +263,7 @@
     <string name="finding_your_ride">Création de votre course</string>
     <string name="allocating_trip_two">Ceci peut prendre quelques instants</string>
     <string name="cancelling">Maintenez pour annuler</string>
+    <string name="allocation_delay">Allocation delay</string>
 
     <!-- Rides -->
     <string name="title_page_upcoming">À venir</string>

@@ -21,6 +21,7 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
+import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.screen.web.WebActivity
 import com.karhoo.uisdk.util.IntentUtils
@@ -66,6 +67,8 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.isEnabled = true
         cancelButton.setListener { cancelTrip() }
         presenter?.waitForAllocation(trip)
+        handler.postDelayed({ presenter?.handleAllocationDelay() }, ALLOCATION_ALERT_DELAY)
+
     }
 
     private fun cancelTrip() {
@@ -173,6 +176,31 @@ class TripAllocationView @JvmOverloads constructor(
         actions?.onBookingCancelledOrFinished()
     }
 
+    override fun displayWebTracking(followCode: String) {
+        val trackingWebIntent = WebActivity.Builder.builder
+                .url(BuildConfig.KARHOO_WEB_TRACKING_URL + followCode)
+                .build(context)
+        context.startActivity(BookingActivity.Builder.builder.build(context))
+        context.startActivity(trackingWebIntent)
+    }
+
+    override fun showAllocationDelayAlert() {
+        val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
+                .setTitle(R.string.allocation_delay)
+                .setPositiveButton(R.string.ok) { dialog, _ ->
+                    dialog.cancel()
+                    presenter?.unsubscribeFromUpdates()
+                    cancelButton.isEnabled = false
+                    visibility = View.INVISIBLE
+                    isClickable = false
+                    context.startActivity(RidesActivity.Builder.builder
+                                                  .build(context))
+                    actions?.onBookingCancelledOrFinished()
+                }
+        alertDialogBuilder.setMessage("It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.")
+        alertDialogBuilder.show()
+    }
+
     override fun showCallToCancelDialog(number: String, quote: String) {
         cancelButton.isEnabled = true
         AlertDialog.Builder(context, R.style.DialogTheme)
@@ -181,14 +209,6 @@ class TripAllocationView @JvmOverloads constructor(
                 .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
                 .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
                 .show()
-    }
-
-    override fun displayWebTracking(followCode: String) {
-        val trackingWebIntent = WebActivity.Builder.builder
-                .url(BuildConfig.KARHOO_WEB_TRACKING_URL + followCode)
-                .build(context)
-        context.startActivity(BookingActivity.Builder.builder.build(context))
-        context.startActivity(trackingWebIntent)
     }
 
     private fun makeCall(number: String) {
@@ -206,4 +226,7 @@ class TripAllocationView @JvmOverloads constructor(
         bookingRequestStateViewModel.viewStates().observe(lifecycleOwner, observer)
     }
 
+    companion object {
+        private const val ALLOCATION_ALERT_DELAY = 60000L
+    }
 }
