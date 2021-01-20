@@ -12,7 +12,6 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.drivertracking.DriverTrackingService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.analytics.Analytics
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -41,7 +40,6 @@ class DetaPresenterTest {
     private var observableDriverTracking: Observable<DriverTrackingInfo> = mock()
     private var tripStateCall: PollCall<TripState> = mock()
     private var observableTripState: Observable<TripState> = mock()
-    private var analytics: Analytics = mock()
 
     private var observerDriverCaptor = argumentCaptor<Observer<Resource<DriverTrackingInfo>>>()
     private var observerTripStateCaptor = argumentCaptor<Observer<Resource<TripState>>>()
@@ -127,20 +125,6 @@ class DetaPresenterTest {
         } else {
             verify(view).showDeta(1, 0)
         }
-    }
-
-    /**
-     * Given:   A valid trip id
-     * When:    trip state is POB
-     * Then:    send deta displayed analytics event
-     */
-    @Test
-    fun `send analytics event when trip state is POB`() {
-        presenter.monitorDeta(TRIP_ID, LONDON_TIMEZONE)
-        observerTripStateCaptor.firstValue.onValueChanged(Resource.Success(tripWithState(TripStatus.PASSENGER_ON_BOARD)))
-        observerDriverCaptor.firstValue.onValueChanged(Resource.Success(DRIVER_POSITION))
-
-        verify(analytics).detaDisplayed(DESTINATION_ETA, TRIP_ID)
     }
 
     /**

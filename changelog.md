@@ -340,10 +340,10 @@
 ## Release 1.9.1
 * DROID-1464 Force logout
 
-# Release 1.9.2
+## Release 1.9.2
 * Merge 1.8.41 into 1.9.1 build
 
-# Release 1.10.0
+## Release 1.10.0
 * DROID-1442 Pick-up type on pre-book confirmation screen
 * DROID-1444 Pick-up type on past rides
 * DROID-1439 Show pick-up type on quote list
@@ -352,19 +352,19 @@
 * DROID-1443 Pick-up type on upcoming rides
 * DROID-1476 All Booking Errors show the same error message to the user
 
-# Release 1.10.1
+## Release 1.10.1
 * DROID-1489 Greying out func of continue button
 * DROID-1454 French translation for trip_id and last_trip_id
 
-# Release 1.10.2
+## Release 1.10.2
 * DROID-779 Car image & pins
 
-# Release 1.10.3
+## Release 1.10.3
 * DROID-1501 Remove duplicate resources
 * DROID-1459 Add ability to view 'default' card on confirm quote screen
 * DROID-1460 Add ability to change payment method 
 
-# Release 1.10.4
+## Release 1.10.4
 * DROID-1499 Ability to view and change card on Profile screen
 * DROID-1507 Number plate covers car description if car description is too long
 * DROID-1510 Create 'rate trip' on ride details screen
@@ -374,7 +374,7 @@
 * DROID-1516 Fix failing Airport tests due to changes in flight number validation
 * DROID-1526 Hide rating names on rate trip
 
-# Release 1.10.5
+## Release 1.10.5
 * DROID-1519 Going back from Add Payment Method causes the screen to stay in loading state
 * DROID-1530 App doesn't update the card details on the UI
 * DROID-1515 French translation
@@ -383,27 +383,27 @@
 * DROID-1530 App doesnt update mastercard
 * DROID-1533 Odd Symbol on rides
 
-# Release 1.10.6
+## Release 1.10.6
 * DROID-1531 Rating Translation
 * DROID-1534 Remove rating on upcoming rides only
 
-# Release 1.10.7
+## Release 1.10.7
 * DROID-1537 "Ensure a source is set for MOBILE" not visible in Segment when selecting a rating
 
-# Release 1.10.8
+## Release 1.10.8
 * DROID-1538 Rename rating event
 
-# Release 1.10.9
+## Release 1.10.9
 * DROID-1541 Background for pickup type visible on non airport prebook trip
 * DROID-1465 Disable automatic 'zoom' on reverse geo-locate
 * DROID-1412 Can't use the app if data connection is slow and wifi scanning if off
 * DROID-1527 Ability to add new card without a trip
 
-# Release 1.10.10
+## Release 1.10.10
 * DROID-1512 Create 'additional feedback' page
 * DROID-1553 Remove RXJava across the SDK
 
-# Release 1.10.11
+## Release 1.10.11
 * DROID-1552 Typo in profile page
 * DROID-1550 Add check for MOBILE_USER role
 * DROID-1548 app doesn't zoom in automatically when it should
@@ -411,30 +411,30 @@
 * DROID-1524 Change of highlight colour to new Karhoo branding
 * DROID-1522 Change of logo on side menu and splash screen
 
-# Release 1.10.12
+## Release 1.10.12
 * DROID-1536 Can't change my card on fr_CA
 * DROID-1565 Address search results list does not clear if address field is cleared
 
-# Release 1.10.13
+## Release 1.10.13
 * DROID-1543 T&Cs and Privacy policy links send user to Karhoo website
 * DROID-1576 User can submit empty feedback
 * DROID-1581 Incorrect placeholder text in upcoming rides in FR
 
-# Release 1.10.14
+## Release 1.10.14
 * DROID-1580 Ability to pre-book up to one year in advance
 * DROID-1579 'Thank you for submitting feedback' message on rated trips
 * DROID-1583 Crash when hiding soft keyboard
 
-# Release 1.10.15
+## Release 1.10.15
 * DROID-1567 Android Design - Color changes
 
-# Release 1.10.16
+## Release 1.10.16
 * DROID-1603 AndroidX Migration
 * DROID-1591 Payment Method Different Font
 * DROID-1586 Can't scroll last item in quote list
 * DROID-1584 Update to Braintree 2.0
 
-# Release 1.10.17
+## Release 1.10.17
 * DROID-1611 Braintree to only use 2.0 3DS
 * DROID-1590 Empty pages on quote screen
 * CB-53 Update NSDK Doc site
@@ -442,7 +442,7 @@
 * CB-49 Generate Session Token
 * CB-51 Change Address Request
 
-# Release 1.10.19
+## Release 1.10.19
 * DROID-1587 Incomplete trip status
 * DROID-1606 View config ext
 * DROID-1649 Edit profile button
@@ -450,7 +450,7 @@
 * DROID-1474 Save and Cancel buttons
 * DROID-1626 Feature Flag from JSON
 
-# Release 1.10.20
+## Release 1.10.20
 * DROID-1578 Fixed Redundant text in footing of register screen
 * DROID-1628 Airport pick up type symbol visible even though no pick up type is returned
 * DROID-1540 Fleet logo stretched in upcoming and past rides

@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-allopen'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.jaredsburrows.license'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'jacoco'
@@ -65,17 +66,14 @@ android {
         applicationId "com.karhoo.karhootraveller"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 141
-        versionName "1.11.2"
+        versionCode 142
+        versionName "1.11.3"
         testInstrumentationRunner "com.karhoo.karhootraveller.common.testrunner.TravellerTestRunner"
 
         def secureProps = new Properties()
         if (file("secure.properties").exists()) {
             file("secure.properties")?.withInputStream { secureProps.load(it) }
         }
-        buildConfigField("String", "KARHOO_SEGMENT_API_KEY_SANDBOX", (secureProps.getProperty("KARHOO_SEGMENT_API_KEY_SANDBOX") ?: ""))
-        buildConfigField("String", "KARHOO_SEGMENT_API_KEY_PROD", (secureProps.getProperty("KARHOO_SEGMENT_API_KEY_PROD") ?: ""))
-
         buildConfigField("String", "ADYEN_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
         buildConfigField("String", "ADYEN_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
         buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
@@ -145,14 +143,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //noinspection OutdatedLibrary
-    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
-        transitive = true
-    }
-    implementation "com.segment.analytics.android:analytics:4.3.0-RC2"
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.karumi:dexter:4.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'

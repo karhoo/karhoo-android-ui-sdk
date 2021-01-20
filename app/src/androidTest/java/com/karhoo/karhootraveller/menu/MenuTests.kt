@@ -67,27 +67,6 @@ class MenuTests : Launch {
 
     /**
      * Given:   I am on the side menu
-     * When:    I click help
-     * Then:    I am taken to the Help page
-     **/
-    @Test
-    fun userSeesHelpPageFromSideMenu() {
-        preferences {
-            setUserPreference(USER)
-        }
-        booking(this) {
-            pressMenuButton()
-        }
-        menu {
-            clickOnHelpButton()
-            longSleep()
-        } result {
-            helpPageIsShown()
-        }
-    }
-
-    /**
-     * Given:   I am on the side menu
      * When:    I click on About
      * Then:    I can see the following elements: Version, T&Cs button, PP button and Licence
      * button, About title

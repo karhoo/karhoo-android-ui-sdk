@@ -89,8 +89,9 @@ class KarhooAvailabilityTest {
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
-                                                                            CATEGORIES, id = QuoteId())))
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
+                                                                          id = QuoteId(),
+                                                                          validity = 30)))
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
             assertEquals(7, it?.size)
         })
@@ -110,8 +111,9 @@ class KarhooAvailabilityTest {
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
-                                                                            CATEGORIES, id = QuoteId())))
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
+                                                                          id = QuoteId(),
+                                                                          validity = 30)))
 
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
             assertEquals(3, it?.size)
@@ -136,8 +138,9 @@ class KarhooAvailabilityTest {
         observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories =
-                                                                            CATEGORIES, id = QuoteId())))
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
+                                                                          id = QuoteId(),
+                                                                          validity = 30)))
 
         availability.filterVehicleListByCategory(MPV)
         verify(analytics).vehicleSelected(MPV, null)

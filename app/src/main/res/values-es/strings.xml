@@ -43,7 +43,6 @@
     <string name="licence_attribution">Atribución de Licencia</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
     <string name="link_t_n_c_terms" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_terms_and_conditions.html</string>
     <string name="link_t_n_c_privacy" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_privacy.html</string>
 

@@ -7,7 +7,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.ViewsConstants.ETA_ELEVATION
 import kotlinx.android.synthetic.main.uisdk_view_eta.view.etaLayout
@@ -18,8 +17,7 @@ class EtaView @JvmOverloads constructor(context: Context,
                                         defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr), EtaMVP.View, LifecycleObserver {
 
-    private val presenter = EtaPresenter(this, KarhooApi.driverTrackingService,
-                                         KarhooApi.tripService, KarhooUISDK.analytics)
+    private val presenter = EtaPresenter(this, KarhooApi.driverTrackingService, KarhooApi.tripService)
 
     init {
         inflate(context, R.layout.uisdk_view_eta, this)

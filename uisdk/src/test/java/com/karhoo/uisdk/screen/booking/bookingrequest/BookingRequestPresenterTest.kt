@@ -124,13 +124,33 @@ class BookingRequestPresenterTest {
      * And:     The booking button is enabled
      */
     @Test
-    fun `logged in user sees the correct input fields and booking button is enabled`() {
+    fun `user without saved card sees the correct input fields and booking button is disabled`() {
+        setAuthenticatedUser()
+
+        requestPresenter.setBookingFields(false)
+
+        verify(view).showAuthenticatedUserBookingFields()
+        verify(view).disableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
+    }
+
+    /**
+     * Given:   A user see the booking screen
+     * When:    They are a logged in user
+     * Then:    The correct input fields are displayed
+     * And:     The booking button is enabled
+     */
+    @Test
+    fun `user with saved card sees the correct input fields and booking button is enabled`() {
+        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
+
         setAuthenticatedUser()
 
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -148,6 +168,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).disableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -167,6 +188,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(PassengerDetails())
         verify(view).enableBooking()
+        verify(view).updateBookingButtonForGuest()
     }
 
     /**
@@ -186,6 +208,7 @@ class BookingRequestPresenterTest {
 
         verify(view).showGuestBookingFields(passengerDetails)
         verify(view).enableBooking()
+        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -382,7 +405,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `display and populate flight number field when pickup address has airport POI`() {
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-                                                                                PoiType.AIRPORT))
+                                                                               PoiType.AIRPORT))
         whenever(flightDetails.flightNumber).thenReturn("flight number")
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
@@ -400,7 +423,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `display flight number field when pickup address has airport POI`() {
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-                                                                                PoiType.AIRPORT))
+                                                                               PoiType.AIRPORT))
         val observer = requestPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
 
@@ -484,6 +507,7 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError()
+        verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string.K0001))
@@ -621,6 +645,7 @@ class BookingRequestPresenterTest {
         verify(preferenceStore).lastTrip = trip
         verify(view).animateOut()
         verify(view).onTripBookedSuccessfully(trip)
+        verify(view, never()).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent.BookingSuccess(trip))
     }

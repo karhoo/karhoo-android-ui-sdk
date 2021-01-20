@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentsNonce
+import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.auth.AuthService
@@ -25,6 +26,7 @@ import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertTrue
@@ -150,24 +152,39 @@ class SplashPresenterTest {
 
     /**
      * Given:   The app has started
-     * When:    The all details are valid
+     * When:    The all details are valid AND Payment Provider is Braintree
      * Then:    A call should be made to proceed
-     * And:     Get nonce should be called
+     * And:     Get nonce should be called ONCE
      */
     @Test
-    fun allDetailsValidAllowTheUserIntoTheApp() {
-        whenever(playServicesUtil.playServicesUpToDate()).thenReturn(0)
+    fun allDetailsValidAllowTheUserIntoTheAppBraintree() {
         whenever(userStore.isCurrentUserValid).thenReturn(true)
         whenever(userStore.currentUser).thenReturn(userInfo)
+        whenever(userStore.paymentProvider).thenReturn(paymentProviderBraintree)
         whenever(paymentService.getNonce(any())).thenReturn(paymentCall)
 
         presenter.isAppValid(true)
         presenter.isTokenValid(true)
-        presenter.getUsersLocation()
-        presenter.onPositionUpdated(location)
-        presenter.checkIfUserIsLoggedIn()
 
-        verify(paymentService).getNonce(any())
+        verify(paymentService, times(1)).getNonce(any())
+        verify(view).goToBooking(any())
+    }
+
+    /**
+     * Given:   The app has started
+     * When:    The all details are valid AND Payment Provider is Adyen
+     * Then:    A call should be made to proceed
+     * And:     Get nonce should NOT be called
+     */
+    @Test
+    fun allDetailsValidAllowTheUserIntoTheAppAdyen() {
+        whenever(userStore.isCurrentUserValid).thenReturn(true)
+        whenever(userStore.paymentProvider).thenReturn(paymentProviderAdyen)
+
+        presenter.isAppValid(true)
+        presenter.isTokenValid(true)
+
+        verify(paymentService, never()).getNonce(any())
         verify(view).goToBooking(any())
     }
 
@@ -316,13 +333,16 @@ class SplashPresenterTest {
     companion object {
 
         val userInfo = UserInfo(
-                firstName = "tizi",
-                lastName = "poo",
-                email = "tizipoo@tizi.poo",
-                locale = "IT",
-                organisations = listOf(Organisation("Tizicab", "tiz", listOf())),
-                phoneNumber = "12345678",
-                userId = "T1Z1P00")
+                firstName = "David",
+                lastName = "Smith",
+                email = "test.test@test.test",
+                phoneNumber = "+441234 56789",
+                userId = "123",
+                locale = "en-GB",
+                organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
+
+        val paymentProviderBraintree = Provider(id = "braintree", loyalty = listOf())
+        val paymentProviderAdyen = Provider(id = "adyen", loyalty = listOf())
 
     }
 

@@ -6,7 +6,8 @@ import com.karhoo.uisdk.R
 import java.io.IOException
 import java.nio.charset.Charset
 
-fun loadHTMLFromAsset(context: Context): String? {
+@Deprecated("Use ContactEmailProvider instead")
+internal fun loadHTMLFromAsset(context: Context): String? {
     var html: String?
     try {
         val input = context.resources.openRawResource(R.raw.support)

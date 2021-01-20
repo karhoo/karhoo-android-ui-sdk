@@ -24,12 +24,6 @@ class AddressRobot : BaseTestRobot() {
                 text = searchTerm)
     }
 
-    fun selectFirstAddress() {
-        clickListItem(
-                listRes = R.id.recycler,
-                position = 0)
-    }
-
     fun pressBackButtonToolbar() {
         clickButtonByContentDescription(R.string.abc_action_bar_up_description)
     }

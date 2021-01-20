@@ -8,7 +8,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.DateUtil
 import kotlinx.android.synthetic.main.uisdk_view_deta.view.detaText
@@ -22,7 +21,7 @@ class DetaView @JvmOverloads constructor(context: Context,
     : FrameLayout(context, attrs, defStyleAttr), DetaMVP.View, LifecycleObserver {
 
     private val presenter = DetaPresenter(this, KarhooApi.driverTrackingService,
-                                          KarhooApi.tripService, KarhooUISDK.analytics)
+                                          KarhooApi.tripService)
 
     companion object {
         private const val MILLISECONDS_IN_ONE_MINUTE = 60L * 1000L

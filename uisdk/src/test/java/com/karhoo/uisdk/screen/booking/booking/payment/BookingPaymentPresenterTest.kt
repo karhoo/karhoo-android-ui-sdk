@@ -10,10 +10,10 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
-import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
@@ -71,7 +71,23 @@ class BookingPaymentPresenterTest {
 
     /**
      * Given:   A call is made to retrieve the payment provider
-     * When:    It fails
+     * When:    There is a stored provider
+     * Then:    Then the call is not made
+     */
+    @Test
+    fun `provider call not made if there is a stored provider`() {
+        whenever(userStore.paymentProvider).thenReturn(Provider("Adyen"))
+
+        presenter.getPaymentProvider()
+
+        verify(paymentsService, never()).getPaymentProvider()
+        verify(view).bindDropInView()
+    }
+
+    /**
+     * Given:   A call is made to retrieve the payment provider
+     * And:     The provider is not stored
+     * When:    The call fails
      * Then:    An error is shown
      */
     @Test
@@ -85,7 +101,8 @@ class BookingPaymentPresenterTest {
 
     /**
      * Given:   A call is made to retrieve the payment provider
-     * When:    A provider is successefully retrieved
+     * And:     The provider is not stored
+     * When:    A provider is successfully retrieved
      * Then:    The drop in view is bound
      */
     @Test
