@@ -54,8 +54,8 @@ android {
 
 publish {
     def groupProjectID = 'com.karhoo'
-    def artifactProjectID = 'uisdk-canary'
-    def publishVersionID = '1.1.1.211220-1'
+    def artifactProjectID = 'uisdk'
+    def publishVersionID = '1.2.0-rc-1'
     def repoNameID = 'Android'
 
     userOrg = 'flit-tech'
