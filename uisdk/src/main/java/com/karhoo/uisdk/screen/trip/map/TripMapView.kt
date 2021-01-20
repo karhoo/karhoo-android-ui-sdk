@@ -165,7 +165,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
                 resources.getValue(R.dimen.map_zoom_max, this, true)
                 setMaxZoomPreference(this.float)
             }
-            setPadding(0, resources.getDimensionPixelSize(R.dimen.map_padding_top),
+            setPadding(0, 0,
                        0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom_trip))
 
             presenter.mapIsReady()

@@ -23,10 +23,6 @@ class MenuRobot : BaseTestRobot() {
         clickButtonByString(R.string.profile)
     }
 
-    fun clickOnHelpButton() {
-        clickButtonByString(R.string.help)
-    }
-
     fun clickOnAboutButton() {
         clickButtonByString(R.string.about)
     }
@@ -49,10 +45,6 @@ class MenuRobot : BaseTestRobot() {
 }
 
 class ResultRobot : BaseTestRobot() {
-
-    fun helpPageIsShown() {
-        stringIsVisibleIsDescendant(HELP_TEXT, R.id.webView)
-    }
 
     fun versionElementIsVisible() {
         textIsVisible(R.string.version)

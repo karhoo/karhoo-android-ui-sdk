@@ -257,7 +257,7 @@
         <item name="srcCompat">@drawable/uisdk_ic_pickup_pin</item>
         <item name="android:layout_width">29dp</item>
         <item name="android:layout_height">41dp</item>
-        <item name="android:layout_marginBottom">20.5dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <style name="KhBookingMapLocationIcon">

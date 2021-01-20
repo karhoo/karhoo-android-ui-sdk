@@ -82,7 +82,6 @@ class AddressTests : Launch {
             successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH)
         }
-
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
             shortSleep()

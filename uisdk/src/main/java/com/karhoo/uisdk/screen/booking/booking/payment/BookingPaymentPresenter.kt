@@ -1,11 +1,9 @@
 package com.karhoo.uisdk.screen.booking.booking.payment
 
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.Provider
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.R
@@ -47,15 +45,15 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
     }
 
     override fun getPaymentProvider() {
-        paymentsService.getPaymentProvider().execute { result ->
-            when (result) {
-                is Resource.Success -> view?.bindDropInView()
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+        if (userStore.paymentProvider == null) {
+            paymentsService.getPaymentProvider().execute { result ->
+                when (result) {
+                    is Resource.Success -> view?.bindDropInView()
+                    is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                }
             }
+        } else {
+            view?.bindDropInView()
         }
     }
-}
-
-enum class ProviderType {
-    ADYEN, BRAINTREE
 }

@@ -166,6 +166,7 @@ class KarhooWebActivity : BaseActivity() {
         const val EXTRA_URL = "extra::url"
         const val EXTRA_TRIP_ID = "extra::tripid"
         const val EXTRA_SCROLLABLE = "extra::scrollable"
+        @Deprecated("Use ContactEmailProvider instead")
         const val INTERCEPT_HELP_STRING = "CreateRecordForm"
         const val TYPE_TEXT_HTML = "text/html"
         const val UTF_8 = "UTF-8"

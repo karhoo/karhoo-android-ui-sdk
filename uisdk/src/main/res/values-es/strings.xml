@@ -82,10 +82,13 @@
     <string name="dispatch_cancelled">Disculpa, %s no tiene conductores disponibles ahora</string>
 
     <!-- Support -->
-    <string name="link_customer_support">https://karhoo.force.com/customersupport</string>
+    <string name="email_info">Por favor no elimines esta información ya que nos ayuda a mejorar la app.</string>
+    <string name="email_report_issue_message">Por favor, deje sus comentarios sobre un tema específico en el espacio a continuación.</string>
+    <string name="feedback_email">support@karhoo.com</string>
     <string name="support_email">support@karhoo.com</string>
     <string name="supplier_email">suppliers@karhoo.com</string>
-    <string name="feedback">Realimentación</string>
+    <string name="feedback">Sugerencias</string>
+    <string name="support_report_issue">Reportar problema</string>
     <string name="title_activity_intent_chooser_send_email">Enviar Email</string>
     <string name="all_category">Todo</string>
     <string name="saloon">Salón</string>
@@ -168,7 +171,7 @@
     <string name="price">Tarifa</string>
     <string name="card">Tarjeta</string>
     <string name="karhoo_id">ID Karhoo</string>
-    <string name="report_issue">Reportar incidencia</string>
+    <string name="report_issue">Reportar problema</string>
 
     <!-- Trip states -->
     <string name="confirmed">Tu viaje ha sido confirmado con %s</string>
@@ -326,7 +329,6 @@
     <string name="last_trip_id">№ de última reserva: %1$s</string>
     <string name="last_trip_id_not_set">№ de última reserva: no establecido</string>
     <string name="about">Información</string>
-    <string name="email_info">Por favor no elimines esta información ya que nos ayuda a mejorar la app. </string>
     <string name="booking_failed_body_no_fleet_name">La demanda es alta en estos momentos. La flota seleccionada no tiene conductores disponibles.</string>
     <string name="info">info</string>
     <string name="location_disabled">Activa los servicios de localización para utilizar la aplicación</string>

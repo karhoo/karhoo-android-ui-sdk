@@ -184,7 +184,6 @@ class ResultRobot : BaseTestRobot() {
         sideMenuProfileButtonIsVisible(R.string.profile)
         sideMenuRidesButtonIsVisible()
         sideMenuFeedbackButtonIsVisible(R.string.feedback)
-        sideMenuHelpButtonIsVisible(R.string.help)
         sideMenuAboutButtonIsVisible(R.string.about)
     }
 
@@ -205,10 +204,6 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun sideMenuFeedbackButtonIsVisible(expectedText: Int) {
-        textIsVisible(expectedText)
-    }
-
-    fun sideMenuHelpButtonIsVisible(expectedText: Int) {
         textIsVisible(expectedText)
     }
 
@@ -386,7 +381,6 @@ class ResultRobot : BaseTestRobot() {
     fun checkSideMenuGuestCheckoutIsShown() {
         sideMenuKarhooLogoIsVisible()
         sideMenuFeedbackButtonIsVisible(R.string.feedback)
-        sideMenuHelpButtonIsVisible(R.string.help)
         sideMenuAboutButtonIsVisible(R.string.about)
         sideMenuButtonIsNotVisiible(R.string.profile)
     }

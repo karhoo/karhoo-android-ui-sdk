@@ -12,7 +12,6 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.drivertracking.DriverTrackingService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.analytics.Analytics
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.atLeastOnce
@@ -40,7 +39,6 @@ class EtaPresenterTest {
     private var observableDriverTracking: Observable<DriverTrackingInfo> = mock()
     private var tripStatusCall: PollCall<TripState> = mock()
     private var observableTripState: Observable<TripState> = mock()
-    private var analytics: Analytics = mock()
 
     private var error: Throwable? = null
 
@@ -99,20 +97,6 @@ class EtaPresenterTest {
         observerDriverTrackingCaptor.firstValue.onValueChanged(Resource.Success(DRIVER_POSITION))
 
         verify(view).showEta(ORIGIN_ETA)
-    }
-
-    /**
-     * Given:   A valid trip id
-     * When:    trip state is DER
-     * Then:    send eta displayed analytics event
-     */
-    @Test
-    fun `send analytics event when trip state is DER`() {
-        presenter.monitorEta(TRIP_ID)
-        observerTripStateCaptor.firstValue.onValueChanged(Resource.Success(tripWithState(TripStatus.DRIVER_EN_ROUTE)))
-        observerDriverTrackingCaptor.firstValue.onValueChanged(Resource.Success(DRIVER_POSITION))
-
-        verify(analytics).etaDisplayed(ORIGIN_ETA, TRIP_ID)
     }
 
     /**

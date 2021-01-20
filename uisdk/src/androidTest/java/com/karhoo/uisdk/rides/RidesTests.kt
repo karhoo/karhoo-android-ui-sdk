@@ -136,6 +136,7 @@ class RidesTests : Launch {
      * Then:    The ride status is "cancelled"
      **/
     @Test
+    @AllowFlaky(attempts = 5)
     fun cancelledStatusOnCancelledByDriverPastRide() {
         serverRobot {
             successfulToken()

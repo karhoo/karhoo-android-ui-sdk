@@ -5,6 +5,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuoteList
+import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
@@ -17,7 +18,12 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
+import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
+import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 
 private const val MAX_ACCEPTABLE_QTA = 20
@@ -121,7 +127,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         cancelVehicleCallback()
         if (bookingStatus != null && bookingStatus.destination == null
                 && categoryViewModels.isNotEmpty()) {
-            updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId()))
+            updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
         } else {
             requestVehicleAvailability(bookingStatus)
         }
@@ -160,8 +166,30 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                     .DestinationAddressEvent(null))
     }
+    
+    private fun handleVehicleValidity(vehicles: QuoteList) {
+
+        val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
+            vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        } else {
+            VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        }
+
+        GlobalScope.launch {
+            delay(refreshDelay)
+            vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
+        }
+    }
+
+    private fun handleVehiclePolling(vehicles: QuoteList) {
+        if (vehicles.status == QuoteStatus.COMPLETED) {
+            cancelVehicleCallback()
+            handleVehicleValidity(vehicles)
+        }
+    }
 
     private fun updateVehicles(vehicles: QuoteList) {
+        handleVehiclePolling(vehicles)
         availabilityHandler?.get()?.hasAvailability = true
         currentCategories(currentCategories = vehicles.categories.keys.toList())
         availableVehicles = vehicles.categories
