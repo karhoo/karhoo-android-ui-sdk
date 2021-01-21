@@ -72,7 +72,6 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
 
     private fun tripAllocated(trip: TripInfo) {
         showAllocationAlert = false
-        showAllocationAlert = false
         unsubscribeFromUpdates()
         if (isGuest()) {
             trip.followCode?.let { view?.displayWebTracking(it) } ?: view?.goToTrip(trip)
