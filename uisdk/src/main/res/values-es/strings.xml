@@ -302,8 +302,8 @@
     <string name="difficulties_cancelling_message">Estamos experimentando dificultades cancelando tu viaje. Por favor llama a la flota. </string>
     <string name="finding_your_ride">Cargando tu viaje...</string>
     <string name="allocating_trip_one">Espera hasta que se te asigne un conductor</string>
-    <string name="allocation_delay_title">Allocation delay</string>
-    <string name="allocation_delay_text">It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.</string>
+    <string name="allocation_delay_title">Retraso en asignación</string>
+    <string name="allocation_delay_text">La flota está tardando más de lo habitual en asignar un conductor. Por favor espere, contacte con la flota o cancele y vuelva a reservar con una flota diferente.</string>
     <string name="base">Tarifa base</string>
     <string name="ride_details">Detalles del viaje</string>
     <string name="ride_confirmed">Viaje confirmado</string>
