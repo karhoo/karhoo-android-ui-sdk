@@ -263,6 +263,8 @@
     <string name="finding_your_ride">Création de votre course</string>
     <string name="allocating_trip_two">Ceci peut prendre quelques instants</string>
     <string name="cancelling">Maintenez pour annuler</string>
+    <string name="allocation_delay_title">Délai d’attribution</string>
+    <string name="allocation_delay_text">L’attribution d\'un véhicule prend plus de temps que prévu. Veuillez patienter, contacter la flotte partenaire, ou annuler la course et recommander avec une autre flotte.</string>
 
     <!-- Rides -->
     <string name="title_page_upcoming">À venir</string>

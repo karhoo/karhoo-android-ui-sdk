@@ -261,6 +261,8 @@
     <string name="allocating_trip_one">Please wait whilst you\'re allocated a driver</string>
     <string name="allocating_trip_two">This may take a moment or two</string>
     <string name="cancelling">Hold to cancel</string>
+    <string name="allocation_delay_title">Allocation delay</string>
+    <string name="allocation_delay_text">It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.</string>
 
     <!-- Rides -->
     <string name="title_page_upcoming">Upcoming</string>
