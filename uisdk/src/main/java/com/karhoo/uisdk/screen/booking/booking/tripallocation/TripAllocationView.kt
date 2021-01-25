@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.BuildConfig
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
@@ -67,7 +68,9 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.isEnabled = true
         cancelButton.setListener { cancelTrip() }
         presenter?.waitForAllocation(trip)
-        handler.postDelayed({ presenter?.handleAllocationDelay() }, ALLOCATION_ALERT_DELAY)
+        if(!KarhooUISDKConfigurationProvider.isGuest()) {
+            handler.postDelayed({ presenter?.handleAllocationDelay() }, ALLOCATION_ALERT_DELAY)
+        }
 
     }
 
@@ -227,6 +230,6 @@ class TripAllocationView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val ALLOCATION_ALERT_DELAY = 60000L
+        private const val ALLOCATION_ALERT_DELAY = 20000L
     }
 }
