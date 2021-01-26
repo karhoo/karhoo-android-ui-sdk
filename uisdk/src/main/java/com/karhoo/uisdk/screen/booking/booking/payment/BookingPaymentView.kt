@@ -115,6 +115,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private fun cardDetailsVisibility(visibility: Int) {
         cardLogoImage.visibility = visibility
         cardNumberText.visibility = visibility
+        changeCardLabel.visibility = visibility
     }
 
     private fun setCardType(cardType: CardType?) {
