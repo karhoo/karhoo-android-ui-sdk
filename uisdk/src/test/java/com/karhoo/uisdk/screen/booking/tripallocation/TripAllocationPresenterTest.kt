@@ -250,9 +250,9 @@ class TripAllocationPresenterTest {
     fun `delayed allocation alert shown for delayed allocation for karhoo user`() {
         presenter.waitForAllocation(tripRequested)
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view).showAllocationDelayAlert()
+        verify(view).showAllocationDelayAlert(tripRequested)
     }
 
     /**
@@ -268,9 +268,9 @@ class TripAllocationPresenterTest {
         presenter.waitForAllocation(tripRequested)
         tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripUserCancelled))
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view, never()).showAllocationDelayAlert()
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
     }
 
     /**
@@ -286,9 +286,9 @@ class TripAllocationPresenterTest {
         presenter.waitForAllocation(tripRequested)
         tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripDispatchCancelled))
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view, never()).showAllocationDelayAlert()
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
     }
 
     /**
@@ -304,9 +304,9 @@ class TripAllocationPresenterTest {
         presenter.waitForAllocation(tripRequested)
         tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripDriverEnRoute))
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view, never()).showAllocationDelayAlert()
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
     }
 
     /**
@@ -320,9 +320,9 @@ class TripAllocationPresenterTest {
         UnitTestUISDKConfig.setTokenAuthentication(context)
         presenter.waitForAllocation(tripRequested)
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view).showAllocationDelayAlert()
+        verify(view).showAllocationDelayAlert(tripRequested)
     }
 
     /**
@@ -336,9 +336,9 @@ class TripAllocationPresenterTest {
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
         presenter.waitForAllocation(tripRequested)
 
-        presenter.handleAllocationDelay()
+        presenter.handleAllocationDelay(tripRequested)
 
-        verify(view, never()).showAllocationDelayAlert()
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
     }
 
     companion object {

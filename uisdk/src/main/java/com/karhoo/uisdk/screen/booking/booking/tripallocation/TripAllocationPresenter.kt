@@ -38,9 +38,9 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
         }
     }
 
-    override fun handleAllocationDelay() {
+    override fun handleAllocationDelay(trip: TripInfo) {
         if(!KarhooUISDKConfigurationProvider.isGuest() && showAllocationAlert) {
-            view?.showAllocationDelayAlert()
+            view?.showAllocationDelayAlert(trip)
         }
     }
 

@@ -7,7 +7,7 @@ interface TripAllocationMVP {
     interface Presenter {
         fun cancelTrip()
 
-        fun handleAllocationDelay()
+        fun handleAllocationDelay(trip: TripInfo)
 
         fun waitForAllocation(trip: TripInfo)
 
@@ -15,7 +15,7 @@ interface TripAllocationMVP {
     }
 
     interface View {
-        fun showAllocationDelayAlert()
+        fun showAllocationDelayAlert(trip: TripInfo)
 
         fun displayBookingFailed(fleetName: String)
 

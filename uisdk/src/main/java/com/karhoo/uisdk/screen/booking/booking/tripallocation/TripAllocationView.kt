@@ -22,7 +22,7 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
-import com.karhoo.uisdk.screen.rides.RidesActivity
+import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.screen.web.WebActivity
 import com.karhoo.uisdk.util.IntentUtils
@@ -69,7 +69,7 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.setListener { cancelTrip() }
         presenter?.waitForAllocation(trip)
         if(!KarhooUISDKConfigurationProvider.isGuest()) {
-            handler.postDelayed({ presenter?.handleAllocationDelay() }, ALLOCATION_ALERT_DELAY)
+            handler.postDelayed({ presenter?.handleAllocationDelay(trip) }, ALLOCATION_ALERT_DELAY)
         }
 
     }
@@ -187,7 +187,7 @@ class TripAllocationView @JvmOverloads constructor(
         context.startActivity(trackingWebIntent)
     }
 
-    override fun showAllocationDelayAlert() {
+    override fun showAllocationDelayAlert(trip: TripInfo) {
         val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
                 .setTitle(R.string.allocation_delay_title)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
@@ -196,7 +196,8 @@ class TripAllocationView @JvmOverloads constructor(
                     cancelButton.isEnabled = false
                     visibility = View.INVISIBLE
                     isClickable = false
-                    context.startActivity(RidesActivity.Builder.builder
+                    context.startActivity(RideDetailActivity.Builder.newBuilder()
+                                                  .trip(trip)
                                                   .build(context))
                     actions?.onBookingCancelledOrFinished()
                 }
@@ -230,6 +231,6 @@ class TripAllocationView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val ALLOCATION_ALERT_DELAY = 20000L
+        private const val ALLOCATION_ALERT_DELAY = 60000L
     }
 }
