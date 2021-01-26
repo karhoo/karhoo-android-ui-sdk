@@ -231,6 +231,6 @@ class TripAllocationView @JvmOverloads constructor(
     }
 
     companion object {
-        private const val ALLOCATION_ALERT_DELAY = 1000L
+        private const val ALLOCATION_ALERT_DELAY = 60000L
     }
 }
