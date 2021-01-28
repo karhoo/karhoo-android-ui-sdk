@@ -124,6 +124,11 @@ class TestData {
 
         const val LONGITUDE = -0.1769328
 
+        const val DER_NOTIFICATION = "Your KarhooTestFleet driver is en route"
+
+        const val ARRIVED_NOTIFICATION = "Your KarhooTestFleet driver has arrived"
+
+
         val TRIP_INFO_BLANK = TripInfo()
 
         val POSITION = Position(

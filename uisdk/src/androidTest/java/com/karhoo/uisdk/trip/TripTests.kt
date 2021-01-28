@@ -17,8 +17,10 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.ARRIVED_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.DER_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
@@ -514,6 +516,57 @@ class TripTests : Launch {
                     destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noNumberPlateDERCheck()
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to driver en route
+     * Then:    I can see the driver en route notification at the top of the screen
+     **/
+    @Test
+    fun DERNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_DER,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_DER)
+        trip(this) {
+        } result {
+            notificationStringCheck(DER_NOTIFICATION)
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to driver arrived
+     * Then:    I can see the driver arrived notification at the top of the screen
+     **/
+    @Test
+    fun arrivedNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_ARRIVED,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_ARRIVED)
+        trip(this) {
+        } result {
+            notificationStringCheck(ARRIVED_NOTIFICATION)
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to Passenger on board
+     * Then:    I can see the POB notification at the top of the screen
+     **/
+    @Test
+    fun POBNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_POB,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_POB)
+        trip(this) {
+        } result {
+            notificationIntCheck(R.string.pass_on_board)
         }
     }
 
