@@ -398,4 +398,12 @@ class ResultRobot : BaseTestRobot() {
         dropOffAddressCheck(destinationText)
     }
 
+    fun notificationStringCheck(notification: String) {
+        stringIsVisibleIsDescendant(notification, R.id.notificationLabel)
+    }
+
+    fun notificationIntCheck(notification: Int) {
+        textIsVisibleIsDescendant(notification, R.id.notificationLabel)
+    }
+
 }
