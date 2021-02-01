@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 
 interface ContactOptionsMVP {
@@ -11,7 +12,7 @@ interface ContactOptionsMVP {
 
         fun showTripCancelledDialog()
 
-        fun showCallToCancelDialog(number: String, quote: String)
+        fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError)
 
         fun enableCallDriver()
 
@@ -31,7 +32,7 @@ interface ContactOptionsMVP {
 
         fun observeTripStatus(bookingStatusPresenter: BookingStatusMVP.Presenter)
 
-        fun showError(@StringRes errorMessageId: Int)
+        fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?)
 
     }
 

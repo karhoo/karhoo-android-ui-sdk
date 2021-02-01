@@ -217,7 +217,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
     private fun handleErrorWhileCancelling(karhooError: KarhooError) {
         view?.hideLoadingDialog()
         if (trip.fleetInfo == null) {
-            view?.displayError(returnErrorStringOrLogoutIfRequired(karhooError))
+            view?.displayError(returnErrorStringOrLogoutIfRequired(karhooError), karhooError)
         } else {
             view?.displayCallToCancelDialog(trip.fleetInfo?.phoneNumber.orEmpty(), trip.fleetInfo?.name.orEmpty())
         }

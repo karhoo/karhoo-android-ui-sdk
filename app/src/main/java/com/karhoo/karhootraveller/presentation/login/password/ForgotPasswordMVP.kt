@@ -1,6 +1,7 @@
 package com.karhoo.karhootraveller.presentation.login.password
 
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.base.listener.ErrorView
 
 interface ForgotPasswordMVP {
@@ -19,7 +20,7 @@ interface ForgotPasswordMVP {
 
         fun resetEmailSent()
 
-        fun couldNotSendResetLink(@StringRes error: Int)
+        fun couldNotSendResetLink(@StringRes error: Int, karhooError: KarhooError?)
 
         fun dismissLoading()
 

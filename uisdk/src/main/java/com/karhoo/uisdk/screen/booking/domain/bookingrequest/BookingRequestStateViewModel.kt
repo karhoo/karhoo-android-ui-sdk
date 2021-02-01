@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.domain.bookingrequest
 
 import android.app.Application
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.base.state.BaseStateViewModel
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
@@ -23,12 +24,13 @@ class BookingRequestStateViewModel(application: Application) : BaseStateViewMode
             is BookingRequestViewContract.BookingRequestEvent.BookingSuccess ->
                 updateBookingRequestStatus(viewEvent.tripInfo)
             is BookingRequestViewContract.BookingRequestEvent.BookingError ->
-                handleBookingError(viewEvent.stringId)
+                handleBookingError(viewEvent.stringId, viewEvent.karhooError)
         }
     }
 
-    private fun handleBookingError(@StringRes stringId: Int) {
-        viewAction = BookingRequestViewContract.BookingRequestAction.HandleBookingError(stringId)
+    private fun handleBookingError(@StringRes stringId: Int, karhooError: KarhooError?) {
+        viewAction = BookingRequestViewContract.BookingRequestAction.HandleBookingError(stringId,
+                                                                                        karhooError)
     }
 
     private fun showTermsAndConditions(url: String) {

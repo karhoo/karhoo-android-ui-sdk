@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.uisdk.KarhooUISDK
@@ -316,8 +317,8 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                                                 text = resources.getString(R.string.location_disabled)))
                 }
 
-                override fun onLocationInfoUnavailable(errorMessage: String) {
-                    showSnackbar(SnackbarConfig(text = errorMessage))
+                override fun onLocationInfoUnavailable(errorMessage: String, karhooError: KarhooError?) {
+                    showSnackbar(SnackbarConfig(text = errorMessage, karhooError = karhooError))
                 }
 
                 override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {
@@ -402,7 +403,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     //endregion
 
-    override fun showErrorDialog(stringId: Int) {
+    override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
         // Do nothing
     }
 

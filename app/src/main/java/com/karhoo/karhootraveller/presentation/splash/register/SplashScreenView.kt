@@ -27,6 +27,7 @@ import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.karhootraveller.service.preference.KarhooPreferenceStore
 import com.karhoo.karhootraveller.util.playservices.KarhooPlayServicesUtil
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
@@ -82,7 +83,7 @@ class SplashScreenView @JvmOverloads constructor(
         splashActions?.startActivity(intent)
     }
 
-    override fun showError() {
+    override fun showError(karhooError: KarhooError?) {
         Toast.makeText(context, "Invalid Token User", Toast.LENGTH_LONG)
     }
 

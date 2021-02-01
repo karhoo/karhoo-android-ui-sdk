@@ -26,7 +26,7 @@ internal class AddressResultListPresenter(
         addressService.locationInfo(LocationInfoRequest(place.placeId, addressProvider.getSessionToken())).execute { result ->
             when (result) {
                 is Resource.Success -> view?.setAddress(result.data, addressPositionInList)
-                is Resource.Failure -> view?.showError(returnErrorStringOrLogoutIfRequired(result.error))
+                is Resource.Failure -> view?.showError(returnErrorStringOrLogoutIfRequired(result.error), result.error)
             }
         }
     }

@@ -49,7 +49,7 @@ class BookingPaymentPresenter(view: BookingPaymentMVP.View,
             paymentsService.getPaymentProvider().execute { result ->
                 when (result) {
                     is Resource.Success -> view?.bindDropInView()
-                    is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                    is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
                 }
             }
         } else {

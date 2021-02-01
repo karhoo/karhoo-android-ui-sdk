@@ -87,8 +87,8 @@ class KarhooAddressProvider(private val analytics: Analytics?,
                 addresses = Addresses(placeSearch, Places())
                 notifyObservers()
             }
-            KarhooError.CouldNotGetAddress -> errorView?.get()?.showErrorDialog(returnErrorStringOrLogoutIfRequired(karhooError))
-            else -> errorView?.get()?.showSnackbar(SnackbarConfig(text = null, stringId = returnErrorStringOrLogoutIfRequired(karhooError)))
+            KarhooError.CouldNotGetAddress -> errorView?.get()?.showErrorDialog(returnErrorStringOrLogoutIfRequired(karhooError), karhooError)
+            else -> errorView?.get()?.showSnackbar(SnackbarConfig(text = null, messageResId = returnErrorStringOrLogoutIfRequired(karhooError), karhooError = karhooError))
         }
     }
 

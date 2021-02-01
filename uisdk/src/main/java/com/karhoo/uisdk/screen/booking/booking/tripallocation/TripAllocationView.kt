@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.screen.booking.booking.tripallocation
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
@@ -13,11 +13,15 @@ import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -155,15 +159,19 @@ class TripAllocationView @JvmOverloads constructor(
     override fun displayBookingFailed(fleetName: String) {
         visibility = View.INVISIBLE
         isClickable = false
-        val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.booking_failed)
-                .setPositiveButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-        if (fleetName.isBlank()) {
-            alertDialogBuilder.setMessage(resources.getString(R.string.booking_failed_body_no_fleet_name))
+
+        val message = if (fleetName.isBlank()) {
+            resources.getString(R.string.booking_failed_body_no_fleet_name)
         } else {
-            alertDialogBuilder.setMessage(String.format(resources.getString(R.string.booking_failed_body), fleetName))
+            String.format(resources.getString(R.string.booking_failed_body), fleetName)
         }
-        alertDialogBuilder.show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.booking_failed,
+                message = message,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
         actions?.onBookingCancelledOrFinished()
     }
 
@@ -171,11 +179,15 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.isEnabled = true
         visibility = View.INVISIBLE
         isClickable = false
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.cancel_ride_successful)
-                .setMessage(R.string.cancel_ride_successful_message)
-                .setPositiveButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_ride_successful,
+                messageResId = R.string.cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
+
         actions?.onBookingCancelledOrFinished()
     }
 
@@ -188,31 +200,34 @@ class TripAllocationView @JvmOverloads constructor(
     }
 
     override fun showAllocationDelayAlert(trip: TripInfo) {
-        val alertDialogBuilder = AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.allocation_delay_title)
-                .setPositiveButton(R.string.ok) { dialog, _ ->
-                    dialog.cancel()
-                    presenter?.unsubscribeFromUpdates()
-                    cancelButton.isEnabled = false
-                    visibility = View.INVISIBLE
-                    isClickable = false
-                    context.startActivity(RideDetailActivity.Builder.newBuilder()
-                                                  .trip(trip)
-                                                  .build(context))
-                    actions?.onBookingCancelledOrFinished()
-                }
-        alertDialogBuilder.setMessage(R.string.allocation_delay_text)
-        alertDialogBuilder.show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.allocation_delay_title,
+                messageResId = R.string.allocation_delay_text,
+                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                                                         DialogInterface.OnClickListener { dialog, _ ->
+                                                             dialog.cancel()
+                                                             presenter?.unsubscribeFromUpdates()
+                                                             cancelButton.isEnabled = false
+                                                             visibility = View.INVISIBLE
+                                                             isClickable = false
+                                                             context.startActivity(RideDetailActivity.Builder.newBuilder()
+                                                                                           .trip(trip)
+                                                                                           .build(context))
+                                                             actions?.onBookingCancelledOrFinished() })
+                )
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
-    override fun showCallToCancelDialog(number: String, quote: String) {
+    override fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError?) {
         cancelButton.isEnabled = true
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.difficulties_cancelling_title)
-                .setMessage(R.string.difficulties_cancelling_message)
-                .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
-                .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.difficulties_cancelling_title,
+                messageResId = R.string.difficulties_cancelling_message,
+                positiveButton = KarhooAlertDialogAction(R.string.call,
+                                                         DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     private fun makeCall(number: String) {

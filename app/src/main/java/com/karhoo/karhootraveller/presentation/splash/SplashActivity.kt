@@ -1,6 +1,7 @@
 package com.karhoo.karhootraveller.presentation.splash
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.TransitionDrawable
 import android.location.Location
@@ -11,7 +12,6 @@ import android.transition.Explode
 import android.view.View
 import android.view.Window
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +22,9 @@ import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.base.SnackbarState
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.NetworkReceiver
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
@@ -54,11 +57,12 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
 
         val isAutomaticLogout = intent.extras?.getBoolean(EXTRA_AUTOMATIC_LOGOUT) ?: false
         if (isAutomaticLogout) {
-            AlertDialog.Builder(this, R.style.DialogTheme)
-                    .setMessage(R.string.automatic_logout_message)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-                    .create()
-                    .show()
+            val config = KarhooAlertDialogConfig(
+                                    messageResId = R.string.automatic_logout_message,
+                                    positiveButton = KarhooAlertDialogAction(android.R.string.ok,
+                                                              DialogInterface.OnClickListener {
+                                                                  _, _ -> }))
+            KarhooAlertDialogHelper(this).showAlertDialog(config)
         }
     }
 

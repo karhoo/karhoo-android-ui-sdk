@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleOwner
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -22,12 +23,12 @@ interface BookingRequestViewContract {
     sealed class BookingRequestEvent {
         data class TermsAndConditionsRequested(val url: String) : BookingRequestEvent()
         data class BookingSuccess(val tripInfo: TripInfo) : BookingRequestEvent()
-        data class BookingError(@StringRes val stringId: Int) : BookingRequestEvent()
+        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?): BookingRequestEvent()
     }
 
     sealed class BookingRequestAction {
         data class ShowTermsAndConditions(val url: String) : BookingRequestAction()
         object WaitForTripAllocation : BookingRequestAction()
-        data class HandleBookingError(@StringRes val stringId: Int) : BookingRequestAction()
+        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?): BookingRequestAction()
     }
 }

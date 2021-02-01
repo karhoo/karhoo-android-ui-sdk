@@ -186,11 +186,11 @@ class UserProfileView @JvmOverloads constructor(context: Context,
     }
 
     override fun showProfileUpdateSuccess(userInfo: UserInfo) {
-        actions?.showSnackbar(SnackbarConfig(text = null, stringId = R.string.profile_update_successful))
+        actions?.showSnackbar(SnackbarConfig(text = null, messageResId = R.string.profile_update_successful))
     }
 
     override fun showProfileUpdateFailure(error: KarhooError) {
-        actions?.showSnackbar(SnackbarConfig(text = error.userFriendlyMessage))
+        actions?.showSnackbar(SnackbarConfig(text = error.userFriendlyMessage, karhooError = error))
     }
 
     override fun showProgressView() {

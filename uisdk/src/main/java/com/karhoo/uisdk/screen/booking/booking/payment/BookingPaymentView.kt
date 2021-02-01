@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.QuotePrice
@@ -132,12 +133,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         dropInView?.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun showError(error: Int) {
-        cardActions?.showErrorDialog(error)
+    override fun showError(error: Int, karhooError: KarhooError?) {
+        cardActions?.showErrorDialog(error, karhooError)
     }
 
-    override fun showPaymentDialog(braintreeSDKToken: String) {
-        paymentActions?.showPaymentDialog()
+    override fun showPaymentDialog(braintreeSDKToken: String, karhooError: KarhooError?) {
+        paymentActions?.showPaymentDialog(karhooError)
     }
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -165,9 +166,9 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentData, price = price)
     }
 
-    override fun showPaymentFailureDialog() {
+    override fun showPaymentFailureDialog(error: KarhooError?) {
         refresh()
-        paymentActions?.showPaymentFailureDialog()
+        paymentActions?.showPaymentFailureDialog(error)
     }
 
     override fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {

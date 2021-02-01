@@ -9,6 +9,7 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -109,7 +110,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                         getPaymentMethods()
                     }
                 }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
@@ -137,7 +139,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                                 view?.showPaymentUI(this.adyenKey, it, this.price)
                             }
                         }
-                        is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                        is Resource.Failure -> view?.showError(R.string.something_went_wrong,result.error)
+                        //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
             }
@@ -154,7 +157,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 view?.threeDSecureNonce(tripId, tripId, amount)
             }
             else -> {
-                view?.showError(R.string.payment_issue_message)
+                view?.showError(R.string.something_went_wrong, karhooError = KarhooError.FailedToCallMoneyService)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }

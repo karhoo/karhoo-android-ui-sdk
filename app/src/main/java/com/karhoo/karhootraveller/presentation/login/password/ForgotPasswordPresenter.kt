@@ -30,7 +30,8 @@ class ForgotPasswordPresenter(private val userService: UserService, view: Forgot
     private fun handleError(karhooError: KarhooError) {
         handleAuthError(karhooError)
         view?.dismissLoading()
-        view?.couldNotSendResetLink(error = returnErrorStringOrLogoutIfRequired(karhooError))
+        view?.couldNotSendResetLink(error = returnErrorStringOrLogoutIfRequired(karhooError),
+                                    karhooError = karhooError)
     }
 
     private fun handleAuthError(error: KarhooError) {

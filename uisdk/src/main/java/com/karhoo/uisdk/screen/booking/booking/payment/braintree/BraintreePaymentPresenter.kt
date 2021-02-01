@@ -63,7 +63,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
-                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken)
+                is Resource.Failure -> view?.showPaymentDialog(braintreeSDKToken, result.error)
             }
         }
     }
@@ -73,7 +73,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(price))
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
@@ -139,7 +140,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
                 }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
@@ -163,7 +165,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }

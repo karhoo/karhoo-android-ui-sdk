@@ -101,7 +101,7 @@ class KarhooAddressProviderTest {
         searchProvider.setSearchQuery("Some Search Query")
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(errorView).showSnackbar(eq(SnackbarConfig(text = null, stringId = R.string.K0001)))
+        verify(errorView).showSnackbar(eq(SnackbarConfig(text = null, messageResId = R.string.K0001)))
     }
 
     /**

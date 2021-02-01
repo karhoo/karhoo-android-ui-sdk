@@ -12,6 +12,7 @@ import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.logoutAndResetApp
 import com.karhoo.karhootraveller.util.playservices.PlayServicesUtil
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.NonceRequest
@@ -128,7 +129,7 @@ internal class SplashPresenter(view: SplashMVP.View,
             is AuthenticationMethod.KarhooUser -> view?.goToLogin()
             is AuthenticationMethod.Guest -> view?.goToBooking(null)
             is AuthenticationMethod.TokenExchange -> handleTokenExchange(loginType)
-            else -> view?.showError()
+            else -> view?.showError(KarhooError.InternalSDKError)
         }
     }
 
@@ -137,7 +138,7 @@ internal class SplashPresenter(view: SplashMVP.View,
         authService.login(token).execute { result ->
             when (result) {
                 is Resource.Success -> view?.goToBooking(null)
-                is Resource.Failure -> view?.showError()
+                is Resource.Failure -> view?.showError(result.error)
             }
         }
     }

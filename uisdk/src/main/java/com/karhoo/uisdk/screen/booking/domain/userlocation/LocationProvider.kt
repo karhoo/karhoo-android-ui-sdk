@@ -13,6 +13,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.SettingsClient
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.network.response.Resource
@@ -36,7 +37,7 @@ class LocationProvider(private val context: Context,
                     when (result) {
                         is Resource.Success -> locationInfoListener.onLocationInfoReady(result.data)
                         is Resource.Failure -> locationInfoListener.onLocationInfoUnavailable(
-                                context.getString(returnErrorStringOrLogoutIfRequired(result.error)))
+                                context.getString(returnErrorStringOrLogoutIfRequired(result.error)), result.error)
                     }
                 }
             }
@@ -119,7 +120,7 @@ interface LocationInfoListener {
 
     fun onLocationServicesDisabled()
 
-    fun onLocationInfoUnavailable(errorMessage: String)
+    fun onLocationInfoUnavailable(errorMessage: String, karhooError: KarhooError?)
 
     fun onResolutionRequired(resolvableApiException: ResolvableApiException)
 

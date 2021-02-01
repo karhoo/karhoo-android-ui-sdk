@@ -2,6 +2,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
 
 interface SplashMVP {
@@ -16,7 +17,7 @@ interface SplashMVP {
 
         fun goToLogin()
 
-        fun showError()
+        fun showError(karhooError: KarhooError?)
 
         fun onResume()
 
