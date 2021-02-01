@@ -138,7 +138,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.getPaymentNonce(price)
 
-        verify(paymentDropInActions).showError(R.string.payment_issue_message, KarhooError.CouldNotBook)
+        verify(paymentDropInActions).showError(R.string.something_went_wrong, KarhooError.FailedToCallMoneyService)
     }
 
     /**

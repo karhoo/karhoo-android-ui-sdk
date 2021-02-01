@@ -87,7 +87,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showTemporaryError(anyString())
+        verify(view).showTemporaryError(anyString(), any())
     }
 
     /**
