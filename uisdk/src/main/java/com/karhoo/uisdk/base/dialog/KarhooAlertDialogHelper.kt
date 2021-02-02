@@ -11,7 +11,7 @@ class KarhooAlertDialogHelper(val context: Context) {
     fun showAlertDialog(config: KarhooAlertDialogConfig): AlertDialog {
         with(builder) {
             config.view?.let { setView(it) }
-            config.title?.let { setTitle(config.title) }
+            setTitle(formatTitle(config))
             setMessage(formatMessage(config))
             config.positiveButton?.let {
                 setPositiveButton(config.positiveButton.buttonLabel) { dialog, which -> config
@@ -35,5 +35,13 @@ class KarhooAlertDialogHelper(val context: Context) {
             message = "$message [${error.code}]"
         }
         return message
+    }
+
+    private fun formatTitle(config: KarhooAlertDialogConfig): String {
+        var title = config.title.orEmpty()
+        if (title.isEmpty() && config.titleResId > 0) {
+            title = context.getString(config.titleResId)
+        }
+        return title
     }
 }

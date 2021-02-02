@@ -156,6 +156,10 @@ class ResultRobot : BaseTestRobot() {
         checkSnackbarWithText(expectedText)
     }
 
+    fun checkErrorIsShown(expectedText: String) {
+        checkSnackbarWithText(expectedText)
+    }
+
     fun checkBookingScreenIsShown() {
         ridesButtonIsEnabled()
         bothAddressFieldsAreVisible()
@@ -386,7 +390,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun samePickUpAndDestinationErrorIsDisplayed() {
-        checkErrorIsShown(R.string.Q0001)
+        checkErrorIsShown("Pick up and destination cannot be the same [Q0001]")
     }
 
     fun fullASAPQuotesListCheckGuest() {

@@ -106,7 +106,7 @@ class TripTests : Launch {
         trip(this) {
             shortSleep()
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 

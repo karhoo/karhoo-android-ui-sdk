@@ -58,7 +58,7 @@ class ContactOptionsView @JvmOverloads constructor(
         val config = KarhooAlertDialogConfig(
                 titleResId = R.string.cancel_ride_successful,
                 messageResId = R.string.cancel_ride_successful_message,
-                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
                                                          DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }

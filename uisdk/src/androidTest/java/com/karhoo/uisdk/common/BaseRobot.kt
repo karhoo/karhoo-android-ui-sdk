@@ -62,6 +62,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert
 import java.util.Date
+import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 
@@ -257,6 +258,10 @@ open abstract class BaseTestRobot {
             onView(withId(resId)).check(matches(withText(text)))
 
     fun checkSnackbarWithText(expectedText: Int) {
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
+    }
+
+    fun checkSnackbarWithText(expectedText: String) {
         onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
     }
 

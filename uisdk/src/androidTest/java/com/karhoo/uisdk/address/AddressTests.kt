@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.preferences
@@ -261,7 +260,7 @@ class AddressTests : Launch {
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
