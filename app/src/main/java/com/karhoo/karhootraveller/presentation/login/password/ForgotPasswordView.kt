@@ -8,6 +8,7 @@ import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.presentation.login.email.EmailDialog
 import com.karhoo.karhootraveller.presentation.login.email.EmailViewMVP
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -48,8 +49,8 @@ class ForgotPasswordView @JvmOverloads constructor(
         actions?.hideProgress()
     }
 
-    override fun couldNotSendResetLink(@StringRes error: Int) {
-        actions?.showSnackbar(SnackbarConfig(text = null, stringId = error))
+    override fun couldNotSendResetLink(@StringRes error: Int, karhooError: KarhooError?) {
+        actions?.showSnackbar(SnackbarConfig(text = null, messageResId = error, karhooError = karhooError))
     }
 
 }

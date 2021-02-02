@@ -154,11 +154,11 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             }
             KarhooError.OriginAndDestinationIdentical -> {
                 clearDestination()
-                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
-                returnErrorStringOrLogoutIfRequired(error)))
+                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
+                returnErrorStringOrLogoutIfRequired(error), karhooError = error))
             }
-            else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
-            returnErrorStringOrLogoutIfRequired(error)))
+            else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
+            returnErrorStringOrLogoutIfRequired(error), karhooError = error))
         }
     }
 

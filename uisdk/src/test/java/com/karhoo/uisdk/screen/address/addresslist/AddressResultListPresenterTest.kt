@@ -92,7 +92,7 @@ class AddressResultListPresenterTest {
         presenter.onAddressSelected(place, 0)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view, atLeastOnce()).showError(anyInt())
+        verify(view, atLeastOnce()).showError(anyInt(), any())
     }
 
     /**
@@ -108,7 +108,7 @@ class AddressResultListPresenterTest {
         presenter.onAddressSelected(place, 0)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showError(anyInt())
+        verify(view).showError(anyInt(), any())
     }
 
 }

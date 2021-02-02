@@ -237,7 +237,7 @@ class TripAllocationPresenterTest {
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showCallToCancelDialog(PHONE_NUMBER, FLEET_NAME)
+        verify(view).showCallToCancelDialog(PHONE_NUMBER, FLEET_NAME, KarhooError.Unexpected)
     }
 
     /**

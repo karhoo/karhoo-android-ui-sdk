@@ -48,11 +48,11 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     private fun handleErrorWhileCancelling(karhooError: KarhooError, tripInfo: TripInfo) {
         view?.showLoadingDialog(false)
         if (tripInfo.fleetInfo == null) {
-            view?.showError(returnErrorStringOrLogoutIfRequired(karhooError))
+            view?.showError(returnErrorStringOrLogoutIfRequired(karhooError), karhooError)
         } else {
             view?.showCallToCancelDialog(
                     tripInfo.fleetInfo?.phoneNumber.orEmpty(),
-                    tripInfo.fleetInfo?.name.orEmpty())
+                    tripInfo.fleetInfo?.name.orEmpty(), karhooError)
         }
     }
 

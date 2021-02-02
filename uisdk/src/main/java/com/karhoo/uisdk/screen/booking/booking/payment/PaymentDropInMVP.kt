@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.QuotePrice
 
@@ -50,9 +51,9 @@ interface PaymentDropInMVP {
 
         fun initialisePaymentFlow(price: QuotePrice?)
 
-        fun showError(@StringRes error: Int)
+        fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
-        fun showPaymentDialog(braintreeSDKToken: String)
+        fun showPaymentDialog(braintreeSDKToken: String, karhooError: KarhooError?)
 
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
 
@@ -60,7 +61,7 @@ interface PaymentDropInMVP {
 
         fun refresh()
 
-        fun showPaymentFailureDialog()
+        fun showPaymentFailureDialog(error: KarhooError? = null)
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String? = null)
     }

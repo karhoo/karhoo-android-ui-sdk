@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal" />
 
+        <TextView
+            android:id="@+id/errorCode"
+            style="@style/Text.Faded.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
     </LinearLayout>
 
     <com.karhoo.uisdk.base.view.LoadingButtonView

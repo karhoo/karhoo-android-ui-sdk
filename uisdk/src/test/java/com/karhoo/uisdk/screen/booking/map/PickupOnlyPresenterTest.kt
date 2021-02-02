@@ -22,6 +22,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.InjectMocks
 import org.mockito.junit.MockitoJUnitRunner
+import kotlin.jvm.Throws
 
 @RunWith(MockitoJUnitRunner::class)
 class PickupOnlyPresenterTest {
@@ -124,7 +125,7 @@ class PickupOnlyPresenterTest {
         presenter.mapMoved(googleLatLng)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(owner).onError(anyInt())
+        verify(owner).onError(anyInt(), any())
     }
 
     /**
@@ -139,7 +140,7 @@ class PickupOnlyPresenterTest {
         presenter.setOwner(owner)
         presenter.mapMoved(googleLatLng)
 
-        verify(owner, never()).onError(anyInt())
+        verify(owner, never()).onError(anyInt(), any())
         verify(owner, never()).locateAndUpdate()
     }
 

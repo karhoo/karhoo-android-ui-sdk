@@ -1,8 +1,8 @@
 package com.karhoo.karhootraveller.presentation.web
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.http.SslError
@@ -17,6 +17,9 @@ import com.karhoo.karhootraveller.R
 import com.karhoo.karhootraveller.util.VersionUtil
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.base.BaseActivity
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.web.prepopulateForUser
 import com.karhoo.uisdk.util.formattedTripId
 import kotlinx.android.synthetic.main.activity_web.progressBar
@@ -84,12 +87,14 @@ class KarhooWebActivity : BaseActivity() {
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(this@KarhooWebActivity, R.style.DialogTheme)
-                    .setMessage(R.string.notification_error_ssl_cert_invalid)
-                    .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
-                    .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }
-                    .create()
-                    .show()
+
+            val config = KarhooAlertDialogConfig(
+                    messageResId = R.string.notification_error_ssl_cert_invalid,
+                    positiveButton = KarhooAlertDialogAction(R.string.continue_journey,
+                                                             DialogInterface.OnClickListener { _, _ -> handler?.proceed() }),
+                    negativeButton = KarhooAlertDialogAction(R.string.cancel,
+                                                             DialogInterface.OnClickListener { _, _ -> handler?.cancel() }))
+            KarhooAlertDialogHelper(this@KarhooWebActivity).showAlertDialog(config)
         }
 
         override fun onLoadResource(view: WebView?, url: String?) {

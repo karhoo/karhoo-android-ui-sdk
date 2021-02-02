@@ -32,7 +32,7 @@ internal class BookingStatusPresenter(view: BookingStatusMVP.View, private val t
                 override fun onValueChanged(value: Resource<TripInfo>) {
                     when (value) {
                         is Resource.Success -> handleTripUpdated(value.data)
-                        is Resource.Failure -> view?.showTemporaryError(value.error.userFriendlyMessage)
+                        is Resource.Failure -> view?.showTemporaryError(value.error.userFriendlyMessage, value.error)
                     }
                 }
             }

@@ -186,7 +186,7 @@ class ContactOptionsPresenterTest {
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString())
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
     }
 
     /**
@@ -301,7 +301,7 @@ class ContactOptionsPresenterTest {
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showError(anyInt())
+        verify(view).showError(anyInt(), any())
     }
 
     /**

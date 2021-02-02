@@ -3,13 +3,18 @@ package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.IntentUtils
 import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.cancelButton
@@ -37,29 +42,36 @@ class ContactOptionsView @JvmOverloads constructor(
     }
 
     override fun showCancelConfirmationDialog() {
-        cancellationDialog = AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.cancel_your_ride)
-                .setMessage(R.string.cancellation_fee)
-                .setPositiveButton(R.string.cancel) { _, _ -> presenter.cancelTrip() }
-                .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_your_ride,
+                messageResId = R.string.cancellation_fee,
+                positiveButton = KarhooAlertDialogAction(R.string.cancel,
+                                                         DialogInterface.OnClickListener { _, _ -> presenter.cancelTrip() }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun showTripCancelledDialog() {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.cancel_ride_successful)
-                .setMessage(R.string.cancel_ride_successful_message)
-                .setPositiveButton(R.string.ok) { _, _ -> actions?.goToCleanBooking() }
-                .show()
+
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_ride_successful,
+                messageResId = R.string.cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
-    override fun showCallToCancelDialog(number: String, quote: String) {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.difficulties_cancelling_title)
-                .setMessage(R.string.difficulties_cancelling_message)
-                .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
-                .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+    override fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError) {
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.difficulties_cancelling_title,
+                messageResId = R.string.difficulties_cancelling_message,
+                positiveButton = KarhooAlertDialogAction(R.string.call,
+                                                         DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun makeCall(number: String) {
@@ -118,7 +130,7 @@ class ContactOptionsView @JvmOverloads constructor(
         bookingStatusPresenter.addTripInfoObserver(presenter)
     }
 
-    override fun showError(@StringRes errorMessageId: Int) {
-        actions?.showTemporaryError(resources.getString(errorMessageId))
+    override fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?) {
+        actions?.showTemporaryError(resources.getString(errorMessageId), karhooError)
     }
 }

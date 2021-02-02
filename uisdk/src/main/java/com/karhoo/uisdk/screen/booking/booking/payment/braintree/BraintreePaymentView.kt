@@ -11,8 +11,8 @@ import com.braintreepayments.api.interfaces.BraintreeErrorListener
 import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.extension.isGuest
 
@@ -34,7 +34,7 @@ class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : Paym
         braintreeFragment.addListener(
                 object : BraintreeErrorListener {
                     override fun onError(error: Exception?) {
-                        actions?.showPaymentFailureDialog()
+                        actions?.showPaymentFailureDialog(KarhooError.fromThrowable(error))
                     }
                 })
 

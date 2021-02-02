@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.tripallocation
 
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.network.observable.Observable
@@ -32,7 +33,7 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
                     .cancel(TripCancellation(tripIdentifier = it))
                     .execute { result ->
                         when (result) {
-                            is Resource.Failure -> handleFailedCancellation()
+                            is Resource.Failure -> handleFailedCancellation(result.error)
                         }
                     }
         }
@@ -52,10 +53,10 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
         tripIdentifier?.let { observeTripInfo(it) }
     }
 
-    private fun handleFailedCancellation() {
+    private fun handleFailedCancellation(karhooError: KarhooError?) {
         val number = trip?.fleetInfo?.phoneNumber.orEmpty()
         val fleet = trip?.fleetInfo?.name.orEmpty()
-        view?.showCallToCancelDialog(number, fleet)
+        view?.showCallToCancelDialog(number, fleet, karhooError)
     }
 
     private fun checkForAllocationOrCancellation(trip: TripInfo) {

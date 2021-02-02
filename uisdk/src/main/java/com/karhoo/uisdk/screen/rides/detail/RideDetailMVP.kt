@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.rides.detail
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -82,7 +83,7 @@ interface RideDetailMVP {
 
         fun displayTripCancelledDialog()
 
-        fun displayError(@StringRes errorMessage: Int)
+        fun displayError(@StringRes errorMessage: Int, karhooError: KarhooError?)
 
         fun displayCallToCancelDialog(number: String, quote: String)
 

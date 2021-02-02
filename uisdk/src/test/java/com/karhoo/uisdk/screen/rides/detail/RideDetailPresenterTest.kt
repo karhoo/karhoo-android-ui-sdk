@@ -541,7 +541,7 @@ class RideDetailPresenterTest {
         cancelTripLambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).hideLoadingDialog()
-        verify(view).displayError(anyInt())
+        verify(view).displayError(anyInt(), any())
     }
 
     /**

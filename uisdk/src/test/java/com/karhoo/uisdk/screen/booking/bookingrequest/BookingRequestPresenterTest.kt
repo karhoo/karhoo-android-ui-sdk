@@ -230,7 +230,7 @@ class BookingRequestPresenterTest {
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string
-                                                                                   .destination_book_error))
+                                                                                   .destination_book_error, null))
     }
 
     /**
@@ -251,7 +251,8 @@ class BookingRequestPresenterTest {
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.origin_book_error))
+                                                             .BookingError(R.string
+                                                                                   .origin_book_error, null))
     }
 
     /**
@@ -510,7 +511,7 @@ class BookingRequestPresenterTest {
         verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.K0001))
+                                                             .BookingError(R.string.K0001, KarhooError.GeneralRequestError))
     }
 
     /**
@@ -534,7 +535,8 @@ class BookingRequestPresenterTest {
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.booking_details_error))
+                                                             .BookingError(R.string
+                                                                                   .booking_details_error, KarhooError.InvalidRequestPayload))
     }
 
     /**
@@ -550,7 +552,7 @@ class BookingRequestPresenterTest {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
-        verify(view).showPaymentFailureDialog()
+        verify(view).showPaymentFailureDialog(KarhooError.CouldNotBookPaymentPreAuthFailed)
     }
 
     /**

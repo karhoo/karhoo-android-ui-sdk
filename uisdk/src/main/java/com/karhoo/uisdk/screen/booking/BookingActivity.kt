@@ -242,7 +242,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingRequestViewContract.BookingRequestAction.WaitForTripAllocation ->
                     waitForTripAllocation()
                 is BookingRequestViewContract.BookingRequestAction.HandleBookingError ->
-                    showErrorDialog(actions.stringId)
+                    showErrorDialog(actions.stringId, actions.karhooError)
             }
         }
     }

@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.network.request.TripSearch
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
@@ -79,7 +80,7 @@ class PastRidesPresenterTest {
         presenter.getPastRides()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showError(anyInt())
+        verify(view).showError(anyInt(), any())
     }
 
     companion object {

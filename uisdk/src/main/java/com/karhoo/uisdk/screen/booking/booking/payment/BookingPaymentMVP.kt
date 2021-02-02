@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 
 import android.content.Intent
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 
 interface BookingPaymentMVP {
@@ -19,7 +20,7 @@ interface BookingPaymentMVP {
 
         fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
-        fun showError(@StringRes error: Int)
+        fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
         fun setPaymentView(view: PaymentDropInMVP.View?)
 
@@ -39,7 +40,7 @@ interface BookingPaymentMVP {
 
     interface PaymentViewActions {
 
-        fun showErrorDialog(@StringRes stringId: Int)
+        fun showErrorDialog(@StringRes stringId: Int, karhooError: KarhooError?)
 
         fun handleChangeCard()
 
@@ -52,11 +53,11 @@ interface BookingPaymentMVP {
 
         fun showPaymentUI()
 
-        fun showPaymentFailureDialog()
+        fun showPaymentFailureDialog(error: KarhooError?)
 
         fun handlePaymentDetailsUpdate()
 
-        fun showPaymentDialog()
+        fun showPaymentDialog(error: KarhooError? = null)
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
     }

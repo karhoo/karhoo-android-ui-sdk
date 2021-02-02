@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.screen.rides.detail
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -10,11 +10,13 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
@@ -22,6 +24,9 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.basefare.BaseFareView
@@ -137,12 +142,14 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     private fun displayCancellationConfirmationDialog() {
-        cancellationDialog = AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.cancel_your_ride)
-                .setMessage(R.string.cancellation_fee)
-                .setPositiveButton(R.string.cancel) { _, _ -> presenter?.cancelTrip() }
-                .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_your_ride,
+                messageResId = R.string.cancellation_fee,
+                positiveButton = KarhooAlertDialogAction(R.string.cancel,
+                                                         DialogInterface.OnClickListener { _, _ -> presenter?.cancelTrip() }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        cancellationDialog = KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun displayVehicle(licensePlate: String) {
@@ -240,24 +247,29 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayTripCancelledDialog() {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.cancel_ride_successful)
-                .setMessage(R.string.cancel_ride_successful_message)
-                .setPositiveButton(R.string.dismiss) { _, _ -> rideDetailActions?.finishActivity() }
-                .show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_ride_successful,
+                messageResId = R.string.cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
     }
 
-    override fun displayError(errorMessage: Int) {
-        rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage)))
+    override fun displayError(errorMessage: Int, karhooError: KarhooError?) {
+        rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage), karhooError = karhooError))
     }
 
     override fun displayCallToCancelDialog(number: String, quote: String) {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.difficulties_cancelling_title)
-                .setMessage(R.string.difficulties_cancelling_message)
-                .setPositiveButton(R.string.call) { _, _ -> makeCall(number) }
-                .setNegativeButton(R.string.dismiss) { dialog, _ -> dialog.cancel() }
-                .show()
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.difficulties_cancelling_title,
+                messageResId = R.string.difficulties_cancelling_message,
+                positiveButton = KarhooAlertDialogAction(R.string.call,
+                                                         DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
     }
 
     override fun displayFlightDetails(flightNumber: String, meetingPoint: String) {
@@ -282,10 +294,12 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayBaseFareDialog() {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setView(BaseFareView(context))
-                .setPositiveButton(R.string.got_it) { dialogInterface, _ -> dialogInterface.dismiss() }
-                .show()
+        val config = KarhooAlertDialogConfig(
+                view = BaseFareView(context),
+                positiveButton = KarhooAlertDialogAction(R.string.got_it,
+                                                         DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
     }
 
     private fun bindPickupType(pickupType: PickupType?) {

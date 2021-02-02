@@ -58,7 +58,7 @@ class RegistrationPresenter(
             }
             else -> {
                 handleAuthError(error)
-                view?.showError(returnErrorStringOrLogoutIfRequired(error))
+                view?.showError(returnErrorStringOrLogoutIfRequired(error), error)
                 setRegistrationMode(true)
             }
         }

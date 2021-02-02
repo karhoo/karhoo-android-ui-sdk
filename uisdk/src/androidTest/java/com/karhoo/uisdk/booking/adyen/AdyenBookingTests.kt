@@ -109,7 +109,7 @@ class AdyenBookingTests : Launch {
         booking(this, null) {
             mediumSleep()
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            checkSnackbarWithText( "General request error. [K0001]")
         }
     }
 

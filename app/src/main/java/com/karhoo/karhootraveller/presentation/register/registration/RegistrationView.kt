@@ -13,6 +13,7 @@ import com.karhoo.karhootraveller.presentation.base.listener.SimpleTextWatcher
 import com.karhoo.karhootraveller.presentation.web.KarhooWebActivity
 import com.karhoo.karhootraveller.service.analytics.KarhooAnalytics
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.validator.EmailValidator
@@ -197,9 +198,9 @@ class RegistrationView @JvmOverloads constructor(
         context.startActivity(webIntent)
     }
 
-    override fun showError(@StringRes errorMessage: Int) {
+    override fun showError(@StringRes errorMessage: Int, karhooError: KarhooError?) {
         actions?.userRegistrationFailed()
-        actions?.showSnackbar(SnackbarConfig(text = null, stringId = errorMessage))
+        actions?.showSnackbar(SnackbarConfig(text = null, messageResId = errorMessage))
     }
 
     interface Actions {

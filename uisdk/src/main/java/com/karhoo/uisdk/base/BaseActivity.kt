@@ -1,6 +1,6 @@
 package com.karhoo.uisdk.base
 
-import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
@@ -15,7 +15,11 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.listener.NetworkReceiver
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
@@ -81,7 +85,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
         if (errorShown == SnackbarType.TEMPORARY) {
 
             currentFocus.hideSoftKeyboard()
-            val text = snackbarConfig.text ?: getString(snackbarConfig.stringId)
+            val text = formatMessage(snackbarConfig)
 
             errorShown = snackbarConfig.type
             if (snackbarConfig.action != null) {
@@ -103,6 +107,18 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
         }
     }
 
+    private fun formatMessage(snackbarConfig: SnackbarConfig): String {
+        var message = snackbarConfig.text.orEmpty()
+        if (message.isEmpty() && snackbarConfig.messageResId > 0) {
+            message = getString(snackbarConfig.messageResId)
+        }
+
+        snackbarConfig.karhooError?.let { error ->
+            message = "$message [${error.code}]"
+        }
+        return message
+    }
+
     override fun showTopBarNotification(stringId: Int) {
         showTopBarNotification(getString(stringId))
     }
@@ -111,12 +127,14 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
         topNotificationWidget.setNotificationText(value)
     }
 
-    override fun showErrorDialog(stringId: Int) {
-        AlertDialog.Builder(this, R.style.DialogTheme)
-                .setMessage(stringId)
-                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.cancel() }
-                .setCancelable(true)
-                .show()
+    override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
+        val config = KarhooAlertDialogConfig(
+                messageResId = stringId,
+                karhooError = karhooError,
+                cancellable = true,
+                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+        KarhooAlertDialogHelper(this).showAlertDialog(config)
     }
 
     override fun dismissSnackbar() {

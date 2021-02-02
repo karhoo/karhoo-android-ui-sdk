@@ -114,9 +114,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
-            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog()
-            KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error)
-            else -> handleError(returnErrorStringOrLogoutIfRequired(error))
+            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(error)
+            KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error, error)
+            else -> handleError(returnErrorStringOrLogoutIfRequired(error), error)
         }
     }
 
@@ -220,18 +220,18 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             view?.setCapacity(quote.vehicle)
             view?.animateIn()
         } else if (origin == null) {
-            handleError(R.string.origin_book_error)
+            handleError(R.string.origin_book_error, null)
         } else if (destination == null) {
-            handleError(R.string.destination_book_error)
+            handleError(R.string.destination_book_error, null)
         }
     }
 
-    override fun handleError(@StringRes stringId: Int) {
+    override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError()
         view?.enableCancelButton()
         bookingRequestStateViewModel?.process(BookingRequestViewContract
                                                       .BookingRequestEvent
-                                                      .BookingError(stringId))
+                                                      .BookingError(stringId, karhooError))
     }
 
     private fun handleBookingType(quote: Quote) {

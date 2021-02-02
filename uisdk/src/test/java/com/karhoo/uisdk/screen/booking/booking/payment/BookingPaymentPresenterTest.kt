@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
@@ -96,7 +97,7 @@ class BookingPaymentPresenterTest {
 
         paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(view).showError(R.string.something_went_wrong)
+        verify(view).showError(R.string.something_went_wrong, KarhooError.InternalSDKError)
     }
 
     /**

@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider.isGuest
 import com.karhoo.uisdk.analytics.Analytics
@@ -111,8 +112,8 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
         view?.doReverseGeolocate()
     }
 
-    override fun onError(@StringRes errorMessage: Int) {
-        view?.showSnackbar(SnackbarConfig(text = null, stringId = errorMessage))
+    override fun onError(@StringRes errorMessage: Int, karhooError: KarhooError?) {
+        view?.showSnackbar(SnackbarConfig(text = null, messageResId = errorMessage, karhooError = karhooError))
     }
 
     override fun locateUserPressed() {

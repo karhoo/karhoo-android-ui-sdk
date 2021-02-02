@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import androidx.lifecycle.Observer
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
@@ -55,7 +56,7 @@ interface BookingRequestMVP {
 
         fun showAuthenticatedUserBookingFields()
 
-        fun showPaymentFailureDialog()
+        fun showPaymentFailureDialog(error: KarhooError?)
 
         fun showPaymentUI()
 
@@ -75,7 +76,7 @@ interface BookingRequestMVP {
 
         fun handleChangeCard()
 
-        fun handleError(stringId: Int)
+        fun handleError(stringId: Int, karhooError: KarhooError?)
 
         fun hideBookingRequest()
 
