@@ -70,7 +70,7 @@ class ForgotPasswordPresenterTest {
         presenter.sendResetLink(EMAIL)
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).couldNotSendResetLink(any())
+        verify(view).couldNotSendResetLink(any(), any())
     }
 
     /**
@@ -101,7 +101,7 @@ class ForgotPasswordPresenterTest {
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
 
-        verify(view).couldNotSendResetLink(R.string.temporary_message_error_codes_unknown)
+        verify(view).couldNotSendResetLink(R.string.temporary_message_error_codes_unknown, KarhooError.Unexpected)
     }
 
     companion object {

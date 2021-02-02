@@ -280,7 +280,7 @@ class SplashPresenterTest {
 
         verify(view).setConfig(authMethodCaptor.capture())
         assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
-        verify(view, atLeastOnce()).showError()
+        verify(view, atLeastOnce()).showError(KarhooError.GeneralRequestError)
     }
 
     /**
@@ -297,7 +297,7 @@ class SplashPresenterTest {
 
         verify(view).setConfig(authMethodCaptor.capture())
         assertTrue(authMethodCaptor.firstValue is AuthenticationMethod.TokenExchange)
-        verify(view, atLeastOnce()).showError()
+        verify(view, atLeastOnce()).showError(KarhooError.GeneralRequestError)
     }
 
     /**
