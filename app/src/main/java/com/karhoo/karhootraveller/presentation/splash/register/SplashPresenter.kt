@@ -7,6 +7,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.karhootraveller.BuildConfig
+import com.karhoo.karhootraveller.models.Application
 import com.karhoo.karhootraveller.presentation.base.BasePresenter
 import com.karhoo.karhootraveller.presentation.splash.domain.AppVersionValidator
 import com.karhoo.karhootraveller.util.logoutAndResetApp
@@ -125,6 +126,24 @@ internal class SplashPresenter(view: SplashMVP.View,
         }
         view?.setConfig(authMethod)
 
+        navigateForAuthMethod(authMethod, loginType)
+    }
+
+    override fun handleSelectedApplication(application: Application?) {
+        application?.config?.auth?.let {
+            val authMethod: AuthenticationMethod = AuthenticationMethod.Guest(identifier =
+                                                                              application.config.auth.anonymous
+                                                                                      .identifier,
+                                                                              referer = BuildConfig
+                                                                                      .GUEST_CHECKOUT_REFERER,
+                                                                              organisationId =
+                                                                              application.organisation_id)
+            view?.setConfig(authMethod)
+            navigateForAuthMethod(authMethod, "")
+        }
+    }
+
+    private fun navigateForAuthMethod(authMethod: AuthenticationMethod, loginType: String) {
         when (authMethod) {
             is AuthenticationMethod.KarhooUser -> view?.goToLogin()
             is AuthenticationMethod.Guest -> view?.goToBooking(null)

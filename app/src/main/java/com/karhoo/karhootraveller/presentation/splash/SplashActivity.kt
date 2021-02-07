@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.karhoo.karhootraveller.R
+import com.karhoo.karhootraveller.models.Application
+import com.karhoo.karhootraveller.presentation.apps.AppsActivity
 import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
 import com.karhoo.karhootraveller.presentation.splash.register.SplashActions
 import com.karhoo.sdk.api.model.Position
@@ -108,6 +110,10 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == RegistrationActivity.REQ_CODE) {
             errorShown = SnackbarState.INVITE
+        }
+        if (resultCode == Activity.RESULT_OK && requestCode == AppsActivity.REQ_CODE_APPS) {
+            val app = data?.getParcelableExtra<Application>(AppsActivity.DATA_APPLICATION)
+            splashScreenWidget.selectedApplication(app)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

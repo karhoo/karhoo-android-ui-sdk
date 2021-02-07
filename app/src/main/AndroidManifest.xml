@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="allowBackup">
+        <activity android:name=".presentation.apps.AppsActivity"></activity>
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -27,7 +28,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_api_key"
-            tools:replace="android:value"/>
+            tools:replace="android:value" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="${fabric_api_key}" />
@@ -39,23 +40,21 @@
             android:name=".presentation.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="karhoo.app"
-                    android:pathPattern="/triptracking" />
+                    android:pathPattern="/triptracking"
+                    android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -64,9 +63,9 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="https"
                     android:host="karhoo.app"
-                    android:pathPattern="/location" />
+                    android:pathPattern="/location"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -99,11 +98,6 @@
             android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
             android:label="@string/title_activity_rides"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.airport.FlightDetailsActivity"
-            android:label="@string/title_activity_airport"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name="com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
             android:label="driverPhoto"

@@ -20,6 +20,8 @@ import com.google.gson.Gson
 import com.karhoo.karhootraveller.BuildConfig
 import com.karhoo.karhootraveller.KarhooConfig
 import com.karhoo.karhootraveller.R
+import com.karhoo.karhootraveller.models.Application
+import com.karhoo.karhootraveller.presentation.apps.AppsActivity
 import com.karhoo.karhootraveller.presentation.login.LoginActivity
 import com.karhoo.karhootraveller.presentation.register.RegistrationActivity
 import com.karhoo.karhootraveller.presentation.splash.domain.KarhooAppVersionValidator
@@ -30,6 +32,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfiguration
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -37,6 +40,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import kotlinx.android.synthetic.main.view_splash.view.appsButton
 import kotlinx.android.synthetic.main.view_splash.view.loginTypeSpinner
 import kotlinx.android.synthetic.main.view_splash.view.registerButton
 import kotlinx.android.synthetic.main.view_splash.view.signInButton
@@ -65,8 +69,10 @@ class SplashScreenView @JvmOverloads constructor(
     private fun initialiseListeners() {
         signInButton.setOnClickListener { goToLogin() }
         registerButton.setOnClickListener { goToRegistration() }
+        appsButton.setOnClickListener { goToApps() }
         if (BuildConfig.BUILD_TYPE == "debug") {
             loginTypeSpinner.visibility = VISIBLE
+            appsButton.visibility = VISIBLE
             val loginTypeAdapter = ArrayAdapter<String>(context, android.R.layout
                     .simple_spinner_dropdown_item, LoginType.values().map { it.value })
             with(loginTypeSpinner) {
@@ -74,6 +80,7 @@ class SplashScreenView @JvmOverloads constructor(
                 onItemSelectedListener = this@SplashScreenView
             }
         } else {
+            appsButton.visibility = GONE
             loginTypeSpinner.visibility = GONE
         }
     }
@@ -90,6 +97,15 @@ class SplashScreenView @JvmOverloads constructor(
     private fun goToRegistration() {
         val intent = RegistrationActivity.Builder.builder.build(context)
         splashActions?.startActivityForResult(intent, RegistrationActivity.REQ_CODE)
+    }
+
+    private fun goToApps() {
+        val intent = AppsActivity.Builder.builder.build(context)
+        splashActions?.startActivityForResult(intent, AppsActivity.REQ_CODE_APPS)
+    }
+
+    override fun selectedApplication(application: Application?) {
+        presenter?.handleSelectedApplication(application)
     }
 
     override fun setConfig(authenticationMethod: AuthenticationMethod) {

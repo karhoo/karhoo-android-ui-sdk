@@ -2,6 +2,7 @@ package com.karhoo.karhootraveller.presentation.splash.register
 
 import android.location.Location
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.karhootraveller.models.Application
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
 
@@ -26,6 +27,8 @@ interface SplashMVP {
         fun promptUpdatePlayServices(errorCode: Int)
 
         fun setConfig(authenticationMethod: AuthenticationMethod)
+
+        fun selectedApplication(application: Application?)
     }
 
     interface Presenter {
@@ -37,6 +40,8 @@ interface SplashMVP {
         fun getUsersLocation()
 
         fun locationUpdatesDenied()
+
+        fun handleSelectedApplication(application: Application?)
     }
 
 }

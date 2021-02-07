@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Karhoo Traveller</string>
     <string name="permission_required">In order to use the karhoo app please allow location permissions</string>
     <string name="permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
@@ -30,8 +30,8 @@
     <string name="profile_update_successful">Your profile was updated successfully</string>
 
     <!-- Central Lat Lng Charring X -->
-    <string translatable="false" name="central_lat">51.5073</string>
-    <string translatable="false" name="central_long">0.1276</string>
+    <string name="central_lat" translatable="false">51.5073</string>
+    <string name="central_long" translatable="false">0.1276</string>
 
     <string name="min">min</string>
     <string name="mins">mins</string>
@@ -66,5 +66,6 @@
     <string name="guest_checkout">Guest Checkout</string>
     <string name="labs_force_a_crash" translatable="false">Force a Crash</string>
     <string name="labs_send_analytics_event" translatable="false">Log an Analytics Event</string>
+    <string name="applications" tools:ignore="ExtraTranslation">Applications</string>
 
 </resources>
