@@ -27,6 +27,8 @@ class BookingCancellationPresenterSpec {
     private var view: BookingCancellationMVP.View = mock()
     private val bookingFeeCall: Call<BookingFee> = mock()
     private val bookingFeeCaptor = argumentCaptor<(Resource<BookingFee>) -> Unit>()
+    private val cancellationCall: Call<Void> = mock()
+    private val cancellationCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
 
     private lateinit var presenter: BookingCancellationPresenter
 
@@ -34,6 +36,9 @@ class BookingCancellationPresenterSpec {
     fun setUp() {
         whenever(tripService.cancellationFee(any())).thenReturn(bookingFeeCall)
         doNothing().whenever(bookingFeeCall).execute(bookingFeeCaptor.capture())
+
+        whenever(tripService.cancel(any())).thenReturn(cancellationCall)
+        doNothing().whenever(cancellationCall).execute(cancellationCaptor.capture())
 
         presenter = BookingCancellationPresenter(view = view, tripsService = tripService)
     }
@@ -49,7 +54,7 @@ class BookingCancellationPresenterSpec {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showCancellationError()
+        verify(view).showCancellationFeeError()
     }
 
     /**
@@ -92,5 +97,33 @@ class BookingCancellationPresenterSpec {
         bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = bookingFee)))
 
         verify(view).showCancellationFee("£52.00")
+    }
+
+    /**
+     * Given:   A cancellation is requested
+     * When:    The call fails
+     * Then:    Then view is updated with the error
+     */
+    @Test
+    fun `a cancellation request failure correctly updates the view`() {
+        presenter.handleCancellationRequest(tripId)
+
+        cancellationCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(view).showCancellationError()
+    }
+
+    /**
+     * Given:   A cancellation is requested
+     * When:    The cancellation succeeds
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a successful cancellation fee response correctly updates the view`() {
+        presenter.handleCancellationRequest(tripId)
+
+        cancellationCaptor.firstValue.invoke(Resource.Success(data = mock()))
+
+        verify(view).showCancellationSuccess()
     }
 }
