@@ -68,7 +68,7 @@ class BookingCancellationPresenterSpec {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = null)))
 
-        verify(view).showCancellationFee("")
+        verify(view).showCancellationFee("", tripId)
     }
 
     /**
@@ -82,7 +82,7 @@ class BookingCancellationPresenterSpec {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee()))
 
-        verify(view).showCancellationFee("")
+        verify(view).showCancellationFee("", tripId)
     }
 
     /**
@@ -96,7 +96,7 @@ class BookingCancellationPresenterSpec {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = bookingFee)))
 
-        verify(view).showCancellationFee("£52.00")
+        verify(view).showCancellationFee("£52.00", tripId)
     }
 
     /**

@@ -19,16 +19,16 @@ class BookingCancellationPresenter(view: BookingCancellationMVP.View,
     override fun getCancellationFee(tripId: String) {
         tripsService.cancellationFee(tripId).execute { result ->
             when (result) {
-                is Resource.Success -> showCancellationFee(result.data.fee)
+                is Resource.Success -> showCancellationFee(result.data.fee, tripId)
                 is Resource.Failure -> view?.showCancellationFeeError()
             }
         }
     }
 
-    private fun showCancellationFee(bookingFeePrice: BookingFeePrice?) {
+    private fun showCancellationFee(bookingFeePrice: BookingFeePrice?, tripId: String) {
         bookingFeePrice?.let {
-            view?.showCancellationFee(CurrencyUtils.getFormattedPrice(it.currency, it.value))
-        } ?: view?.showCancellationFee("")
+            view?.showCancellationFee(CurrencyUtils.getFormattedPrice(it.currency, it.value), tripId)
+        } ?: view?.showCancellationFee("", tripId)
     }
 
     override fun handleCancellationRequest(tripId: String) {
