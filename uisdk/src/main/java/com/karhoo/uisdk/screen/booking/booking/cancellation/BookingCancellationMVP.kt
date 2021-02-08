@@ -4,7 +4,7 @@ interface BookingCancellationMVP {
     interface View {
         fun cancelTrip()
 
-        fun showCancellationFee()
+        fun showCancellationFee(formattedPrice: String)
 
         fun showCancellationError()
     }
@@ -12,6 +12,6 @@ interface BookingCancellationMVP {
     interface Presenter {
         fun handleCancellationRequest()
 
-        fun getCancellationFee()
+        fun getCancellationFee(tripId: String)
     }
 }
