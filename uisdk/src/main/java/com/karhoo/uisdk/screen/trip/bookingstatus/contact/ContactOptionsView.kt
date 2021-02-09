@@ -40,7 +40,8 @@ class ContactOptionsView @JvmOverloads constructor(
 
         contactDriverButton.setOnClickListener { presenter.contactDriver() }
         contactFleetButton.setOnClickListener {
-            presenter.contactFleet() }
+            presenter.contactFleet()
+        }
     }
 
     override fun showTripCancelledDialog() {
@@ -129,11 +130,12 @@ class ContactOptionsView @JvmOverloads constructor(
     }
 
     override fun showCancellationFee(formattedPrice: String, tripId: String) {
-        val messageResId = if (formattedPrice.isNotEmpty()) R.string.you_may_be_charged else R
-                .string.would_you_like_to_proceed
+        val message = if (formattedPrice.isNotEmpty())
+            String.format(resources.getString(R.string.you_may_be_charged, formattedPrice)) else
+            resources.getString(R.string.would_you_like_to_proceed)
         val config = KarhooAlertDialogConfig(
                 titleResId = R.string.cancel_your_ride,
-                messageResId = messageResId,
+                message = message,
                 cancellable = false,
                 positiveButton = KarhooAlertDialogAction(R.string.dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
