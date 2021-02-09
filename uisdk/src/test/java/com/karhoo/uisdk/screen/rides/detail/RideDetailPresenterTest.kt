@@ -572,16 +572,6 @@ class RideDetailPresenterTest {
         verify(view).showFeedbackSubmitted()
     }
 
-    /*private fun createInstanceOfVoid(): Void? {
-        return try {
-            val constructor = Void::class.java.getDeclaredConstructor()
-            constructor.isAccessible = true
-            constructor.newInstance()
-        } catch (e: Exception) {
-            null
-        }
-    }*/
-
     companion object {
         private val BREAKDOWN_NO_CURRENCY = FareBreakdown(
                 total = 2134,
