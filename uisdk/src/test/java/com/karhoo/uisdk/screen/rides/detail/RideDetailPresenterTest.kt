@@ -53,7 +53,6 @@ class RideDetailPresenterTest {
     private val scheduledDateViewBinder: ScheduledDateViewBinder = mock()
     private val analytics: Analytics = mock()
     private val feedbackCompletedTripsStore: FeedbackCompletedTripsStore = mock()
-    private val cancelTripCall: Call<Void> = mock()
     private val observable: Observable<TripInfo> = mock()
     private var fareService: FareService = mock()
     private var fareCall: Call<Fare> = mock()

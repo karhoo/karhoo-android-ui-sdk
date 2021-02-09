@@ -30,7 +30,7 @@ class RideDetailRobot : BaseTestRobot() {
     }
 
     fun clickCancelRideDetails() {
-        clickButton(R.id.cancelRideButton)
+        clickButton(R.id.cancelButton)
     }
 
     fun confirmCancellationRideDetails() {
@@ -272,7 +272,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun upcomingTripcCancelRideButtonIsEnabled() {
-        buttonIsEnabled(R.id.cancelRideButton)
+        buttonIsEnabled(R.id.cancelButton)
     }
 
     fun upcomingTripCallFleetButtonIsEnabled() {
@@ -284,7 +284,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun upcomingTripcCancelRideButtonIsNotVisible() {
-        viewIsNotVisible(R.id.cancelRideButton)
+        viewIsNotVisible(R.id.cancelButton)
     }
 
     fun upcomingPassengerOnBoardRideDetailsFullCheck() {
