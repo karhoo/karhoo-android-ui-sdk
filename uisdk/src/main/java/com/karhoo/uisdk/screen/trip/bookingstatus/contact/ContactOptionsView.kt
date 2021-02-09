@@ -144,19 +144,4 @@ class ContactOptionsView @JvmOverloads constructor(
                                                          }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
-
-    override fun showCancellationFeeError() {
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.difficulties_cancelling_title,
-                messageResId = R.string.difficulties_cancelling_message,
-                cancellable = false,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
-                negativeButton = KarhooAlertDialogAction(R.string.cancel,
-                                                         DialogInterface.OnClickListener { _, _
-                                                             ->
-                                                             //TODO Add Call Fleet functionality
-                                                         }))
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
-    }
 }

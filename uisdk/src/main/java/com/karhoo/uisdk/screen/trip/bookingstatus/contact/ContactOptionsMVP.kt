@@ -36,8 +36,6 @@ interface ContactOptionsMVP {
         fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?)
 
         fun showCancellationFee(formattedPrice: String, tripId: String)
-
-        fun showCancellationFeeError()
     }
 
     interface Presenter {

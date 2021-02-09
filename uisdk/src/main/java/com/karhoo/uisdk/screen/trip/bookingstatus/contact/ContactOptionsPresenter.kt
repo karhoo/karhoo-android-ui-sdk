@@ -61,7 +61,6 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     }
 
     override fun cancelPressed() {
-        //        view?.showCancelConfirmationDialog()
         getCancellationFee()
     }
 
@@ -102,12 +101,12 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     }
 
     override fun getCancellationFee() {
-        val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode else trip?.tripId
-        tripIdentifier?.let {
-            tripsService.cancellationFee(tripIdentifier).execute { result ->
+        //TODO Add cancellation for guest user
+        trip?.let { tripInfo ->
+            tripsService.cancellationFee(tripInfo.tripId).execute { result ->
                 when (result) {
-                    is Resource.Success -> showCancellationFee(result.data.fee, tripIdentifier)
-                    is Resource.Failure -> view?.showCancellationFeeError()
+                    is Resource.Success -> showCancellationFee(result.data.fee, tripInfo.tripId)
+                    is Resource.Failure -> handleErrorWhileCancelling(result.error, tripInfo)
                 }
             }
         }
