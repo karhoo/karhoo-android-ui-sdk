@@ -330,7 +330,7 @@ class ContactOptionsPresenterTest {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).showError(anyInt(), any())
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
         verify(view).showLoadingDialog(false)
     }
 
