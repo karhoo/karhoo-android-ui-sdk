@@ -8,8 +8,6 @@ interface ContactOptionsMVP {
 
     interface View {
 
-        fun showCancelConfirmationDialog()
-
         fun showTripCancelledDialog()
 
         fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError)
@@ -34,6 +32,9 @@ interface ContactOptionsMVP {
 
         fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?)
 
+        fun showCancellationFee(formattedPrice: String, tripId: String)
+
+        fun showCancellationFeeError()
     }
 
     interface Presenter {
@@ -46,6 +47,6 @@ interface ContactOptionsMVP {
 
         fun contactDriver()
 
+        fun getCancellationFee()
     }
-
 }

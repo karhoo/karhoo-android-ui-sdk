@@ -41,17 +41,17 @@ class ContactOptionsView @JvmOverloads constructor(
         contactFleetButton.setOnClickListener { presenter.contactFleet() }
     }
 
-    override fun showCancelConfirmationDialog() {
-
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_your_ride,
-                messageResId = R.string.cancellation_fee,
-                positiveButton = KarhooAlertDialogAction(R.string.cancel,
-                                                         DialogInterface.OnClickListener { _, _ -> presenter.cancelTrip() }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
-    }
+//    override fun showCancelConfirmationDialog() {
+//
+//        val config = KarhooAlertDialogConfig(
+//                titleResId = R.string.cancel_your_ride,
+//                messageResId = R.string.cancellation_fee,
+//                positiveButton = KarhooAlertDialogAction(R.string.cancel,
+//                                                         DialogInterface.OnClickListener { _, _ -> presenter.cancelTrip() }),
+//                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+//                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+//        KarhooAlertDialogHelper(context).showAlertDialog(config)
+//    }
 
     override fun showTripCancelledDialog() {
 
@@ -132,5 +132,37 @@ class ContactOptionsView @JvmOverloads constructor(
 
     override fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?) {
         actions?.showTemporaryError(resources.getString(errorMessageId), karhooError)
+    }
+
+    override fun showCancellationFee(formattedPrice: String, tripId: String) {
+        val messageResId = if (formattedPrice.isNotEmpty()) R.string.you_may_be_charged else R
+                .string.would_you_like_to_proceed
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_your_ride,
+                messageResId = messageResId,
+                cancellable = false,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
+                negativeButton = KarhooAlertDialogAction(R.string.ok,
+                                                         DialogInterface.OnClickListener { _, _
+                                                             ->
+                                                             presenter.cancelTrip()
+                                                         }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+    }
+
+    override fun showCancellationFeeError() {
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.difficulties_cancelling_title,
+                messageResId = R.string.difficulties_cancelling_message,
+                cancellable = false,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
+                negativeButton = KarhooAlertDialogAction(R.string.cancel,
+                                                         DialogInterface.OnClickListener { _, _
+                                                             ->
+                                                             //TODO Add Call Fleet functionality
+                                                         }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 }

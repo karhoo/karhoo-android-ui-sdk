@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.BookingFeePrice
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.network.request.TripCancellation
@@ -10,6 +11,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
+import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 
 internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
@@ -31,14 +33,14 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                     .cancel(TripCancellation(tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode.orEmpty() else trip?.tripId.orEmpty()))
                     .execute { result ->
                         when (result) {
-                            is Resource.Success -> handleSuccesfulCancellation()
+                            is Resource.Success -> handleSuccessfulCancellation()
                             is Resource.Failure -> handleErrorWhileCancelling(result.error, it)
                         }
                     }
         }
     }
 
-    private fun handleSuccesfulCancellation() {
+    private fun handleSuccessfulCancellation() {
         view?.apply {
             showLoadingDialog(false)
             view?.showTripCancelledDialog()
@@ -57,7 +59,8 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     }
 
     override fun cancelPressed() {
-        view?.showCancelConfirmationDialog()
+        //        view?.showCancelConfirmationDialog()
+        getCancellationFee()
     }
 
     override fun onTripInfoChanged(tripInfo: TripInfo?) {
@@ -96,4 +99,21 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
         trip?.vehicle?.driver?.phoneNumber?.let { view?.makeCall(it) }
     }
 
+    override fun getCancellationFee() {
+        val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode else trip?.tripId
+        tripIdentifier?.let {
+            tripsService.cancellationFee(tripIdentifier).execute { result ->
+                when (result) {
+                    is Resource.Success -> showCancellationFee(result.data.fee, tripIdentifier)
+                    is Resource.Failure -> view?.showCancellationFeeError()
+                }
+            }
+        }
+    }
+
+    private fun showCancellationFee(bookingFeePrice: BookingFeePrice?, tripId: String) {
+        bookingFeePrice?.let {
+            view?.showCancellationFee(CurrencyUtils.getFormattedPrice(it.currency, it.value), tripId)
+        } ?: view?.showCancellationFee("", tripId)
+    }
 }
