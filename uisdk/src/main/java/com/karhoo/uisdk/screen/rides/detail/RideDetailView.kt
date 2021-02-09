@@ -37,13 +37,11 @@ import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.bookingTermsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cancelRideButton
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsLayout
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.contactFleetButton
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dateTimeText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dropOffLabel
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightDetailsLayout
@@ -61,6 +59,7 @@ import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.reportIssueBut
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.starRatingWidget
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateIcon
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateText
+import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
 import org.joda.time.DateTime
 
 class RideDetailView @JvmOverloads constructor(
@@ -96,6 +95,10 @@ class RideDetailView @JvmOverloads constructor(
             bindVehicle()
             bindDate()
         }
+
+        presenter?.let {
+            contactOptionsWidget.observeTripStatus(it)
+        }
     }
 
     private fun setTripRating(trip: TripInfo) {
@@ -109,8 +112,6 @@ class RideDetailView @JvmOverloads constructor(
     private fun setListeners(trip: TripInfo) {
         reportIssueButton.setOnClickListener { rideDetailActions?.showCustomerSupport(trip.displayTripId) }
         rebookRideButton.setOnClickListener { startBookingActivityWithTrip(trip) }
-        cancelRideButton.setOnClickListener { displayCancellationConfirmationDialog() }
-        contactFleetButton.setOnClickListener { presenter?.contactFleet() }
         baseFareIcon.setOnClickListener { presenter?.baseFarePressed() }
     }
 
@@ -139,17 +140,6 @@ class RideDetailView @JvmOverloads constructor(
     override fun displayNoDateAvailable() {
         dateTimeText.setText(R.string.pending)
         rideDetailActions?.externalDateTime = resources.getString(R.string.pending)
-    }
-
-    private fun displayCancellationConfirmationDialog() {
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_your_ride,
-                messageResId = R.string.cancellation_fee,
-                positiveButton = KarhooAlertDialogAction(R.string.cancel,
-                                                         DialogInterface.OnClickListener { _, _ -> presenter?.cancelTrip() }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-        cancellationDialog = KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun displayVehicle(licensePlate: String) {
@@ -200,11 +190,11 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayCancelRideButton() {
-        cancelRideButton.visibility = View.VISIBLE
+        contactOptionsWidget.enableCancelButton()
     }
 
     override fun displayContactFleetButton() {
-        contactFleetButton.visibility = View.VISIBLE
+        contactOptionsWidget.disableCancelButton()
     }
 
     override fun hideRebookButton() {
@@ -219,11 +209,11 @@ class RideDetailView @JvmOverloads constructor(
         if (cancellationDialog?.isShowing == true) {
             cancellationDialog?.dismiss()
         }
-        cancelRideButton.visibility = View.GONE
+        contactOptionsWidget.disableCancelButton()
     }
 
     override fun hideContactFleetButton() {
-        contactFleetButton.visibility = View.GONE
+        contactOptionsWidget.enableCancelButton()
     }
 
     override fun makeCall(number: String) {

@@ -10,6 +10,7 @@ import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
@@ -17,7 +18,8 @@ import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                                        private val tripsService: TripsService,
                                        private val analytics: Analytics?)
-    : BasePresenter<ContactOptionsMVP.View>(), ContactOptionsMVP.Presenter, BookingStatusMVP.Presenter.OnTripInfoChangedListener {
+    : BasePresenter<ContactOptionsMVP.View>(), ContactOptionsMVP.Presenter, BookingStatusMVP.Presenter.OnTripInfoChangedListener,
+      RideDetailMVP.Presenter.OnTripInfoChangedListener {
 
     private var trip: TripInfo? = null
 

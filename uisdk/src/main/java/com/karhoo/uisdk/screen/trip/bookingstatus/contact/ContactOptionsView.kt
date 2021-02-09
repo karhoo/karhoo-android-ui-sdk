@@ -15,6 +15,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.IntentUtils
 import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.cancelButton
@@ -38,20 +39,9 @@ class ContactOptionsView @JvmOverloads constructor(
         inflate(context, R.layout.uisdk_view_contact_options, this)
 
         contactDriverButton.setOnClickListener { presenter.contactDriver() }
-        contactFleetButton.setOnClickListener { presenter.contactFleet() }
+        contactFleetButton.setOnClickListener {
+            presenter.contactFleet() }
     }
-
-//    override fun showCancelConfirmationDialog() {
-//
-//        val config = KarhooAlertDialogConfig(
-//                titleResId = R.string.cancel_your_ride,
-//                messageResId = R.string.cancellation_fee,
-//                positiveButton = KarhooAlertDialogAction(R.string.cancel,
-//                                                         DialogInterface.OnClickListener { _, _ -> presenter.cancelTrip() }),
-//                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-//                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-//        KarhooAlertDialogHelper(context).showAlertDialog(config)
-//    }
 
     override fun showTripCancelledDialog() {
 
@@ -128,6 +118,10 @@ class ContactOptionsView @JvmOverloads constructor(
 
     override fun observeTripStatus(bookingStatusPresenter: BookingStatusMVP.Presenter) {
         bookingStatusPresenter.addTripInfoObserver(presenter)
+    }
+
+    override fun observeTripStatus(rideDetailPresenter: RideDetailMVP.Presenter) {
+        rideDetailPresenter.addTripInfoObserver(presenter)
     }
 
     override fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?) {

@@ -1,14 +1,12 @@
 package com.karhoo.uisdk.screen.rides.detail
 
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
-import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
@@ -20,7 +18,6 @@ import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.classToLocalisedString
-import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import java.util.Currency
 
 private val LIVE_STATES = arrayOf(
@@ -43,6 +40,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     private var tripDetailsObserver: Observer<Resource<TripInfo>>? = null
     private var tripDetailsObservable: Observable<TripInfo>? = null
+    private var tripInfoObservers = mutableSetOf<RideDetailMVP.Presenter.OnTripInfoChangedListener?>()
 
     init {
         attachView(view)
@@ -182,45 +180,8 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         }
     }
 
-    override fun contactFleet() {
-        trip.fleetInfo?.phoneNumber?.let { view?.makeCall(it) }
-    }
-
     override fun baseFarePressed() {
         view?.displayBaseFareDialog()
-    }
-
-    override fun cancelTrip() {
-        analytics?.userCancelTrip(trip)
-        view?.displayLoadingDialog()
-
-        val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip.followCode else trip.tripId
-        tripIdentifier?.let {
-            tripsService
-                    .cancel(TripCancellation(tripIdentifier = it))
-                    .execute { result ->
-                        when (result) {
-                            is Resource.Success -> handleSuccesfulCancellation()
-                            is Resource.Failure -> handleErrorWhileCancelling(result.error)
-                        }
-                    }
-        }
-    }
-
-    private fun handleSuccesfulCancellation() {
-        view?.apply {
-            hideLoadingDialog()
-            displayTripCancelledDialog()
-        }
-    }
-
-    private fun handleErrorWhileCancelling(karhooError: KarhooError) {
-        view?.hideLoadingDialog()
-        if (trip.fleetInfo == null) {
-            view?.displayError(returnErrorStringOrLogoutIfRequired(karhooError), karhooError)
-        } else {
-            view?.displayCallToCancelDialog(trip.fleetInfo?.phoneNumber.orEmpty(), trip.fleetInfo?.name.orEmpty())
-        }
     }
 
     private fun observeTripInfo(tripIdentifier: String) {
@@ -244,6 +205,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
     private fun handleTripUpdate(tripInfo: TripInfo) {
         this.trip = tripInfo
         bindAll()
+        notifyObservers()
     }
 
     override fun bindDate() {
@@ -261,6 +223,23 @@ class RideDetailPresenter(view: RideDetailMVP.View,
     }
 
     override fun onPause() {
+        unsubscribeObservers()
+    }
+
+    override fun addTripInfoObserver(tripInfoListener: RideDetailMVP.Presenter.OnTripInfoChangedListener?) {
+        tripInfoObservers.add(tripInfoListener)
+        tripInfoListener?.onTripInfoChanged(trip)
+    }
+
+    private fun notifyObservers() {
+        tripInfoObservers.map {
+            it?.onTripInfoChanged(trip) ?: run {
+                tripInfoObservers.remove(it)
+            }
+        }
+    }
+
+    private fun unsubscribeObservers() {
         tripDetailsObservable?.apply {
             tripDetailsObserver?.let {
                 unsubscribe(it)

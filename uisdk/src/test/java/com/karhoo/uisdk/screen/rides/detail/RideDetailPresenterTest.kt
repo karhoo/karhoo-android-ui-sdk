@@ -5,7 +5,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Fare
 import com.karhoo.sdk.api.model.FareBreakdown
-import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -14,7 +13,6 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
-import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
@@ -39,7 +37,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.junit.MockitoJUnitRunner
@@ -75,7 +72,6 @@ class RideDetailPresenterTest {
             feedbackCompletedTripsStore = feedbackCompletedTripsStore,
             fareService = fareService)
 
-    private val cancelTripLambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
     private val observerTripInfoCaptor = argumentCaptor<Observer<Resource<TripInfo>>>()
     private val pollingTimeCaptor = argumentCaptor<Long>()
     private var fareCaptor = argumentCaptor<(Resource<Fare>) -> Unit>()
@@ -86,7 +82,6 @@ class RideDetailPresenterTest {
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.KarhooUser()))
         Locale.setDefault(Locale.UK)
-        doNothing().whenever(cancelTripCall).execute(cancelTripLambdaCaptor.capture())
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
@@ -447,120 +442,6 @@ class RideDetailPresenterTest {
     }
 
     /**
-     * Given:   A trip with a fleet phone number
-     * When:    contact fleet
-     * Then:    make call to fleet phone number
-     */
-    @Test
-    fun `makes call to fleet phone number`() {
-        val PHONE_NUMBER = "+441234567891"
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                tripState = TripStatus.DRIVER_EN_ROUTE,
-                fleetInfo = FleetInfo(phoneNumber = PHONE_NUMBER))
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-
-        presenter.contactFleet()
-        verify(view).makeCall(PHONE_NUMBER)
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel has started
-     * Then:    An event that the user pressed cancel should be sent
-     */
-    @Test
-    fun `user presses cancel trip fires event`() {
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                origin = TripLocationInfo(),
-                destination = TripLocationInfo(),
-                tripState = TripStatus.CONFIRMED,
-                vehicle = Vehicle())
-
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-        presenter.cancelTrip()
-
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Success(mock()))
-
-        verify(analytics).userCancelTrip(trip)
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel has started
-     * Then:    the loading dialog is shown
-     */
-    @Test
-    fun `user presses cancel shows loading dialog`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(mock())
-
-        verify(view).displayLoadingDialog()
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel is unsuccessful
-     * Then:    The view should be told to display the call dialog
-     */
-    @Test
-    fun `user cancels trip unsuccessfully`() {
-        val FLEET_NAME = "Keaney's Cars"
-        val FLEET_NUMBER = "+353 1234 567891"
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                fleetInfo = FleetInfo(
-                        name = FLEET_NAME,
-                        phoneNumber = FLEET_NUMBER))
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Failure(mock()))
-
-        verify(view).displayCallToCancelDialog(FLEET_NUMBER, FLEET_NAME)
-    }
-
-    /**
-     * Given:   fleet info is null
-     * When:    attempting to cancel trip, sdk callback onServiceError
-     * Then:    show error
-     */
-    @Test
-    fun `show error when attempting to cancel on service error trip and fleet info is null`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(view).hideLoadingDialog()
-        verify(view).displayError(anyInt(), any())
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel is successful by karhoo
-     * Then:    The view should be told to display the complete dialog
-     */
-    @Test
-    fun `user cancels trip successfully by karhoo`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Success(mock()))
-
-        verify(view).hideLoadingDialog()
-        verify(view).displayTripCancelledDialog()
-    }
-
-    /**
      * Given:   A trip with null flight details
      * When:    binding flight details
      * Then:    The view should be told to hide the flight details UI
@@ -691,7 +572,7 @@ class RideDetailPresenterTest {
         verify(view).showFeedbackSubmitted()
     }
 
-    private fun createInstanceOfVoid(): Void? {
+    /*private fun createInstanceOfVoid(): Void? {
         return try {
             val constructor = Void::class.java.getDeclaredConstructor()
             constructor.isAccessible = true
@@ -699,7 +580,7 @@ class RideDetailPresenterTest {
         } catch (e: Exception) {
             null
         }
-    }
+    }*/
 
     companion object {
         private val BREAKDOWN_NO_CURRENCY = FareBreakdown(

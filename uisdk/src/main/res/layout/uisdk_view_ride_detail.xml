@@ -428,22 +428,10 @@
                 android:text="@string/rebook_ride"
                 android:visibility="gone" />
 
-            <Button
-                android:id="@+id/cancelRideButton"
-                style="@style/NoBackgroundButtonTheme"
+            <com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
+                android:id="@+id/contactOptionsWidget"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_medium_small"
-                android:text="@string/cancel_ride" />
-
-            <Button
-                android:id="@+id/contactFleetButton"
-                style="@style/NoBackgroundButtonTheme"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/spacing_large"
-                android:layout_marginRight="@dimen/spacing_medium_small"
-                android:text="@string/contact_fleet"
-                android:visibility="gone" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

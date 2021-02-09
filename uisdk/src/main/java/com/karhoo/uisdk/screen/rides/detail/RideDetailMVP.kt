@@ -4,6 +4,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -26,16 +27,19 @@ interface RideDetailMVP {
 
         fun bindDate()
 
-        fun cancelTrip()
-
-        fun contactFleet()
-
         fun baseFarePressed()
 
         fun onResume()
 
         fun onPause()
 
+        fun addTripInfoObserver(tripInfoListener: OnTripInfoChangedListener?)
+
+        interface OnTripInfoChangedListener {
+
+            fun onTripInfoChanged(tripInfo: TripInfo?)
+
+        }
     }
 
     interface View : ScheduledDateView {
@@ -89,7 +93,9 @@ interface RideDetailMVP {
 
         fun displayBaseFareDialog()
 
-        fun showFeedbackSubmitted()
+        fun showFeedbackSubmitted() {
+
+        }
 
         interface Actions {
 
