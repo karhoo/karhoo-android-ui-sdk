@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -15,6 +16,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.IntentUtils
@@ -50,7 +52,7 @@ class ContactOptionsView @JvmOverloads constructor(
                 titleResId = R.string.cancel_ride_successful,
                 messageResId = R.string.cancel_ride_successful_message,
                 positiveButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }))
+                                                         DialogInterface.OnClickListener { _, _ -> goToCleanBooking() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
@@ -145,5 +147,9 @@ class ContactOptionsView @JvmOverloads constructor(
                                                              presenter.cancelTrip()
                                                          }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
+    }
+
+    private fun goToCleanBooking() {
+        (context as Activity).startActivity(BookingActivity.Builder.builder.build(context))
     }
 }

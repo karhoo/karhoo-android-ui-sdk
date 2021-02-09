@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.rides.detail
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -32,7 +31,6 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.basefare.BaseFareView
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
-import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.toLocalisedString
@@ -68,7 +66,7 @@ class RideDetailView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr), RideDetailMVP.View, ContactOptionsActions, LifecycleObserver {
+    : FrameLayout(context, attrs, defStyleAttr), RideDetailMVP.View, LifecycleObserver {
 
     private var presenter: RideDetailPresenter? = null
     private var progressDialog: ProgressDialog? = null
@@ -319,15 +317,6 @@ class RideDetailView @JvmOverloads constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         presenter?.onPause()
-    }
-
-    override fun goToCleanBooking() {
-        (context as Activity).startActivity(BookingActivity.Builder.builder.build(context))
-    }
-
-    override fun showTemporaryError(error: String, karhooError: KarhooError?) {
-        //TODO
-//        actions?.showSnackbar(SnackbarConfig(text = error, karhooError = karhooError))
     }
 
 }
