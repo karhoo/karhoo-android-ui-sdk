@@ -14,6 +14,7 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITHOUT_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
@@ -109,7 +110,10 @@ class TripFlowTests : Launch {
                 details = TRIP_DER,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         serverRobot {
-            cancelFeeResponse(
+            cancelFeeResponse(code = HTTP_OK,
+                              response = CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
+            cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
                     trip = TRIP.tripId)

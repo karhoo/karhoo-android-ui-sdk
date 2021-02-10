@@ -269,7 +269,10 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_DER)
         serverRobot {
-            cancelFeeResponse(
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
+            cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
                     trip = TRIP.tripId)
@@ -296,7 +299,10 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_ARRIVED)
         serverRobot {
-            cancelFeeResponse(
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
+            cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
                     trip = TRIP.tripId)

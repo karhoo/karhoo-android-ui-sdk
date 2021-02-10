@@ -32,7 +32,7 @@ class TripRobot : BaseTestRobot() {
     }
 
     fun clickConfirmCancellation() {
-        clickOnButtonInAlertDialog(AlertDialogButton.POSITIVE)
+        dialogClickButtonByText(R.string.ok)
     }
 
     fun clickDoneOnRideSummary() {
