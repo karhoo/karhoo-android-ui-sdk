@@ -157,9 +157,15 @@ class RideDetailPresenter(view: RideDetailMVP.View,
                 displayContactFleetButton()
             }
             if (trip.tripState == TripStatus.PASSENGER_ON_BOARD) {
-                view?.hideCancelRideButton()
+                view?.apply {
+                    hideCancelRideButton()
+                    hideContactFleetButton()
+                }
             } else {
-                view?.displayCancelRideButton()
+                view?.apply {
+                    displayCancelRideButton()
+                    displayContactFleetButton()
+                }
             }
         } else {
             view?.apply {
