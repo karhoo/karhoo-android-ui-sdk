@@ -109,7 +109,7 @@ class TripFlowTests : Launch {
                 details = TRIP_DER,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         serverRobot {
-            cancelResponse(
+            cancelFeeResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
                     trip = TRIP.tripId)

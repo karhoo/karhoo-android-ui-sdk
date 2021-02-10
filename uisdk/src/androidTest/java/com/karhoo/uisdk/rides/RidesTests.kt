@@ -12,6 +12,7 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITH_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.FARE_CANCELLED
 import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
@@ -28,6 +29,7 @@ import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_INCOMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
@@ -330,12 +332,12 @@ class RidesTests : Launch {
             shortSleep()
         }
         serverRobot {
-            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
-            TestData.TRIP.tripId)
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITH_BOOKING_FEE, trip = TRIP.tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
         }
         rideDetail {
             clickCancelRideDetails()
-            clickOnCancel()
+            clickAcceptCancellationFee()
         } result {
             cancelConfirmationIsVisible()
         }
@@ -361,13 +363,13 @@ class RidesTests : Launch {
             shortSleep()
         }
         serverRobot {
-            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
-            TestData.TRIP.tripId)
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITH_BOOKING_FEE, trip = TRIP.tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
             upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
         }
         rideDetail {
             clickCancelRideDetails()
-            clickOnCancel()
+            clickAcceptCancellationFee()
             clickOnDismiss()
         }
         rides {

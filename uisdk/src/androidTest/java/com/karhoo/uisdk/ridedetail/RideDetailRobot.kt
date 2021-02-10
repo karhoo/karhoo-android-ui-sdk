@@ -45,6 +45,10 @@ class RideDetailRobot : BaseTestRobot() {
         dialogClickButtonByText(R.string.dismiss)
     }
 
+    fun clickAcceptCancellationFee() {
+        dialogClickButtonByText(R.string.ok)
+    }
+
     fun clickOnReportIssue() {
         clickButton(R.id.reportIssueButton)
     }

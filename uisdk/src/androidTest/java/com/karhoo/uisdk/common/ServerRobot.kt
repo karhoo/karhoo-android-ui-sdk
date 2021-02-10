@@ -216,6 +216,15 @@ class ServerRobot {
                         )
     }
 
+    fun cancelFeeResponse(code: Int, response: Any, delayInMillis: Int = 0, trip: String) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.BOOKING_CANCEL_FEE.replace("{id}", trip),
+                delayInMillis = delayInMillis
+                        )
+    }
+
     fun sdkInitResponse(code: Int, response: Any, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
@@ -250,6 +259,15 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.BOOKING_HISTORY_METHOD,
+                delayInMillis = 0
+                        )
+    }
+
+    fun cancelRideResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.CANCEL_BOOKING_METHOD,
                 delayInMillis = 0
                         )
     }

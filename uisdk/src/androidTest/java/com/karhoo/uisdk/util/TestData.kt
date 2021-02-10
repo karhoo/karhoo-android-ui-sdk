@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
 import com.karhoo.sdk.api.model.Address
 import com.karhoo.sdk.api.model.Availability
 import com.karhoo.sdk.api.model.AvailabilityVehicle
+import com.karhoo.sdk.api.model.BookingFee
+import com.karhoo.sdk.api.model.BookingFeePrice
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Credentials
@@ -683,6 +685,12 @@ class TestData {
         val RIDE_SCREEN_DER_AIRPORT_PICKUP = TripList(bookings = listOf(TRIP.copy(
                 meetingPoint = MeetingPoint(pickupType = PickupType.MEET_AND_GREET)
                                                                                  )))
+
+        val CANCEL_WITHOUT_BOOKING_FEE = BookingFee(cancellationFee = false)
+
+        val CANCEL_WITH_BOOKING_FEE = BookingFee(cancellationFee = true,
+                                                 fee = BookingFeePrice(currency = "GBP",
+                                                                  value = 1000))
 
         /**
          *
