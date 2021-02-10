@@ -85,8 +85,6 @@ interface RideDetailMVP {
 
         fun displayError(@StringRes errorMessage: Int, karhooError: KarhooError?)
 
-        fun displayCallToCancelDialog(number: String, quote: String)
-
         fun displayBaseFareDialog()
 
         fun showFeedbackSubmitted() {

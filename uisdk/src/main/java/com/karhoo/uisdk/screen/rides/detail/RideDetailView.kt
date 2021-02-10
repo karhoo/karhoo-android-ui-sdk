@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.rides.detail
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -248,18 +247,6 @@ class RideDetailView @JvmOverloads constructor(
         rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage), karhooError = karhooError))
     }
 
-    override fun displayCallToCancelDialog(number: String, quote: String) {
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.difficulties_cancelling_title,
-                messageResId = R.string.difficulties_cancelling_message,
-                positiveButton = KarhooAlertDialogAction(R.string.call,
-                                                         DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
-
-    }
-
     override fun displayFlightDetails(flightNumber: String, meetingPoint: String) {
         if (flightNumber.isNotBlank()) {
             flightDetailsLayout.visibility = View.VISIBLE
@@ -318,8 +305,8 @@ class RideDetailView @JvmOverloads constructor(
         presenter?.onPause()
     }
 
-    override fun goToCleanBooking() {
-        (context as Activity).finish()
+    override fun goToNextScreen() {
+        rideDetailActions?.finishActivity()
     }
 
     override fun showTemporaryError(error: String, karhooError: KarhooError?) {
