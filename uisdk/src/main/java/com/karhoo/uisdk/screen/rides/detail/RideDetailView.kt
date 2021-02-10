@@ -31,7 +31,6 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.basefare.BaseFareView
-import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
@@ -326,7 +325,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun goToCleanBooking() {
-        (context as Activity).startActivity(RidesActivity.Builder.builder.build(context))
+        (context as Activity).finish()
     }
 
     override fun showTemporaryError(error: String, karhooError: KarhooError?) {
