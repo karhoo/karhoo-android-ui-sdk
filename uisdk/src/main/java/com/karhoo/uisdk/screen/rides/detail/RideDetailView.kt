@@ -21,7 +21,6 @@ import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -80,7 +79,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     fun bind(trip: TripInfo) {
-        presenter = RideDetailPresenter(this, trip, KarhooApi.tripService, ScheduledDateViewBinder(), KarhooUISDK.analytics, FeedbackCompletedTripsStore(context))
+        presenter = RideDetailPresenter(this, trip, KarhooApi.tripService, ScheduledDateViewBinder(), FeedbackCompletedTripsStore(context))
 
         loadLogo(trip)
         displayText(trip)
@@ -297,7 +296,6 @@ class RideDetailView @JvmOverloads constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         presenter?.onResume()
-        contactOptionsWidget.disableCallDriver()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
