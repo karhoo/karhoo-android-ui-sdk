@@ -43,14 +43,6 @@ class RideDetailRobot : BaseTestRobot() {
         dialogClickButtonByText(R.string.cancel)
     }
 
-    fun clickOnDismiss() {
-        dialogClickButtonByText(R.string.dismiss)
-    }
-
-    fun clickOnOkay() {
-        dialogClickButtonByText(R.string.ok)
-    }
-
     fun clickOnReportIssue() {
         clickButton(R.id.reportIssueButton)
     }

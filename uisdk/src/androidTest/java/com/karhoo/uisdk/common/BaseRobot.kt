@@ -61,6 +61,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert
 import java.util.Date
+import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 
@@ -280,6 +281,14 @@ open abstract class BaseTestRobot {
         onView(allOf(isAssignableFrom(TextView::class.java),
                      withParent(isAssignableFrom(Toolbar::class.java))))
                 .check(matches(withText(expectedText)))
+    }
+
+    fun clickOnDismiss() {
+        dialogClickButtonByText(R.string.dismiss)
+    }
+
+    fun clickOnOkay() {
+        dialogClickButtonByText(R.string.ok)
     }
 
     fun clickBackToolbarButton() {
