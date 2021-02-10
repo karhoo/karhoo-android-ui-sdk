@@ -130,6 +130,9 @@ class TestData {
 
         const val ARRIVED_NOTIFICATION = "Your KarhooTestFleet driver has arrived"
 
+        const val BOOKING_FEE_NOTIFICATION = "You will be charged a cancellation fee estimated at £10.00.\n\nWould you like to proceed?"
+
+        const val PROCEED_WITH_CANCELLATION = "Would you like to proceed?"
 
         val TRIP_INFO_BLANK = TripInfo()
 

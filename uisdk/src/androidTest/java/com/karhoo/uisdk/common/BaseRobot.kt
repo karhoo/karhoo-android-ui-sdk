@@ -36,7 +36,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withHint
@@ -161,6 +160,9 @@ open abstract class BaseTestRobot {
 
     fun dialogTextIsNotVisible(text: Int) =
             onView(withText(text)).inRoot(isDialog()).check(matches(not(isDisplayed())))
+
+    fun dialogTextIsVisibleString(text: String) =
+            onView(withText(text)).inRoot(isDialog()).check(matches(isDisplayed()))
 
     fun viewIsVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(isDisplayed()))

@@ -12,6 +12,7 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITHOUT_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITH_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.FARE_CANCELLED
@@ -337,20 +338,64 @@ class RidesTests : Launch {
         }
         rideDetail {
             clickCancelRideDetails()
-            clickAcceptCancellationFee()
+            confirmCancellationRideDetails()
         } result {
             cancelConfirmationIsVisible()
         }
     }
 
     /**
-     * Given:   I am on the ride details screen
-     * When:    I successfully cancel a prebooked ride
-     * And:     I click on Dismiss the canfirmation dialog
-     * Then:    I am taken back to the upcoming rides screen
+     * Given:  I am on the ride details screen
+     * When:   I successfully cancel a prebooked ride
+     * And:    There is no cancellation fee
+     * And:    I click on Dismiss the confirmation dialog
+     * Then:   I am not shown a cancellation fee
+     * And:    I am taken back to the upcoming rides screen when I accept the cancellation
      **/
     @Test
-    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebook() {
+    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebookWithoutFee() {
+        serverRobot {
+            successfulToken()
+            upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
+        }
+        rides(this) {
+            shortSleep()
+            clickOnFirstRide()
+        }
+        rideDetail {
+            shortSleep()
+        }
+        serverRobot {
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITHOUT_BOOKING_FEE, trip = TRIP
+                    .tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
+            upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
+        }
+        rideDetail {
+            clickCancelRideDetails()
+            checkCancellationFeeIsNotShown()
+            clickOnDismiss()
+            clickCancelRideDetails()
+            clickOnOkay()
+            clickOnDismiss()
+        }
+        rides {
+            shortSleep()
+        } result {
+            checkNoUpcomingBookings()
+        }
+    }
+
+    /**
+     * Given:  I am on the ride details screen
+     * When:   I successfully cancel a prebooked ride
+     * And:    There is a cancellation fee
+     * And:    I click on Dismiss the confirmation dialog
+     * Then:   I am shown the cancellation fee
+     * And:    I am taken back to the upcoming rides screen when I accept the cancellation
+     **/
+    @Test
+    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebookWithFee() {
         serverRobot {
             successfulToken()
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
@@ -369,7 +414,10 @@ class RidesTests : Launch {
         }
         rideDetail {
             clickCancelRideDetails()
-            clickAcceptCancellationFee()
+            checkCancellationFeeIsShown()
+            clickOnDismiss()
+            clickCancelRideDetails()
+            clickOnOkay()
             clickOnDismiss()
         }
         rides {
