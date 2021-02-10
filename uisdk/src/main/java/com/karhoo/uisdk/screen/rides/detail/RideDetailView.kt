@@ -317,6 +317,7 @@ class RideDetailView @JvmOverloads constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         presenter?.onResume()
+        contactOptionsWidget.disableCallDriver()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
