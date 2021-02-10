@@ -71,13 +71,9 @@ interface RideDetailMVP {
 
         fun hideReportIssueButton()
 
-        fun displayCancelRideButton()
+        fun displayContactOptions()
 
-        fun hideCancelRideButton()
-
-        fun displayContactFleetButton()
-
-        fun hideContactFleetButton()
+        fun hideContactOptions()
 
         fun makeCall(number: String)
 

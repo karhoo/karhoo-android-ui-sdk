@@ -192,12 +192,11 @@ class RideDetailView @JvmOverloads constructor(
         reportIssueButton.visibility = View.VISIBLE
     }
 
-    override fun displayCancelRideButton() {
+    override fun displayContactOptions() {
+        contactOptionsWidget.visibility = View.VISIBLE
         contactOptionsWidget.enableCancelButton()
-    }
-
-    override fun displayContactFleetButton() {
         contactOptionsWidget.enableCallFleet()
+        contactOptionsWidget.disableCallDriver()
     }
 
     override fun hideRebookButton() {
@@ -208,16 +207,11 @@ class RideDetailView @JvmOverloads constructor(
         reportIssueButton.visibility = View.GONE
     }
 
-    override fun hideCancelRideButton() {
+    override fun hideContactOptions() {
         if (cancellationDialog?.isShowing == true) {
             cancellationDialog?.dismiss()
         }
-        contactOptionsWidget.disableCancelButton()
-    }
-
-    override fun hideContactFleetButton() {
-        contactOptionsWidget.disableCallFleet()
-        contactOptionsWidget.disableCallDriver()
+        contactOptionsWidget.visibility = View.GONE
     }
 
     override fun makeCall(number: String) {

@@ -154,23 +154,20 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             view?.apply {
                 hideRebookButton()
                 hideReportIssueButton()
-                displayContactFleetButton()
+                displayContactOptions()
             }
             if (trip.tripState == TripStatus.PASSENGER_ON_BOARD) {
                 view?.apply {
-                    hideCancelRideButton()
-                    hideContactFleetButton()
+                    hideContactOptions()
                 }
             } else {
                 view?.apply {
-                    displayCancelRideButton()
-                    displayContactFleetButton()
+                    displayContactOptions()
                 }
             }
         } else {
             view?.apply {
-                hideCancelRideButton()
-                hideContactFleetButton()
+                hideContactOptions()
                 displayReportIssueButton()
             }
             if (!trip.origin?.placeId.isNullOrEmpty()

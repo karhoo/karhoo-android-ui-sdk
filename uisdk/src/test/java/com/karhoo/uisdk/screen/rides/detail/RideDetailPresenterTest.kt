@@ -367,8 +367,8 @@ class RideDetailPresenterTest {
         presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).hideCancelRideButton()
-        verify(view).hideContactFleetButton()
+        verify(view).hideContactOptions()
+        verify(view).hideContactOptions()
     }
 
     /**
@@ -403,7 +403,7 @@ class RideDetailPresenterTest {
         presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).displayCancelRideButton()
+        verify(view).displayContactOptions()
     }
 
     /**
@@ -420,7 +420,7 @@ class RideDetailPresenterTest {
         presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).hideCancelRideButton()
+        verify(view).hideContactOptions()
     }
 
     /**
@@ -437,7 +437,7 @@ class RideDetailPresenterTest {
         presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).displayContactFleetButton()
+        verify(view).displayContactOptions()
     }
 
     /**
