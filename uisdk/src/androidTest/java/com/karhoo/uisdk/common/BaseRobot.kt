@@ -61,7 +61,6 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert
 import java.util.Date
-import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 

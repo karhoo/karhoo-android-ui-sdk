@@ -338,7 +338,7 @@ class RidesTests : Launch {
         }
         rideDetail {
             clickCancelRideDetails()
-            confirmCancellationRideDetails()
+            clickOnOkay()
         } result {
             cancelConfirmationIsVisible()
         }
