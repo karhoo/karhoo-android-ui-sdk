@@ -31,8 +31,10 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
         analytics?.userCancelTrip(trip)
         trip?.let {
             view?.showLoadingDialog(true)
+            val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode
+                    .orEmpty() else trip?.tripId.orEmpty()
             tripsService
-                    .cancel(TripCancellation(tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode.orEmpty() else trip?.tripId.orEmpty()))
+                    .cancel(TripCancellation(tripIdentifier))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> handleSuccessfulCancellation()
@@ -101,9 +103,10 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     }
 
     override fun getCancellationFee() {
-        //TODO Add cancellation for guest user
         trip?.let { tripInfo ->
-            tripsService.cancellationFee(tripInfo.tripId).execute { result ->
+            val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode
+                    .orEmpty() else trip?.tripId.orEmpty()
+            tripsService.cancellationFee(tripIdentifier).execute { result ->
                 when (result) {
                     is Resource.Success -> showCancellationFee(result.data.fee, tripInfo.tripId)
                     is Resource.Failure -> handleErrorWhileCancelling(result.error, tripInfo)

@@ -90,9 +90,7 @@ class ContactOptionsPresenterTest {
 
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
 
         whenever(tripsService.cancellationFee(any())).thenReturn(bookingFeeCall)
         doNothing().whenever(bookingFeeCall).execute(bookingFeeCaptor.capture())
@@ -163,9 +161,7 @@ class ContactOptionsPresenterTest {
      */
     @Test
     fun `cancel guest booking trip uses correct identifier`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
@@ -312,10 +308,29 @@ class ContactOptionsPresenterTest {
     @Test
     fun `hide all contact options when trip is POB`() {
         presenter.onTripInfoChanged(emptyTripInfo)
+
         verify(view).disableCallFleet()
         verify(view).disableCallDriver()
     }
 
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    The call fails
+     * Then:    Then view is updated with the error
+     */
+    @Test
+    fun `a guest booking cancellation fee request failure uses the follow code`() {
+        UnitTestUISDKConfig.setGuestAuthentication(context)
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(tripsService).cancellationFee(FOLLOW_CODE)
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
+        verify(view).showLoadingDialog(false)
+    }
 
     /**
      * Given:   The cancellation fee is requested
@@ -330,6 +345,7 @@ class ContactOptionsPresenterTest {
 
         bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
+        verify(tripsService).cancellationFee(TRIP_ID)
         verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
         verify(view).showLoadingDialog(false)
     }
