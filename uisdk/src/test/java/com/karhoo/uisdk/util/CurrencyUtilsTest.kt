@@ -26,7 +26,7 @@ class CurrencyUtilsTest {
     }
 
     /**
-     * Given:   A high nad low price
+     * Given:   A high and low price
      * When:    Getting the formatted string
      * Then:    The string should be returned with the range pricing
      */
@@ -41,5 +41,25 @@ class CurrencyUtilsTest {
         assertEquals("£5.00 - 10.00", priceString)
     }
 
+    /**
+     * Given:   A formatted currency String is requested
+     * When:    There is a null currency code
+     * Then:    An empty string is returned
+     */
+    @Test
+    fun `empty string returned for null currency string`() {
+        val formattedString = CurrencyUtils.getFormattedPrice(currency = null, price = 100)
+        assertEquals("", formattedString)
+    }
 
+    /**
+     * Given:   A formatted currency String is requested
+     * When:    There is a valid currency code
+     * Then:    An empty string is returned
+     */
+    @Test
+    fun `formatted currency string returned for currency string and price`() {
+        val formattedString = CurrencyUtils.getFormattedPrice(currency = "GBP", price = 1000)
+        assertEquals("£10.00", formattedString)
+    }
 }

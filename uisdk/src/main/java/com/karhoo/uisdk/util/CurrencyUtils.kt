@@ -4,9 +4,16 @@ import java.util.Currency
 
 object CurrencyUtils {
 
+    fun getFormattedPrice(currency: String?, price: Int): String {
+        return if (currency.isNullOrEmpty()) "" else {
+            val currency = Currency.getInstance(currency)
+            intToPrice(currency, price)
+        }
+    }
+
     fun intToPrice(currency: Currency, price: Int): String {
 
-        val cost = Integer.toString(price)
+        val cost = price.toString()
         val low = currency.defaultFractionDigits
 
         val (costHi, costLow) = getDisplayPrice(cost, low)

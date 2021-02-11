@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
@@ -15,6 +16,8 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.IntentUtils
 import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.cancelButton
@@ -38,19 +41,9 @@ class ContactOptionsView @JvmOverloads constructor(
         inflate(context, R.layout.uisdk_view_contact_options, this)
 
         contactDriverButton.setOnClickListener { presenter.contactDriver() }
-        contactFleetButton.setOnClickListener { presenter.contactFleet() }
-    }
-
-    override fun showCancelConfirmationDialog() {
-
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_your_ride,
-                messageResId = R.string.cancellation_fee,
-                positiveButton = KarhooAlertDialogAction(R.string.cancel,
-                                                         DialogInterface.OnClickListener { _, _ -> presenter.cancelTrip() }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        contactFleetButton.setOnClickListener {
+            presenter.contactFleet()
+        }
     }
 
     override fun showTripCancelledDialog() {
@@ -59,7 +52,8 @@ class ContactOptionsView @JvmOverloads constructor(
                 titleResId = R.string.cancel_ride_successful,
                 messageResId = R.string.cancel_ride_successful_message,
                 positiveButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }))
+                                                         DialogInterface.OnClickListener { _, _
+                                                             -> actions?.goToNextScreen() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
@@ -130,7 +124,33 @@ class ContactOptionsView @JvmOverloads constructor(
         bookingStatusPresenter.addTripInfoObserver(presenter)
     }
 
+    override fun observeTripStatus(rideDetailPresenter: RideDetailMVP.Presenter) {
+        rideDetailPresenter.addTripInfoObserver(presenter)
+    }
+
     override fun showError(@StringRes errorMessageId: Int, karhooError: KarhooError?) {
         actions?.showTemporaryError(resources.getString(errorMessageId), karhooError)
+    }
+
+    override fun showCancellationFee(formattedPrice: String, tripId: String) {
+        val message = if (formattedPrice.isNotEmpty())
+            String.format(resources.getString(R.string.you_may_be_charged, formattedPrice)) else
+            resources.getString(R.string.would_you_like_to_proceed)
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.cancel_your_ride,
+                message = message,
+                cancellable = false,
+                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
+                negativeButton = KarhooAlertDialogAction(R.string.ok,
+                                                         DialogInterface.OnClickListener { _, _
+                                                             ->
+                                                             presenter.cancelTrip()
+                                                         }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+    }
+
+    private fun goToCleanBooking() {
+        (context as Activity).startActivity(BookingActivity.Builder.builder.build(context))
     }
 }

@@ -248,6 +248,8 @@
     <string name="difficulties_cancelling_message">Nous n\'arrivons pas à annuler votre course. Veuillez contacter le fournisseur.</string>
     <string name="cancellation_fee">Des frais d\'annulation pourraient être facturés par le fournisseur.</string>
     <string name="call">Appeler</string>
+    <string name="you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>
+    <string name="would_you_like_to_proceed">Souhaitez-vous continuer?</string>
 
     <!-- trip info -->
     <string name="ride_options">Options</string>

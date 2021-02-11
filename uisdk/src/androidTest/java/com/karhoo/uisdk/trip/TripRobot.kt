@@ -3,6 +3,7 @@ package com.karhoo.uisdk.trip
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.REG_PLATE
 import org.junit.Assert
 
@@ -32,7 +33,7 @@ class TripRobot : BaseTestRobot() {
     }
 
     fun clickConfirmCancellation() {
-        clickOnButtonInAlertDialog(AlertDialogButton.POSITIVE)
+        dialogClickButtonByText(R.string.ok)
     }
 
     fun clickDoneOnRideSummary() {
@@ -49,6 +50,14 @@ class TripRobot : BaseTestRobot() {
 
     fun clickOKOnCancelledConfirmation() {
         dialogClickButtonByText(R.string.ok)
+    }
+
+    fun checkCancellationFeeIsNotShown() {
+        dialogTextIsVisibleString(TestData.PROCEED_WITH_CANCELLATION)
+    }
+
+    fun checkCancellationFeeIsShown() {
+        dialogTextIsVisibleString(TestData.BOOKING_FEE_NOTIFICATION)
     }
 
 }

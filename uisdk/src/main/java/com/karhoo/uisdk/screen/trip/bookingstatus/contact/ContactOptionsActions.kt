@@ -4,7 +4,7 @@ import com.karhoo.sdk.api.KarhooError
 
 interface ContactOptionsActions {
 
-    fun goToCleanBooking()
+    fun goToNextScreen()
 
     fun showTemporaryError(error: String, karhooError: KarhooError?)
 

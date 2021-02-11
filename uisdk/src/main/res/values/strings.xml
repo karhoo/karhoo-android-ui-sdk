@@ -246,6 +246,8 @@
     <string name="difficulties_cancelling_title">Difficulties Cancelling</string>
     <string name="difficulties_cancelling_message">We are experiencing issues cancelling your ride. Please contact the fleet.</string>
     <string name="call">CALL</string>
+    <string name="you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>
+    <string name="would_you_like_to_proceed">Would you like to proceed?</string>
 
     <!--trip info-->
     <string name="ride_options">Ride Options</string>

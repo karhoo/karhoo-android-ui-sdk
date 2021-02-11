@@ -7,11 +7,13 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
+import com.karhoo.uisdk.util.TestData.Companion.BOOKING_FEE_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.HELP_TEXT
 import com.karhoo.uisdk.util.TestData.Companion.KARHOO_ID
 import com.karhoo.uisdk.util.TestData.Companion.PAST_DATE_TIME
 import com.karhoo.uisdk.util.TestData.Companion.PREBOOK_TIME_DATE
 import com.karhoo.uisdk.util.TestData.Companion.PRICE_TOTAL
+import com.karhoo.uisdk.util.TestData.Companion.PROCEED_WITH_CANCELLATION
 import com.karhoo.uisdk.util.TestData.Companion.TEST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_ID
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLE_DETAILS
@@ -30,7 +32,7 @@ class RideDetailRobot : BaseTestRobot() {
     }
 
     fun clickCancelRideDetails() {
-        clickButton(R.id.cancelRideButton)
+        clickButton(R.id.cancelButton)
     }
 
     fun confirmCancellationRideDetails() {
@@ -41,12 +43,16 @@ class RideDetailRobot : BaseTestRobot() {
         dialogClickButtonByText(R.string.cancel)
     }
 
-    fun clickOnDismiss() {
-        dialogClickButtonByText(R.string.dismiss)
-    }
-
     fun clickOnReportIssue() {
         clickButton(R.id.reportIssueButton)
+    }
+
+    fun checkCancellationFeeIsNotShown() {
+        dialogTextIsVisibleString(PROCEED_WITH_CANCELLATION)
+    }
+
+    fun checkCancellationFeeIsShown() {
+        dialogTextIsVisibleString(BOOKING_FEE_NOTIFICATION)
     }
 }
 
@@ -272,7 +278,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun upcomingTripcCancelRideButtonIsEnabled() {
-        buttonIsEnabled(R.id.cancelRideButton)
+        buttonIsEnabled(R.id.cancelButton)
     }
 
     fun upcomingTripCallFleetButtonIsEnabled() {
@@ -284,7 +290,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun upcomingTripcCancelRideButtonIsNotVisible() {
-        viewIsNotVisible(R.id.cancelRideButton)
+        viewIsNotVisible(R.id.cancelButton)
     }
 
     fun upcomingPassengerOnBoardRideDetailsFullCheck() {

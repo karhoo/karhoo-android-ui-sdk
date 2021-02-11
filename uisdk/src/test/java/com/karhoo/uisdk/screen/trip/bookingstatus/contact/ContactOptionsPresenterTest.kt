@@ -3,6 +3,8 @@ package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 import android.content.Context
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.sdk.api.model.BookingFee
+import com.karhoo.sdk.api.model.BookingFeePrice
 import com.karhoo.sdk.api.model.Driver
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.TripInfo
@@ -42,6 +44,9 @@ class ContactOptionsPresenterTest {
     private var view: ContactOptionsMVP.View = mock()
     private var tripsService: TripsService = mock()
     private var analytics: Analytics = mock()
+    private val bookingFeeCall: Call<BookingFee> = mock()
+    private val bookingFeeCaptor = argumentCaptor<(Resource<BookingFee>) -> Unit>()
+    private val lambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
 
     @Captor
     private lateinit var cancellationCaptor: ArgumentCaptor<TripCancellation>
@@ -52,6 +57,8 @@ class ContactOptionsPresenterTest {
         private const val TRIP_ID = "someTripId"
         private const val FOLLOW_CODE = "followCode"
     }
+
+    private val bookingFee = BookingFeePrice(currency = "GBP", value = 5200)
 
     private var fleetInfo = FleetInfo(
             name = "Some mad oul fleet",
@@ -81,13 +88,14 @@ class ContactOptionsPresenterTest {
 
     private lateinit var presenter: ContactOptionsPresenter
 
-    private val lambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
-
     @Before
     fun setUp() {
         KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.KarhooUser()))
+
+        whenever(tripsService.cancellationFee(any())).thenReturn(bookingFeeCall)
+        doNothing().whenever(bookingFeeCall).execute(bookingFeeCaptor.capture())
 
         presenter = ContactOptionsPresenter(
                 view = view,
@@ -102,12 +110,10 @@ class ContactOptionsPresenterTest {
      * Then:    The view should be told to display the complete dialog
      */
     @Test
-    fun `user cancels trip successfully`() {
+    fun `user requests cancels trip successfully`() {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -180,8 +186,6 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
@@ -199,8 +203,6 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -218,8 +220,6 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -316,4 +316,69 @@ class ContactOptionsPresenterTest {
         verify(view).disableCallDriver()
     }
 
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    The call fails
+     * Then:    Then view is updated with the error
+     */
+    @Test
+    fun `a cancellation fee request failure correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
+        verify(view).showLoadingDialog(false)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There is a null cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a null cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = null)))
+
+        verify(view).showCancellationFee("", TRIP_ID)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There there is no cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a no cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee()))
+
+        verify(view).showCancellationFee("", TRIP_ID)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There is a valid cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a valid cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = bookingFee)))
+
+        verify(view).showCancellationFee("£52.00", TRIP_ID)
+    }
 }

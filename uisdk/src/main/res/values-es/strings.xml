@@ -127,6 +127,8 @@
     <string name="cancel_ride_successful_message">Tu reserva se canceló con éxito.</string>
     <string name="cancellation_fee">Puede que se te cobre una tarifa de cancelación</string>
     <string name="call">LLAMAR</string>
+    <string name="you_may_be_charged">Se le cargará una tasa de cancelación estimada en %s.\n\n¿Quiere continuar?</string>
+    <string name="would_you_like_to_proceed">¿Quiere continuar?</string>
 
     <!-- trip info -->
     <string name="ride_options">Opciones del viaje</string>
