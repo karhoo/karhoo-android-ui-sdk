@@ -71,13 +71,9 @@ interface RideDetailMVP {
 
         fun hideReportIssueButton()
 
-        fun displayCancelRideButton()
+        fun displayContactOptions()
 
-        fun hideCancelRideButton()
-
-        fun displayContactFleetButton()
-
-        fun hideContactFleetButton()
+        fun hideContactOptions()
 
         fun makeCall(number: String)
 
@@ -88,8 +84,6 @@ interface RideDetailMVP {
         fun displayTripCancelledDialog()
 
         fun displayError(@StringRes errorMessage: Int, karhooError: KarhooError?)
-
-        fun displayCallToCancelDialog(number: String, quote: String)
 
         fun displayBaseFareDialog()
 

@@ -21,7 +21,6 @@ import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -31,6 +30,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.basefare.BaseFareView
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
+import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.toLocalisedString
@@ -66,7 +66,7 @@ class RideDetailView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr), RideDetailMVP.View, LifecycleObserver {
+    : FrameLayout(context, attrs, defStyleAttr), RideDetailMVP.View, ContactOptionsActions, LifecycleObserver {
 
     private var presenter: RideDetailPresenter? = null
     private var progressDialog: ProgressDialog? = null
@@ -75,10 +75,11 @@ class RideDetailView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_ride_detail, this)
+        contactOptionsWidget.actions = this
     }
 
     fun bind(trip: TripInfo) {
-        presenter = RideDetailPresenter(this, trip, KarhooApi.tripService, ScheduledDateViewBinder(), KarhooUISDK.analytics, FeedbackCompletedTripsStore(context))
+        presenter = RideDetailPresenter(this, trip, KarhooApi.tripService, ScheduledDateViewBinder(), FeedbackCompletedTripsStore(context))
 
         loadLogo(trip)
         displayText(trip)
@@ -189,12 +190,11 @@ class RideDetailView @JvmOverloads constructor(
         reportIssueButton.visibility = View.VISIBLE
     }
 
-    override fun displayCancelRideButton() {
+    override fun displayContactOptions() {
+        contactOptionsWidget.visibility = View.VISIBLE
         contactOptionsWidget.enableCancelButton()
-    }
-
-    override fun displayContactFleetButton() {
-        contactOptionsWidget.disableCancelButton()
+        contactOptionsWidget.enableCallFleet()
+        contactOptionsWidget.disableCallDriver()
     }
 
     override fun hideRebookButton() {
@@ -205,15 +205,11 @@ class RideDetailView @JvmOverloads constructor(
         reportIssueButton.visibility = View.GONE
     }
 
-    override fun hideCancelRideButton() {
+    override fun hideContactOptions() {
         if (cancellationDialog?.isShowing == true) {
             cancellationDialog?.dismiss()
         }
-        contactOptionsWidget.disableCancelButton()
-    }
-
-    override fun hideContactFleetButton() {
-        contactOptionsWidget.enableCancelButton()
+        contactOptionsWidget.visibility = View.GONE
     }
 
     override fun makeCall(number: String) {
@@ -248,18 +244,6 @@ class RideDetailView @JvmOverloads constructor(
 
     override fun displayError(errorMessage: Int, karhooError: KarhooError?) {
         rideDetailActions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage), karhooError = karhooError))
-    }
-
-    override fun displayCallToCancelDialog(number: String, quote: String) {
-        val config = KarhooAlertDialogConfig(
-                titleResId = R.string.difficulties_cancelling_title,
-                messageResId = R.string.difficulties_cancelling_message,
-                positiveButton = KarhooAlertDialogAction(R.string.call,
-                                                         DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
-
     }
 
     override fun displayFlightDetails(flightNumber: String, meetingPoint: String) {
@@ -317,6 +301,14 @@ class RideDetailView @JvmOverloads constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         presenter?.onPause()
+    }
+
+    override fun goToNextScreen() {
+        rideDetailActions?.finishActivity()
+    }
+
+    override fun showTemporaryError(error: String, karhooError: KarhooError?) {
+        TODO("Not yet implemented")
     }
 
 }

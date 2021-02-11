@@ -62,7 +62,7 @@ class RideDetailTests : Launch {
             successfulToken()
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_REQUESTED_DETAILS, trip = TRIP.tripId)
             bookingHistoryResponse(code = HTTP_OK, response = TRIP_STATUS_REQUESTED)
-            cancelResponse(code = HTTP_INTERNAL_ERROR, response = COULD_NOT_CANCEL_TRIP, trip = TRIP.tripId)
+            cancelFeeResponse(code = HTTP_INTERNAL_ERROR, response = COULD_NOT_CANCEL_TRIP, trip = TRIP.tripId)
         }
         rideDetail(this, TRIP_INTENT) {
             clickCancelRideDetails()

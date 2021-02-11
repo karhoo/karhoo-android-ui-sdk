@@ -12,7 +12,6 @@ import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
@@ -33,7 +32,6 @@ class RideDetailPresenter(view: RideDetailMVP.View,
                           private var trip: TripInfo,
                           private val tripsService: TripsService,
                           private val scheduledDateBinder: ScheduledDateViewBinder,
-                          private val analytics: Analytics?,
                           private val feedbackCompletedTripsStore: FeedbackCompletedTripsStore,
                           private val fareService: FareService = KarhooApi.fareService)
     : BasePresenter<RideDetailMVP.View>(), RideDetailMVP.Presenter {
@@ -154,17 +152,16 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             view?.apply {
                 hideRebookButton()
                 hideReportIssueButton()
-                displayContactFleetButton()
+                displayContactOptions()
             }
             if (trip.tripState == TripStatus.PASSENGER_ON_BOARD) {
-                view?.hideCancelRideButton()
-            } else {
-                view?.displayCancelRideButton()
+                view?.apply {
+                    hideContactOptions()
+                }
             }
         } else {
             view?.apply {
-                hideCancelRideButton()
-                hideContactFleetButton()
+                hideContactOptions()
                 displayReportIssueButton()
             }
             if (!trip.origin?.placeId.isNullOrEmpty()

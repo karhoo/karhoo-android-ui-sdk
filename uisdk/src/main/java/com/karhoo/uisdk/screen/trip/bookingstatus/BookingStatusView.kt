@@ -87,7 +87,7 @@ class BookingStatusView @JvmOverloads constructor(
         }
     }
 
-    override fun goToCleanBooking() {
+    override fun goToNextScreen() {
         actions?.goToCleanBooking()
     }
 

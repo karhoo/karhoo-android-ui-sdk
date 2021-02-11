@@ -7,6 +7,8 @@ import com.google.gson.annotations.SerializedName
 import com.karhoo.sdk.api.model.Address
 import com.karhoo.sdk.api.model.Availability
 import com.karhoo.sdk.api.model.AvailabilityVehicle
+import com.karhoo.sdk.api.model.BookingFee
+import com.karhoo.sdk.api.model.BookingFeePrice
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Credentials
@@ -128,6 +130,9 @@ class TestData {
 
         const val ARRIVED_NOTIFICATION = "Your KarhooTestFleet driver has arrived"
 
+        const val BOOKING_FEE_NOTIFICATION = "You will be charged a cancellation fee estimated at £10.00.\n\nWould you like to proceed?"
+
+        const val PROCEED_WITH_CANCELLATION = "Would you like to proceed?"
 
         val TRIP_INFO_BLANK = TripInfo()
 
@@ -683,6 +688,12 @@ class TestData {
         val RIDE_SCREEN_DER_AIRPORT_PICKUP = TripList(bookings = listOf(TRIP.copy(
                 meetingPoint = MeetingPoint(pickupType = PickupType.MEET_AND_GREET)
                                                                                  )))
+
+        val CANCEL_WITHOUT_BOOKING_FEE = BookingFee(cancellationFee = false)
+
+        val CANCEL_WITH_BOOKING_FEE = BookingFee(cancellationFee = true,
+                                                 fee = BookingFeePrice(currency = "GBP",
+                                                                  value = 1000))
 
         /**
          *

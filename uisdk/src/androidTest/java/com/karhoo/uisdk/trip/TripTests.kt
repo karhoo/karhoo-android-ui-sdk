@@ -257,18 +257,21 @@ class TripTests : Launch {
     }
 
     /**
-     * Given:   Trip status is DER
+     * Given:   Trip status is DER (driver en route)
      * When:    When I cancel the trip
      * Then:    The trip is confirmed as cancelled
      **/
     @Test
     @AllowFlaky(attempts = 5)
-    fun cancelWhenDERSuccessfully() {
+    fun cancelWithoutBookingFeeWhenDERSuccessfully() {
         mockTripSuccessResponse(
                 status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
                 details = TRIP_DER)
         serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
             cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
@@ -277,7 +280,43 @@ class TripTests : Launch {
         trip(this) {
             clickOnDriverDetails()
             clickOnCancelRide()
-            clickConfirmCancellation()
+            checkCancellationFeeIsNotShown()
+            clickOnDismiss()
+            clickOnCancelRide()
+            clickOnOkay()
+        } result {
+            cancellationConfirmation()
+        }
+    }
+
+    /**
+     * Given:   Trip status is DER (driver en route)
+     * When:    When I cancel the trip
+     * Then:    The trip is confirmed as cancelled
+     **/
+    @Test
+    @AllowFlaky(attempts = 5)
+    fun cancelWithBookingFeeWhenDERSuccessfully() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_DER,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_DER)
+        serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITH_BOOKING_FEE,
+                              trip = TRIP.tripId)
+            cancelResponse(
+                    code = HTTP_CREATED,
+                    response = TRIP_STATUS_CANCELLED_BY_USER,
+                    trip = TRIP.tripId)
+        }
+        trip(this) {
+            clickOnDriverDetails()
+            clickOnCancelRide()
+            checkCancellationFeeIsShown()
+            clickOnDismiss()
+            clickOnCancelRide()
+            clickOnOkay()
         } result {
             cancellationConfirmation()
         }
@@ -296,6 +335,9 @@ class TripTests : Launch {
                 tracking = DRIVER_TRACKING,
                 details = TRIP_ARRIVED)
         serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
             cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
