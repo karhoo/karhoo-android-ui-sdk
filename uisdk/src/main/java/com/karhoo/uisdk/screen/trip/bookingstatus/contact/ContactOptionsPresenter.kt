@@ -68,7 +68,20 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
 
     override fun onTripInfoChanged(tripInfo: TripInfo?) {
         trip = tripInfo
-        trip?.let { enableValidContactOptions(it) }
+        trip?.let {
+            it.tripState?.let { tripStatus -> setCancellationOption(tripStatus) }
+            enableValidContactOptions(it)
+        }
+    }
+
+    private fun setCancellationOption(tripStatus: TripStatus) {
+        if (tripStatus == TripStatus.REQUESTED
+                || tripStatus == TripStatus.CONFIRMED
+                || tripStatus == TripStatus.DRIVER_EN_ROUTE) {
+            view?.enableCancelButton()
+        } else {
+            view?.disableCancelButton()
+        }
     }
 
     private fun enableValidContactOptions(currentTrip: TripInfo) {
@@ -79,6 +92,9 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                 enableCallDriver()
                 disableCallFleet()
             }
+        } else if (currentTrip.tripState == TripStatus.PASSENGER_ON_BOARD
+                && !currentTrip.fleetInfo?.phoneNumber.isNullOrBlank()) {
+            view?.enableCallFleet()
         } else if (!currentTrip.fleetInfo?.phoneNumber.isNullOrBlank()) {
             view?.apply {
                 enableCallFleet()

@@ -406,7 +406,7 @@ class RideDetailPresenterTest {
      * Then:    hide cancel ride
      */
     @Test
-    fun `hides cancel ride button when POB`() {
+    fun `shows contact options when POB`() {
         val trip = TripInfo(
                 tripId = TRIP_ID,
                 tripState = TripStatus.PASSENGER_ON_BOARD)
@@ -414,7 +414,7 @@ class RideDetailPresenterTest {
         presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).hideContactOptions()
+        verify(view).displayContactOptions()
     }
 
     /**
