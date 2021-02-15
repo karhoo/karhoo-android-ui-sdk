@@ -92,10 +92,13 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                 enableCallDriver()
                 disableCallFleet()
             }
-        } else if (currentTrip.tripState == TripStatus.PASSENGER_ON_BOARD
-                && !currentTrip.fleetInfo?.phoneNumber.isNullOrBlank()) {
-            view?.enableCallFleet()
-        } else if (!currentTrip.fleetInfo?.phoneNumber.isNullOrBlank()) {
+        } else if(currentTrip.tripState == TripStatus.COMPLETED) {
+            view?.apply {
+                disableCallFleet()
+                disableCallDriver()
+            }
+        } else if (!currentTrip
+                        .fleetInfo?.phoneNumber.isNullOrBlank()) {
             view?.apply {
                 enableCallFleet()
                 disableCallDriver()
