@@ -31,8 +31,10 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
         analytics?.userCancelTrip(trip)
         trip?.let {
             view?.showLoadingDialog(true)
+            val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode
+                    .orEmpty() else trip?.tripId.orEmpty()
             tripsService
-                    .cancel(TripCancellation(tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode.orEmpty() else trip?.tripId.orEmpty()))
+                    .cancel(TripCancellation(tripIdentifier))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> handleSuccessfulCancellation()
@@ -66,7 +68,20 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
 
     override fun onTripInfoChanged(tripInfo: TripInfo?) {
         trip = tripInfo
-        trip?.let { enableValidContactOptions(it) }
+        trip?.let {
+            it.tripState?.let { tripStatus -> setCancellationOption(tripStatus) }
+            enableValidContactOptions(it)
+        }
+    }
+
+    private fun setCancellationOption(tripStatus: TripStatus) {
+        if (tripStatus == TripStatus.REQUESTED
+                || tripStatus == TripStatus.CONFIRMED
+                || tripStatus == TripStatus.DRIVER_EN_ROUTE) {
+            view?.enableCancelButton()
+        } else {
+            view?.disableCancelButton()
+        }
     }
 
     private fun enableValidContactOptions(currentTrip: TripInfo) {
@@ -77,7 +92,13 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                 enableCallDriver()
                 disableCallFleet()
             }
-        } else if (!currentTrip.fleetInfo?.phoneNumber.isNullOrBlank()) {
+        } else if(currentTrip.tripState == TripStatus.COMPLETED) {
+            view?.apply {
+                disableCallFleet()
+                disableCallDriver()
+            }
+        } else if (!currentTrip
+                        .fleetInfo?.phoneNumber.isNullOrBlank()) {
             view?.apply {
                 enableCallFleet()
                 disableCallDriver()
@@ -101,9 +122,10 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
     }
 
     override fun getCancellationFee() {
-        //TODO Add cancellation for guest user
         trip?.let { tripInfo ->
-            tripsService.cancellationFee(tripInfo.tripId).execute { result ->
+            val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode
+                    .orEmpty() else trip?.tripId.orEmpty()
+            tripsService.cancellationFee(tripIdentifier).execute { result ->
                 when (result) {
                     is Resource.Success -> showCancellationFee(result.data.fee, tripInfo.tripId)
                     is Resource.Failure -> handleErrorWhileCancelling(result.error, tripInfo)

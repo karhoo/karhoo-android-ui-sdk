@@ -83,6 +83,7 @@ class ResultRobot : BaseTestRobot() {
         pastTripRatingFieldsVisible()
         pastTripRebookButtonVisibleAndEnabled()
         pastTripReportIssueButtonVisibleAndEnabled()
+        pastRideContactOptionsNotVisible()
     }
 
     fun completedRideFullCheckFromTrip() {
@@ -182,6 +183,10 @@ class ResultRobot : BaseTestRobot() {
 
     fun pastTripReportIssueButtonVisibleAndEnabled() {
         buttonIsEnabled(R.id.reportIssueButton)
+    }
+
+    fun pastRideContactOptionsNotVisible() {
+        viewIsNotVisible(R.id.contactOptionsWidget)
     }
 
     fun checkForPendingState() {

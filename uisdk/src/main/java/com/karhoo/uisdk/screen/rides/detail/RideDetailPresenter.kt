@@ -154,11 +154,6 @@ class RideDetailPresenter(view: RideDetailMVP.View,
                 hideReportIssueButton()
                 displayContactOptions()
             }
-            if (trip.tripState == TripStatus.PASSENGER_ON_BOARD) {
-                view?.apply {
-                    hideContactOptions()
-                }
-            }
         } else {
             view?.apply {
                 hideContactOptions()
