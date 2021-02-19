@@ -49,7 +49,7 @@ class TripRobot : BaseTestRobot() {
     }
 
     fun clickOKOnCancelledConfirmation() {
-        dialogClickButtonByText(R.string.ok)
+        dialogClickButtonByText(R.string.dismiss)
     }
 
     fun checkCancellationFeeIsNotShown() {

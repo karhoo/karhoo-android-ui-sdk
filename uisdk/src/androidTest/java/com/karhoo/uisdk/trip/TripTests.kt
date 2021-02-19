@@ -333,7 +333,7 @@ class TripTests : Launch {
         mockTripSuccessResponse(
                 status = TRIP_STATUS_ARRIVED,
                 tracking = DRIVER_TRACKING,
-                details = TRIP_ARRIVED)
+                details = TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS)
         serverRobot {
             cancelFeeResponse(code = HTTP_OK,
                               response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
@@ -344,6 +344,7 @@ class TripTests : Launch {
                     trip = TRIP.tripId)
         }
         trip(this) {
+            mediumSleep()
             clickOnDriverDetails()
             clickOnCancelRide()
             clickConfirmCancellation()
@@ -375,8 +376,8 @@ class TripTests : Launch {
 
     /**
      * Given:   Trip status is Arrived
-     * When:    When I cancel the trip cancellation
-     * Then:    The trip continues as normal
+     * When:    Ride details is clicked
+     * Then:    The trip continues as normal, Cancel option is not available
      **/
     @Test
     @AllowFlaky(attempts = 5)
@@ -387,10 +388,9 @@ class TripTests : Launch {
                 details = TRIP_ARRIVED)
         trip(this) {
             clickOnDriverDetails()
-            clickOnCancelRide()
-            clickOnCancelYourRideCancellation()
             shortSleep()
         } result {
+            noCancelButtonVisible()
             checkRideInProgress()
         }
     }
@@ -567,6 +567,7 @@ class TripTests : Launch {
      * Then:    I can see the driver en route notification at the top of the screen
      **/
     @Test
+    @AllowFlaky(attempts = 3)
     fun DERNotificationIsVisible() {
         mockTripSuccessResponse(
                 status = TRIP_STATUS_DER,

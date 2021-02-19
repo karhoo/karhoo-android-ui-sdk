@@ -230,7 +230,7 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=0987&currency=$DEFAULT_CURRENCY",
+                        "?organisation_id=organisation_id&currency=$DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }

@@ -107,7 +107,8 @@ class BraintreeBookingTests : Launch {
         booking(this, null) {
             mediumSleep()
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            // R.string.K0001
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
@@ -522,7 +523,6 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         booking(this, INITIAL_TRIP_INTENT) {

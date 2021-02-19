@@ -53,7 +53,7 @@ class RideDetailTests : Launch {
     /**
      * Given:   I am on the ride detail screen
      * When:    An error occurs
-     * Then:    The correct error message is displayed in the snackbar
+     * Then:    The correct error message is displayed
      **/
     @Test
     @AllowFlaky(attempts = 5)
@@ -66,7 +66,6 @@ class RideDetailTests : Launch {
         }
         rideDetail(this, TRIP_INTENT) {
             clickCancelRideDetails()
-            confirmCancellationRideDetails()
         } result {
             couldNotCancelMessageIsDisplayed()
         }
