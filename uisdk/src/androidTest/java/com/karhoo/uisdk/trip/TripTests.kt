@@ -323,17 +323,17 @@ class TripTests : Launch {
     }
 
     /**
-     * Given:   Trip status is Arrived
+     * Given:   Trip status is Driver En Route
      * When:    When I cancel the trip
      * Then:    The trip is confirmed as cancelled
      **/
     @Test
     @AllowFlaky(attempts = 5)
-    fun cancelWhenDriverArrivedSuccessfully() {
+    fun cancelWhenDriverEnRouteSuccessfully() {
         mockTripSuccessResponse(
-                status = TRIP_STATUS_ARRIVED,
+                status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
-                details = TRIP_DER_NO_VEHICLE_AND_DRIVER_DETAILS)
+                details = TRIP_DER)
         serverRobot {
             cancelFeeResponse(code = HTTP_OK,
                               response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
