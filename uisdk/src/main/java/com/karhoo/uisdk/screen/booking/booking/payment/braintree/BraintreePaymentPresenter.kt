@@ -116,7 +116,11 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
-        view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce.orEmpty(), quotePriceToAmount(price))
+        if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
+        } else {
+            view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce.orEmpty(), quotePriceToAmount(price))
+        }
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {

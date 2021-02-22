@@ -224,6 +224,10 @@ open class BaseTestRobot {
         onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
     }
 
+    fun checkSnackbarWithText(expectedText: String) {
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
+    }
+
     fun checkSnackbarButtonIsEnabled(button: String) {
         onView(allOf(withId(R.id.snackbar_action), withText(button))).check(matches(isEnabled()))
     }

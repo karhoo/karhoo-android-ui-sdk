@@ -36,7 +36,7 @@ class RideDetailRobot : BaseTestRobot() {
     }
 
     fun confirmCancellationRideDetails() {
-        clickOnButtonInAlertDialog(AlertDialogButton.POSITIVE)
+        clickOnButtonInAlertDialog(AlertDialogButton.NEGATIVE)
     }
 
     fun clickOnCancel() {
