@@ -98,7 +98,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
 
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)
-        request.put(RETURN_URL_SUFFIX, "")
 
         return request.toString()
     }
@@ -112,7 +111,6 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         const val PAYLOAD = "payload"
         const val PAYMENTS_PAYLOAD = "payments_payload"
         const val RETURN_URL = "returnUrl"
-        const val RETURN_URL_SUFFIX = "return_url_suffix"
         const val TRIP_ID = AdyenDropInService.TRIP_ID
     }
 }
