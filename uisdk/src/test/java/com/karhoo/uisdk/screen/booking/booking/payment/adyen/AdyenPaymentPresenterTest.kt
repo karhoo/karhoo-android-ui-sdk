@@ -44,6 +44,7 @@ class AdyenPaymentPresenterTest {
     private var paymentDropInActions: PaymentDropInMVP.Actions = mock()
 
     private val paymentInfoCaptor = argumentCaptor<SavedPaymentInfo>()
+    private val karhooErrorCaptor = argumentCaptor<KarhooError>()
     private val paymentMethodsCall: Call<String> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
     private val publicKeyCall: Call<AdyenPublicKey> = mock()
@@ -111,7 +112,7 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `payment view shown when change card pressed and payment methods retrieved successfully`() {
-        val paymentData: String = "{paymentMethods: []}"
+        val paymentData = "{paymentMethods: []}"
         setConfig()
 
         adyenPaymentPresenter.sdkInit(price)
@@ -200,13 +201,31 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown is activity result is RESULT_OK and the result code is not authorised`() {
-        whenever(data.getStringExtra(RESULT_KEY)).thenReturn("{}")
+        val response = """
+            {
+                "additionalData": {
+                  "cardSummary": "4305",
+                  "fundingSource": "CREDIT",
+                  "paymentMethod": "visa",
+                  "recurringProcessingModel": "Subscription"
+                },
+                "merchantReference": "0d10e9f0-f000-4a22-95bc-bfc6f8530e37/preauth/0",
+                "pspReference": "852614786431484C",
+                "refusalReason": "FRAUD-CANCELLED",
+                "refusalReasonCode": "22",
+                "resultCode": "Cancelled"
+            }
+        """.trimIndent()
+        whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response)
         adyenPaymentPresenter.handleActivityResult(
                 requestCode = REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(paymentDropInActions).showPaymentFailureDialog()
+        verify(paymentDropInActions).showPaymentFailureDialog(karhooErrorCaptor.capture())
+        assertEquals(karhooErrorCaptor.firstValue.code, "KSDK00 Cancelled")
+        assertEquals(karhooErrorCaptor.firstValue.internalMessage, "22")
+        assertEquals(karhooErrorCaptor.firstValue.userFriendlyMessage, "FRAUD-CANCELLED")
     }
 
     /**
@@ -343,6 +362,6 @@ class AdyenPaymentPresenterTest {
         private const val MERCHANT_REFERENCE = AdyenPaymentView.MERCHANT_REFERENCE
         private const val RESULT_KEY = AdyenResultActivity.RESULT_KEY
         private const val REQUEST_CODE = AdyenPaymentView.REQ_CODE_ADYEN
-        private const val RESULT_CODE = AdyenPaymentView.RESULT_CODE
+        private const val RESULT_CODE = AdyenPaymentPresenter.RESULT_CODE
     }
 }

@@ -47,7 +47,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         userStore.addSavedPaymentObserver(this)
     }
 
-    override fun getDropInConfig(context: Context, publicKey: String): Any {
+    override fun getDropInConfig(context: Context, sdkToken: String): Any {
         val amount = Amount()
         amount.currency = price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = price?.highPrice.orZero()
@@ -65,7 +65,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 .setAmount(amount)
                 .setEnvironment(environment)
                 .setShopperLocale(Locale.getDefault())
-                .addCardConfiguration(createCardConfig(context, publicKey))
+                .addCardConfiguration(createCardConfig(context, sdkToken))
                 .build()
     }
 
@@ -77,18 +77,28 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY)
+            val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY) ?: ""
             val payload = JSONObject(dataString)
-            when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
+            when (payload.optString(RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
                     this.tripId = payload.optString(TRIP_ID, "")
-                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, null))
+                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
                 }
-                else -> view?.showPaymentFailureDialog()
+                else -> {
+                    val error = convertToKarhooError(payload)
+                    view?.showPaymentFailureDialog(error)
+                }
             }
         } else {
             view?.refresh()
         }
+    }
+
+    private fun convertToKarhooError(payload: JSONObject): KarhooError {
+        val result = payload.optString(RESULT_CODE, "")
+        val refusalReason = payload.optString(REFUSAL_REASON, "")
+        val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
+        return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
 
     override fun initialiseGuestPayment(price: QuotePrice?) {
@@ -139,7 +149,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                                 view?.showPaymentUI(this.adyenKey, it, this.price)
                             }
                         }
-                        is Resource.Failure -> view?.showError(R.string.something_went_wrong,result.error)
+                        is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
                         //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
@@ -169,7 +179,9 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     private fun updateCardDetails(paymentData: String?) {
-        paymentData?.let {
+        if (paymentData.isNullOrEmpty()) {
+            view?.refresh()
+        } else {
             val additionalData = JSONObject(paymentData)
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")
@@ -177,11 +189,14 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 SavedPaymentInfo(newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
             userStore.savedPaymentInfo = savedPaymentInfo
-        } ?: view?.refresh()
+        }
     }
 
     companion object {
         const val CARD_SUMMARY = "cardSummary"
         const val PAYMENT_METHOD = "paymentMethod"
+        const val RESULT_CODE = "resultCode"
+        const val REFUSAL_REASON = "refusalReason"
+        const val REFUSAL_REASON_CODE = "refusalReasonCode"
     }
 }
