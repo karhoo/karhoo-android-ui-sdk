@@ -4,49 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.karhoo.sdk.api.model.Address
-import com.karhoo.sdk.api.model.Availability
-import com.karhoo.sdk.api.model.AvailabilityVehicle
-import com.karhoo.sdk.api.model.BookingFee
-import com.karhoo.sdk.api.model.BookingFeePrice
-import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.Credentials
-import com.karhoo.sdk.api.model.Direction
-import com.karhoo.sdk.api.model.Driver
-import com.karhoo.sdk.api.model.DriverTrackingInfo
-import com.karhoo.sdk.api.model.Fare
-import com.karhoo.sdk.api.model.FareBreakdown
-import com.karhoo.sdk.api.model.FleetInfo
-import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.MeetingPoint
-import com.karhoo.sdk.api.model.Organisation
-import com.karhoo.sdk.api.model.PaymentProvider
-import com.karhoo.sdk.api.model.PaymentsNonce
-import com.karhoo.sdk.api.model.PickupType
-import com.karhoo.sdk.api.model.Place
-import com.karhoo.sdk.api.model.Places
-import com.karhoo.sdk.api.model.Poi
-import com.karhoo.sdk.api.model.PoiDetails
-import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.Position
-import com.karhoo.sdk.api.model.Price
-import com.karhoo.sdk.api.model.Provider
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteSource
-import com.karhoo.sdk.api.model.QuoteStatus
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripList
-import com.karhoo.sdk.api.model.TripLocationInfo
-import com.karhoo.sdk.api.model.TripState
-import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.sdk.api.model.UserInfo
-import com.karhoo.sdk.api.model.Vehicle
-import com.karhoo.sdk.api.model.Vehicles
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import java.text.SimpleDateFormat
@@ -273,6 +231,9 @@ class TestData {
                                          luggageCapacity = 2,
                                          passengerCapacity = 2)
 
+        val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation("", 2))
+        val CANCELLATION_AGREEMENT_ZERO_MINUTES = ServiceAgreements(ServiceCancellation("", 0))
+
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
         val TRIP_COMPLETED_AIRPORT_PICKUP = TRIP_COMPLETED.copy(
@@ -321,13 +282,31 @@ class TestData {
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
+        val QUOTE_WITH_CANCELLATION_AGREEMENT = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE,
+                serviceAgreements = CANCELLATION_AGREEMENT)
+
+        val QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE,
+                serviceAgreements = CANCELLATION_AGREEMENT_ZERO_MINUTES)
+
         val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                          quoteType = QuoteType.ESTIMATED,
-                          quoteSource = QuoteSource.FLEET,
-                          price = QUOTE_PRICE,
-                          fleet = QUOTE_FLEET,
-                          pickupType = PickupType.CURBSIDE,
-                          vehicle = QUOTE_VEHICLE)
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE)
 
         /**
          * Address Payloads
@@ -810,6 +789,24 @@ class TestData {
                                                             luggageCapacity = 2,
                                                             passengerCapacity = 2)))
                                     )
+
+        val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS = Vehicles(
+                status = QuoteStatus.PROGRESSING,
+                id = QUOTE_LIST_ID_ASAP.quoteId,
+                availability = AVAILABILITY,
+                quotes = listOf(
+                        QUOTE,
+                        QUOTE_WITH_CANCELLATION_AGREEMENT)
+        )
+
+        val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES = Vehicles(
+                status = QuoteStatus.PROGRESSING,
+                id = QUOTE_LIST_ID_ASAP.quoteId,
+                availability = AVAILABILITY,
+                quotes = listOf(
+                        QUOTE,
+                        QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES)
+        )
 
         /**
          *

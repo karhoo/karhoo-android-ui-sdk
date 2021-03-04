@@ -5,11 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.karhoo.sdk.api.model.PickupType
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteSource
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.*
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.CurrencyUtils
@@ -29,6 +25,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.pickupTypeText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.priceText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteNameText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteProgressBar
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteCancellationText
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
@@ -45,7 +42,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesListItem,
-                                                        defStyleAttr, R.style.KhQuoteListItemView)
+                defStyleAttr, R.style.KhQuoteListItemView)
         val layout = typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
                 .layout.uisdk_view_quotes_item)
         typedArray.recycle()
@@ -59,8 +56,8 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
         categoryText.text = String.format("%s%s",
-                                          vehicleDetails.vehicle.vehicleClass?.substring(0, 1)?.toUpperCase(),
-                                          vehicleDetails.vehicle.vehicleClass?.substring(1))
+                vehicleDetails.vehicle.vehicleClass?.substring(0, 1)?.toUpperCase(),
+                vehicleDetails.vehicle.vehicleClass?.substring(1))
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
@@ -68,6 +65,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setPickupType(vehicleDetails.pickupType)
         setCapacity(vehicleDetails.vehicle)
+        setCancellationSLA(vehicleDetails.serviceAgreements)
 
         tag = vehicleDetails
 
@@ -171,6 +169,15 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         capacityWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
                 people = vehicle.passengerCapacity)
+    }
+
+    private fun setCancellationSLA(serviceAgreements: ServiceAgreements?) {
+        if (serviceAgreements?.freeCancellation != null && serviceAgreements.freeCancellation?.minutes ?: 0 > 0) {
+            quoteCancellationText.text = String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), serviceAgreements.freeCancellation?.minutes)
+            quoteCancellationText.visibility = View.VISIBLE
+        } else {
+            quoteCancellationText.visibility = View.INVISIBLE
+        }
     }
 
     private fun startLoading() {

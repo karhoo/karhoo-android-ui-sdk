@@ -202,6 +202,12 @@ open abstract class BaseTestRobot {
     fun viewIsVisibleIsDescendant(id: Int, resId: Int): ViewInteraction =
             onView(allOf(withId(id), isDescendantOfA(withId(resId))))
 
+    fun viewIsVisibleInDescendant(id: Int, resId: Int): ViewInteraction =
+            onView(allOf(withId(id), withEffectiveVisibility(Visibility.VISIBLE), isDescendantOfA(withId(resId))))
+
+    fun viewIsNotVisibleInDescendant(id: Int, resId: Int): ViewInteraction =
+            onView(allOf(withId(id), withEffectiveVisibility(Visibility.GONE), isDescendantOfA(withId(resId))))
+
     fun viewIsFocused(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(hasFocus()))
 

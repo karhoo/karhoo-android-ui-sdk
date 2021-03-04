@@ -15,6 +15,7 @@
     <string name="address_picker_dropoff_booking">Añadir destino</string>
     <string name="loading_min">min</string>
     <string name="capacity">x %s</string>
+    <string name="uisdk_quote_cancellation_minutes">Cancelación gratuita hasta %d minutos antes de la recogida</string>
 
     <!-- Activity Titles -->
     <string name="title_activity_address">Dirección</string>
