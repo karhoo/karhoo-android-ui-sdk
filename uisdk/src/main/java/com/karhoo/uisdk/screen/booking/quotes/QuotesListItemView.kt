@@ -5,7 +5,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.PickupType
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteSource
+import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.ServiceAgreements
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.CurrencyUtils
