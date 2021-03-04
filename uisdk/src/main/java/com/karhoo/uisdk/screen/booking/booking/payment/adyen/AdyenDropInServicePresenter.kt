@@ -1,9 +1,11 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.os.Build
 import com.adyen.checkout.dropin.service.CallResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
+import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.ANDROID
 import org.json.JSONObject
@@ -96,10 +98,28 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         additionalData.put(ALLOW_3DS, ALLOW_3DS_TRUE)
         payload.put(ADDITIONAL_DATA, additionalData)
 
+        val browserInfo = JSONObject()
+        browserInfo.put(USER_AGENT, getUserAgent())
+        browserInfo.put(ACCEPT_HEADER, getAcceptHeader())
+        payload.put(BROWSER_INFO, browserInfo)
+
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)
 
         return request.toString()
+    }
+
+    private fun getUserAgent(): String {
+        return System.getProperty("http.agent")?.let {agent ->
+            "$agent, UISDK  ${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})"
+        } ?: run {
+            "${Build.DEVICE} ${Build.MODEL} ${Build.PRODUCT}, UISDK  ${BuildConfig.VERSION_NAME} " +
+                    "(${BuildConfig.VERSION_CODE})"
+        }
+    }
+
+    private fun getAcceptHeader(): String {
+        return ACCEPT_HEADER_VALUE
     }
 
     companion object {
@@ -107,10 +127,14 @@ class AdyenDropInServicePresenter(service: AdyenDropInServiceMVP.Service,
         const val ALLOW_3DS = "allow3DS2"
         const val ALLOW_3DS_TRUE = "true"
         const val ADDITIONAL_DATA = "additionalData"
+        const val BROWSER_INFO = "browserInfo"
+        const val USER_AGENT = "userAgent"
+        const val ACCEPT_HEADER = "acceptHeader"
         const val CHANNEL = "channel"
         const val PAYLOAD = "payload"
         const val PAYMENTS_PAYLOAD = "payments_payload"
         const val RETURN_URL = "returnUrl"
         const val TRIP_ID = AdyenDropInService.TRIP_ID
+        const val ACCEPT_HEADER_VALUE = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
     }
 }

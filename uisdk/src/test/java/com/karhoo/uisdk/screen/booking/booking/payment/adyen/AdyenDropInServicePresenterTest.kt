@@ -5,9 +5,12 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ACCEPT_HEADER
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ALLOW_3DS
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.BROWSER_INFO
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.PAYMENTS_PAYLOAD
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.USER_AGENT
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -81,6 +84,10 @@ class AdyenDropInServicePresenterTest {
         val additionalData = payloadJson.getJSONObject(ADDITIONAL_DATA)
         assertTrue(additionalData.has(ALLOW_3DS))
         assertEquals("true", additionalData.get(ALLOW_3DS))
+        assertTrue(payloadJson.has(BROWSER_INFO))
+        val browserInfo = payloadJson.getJSONObject(BROWSER_INFO)
+        assertTrue(browserInfo.has(USER_AGENT))
+        assertTrue(browserInfo.has(ACCEPT_HEADER))
         verify(jsonObject).keys()
         verify(jsonObject).get(PAYMENT_METHOD)
         verify(jsonObject).get(AMOUNT)

@@ -49,7 +49,6 @@ class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentD
         const val ADDITIONAL_DATA = "additionalData"
         const val AUTHORISED = "Authorised"
         const val MERCHANT_REFERENCE = "merchantReference"
-        const val RESULT_CODE = "resultCode"
         const val REQ_CODE_ADYEN = DropIn.Companion.DROP_IN_REQUEST_CODE
     }
 }
