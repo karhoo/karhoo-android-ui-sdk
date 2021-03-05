@@ -19,6 +19,7 @@
     <string name="enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
     <string name="no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="capacity">x %s</string>
+    <string name="uisdk_quote_cancellation_minutes">Free cancellation up to %d mins before pickup</string>
 
     <!-- Activity Titles -->
     <string name="title_activity_address">Address</string>

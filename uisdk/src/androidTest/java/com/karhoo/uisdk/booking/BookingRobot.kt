@@ -318,6 +318,14 @@ class ResultRobot : BaseTestRobot() {
         viewIsVisibleIsDescendant(R.id.priceText, R.id.quotesListRecycler)
     }
 
+    fun freeCancellationTextVisible() {
+        viewIsVisibleInDescendant(R.id.quoteCancellationText, R.id.quotesListRecycler)
+    }
+
+    fun freeCancellationTextNotVisible() {
+        viewIsNotVisibleInDescendant(R.id.quoteCancellationText, R.id.quotesListRecycler)
+    }
+
     fun fareTypeVisible() {
         viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.quotesListRecycler)
     }

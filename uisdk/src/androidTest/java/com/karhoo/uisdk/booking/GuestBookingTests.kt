@@ -35,6 +35,8 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES
 import com.karhoo.uisdk.util.TestSDKConfig
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
@@ -108,6 +110,63 @@ class GuestBookingTests : Launch {
             shortSleep()
         } result {
             fullASAPQuotesListCheckGuest()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes with a cancellation service agreement
+     * When:    Checking the quotes
+     * Then:    The user can see the free cancellation text
+     **/
+    @Test
+    fun fullQuoteListCheckCancellationTextForGuestUser() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextVisible()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes with a cancellation service agreement having 0 minutes
+     * When:    Checking the quotes
+     * Then:    The user can not see the free cancellation text
+     **/
+    @Test
+    fun checkNotVisibleCancellationTextForGuestUserAndZeroMinutesSLA() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextNotVisible()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes without a cancellation service agreement
+     * When:    Checking the quotes
+     * Then:    The user can not see the free cancellation text
+     **/
+    @Test
+    fun checkVisibleCancellationTextForGuestUser() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextNotVisible()
         }
     }
 

@@ -47,6 +47,8 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.model.Vehicles
+import com.karhoo.sdk.api.model.ServiceAgreements
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import java.text.SimpleDateFormat
@@ -273,6 +275,9 @@ class TestData {
                                          luggageCapacity = 2,
                                          passengerCapacity = 2)
 
+        val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation("", 2))
+        val CANCELLATION_AGREEMENT_ZERO_MINUTES = ServiceAgreements(ServiceCancellation("", 0))
+
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
 
         val TRIP_COMPLETED_AIRPORT_PICKUP = TRIP_COMPLETED.copy(
@@ -321,13 +326,31 @@ class TestData {
                 placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
+        val QUOTE_WITH_CANCELLATION_AGREEMENT = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE,
+                serviceAgreements = CANCELLATION_AGREEMENT)
+
+        val QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE,
+                serviceAgreements = CANCELLATION_AGREEMENT_ZERO_MINUTES)
+
         val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                          quoteType = QuoteType.ESTIMATED,
-                          quoteSource = QuoteSource.FLEET,
-                          price = QUOTE_PRICE,
-                          fleet = QUOTE_FLEET,
-                          pickupType = PickupType.CURBSIDE,
-                          vehicle = QUOTE_VEHICLE)
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE)
 
         /**
          * Address Payloads
@@ -810,6 +833,24 @@ class TestData {
                                                             luggageCapacity = 2,
                                                             passengerCapacity = 2)))
                                     )
+
+        val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS = Vehicles(
+                status = QuoteStatus.PROGRESSING,
+                id = QUOTE_LIST_ID_ASAP.quoteId,
+                availability = AVAILABILITY,
+                quotes = listOf(
+                        QUOTE,
+                        QUOTE_WITH_CANCELLATION_AGREEMENT)
+        )
+
+        val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES = Vehicles(
+                status = QuoteStatus.PROGRESSING,
+                id = QUOTE_LIST_ID_ASAP.quoteId,
+                availability = AVAILABILITY,
+                quotes = listOf(
+                        QUOTE,
+                        QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES)
+        )
 
         /**
          *
