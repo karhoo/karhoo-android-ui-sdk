@@ -46,8 +46,6 @@ interface Analytics {
 
     fun reverseGeo()
 
-    fun reverseGeoResponse(locationDetails: LocationInfo)
-
     fun currentLocationPressed()
 
     fun prebookSet(date: Date, timezone: String)
@@ -75,8 +73,6 @@ interface Analytics {
     fun userCalledFleet(trip: TripInfo?)
 
     fun userEnteredTextSearch(search: String?)
-
-    fun bookReturnRide()
 
     fun trackRide()
 
