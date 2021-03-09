@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -193,6 +194,23 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         lifecycle.apply {
             addObserver(bookingMapWidget)
             addObserver(bookingRequestWidget)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    bookingMapWidget.locationPermissionGranted()
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest
+                                    .permission.ACCESS_FINE_LOCATION)) {
+                        showLocationLock()
+                    }
+                }
+                return
+            }
         }
     }
 
