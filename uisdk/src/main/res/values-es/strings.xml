@@ -325,7 +325,6 @@
     <string name="quoted_fare">Tarifa estimada</string>
     <string name="done">OK</string>
     <string name="vehicle">Vehículo</string>
-    <string name="book_return_ride">Reservar viaje de vuelta</string>
     <string name="card_charged">Cobro realizado</string>
     <string name="ride_summary">Resumen del viaje</string>
     <string name="payment_summary">Resumen del pago</string>

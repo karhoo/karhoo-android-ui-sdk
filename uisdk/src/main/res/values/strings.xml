@@ -347,7 +347,6 @@
     <string name="total_fare">Total Fare</string>
     <string name="date">Date</string>
     <string name="done">DONE</string>
-    <string name="book_return_ride">BOOK RETURN RIDE</string>
     <string name="rate_trip_label">How would you rate your trip?</string>
     <string name="star_poor">Poor</string>
     <string name="star_fair">Fair</string>

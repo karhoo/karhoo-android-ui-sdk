@@ -350,7 +350,6 @@
     <string name="total_fare">Prix total</string>
     <string name="date">Date</string>
     <string name="done">FERMER</string>
-    <string name="book_return_ride">RÉSERVER TRAJET RETOUR</string>
     <string name="rating_submitted">Merci pour votre évaluation.</string>
     <string name="submit_button_text">Pourriez-vous nous en dire un peu plus?</string>
     <string name="rate_trip_label">Veuillez donner une évaluation à votre voyage.</string>

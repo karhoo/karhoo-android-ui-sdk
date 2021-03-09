@@ -157,11 +157,6 @@ class KarhooAnalytics private constructor() : Analytics {
         AnalyticsManager.fireEvent(Event.REVERSE_GEO)
     }
 
-    override fun reverseGeoResponse(locationInfo: LocationInfo) {
-        AnalyticsManager.fireEvent(Event.REVERSE_GEO_RESPONSE,
-                                   Payloader.Builder.builder.reverseGeoResponse(locationInfo).build())
-    }
-
     override fun currentLocationPressed() {
         AnalyticsManager.fireEvent(Event.CURRENT_LOCATION_PRESSED)
     }
@@ -247,10 +242,6 @@ class KarhooAnalytics private constructor() : Analytics {
         AnalyticsManager.fireEvent(Event.USER_ENTERED_ADDRESS, Payloader.Builder.builder
                 .userEnteredAddressSearch(search.orEmpty())
                 .build())
-    }
-
-    override fun bookReturnRide() {
-        AnalyticsManager.fireEvent(Event.BOOK_RETURN_RIDE)
     }
 
     override fun trackRide() {

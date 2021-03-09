@@ -36,14 +36,6 @@ class TripRobot : BaseTestRobot() {
         dialogClickButtonByText(R.string.ok)
     }
 
-    fun clickDoneOnRideSummary() {
-        clickButton(R.id.doneButton)
-    }
-
-    fun clickBookReturnRide() {
-        clickButton(R.id.bookReturnButton)
-    }
-
     fun clickAlternativeButton() {
         dialogClickButtonByText(R.string.alternative)
     }
@@ -80,68 +72,8 @@ class ResultRobot : BaseTestRobot() {
         textIsVisible(R.string.cancel_ride_successful)
     }
 
-    fun tripSummaryLogoVisible() {
-        viewIsVisible(R.id.karhooLogoIcon)
-    }
-
-    fun tripSummaryRideSummaryLabel() {
-        viewIsVisible(R.id.rideSummaryLabel)
-    }
-
     fun tripSummaryPickUpLogoVisible() {
         viewIsVisible(R.id.pickUpFullIcon)
-    }
-
-    fun tripSummaryPickUpAddressVisible(address: String) {
-        Assert.assertEquals(address, getStringFromTextView(R.id.pickUpText))
-    }
-
-    fun tripSummaryDestinationAddressVisible(address: String) {
-        Assert.assertEquals(address, getStringFromTextView(R.id.dropOffText))
-    }
-
-    fun tripSummaryDateLabelVisible() {
-        viewIsVisible(R.id.dateLabel)
-    }
-
-    fun tripSummaryDateVisible() {
-        viewIsVisible(R.id.dateOfBookingText)
-    }
-
-    fun tripSummaryFleetLabelIsVisible() {
-        viewIsVisible(R.id.fleetNameLabel)
-    }
-
-    fun tripSummaryFleetNameIsVisible() {
-        viewIsVisible(R.id.fleetNameText)
-    }
-
-    fun tripSummaryPaymentSummaryLabelIsVisible() {
-        viewIsVisible(R.id.paymentSummaryLabel)
-    }
-
-    fun tripSummaryQuoteFareLabelIsVisible() {
-        viewIsVisible(R.id.estimatedLabel)
-    }
-
-    fun tripSummaryQuoteFareIsVisible() {
-        viewIsVisible(R.id.estimatedFareText)
-    }
-
-    fun tripSummaryTotalLabelIsVisible() {
-        viewIsVisible(R.id.totalLabel)
-    }
-
-    fun tripSummaryTotalFareIsVisible() {
-        viewIsVisible(R.id.totalFareText)
-    }
-
-    fun tripSummaryBookReturnRideButtonEnabled() {
-        buttonIsEnabled(R.id.bookReturnButton)
-    }
-
-    fun tripSummaryDoneButtonIsEnabled() {
-        buttonIsEnabled(R.id.doneButton)
     }
 
     fun driverPhotoPlaceHolderPresent() {
@@ -183,11 +115,6 @@ class ResultRobot : BaseTestRobot() {
     fun pickUpAddressField() {
         viewIsVisible(R.id.subtitlePickupLabel)
         viewIsVisible(R.id.pickupLabel)
-    }
-
-    fun dropOffAddressField() {
-        viewIsVisible(R.id.subtitlleDropoffLabel)
-        viewIsVisible(R.id.dropOffText)
     }
 
     fun PickUpAddressVisible(address: String) {
@@ -262,26 +189,6 @@ class ResultRobot : BaseTestRobot() {
         dialogTextIsVisible(R.string.title_dispatch_cancelled)
         alternativeButtonIsEnabled()
         okCancelledByFleetButtonEnabled()
-    }
-
-    fun tripSummaryFullCheck(pickupText: String, destinationText: String) {
-        tripSummaryLogoVisible()
-        tripSummaryRideSummaryLabel()
-        tripSummaryPickUpLogoVisible()
-        tripSummaryPickUpAddressVisible(pickupText)
-        //        tripSummaryDropOffLogoVisible()
-        tripSummaryDestinationAddressVisible(destinationText)
-        tripSummaryDateLabelVisible()
-        tripSummaryDateVisible()
-        tripSummaryFleetLabelIsVisible()
-        tripSummaryFleetNameIsVisible()
-        tripSummaryPaymentSummaryLabelIsVisible()
-        tripSummaryQuoteFareIsVisible()
-        tripSummaryQuoteFareLabelIsVisible()
-        tripSummaryTotalLabelIsVisible()
-        tripSummaryTotalFareIsVisible()
-        tripSummaryBookReturnRideButtonEnabled()
-        tripSummaryDoneButtonIsEnabled()
     }
 
     fun driverDERDetailsFullCheck() {
