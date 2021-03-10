@@ -91,7 +91,6 @@ class RideDetailView @JvmOverloads constructor(
             bindFlightDetails()
             bindPrice()
             bindState()
-            bindCard()
             bindButtons()
             bindVehicle()
             bindDate()

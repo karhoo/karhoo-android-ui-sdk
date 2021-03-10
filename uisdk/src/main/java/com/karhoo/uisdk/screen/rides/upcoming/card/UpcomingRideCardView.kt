@@ -104,7 +104,7 @@ class UpcomingRideCardView @JvmOverloads constructor(
         }
     }
 
-    override fun callDriver(number: String) {
+    override fun callFleet(number: String) {
         IntentUtils.dialIntent(number)?.let {
             context.startActivity(it)
         }

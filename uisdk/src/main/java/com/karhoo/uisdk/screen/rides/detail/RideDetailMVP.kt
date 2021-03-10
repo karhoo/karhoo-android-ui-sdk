@@ -15,8 +15,6 @@ interface RideDetailMVP {
 
         fun bindPrice()
 
-        fun bindCard()
-
         fun bindButtons()
 
         fun bindVehicle()

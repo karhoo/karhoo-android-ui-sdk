@@ -246,55 +246,55 @@ class ResultRobot : BaseTestRobot() {
         upcomingTripCallFleetButtonIsEnabled()
     }
 
-    fun upcomingTripFleetNameVisible(fleet: String) {
+    private fun upcomingTripFleetNameVisible(fleet: String) {
         stringIsVisibleIsDescendant(fleet, R.id.bookingTermsText)
     }
 
-    fun upcomingRideFleetLogoVisible() {
+    private fun upcomingRideFleetLogoVisible() {
         viewIsVisible(R.id.logoImage)
     }
 
-    fun pickUpAndDropOffIconVisible() {
+    private fun pickUpAndDropOffIconVisible() {
         viewIsVisible(R.id.pickupBallIcon)
         viewIsVisible(R.id.dropoffBallIcon)
     }
 
-    fun pickUpAddressVisible(address: String) {
+    private fun pickUpAddressVisible(address: String) {
         stringIsVisibleIsDescendant(address, R.id.pickupLabel)
     }
 
-    fun dropOffAddressVisible(address: String) {
+    private fun dropOffAddressVisible(address: String) {
         stringIsVisibleIsDescendant(address, R.id.dropOffLabel)
     }
 
-    fun rideStatusVisible(status: Int) {
+    private fun rideStatusVisible(status: Int) {
         viewIsVisible(R.id.stateIcon)
         textIsVisibleIsDescendant(status, R.id.stateText)
     }
 
-    fun upcomingTripPriceChecks(fare: String) {
+    private fun upcomingTripPriceChecks(fare: String) {
         viewIsVisible(R.id.priceTypeText)
         stringIsVisibleIsDescendant(fare, R.id.priceText)
     }
 
-    fun upcomingTripIDVisible(trip: String) {
+    private fun upcomingTripIDVisible(trip: String) {
         stringIsVisible(KARHOO_ID)
         stringIsVisibleIsDescendant(trip, R.id.karhooId)
     }
 
-    fun upcomingTripcCancelRideButtonIsEnabled() {
+    private fun upcomingTripcCancelRideButtonIsEnabled() {
         buttonIsEnabled(R.id.cancelButton)
     }
 
-    fun upcomingTripCallFleetButtonIsEnabled() {
+    private fun upcomingTripCallFleetButtonIsEnabled() {
         buttonIsEnabled(R.id.contactFleetButton)
     }
 
-    fun upcomingVehicleDetailsVisible(vehicle: String) {
+    private fun upcomingVehicleDetailsVisible(vehicle: String) {
         stringIsVisibleIsDescendant(vehicle, R.id.carText)
     }
 
-    fun upcomingTripcCancelRideButtonIsNotVisible() {
+    private fun upcomingTripcCancelRideButtonIsNotVisible() {
         viewIsNotVisible(R.id.cancelButton)
     }
 
@@ -330,7 +330,7 @@ class ResultRobot : BaseTestRobot() {
         stringIsVisibleIsDescendantWeb(HELP_TEXT, R.id.khWebView)
     }
 
-    fun contactDetailFieldsReportIssue() {
+    private fun contactDetailFieldsReportIssue() {
         stringIsVisibleIsDescendantWeb("Contact Details", R.id.khWebView)
         stringIsVisibleIsDescendantWeb("Full Name", R.id.khWebView)
         stringIsVisibleIsDescendantWeb("Email", R.id.khWebView)
@@ -339,7 +339,7 @@ class ResultRobot : BaseTestRobot() {
         stringIsVisibleIsDescendantWeb("Description", R.id.khWebView)
     }
 
-    fun correctDetailsFilledReportIssue() {
+    private fun correctDetailsFilledReportIssue() {
         stringIsVisibleIsDescendantWeb(TestData.USER.firstName, R.id.khWebView)
         stringIsVisibleIsDescendantWeb(TestData.USER.lastName, R.id.khWebView)
         stringIsVisibleIsDescendantWeb(TestData.USER.email, R.id.khWebView)

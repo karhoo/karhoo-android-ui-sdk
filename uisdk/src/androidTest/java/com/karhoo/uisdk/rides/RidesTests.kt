@@ -274,6 +274,7 @@ class RidesTests : Launch {
             shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffUpcoming()
+            callFleetButtonIsEnabled()
         }
     }
 
@@ -610,8 +611,8 @@ class RidesTests : Launch {
         trip {
             longSleep()
         } result {
-            DERFullScreenCheck(pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                               destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty())
+            DERFullScreenCheck(pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                               destinationText = TRIP_DER.destination?.displayAddress.orEmpty())
         }
     }
 
