@@ -80,9 +80,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
-            view?.initialiseGuestPayment(quote?.price)
+            view?.initialiseGuestPayment(quote)
         } else {
-            view?.initialisePaymentProvider(quote?.price)
+            view?.initialisePaymentProvider(quote)
         }
         analytics?.bookingRequested(currentTripInfo(), outboundTripId)
     }
@@ -127,7 +127,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun handleChangeCard() {
-        view?.initialiseChangeCard(quote?.price)
+        view?.initialiseChangeCard(quote)
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
@@ -160,23 +160,22 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
-        val passengerDetails = if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() is AuthenticationMethod.KarhooUser)
-            getPassengerDetails() else passengerDetails
+    override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
+        val passenger = if (KarhooUISDKConfigurationProvider.configuration
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
 
-        passengerDetails?.let {
-            val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
+        passenger?.let {
+            val metadata = tripId?.let { hashMapOf(TRIP_ID to identifier) }
 
             tripsService.book(TripBooking(
                     comments = comments,
                     flightNumber = flightDetails?.flightNumber,
                     meta = metadata,
-                    nonce = nonce,
-                    quoteId = quote?.id?.orEmpty(),
+                    nonce = identifier,
+                    quoteId = quote?.id.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,
-                            passengerDetails = listOf(passengerDetails),
+                            passengerDetails = listOf(passenger),
                             luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {

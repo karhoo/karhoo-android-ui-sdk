@@ -5,7 +5,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
@@ -38,11 +37,11 @@ interface BookingRequestMVP {
 
         fun enableCancelButton()
 
-        fun initialiseChangeCard(price: QuotePrice? = null)
+        fun initialiseChangeCard(quote: Quote? = null)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
+        fun initialiseGuestPayment(quote: Quote?)
 
-        fun initialisePaymentProvider(price: QuotePrice?)
+        fun initialisePaymentProvider(quote: Quote?)
 
         fun onError()
 

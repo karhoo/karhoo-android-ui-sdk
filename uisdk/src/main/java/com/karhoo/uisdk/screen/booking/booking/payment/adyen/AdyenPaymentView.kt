@@ -5,7 +5,7 @@ import android.content.Intent
 import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import org.json.JSONObject
 
@@ -18,16 +18,16 @@ class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentD
         presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
-    override fun initialiseChangeCard(price: QuotePrice?) {
-        presenter?.sdkInit(price)
+    override fun initialiseChangeCard(quote: Quote?) {
+        presenter?.sdkInit(quote)
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        presenter?.initialiseGuestPayment(price)
+    override fun initialiseGuestPayment(quote: Quote?) {
+        presenter?.initialiseGuestPayment(quote)
     }
 
-    override fun initialisePaymentFlow(price: QuotePrice?) {
-        presenter?.getPaymentNonce(price)
+    override fun initialisePaymentFlow(quote: Quote?) {
+        presenter?.getPaymentNonce(quote)
     }
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
@@ -35,14 +35,21 @@ class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentD
         actions?.threeDSecureNonce(sdkToken, sdkToken)
     }
 
-    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?) {
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
         val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken)
                 as DropInConfiguration
 
+        cacheSupplyPartnerId(context, quote)
+
         DropIn.startPayment(context, paymentMethods, dropInConfiguration)
+    }
+
+    private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {
+        val repository = AdyenDropInServiceRepository(context)
+        repository.supplyPartnerId = quote?.fleet?.fleetId ?: ""
     }
 
     companion object {

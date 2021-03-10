@@ -461,7 +461,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).initialiseGuestPayment(price)
+        verify(view).initialiseGuestPayment(quote)
     }
 
     /**
@@ -488,7 +488,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).initialiseGuestPayment(price)
+        verify(view).initialiseGuestPayment(quote)
     }
 
     /**
