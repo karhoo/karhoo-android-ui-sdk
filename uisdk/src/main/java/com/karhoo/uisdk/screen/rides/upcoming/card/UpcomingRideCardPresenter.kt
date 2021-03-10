@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.rides.upcoming.card
 
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
@@ -25,28 +24,11 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
             TripStatus.PASSENGER_ON_BOARD ->
                 view.displayTrackDriverButton()
         }
-        setCallText()
-    }
-
-    private fun setCallText() {
-        if (checkDriverNumberIsAvailable()) {
-            view?.callText(R.string.contact_driver)
-        } else {
-            view?.callText(R.string.contact_fleet)
-        }
     }
 
     override fun call() {
-        if (checkDriverNumberIsAvailable()) {
-            view?.callDriver(trip.vehicle?.driver?.phoneNumber.orEmpty())
-        } else {
-            view?.callDriver(trip.fleetInfo?.phoneNumber.orEmpty())
-        }
+        view?.callFleet(trip.fleetInfo?.phoneNumber.orEmpty())
     }
-
-    private fun checkDriverNumberIsAvailable() = trip.vehicle != null
-            && trip.vehicle?.driver != null
-            && !trip.vehicle?.driver?.phoneNumber.isNullOrEmpty()
 
     override fun track() {
         analytics?.trackRide()

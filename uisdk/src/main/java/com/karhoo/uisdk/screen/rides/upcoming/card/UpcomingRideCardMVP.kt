@@ -17,7 +17,7 @@ interface UpcomingRideCardMVP {
     }
 
     interface View : ScheduledDateView {
-        fun callDriver(number: String)
+        fun callFleet(number: String)
 
         fun callText(@StringRes contactText: Int)
 
