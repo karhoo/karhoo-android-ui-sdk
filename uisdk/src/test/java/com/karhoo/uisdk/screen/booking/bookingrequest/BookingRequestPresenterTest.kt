@@ -712,17 +712,17 @@ class BookingRequestPresenterTest {
 
     private fun setGuestUser() {
         whenever(userStore.currentUser).thenReturn(UserInfo())
-        UnitTestUISDKConfig.setGuestAuthentication(context)
+        setGuestAuthentication(context)
     }
 
     private fun setTokenUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        UnitTestUISDKConfig.setTokenAuthentication(context)
+        setTokenAuthentication(context)
     }
 
     private fun setAuthenticatedUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        UnitTestUISDKConfig.setKarhooAuthentication(context)
+        setKarhooAuthentication(context)
     }
 
     companion object {
