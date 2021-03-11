@@ -19,6 +19,8 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
+import com.karhoo.uisdk.util.ADYEN
+import com.karhoo.uisdk.util.BRAINTREE
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.atLeastOnce
@@ -341,8 +343,8 @@ class SplashPresenterTest {
                 locale = "en-GB",
                 organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
 
-        val paymentProviderBraintree = Provider(id = "braintree", loyalty = listOf())
-        val paymentProviderAdyen = Provider(id = "adyen", loyalty = listOf())
+        val paymentProviderBraintree = Provider(id = BRAINTREE, loyalty = listOf())
+        val paymentProviderAdyen = Provider(id = ADYEN, loyalty = listOf())
 
     }
 

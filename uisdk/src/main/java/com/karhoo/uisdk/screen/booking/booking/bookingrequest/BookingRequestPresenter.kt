@@ -23,6 +23,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
+import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -123,6 +124,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     override fun clearData() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.removeCurrentUser()
+        }
+        if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) {
+            userStore.clearSavedPaymentInfo()
         }
     }
 
