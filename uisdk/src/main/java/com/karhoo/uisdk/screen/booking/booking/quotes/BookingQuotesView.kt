@@ -9,9 +9,7 @@ import com.karhoo.uisdk.util.LogoTransformation
 import com.karhoo.uisdk.util.extension.convertDpToPixels
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.categoryText
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteNameText
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 
 class BookingQuotesView @JvmOverloads constructor(context: Context,
@@ -40,12 +38,18 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(categoryText, detailsTextStyle)
     }
 
-    fun bindViews(url: String?, quoteName: String, category: String) {
+    fun bindViews(url: String?, quoteName: String, category: String, cancellationMinutes: Int?) {
         url?.let { loadImage(it) }
         quoteNameText.text = quoteName
         categoryText.text = String.format("%s%s",
                                           category.substring(0, 1).toUpperCase(),
                                           category.substring(1))
+        if (cancellationMinutes != null && cancellationMinutes > 0) {
+            bookingQuoteCancellationText.text = String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), cancellationMinutes)
+            bookingQuoteCancellationText.visibility = VISIBLE
+        } else {
+            bookingQuoteCancellationText.visibility = GONE
+        }
     }
 
     private fun loadImage(url: String) {

@@ -239,8 +239,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     private fun bindQuoteAndTerms(vehicle: Quote) {
-        bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
-                                             vehicle.vehicle.vehicleClass.orEmpty())
+        bookingRequestQuotesWidget.bindViews(
+                vehicle.fleet.logoUrl,
+                vehicle.fleet.name.orEmpty(),
+                vehicle.vehicle.vehicleClass.orEmpty(),
+                vehicle.serviceAgreements?.freeCancellation?.minutes
+        )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 

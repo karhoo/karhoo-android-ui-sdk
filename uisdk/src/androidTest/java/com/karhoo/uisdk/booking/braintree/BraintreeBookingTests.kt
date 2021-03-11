@@ -15,10 +15,10 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.util.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
-import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP

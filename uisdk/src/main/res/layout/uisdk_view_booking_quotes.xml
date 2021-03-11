@@ -13,9 +13,9 @@
         android:layout_height="@dimen/quotes_logo_size"
         android:layout_gravity="center_vertical|left"
         android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineCentre"
@@ -33,10 +33,10 @@
         android:layout_marginEnd="@dimen/spacing_xxsmall"
         android:ellipsize="end"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@id/capacityWidget"
-        app:layout_constraintStart_toEndOf="@id/logoImage"
         app:layout_constraintBottom_toTopOf="@id/guidelineCentre"
+        app:layout_constraintEnd_toStartOf="@id/capacityWidget"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@id/logoImage"
         tools:text="Addison Lee" />
 
     <TextView
@@ -48,6 +48,17 @@
         app:layout_constraintStart_toStartOf="@id/quoteNameText"
         app:layout_constraintTop_toBottomOf="@id/guidelineCentre"
         tools:text="Car" />
+
+    <TextView
+        android:id="@+id/bookingQuoteCancellationText"
+        style="@style/Text.Primary.Small.Green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintStart_toStartOf="@id/quoteNameText"
+        app:layout_constraintTop_toBottomOf="@id/categoryText"
+        tools:text="Free cancellation up to 21 minutes before pickup" />
 
     <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
         android:id="@+id/capacityWidget"
