@@ -49,7 +49,7 @@ class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentD
 
     private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {
         val repository = AdyenDropInServiceRepository(context)
-        repository.supplyPartnerId = quote?.fleet?.fleetId ?: ""
+        repository.supplyPartnerId = quote?.fleet?.id ?: ""
     }
 
     companion object {
