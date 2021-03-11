@@ -26,7 +26,9 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.UnitTestUISDKConfig
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
