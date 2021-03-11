@@ -34,7 +34,7 @@ class AdyenDropInServicePresenterTest {
 
     private val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT, SHOPPER_REFERENCE, RANDOM)
     private var jsonObject: JSONObject = mock()
-    private var contect: Context = mock()
+    private var context: Context = mock()
     private var paymentJson: JSONObject = JSONObject("{\"type\": \"scheme\",\n\"holderName\": " +
                                                              "\"Test\"}")
     private var amountJson: JSONObject = JSONObject("{ \"currency\": \"GBP\" }")
@@ -65,7 +65,7 @@ class AdyenDropInServicePresenterTest {
         whenever(paymentsService.getAdyenPaymentDetails(any())).thenReturn(paymentsDetailsCall)
         doNothing().whenever(paymentsDetailsCall).execute(paymentsDetailsCaptor.capture())
 
-        presenter = AdyenDropInServicePresenter(contect, service, paymentsService, dropInRepository)
+        presenter = AdyenDropInServicePresenter(context, service, paymentsService, dropInRepository)
     }
 
     /**

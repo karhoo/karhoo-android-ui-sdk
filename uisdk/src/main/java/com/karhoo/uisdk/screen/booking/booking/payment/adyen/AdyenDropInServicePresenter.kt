@@ -28,7 +28,6 @@ class AdyenDropInServicePresenter(context: Context,
             when (result) {
                 is Resource.Success -> {
                     result.data.let { result ->
-                        //TODO Find a better way to store / pass through the transaction id
                         val tripId = result.getString(TRIP_ID)
                         storeTripId(tripId)
                         result.optJSONObject(PAYLOAD)?.let { payload ->
