@@ -10,6 +10,7 @@ class AdyenResultActivity : AppCompatActivity() {
     companion object {
         const val RESULT_KEY = "payment_result"
         const val TYPE_KEY = "integration_type"
+        const val RESULT_PROCESSING = "Processing"
 
         fun start(context: Context, paymentResult: String) {
             val intent = Intent(context, AdyenResultActivity::class.java)
@@ -22,7 +23,7 @@ class AdyenResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.uisdk_activity_base)
 
-        val res = intent?.getStringExtra(RESULT_KEY) ?: "Processing"
+        val res = intent?.getStringExtra(RESULT_KEY) ?: RESULT_PROCESSING
         val data = Intent()
         data.putExtra(RESULT_KEY, res)
         setResult(RESULT_OK, data)

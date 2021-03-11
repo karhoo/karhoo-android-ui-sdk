@@ -12,7 +12,7 @@ import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
 import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.util.extension.isGuest
 
@@ -22,8 +22,7 @@ class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : Paym
     var actions: PaymentDropInMVP.Actions? = actions
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
-        val braintreeFragment = BraintreeFragment
-                .newInstance(context as AppCompatActivity, sdkToken)
+        val braintreeFragment = BraintreeFragment.newInstance(context as AppCompatActivity, sdkToken)
 
         braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
             override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
@@ -48,24 +47,23 @@ class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : Paym
         }
     }
 
-    override fun initialiseChangeCard(price: QuotePrice?) {
-        presenter?.sdkInit(price)
+    override fun initialiseChangeCard(quote: Quote?) {
+        presenter?.sdkInit(quote)
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        presenter?.initialiseGuestPayment(price)
+    override fun initialiseGuestPayment(quote: Quote?) {
+        presenter?.initialiseGuestPayment(quote)
     }
 
-    override fun initialisePaymentFlow(price: QuotePrice?) {
-        presenter?.getPaymentNonce(price)
+    override fun initialisePaymentFlow(quote: Quote?) {
+        presenter?.getPaymentNonce(quote)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
-    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData:
-    String?, price: QuotePrice?) {
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
         val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
                 DropInRequest
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE

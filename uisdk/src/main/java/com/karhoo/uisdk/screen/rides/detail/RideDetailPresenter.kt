@@ -47,7 +47,6 @@ class RideDetailPresenter(view: RideDetailMVP.View,
     private fun bindAll() {
         bindState()
         bindPrice()
-        bindCard()
         bindButtons()
         bindVehicle()
         bindFlightDetails()
@@ -141,10 +140,6 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         val currency = Currency.getInstance(price.currency)
         val value = price.total
         return CurrencyUtils.intToPrice(currency, value)
-    }
-
-    override fun bindCard() {
-        //TODO IMPLEMENT AND TEST WHEN CARD DETAILS AVAILABLE
     }
 
     override fun bindButtons() {

@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -24,7 +23,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
@@ -184,8 +182,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .drawable.uisdk_gradient_enabled)
     }
 
-    override fun initialiseChangeCard(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
+    override fun initialiseChangeCard(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
     override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
@@ -303,11 +301,13 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 positiveButton = KarhooAlertDialogAction(R.string.add_card,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              onPaymentHandlePositive()
-                                                             dialog.dismiss() }),
+                                                             dialog.dismiss()
+                                                         }),
                 negativeButton = KarhooAlertDialogAction(R.string.cancel,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              onPaymentHandleCancelled()
-                                                             dialog.dismiss() }))
+                                                             dialog.dismiss()
+                                                         }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
     }
@@ -351,8 +351,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                     view = prebookConfirmationView,
                     cancellable = false,
                     positiveButton = KarhooAlertDialogAction(R.string.ride_details,
-                                                             DialogInterface.OnClickListener {
-                                                                 dialog, _ ->
+                                                             DialogInterface.OnClickListener { dialog, _ ->
                                                                  finishedBooking(dialog)
                                                                  val taskStackBuilder = TaskStackBuilder.create(context)
                                                                          .addNextIntent(BookingActivity.Builder.builder.build(context))
@@ -361,7 +360,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                                  }
                                                                  taskStackBuilder.addNextIntent(RideDetailActivity.Builder.newBuilder()
                                                                                                         .trip(tripInfo).build(context))
-                                                                 taskStackBuilder.startActivities() }),
+                                                                 taskStackBuilder.startActivities()
+                                                             }),
                     negativeButton = KarhooAlertDialogAction(R.string.dismiss,
                                                              DialogInterface.OnClickListener { dialog, _ -> finishedBooking(dialog) }))
             KarhooAlertDialogHelper(context).showAlertDialog(config).window?.setLayout(
@@ -404,12 +404,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                              bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
     }
 
-    override fun initialisePaymentProvider(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
+    override fun initialisePaymentProvider(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(quote)
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
+    override fun initialiseGuestPayment(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
     }
 
     override fun handlePaymentDetailsUpdate() {
