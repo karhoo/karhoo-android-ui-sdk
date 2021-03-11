@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
@@ -126,11 +125,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.removeCurrentUser()
         }
-        Log.d("PD36", "id: ${userStore.paymentProvider?.id}")
         if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) {
-            userStore.savedPaymentInfo = null
+            userStore.clearSavedPaymentInfo()
         }
-        Log.d("PD36", "id 2: ${userStore.paymentProvider?.id}")
     }
 
     override fun handleChangeCard() {
@@ -209,7 +206,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     private fun refreshPaymentDetails() {
-        Log.d("PD36", "refreshPaymentDetails id: ${userStore.paymentProvider?.id}")
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 

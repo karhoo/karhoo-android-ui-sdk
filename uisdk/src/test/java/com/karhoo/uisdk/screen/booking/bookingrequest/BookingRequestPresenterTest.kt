@@ -5,7 +5,6 @@ import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
@@ -26,7 +25,6 @@ import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
@@ -38,6 +36,8 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.service.preference.PreferenceStore
+import com.karhoo.uisdk.util.ADYEN
+import com.karhoo.uisdk.util.BRAINTREE
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -613,7 +613,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `Braintree booking request has null meta`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
-        whenever(userStore.paymentProvider).thenReturn(Provider("Braintree"))
+        whenever(userStore.paymentProvider).thenReturn(Provider(BRAINTREE))
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
@@ -680,25 +680,49 @@ class BookingRequestPresenterTest {
         verify(userStore, never()).removeCurrentUser()
     }
 
+    /**
+     * Given:   The user leaves the booking screen
+     * When:    The user is a Braintree user
+     * Then:    The saved payment info is not removed
+     */
+    @Test
+    fun `clear data does not remove saved payment info for Braintree users`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = Provider(id = BRAINTREE)
+
+        requestPresenter.clearData()
+
+        verify(userStore, never()).removeCurrentUser()
+    }
+
+    /**
+     * Given:   The user leaves the booking screen
+     * When:    The user is an Adyen user
+     * Then:    The saved payment info is removed
+     */
+    @Test
+    fun `clear data removes saved payment info for Adyen users`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = Provider(id = ADYEN)
+
+        requestPresenter.clearData()
+
+        verify(userStore, never()).removeCurrentUser()
+    }
+
     private fun setGuestUser() {
         whenever(userStore.currentUser).thenReturn(UserInfo())
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
     }
 
     private fun setTokenUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
+        UnitTestUISDKConfig.setTokenAuthentication(context)
     }
 
     private fun setAuthenticatedUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
     }
 
     companion object {

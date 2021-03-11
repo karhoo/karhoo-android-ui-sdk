@@ -60,10 +60,6 @@ class TestData {
 
     companion object {
 
-        const val ADYEN = "ADYEN"
-
-        const val BRAINTREE = "Braintree"
-
         const val REVERSE_GEO_DISPLAY_ADDRESS = "12 Grimmauld Place, OFTP HQ"
 
         const val SELECTED_ADDRESS_EXTRA = "368 Oxford St, London W1D 1LU, UK"
@@ -868,13 +864,13 @@ class TestData {
                 cardType = CardType.NOT_SET
                                                              )
 
-        val ADYEN_PROVIDER = PaymentProvider(Provider(id = "Adyen"))
+        val ADYEN_PROVIDER = PaymentProvider(Provider(id = ADYEN))
 
         val ADYEN_PUBLIC_KEY = AdyenPublicKey("12345678")
 
         val BRAINTREE_TOKEN = BraintreeSDKToken(token = "duidchjbwe36874cbaskj3")
 
-        val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = "Braintree"))
+        val BRAINTREE_PROVIDER = PaymentProvider(Provider(id = BRAINTREE))
 
         val ADYEN_PAYMENT_METHODS_EMPTY = ""
 
