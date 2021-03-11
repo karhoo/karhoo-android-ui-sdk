@@ -8,6 +8,7 @@ import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.CardType
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
@@ -17,7 +18,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
-import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -35,11 +35,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class AdyenPaymentPresenterTest {
 
+    private val price: QuotePrice = QuotePrice(highPrice = 100, currencyCode = "GBP")
     private var context: Context = mock()
     private var data: Intent = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var price: QuotePrice = mock()
+    private var quote: Quote = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var paymentDropInActions: PaymentDropInMVP.Actions = mock()
 
@@ -61,6 +62,7 @@ class AdyenPaymentPresenterTest {
         whenever(paymentsService.getAdyenPaymentMethods(any()))
                 .thenReturn(paymentMethodsCall)
         doNothing().whenever(paymentMethodsCall).execute(paymentMethodsCaptor.capture())
+        whenever(quote.price).thenReturn(price)
 
         adyenPaymentPresenter = AdyenPaymentPresenter(
                 paymentsService = paymentsService,
@@ -76,7 +78,7 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown when change card pressed and public key retrieval fails`() {
 
-        adyenPaymentPresenter.sdkInit(price)
+        adyenPaymentPresenter.sdkInit(quote)
 
         publicKeyCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
@@ -94,7 +96,7 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown when change card pressed and payment methods retrieval fails`() {
 
-        adyenPaymentPresenter.sdkInit(price)
+        adyenPaymentPresenter.sdkInit(quote)
 
         publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
@@ -115,14 +117,14 @@ class AdyenPaymentPresenterTest {
         val paymentData = "{paymentMethods: []}"
         setConfig()
 
-        adyenPaymentPresenter.sdkInit(price)
+        adyenPaymentPresenter.sdkInit(quote)
 
         publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Success(paymentData))
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentDropInActions).showPaymentUI(adyenPublicKey.publicKey, paymentData, price)
+        verify(paymentDropInActions).showPaymentUI(adyenPublicKey.publicKey, paymentData, quote)
     }
 
     /**
@@ -134,10 +136,7 @@ class AdyenPaymentPresenterTest {
     fun `error shown when retrieval of a nonce is attempted and it is null`() {
         setConfig()
 
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
-        whenever(price.highPrice).thenReturn(100)
-
-        adyenPaymentPresenter.getPaymentNonce(price)
+        adyenPaymentPresenter.getPaymentNonce(quote)
 
         verify(paymentDropInActions).showError(R.string.something_went_wrong, KarhooError.FailedToCallMoneyService)
     }
@@ -151,12 +150,9 @@ class AdyenPaymentPresenterTest {
     fun `nonce retrieved for 3ds when retrieval is attempted and it is not null`() {
         setConfig()
 
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
-        whenever(price.highPrice).thenReturn(100)
-
         setMockNonce()
 
-        adyenPaymentPresenter.getPaymentNonce(price)
+        adyenPaymentPresenter.getPaymentNonce(quote)
 
         verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID, "1.00")
     }
@@ -305,10 +301,7 @@ class AdyenPaymentPresenterTest {
         setConfig(handleBraintree = true)
         setMockNonce()
 
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
-        whenever(price.highPrice).thenReturn(100)
-
-        adyenPaymentPresenter.initialiseGuestPayment(price)
+        adyenPaymentPresenter.initialiseGuestPayment(quote)
 
         verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID)
     }
@@ -322,10 +315,7 @@ class AdyenPaymentPresenterTest {
         setConfig()
         setMockNonce()
 
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
-        whenever(price.highPrice).thenReturn(100)
-
-        adyenPaymentPresenter.initialiseGuestPayment(price)
+        adyenPaymentPresenter.initialiseGuestPayment(quote)
 
         verify(paymentDropInActions).threeDSecureNonce(TRIP_ID, TRIP_ID, "1.00")
     }
