@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -89,14 +90,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun changeCard() {
         cardDetailsVisibility(GONE)
+        editCardButtonVisibility(GONE)
         cardNumberText.isEnabled = false
-        changeCardLabel.visibility = GONE
         changeCardProgressBar.visibility = VISIBLE
         cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
         cardDetailsVisibility(VISIBLE)
+        editCardButtonVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = GONE
     }
 
@@ -116,7 +118,14 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private fun cardDetailsVisibility(visibility: Int) {
         cardLogoImage.visibility = visibility
         cardNumberText.visibility = visibility
-        changeCardLabel.visibility = visibility
+    }
+
+    private fun editCardButtonVisibility(visibility: Int) {
+        KarhooApi.userStore.savedPaymentInfo?.let {
+            changeCardLabel.visibility = visibility
+        } ?: run {
+            changeCardLabel.visibility = GONE
+        }
     }
 
     private fun setCardType(cardType: CardType?) {
@@ -147,6 +156,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 bindViews(it.cardType, it.lastFour)
                 changeCardProgressBar.visibility = INVISIBLE
                 cardDetailsVisibility(VISIBLE)
+                editCardButtonVisibility(View.VISIBLE)
                 changeCardLabel.visibility = VISIBLE
                 paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
                 setCardType(it.cardType)
