@@ -171,6 +171,70 @@ class GuestBookingTests : Launch {
     }
 
     /**
+     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is shown on the details page
+     **/
+    @Test
+    fun cancellationTextVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsShown()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
+     *          with 0 minutes
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is NOT shown on the details page
+     **/
+    @Test
+    fun cancellationTextWithZeroMinutesNotVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsNotShown()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that doesn't have a cancellation SLA
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is NOT shown on the details page
+     **/
+    @Test
+    fun cancellationTextNotVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsNotShown()
+        }
+    }
+
+    /**
      * Given:   I land on the booking screen as a guest user
      * When:    I check all the elements on the screen
      * Then:    I can see: Burger menu button enabled, "Add pick up" and "Add destination" in

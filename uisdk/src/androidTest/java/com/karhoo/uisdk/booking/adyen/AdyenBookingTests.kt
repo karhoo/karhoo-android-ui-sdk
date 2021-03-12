@@ -18,10 +18,10 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.util.ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
-import com.karhoo.uisdk.util.TestData.Companion.ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP

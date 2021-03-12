@@ -14,12 +14,9 @@ import com.karhoo.sdk.api.model.ServiceAgreements
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.CurrencyUtils
-import com.karhoo.uisdk.util.LogoTransformation
-import com.karhoo.uisdk.util.extension.convertDpToPixels
+import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.categoryText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.etaText
@@ -60,9 +57,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
-        categoryText.text = String.format("%s%s",
-                vehicleDetails.vehicle.vehicleClass?.substring(0, 1)?.toUpperCase(),
-                vehicleDetails.vehicle.vehicleClass?.substring(1))
+        categoryText.text = vehicleDetails.vehicle.vehicleClass?.capitalize()
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
@@ -78,21 +73,13 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun loadImage(url: String?) {
-        val logoSize = resources.getDimension(R.dimen.logo_size).convertDpToPixels()
-
-        val picasso = Picasso.with(context)
-        val creator: RequestCreator
-
-        creator = if (url.isNullOrEmpty()) {
-            picasso.load(R.drawable.uisdk_ic_quotes_logo_empty)
-        } else {
-            picasso.load(url)
-        }
-
-        creator.placeholder(R.drawable.uisdk_ic_quotes_logo_empty)
-                .resize(logoSize, logoSize)
-                .transform(LogoTransformation(resources.getInteger(R.integer.logo_radius)))
-                .into(logoImage, object : Callback {
+        PicassoLoader.loadImage(context,
+                logoImage,
+                url,
+                R.drawable.uisdk_ic_quotes_logo_empty,
+                R.dimen.logo_size,
+                R.integer.logo_radius,
+                object : Callback {
                     override fun onSuccess() {
                         stopLoading()
                     }

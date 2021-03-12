@@ -421,6 +421,14 @@ class ResultRobot : BaseTestRobot() {
         viewIsVisible(R.id.bookingRequestPassengerDetailsWidget)
     }
 
+    fun checkCancellationTextInDetailsPageIsShown() {
+        viewIsVisible(R.id.bookingQuoteCancellationText)
+    }
+
+    fun checkCancellationTextInDetailsPageIsNotShown() {
+        viewIsNotVisible(R.id.bookingQuoteCancellationText)
+    }
+
     fun fullCheckEmptyGuestDetailsPage() {
         guestDetailsPageFleetCheck()
         closeButtonIsEnabledGuestDetails()

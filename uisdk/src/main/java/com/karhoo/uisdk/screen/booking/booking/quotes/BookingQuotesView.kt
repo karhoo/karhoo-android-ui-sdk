@@ -5,13 +5,8 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.widget.TextViewCompat
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.util.LogoTransformation
-import com.karhoo.uisdk.util.extension.convertDpToPixels
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.categoryText
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteNameText
+import com.karhoo.uisdk.util.PicassoLoader
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 
 class BookingQuotesView @JvmOverloads constructor(context: Context,
@@ -20,6 +15,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
     private var headerTextStyle: Int = R.style.Text_Black_Medium_Bold
     private var detailsTextStyle: Int = R.style.Text_Alternative_XSmall
+    private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(this)
 
     init {
         inflate(context, R.layout.uisdk_view_booking_quotes, this)
@@ -28,42 +24,43 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingQuotesView,
-                                                        defStyleAttr, R.style.KhBookingQuotesView)
-        headerTextStyle = typedArray.getResourceId(R.styleable
-                                                           .BookingQuotesView_headerText, R
-                                                           .style
-                                                           .Text_Black_Medium_Bold)
-        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_detailsText, R
-                .style
-                .Text_Alternative_XSmall)
+                defStyleAttr, R.style.KhBookingQuotesView)
+        headerTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_headerText,
+                R.style.Text_Black_Medium_Bold)
+        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_detailsText,
+                R.style.Text_Alternative_XSmall)
         TextViewCompat.setTextAppearance(quoteNameText, headerTextStyle)
         TextViewCompat.setTextAppearance(categoryText, detailsTextStyle)
     }
 
-    fun bindViews(url: String?, quoteName: String, category: String) {
-        url?.let { loadImage(it) }
+    fun bindViews(url: String?, quoteName: String, category: String, cancellationMinutes: Int?) {
         quoteNameText.text = quoteName
-        categoryText.text = String.format("%s%s",
-                                          category.substring(0, 1).toUpperCase(),
-                                          category.substring(1))
+        presenter.capitalizeCategory(category)
+        presenter.checkCancellationSLAMinutes(cancellationMinutes, context)
+        loadImage(url)
     }
 
-    private fun loadImage(url: String) {
-        val logoSize = resources.getDimension(R.dimen.logo_size).convertDpToPixels()
+    override fun setCancellationText(text: String) {
+        bookingQuoteCancellationText.text = text
+    }
 
-        val picasso = Picasso.with(context)
-        val creator: RequestCreator
+    override fun showCancellationText(show: Boolean) = if (show) {
+        bookingQuoteCancellationText.visibility = VISIBLE
+    } else {
+        bookingQuoteCancellationText.visibility = GONE
+    }
 
-        creator = if (url.isNotBlank()) {
-            picasso.load(url)
-        } else {
-            picasso.load(R.drawable.uisdk_ic_quotes_logo_empty)
-        }
+    override fun setCategoryText(text: String) {
+        categoryText.text = text
+    }
 
-        creator.placeholder(R.drawable.uisdk_ic_quotes_logo_empty)
-                .resize(logoSize, logoSize)
-                .transform(LogoTransformation(resources.getInteger(R.integer.logo_radius)))
-                .into(logoImage)
+    private fun loadImage(url: String?) {
+        PicassoLoader.loadImage(context,
+                logoImage,
+                url,
+                R.drawable.uisdk_ic_quotes_logo_empty,
+                R.dimen.logo_size,
+                R.integer.logo_radius)
     }
 
     override fun setCapacity(luggage: Int, people: Int) {
