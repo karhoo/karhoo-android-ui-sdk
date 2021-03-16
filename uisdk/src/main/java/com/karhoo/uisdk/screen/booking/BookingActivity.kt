@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -103,6 +104,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
         setWatchers()
         setNavHeaderImage()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (tripAllocationWidget.visibility != View.VISIBLE) {
+            quotesListWidget.cleanup()
+        }
     }
 
     private fun setNavHeaderImage() {
