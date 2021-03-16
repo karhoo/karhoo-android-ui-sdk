@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
@@ -49,8 +50,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     override fun cleanup() {
-        bookingStatusStateViewModel.viewStates().removeObserver(observer)
         cancelVehicleCallback()
+        bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
 
     override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingStatus> {
