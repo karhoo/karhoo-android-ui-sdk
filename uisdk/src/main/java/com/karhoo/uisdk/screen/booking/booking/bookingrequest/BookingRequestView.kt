@@ -347,16 +347,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
             bookingRequestButton.onLoadingComplete()
             animateOut()
 
-            PrebookConfirmationView(context).apply {
+            var prebookConfirmationView = PrebookConfirmationView(context).apply {
                 bind(quoteType, tripInfo)
             }
-
+            prebookConfirmationView.actions = this
         }
     }
 
-    private fun finishedBooking(dialog: DialogInterface) {
+    override fun finishedBooking() {
         presenter.resetBooking()
-        dialog.dismiss()
     }
 
     private fun onPaymentHandlePositive() {

@@ -16,6 +16,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.CurrencyUtils
@@ -41,6 +42,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
         defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr), ScheduledDateView {
     private val scheduledDateViewBinder = ScheduledDateViewBinder()
+    var actions: BookingRequestMVP.Actions? = null
 
     init {
         View.inflate(context, R.layout.uisdk_alert_prebook_confirmation, this)
@@ -78,7 +80,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
                 cancellable = false,
                 positiveButton = KarhooAlertDialogAction(R.string.ride_details,
                                                          DialogInterface.OnClickListener { dialog, _ ->
-//                                                             finishedBooking(dialog)
+                                                             actions?.finishedBooking()
                                                              val taskStackBuilder = TaskStackBuilder.create(context)
                                                                      .addNextIntent(BookingActivity.Builder.builder.build(context))
                                                              if (!isGuest()) {
@@ -91,7 +93,8 @@ class PrebookConfirmationView @JvmOverloads constructor(
                 negativeButton = KarhooAlertDialogAction(R.string.dismiss,
                                                          DialogInterface.OnClickListener {
                                                              dialog, _ ->
-                                                             /*finishedBooking*/dialog.dismiss()
+                                                             actions?.finishedBooking()
+                                                             dialog.dismiss()
                                                              (dialog) }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
