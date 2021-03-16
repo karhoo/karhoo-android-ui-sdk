@@ -347,30 +347,9 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
             bookingRequestButton.onLoadingComplete()
             animateOut()
 
-            val prebookConfirmationView = PrebookConfirmationView(context).apply {
+            PrebookConfirmationView(context).apply {
                 bind(quoteType, tripInfo)
             }
-
-            val config = KarhooAlertDialogConfig(
-                    view = prebookConfirmationView,
-                    cancellable = false,
-                    positiveButton = KarhooAlertDialogAction(R.string.ride_details,
-                                                             DialogInterface.OnClickListener { dialog, _ ->
-                                                                 finishedBooking(dialog)
-                                                                 val taskStackBuilder = TaskStackBuilder.create(context)
-                                                                         .addNextIntent(BookingActivity.Builder.builder.build(context))
-                                                                 if (!isGuest()) {
-                                                                     taskStackBuilder.addNextIntent(RidesActivity.Builder.builder.build(context))
-                                                                 }
-                                                                 taskStackBuilder.addNextIntent(RideDetailActivity.Builder.newBuilder()
-                                                                                                        .trip(tripInfo).build(context))
-                                                                 taskStackBuilder.startActivities()
-                                                             }),
-                    negativeButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                             DialogInterface.OnClickListener { dialog, _ -> finishedBooking(dialog) }))
-            KarhooAlertDialogHelper(context).showAlertDialog(config).window?.setLayout(
-                    resources.displayMetrics.widthPixels,
-                    (resources.displayMetrics.heightPixels * BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR).toInt())
 
         }
     }

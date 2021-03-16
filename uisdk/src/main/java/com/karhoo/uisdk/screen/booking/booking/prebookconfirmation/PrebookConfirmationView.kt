@@ -1,17 +1,27 @@
 package com.karhoo.uisdk.screen.booking.booking.prebookconfirmation
 
 import android.content.Context
+import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.app.TaskStackBuilder
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.rides.RidesActivity
+import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.ViewsConstants
+import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.bookingDateText
@@ -58,6 +68,32 @@ class PrebookConfirmationView @JvmOverloads constructor(
         fareText.text = CurrencyUtils.intToPrice(currency, trip.quote?.total.orZero())
 
         fareTypeText.text = quoteType?.toLocalisedString(context.applicationContext).orEmpty()
+
+        buildAlert(trip)
+    }
+
+    private fun buildAlert(tripInfo: TripInfo) {
+        val config = KarhooAlertDialogConfig(
+                view = this,
+                cancellable = false,
+                positiveButton = KarhooAlertDialogAction(R.string.ride_details,
+                                                         DialogInterface.OnClickListener { dialog, _ ->
+//                                                             finishedBooking(dialog)
+                                                             val taskStackBuilder = TaskStackBuilder.create(context)
+                                                                     .addNextIntent(BookingActivity.Builder.builder.build(context))
+                                                             if (!isGuest()) {
+                                                                 taskStackBuilder.addNextIntent(RidesActivity.Builder.builder.build(context))
+                                                             }
+                                                             taskStackBuilder.addNextIntent(RideDetailActivity.Builder.newBuilder()
+                                                                                                    .trip(tripInfo).build(context))
+                                                             taskStackBuilder.startActivities()
+                                                         }),
+                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                                                         DialogInterface.OnClickListener {
+                                                             dialog, _ ->
+                                                             /*finishedBooking*/dialog.dismiss()
+                                                             (dialog) }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun displayDate(date: DateTime) {
