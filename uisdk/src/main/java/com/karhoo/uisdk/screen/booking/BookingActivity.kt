@@ -108,9 +108,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onPause() {
         super.onPause()
-        if (tripAllocationWidget.visibility != View.VISIBLE) {
-            quotesListWidget.cleanup()
-        }
+        quotesListWidget.cleanup()
     }
 
     private fun setNavHeaderImage() {
