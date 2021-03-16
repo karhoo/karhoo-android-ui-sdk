@@ -69,6 +69,6 @@ class BookingQuotesPresenterTest {
         private const val TEST_STRING = "test"
         private const val TEST_ZERO_MINUTES = 0
         private const val TEST_TEN_MINUTES = 10
-        private const val TEST_CANCELLATION_TEXT = "Free cancellation up to %d mins before pickup"
+        const val TEST_CANCELLATION_TEXT = "Free cancellation up to %d mins before pickup"
     }
 }

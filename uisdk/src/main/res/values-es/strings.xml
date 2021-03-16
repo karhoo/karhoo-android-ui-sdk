@@ -16,6 +16,7 @@
     <string name="loading_min">min</string>
     <string name="capacity">x %s</string>
     <string name="uisdk_quote_cancellation_minutes">Cancelación gratuita hasta %d minutos antes de la recogida</string>
+    <string name="uisdk_quote_cancellation_before_driver_departure">Cancelación gratuita hasta que el conductor esté en camino</string>
 
     <!-- Activity Titles -->
     <string name="title_activity_address">Dirección</string>

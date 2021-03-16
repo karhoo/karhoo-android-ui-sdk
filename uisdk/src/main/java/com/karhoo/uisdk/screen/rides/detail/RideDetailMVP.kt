@@ -1,10 +1,13 @@
 package com.karhoo.uisdk.screen.rides.detail
 
+import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -32,6 +35,8 @@ interface RideDetailMVP {
         fun onPause()
 
         fun addTripInfoObserver(tripInfoListener: OnTripInfoChangedListener?)
+
+        fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context)
 
         interface OnTripInfoChangedListener {
 
@@ -85,9 +90,11 @@ interface RideDetailMVP {
 
         fun displayBaseFareDialog()
 
-        fun showFeedbackSubmitted() {
+        fun showFeedbackSubmitted()
 
-        }
+        fun showCancellationText(show: Boolean)
+
+        fun setCancellationText(text: String)
 
         interface Actions {
 

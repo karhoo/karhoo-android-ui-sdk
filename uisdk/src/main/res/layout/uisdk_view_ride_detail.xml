@@ -379,6 +379,18 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/rideDetailCancellationText"
+            style="@style/Text.Primary.Small.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            tools:text="Free cancellation up to 21 minutes before pickup"
+            tools:visibility="visible" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_height"

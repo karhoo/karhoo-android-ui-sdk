@@ -17,15 +17,7 @@ import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.bookingTermsText
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.callButton
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.carText
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.dateTimeText
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.dropOffLabel
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.pickupLabel
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.pickupTypeText
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.trackButton
+import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.*
 import org.joda.time.DateTime
 
 class UpcomingRideCardView @JvmOverloads constructor(
@@ -41,7 +33,12 @@ class UpcomingRideCardView @JvmOverloads constructor(
     }
 
     fun bind(trip: TripInfo) {
-        presenter = UpcomingRideCardPresenter(this, trip, ScheduledDateViewBinder(), KarhooUISDK.analytics)
+        presenter = UpcomingRideCardPresenter(
+                this,
+                trip,
+                ScheduledDateViewBinder(),
+                KarhooUISDK.analytics,
+                context)
 
         loadFleetLogo(trip)
 
@@ -131,5 +128,13 @@ class UpcomingRideCardView @JvmOverloads constructor(
 
     override fun hideTrackDriverButton() {
         trackButton.visibility = View.GONE
+    }
+
+    override fun setCancellationText(text: String) {
+        upcomingRideCancellationText.text = text
+    }
+
+    override fun showCancellationText(show: Boolean) {
+        upcomingRideCancellationText.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

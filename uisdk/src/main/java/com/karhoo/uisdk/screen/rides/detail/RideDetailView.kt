@@ -35,30 +35,7 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.bookingTermsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsLayout
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dateTimeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dropOffLabel
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightDetailsLayout
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightNumberText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.karhooId
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.meetingPointText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupLabel
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupTypeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceTypeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.ratingDivider
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.rebookRideButton
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.reportIssueButton
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.starRatingWidget
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.*
 import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
 import org.joda.time.DateTime
 
@@ -98,6 +75,10 @@ class RideDetailView @JvmOverloads constructor(
 
         presenter?.let {
             contactOptionsWidget.observeTripStatus(it)
+        }
+
+        trip.tripState?.let {
+            presenter?.checkCancellationSLA(it, trip.serviceAgreements?.freeCancellation, context)
         }
     }
 
@@ -236,7 +217,7 @@ class RideDetailView @JvmOverloads constructor(
                 titleResId = R.string.cancel_ride_successful,
                 messageResId = R.string.cancel_ride_successful_message,
                 positiveButton = KarhooAlertDialogAction(R.string.dismiss,
-                                                         DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
+                        DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
     }
@@ -270,7 +251,7 @@ class RideDetailView @JvmOverloads constructor(
         val config = KarhooAlertDialogConfig(
                 view = BaseFareView(context),
                 positiveButton = KarhooAlertDialogAction(R.string.got_it,
-                                                         DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
+                        DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
     }
@@ -308,6 +289,14 @@ class RideDetailView @JvmOverloads constructor(
 
     override fun showTemporaryError(error: String, karhooError: KarhooError?) {
         TODO("Not yet implemented")
+    }
+
+    override fun setCancellationText(text: String) {
+        rideDetailCancellationText.text = text
+    }
+
+    override fun showCancellationText(show: Boolean) {
+        rideDetailCancellationText.visibility = if (show) View.VISIBLE else View.GONE
     }
 
 }

@@ -21,6 +21,7 @@
     <string name="no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="capacity">x %s</string>
     <string name="uisdk_quote_cancellation_minutes">Annulation gratuite jusqu’à %d minutes avant la prise en charge</string>
+    <string name="uisdk_quote_cancellation_before_driver_departure">Annulation sans frais jusqu\'au départ du chauffeur</string>
 
     <!-- Activity Titles -->
     <string name="title_activity_address">Adresse</string>

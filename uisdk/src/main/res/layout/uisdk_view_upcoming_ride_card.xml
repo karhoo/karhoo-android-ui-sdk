@@ -63,7 +63,7 @@
                 android:text="@string/pickup_type_meet_and_greet"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_size_xsmall"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -76,10 +76,10 @@
 
             <ImageView
                 android:id="@+id/pickupBallIcon"
+                style="@style/KhPickUpDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall"
-                style="@style/KhPickUpDot" />
+                android:layout_marginEnd="@dimen/spacing_xsmall" />
 
             <TextView
                 android:id="@+id/pickupLabel"
@@ -101,10 +101,10 @@
 
             <ImageView
                 android:id="@+id/dropoffBallIcon"
+                style="@style/KhDropOffDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall"
-                style="@style/KhDropOffDot" />
+                android:layout_marginEnd="@dimen/spacing_xsmall" />
 
             <TextView
                 android:id="@+id/dropOffLabel"
@@ -123,6 +123,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_xsmall"
             tools:text="Fiat Panda" />
+
+        <TextView
+            android:id="@+id/upcomingRideCancellationText"
+            style="@style/Text.Primary.Small.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:visibility="gone"
+            tools:text="Free cancellation up to 21 minutes before pickup"
+            tools:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"
