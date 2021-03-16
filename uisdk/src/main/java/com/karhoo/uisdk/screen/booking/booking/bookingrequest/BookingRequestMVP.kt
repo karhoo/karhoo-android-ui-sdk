@@ -104,6 +104,8 @@ interface BookingRequestMVP {
         fun onTermsAndConditionsRequested(url: String?)
     }
 
-    interface Actions : PaymentActions
+    interface Actions : PaymentActions {
+        fun finishedBooking()
+    }
 
 }
