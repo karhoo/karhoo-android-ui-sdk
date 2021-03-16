@@ -106,11 +106,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         setNavHeaderImage()
     }
 
-    override fun onPause() {
-        super.onPause()
-        quotesListWidget.cleanup()
-    }
-
     private fun setNavHeaderImage() {
         Handler().postDelayed({
                                   KarhooUISDKConfigurationProvider.configuration.logo()?.let {
@@ -134,11 +129,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onLowMemory() {
         super.onLowMemory()
         bookingMapWidget.onLowMemory()
-    }
-
-    override fun onStop() {
-        quotesListWidget?.cleanup()
-        super.onStop()
     }
 
     override fun handleExtras() {
@@ -302,7 +292,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun waitForTripAllocation() {
         quotesListWidget.hideList()
-        quotesListWidget?.cleanup()
         addressBarWidget.visibility = View.INVISIBLE
         bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE

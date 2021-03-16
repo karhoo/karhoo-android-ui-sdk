@@ -3,11 +3,15 @@ package com.karhoo.uisdk.screen.booking.quotes
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
@@ -29,6 +33,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
+import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
@@ -40,7 +45,7 @@ class QuotesListView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), QuotesSortView.Listener,
-      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget {
+      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -61,6 +66,11 @@ class QuotesListView @JvmOverloads constructor(
 
         quotesSortWidget.setListener(this)
         chevronIcon.setOnClickListener { presenter.showMore() }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPause() {
+        availabilityProvider?.cleanup()
     }
 
     override fun setChevronState(isExpanded: Boolean) {
@@ -97,6 +107,7 @@ class QuotesListView @JvmOverloads constructor(
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
                                 bookingStatusStateViewModel: BookingStatusStateViewModel,
                                 bookingQuotesViewModel: BookingQuotesViewModel) {
+        lifecycleOwner.lifecycle.addObserver(this)
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
@@ -106,10 +117,6 @@ class QuotesListView @JvmOverloads constructor(
 
         this.bookingQuotesViewModel = bookingQuotesViewModel
         bookingQuotesViewModel.viewStates().observe(lifecycleOwner, watchBookingQuotesStatus())
-    }
-
-    override fun cleanup() {
-        availabilityProvider?.cleanup()
     }
 
     private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
