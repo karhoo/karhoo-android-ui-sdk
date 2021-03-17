@@ -22,8 +22,11 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
+import com.karhoo.uisdk.screen.booking.quotes.BookingQuotesPresenterTest
 import com.karhoo.uisdk.screen.rides.detail.RideDetailPresenter.Companion.TRIP_INFO_UPDATE_PERIOD
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
+import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
+import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -74,13 +77,13 @@ class RideDetailPresenterTest {
 
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         Locale.setDefault(Locale.UK)
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
+        whenever(context.getString(R.string.uisdk_quote_cancellation_minutes)).thenReturn(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT)
+        whenever(context.getString(R.string.uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     /**
@@ -243,9 +246,7 @@ class RideDetailPresenterTest {
      */
     @Test
     fun `observer is added to observable for guest booking`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         val trip = TripInfo(
                 tripId = TRIP_ID,
                 followCode = FOLLOW_CODE,
@@ -565,16 +566,101 @@ class RideDetailPresenterTest {
         verify(view).showFeedbackSubmitted()
     }
 
+    /**
+     * Given:   The trip has a service cancellation of type before pickup with a tripStatus different
+     *          than requested or confirmed
+     * Then:    The cancellation text is not shown
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup with a passenger on board trip state, the cancellation text is not shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.PASSENGER_ON_BOARD,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view, never()).showCancellationText(any())
+        verify(view, never()).setCancellationText(any())
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before pickup with a tripStatus equal to confirmed
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.CONFIRMED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to confirmed
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.CONFIRMED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.REQUESTED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.REQUESTED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+    }
+
     companion object {
         private val BREAKDOWN_NO_CURRENCY = FareBreakdown(
                 total = 2134,
                 currency = ""
-                                                         )
+        )
 
         private val FARE_NO_CURRENCY = Fare(
                 state = "COMPLETE",
                 breakdown = BREAKDOWN_NO_CURRENCY
-                                           )
+        )
 
         private val FARE_COMPLETE = FARE_NO_CURRENCY.copy(
                 breakdown = BREAKDOWN_NO_CURRENCY.copy(

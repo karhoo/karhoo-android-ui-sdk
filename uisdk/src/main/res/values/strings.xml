@@ -20,6 +20,7 @@
     <string name="no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="capacity">x %s</string>
     <string name="uisdk_quote_cancellation_minutes">Free cancellation up to %d mins before pickup</string>
+    <string name="uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>
 
     <!-- Activity Titles -->
     <string name="title_activity_address">Address</string>

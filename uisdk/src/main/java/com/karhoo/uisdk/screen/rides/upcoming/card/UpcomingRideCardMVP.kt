@@ -28,6 +28,10 @@ interface UpcomingRideCardMVP {
         fun displayTrackDriverButton()
 
         fun hideTrackDriverButton()
+
+        fun setCancellationText(text: String)
+
+        fun showCancellationText(show: Boolean)
     }
 
 }

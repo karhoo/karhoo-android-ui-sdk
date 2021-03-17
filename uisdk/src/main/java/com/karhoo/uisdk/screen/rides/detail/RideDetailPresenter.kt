@@ -1,10 +1,12 @@
 package com.karhoo.uisdk.screen.rides.detail
 
+import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
@@ -17,6 +19,8 @@ import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.getCancellationText
+import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
 import java.util.Currency
 
 private val LIVE_STATES = arrayOf(
@@ -211,6 +215,21 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     override fun onPause() {
         unsubscribeObservers()
+    }
+
+    override fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context) {
+        if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(tripStatus) == false) {
+            return
+        }
+
+        val cancellationText = serviceCancellation?.getCancellationText(context)
+
+        if (cancellationText.isNullOrEmpty()) {
+            view?.showCancellationText(false)
+        } else {
+            view?.setCancellationText(cancellationText)
+            view?.showCancellationText(true)
+        }
     }
 
     override fun addTripInfoObserver(tripInfoListener: RideDetailMVP.Presenter.OnTripInfoChangedListener?) {

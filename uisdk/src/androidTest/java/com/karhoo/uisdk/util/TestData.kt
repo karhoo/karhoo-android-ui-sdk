@@ -4,51 +4,7 @@ import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.karhoo.sdk.api.model.Address
-import com.karhoo.sdk.api.model.Availability
-import com.karhoo.sdk.api.model.AvailabilityVehicle
-import com.karhoo.sdk.api.model.BookingFee
-import com.karhoo.sdk.api.model.BookingFeePrice
-import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.Credentials
-import com.karhoo.sdk.api.model.Direction
-import com.karhoo.sdk.api.model.Driver
-import com.karhoo.sdk.api.model.DriverTrackingInfo
-import com.karhoo.sdk.api.model.Fare
-import com.karhoo.sdk.api.model.FareBreakdown
-import com.karhoo.sdk.api.model.FleetInfo
-import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.MeetingPoint
-import com.karhoo.sdk.api.model.Organisation
-import com.karhoo.sdk.api.model.PaymentProvider
-import com.karhoo.sdk.api.model.PaymentsNonce
-import com.karhoo.sdk.api.model.PickupType
-import com.karhoo.sdk.api.model.Place
-import com.karhoo.sdk.api.model.Places
-import com.karhoo.sdk.api.model.Poi
-import com.karhoo.sdk.api.model.PoiDetails
-import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.Position
-import com.karhoo.sdk.api.model.Price
-import com.karhoo.sdk.api.model.Provider
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteSource
-import com.karhoo.sdk.api.model.QuoteStatus
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripList
-import com.karhoo.sdk.api.model.TripLocationInfo
-import com.karhoo.sdk.api.model.TripState
-import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.sdk.api.model.UserInfo
-import com.karhoo.sdk.api.model.Vehicle
-import com.karhoo.sdk.api.model.Vehicles
-import com.karhoo.sdk.api.model.ServiceAgreements
-import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import java.text.SimpleDateFormat
@@ -259,7 +215,7 @@ class TestData {
                                      highPrice = 577,
                                      lowPrice = 577)
 
-        val QUOTE_FLEET = FleetInfo(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+        val QUOTE_FLEET = Fleet(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                     name = "iCabbi [Sandbox]",
                                     logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                     description = "Some fleet description",
@@ -272,6 +228,8 @@ class TestData {
                                          passengerCapacity = 2)
 
         val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation("", 2))
+        val CANCELLATION_AGREEMENT_BEFORE_PICKUP = ServiceAgreements(ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, 2))
+        val CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE = ServiceAgreements(ServiceCancellation(CANCELLATION_BEFORE_DRIVER_EN_ROUTE, 2))
         val CANCELLATION_AGREEMENT_ZERO_MINUTES = ServiceAgreements(ServiceCancellation("", 0))
 
         val AVAILABILITY = Availability(vehicles = AvailabilityVehicle(classes = listOf("Saloon", "Taxi", "MPV", "Exec", "Electric", "Moto")))
@@ -300,6 +258,12 @@ class TestData {
 
         val TRIP_CONFIRMED = TRIP.copy(
                 tripState = TripStatus.CONFIRMED)
+
+        val TRIP_REQUESTED = TRIP.copy(
+                tripState = TripStatus.REQUESTED)
+
+        val TRIP_ONBOARDED = TRIP.copy(
+                tripState = TripStatus.PASSENGER_ON_BOARD)
 
         val TRIP_PREBOOKED = TRIP_CONFIRMED.copy(
                 dateScheduled = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").parse("2021-12-2T20:00:00Z"))
@@ -742,7 +706,7 @@ class TestData {
                                 quoteType = QuoteType.METERED,
                                 price = QUOTE_PRICE.copy(highPrice = 841, lowPrice = 841,
                                                          currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(fleetId = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
+                                fleet = QUOTE_FLEET.copy(id = "4f596e3f-c638-4221-9e88-b24bc7b4dea5",
                                                          name = "Second Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
                                                          description = "Some fleet description",
@@ -760,7 +724,7 @@ class TestData {
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2500, lowPrice = 2500,
                                                          currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+                                fleet = QUOTE_FLEET.copy(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Last Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                                          description = "Some fleet description",
@@ -778,7 +742,7 @@ class TestData {
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
                                                          currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+                                fleet = QUOTE_FLEET.copy(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Third Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                                          description = "Some fleet description",
@@ -797,7 +761,7 @@ class TestData {
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
                                                          currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+                                fleet = QUOTE_FLEET.copy(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "Fourth Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
                                                          description = "Some fleet description",
@@ -816,7 +780,7 @@ class TestData {
                                 quoteType = QuoteType.ESTIMATED,
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
                                                          currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(fleetId = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+                                fleet = QUOTE_FLEET.copy(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
                                                          name = "A Taxi Fleet",
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/9b7e3ae9-48d0-42f2-9130-d99c5bec431c.png",
                                                          description = "Some fleet description",

@@ -5,11 +5,13 @@ import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
+import com.karhoo.karhootraveller.R
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
+import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.COULD_NOT_CANCEL_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
@@ -17,11 +19,14 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_DRIVER_MEETING
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_KARHOO_MEETING_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CANCELLED_BY_USER_MEETING_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_COMPLETED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_CONFIRMED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_CONFIRMED_MEETING_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DRIVER_EN_ROUTE_POINT_UNSET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_INCOMPLETE
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_ONBOARDED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_POB
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_PREBOOKED
+import com.karhoo.uisdk.util.TestData.Companion.TRIP_REQUESTED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_REQUESTED_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_REQUESTED
 import com.karhoo.uisdk.util.TestData.Companion.USER
@@ -262,6 +267,75 @@ class RideDetailTests : Launch {
     }
 
     /**
+     * Given:   I am on the ride details of a requested ride with a cancellation SLA before pickup
+     * When:    The card is shown
+     * Then:    The cancellation SLA text is shown
+     **/
+    @Test
+    fun checkCancellationTextForRequestedRideWithSLA() {
+        serverRobot {
+            successfulToken()
+        }
+        rideDetail(this, TRIP_REQUESTED_INTENT_WITH_CANCELLATION_SLA) {
+            shortSleep()
+        } result {
+            viewIsVisible(R.id.rideDetailCancellationText)
+        }
+    }
+
+    /**
+     * Given:   I am on the ride details of a confirmed ride with a cancellation SLA before pickup
+     * When:    The card is shown
+     * Then:    The cancellation SLA text is shown
+     **/
+    @Test
+    fun checkCancellationTextForConfirmedRideWithSLA() {
+        serverRobot {
+            successfulToken()
+        }
+        rideDetail(this, TRIP_CONFIRMED_INTENT_WITH_CANCELLATION_SLA) {
+            shortSleep()
+        } result {
+            viewIsVisible(R.id.rideDetailCancellationText)
+        }
+    }
+
+    /**
+     * Given:   I am on the ride details of a confirmed ride without a cancellation SLA
+     * When:    The card is shown
+     * Then:    The cancellation SLA text is not shown
+     **/
+    @Test
+    fun checkCancellationTextForConfirmedRideWithoutSLA() {
+        serverRobot {
+            successfulToken()
+        }
+        rideDetail(this, TRIP_STATE_CONFIRMED) {
+            shortSleep()
+        } result {
+            viewIsNotVisible(R.id.rideDetailCancellationText)
+        }
+    }
+
+    /**
+     * Given:   I am on the ride details of a on boarded ride with a cancellation SLA
+     * When:    The card is shown
+     * Then:    The cancellation SLA text is not shown
+     **/
+    @Test
+    fun checkCancellationTextForOnBoardedRideWithSLA() {
+        serverRobot {
+            successfulToken()
+        }
+        rideDetail(this, TRIP_STATE_ON_BOARDED) {
+            shortSleep()
+        } result {
+            viewIsNotVisible(R.id.rideDetailCancellationText)
+        }
+    }
+
+
+    /**
      * Given:   I am on the details of a completed ride
      * When:    I select Report an issue
      * Then:    I am taken to the salesforce page and the following info is visible:
@@ -294,6 +368,30 @@ class RideDetailTests : Launch {
         private val TRIP_INTENT = Intent().apply {
             putExtras(Bundle().apply {
                 putParcelable(TRIP_EXTRA, TRIP)
+            })
+        }
+
+        private val TRIP_STATE_CONFIRMED = Intent().apply {
+            putExtras(Bundle().apply {
+                putParcelable(TRIP_EXTRA, TRIP_CONFIRMED)
+            })
+        }
+
+        private val TRIP_STATE_ON_BOARDED = Intent().apply {
+            putExtras(Bundle().apply {
+                putParcelable(TRIP_EXTRA, TRIP_ONBOARDED.copy(serviceAgreements = TestData.CANCELLATION_AGREEMENT_BEFORE_PICKUP))
+            })
+        }
+
+        private val TRIP_REQUESTED_INTENT_WITH_CANCELLATION_SLA = Intent().apply {
+            putExtras(Bundle().apply {
+                putParcelable(TRIP_EXTRA, TRIP_REQUESTED.copy(serviceAgreements = TestData.CANCELLATION_AGREEMENT_BEFORE_PICKUP))
+            })
+        }
+
+        private val TRIP_CONFIRMED_INTENT_WITH_CANCELLATION_SLA = Intent().apply {
+            putExtras(Bundle().apply {
+                putParcelable(TRIP_EXTRA, TRIP_CONFIRMED.copy(serviceAgreements = TestData.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE))
             })
         }
 
