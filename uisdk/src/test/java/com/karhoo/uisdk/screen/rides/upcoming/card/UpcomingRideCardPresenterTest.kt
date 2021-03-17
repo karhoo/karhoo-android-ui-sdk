@@ -97,23 +97,8 @@ class UpcomingRideCardPresenterTest {
     /**
      * Given:   An upcoming trip
      * When:    There is a free cancellation SLA before pickup
-     * Then:    The view should set the correct text the cancellation SLA textview
-     */
-    @Test
-    fun `When we have a free cancellation SLA with before pickup, the cancellation text is set correctly`() {
-        presenter = UpcomingRideCardPresenter(view,
-                TRIP_DETAILS_SLA_BEFORE_PICKUP,
-                scheduledDateViewBinder,
-                analytics,
-                context)
-
-        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, TEST_TWO_MINUTES))
-    }
-
-    /**
-     * Given:   An upcoming trip
-     * When:    There is a free cancellation SLA before pickup
      * Then:    The view should show correctly the cancellation SLA textview
+     * Then:    The view should set the correct text in the cancellation SLA textview
      */
     @Test
     fun `When we have a free cancellation SLA with before pickup, the cancellation text is visible`() {
@@ -124,22 +109,7 @@ class UpcomingRideCardPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
-    }
-
-    /**
-     * Given:   An upcoming trip
-     * When:    There is a free cancellation SLA before driver en route
-     * Then:    The view should set the correct text the cancellation SLA textview
-     */
-    @Test
-    fun `When we have a free cancellation SLA with before driver en route duration, the cancellation text is set correctly`() {
-        presenter = UpcomingRideCardPresenter(view,
-                TRIP_DETAILS_SLA_BEFORE_DRIVER_EN_ROUTE,
-                scheduledDateViewBinder,
-                analytics,
-                context)
-
-        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, TEST_TWO_MINUTES))
     }
 
     /**
@@ -156,6 +126,7 @@ class UpcomingRideCardPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
+        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     /**

@@ -77,8 +77,7 @@ class RideDetailPresenterTest {
 
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context = context,
-                authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         Locale.setDefault(Locale.UK)
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
@@ -247,9 +246,7 @@ class RideDetailPresenterTest {
      */
     @Test
     fun `observer is added to observable for guest booking`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-        context,
-                authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         val trip = TripInfo(
                 tripId = TRIP_ID,
                 followCode = FOLLOW_CODE,
@@ -589,6 +586,7 @@ class RideDetailPresenterTest {
      * Given:   The trip has a service cancellation of type before pickup with a tripStatus equal to confirmed
      *
      * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
      */
     @Test
     fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
@@ -598,20 +596,6 @@ class RideDetailPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
-    }
-
-    /**
-     * Given:   The trip has a service cancellation of type before pickup with a tripStatus equal to confirmed
-     *
-     * Then:    The cancellation text is the correct one
-     */
-    @Test
-    fun `When the trip has a service cancellation of type before pickup, the cancellation text is the correct one`() {
-        presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
-                context)
-
         verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
     }
 
@@ -619,6 +603,7 @@ class RideDetailPresenterTest {
      * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to confirmed
      *
      * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
      */
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
@@ -628,27 +613,15 @@ class RideDetailPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
-    }
-
-    /**
-     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to confirmed
-     *
-     * Then:    The cancellation text is the correct one
-     */
-    @Test
-    fun `When the trip has a service cancellation of type before driver en route, the cancellation text is the correct one`() {
-        presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
-                context)
-
         verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+
     }
 
     /**
      * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
      *
      * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
      */
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
@@ -658,20 +631,6 @@ class RideDetailPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
-    }
-
-    /**
-     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
-     *
-     * Then:    The cancellation text is the correct one
-     */
-    @Test
-    fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is the correct one`() {
-        presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
-                context)
-
         verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
@@ -679,6 +638,7 @@ class RideDetailPresenterTest {
      * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
      *
      * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
      */
     @Test
     fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
@@ -688,20 +648,6 @@ class RideDetailPresenterTest {
                 context)
 
         verify(view).showCancellationText(true)
-    }
-
-    /**
-     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
-     *
-     * Then:    The cancellation text is the correct one
-     */
-    @Test
-    fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is the correct one`() {
-        presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
-                context)
-
         verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
     }
 
