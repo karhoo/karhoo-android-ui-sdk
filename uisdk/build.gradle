@@ -55,7 +55,7 @@ android {
 publish {
     def groupProjectID = 'com.karhoo'
     def artifactProjectID = 'uisdk-canary'
-    def publishVersionID = '1.2.1-11032021-1'
+    def publishVersionID = '1.2.1-18032021-1'
     def repoNameID = 'Android'
 
     userOrg = 'flit-tech'
@@ -69,7 +69,7 @@ publish {
 
 dependencies {
 
-    api 'com.karhoo:nsdk-canary:1.2.2.11032021-1'
+    api 'com.karhoo:nsdk-canary:1.2.2.18032021-2'
     api 'com.braintreepayments.api:drop-in:4.6.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'

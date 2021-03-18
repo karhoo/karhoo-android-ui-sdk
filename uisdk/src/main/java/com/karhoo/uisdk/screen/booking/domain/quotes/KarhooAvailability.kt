@@ -49,8 +49,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     override fun cleanup() {
-        bookingStatusStateViewModel.viewStates().removeObserver(observer)
         cancelVehicleCallback()
+        bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
 
     override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingStatus> {
@@ -64,6 +64,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     @Suppress("NestedBlockDepth")
     private fun requestVehicleAvailability(bookingStatus: BookingStatus?) {
+        cancelVehicleCallback()
         bookingStatus?.pickup?.let { bookingStatusPickup ->
             bookingStatus.destination?.let { bookingStatusDestination ->
                 vehiclesObserver = quotesCallback()
@@ -166,13 +167,13 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                     .DestinationAddressEvent(null))
     }
-    
+
     private fun handleVehicleValidity(vehicles: QuoteList) {
 
-        val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
-            vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
-        } else {
-            VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        val refreshDelay = when {
+            vehicles.validity == -1 -> 0
+            vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+            else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
         }
 
         GlobalScope.launch {

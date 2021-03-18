@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -128,11 +129,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onLowMemory() {
         super.onLowMemory()
         bookingMapWidget.onLowMemory()
-    }
-
-    override fun onStop() {
-        quotesListWidget?.cleanup()
-        super.onStop()
     }
 
     override fun handleExtras() {
@@ -296,7 +292,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun waitForTripAllocation() {
         quotesListWidget.hideList()
-        quotesListWidget?.cleanup()
         addressBarWidget.visibility = View.INVISIBLE
         bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
