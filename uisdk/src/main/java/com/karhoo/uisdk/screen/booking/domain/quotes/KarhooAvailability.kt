@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
@@ -65,6 +64,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     @Suppress("NestedBlockDepth")
     private fun requestVehicleAvailability(bookingStatus: BookingStatus?) {
+        cancelVehicleCallback()
         bookingStatus?.pickup?.let { bookingStatusPickup ->
             bookingStatus.destination?.let { bookingStatusDestination ->
                 vehiclesObserver = quotesCallback()
@@ -167,13 +167,13 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                     .DestinationAddressEvent(null))
     }
-    
+
     private fun handleVehicleValidity(vehicles: QuoteList) {
 
-        val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
-            vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
-        } else {
-            VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        val refreshDelay = when {
+            vehicles.validity == -1 -> 0
+            vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+            else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
         }
 
         GlobalScope.launch {
