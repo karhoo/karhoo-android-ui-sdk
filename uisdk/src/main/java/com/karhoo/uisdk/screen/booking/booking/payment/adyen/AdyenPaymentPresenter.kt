@@ -119,7 +119,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                         getPaymentMethods()
                     }
                 }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -149,7 +149,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                                 view?.showPaymentUI(this.adyenKey, it, this.quote)
                             }
                         }
-                        is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                        is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                         //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
@@ -167,7 +167,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 view?.threeDSecureNonce(tripId, tripId, amount)
             }
             else -> {
-                view?.showError(R.string.something_went_wrong, karhooError = KarhooError.FailedToCallMoneyService)
+                view?.showError(R.string.kh_uisdk_something_went_wrong, karhooError = KarhooError.FailedToCallMoneyService)
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }

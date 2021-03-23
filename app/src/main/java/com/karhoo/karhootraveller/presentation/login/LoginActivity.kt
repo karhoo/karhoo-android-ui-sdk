@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity(), LoginView.Actions, ForgotPasswordMVP.Actio
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setTitle(R.string.title_activity_login)
+            setTitle(R.string.kh_uisdk_title_activity_login)
         }
         forgotPasswordWidget.actions = this
     }

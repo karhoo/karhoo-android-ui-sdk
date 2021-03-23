@@ -64,7 +64,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="@drawable/uisdk_booking_button_background"
-        android:text="@string/book_now"
+        android:text="@string/kh_uisdk_book_now"
         android:textColor="@color/text_white" />
 
     <include layout="@layout/uisdk_activity_base" />

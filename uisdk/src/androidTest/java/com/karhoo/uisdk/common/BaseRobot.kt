@@ -290,15 +290,15 @@ open abstract class BaseTestRobot {
     }
 
     fun clickOnDismiss() {
-        dialogClickButtonByText(R.string.dismiss)
+        dialogClickButtonByText(R.string.kh_uisdk_dismiss)
     }
 
     fun clickOnOkay() {
-        dialogClickButtonByText(R.string.ok)
+        dialogClickButtonByText(R.string.kh_uisdk_ok)
     }
 
     fun clickBackToolbarButton() {
-        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
+        onView(withContentDescription(R.string.kh_uisdk_abc_action_bar_up_description)).perform(click())
     }
 
     fun swipeLeftTabView() {

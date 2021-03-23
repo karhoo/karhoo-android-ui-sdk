@@ -70,10 +70,10 @@ class WebActivity : BaseActivity() {
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
             val config = KarhooAlertDialogConfig(
-                    messageResId = R.string.notification_error_ssl_cert_invalid,
-                    positiveButton = KarhooAlertDialogAction(R.string.continue_journey,
+                    messageResId = R.string.kh_uisdk_notification_error_ssl_cert_invalid,
+                    positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_continue_journey,
                                                              DialogInterface.OnClickListener { _, _ -> handler?.proceed() }),
-                    negativeButton = KarhooAlertDialogAction(R.string.cancel,
+                    negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
                                                      DialogInterface.OnClickListener { _, _ -> handler?.cancel() }))
             KarhooAlertDialogHelper(this@WebActivity).showAlertDialog(config)
         }

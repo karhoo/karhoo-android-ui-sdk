@@ -49,9 +49,9 @@ class ContactOptionsView @JvmOverloads constructor(
     override fun showTripCancelledDialog() {
 
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_ride_successful,
-                messageResId = R.string.cancel_ride_successful_message,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                titleResId = R.string.kh_uisdk_cancel_ride_successful,
+                messageResId = R.string.kh_uisdk_cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { _, _
                                                              -> actions?.goToNextScreen() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
@@ -59,11 +59,11 @@ class ContactOptionsView @JvmOverloads constructor(
 
     override fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.difficulties_cancelling_title,
-                messageResId = R.string.difficulties_cancelling_message,
-                positiveButton = KarhooAlertDialogAction(R.string.call,
+                titleResId = R.string.kh_uisdk_difficulties_cancelling_title,
+                messageResId = R.string.kh_uisdk_difficulties_cancelling_message,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_call,
                                                          DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
@@ -108,7 +108,7 @@ class ContactOptionsView @JvmOverloads constructor(
     override fun showLoadingDialog(show: Boolean) {
         if (show) {
             progressDialog = ProgressDialog(context).apply {
-                setTitle(R.string.cancelling_ride)
+                setTitle(R.string.kh_uisdk_cancelling_ride)
                 setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
                 isIndeterminate = true
                 setProgressNumberFormat(null)
@@ -134,15 +134,15 @@ class ContactOptionsView @JvmOverloads constructor(
 
     override fun showCancellationFee(formattedPrice: String, tripId: String) {
         val message = if (formattedPrice.isNotEmpty())
-            String.format(resources.getString(R.string.you_may_be_charged, formattedPrice)) else
-            resources.getString(R.string.would_you_like_to_proceed)
+            String.format(resources.getString(R.string.kh_uisdk_you_may_be_charged, formattedPrice)) else
+            resources.getString(R.string.kh_uisdk_would_you_like_to_proceed)
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_your_ride,
+                titleResId = R.string.kh_uisdk_cancel_your_ride,
                 message = message,
                 cancellable = false,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }),
-                negativeButton = KarhooAlertDialogAction(R.string.ok,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
                                                          DialogInterface.OnClickListener { _, _
                                                              ->
                                                              presenter.cancelTrip()

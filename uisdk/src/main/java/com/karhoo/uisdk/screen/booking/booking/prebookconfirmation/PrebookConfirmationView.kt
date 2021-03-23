@@ -78,7 +78,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
         val config = KarhooAlertDialogConfig(
                 view = this,
                 cancellable = false,
-                positiveButton = KarhooAlertDialogAction(R.string.ride_details,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ride_details,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              actions?.finishedBooking()
                                                              val taskStackBuilder = TaskStackBuilder.create(context)
@@ -90,7 +90,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
                                                                                                     .trip(tripInfo).build(context))
                                                              taskStackBuilder.startActivities()
                                                          }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener {
                                                              dialog, _ ->
                                                              actions?.finishedBooking()

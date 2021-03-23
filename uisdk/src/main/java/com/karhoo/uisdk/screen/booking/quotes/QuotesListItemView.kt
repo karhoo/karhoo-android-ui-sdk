@@ -123,24 +123,24 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         return when (quoteType ?: QuoteType.ESTIMATED) {
             QuoteType.FIXED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.fixed_fare)
+                context.getString(R.string.kh_uisdk_fixed_fare)
             }
             QuoteType.METERED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.metered)
+                context.getString(R.string.kh_uisdk_metered)
             }
             QuoteType.ESTIMATED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.estimated_fare)
+                context.getString(R.string.kh_uisdk_estimated_fare)
             }
-            else -> context.getString(R.string.estimated_fare)
+            else -> context.getString(R.string.kh_uisdk_estimated_fare)
         }
     }
 
     private fun setEta(etaTime: Int?, isPrebook: Boolean) {
         etaText.visibility = if (isPrebook) View.GONE else View.VISIBLE
         val etaTimeString = etaTime?.toString() ?: "~"
-        etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.min))
+        etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
     }
 
     private fun setPickupType(pickupType: PickupType?) {
@@ -165,7 +165,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
     private fun setCancellationSLA(serviceAgreements: ServiceAgreements?) {
         if (serviceAgreements?.freeCancellation != null && serviceAgreements.freeCancellation?.minutes ?: 0 > 0) {
-            quoteCancellationText.text = String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), serviceAgreements.freeCancellation?.minutes)
+            quoteCancellationText.text = String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), serviceAgreements.freeCancellation?.minutes)
             quoteCancellationText.visibility = View.VISIBLE
         } else {
             quoteCancellationText.visibility = View.INVISIBLE

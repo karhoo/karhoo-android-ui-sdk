@@ -34,7 +34,7 @@
             style="@style/AppTheme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/additional_comments"
+            android:hint="@string/kh_uisdk_additional_comments"
             android:inputType="textMultiLine|textAutoComplete|textCapSentences"
             android:theme="@style/AppTheme.EditText" />
 

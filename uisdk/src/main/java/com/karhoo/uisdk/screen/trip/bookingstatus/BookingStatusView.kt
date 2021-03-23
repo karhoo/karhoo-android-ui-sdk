@@ -92,15 +92,15 @@ class BookingStatusView @JvmOverloads constructor(
     }
 
     override fun showCancellationDialog(tripDetails: TripInfo) {
-        val message = String.format(context.getString(R.string.dispatch_cancelled),
-                                    if (tripDetails.fleetInfo == null) context.getString(R.string.quote) else tripDetails.fleetInfo?.name)
+        val message = String.format(context.getString(R.string.kh_uisdk_dispatch_cancelled),
+                                    if (tripDetails.fleetInfo == null) context.getString(R.string.kh_uisdk_quote) else tripDetails.fleetInfo?.name)
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.title_dispatch_cancelled,
+                titleResId = R.string.kh_uisdk_title_dispatch_cancelled,
                 message = message,
                 cancellable = false,
-                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
                                                          DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }),
-                negativeButton = KarhooAlertDialogAction(R.string.alternative,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_alternative,
                                                          DialogInterface.OnClickListener { _, _ -> actions?.goToPrefilledBooking(tripDetails) }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 

@@ -51,15 +51,15 @@ class RidesRobot : BaseTestRobot() {
 class ResultRobot : BaseTestRobot() {
 
     fun checkRidesScreenIsShown() {
-        checkToolbarTitle(R.string.title_activity_rides)
+        checkToolbarTitle(R.string.kh_uisdk_title_activity_rides)
     }
 
     fun checkNoUpcomingBookings() {
-        textIsVisible(R.string.title_upcoming_rides_empty)
+        textIsVisible(R.string.kh_uisdk_title_upcoming_rides_empty)
     }
 
     fun checkNoPastBookings() {
-        textIsVisible(R.string.title_past_rides_empty)
+        textIsVisible(R.string.kh_uisdk_title_past_rides_empty)
     }
 
     fun checkErrorIsShown(expectedText: Int) {
@@ -172,7 +172,7 @@ class ResultRobot : BaseTestRobot() {
         dropOffAddressIsVisible(ADDRESS_DESTINATION)
         dropOffIconIsVisible()
         carDetailsAreVisible(VEHICLE_DETAILS)
-        pastBookingHasExpectedStatus(R.string.completed)
+        pastBookingHasExpectedStatus(R.string.kh_uisdk_completed)
         priceIsVisible(PRICE_TOTAL)
     }
 
@@ -188,8 +188,8 @@ class ResultRobot : BaseTestRobot() {
         pickUpAddressIsVisible(ADDRESS_ORIGIN)
         dropOffAddressIsVisible(ADDRESS_DESTINATION)
         dropOffIconIsVisible()
-        pastBookingHasExpectedStatus(R.string.cancelled)
-        pastBookingHasExpectedPrice(R.string.cancelled)
+        pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
+        pastBookingHasExpectedPrice(R.string.kh_uisdk_cancelled)
     }
 
     fun cancelledByUserPrebookedFullCheck() {

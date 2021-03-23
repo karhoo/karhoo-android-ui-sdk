@@ -14,10 +14,10 @@ fun ServiceCancellation.getCancellationText(context: Context): String? {
 
     return when (this.type) {
         CANCELLATION_TIME_BEFORE_PICKUP -> {
-            String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), minutes)
+            String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), minutes)
         }
         CANCELLATION_BEFORE_DRIVER_EN_ROUTE -> {
-            context.getString(R.string.uisdk_quote_cancellation_before_driver_departure)
+            context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)
         }
         else -> {
             null

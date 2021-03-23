@@ -82,8 +82,8 @@ class RideDetailPresenterTest {
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
-        whenever(context.getString(R.string.uisdk_quote_cancellation_minutes)).thenReturn(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT)
-        whenever(context.getString(R.string.uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_minutes)).thenReturn(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     /**
@@ -98,7 +98,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
     }
 
     /**
@@ -113,7 +113,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
     }
 
     /**
@@ -128,7 +128,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.ride_state_completed, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.off_black)
     }
 
     /**

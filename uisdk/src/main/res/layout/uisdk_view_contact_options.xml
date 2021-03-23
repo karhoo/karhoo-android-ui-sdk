@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:text="@string/cancel_ride"
+        android:text="@string/kh_uisdk_cancel_ride"
         android:textColor="@color/off_black"
         app:layout_constraintEnd_toStartOf="@+id/contactFleetButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         style="@style/PlainTextButtonWithNoBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/contact_fleet"
+        android:text="@string/kh_uisdk_contact_fleet"
         app:layout_constraintEnd_toStartOf="@+id/contactDriverButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         style="@style/PlainTextButtonWithNoBackground"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/contact_driver"
+        android:text="@string/kh_uisdk_contact_driver"
         android:textColor="@color/off_black"
         android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"

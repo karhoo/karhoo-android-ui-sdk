@@ -34,7 +34,7 @@
                     style="@style/AppTheme.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/first_name_hint"
+                    android:hint="@string/kh_uisdk_first_name_hint"
                     android:inputType="textPersonName"
                     android:theme="@style/AppTheme.EditText" />
 
@@ -53,7 +53,7 @@
                     style="@style/AppTheme.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/last_name_hint"
+                    android:hint="@string/kh_uisdk_last_name_hint"
                     android:inputType="textPersonName"
                     android:theme="@style/AppTheme.EditText" />
 
@@ -74,7 +74,7 @@
                 style="@style/AppTheme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_hint"
+                android:hint="@string/kh_uisdk_email_hint"
                 android:inputType="textEmailAddress"
                 android:theme="@style/AppTheme.EditText" />
 
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xsmall"
-                    android:text="@string/code"
+                    android:text="@string/kh_uisdk_code"
                     android:textColor="@color/med_grey" />
 
                 <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
@@ -134,7 +134,7 @@
                         style="@style/AppTheme.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/mobile_phone_number_hint"
+                        android:hint="@string/kh_uisdk_mobile_phone_number_hint"
                         android:inputType="numberDecimal"
                         android:theme="@style/AppTheme.EditText" />
 
@@ -158,7 +158,7 @@
                 style="@style/AppTheme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password_hint"
+                android:hint="@string/kh_uisdk_password_hint"
                 android:inputType="textPassword"
                 android:theme="@style/AppTheme.EditText" />
 
@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/register_check_box"
+                android:text="@string/kh_uisdk_register_check_box"
                 android:textColor="@color/off_black"
                 android:textSize="12sp" />
 
@@ -196,7 +196,7 @@
             android:layout_marginTop="@dimen/spacing_medium_small"
             android:background="@drawable/uisdk_ripple_background"
             android:enabled="false"
-            android:text="@string/continue_registration"
+            android:text="@string/kh_uisdk_continue_registration"
             tools:enabled="false" />
 
         <TextView
@@ -205,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium_small"
             android:gravity="center_horizontal|bottom"
-            android:text="@string/by_continuing_you_agree_to" />
+            android:text="@string/kh_uisdk_by_continuing_you_agree_to" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -221,13 +221,13 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin_large"
                 android:clickable="true"
                 android:gravity="center_horizontal|bottom"
-                android:text="@string/terms_conditions" />
+                android:text="@string/kh_uisdk_terms_conditions" />
 
             <TextView
                 style="@style/Text.Primary.XSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_and" />
+                android:text="@string/kh_uisdk_label_and" />
 
             <TextView
                 android:id="@+id/privacyLabel"
@@ -237,7 +237,7 @@
                 android:layout_marginBottom="@dimen/activity_vertical_margin_large"
                 android:clickable="true"
                 android:gravity="center_horizontal|bottom"
-                android:text="@string/privacy_policy_small" />
+                android:text="@string/kh_uisdk_privacy_policy_small" />
 
         </LinearLayout>
 

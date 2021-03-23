@@ -164,7 +164,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(paymentView, never()).showError(R.string.something_went_wrong, null)
+        verify(paymentView, never()).showError(R.string.kh_uisdk_something_went_wrong, null)
         verify(userStore).savedPaymentInfo
 
     }
@@ -220,7 +220,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(R.string.something_went_wrong, KarhooError.GeneralRequestError)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**
@@ -269,7 +269,7 @@ class BraintreePaymentPresenterTest {
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(R.string.something_went_wrong, KarhooError.GeneralRequestError)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**
@@ -474,7 +474,7 @@ class BraintreePaymentPresenterTest {
         addPaymentCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(paymentsService).addPaymentMethod(any())
-        verify(paymentView).showError(R.string.something_went_wrong, KarhooError.GeneralRequestError)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**

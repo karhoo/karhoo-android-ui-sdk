@@ -41,8 +41,8 @@ class ForgotPasswordView @JvmOverloads constructor(
 
     override fun resetEmailSent() {
         actions?.hideProgress()
-        actions?.showSnackbar(SnackbarConfig(text = resources.getString(R.string.password_reset_success),
-                                             action = SnackbarAction(resources.getString(R.string.got_it)) {}))
+        actions?.showSnackbar(SnackbarConfig(text = resources.getString(R.string.kh_uisdk_password_reset_success),
+                                             action = SnackbarAction(resources.getString(R.string.kh_uisdk_got_it)) {}))
     }
 
     override fun dismissLoading() {

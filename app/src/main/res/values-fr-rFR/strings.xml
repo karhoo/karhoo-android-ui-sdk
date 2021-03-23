@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Karhoo Traveller</string>
-    <string name="permission_required">Pour utiliser notre application, veuillez activer les services de localisation.</string>
-    <string name="permission_rationale_location">Pour que nous pouvions vous localiser avec l\'aide de votre téléphone, veuillez  activer les services de localisation.</string>
-    <string name="settings">Paramètres</string>
-    <string name="automatic_logout_message">Nous vous avons déconnecté. Cela peut être dû à une connexion sur un autre appareil. Veuillez vous reconnecter.</string>
+    <string name="kh_uisdk_app_name">Karhoo Traveller</string>
+    <string name="kh_uisdk_permission_required">Pour utiliser notre application, veuillez activer les services de localisation.</string>
+    <string name="kh_uisdk_permission_rationale_location">Pour que nous pouvions vous localiser avec l\'aide de votre téléphone, veuillez  activer les services de localisation.</string>
+    <string name="kh_uisdk_settings">Paramètres</string>
+    <string name="kh_uisdk_automatic_logout_message">Nous vous avons déconnecté. Cela peut être dû à une connexion sur un autre appareil. Veuillez vous reconnecter.</string>
 
     <!-- Activity Titles -->
-    <string name="title_activity_register">Inscription</string>
-    <string name="title_activity_login">S\'identifier</string>
-    <string name="title_activity_web">Internet</string>
-    <string name="title_activity_profile">Profil</string>
-    <string name="title_activity_karhoo_labs">Karhoo Labs</string>
+    <string name="kh_uisdk_title_activity_register">Inscription</string>
+    <string name="kh_uisdk_title_activity_login">S\'identifier</string>
+    <string name="kh_uisdk_title_activity_web">Internet</string>
+    <string name="kh_uisdk_title_activity_profile">Profil</string>
+    <string name="kh_uisdk_title_activity_karhoo_labs">Karhoo Labs</string>
 
 
     <!-- Navigation Drawer -->
-    <string name="login">S\'identifier</string>
-    <string name="drawer_closed">Ouverture du menu</string>
-    <string name="drawer_open">Fermeture du menu</string>
-    <string name="profile">Profil</string>
-    <string name="help">Aide</string>
-    <string name="rides">Courses</string>
-    <string name="about">À propos</string>
-    <string name="karhoo_labs">Karhoo Labs</string>
+    <string name="kh_uisdk_login">S\'identifier</string>
+    <string name="kh_uisdk_drawer_closed">Ouverture du menu</string>
+    <string name="kh_uisdk_drawer_open">Fermeture du menu</string>
+    <string name="kh_uisdk_profile">Profil</string>
+    <string name="kh_uisdk_help">Aide</string>
+    <string name="kh_uisdk_rides">Courses</string>
+    <string name="kh_uisdk_about">À propos</string>
+    <string name="kh_uisdk_karhoo_labs">Karhoo Labs</string>
 
     <!-- Profile -->
-    <string name="edit_profile">Modifier</string>
-    <string name="payment_card">Carte de paiement</string>
-    <string name="profile_update_successful">Votre profil a été mis à jour avec succès</string>
+    <string name="kh_uisdk_edit_profile">Modifier</string>
+    <string name="kh_uisdk_payment_card">Carte de paiement</string>
+    <string name="kh_uisdk_profile_update_successful">Votre profil a été mis à jour avec succès</string>
 
     <!-- Central Lat Lng Charring X -->
-    <string name="central_lat">48.8606111</string>
-    <string name="central_long">2.337644</string>
+    <string name="kh_uisdk_central_lat">48.8606111</string>
+    <string name="kh_uisdk_central_long">2.337644</string>
 
-    <string name="min">min</string>
-    <string name="mins">min</string>
+    <string name="kh_uisdk_min">min</string>
+    <string name="kh_uisdk_mins">min</string>
 
     <!-- About -->
-    <string name="information">À propos</string>
-    <string name="version">Version</string>
-    <string name="terms_and_conditions">Conditions générales d\'utilisation</string>
-    <string name="privacy_policy">Règles de confidentialité</string>
-    <string name="licence_attribution">Licences logicielles</string>
+    <string name="kh_uisdk_information">À propos</string>
+    <string name="kh_uisdk_version">Version</string>
+    <string name="kh_uisdk_terms_and_conditions">Conditions générales d\'utilisation</string>
+    <string name="kh_uisdk_privacy_policy">Règles de confidentialité</string>
+    <string name="kh_uisdk_licence_attribution">Licences logicielles</string>
 
     <!-- Support -->
-    <string name="reset_password_info">Veuillez entrer votre adresse email ci-dessous pour réinitialiser votre mot de passe.</string>
-    <string name="forgot_password">Mot de passe oublié?</string>
-    <string name="password_reset_success">Veuillez vérifier votre compte email pour compléter la réinitialisation du mot de passe.</string>
+    <string name="kh_uisdk_reset_password_info">Veuillez entrer votre adresse email ci-dessous pour réinitialiser votre mot de passe.</string>
+    <string name="kh_uisdk_forgot_password">Mot de passe oublié?</string>
+    <string name="kh_uisdk_password_reset_success">Veuillez vérifier votre compte email pour compléter la réinitialisation du mot de passe.</string>
 
     <!-- Dialogs -->
-    <string name="ok">OK</string>
-    <string name="cancel">Annuler</string>
-    <string name="dismiss">Fermer</string>
-    <string name="alternative">Autres Options</string>
-    <string name="add_card">Ajouter une carte</string>
-    <string name="update">Mettre à jour</string>
-    <string name="got_it">OK</string>
-    <string name="contact">CONTACT</string>
+    <string name="kh_uisdk_ok">OK</string>
+    <string name="kh_uisdk_cancel">Annuler</string>
+    <string name="kh_uisdk_dismiss">Fermer</string>
+    <string name="kh_uisdk_alternative">Autres Options</string>
+    <string name="kh_uisdk_add_card">Ajouter une carte</string>
+    <string name="kh_uisdk_update">Mettre à jour</string>
+    <string name="kh_uisdk_got_it">OK</string>
+    <string name="kh_uisdk_contact">CONTACT</string>
 
     <!-- Karhoo Labs -->
-    <string name="guest_checkout">Mode invité</string>
+    <string name="kh_uisdk_guest_checkout">Mode invité</string>
 
 </resources>

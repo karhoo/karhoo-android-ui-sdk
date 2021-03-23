@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
                         android:paddingBottom="@dimen/spacing_small"
-                        android:text="@string/address_pick_up"
+                        android:text="@string/kh_uisdk_address_pick_up"
                         android:textSize="@dimen/text_size_xsmall" />
 
                     <TextView
@@ -91,7 +91,7 @@
                         android:layout_marginRight="@dimen/spacing_small"
                         android:maxLines="1"
                         android:paddingTop="@dimen/spacing_small"
-                        android:text="@string/retrieving_pickup" />
+                        android:text="@string/kh_uisdk_retrieving_pickup" />
 
                 </FrameLayout>
 
@@ -119,7 +119,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|start"
                             android:paddingBottom="@dimen/spacing_small"
-                            android:text="@string/address_drop_off"
+                            android:text="@string/kh_uisdk_address_drop_off"
                             android:textSize="@dimen/text_size_xsmall" />
 
                         <TextView
@@ -130,7 +130,7 @@
                             android:layout_gravity="center|start"
                             android:maxLines="1"
                             android:paddingTop="@dimen/spacing_small"
-                            android:text="@string/retrieving_dropoff" />
+                            android:text="@string/kh_uisdk_retrieving_dropoff" />
 
                     </FrameLayout>
 

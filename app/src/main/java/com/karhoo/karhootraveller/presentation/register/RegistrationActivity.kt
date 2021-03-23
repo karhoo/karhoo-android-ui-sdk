@@ -24,7 +24,7 @@ class RegistrationActivity : BaseActivity(), RegistrationView.Actions {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setTitle(R.string.title_activity_register)
+            setTitle(R.string.kh_uisdk_title_activity_register)
         }
     }
 

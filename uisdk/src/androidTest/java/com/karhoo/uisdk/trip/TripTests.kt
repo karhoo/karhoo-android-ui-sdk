@@ -609,7 +609,7 @@ class TripTests : Launch {
                 details = TRIP_POB)
         trip(this) {
         } result {
-            notificationIntCheck(R.string.pass_on_board)
+            notificationIntCheck(R.string.kh_uisdk_pass_on_board)
         }
     }
 

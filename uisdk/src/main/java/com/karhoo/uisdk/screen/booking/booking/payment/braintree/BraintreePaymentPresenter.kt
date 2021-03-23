@@ -74,7 +74,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(quote))
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -145,7 +145,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
                 }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -170,7 +170,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong, result.error)
+                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }

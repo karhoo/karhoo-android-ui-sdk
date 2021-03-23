@@ -32,7 +32,7 @@ class EmailView @JvmOverloads constructor(
         emailLayout.apply {
             setValidator(EmailValidator())
             editText?.addTextChangedListener(validFieldsTextWatcher)
-            setErrorMsg(R.string.invalid_email)
+            setErrorMsg(R.string.kh_uisdk_invalid_email)
         }
 
         emailInput.setOnFocusChangeListener { _, hasFocus -> handleFocusChange(emailLayout, hasFocus) }

@@ -64,7 +64,7 @@ class UpcomingRideCardView @JvmOverloads constructor(
     }
 
     override fun displayNoDateAvailable() {
-        dateTimeText.setText(R.string.pending)
+        dateTimeText.setText(R.string.kh_uisdk_pending)
     }
 
     private fun loadFleetLogo(trip: TripInfo) {

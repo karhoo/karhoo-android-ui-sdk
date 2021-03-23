@@ -14,7 +14,7 @@ class KarhooEmailClient : EmailClient {
         val sendEmailIntent = Intent(Intent.ACTION_VIEW)
         sendEmailIntent.data = Uri.parse(data)
         return Intent.createChooser(sendEmailIntent,
-                                    context.getString(R.string.title_activity_intent_chooser_send_email))
+                                    context.getString(R.string.kh_uisdk_title_activity_intent_chooser_send_email))
 
     }
 }

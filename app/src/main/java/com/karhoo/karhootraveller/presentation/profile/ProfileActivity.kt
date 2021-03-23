@@ -27,7 +27,7 @@ class ProfileActivity : BaseActivity(), BookingPaymentMVP.PaymentViewActions, Us
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setTitle(R.string.title_activity_profile)
+            setTitle(R.string.kh_uisdk_title_activity_profile)
         }
         userProfileView.actions = this
         lifecycle.addObserver(userProfileView)

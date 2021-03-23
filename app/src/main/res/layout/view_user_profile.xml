@@ -25,7 +25,7 @@
             style="@style/AppTheme.EditTextProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/first_name_hint"
+            android:hint="@string/kh_uisdk_first_name_hint"
             android:inputType="textPersonName"
             android:theme="@style/AppTheme.EditText"
             tools:text="John" />
@@ -48,7 +48,7 @@
             style="@style/AppTheme.EditTextProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/last_name_hint"
+            android:hint="@string/kh_uisdk_last_name_hint"
             android:inputType="textPersonName"
             android:theme="@style/AppTheme.EditText"
             tools:text="Doe" />
@@ -71,7 +71,7 @@
             style="@style/AppTheme.EditTextProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_hint"
+            android:hint="@string/kh_uisdk_email_hint"
             android:inputType="textEmailAddress"
             android:theme="@style/AppTheme.EditText"
             tools:text="john@doe.com" />
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_xxxsmall"
                 android:layout_marginTop="14dp"
-                android:text="@string/code"
+                android:text="@string/kh_uisdk_code"
                 android:textColor="@color/med_grey" />
 
             <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
@@ -135,7 +135,7 @@
                     style="@style/AppTheme.EditTextProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mobile_phone_number_hint"
+                    android:hint="@string/kh_uisdk_mobile_phone_number_hint"
                     android:inputType="numberDecimal"
                     android:theme="@style/AppTheme.EditText" />
 

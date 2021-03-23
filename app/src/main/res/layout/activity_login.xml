@@ -57,7 +57,7 @@
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="bottom|center"
         android:lineSpacingExtra="2sp"
-        android:text="@string/forgot_password"
+        android:text="@string/kh_uisdk_forgot_password"
         android:textAllCaps="true"
         android:textColor="@color/off_black"
         android:textSize="14sp"

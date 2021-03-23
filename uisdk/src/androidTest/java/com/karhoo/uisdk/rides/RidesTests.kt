@@ -110,7 +110,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.completed)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_completed)
         }
     }
 
@@ -129,7 +129,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -149,7 +149,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -169,7 +169,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -188,7 +188,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedPrice(R.string.cancelled)
+            pastBookingHasExpectedPrice(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -236,7 +236,7 @@ class RidesTests : Launch {
         rides(this) {
             shortSleep()
         } result {
-            checkErrorMessageIsShown(R.string.K0001)
+            checkErrorMessageIsShown(R.string.kh_uisdk_K0001)
         }
     }
 

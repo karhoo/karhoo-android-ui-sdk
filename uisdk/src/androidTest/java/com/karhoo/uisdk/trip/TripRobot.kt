@@ -33,15 +33,15 @@ class TripRobot : BaseTestRobot() {
     }
 
     fun clickConfirmCancellation() {
-        dialogClickButtonByText(R.string.ok)
+        dialogClickButtonByText(R.string.kh_uisdk_ok)
     }
 
     fun clickAlternativeButton() {
-        dialogClickButtonByText(R.string.alternative)
+        dialogClickButtonByText(R.string.kh_uisdk_alternative)
     }
 
     fun clickOKOnCancelledConfirmation() {
-        dialogClickButtonByText(R.string.dismiss)
+        dialogClickButtonByText(R.string.kh_uisdk_dismiss)
     }
 
     fun checkCancellationFeeIsNotShown() {
@@ -69,7 +69,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun cancellationConfirmation() {
-        textIsVisible(R.string.cancel_ride_successful)
+        textIsVisible(R.string.kh_uisdk_cancel_ride_successful)
     }
 
     fun tripSummaryPickUpLogoVisible() {
@@ -170,11 +170,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun alternativeButtonIsEnabled() {
-        dialogButtonByTextIsEnabled(R.string.alternative)
+        dialogButtonByTextIsEnabled(R.string.kh_uisdk_alternative)
     }
 
     fun okCancelledByFleetButtonEnabled() {
-        dialogButtonByTextIsEnabled(R.string.ok)
+        dialogButtonByTextIsEnabled(R.string.kh_uisdk_ok)
     }
 
     fun pickUpAddressCheck(pickupAddress: String) {
@@ -186,7 +186,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fleetCancelledAfterDERVisible() {
-        dialogTextIsVisible(R.string.title_dispatch_cancelled)
+        dialogTextIsVisible(R.string.kh_uisdk_title_dispatch_cancelled)
         alternativeButtonIsEnabled()
         okCancelledByFleetButtonEnabled()
     }

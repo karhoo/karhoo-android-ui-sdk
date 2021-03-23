@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/spacing_small"
-            android:text="@string/booking_car"
+            android:text="@string/kh_uisdk_booking_car"
             android:textAllCaps="true"
             android:textColor="@color/off_white"
             android:textSize="@dimen/text_size_large" />

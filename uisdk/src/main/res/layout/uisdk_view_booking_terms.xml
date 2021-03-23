@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="@dimen/spacing_xsmall"
-        android:text="@string/booking_terms"
+        android:text="@string/kh_uisdk_booking_terms"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/full_width_button_height"
         android:gravity="center|center_vertical"
-        android:text="@string/label_terms_and_conditions"
+        android:text="@string/kh_uisdk_label_terms_and_conditions"
         app:layout_constraintEnd_toStartOf="@+id/guidelineCentre"
         app:layout_constraintStart_toStartOf="@+id/bookingTermsText"
         app:layout_constraintTop_toBottomOf="@id/bookingTermsText" />
@@ -48,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/full_width_button_height"
         android:gravity="center|center_vertical"
-        android:text="@string/label_cancellation_policy"
+        android:text="@string/kh_uisdk_label_cancellation_policy"
         app:layout_constraintEnd_toEndOf="@+id/bookingTermsText"
         app:layout_constraintStart_toEndOf="@id/guidelineCentre"
         app:layout_constraintTop_toBottomOf="@id/bookingTermsText" />

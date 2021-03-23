@@ -49,7 +49,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
                   currency: Currency) {
         etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
                 .getString(R.string
-        .min))
+        .kh_uisdk_min))
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
@@ -75,7 +75,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     }
 
     fun bindETAOnly(time: Int?, typeEta: String, typePrice: QuoteType) {
-        etaText.text = String.format("%s %s", time ?: "~", context.getString(R.string.min))
+        etaText.text = String.format("%s %s", time ?: "~", context.getString(R.string.kh_uisdk_min))
         etaTypeText.text = typeEta
         setContainerVisibility(R.dimen.spacing_none, GONE)
     }

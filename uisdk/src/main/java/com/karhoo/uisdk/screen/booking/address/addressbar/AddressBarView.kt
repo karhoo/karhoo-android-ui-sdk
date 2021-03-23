@@ -72,14 +72,14 @@ class AddressBarView
             datePicker.minDate = minDate
             datePicker.maxDate = maxDate
         }
-        datePicker.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.prebook_timezone_title, timeZone))
+        datePicker.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
         datePicker.show()
     }
 
     override fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
         val dialog = TimePickerDialog(context, R.style.DialogTheme, this,
                                       hour, minute, DateFormat.is24HourFormat(context))
-        dialog.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.prebook_timezone_title, timeZone))
+        dialog.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
         dialog.show()
     }
 
@@ -119,7 +119,7 @@ class AddressBarView
     override fun setDropoffAddress(displayAddress: String) {
         if (displayAddress.isBlank()) {
             dropOffLabel.apply {
-                text = resources.getString(R.string.address_picker_dropoff_booking)
+                text = resources.getString(R.string.kh_uisdk_address_picker_dropoff_booking)
                 setTextColor(ContextCompat.getColor(context, R.color.uisdk_text_action))
             }
             setDropoffAddressVisibility(true)
@@ -145,7 +145,7 @@ class AddressBarView
     }
 
     override fun setDefaultPickupText() {
-        pickupLabel.text = context.getString(R.string.address_picker_add_pickup)
+        pickupLabel.text = context.getString(R.string.kh_uisdk_address_picker_add_pickup)
     }
 
     override fun showFlipButton() {
@@ -203,7 +203,7 @@ class AddressBarView
     }
 
     private fun shouldHideScheduledIcon(): Boolean {
-        return pickupLabel.text == context.getString(R.string.address_picker_add_pickup) ||
+        return pickupLabel.text == context.getString(R.string.kh_uisdk_address_picker_add_pickup) ||
                 clearDateTimeButtonIcon.visibility == View.VISIBLE
     }
 }

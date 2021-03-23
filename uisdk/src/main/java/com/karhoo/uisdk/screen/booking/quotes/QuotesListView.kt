@@ -101,7 +101,7 @@ class QuotesListView @JvmOverloads constructor(
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(SnackbarConfig(text = resources
                                                           .getString(R.string
-                                                                             .destination_price_error))))
+                                                                             .kh_uisdk_destination_price_error))))
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
@@ -195,13 +195,13 @@ class QuotesListView @JvmOverloads constructor(
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
                                             priority = SnackbarPriority.NORMAL,
-                                            action = SnackbarAction(resources.getString(R.string.contact)) {
+                                            action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
                                                 val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
                                                 showNoCoverageEmail?.let {intent ->
                                                     activity.startActivity(intent)
                                                 }
                                             },
-                                            text = resources.getString(R.string.no_availability))
+                                            text = resources.getString(R.string.kh_uisdk_no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(snackbarConfig))
 
@@ -229,7 +229,7 @@ class QuotesListView @JvmOverloads constructor(
             availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
                                                       KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
                                                       it, lifecycleOwner).apply {
-                setAllCategory(resources.getString(R.string.all_category))
+                setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)
             }

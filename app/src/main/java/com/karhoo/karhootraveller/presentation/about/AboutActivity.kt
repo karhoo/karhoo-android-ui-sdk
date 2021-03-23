@@ -31,7 +31,7 @@ class AboutActivity : AppCompatActivity() {
     private fun launchTermsAndConditions() {
         val webIntent = KarhooWebActivity.Builder.builder
                 .setScrollable(true)
-                .url(getString(R.string.link_t_n_c_terms))
+                .url(getString(R.string.kh_uisdk_link_t_n_c_terms))
                 .build(this)
         startActivity(webIntent)
     }
@@ -39,7 +39,7 @@ class AboutActivity : AppCompatActivity() {
     private fun launchPrivacyPolicy() {
         val webIntent = KarhooWebActivity.Builder.builder
                 .setScrollable(true)
-                .url(getString(R.string.link_t_n_c_privacy))
+                .url(getString(R.string.kh_uisdk_link_t_n_c_privacy))
                 .build(this)
         startActivity(webIntent)
     }
@@ -47,7 +47,7 @@ class AboutActivity : AppCompatActivity() {
     private fun launchLicencesInWebActivity() {
         val licenceWebIntent = KarhooWebActivity.Builder.builder
                 .setScrollable(true)
-                .url(getString(R.string.link_open_source_licenses))
+                .url(getString(R.string.kh_uisdk_link_open_source_licenses))
                 .build(this)
         startActivity(licenceWebIntent)
     }

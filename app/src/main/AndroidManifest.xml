@@ -14,11 +14,11 @@
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/kh_uisdk_app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        tools:replace="allowBackup">
+        tools:replace="android:allowBackup,android:label">
 
         <uses-library
             android:name="org.apache.http.legacy"
@@ -71,11 +71,11 @@
         </activity>
         <activity
             android:name=".presentation.login.LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="@string/kh_uisdk_title_activity_login"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.address.AddressActivity"
-            android:label="@string/title_activity_address"
+            android:label="@string/kh_uisdk_title_activity_address"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
@@ -85,23 +85,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.register.RegistrationActivity"
-            android:label="@string/register"
+            android:label="@string/kh_uisdk_register"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.trip.TripActivity"
-            android:label="@string/title_activity_trip"
+            android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
-            android:label="@string/title_activity_rides"
+            android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
-            android:label="@string/title_activity_rides"
+            android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.airport.FlightDetailsActivity"
-            android:label="@string/title_activity_airport"
+            android:label="@string/kh_uisdk_title_activity_airport"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity
@@ -111,23 +111,23 @@
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name=".presentation.profile.ProfileActivity"
-            android:label="@string/title_activity_profile"
+            android:label="@string/kh_uisdk_title_activity_profile"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.about.AboutActivity"
-            android:label="@string/about"
+            android:label="@string/kh_uisdk_about"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.web.KarhooWebActivity"
-            android:label="@string/title_activity_web"
+            android:label="@string/kh_uisdk_title_activity_web"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
-            android:label="@string/feedback"
+            android:label="@string/kh_uisdk_feedback"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.karhooLabs.KarhooLabsActivity"
-            android:label="@string/title_activity_karhoo_labs"
+            android:label="@string/kh_uisdk_title_activity_karhoo_labs"
             android:screenOrientation="portrait" />
     </application>
 

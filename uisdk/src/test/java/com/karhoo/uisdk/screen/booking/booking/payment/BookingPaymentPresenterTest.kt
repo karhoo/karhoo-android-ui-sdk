@@ -98,7 +98,7 @@ class BookingPaymentPresenterTest {
 
         paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(view).showError(R.string.something_went_wrong, KarhooError.InternalSDKError)
+        verify(view).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
 
     /**

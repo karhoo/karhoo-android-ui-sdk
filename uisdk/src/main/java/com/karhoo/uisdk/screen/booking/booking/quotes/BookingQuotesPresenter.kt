@@ -7,7 +7,7 @@ import java.util.*
 class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP.Presenter {
     override fun checkCancellationSLAMinutes(minutes: Int?, context: Context) {
         if (minutes != null && minutes > 0) {
-            view.setCancellationText(String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), minutes))
+            view.setCancellationText(String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), minutes))
             view.showCancellationText(true)
         } else {
             view.showCancellationText(false)

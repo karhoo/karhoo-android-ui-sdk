@@ -192,8 +192,8 @@ class TripMapPresenterTest {
 
         presenter.mapIsReady()
 
-        verify(view).addPinToMap(ORIGIN, true, R.string.address_pick_up)
-        verify(view).addPinToMap(DESTINATION, false, R.string.address_drop_off)
+        verify(view).addPinToMap(ORIGIN, true, R.string.kh_uisdk_address_pick_up)
+        verify(view).addPinToMap(DESTINATION, false, R.string.kh_uisdk_address_drop_off)
         verify(view).zoomMapToIncludeLatLngs(anyInt(), eq(ORIGIN), eq(DESTINATION))
     }
 

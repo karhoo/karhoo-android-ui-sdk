@@ -3,6 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/booking_action_rides"
-        android:title="@string/rides"
+        android:title="@string/kh_uisdk_rides"
         app:showAsAction="always" />
 </menu>

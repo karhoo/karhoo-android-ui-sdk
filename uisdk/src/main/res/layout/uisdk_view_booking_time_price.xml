@@ -23,7 +23,7 @@
             android:layout_gravity="start"
             android:gravity="start"
             style="@style/KhBookingETAPriceView"
-            android:text="@string/estimated_arrival_time" />
+            android:text="@string/kh_uisdk_estimated_arrival_time" />
 
         <TextView
             android:id="@+id/etaText"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             style="@style/KhBookingETAPriceView"
-            android:text="@string/estimated_price" />
+            android:text="@string/kh_uisdk_estimated_price" />
 
         <TextView
             android:id="@+id/priceText"

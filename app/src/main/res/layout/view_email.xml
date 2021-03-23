@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/reset_password_info" />
+        android:text="@string/kh_uisdk_reset_password_info" />
 
     <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
         android:id="@+id/emailLayout"
@@ -23,7 +23,7 @@
             style="@style/AppTheme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_hint"
+            android:hint="@string/kh_uisdk_email_hint"
             android:inputType="textEmailAddress"
             android:theme="@style/AppTheme.EditText" />
 
