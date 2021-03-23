@@ -304,6 +304,15 @@ class TestData {
                 vehicle = QUOTE_VEHICLE,
                 serviceAgreements = CANCELLATION_AGREEMENT_ZERO_MINUTES)
 
+        val QUOTE_WITH_CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
+                quoteType = QuoteType.ESTIMATED,
+                quoteSource = QuoteSource.FLEET,
+                price = QUOTE_PRICE,
+                fleet = QUOTE_FLEET,
+                pickupType = PickupType.CURBSIDE,
+                vehicle = QUOTE_VEHICLE,
+                serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE)
+
         val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
                 quoteType = QuoteType.ESTIMATED,
                 quoteSource = QuoteSource.FLEET,
@@ -827,6 +836,23 @@ class TestData {
                                         luggageCapacity = 2,
                                         passengerCapacity = 2))
         ))
+
+        val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE = Vehicles(
+                status = QuoteStatus.PROGRESSING,
+                id = QUOTE_LIST_ID_ASAP.quoteId,
+                availability = AVAILABILITY,
+                quotes = listOf(
+                        QUOTE,
+                        QUOTE_WITH_CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.copy(
+                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
+                                price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
+                                        currencyCode = DEFAULT_CURRENCY),
+                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
+                                        vehicleQta = QuoteQTA(highMinutes =
+                                        5, lowMinutes = 5),
+                                        luggageCapacity = 2,
+                                        passengerCapacity = 2))
+                ))
 
         /**
          *

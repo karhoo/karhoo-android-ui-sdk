@@ -10,11 +10,12 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.ServiceAgreements
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Callback
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
@@ -65,7 +66,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setPickupType(vehicleDetails.pickupType)
         setCapacity(vehicleDetails.vehicle)
-        setCancellationSLA(vehicleDetails.serviceAgreements)
+        setCancellationSLA(vehicleDetails.serviceAgreements?.freeCancellation)
 
         tag = vehicleDetails
 
@@ -163,12 +164,14 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 people = vehicle.passengerCapacity)
     }
 
-    private fun setCancellationSLA(serviceAgreements: ServiceAgreements?) {
-        if (serviceAgreements?.freeCancellation != null && serviceAgreements.freeCancellation?.minutes ?: 0 > 0) {
-            quoteCancellationText.text = String.format(context.getString(R.string.uisdk_quote_cancellation_minutes), serviceAgreements.freeCancellation?.minutes)
-            quoteCancellationText.visibility = View.VISIBLE
+    private fun setCancellationSLA(serviceCancellation: ServiceCancellation?) {
+        val text = serviceCancellation?.getCancellationText(context)
+
+        if (text.isNullOrEmpty()) {
+            quoteCancellationText.visibility = View.GONE
         } else {
-            quoteCancellationText.visibility = View.INVISIBLE
+            quoteCancellationText.text = text
+            quoteCancellationText.visibility = View.VISIBLE
         }
     }
 
