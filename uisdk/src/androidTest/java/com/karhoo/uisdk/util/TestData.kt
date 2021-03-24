@@ -227,7 +227,7 @@ class TestData {
                                          luggageCapacity = 2,
                                          passengerCapacity = 2)
 
-        val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation("", 2))
+        val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, 2))
         val CANCELLATION_AGREEMENT_BEFORE_PICKUP = ServiceAgreements(ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, 2))
         val CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE = ServiceAgreements(ServiceCancellation(CANCELLATION_BEFORE_DRIVER_EN_ROUTE, 2))
         val CANCELLATION_AGREEMENT_ZERO_MINUTES = ServiceAgreements(ServiceCancellation("", 0))
