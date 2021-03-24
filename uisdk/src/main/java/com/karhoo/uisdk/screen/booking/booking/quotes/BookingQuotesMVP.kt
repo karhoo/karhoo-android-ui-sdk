@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.quotes
 
 import android.content.Context
+import com.karhoo.sdk.api.model.ServiceCancellation
 
 interface BookingQuotesMVP {
 
@@ -12,7 +13,7 @@ interface BookingQuotesMVP {
     }
 
     interface Presenter {
-        fun checkCancellationSLAMinutes(minutes: Int?, context: Context)
+        fun checkCancellationSLAMinutes(serviceCancellation: ServiceCancellation?, context: Context)
         fun capitalizeCategory(category: String)
     }
 }

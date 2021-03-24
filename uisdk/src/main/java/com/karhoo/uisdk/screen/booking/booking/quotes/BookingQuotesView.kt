@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.core.widget.TextViewCompat
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.PicassoLoader
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
@@ -33,10 +34,10 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         TextViewCompat.setTextAppearance(categoryText, detailsTextStyle)
     }
 
-    fun bindViews(url: String?, quoteName: String, category: String, cancellationMinutes: Int?) {
+    fun bindViews(url: String?, quoteName: String, category: String, serviceCancellation: ServiceCancellation?) {
         quoteNameText.text = quoteName
         presenter.capitalizeCategory(category)
-        presenter.checkCancellationSLAMinutes(cancellationMinutes, context)
+        presenter.checkCancellationSLAMinutes(serviceCancellation, context)
         loadImage(url)
     }
 

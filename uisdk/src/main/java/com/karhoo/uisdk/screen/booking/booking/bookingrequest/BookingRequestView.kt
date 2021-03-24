@@ -243,7 +243,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 vehicle.fleet.logoUrl,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
-                vehicle.serviceAgreements?.freeCancellation?.minutes
+                vehicle.serviceAgreements?.freeCancellation
         )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
