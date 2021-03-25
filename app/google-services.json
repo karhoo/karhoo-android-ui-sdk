@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:914dc37ddf3f85951c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "123",
           "client_type": 3
         }
       ],
@@ -28,14 +28,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ""
+                "bundle_id": "123"
               }
             }
           ]
@@ -44,14 +44,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "123",
           "client_type": 3
         }
       ],
@@ -64,14 +64,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 3
             },
             {
               "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ""
+                "bundle_id": "123"
               }
             }
           ]
@@ -80,14 +80,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.prodQA"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "123",
           "client_type": 3
         }
       ],
@@ -100,14 +100,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 3
             },
             {
               "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ""
+                "bundle_id": "123"
               }
             }
           ]
@@ -116,14 +116,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.sandbox"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "123",
           "client_type": 3
         }
       ],
@@ -136,14 +136,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 3
             },
             {
               "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ""
+                "bundle_id": "123"
               }
             }
           ]
@@ -152,14 +152,14 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.staging"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "123",
           "client_type": 3
         }
       ],
@@ -172,14 +172,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "123",
               "client_type": 3
             },
             {
               "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": ""
+                "bundle_id": "123"
               }
             }
           ]
