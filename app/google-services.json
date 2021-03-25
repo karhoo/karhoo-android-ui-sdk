@@ -1,16 +1,160 @@
 {
   "project_info": {
-    "project_number": "1234",
-    "firebase_url": "https://k.firebaseio.com",
-    "project_id": "kh",
-    "storage_bucket": "kh.a.com"
+    "project_number": "785182441373",
+    "firebase_url": "https://karhoo-mobile.firebaseio.com",
+    "project_id": "karhoo-mobile",
+    "storage_bucket": "karhoo-mobile.appspot.com"
   },
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:785182441373:android:914dc37ddf3f85951c7974",
+        "android_client_info": {
+          "package_name": "com.karhoo.karhootraveller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "",
         "android_client_info": {
-          "package_name": ""
+          "package_name": "com.karhoo.karhootraveller.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "com.karhoo.karhootraveller.prodQA"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "com.karhoo.karhootraveller.sandbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "",
+        "android_client_info": {
+          "package_name": "com.karhoo.karhootraveller.staging"
         }
       },
       "oauth_client": [
