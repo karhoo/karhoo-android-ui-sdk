@@ -620,7 +620,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun checkAdyenWidgetIsShown() {
-        textIsVisible(R.string.kh_uisdk_change_payment_method)
+        textIsVisible(R.string.change_payment_method)
     }
 
 }
