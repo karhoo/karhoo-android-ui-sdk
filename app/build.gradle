@@ -74,21 +74,21 @@ android {
         if (file("secure.properties").exists()) {
             file("secure.properties")?.withInputStream { secureProps.load(it) }
         }
-        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
-        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
-        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_IDENTIFIER") ?: ""))
-        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID") ?: ""))
-        buildConfigField("String", "GUEST_CHECKOUT_REFERER", (secureProps.getProperty("GUEST_CHECKOUT_REFERER") ?: ""))
-        buildConfigField("String", "ADYEN_CLIENT_ID", (secureProps.getProperty("ADYEN_CLIENT_ID") ?: ""))
-        buildConfigField("String", "ADYEN_CLIENT_SCOPE", (secureProps.getProperty("ADYEN_CLIENT_SCOPE") ?: ""))
-        buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: ""))
-        buildConfigField("String", "BRAINTREE_CLIENT_ID", (secureProps.getProperty("BRAINTREE_CLIENT_ID") ?: ""))
-        buildConfigField("String", "BRAINTREE_CLIENT_SCOPE", (secureProps.getProperty("BRAINTREE_CLIENT_SCOPE") ?: ""))
-        buildConfigField("String", "BRAINTREE_AUTH_TOKEN", (secureProps.getProperty("BRAINTREE_AUTH_TOKEN") ?: ""))
+        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_IDENTIFIER") ?: '""'))
+        buildConfigField("String", "ADYEN_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("ADYEN_GUEST_CHECKOUT_ORGANISATION_ID") ?: '""'))
+        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_IDENTIFIER", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_IDENTIFIER") ?: '""'))
+        buildConfigField("String", "BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID", (secureProps.getProperty("BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID") ?: '""'))
+        buildConfigField("String", "GUEST_CHECKOUT_REFERER", (secureProps.getProperty("GUEST_CHECKOUT_REFERER") ?: '""'))
+        buildConfigField("String", "ADYEN_CLIENT_ID", (secureProps.getProperty("ADYEN_CLIENT_ID") ?: '""'))
+        buildConfigField("String", "ADYEN_CLIENT_SCOPE", (secureProps.getProperty("ADYEN_CLIENT_SCOPE") ?: '""'))
+        buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: '""'))
+        buildConfigField("String", "BRAINTREE_CLIENT_ID", (secureProps.getProperty("BRAINTREE_CLIENT_ID") ?: '""'))
+        buildConfigField("String", "BRAINTREE_CLIENT_SCOPE", (secureProps.getProperty("BRAINTREE_CLIENT_SCOPE") ?: '""'))
+        buildConfigField("String", "BRAINTREE_AUTH_TOKEN", (secureProps.getProperty("BRAINTREE_AUTH_TOKEN") ?: '""'))
 
-        buildConfigField("String", "STAGING_HOST", (secureProps.getProperty("STAGING_HOST") ?: ""))
-        buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: ""))
-        buildConfigField("String", "STAGING_GUEST_HOST", (secureProps.getProperty("STAGING_GUEST_HOST") ?: ""))
+        buildConfigField("String", "STAGING_HOST", (secureProps.getProperty("STAGING_HOST") ?: '""'))
+        buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: '""'))
+        buildConfigField("String", "STAGING_GUEST_HOST", (secureProps.getProperty("STAGING_GUEST_HOST") ?: '""'))
         manifestPlaceholders = [fabric_api_key: "456443aaa8b67d99edf1ef2c58b84d212cbf3b4b"]
         vectorDrawables.useSupportLibrary = true
     }
