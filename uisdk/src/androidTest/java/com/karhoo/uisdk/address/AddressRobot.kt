@@ -87,7 +87,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun noRecentFound() {
-        checkTextViewIfMultiMatches(R.id.emptyText, R.string.recents_empty)
+        checkTextViewIfMultiMatches(R.id.emptyText, R.string.kh_uisdk_recents_empty)
     }
 
     fun checkErrorIsShown(expectedText: Int) {
@@ -95,19 +95,19 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun checkAddressPickUpPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
     }
 
     fun checkAddressDestinationPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
     }
 
     fun enterPickupHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
     }
 
     fun enterDestinationHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
     }
 
     fun clearAddressButtonIsNotClickable() {

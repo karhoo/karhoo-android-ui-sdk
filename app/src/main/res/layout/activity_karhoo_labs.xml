@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/spacing_xlarge"
         android:layout_marginStart="32dp"
-        android:text="@string/guest_checkout"
+        android:text="@string/kh_uisdk_guest_checkout"
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintStart_toEndOf="@+id/karhooLabsIcon"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -46,7 +46,7 @@
         android:id="@+id/karhooLabsForceCrash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labs_force_a_crash"
+        android:text="@string/kh_uisdk_labs_force_a_crash"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guestCheckoutSwitch" />
@@ -55,7 +55,7 @@
         android:id="@+id/karhooLabsSendAnalytics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labs_send_analytics_event"
+        android:text="@string/kh_uisdk_labs_send_analytics_event"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/karhooLabsForceCrash" />

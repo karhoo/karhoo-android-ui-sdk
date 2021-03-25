@@ -11,10 +11,10 @@ class EmailDialog(context: Context, actions: EmailViewMVP.Actions?) : AlertDialo
     init {
         emailView.validEmailChangedListener = this
 
-        setTitle(R.string.forgot_password)
+        setTitle(R.string.kh_uisdk_forgot_password)
         setView(emailView)
-        setButton(BUTTON_POSITIVE, context.getText(R.string.ok)) { _, _ -> actions?.resetEmail(emailView.email()) }
-        setButton(BUTTON_NEGATIVE, context.getText(R.string.cancel)) { _, _ -> dismiss() }
+        setButton(BUTTON_POSITIVE, context.getText(R.string.kh_uisdk_ok)) { _, _ -> actions?.resetEmail(emailView.email()) }
+        setButton(BUTTON_NEGATIVE, context.getText(R.string.kh_uisdk_cancel)) { _, _ -> dismiss() }
     }
 
     override fun show() {

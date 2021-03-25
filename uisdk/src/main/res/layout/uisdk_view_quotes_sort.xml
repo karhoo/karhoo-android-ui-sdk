@@ -28,7 +28,7 @@
             android:id="@+id/etaLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sorter_nearest"
+            android:text="@string/kh_uisdk_sorter_nearest"
             android:textColor="@color/off_white"
             android:textSize="@dimen/text_size_small_medium" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/priceLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sorter_cheapest"
+            android:text="@string/kh_uisdk_sorter_cheapest"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_size_small_medium" />
     </LinearLayout>

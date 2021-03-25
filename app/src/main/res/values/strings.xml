@@ -1,70 +1,70 @@
 <resources>
-    <string name="app_name">Karhoo Traveller</string>
-    <string name="permission_required">In order to use the karhoo app please allow location permissions</string>
-    <string name="permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
-    <string name="settings">Settings</string>
-    <string name="automatic_logout_message">You were automatically signed out. This could be because you signed in on another device. Please sign in again to continue.</string>
+    <string name="kh_uisdk_app_name">Karhoo Traveller</string>
+    <string name="kh_uisdk_permission_required">In order to use the karhoo app please allow location permissions</string>
+    <string name="kh_uisdk_permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
+    <string name="kh_uisdk_settings">Settings</string>
+    <string name="kh_uisdk_automatic_logout_message">You were automatically signed out. This could be because you signed in on another device. Please sign in again to continue.</string>
 
     <!-- Activity Titles -->
-    <string name="title_activity_register">Register</string>
-    <string name="title_activity_login">Sign In</string>
-    <string name="title_activity_web">Web</string>
-    <string name="title_activity_profile">Profile</string>
-    <string name="title_activity_karhoo_labs">Karhoo Labs</string>
+    <string name="kh_uisdk_title_activity_register">Register</string>
+    <string name="kh_uisdk_title_activity_login">Sign In</string>
+    <string name="kh_uisdk_title_activity_web">Web</string>
+    <string name="kh_uisdk_title_activity_profile">Profile</string>
+    <string name="kh_uisdk_title_activity_karhoo_labs">Karhoo Labs</string>
 
 
     <!-- Navigation Drawer -->
-    <string name="login">Sign In</string>
-    <string name="drawer_closed">Drawer closed</string>
-    <string name="drawer_open">Drawer open</string>
-    <string name="profile">Profile</string>
-    <string name="help">Help</string>
-    <string name="rides">Rides</string>
-    <string name="about">About</string>
-    <string name="karhoo_labs">Karhoo Labs</string>
+    <string name="kh_uisdk_login">Sign In</string>
+    <string name="kh_uisdk_drawer_closed">Drawer closed</string>
+    <string name="kh_uisdk_drawer_open">Drawer open</string>
+    <string name="kh_uisdk_profile">Profile</string>
+    <string name="kh_uisdk_help">Help</string>
+    <string name="kh_uisdk_rides">Rides</string>
+    <string name="kh_uisdk_about">About</string>
+    <string name="kh_uisdk_karhoo_labs">Karhoo Labs</string>
 
 
     <!-- Profile -->
-    <string name="edit_profile">Edit</string>
-    <string name="payment_card">Payment Card</string>
-    <string name="profile_update_successful">Your profile was updated successfully</string>
+    <string name="kh_uisdk_edit_profile">Edit</string>
+    <string name="kh_uisdk_payment_card">Payment Card</string>
+    <string name="kh_uisdk_profile_update_successful">Your profile was updated successfully</string>
 
     <!-- Central Lat Lng Charring X -->
-    <string translatable="false" name="central_lat">51.5073</string>
-    <string translatable="false" name="central_long">0.1276</string>
+    <string translatable="false" name="kh_uisdk_central_lat">51.5073</string>
+    <string translatable="false" name="kh_uisdk_central_long">0.1276</string>
 
-    <string name="min">min</string>
-    <string name="mins">mins</string>
+    <string name="kh_uisdk_min">min</string>
+    <string name="kh_uisdk_mins">mins</string>
 
     <!-- About -->
-    <string name="information">Information</string>
-    <string name="version">Version</string>
-    <string name="terms_and_conditions">Terms and conditions</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="licence_attribution">Licence attribution</string>
+    <string name="kh_uisdk_information">Information</string>
+    <string name="kh_uisdk_version">Version</string>
+    <string name="kh_uisdk_terms_and_conditions">Terms and conditions</string>
+    <string name="kh_uisdk_privacy_policy">Privacy policy</string>
+    <string name="kh_uisdk_licence_attribution">Licence attribution</string>
 
     <!-- Support -->
-    <string name="link_t_n_c_terms" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_terms_and_conditions.html</string>
-    <string name="link_t_n_c_privacy" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_privacy.html</string>
+    <string name="kh_uisdk_link_t_n_c_terms" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_terms_and_conditions.html</string>
+    <string name="kh_uisdk_link_t_n_c_privacy" translatable="false">https://cdn.karhoo.com/d/terms/KarhooAppTerms/Karhoo_privacy.html</string>
 
-    <string name="reset_password_info">Enter your email address below to reset your password.</string>
-    <string name="forgot_password">Forgotten Password?</string>
-    <string name="password_reset_success">Success! Please check your email to continue resetting your password.</string>
+    <string name="kh_uisdk_reset_password_info">Enter your email address below to reset your password.</string>
+    <string name="kh_uisdk_forgot_password">Forgotten Password?</string>
+    <string name="kh_uisdk_password_reset_success">Success! Please check your email to continue resetting your password.</string>
 
     <!-- Dialogs -->
-    <string name="ok">OK</string>
-    <string name="cancel">CANCEL</string>
-    <string name="dismiss">DISMISS</string>
-    <string name="alternative">ALTERNATIVE</string>
-    <string name="add_card">ADD CARD</string>
-    <string name="update">UPDATE</string>
-    <string name="got_it">GOT IT</string>
-    <string name="contact">CONTACT</string>
-    <string name="link_open_source_licenses" translatable="false">file:///android_asset/open_source_licenses.html</string>
+    <string name="kh_uisdk_ok">OK</string>
+    <string name="kh_uisdk_cancel">CANCEL</string>
+    <string name="kh_uisdk_dismiss">DISMISS</string>
+    <string name="kh_uisdk_alternative">ALTERNATIVE</string>
+    <string name="kh_uisdk_add_card">ADD CARD</string>
+    <string name="kh_uisdk_update">UPDATE</string>
+    <string name="kh_uisdk_got_it">GOT IT</string>
+    <string name="kh_uisdk_contact">CONTACT</string>
+    <string name="kh_uisdk_link_open_source_licenses" translatable="false">file:///android_asset/open_source_licenses.html</string>
 
     <!-- Karhoo Labs -->
-    <string name="guest_checkout">Guest Checkout</string>
-    <string name="labs_force_a_crash" translatable="false">Force a Crash</string>
-    <string name="labs_send_analytics_event" translatable="false">Log an Analytics Event</string>
+    <string name="kh_uisdk_guest_checkout">Guest Checkout</string>
+    <string name="kh_uisdk_labs_force_a_crash" translatable="false">Force a Crash</string>
+    <string name="kh_uisdk_labs_send_analytics_event" translatable="false">Log an Analytics Event</string>
 
 </resources>

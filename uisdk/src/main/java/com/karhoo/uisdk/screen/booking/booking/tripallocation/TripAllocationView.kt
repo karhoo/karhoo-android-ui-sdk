@@ -161,14 +161,14 @@ class TripAllocationView @JvmOverloads constructor(
         isClickable = false
 
         val message = if (fleetName.isBlank()) {
-            resources.getString(R.string.booking_failed_body_no_fleet_name)
+            resources.getString(R.string.kh_uisdk_booking_failed_body_no_fleet_name)
         } else {
-            String.format(resources.getString(R.string.booking_failed_body), fleetName)
+            String.format(resources.getString(R.string.kh_uisdk_booking_failed_body), fleetName)
         }
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.booking_failed,
+                titleResId = R.string.kh_uisdk_booking_failed,
                 message = message,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
@@ -181,9 +181,9 @@ class TripAllocationView @JvmOverloads constructor(
         isClickable = false
 
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_ride_successful,
-                messageResId = R.string.cancel_ride_successful_message,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                titleResId = R.string.kh_uisdk_cancel_ride_successful,
+                messageResId = R.string.kh_uisdk_cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
@@ -201,9 +201,9 @@ class TripAllocationView @JvmOverloads constructor(
 
     override fun showAllocationDelayAlert(trip: TripInfo) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.allocation_delay_title,
-                messageResId = R.string.allocation_delay_text,
-                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                titleResId = R.string.kh_uisdk_allocation_delay_title,
+                messageResId = R.string.kh_uisdk_allocation_delay_text,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              dialog.cancel()
                                                              presenter?.unsubscribeFromUpdates()
@@ -221,11 +221,11 @@ class TripAllocationView @JvmOverloads constructor(
     override fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError?) {
         cancelButton.isEnabled = true
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.difficulties_cancelling_title,
-                messageResId = R.string.difficulties_cancelling_message,
-                positiveButton = KarhooAlertDialogAction(R.string.call,
+                titleResId = R.string.kh_uisdk_difficulties_cancelling_title,
+                messageResId = R.string.kh_uisdk_difficulties_cancelling_message,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_call,
                                                          DialogInterface.OnClickListener { _, _ -> makeCall(number) }),
-                negativeButton = KarhooAlertDialogAction(R.string.dismiss,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }

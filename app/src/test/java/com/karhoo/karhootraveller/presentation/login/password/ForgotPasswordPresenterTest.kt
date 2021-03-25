@@ -101,7 +101,7 @@ class ForgotPasswordPresenterTest {
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
 
-        verify(view).couldNotSendResetLink(R.string.temporary_message_error_codes_unknown, KarhooError.Unexpected)
+        verify(view).couldNotSendResetLink(R.string.kh_uisdk_temporary_message_error_codes_unknown, KarhooError.Unexpected)
     }
 
     companion object {

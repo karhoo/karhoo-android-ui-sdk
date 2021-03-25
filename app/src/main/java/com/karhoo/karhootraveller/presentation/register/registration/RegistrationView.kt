@@ -85,24 +85,24 @@ class RegistrationView @JvmOverloads constructor(
 
     private fun setErrors() {
         emailLayout.apply {
-            setErrorMsg(R.string.invalid_email)
+            setErrorMsg(R.string.kh_uisdk_invalid_email)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
         mobileNumberLayout.apply {
-            setErrorMsg(R.string.invalid_phone_number)
+            setErrorMsg(R.string.kh_uisdk_invalid_phone_number)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
         firstNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
         lastNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
         passwordLayout.apply {
             errorColorEnabled = true
-            setErrorMsg(R.string.invalid_password)
+            setErrorMsg(R.string.kh_uisdk_invalid_password)
             setHelper(true)
         }
     }
@@ -185,7 +185,7 @@ class RegistrationView @JvmOverloads constructor(
     override fun goToTerms() {
         val webIntent = KarhooWebActivity.Builder.builder
                 .setScrollable(true)
-                .url(context.getString(R.string.link_t_n_c_terms))
+                .url(context.getString(R.string.kh_uisdk_link_t_n_c_terms))
                 .build(context)
         context.startActivity(webIntent)
     }
@@ -193,7 +193,7 @@ class RegistrationView @JvmOverloads constructor(
     override fun goToPrivacy() {
         val webIntent = KarhooWebActivity.Builder.builder
                 .setScrollable(true)
-                .url(context.getString(R.string.link_t_n_c_privacy))
+                .url(context.getString(R.string.kh_uisdk_link_t_n_c_privacy))
                 .build(context)
         context.startActivity(webIntent)
     }

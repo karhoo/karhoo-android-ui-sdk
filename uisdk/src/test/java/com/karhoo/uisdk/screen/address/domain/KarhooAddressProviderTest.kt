@@ -102,7 +102,7 @@ class KarhooAddressProviderTest {
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(errorView).showSnackbar(eq(SnackbarConfig(text = null, messageResId = R.string
-                .K0001, karhooError = KarhooError.GeneralRequestError)))
+                .kh_uisdk_K0001, karhooError = KarhooError.GeneralRequestError)))
     }
 
     /**
@@ -154,7 +154,7 @@ class KarhooAddressProviderTest {
         searchProvider.setSearchQuery("Some Search Query")
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotGetAddress))
 
-        verify(errorView).showErrorDialog(R.string.K2001, KarhooError.CouldNotGetAddress)
+        verify(errorView).showErrorDialog(R.string.kh_uisdk_K2001, KarhooError.CouldNotGetAddress)
     }
 
     companion object {

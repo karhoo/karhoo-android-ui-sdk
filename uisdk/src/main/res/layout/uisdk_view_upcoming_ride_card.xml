@@ -60,7 +60,7 @@
                 android:paddingTop="@dimen/spacing_xxxsmall"
                 android:paddingRight="@dimen/spacing_xxsmall"
                 android:paddingBottom="@dimen/spacing_xxxsmall"
-                android:text="@string/pickup_type_meet_and_greet"
+                android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_size_xsmall"
                 android:visibility="gone" />
@@ -145,7 +145,7 @@
                 style="@style/Text.Action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_fleet" />
+                android:text="@string/kh_uisdk_contact_fleet" />
 
             <Button
                 android:id="@+id/trackButton"
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_small"
-                android:text="@string/track_driver" />
+                android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>
 

@@ -65,12 +65,12 @@ class LoginView @JvmOverloads constructor(
 
     private fun setErrors() {
         emailLayout.apply {
-            setErrorMsg(R.string.invalid_email)
+            setErrorMsg(R.string.kh_uisdk_invalid_email)
             setErrorTextAppearance(R.style.Text_Red_Small)
 
         }
         passwordLayout.apply {
-            setErrorMsg(R.string.invalid_password)
+            setErrorMsg(R.string.kh_uisdk_invalid_password)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
     }
@@ -85,7 +85,7 @@ class LoginView @JvmOverloads constructor(
 
     override fun onError() {
         actions?.hideProgress()
-        passwordLayout.error = context.getString(R.string.error_invalid_password)
+        passwordLayout.error = context.getString(R.string.kh_uisdk_error_invalid_password)
     }
 
     private fun handleFocusChange(layout: SelfValidatingTextLayout, hasFocus: Boolean) {

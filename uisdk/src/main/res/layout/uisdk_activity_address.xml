@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:tag="@string/address_map_options" />
+        android:tag="@string/kh_uisdk_address_map_options" />
 
     <com.karhoo.uisdk.screen.address.addresslist.AddressResultListView
         android:id="@+id/addressResultListWidget"

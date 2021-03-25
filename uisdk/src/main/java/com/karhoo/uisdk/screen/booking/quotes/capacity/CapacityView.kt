@@ -17,8 +17,8 @@ class CapacityView @JvmOverloads constructor(context: Context,
     }
 
     override fun setCapacity(luggage: Int, people: Int) {
-        luggageCapacityText.text = resources.getString(R.string.capacity, luggage.toString())
-        peopleCapacityText.text = resources.getString(R.string.capacity, people.toString())
+        luggageCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, luggage.toString())
+        peopleCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, people.toString())
     }
 
 }

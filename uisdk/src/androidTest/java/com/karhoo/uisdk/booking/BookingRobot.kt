@@ -40,7 +40,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressMenuButton() {
-        clickButtonByContentDescription(R.string.drawer_open)
+        clickButtonByContentDescription(R.string.kh_uisdk_drawer_open)
     }
 
     fun longClickCancelAllocationScreen() {
@@ -60,7 +60,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressOKPrebookWindow() {
-        clickButtonByString(R.string.ok)
+        clickButtonByString(R.string.kh_uisdk_ok)
     }
 
     fun pressOutOfSideMenu() {
@@ -180,15 +180,15 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun localTimeMessageIsDisplayed() {
-        textIsVisibleIsDescendant(R.string.prebook_timezone_title, R.id.action_mode_bar_stub)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_prebook_timezone_title, R.id.action_mode_bar_stub)
     }
 
     fun checkSideMenuIsShown() {
         sideMenuKarhooLogoIsVisible()
-        sideMenuProfileButtonIsVisible(R.string.profile)
+        sideMenuProfileButtonIsVisible(R.string.kh_uisdk_profile)
         sideMenuRidesButtonIsVisible()
-        sideMenuFeedbackButtonIsVisible(R.string.feedback)
-        sideMenuAboutButtonIsVisible(R.string.about)
+        sideMenuFeedbackButtonIsVisible(R.string.kh_uisdk_feedback)
+        sideMenuAboutButtonIsVisible(R.string.kh_uisdk_about)
     }
 
     fun sideMenuKarhooLogoIsVisible() {
@@ -204,7 +204,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun sideMenuRidesButtonIsVisible() {
-        textIsVisibleIsDescendant(R.string.rides, R.id.design_navigation_view)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_rides, R.id.design_navigation_view)
     }
 
     fun sideMenuFeedbackButtonIsVisible(expectedText: Int) {
@@ -216,7 +216,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun cancellationConfirmation() {
-        textIsVisible(R.string.cancel_ride_successful)
+        textIsVisible(R.string.kh_uisdk_cancel_ride_successful)
     }
 
     fun prebookWindowNotVisible() {
@@ -248,7 +248,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun contactButtonSnackbarIsEnabled() {
-        checkSnackbarButtonIsEnabled(R.string.contact)
+        checkSnackbarButtonIsEnabled(R.string.kh_uisdk_contact)
     }
 
     fun prebookButtonIsEnabled() {
@@ -331,11 +331,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun allCategoriesAreVisible() {
-        textIsVisibleIsDescendant(R.string.taxi, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.mpv, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.electric, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.moto, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.all_category, R.id.categorySelectorWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_taxi, R.id.categorySelectorWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_mpv, R.id.categorySelectorWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_electric, R.id.categorySelectorWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_moto, R.id.categorySelectorWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_all_category, R.id.categorySelectorWidget)
     }
 
     fun sideMenuIsNotVisible() {
@@ -369,12 +369,12 @@ class ResultRobot : BaseTestRobot() {
 
     fun pickupFieldCheck() {
         viewIsVisible(R.id.pickupDot)
-        textIsVisibleIsDescendant(R.string.address_picker_add_pickup, R.id.pickupLabel)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_address_picker_add_pickup, R.id.pickupLabel)
     }
 
     fun destinationFieldCheck() {
         viewIsVisible(R.id.addDestinationDot)
-        textIsVisibleIsDescendant(R.string.address_picker_dropoff_booking, R.id.dropOffLabel)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_address_picker_dropoff_booking, R.id.dropOffLabel)
     }
 
     fun ridesButtonIsNotVisible() {
@@ -382,7 +382,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun menuButtonIsEnabled() {
-        buttonByContentDescriptionIsEnabled(R.string.drawer_open)
+        buttonByContentDescriptionIsEnabled(R.string.kh_uisdk_drawer_open)
     }
 
     fun bothSelectedAddressesAreVisible() {
@@ -392,9 +392,9 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkSideMenuGuestCheckoutIsShown() {
         sideMenuKarhooLogoIsVisible()
-        sideMenuFeedbackButtonIsVisible(R.string.feedback)
-        sideMenuAboutButtonIsVisible(R.string.about)
-        sideMenuButtonIsNotVisiible(R.string.profile)
+        sideMenuFeedbackButtonIsVisible(R.string.kh_uisdk_feedback)
+        sideMenuAboutButtonIsVisible(R.string.kh_uisdk_about)
+        sideMenuButtonIsNotVisiible(R.string.kh_uisdk_profile)
     }
 
     fun samePickUpAndDestinationErrorIsDisplayed() {
@@ -457,7 +457,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun ETATextIsVisibleGuestDetails(ETA: Int?) {
         viewIsVisibleIsDescendant(R.id.etaTypeText, R.id.bookingRequestPriceWidget)
-        textIsVisibleIsDescendant(R.string.estimated_arrival_time, R.id.bookingRequestPriceWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_estimated_arrival_time, R.id.bookingRequestPriceWidget)
         if (ETA != null) {
             textIsVisibleIsDescendant(ETA, R.id.bookingRequestPriceWidget)
         }
@@ -465,7 +465,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun estimatedPriceTextIsVisibleGuestDetails(price: Int) {
         viewIsVisibleIsDescendant(R.id.priceTypeText, R.id.bookingRequestPriceWidget)
-        textIsVisibleIsDescendant(R.string.estimated_price, R.id.bookingRequestPriceWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_estimated_price, R.id.bookingRequestPriceWidget)
         textIsVisibleIsDescendant(price, R.id.bookingRequestPriceWidget)
     }
 
@@ -475,7 +475,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun passengerDetailsTitleIsVisible() {
-        textIsVisibleIsDescendant(R.string.passenger_details, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_passenger_details, R.id.bookingRequestWidget)
     }
 
     fun passengerDetailsFieldsCheck() {
@@ -495,23 +495,23 @@ class ResultRobot : BaseTestRobot() {
 
     fun paymentEmptyDetailsCheckGuestDetails() {
         viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
-        textIsVisibleIsDescendant(R.string.payment_details, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-        textIsVisibleIsDescendant(R.string.add_payment, R.id.cardNumberText)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_add_payment, R.id.cardNumberText)
     }
 
     fun paymentCardDetailsCheck() {
         viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
-        textIsVisibleIsDescendant(R.string.payment_details, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
     fun termsGuestDetailsCheck() {
         viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingRequestWidget)
-        textIsVisibleIsDescendant(R.string.booking_terms, R.id.bookingRequestTermsWidget)
-        textIsVisibleIsDescendant(R.string.label_terms_and_conditions, R.id.bookingRequestTermsWidget)
-        textIsVisibleIsDescendant(R.string.label_cancellation_policy, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_booking_terms, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_label_terms_and_conditions, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_label_cancellation_policy, R.id.bookingRequestTermsWidget)
     }
 
     fun checkoutAsGuestButtonIsDisabled() {
@@ -520,7 +520,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun bookButtonTextIsCheckoutGuest() {
-        textIsVisibleIsDescendant(R.string.checkout_as_guest, R.id.bookingRequestButton)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_checkout_as_guest, R.id.bookingRequestButton)
     }
 
     fun fullCheckFilledGuestDetailsPage() {
@@ -569,7 +569,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun ETAIsVisible(ETA: Int?) {
-        textIsVisibleIsDescendant(R.string.estimated_arrival_time, R.id.etaTypeText)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_estimated_arrival_time, R.id.etaTypeText)
         viewIsVisibleIsDescendant(R.id.etaText, R.id.bookingRequestLayout)
         if (ETA != null) {
             textIsVisibleIsDescendant(ETA, R.id.etaText)
@@ -577,7 +577,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun priceDetailsVisible(price: Int) {
-        textIsVisibleIsDescendant(R.string.estimated_price, R.id.priceTypeText)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_estimated_price, R.id.priceTypeText)
         viewIsVisibleIsDescendant(R.id.priceText, R.id.bookingRequestLayout)
         if (price != null) {
             textIsVisibleIsDescendant(price, R.id.priceText)
@@ -590,9 +590,9 @@ class ResultRobot : BaseTestRobot() {
 
     fun termsCheck() {
         viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingRequestLayout)
-        textIsVisibleIsDescendant(R.string.booking_terms, R.id.bookingRequestTermsWidget)
-        textIsVisibleIsDescendant(R.string.label_terms_and_conditions, R.id.bookingRequestTermsWidget)
-        textIsVisibleIsDescendant(R.string.label_cancellation_policy, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_booking_terms, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_label_terms_and_conditions, R.id.bookingRequestTermsWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_label_cancellation_policy, R.id.bookingRequestTermsWidget)
     }
 
     fun bookButtonIsEnabled() {

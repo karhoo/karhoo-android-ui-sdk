@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/spacing_small"
-            android:text="@string/feedback_title"
+            android:text="@string/kh_uisdk_feedback_title"
             android:textSize="@dimen/text_size_large" />
 
         <com.karhoo.uisdk.screen.rides.feedback.RatedQuestionView
@@ -27,8 +27,8 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/spacing_small"
-            app:field_id="@string/question_one_id"
-            app:question="@string/question_one" />
+            app:field_id="@string/kh_uisdk_question_one_id"
+            app:question="@string/kh_uisdk_question_one" />
 
         <com.karhoo.uisdk.screen.rides.feedback.RatedQuestionView
             android:layout_width="match_parent"
@@ -36,8 +36,8 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/spacing_small"
-            app:field_id="@string/question_two_id"
-            app:question="@string/question_two" />
+            app:field_id="@string/kh_uisdk_question_two_id"
+            app:question="@string/kh_uisdk_question_two" />
 
         <com.karhoo.uisdk.screen.rides.feedback.RatedQuestionView
             android:layout_width="match_parent"
@@ -45,8 +45,8 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/spacing_small"
-            app:field_id="@string/question_three_id"
-            app:question="@string/question_three" />
+            app:field_id="@string/kh_uisdk_question_three_id"
+            app:question="@string/kh_uisdk_question_three" />
 
         <com.karhoo.uisdk.screen.rides.feedback.RatedQuestionView
             android:layout_width="match_parent"
@@ -54,8 +54,8 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/spacing_small"
-            app:field_id="@string/question_four_id"
-            app:question="@string/question_four" />
+            app:field_id="@string/kh_uisdk_question_four_id"
+            app:question="@string/kh_uisdk_question_four" />
 
         <TextView
             style="@style/AppTheme.EditTextWithHint"
@@ -64,7 +64,7 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/spacing_xsmall"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/trip_id_label"
+            android:text="@string/kh_uisdk_trip_id_label"
             android:textSize="@dimen/text_size_small" />
 
         <EditText
@@ -82,7 +82,7 @@
             android:layout_height="@dimen/full_width_button_height"
             android:background="@drawable/uisdk_booking_button_background"
             android:enabled="false"
-            android:text="@string/submit"
+            android:text="@string/kh_uisdk_submit"
             android:textColor="@color/text_white" />
 
     </LinearLayout>

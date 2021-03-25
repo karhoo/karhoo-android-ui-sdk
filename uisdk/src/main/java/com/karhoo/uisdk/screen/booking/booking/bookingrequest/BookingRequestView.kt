@@ -92,7 +92,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         View.inflate(context, R.layout.uisdk_booking_request, this)
         isGuest = isGuest()
         attachListeners()
-        bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.add_flight_details))
+        bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
         presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
@@ -112,7 +112,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateBookingButtonForGuest() {
-        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
+        bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
     }
 
     override fun showAuthenticatedUserBookingFields() {
@@ -216,7 +216,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     override fun bindEta(quote: Quote, card: String) {
         bindQuoteAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
-                                              context.getString(R.string.estimated_arrival_time),
+                                              context.getString(R.string.kh_uisdk_estimated_arrival_time),
                                               quote.quoteType)
     }
 
@@ -235,7 +235,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bindQuoteAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.estimated_arrival_time), currency)
+        bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.kh_uisdk_estimated_arrival_time), currency)
     }
 
     private fun bindQuoteAndTerms(vehicle: Quote) {
@@ -299,15 +299,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.payment_issue,
-                messageResId = R.string.payment_issue_message,
+                titleResId = R.string.kh_uisdk_payment_issue,
+                messageResId = R.string.kh_uisdk_payment_issue_message,
                 karhooError = error,
-                positiveButton = KarhooAlertDialogAction(R.string.add_card,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              onPaymentHandlePositive()
                                                              dialog.dismiss()
                                                          }),
-                negativeButton = KarhooAlertDialogAction(R.string.cancel,
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
                                                          DialogInterface.OnClickListener { dialog, _ ->
                                                              onPaymentHandleCancelled()
                                                              dialog.dismiss()

@@ -103,17 +103,17 @@ class UserProfileView @JvmOverloads constructor(context: Context,
 
     private fun initialiseFieldErrors() {
         firstNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
 
         lastNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
 
         mobileNumberLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
     }
@@ -186,7 +186,7 @@ class UserProfileView @JvmOverloads constructor(context: Context,
     }
 
     override fun showProfileUpdateSuccess(userInfo: UserInfo) {
-        actions?.showSnackbar(SnackbarConfig(text = null, messageResId = R.string.profile_update_successful))
+        actions?.showSnackbar(SnackbarConfig(text = null, messageResId = R.string.kh_uisdk_profile_update_successful))
     }
 
     override fun showProfileUpdateFailure(error: KarhooError) {

@@ -85,7 +85,7 @@
                             android:paddingTop="@dimen/spacing_xxxsmall"
                             android:paddingRight="@dimen/spacing_xxsmall"
                             android:paddingBottom="@dimen/spacing_xxxsmall"
-                            android:text="@string/pickup_type_meet_and_greet"
+                            android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                             android:textColor="@color/text_white"
                             android:textSize="@dimen/text_size_xxsmall" />
 
@@ -118,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="left"
                             android:maxLines="1"
-                            android:text="@string/loading_min"
+                            android:text="@string/kh_uisdk_loading_min"
                             android:textColor="@color/off_black"
                             android:textSize="@dimen/text_size_medium"
                             tools:text="99 min" />

@@ -132,7 +132,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
                 messageResId = stringId,
                 karhooError = karhooError,
                 cancellable = true,
-                positiveButton = KarhooAlertDialogAction(R.string.ok,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(this).showAlertDialog(config)
     }
@@ -146,12 +146,12 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                             Uri.fromParts("package", packageName, null))
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val action = SnackbarAction(getString(R.string.settings)) { startActivity(intent) }
+        val action = SnackbarAction(getString(R.string.kh_uisdk_settings)) { startActivity(intent) }
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING,
                                             priority = SnackbarPriority.HIGH,
                                             action = action,
-                                            text = getString(R.string.permission_rationale_location))
+                                            text = getString(R.string.kh_uisdk_permission_rationale_location))
         showSnackbar(snackbarConfig)
     }
 
@@ -163,11 +163,11 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
             resetNetworkLost()
             resetErrorLock()
         } else if (!isConnected) {
-            val action = SnackbarAction(getString(R.string.settings)) { startActivity(networkReceiver?.settingsIntent) }
+            val action = SnackbarAction(getString(R.string.kh_uisdk_settings)) { startActivity(networkReceiver?.settingsIntent) }
             val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING,
                                                 priority = SnackbarPriority.HIGHEST,
                                                 action = action,
-                                                text = getString(R.string.network_error))
+                                                text = getString(R.string.kh_uisdk_network_error))
             showSnackbar(snackbarConfig)
             setNetworkLost()
             enableErrorLock()

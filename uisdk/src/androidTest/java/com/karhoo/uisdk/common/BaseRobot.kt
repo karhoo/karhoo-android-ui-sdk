@@ -290,11 +290,11 @@ open abstract class BaseTestRobot {
     }
 
     fun clickOnDismiss() {
-        dialogClickButtonByText(R.string.dismiss)
+        dialogClickButtonByText(R.string.kh_uisdk_dismiss)
     }
 
     fun clickOnOkay() {
-        dialogClickButtonByText(R.string.ok)
+        dialogClickButtonByText(R.string.kh_uisdk_ok)
     }
 
     fun clickBackToolbarButton() {

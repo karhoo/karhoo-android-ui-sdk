@@ -84,7 +84,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService, never()).getAdyenPaymentMethods(any())
         verify(paymentsService).getAdyenPublicKey()
-        verify(paymentDropInActions).showError(R.string.something_went_wrong, KarhooError.InternalSDKError)
+        verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
 
     /**
@@ -103,7 +103,7 @@ class AdyenPaymentPresenterTest {
 
         verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentDropInActions).showError(R.string.something_went_wrong, KarhooError.InternalSDKError)
+        verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
 
     /**
@@ -138,7 +138,7 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.getPaymentNonce(quote)
 
-        verify(paymentDropInActions).showError(R.string.something_went_wrong, KarhooError.FailedToCallMoneyService)
+        verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.FailedToCallMoneyService)
     }
 
     /**

@@ -41,7 +41,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
     }
 
     fun bindViews(vehicle: Quote) {
-        bookingTermsText.text = String.format(resources.getString(R.string.booking_terms),
+        bookingTermsText.text = String.format(resources.getString(R.string.kh_uisdk_booking_terms),
                                               vehicle.fleet.name)
         termsConditionsText.setOnClickListener {
             actions?.showWebView(vehicle.fleet.termsConditionsUrl)

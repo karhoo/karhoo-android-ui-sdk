@@ -112,9 +112,9 @@ class SplashScreenView @JvmOverloads constructor(
     }
 
     override fun appInvalid() {
-        splashActions?.showErrorWithAction(R.string.app_invalid,
+        splashActions?.showErrorWithAction(R.string.kh_uisdk_app_invalid,
                                            { context.startActivity(Intent(ACTION_VIEW, Uri.parse("market://details?id=" + context.packageName))) },
-                                           R.string.update)
+                                           R.string.kh_uisdk_update)
     }
 
     override fun promptUpdatePlayServices(errorCode: Int) {
@@ -140,8 +140,8 @@ class SplashScreenView @JvmOverloads constructor(
         splashActions?.dismissErrors()
 
         val fallbackLocation = Location("").apply {
-            latitude = context.getString(R.string.central_lat).toDouble()
-            longitude = context.getString(R.string.central_long).toDouble()
+            latitude = context.getString(R.string.kh_uisdk_central_lat).toDouble()
+            longitude = context.getString(R.string.kh_uisdk_central_long).toDouble()
         }
 
         presenter = SplashPresenter(this,
@@ -174,14 +174,14 @@ class SplashScreenView @JvmOverloads constructor(
     }
 
     private fun setRationaleShown(isShown: Boolean) {
-        context.getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
-                .edit().putBoolean(context.getString(R.string.location_rationale_shown), isShown)
+        context.getSharedPreferences(context.getString(R.string.kh_uisdk_permissions), Context.MODE_PRIVATE)
+                .edit().putBoolean(context.getString(R.string.kh_uisdk_location_rationale_shown), isShown)
                 .apply()
     }
 
     private fun rationaleShown(): Boolean {
-        return context.getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
-                .getBoolean(context.getString(R.string.location_rationale_shown), false)
+        return context.getSharedPreferences(context.getString(R.string.kh_uisdk_permissions), Context.MODE_PRIVATE)
+                .getBoolean(context.getString(R.string.kh_uisdk_location_rationale_shown), false)
     }
 
     override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {

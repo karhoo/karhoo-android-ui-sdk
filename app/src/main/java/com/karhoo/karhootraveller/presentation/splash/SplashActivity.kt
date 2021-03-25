@@ -58,7 +58,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
         val isAutomaticLogout = intent.extras?.getBoolean(EXTRA_AUTOMATIC_LOGOUT) ?: false
         if (isAutomaticLogout) {
             val config = KarhooAlertDialogConfig(
-                                    messageResId = R.string.automatic_logout_message,
+                                    messageResId = R.string.kh_uisdk_automatic_logout_message,
                                     positiveButton = KarhooAlertDialogAction(android.R.string.ok,
                                                               DialogInterface.OnClickListener {
                                                                   _, _ -> }))
@@ -81,7 +81,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
             SnackbarState.INVITE -> {
                 splashScreenWidget.visibility = View.INVISIBLE
                 goFullScreen()
-                showErrorWithAction(R.string.requested_invite, { inviteUnderstood() }, R.string.got_it)
+                showErrorWithAction(R.string.kh_uisdk_requested_invite, { inviteUnderstood() }, R.string.kh_uisdk_got_it)
             }
         }
         getBookingMapDeepLinkData()
@@ -157,7 +157,7 @@ class SplashActivity : AppCompatActivity(), SplashActions, NetworkReceiver.Actio
                 snackbar?.dismiss()
                 resetErrorLock()
             } else {
-                showErrorWithAction(R.string.network_error, { startActivity(networkReceiver?.settingsIntent) }, R.string.settings)
+                showErrorWithAction(R.string.kh_uisdk_network_error, { startActivity(networkReceiver?.settingsIntent) }, R.string.kh_uisdk_settings)
                 enableErrorLock(SnackbarState.NETWORK)
             }
         }

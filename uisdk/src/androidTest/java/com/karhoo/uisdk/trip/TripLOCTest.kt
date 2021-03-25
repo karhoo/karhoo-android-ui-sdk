@@ -69,7 +69,7 @@ class TripLOCTest : Launch {
             }
             mediumSleep()
         } result {
-            checkSnackbarWithText(R.string.network_error)
+            checkSnackbarWithText(R.string.kh_uisdk_network_error)
         }
     }
 

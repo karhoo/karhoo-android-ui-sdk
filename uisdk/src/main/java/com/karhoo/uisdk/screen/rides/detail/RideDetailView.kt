@@ -119,8 +119,8 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayNoDateAvailable() {
-        dateTimeText.setText(R.string.pending)
-        rideDetailActions?.externalDateTime = resources.getString(R.string.pending)
+        dateTimeText.setText(R.string.kh_uisdk_pending)
+        rideDetailActions?.externalDateTime = resources.getString(R.string.kh_uisdk_pending)
     }
 
     override fun displayVehicle(licensePlate: String) {
@@ -137,11 +137,11 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     override fun displayPricePending() {
-        this.priceText.setText(R.string.cancelled)
+        this.priceText.setText(R.string.kh_uisdk_cancelled)
     }
 
     override fun displayPrice(price: String) {
-        this.priceTypeText.text = resources.getText(R.string.price)
+        this.priceTypeText.text = resources.getText(R.string.kh_uisdk_price)
         this.baseFareIcon.visibility = GONE
         this.priceText.text = price
     }
@@ -198,7 +198,7 @@ class RideDetailView @JvmOverloads constructor(
 
     override fun displayLoadingDialog() {
         progressDialog = ProgressDialog(context).apply {
-            setTitle(R.string.cancelling_ride)
+            setTitle(R.string.kh_uisdk_cancelling_ride)
             setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
             isIndeterminate = true
             setCancelable(false)
@@ -214,9 +214,9 @@ class RideDetailView @JvmOverloads constructor(
 
     override fun displayTripCancelledDialog() {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.cancel_ride_successful,
-                messageResId = R.string.cancel_ride_successful_message,
-                positiveButton = KarhooAlertDialogAction(R.string.dismiss,
+                titleResId = R.string.kh_uisdk_cancel_ride_successful,
+                messageResId = R.string.kh_uisdk_cancel_ride_successful_message,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
                         DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
@@ -250,7 +250,7 @@ class RideDetailView @JvmOverloads constructor(
     override fun displayBaseFareDialog() {
         val config = KarhooAlertDialogConfig(
                 view = BaseFareView(context),
-                positiveButton = KarhooAlertDialogAction(R.string.got_it,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_got_it,
                         DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 

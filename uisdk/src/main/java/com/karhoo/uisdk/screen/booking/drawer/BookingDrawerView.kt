@@ -33,8 +33,8 @@ class BookingDrawerView @JvmOverloads constructor(context: Context,
         drawerToggle = ActionBarDrawerToggle(context as Activity,
                                              this,
                                              toolbar,
-                                             R.string.drawer_open,
-                                             R.string.drawer_closed)
+                                             R.string.kh_uisdk_drawer_open,
+                                             R.string.kh_uisdk_drawer_closed)
 
         addDrawerListener(drawerToggle!!)
         actionBar.setDisplayHomeAsUpEnabled(true)

@@ -14,7 +14,7 @@
 
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
-            android:label="@string/title_activity_threedsecure"
+            android:label="@string/kh_uisdk_title_activity_threedsecure"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name="com.karhoo.uisdk.screen.address.AddressActivity"
-            android:label="@string/title_activity_address"
+            android:label="@string/kh_uisdk_title_activity_address"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
@@ -40,17 +40,17 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name="com.karhoo.uisdk.screen.trip.TripActivity"
-            android:label="@string/title_activity_trip"
+            android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
-            android:label="@string/title_activity_rides"
+            android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
-            android:label="@string/title_activity_rides"
+            android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -60,16 +60,16 @@
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
-            android:label="@string/feedback"
+            android:label="@string/kh_uisdk_feedback"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.web.WebActivity"
-            android:label="@string/title_activity_trip"
+            android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screen.booking.booking.payment.adyen.AdyenResultActivity"
-            android:label="@string/payment_details"
+            android:label="@string/kh_uisdk_payment_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 

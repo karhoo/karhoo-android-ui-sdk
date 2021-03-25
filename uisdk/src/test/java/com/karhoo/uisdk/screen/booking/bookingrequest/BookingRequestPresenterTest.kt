@@ -232,7 +232,7 @@ class BookingRequestPresenterTest {
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string
-                                                                                   .destination_book_error, null))
+                                                                                   .kh_uisdk_destination_book_error, null))
     }
 
     /**
@@ -254,7 +254,7 @@ class BookingRequestPresenterTest {
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string
-                                                                                   .origin_book_error, null))
+                                                                                   .kh_uisdk_origin_book_error, null))
     }
 
     /**
@@ -513,7 +513,7 @@ class BookingRequestPresenterTest {
         verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.K0001, KarhooError.GeneralRequestError))
+                                                             .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
     }
 
     /**
@@ -538,7 +538,7 @@ class BookingRequestPresenterTest {
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string
-                                                                                   .booking_details_error, KarhooError.InvalidRequestPayload))
+                                                                                   .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
     }
 
     /**

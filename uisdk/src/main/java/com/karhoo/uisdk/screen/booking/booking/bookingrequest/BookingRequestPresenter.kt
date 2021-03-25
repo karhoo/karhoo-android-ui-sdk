@@ -116,7 +116,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(error)
-            KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error, error)
+            KarhooError.InvalidRequestPayload -> handleError(R.string.kh_uisdk_booking_details_error, error)
             else -> handleError(returnErrorStringOrLogoutIfRequired(error), error)
         }
     }
@@ -223,9 +223,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             view?.setCapacity(quote.vehicle)
             view?.animateIn()
         } else if (origin == null) {
-            handleError(R.string.origin_book_error, null)
+            handleError(R.string.kh_uisdk_origin_book_error, null)
         } else if (destination == null) {
-            handleError(R.string.destination_book_error, null)
+            handleError(R.string.kh_uisdk_destination_book_error, null)
         }
     }
 

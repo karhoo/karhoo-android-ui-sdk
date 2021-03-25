@@ -20,8 +20,8 @@ class KarhooNotificationContract(val rideNotificationView: RideNotificationContr
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Build.VERSION.SDK_INT != Build.VERSION_CODES.N) {
-            val name = context.getString(R.string.channel_name)
-            val descriptionText = context.getString(R.string.channel_description)
+            val name = context.getString(R.string.kh_uisdk_channel_name)
+            val descriptionText = context.getString(R.string.kh_uisdk_channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(TRIP_INTO_CHANNEL, name, importance).apply {
                 description = descriptionText

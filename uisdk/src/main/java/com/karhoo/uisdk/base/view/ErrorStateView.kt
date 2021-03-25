@@ -24,7 +24,7 @@ class ErrorStateView @JvmOverloads constructor(context: Context,
         errorMessage = findViewById(R.id.errorText)
         errorCode = findViewById(R.id.errorCode)
         retryButton = findViewById(R.id.retryButton)
-        retryButton.setText(R.string.retry)
+        retryButton.setText(R.string.kh_uisdk_retry)
     }
 
     fun setRetryButtonClickListener(listener: OnClickListener?) {

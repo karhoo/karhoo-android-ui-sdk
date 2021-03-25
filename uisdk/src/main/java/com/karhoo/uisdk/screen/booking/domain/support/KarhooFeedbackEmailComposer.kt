@@ -44,10 +44,10 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     fun createFeedbackEmail(): Intent? {
-        val emailTo = contextWeakRef.get()?.getString(R.string.feedback_email)
-        val emailSubject = contextWeakRef.get()?.getString(R.string.feedback)
+        val emailTo = contextWeakRef.get()?.getString(R.string.kh_uisdk_feedback_email)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_feedback)
 
-        val headline = contextWeakRef.get()?.getString(R.string.email_info).orEmpty()
+        val headline = contextWeakRef.get()?.getString(R.string.kh_uisdk_email_info).orEmpty()
         val emailFooter = mailMetaInfo(headline)
 
         val data = "mailto:?subject=$emailSubject" +
@@ -57,13 +57,13 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     private fun createSupportForTripEmail(tripInfo: TripInfo?): Intent? {
-        val headline = contextWeakRef.get()?.getString(R.string.email_info).orEmpty()
+        val headline = contextWeakRef.get()?.getString(R.string.kh_uisdk_email_info).orEmpty()
 
         var emailFooter = getTripDetails(tripInfo)
         emailFooter += mailMetaInfo(headline)
 
-        val emailTo = contextWeakRef.get()?.getString(R.string.support_email)
-        val emailSubject = "${contextWeakRef.get()?.getString(R.string.support_report_issue)}: " +
+        val emailTo = contextWeakRef.get()?.getString(R.string.kh_uisdk_support_email)
+        val emailSubject = "${contextWeakRef.get()?.getString(R.string.kh_uisdk_support_report_issue)}: " +
                 "${tripInfo?.displayTripId}"
 
         val data = "mailto:?subject=$emailSubject" +
@@ -73,10 +73,10 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     private fun createSupplierEmail(): Intent? {
-        val headline = contextWeakRef.get()?.getString(R.string.fleet_recommendation_body).orEmpty()
+        val headline = contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_body).orEmpty()
 
-        val emailTo = contextWeakRef.get()?.getString(R.string.supplier_email)
-        val emailSubject = contextWeakRef.get()?.getString(R.string.fleet_recommendation_subject)
+        val emailTo = contextWeakRef.get()?.getString(R.string.kh_uisdk_supplier_email)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_subject)
 
         val data = "mailto:?subject=$emailSubject" +
                 "&body=$headline" +
@@ -91,7 +91,7 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     private fun getTripDetails(tripInfo: TripInfo?): String {
-        var text = contextWeakRef.get()?.getString(R.string.email_report_issue_message) ?: ""
+        var text = contextWeakRef.get()?.getString(R.string.kh_uisdk_email_report_issue_message) ?: ""
         val lastTripId = tripInfo?.displayTripId
 
         text += lastTripId.let {

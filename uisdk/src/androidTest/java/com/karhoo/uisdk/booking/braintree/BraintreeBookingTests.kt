@@ -107,7 +107,7 @@ class BraintreeBookingTests : Launch {
         booking(this, null) {
             mediumSleep()
         } result {
-            // R.string.K0001
+            // R.string.kh_uisdk_K0001
             checkSnackbarWithText("General request error. [K0001]")
         }
     }
@@ -127,7 +127,7 @@ class BraintreeBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.no_availability)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }
@@ -150,7 +150,7 @@ class BraintreeBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.no_availability)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }
