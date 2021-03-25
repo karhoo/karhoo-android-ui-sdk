@@ -25,7 +25,7 @@ class AddressRobot : BaseTestRobot() {
     }
 
     fun pressBackButtonToolbar() {
-        clickButtonByContentDescription(R.string.kh_uisdk_abc_action_bar_up_description)
+        clickButtonByContentDescription(R.string.abc_action_bar_up_description)
     }
 
     fun clearAddressSearchList() {
