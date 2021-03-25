@@ -8,21 +8,25 @@ import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
 
 fun ServiceCancellation.getCancellationText(context: Context): String? {
-    if (minutes == 0) {
-        return null
-    }
+    var text: String?
 
-    return when (this.type) {
+    when (this.type) {
         CANCELLATION_TIME_BEFORE_PICKUP -> {
-            String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), minutes)
+            text = String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), minutes)
+
+            if (minutes == 0) {
+                text = null
+            }
         }
         CANCELLATION_BEFORE_DRIVER_EN_ROUTE -> {
-            context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)
+            text = context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)
         }
         else -> {
-            null
+            text = null
         }
     }
+
+    return text
 }
 
 fun ServiceCancellation.hasValidCancellationDependingOnTripStatus(tripStatus: TripStatus): Boolean {
