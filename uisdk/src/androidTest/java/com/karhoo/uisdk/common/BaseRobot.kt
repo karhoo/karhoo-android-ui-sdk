@@ -298,7 +298,7 @@ open abstract class BaseTestRobot {
     }
 
     fun clickBackToolbarButton() {
-        onView(withContentDescription(R.string.kh_uisdk_abc_action_bar_up_description)).perform(click())
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click())
     }
 
     fun swipeLeftTabView() {
