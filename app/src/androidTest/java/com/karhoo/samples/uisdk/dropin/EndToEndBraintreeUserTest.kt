@@ -8,8 +8,8 @@ import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.samples.uisdk.dropin.common.preferences
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
-import com.karhoo.uisdk.common.Launch
-import com.karhoo.uisdk.common.serverRobot
+import com.karhoo.samples.uisdk.dropin.common.Launch
+import com.karhoo.samples.uisdk.dropin.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.trip.trip
@@ -96,9 +96,9 @@ class EndToEndBraintreeUserTest : Launch {
             userProfileResponse(HTTP_OK, USER_INFO)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
-        main {
+        main(this) {
+            mediumSleep()
             userClicksOnBookATripGuest()
-            longSleep()
         }
         booking {
             mediumSleep()
