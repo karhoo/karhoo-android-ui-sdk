@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven-publish'
 
 group = 'com.karhoo.uisdk'
 version = '1.0'
@@ -10,7 +10,6 @@ String[] fileFilter = [
         '**/*View*.*',
         '**/*Activity.*'
 ]
-enableJacoco(project, 'Debug', fileFilter)
 
 android {
     compileSdkVersion 29
@@ -52,24 +51,23 @@ android {
 
 }
 
-publish {
-    def groupProjectID = 'com.karhoo'
-    def artifactProjectID = 'uisdk-canary'
-    def publishVersionID = '1.2.1-18032021-1'
-    def repoNameID = 'Android'
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
 
-    userOrg = 'flit-tech'
-    repoName = repoNameID
-    groupId = groupProjectID
-    artifactId = artifactProjectID
-    publishVersion = publishVersionID
-    desc = 'Karhoo UI SDK'
-    website = 'https://karhoo'
+                groupId = 'com.karhoo'
+                artifactId = 'uisdk-canary'
+                version = '1.2.1.25032021-1'
+            }
+        }
+    }
 }
 
 dependencies {
 
-    api 'com.karhoo:nsdk-canary:1.2.2.18032021-2'
+    api 'com.github.karhoo:karhoo-android-sdk:jitpack_migration-SNAPSHOT'
     api 'com.braintreepayments.api:drop-in:4.6.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
