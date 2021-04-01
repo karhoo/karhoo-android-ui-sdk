@@ -45,7 +45,7 @@ class QuotesListView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), QuotesSortView.Listener,
-      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
+        QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -84,7 +84,7 @@ class QuotesListView @JvmOverloads constructor(
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                      .QuotesListCollapsed)
+                    .QuotesListCollapsed)
         }
     }
 
@@ -149,7 +149,7 @@ class QuotesListView @JvmOverloads constructor(
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
-                                                              .animation_duration_slide_out_or_in_quotes).toLong())
+                            .animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isQuotesListVisible = true
@@ -203,18 +203,22 @@ class QuotesListView @JvmOverloads constructor(
                                             },
                                             text = resources.getString(R.string.kh_uisdk_no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .Error(snackbarConfig))
+                .Error(snackbarConfig))
 
+    }
+
+    override fun showNoResultsText(show: Boolean) {
+        quotesRecyclerView.showNoResultsText(show)
     }
 
     override fun hideNoAvailability() {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
+                .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .Error(snackbarConfig))
+                .Error(snackbarConfig))
     }
 
     override fun setQuotesListVisibility() {

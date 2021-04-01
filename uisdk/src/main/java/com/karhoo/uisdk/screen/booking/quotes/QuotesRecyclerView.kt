@@ -70,10 +70,36 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     }
 
     override fun setListVisibility(visible: Boolean) {
-        quotesListRecycler.visibility = if (visible) View.VISIBLE else View.GONE
-        noDestinationLabel.visibility = if (visible) View.GONE else View.VISIBLE
-        noDestinationVehiclesLabel?.visibility = if (visible) View.GONE else View.VISIBLE
+        if (visible) {
+            quotesListRecycler.visibility = View.VISIBLE
+            noDestinationLabel.visibility = View.GONE
+            noDestinationVehiclesLabel?.visibility = View.GONE
+        } else {
+            quotesListRecycler.visibility = View.GONE
+
+            noDestinationLabel.visibility = View.VISIBLE
+            noDestinationLabel?.text = context.resources.getString(R.string.kh_uisdk_no_availability)
+
+            noDestinationVehiclesLabel?.text = context.resources.getString(R.string.kh_uisdk_enter_destination_for_vehicles)
+            noDestinationVehiclesLabel?.visibility = View.VISIBLE
+
+        }
         setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)
+    }
+
+    override fun showNoResultsText(show: Boolean) {
+        if (show) {
+            noDestinationVehiclesLabel?.text = context.resources.getString(R.string.kh_uisdk_no_results_found)
+            noDestinationLabel?.text = context.resources.getString(R.string.kh_uisdk_no_results_label)
+
+            noDestinationVehiclesLabel?.visibility = View.VISIBLE
+            noDestinationLabel?.visibility = View.VISIBLE
+        } else {
+            noDestinationVehiclesLabel?.visibility = View.GONE
+            noDestinationLabel?.visibility = View.GONE
+        }
+
+        setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)
     }
 
     override fun watchCategories(lifecycleOwner: LifecycleOwner, categoriesViewModel: CategoriesViewModel) {

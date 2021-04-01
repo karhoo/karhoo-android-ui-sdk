@@ -20,6 +20,8 @@ interface QuotesRecyclerMVP {
 
         fun setListVisibility(visible: Boolean)
 
+        fun showNoResultsText(show: Boolean)
+
         fun watchQuoteListStatus(lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
         BookingQuotesViewModel)
 
