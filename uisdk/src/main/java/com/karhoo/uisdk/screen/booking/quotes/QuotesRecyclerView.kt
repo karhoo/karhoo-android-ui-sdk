@@ -14,8 +14,8 @@ import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.noDestinationLabel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.noDestinationVehiclesLabel
+import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesErrorSubtitle
+import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesErrorTitle
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesListRecycler
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingProgressBar
@@ -56,7 +56,7 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     }
 
     override fun setQuotesLoaderVisibility(visible: Int) {
-        if (noDestinationLabel.visibility == View.VISIBLE) {
+        if (quotesErrorTitle.visibility == View.VISIBLE) {
             quotesLoadingProgressBar.visibility = View.GONE
             quotesLoadingLabel.visibility = View.GONE
         } else {
@@ -72,16 +72,16 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     override fun setListVisibility(visible: Boolean) {
         if (visible) {
             quotesListRecycler.visibility = View.VISIBLE
-            noDestinationLabel.visibility = View.GONE
-            noDestinationVehiclesLabel?.visibility = View.GONE
+            quotesErrorTitle.visibility = View.GONE
+            quotesErrorSubtitle?.visibility = View.GONE
         } else {
             quotesListRecycler.visibility = View.GONE
 
-            noDestinationLabel.visibility = View.VISIBLE
-            noDestinationLabel?.text = context.resources.getString(R.string.kh_uisdk_no_availability)
+            quotesErrorTitle.visibility = View.VISIBLE
+            quotesErrorTitle?.text = context.resources.getString(R.string.kh_uisdk_no_availability)
 
-            noDestinationVehiclesLabel?.text = context.resources.getString(R.string.kh_uisdk_enter_destination_for_vehicles)
-            noDestinationVehiclesLabel?.visibility = View.VISIBLE
+            quotesErrorSubtitle?.text = context.resources.getString(R.string.kh_uisdk_enter_destination_for_vehicles)
+            quotesErrorSubtitle?.visibility = View.VISIBLE
 
         }
         setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)
@@ -89,14 +89,14 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
 
     override fun showNoResultsText(show: Boolean) {
         if (show) {
-            noDestinationVehiclesLabel?.text = context.resources.getString(R.string.kh_uisdk_no_results_found)
-            noDestinationLabel?.text = context.resources.getString(R.string.kh_uisdk_no_results_label)
+            quotesErrorSubtitle?.text = context.resources.getString(R.string.kh_uisdk_no_results_found)
+            quotesErrorTitle?.text = context.resources.getString(R.string.kh_uisdk_no_results_label)
 
-            noDestinationVehiclesLabel?.visibility = View.VISIBLE
-            noDestinationLabel?.visibility = View.VISIBLE
+            quotesErrorSubtitle?.visibility = View.VISIBLE
+            quotesErrorTitle?.visibility = View.VISIBLE
         } else {
-            noDestinationVehiclesLabel?.visibility = View.GONE
-            noDestinationLabel?.visibility = View.GONE
+            quotesErrorSubtitle?.visibility = View.GONE
+            quotesErrorTitle?.visibility = View.GONE
         }
 
         setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)

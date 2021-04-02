@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/noDestinationVehiclesLabel"
+        android:id="@+id/quotesErrorSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/spacing_small"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/noDestinationLabel"
+        android:id="@+id/quotesErrorTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xsmall"
@@ -75,7 +75,7 @@
         android:textColor="@color/med_grey"
         android:textSize="@dimen/text_size_medium"
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/noDestinationVehiclesLabel"
+        app:layout_constraintBottom_toTopOf="@+id/quotesErrorSubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
