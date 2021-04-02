@@ -22,6 +22,8 @@
     <string name="kh_uisdk_capacity">x %s</string>
     <string name="kh_uisdk_quote_cancellation_minutes">Annulation gratuite jusqu’à %d minutes avant la prise en charge</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Annulation sans frais jusqu\'au départ du chauffeur</string>
+    <string name="kh_uisdk_no_results_label">No results</string>
+    <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
 
     <!-- Activity Titles -->
     <string name="kh_uisdk_title_activity_address">Adresse</string>
