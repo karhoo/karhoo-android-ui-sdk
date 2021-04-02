@@ -10,6 +10,7 @@ import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.samples.uisdk.dropin.common.Launch
 import com.karhoo.samples.uisdk.dropin.common.serverRobot
+import com.karhoo.samples.uisdk.dropin.common.testrunner.TravellerTestConfig
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.trip.trip
@@ -50,7 +51,7 @@ import java.net.HttpURLConnection.HTTP_OK
 class EndToEndBraintreeUserTest : Launch {
 
     @get:Rule
-    var wireMockRule = WireMockRule(WireMockConfiguration.options().port(UiSDKTestConfig.PORT_NUMBER), false)
+    var wireMockRule = WireMockRule(WireMockConfiguration.options().port(TravellerTestConfig.PORT_NUMBER), false)
 
     @get:Rule
     val activityRule: ActivityTestRule<MainActivity> =
@@ -69,14 +70,14 @@ class EndToEndBraintreeUserTest : Launch {
     @Before
     fun clearUser() {
         preferences {
-            clearUserPreference()
+//            clearUserPreference()
         }
     }
 
     @After
     fun tearDown() {
         preferences {
-            clearUserPreference()
+//            clearUserPreference()
         }
     }
 
@@ -97,8 +98,12 @@ class EndToEndBraintreeUserTest : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         main(this) {
+            userClicksOnBookATripLogin()
             mediumSleep()
-            userClicksOnBookATripGuest()
+            validEmailAndPasswordLogin()
+            mediumSleep()
+            userClicksOnSignInButton()
+//            userClicksOnBookATripGuest()
         }
         booking {
             mediumSleep()

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+        android:id="@+id/emailLayout"
+        style="@style/AppTheme.EditText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:theme="@style/AppTheme.EditText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailInput"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/kh_uisdk_email_hint"
+            android:inputType="textEmailAddress"
+            android:theme="@style/AppTheme.EditText" />
+
+    </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+
+    <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+        android:id="@+id/passwordLayout"
+        style="@style/AppTheme.LoginPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:theme="@style/AppTheme.LoginPassword"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/primary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordInput"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/kh_uisdk_password_hint"
+            android:inputType="textPassword"
+            android:theme="@style/AppTheme.EditText" />
+
+    </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+
+    <Button
+        android:id="@+id/signInButton"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:layout_width="128dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginBottom="@dimen/spacing_medium_small"
+        android:background="@drawable/uisdk_ripple_background"
+        android:text="@string/kh_uisdk_sign_in_but"
+        tools:enabled="false" />
+
+</LinearLayout>

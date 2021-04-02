@@ -1,14 +1,18 @@
 package com.karhoo.samples.uisdk.dropin
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
 import com.karhoo.samples.uisdk.dropin.config.GuestConfig
 import com.karhoo.samples.uisdk.dropin.config.TokenExchangeConfig
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -40,6 +44,37 @@ class MainActivity : AppCompatActivity() {
 
             loginTokenExchange()
         }
+
+
+        findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
+            showLoginInputDialog()
+        }
+    }
+
+    private fun showLoginInputDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.view_login)
+        val userNameEditText = dialog.findViewById(R.id.emailInput) as TextInputEditText
+        val passwordEditText = dialog.findViewById(R.id.passwordInput) as TextInputEditText
+        val signInButton = dialog.findViewById(R.id.signInButton) as Button
+        signInButton.setOnClickListener {
+            showLoading()
+            loginUser(userNameEditText.text.toString(), passwordEditText.text.toString())
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    private fun loginUser(email: String, password: String) {
+        KarhooApi.userService.loginUser(UserLogin(email = email, password = password))
+                .execute { result ->
+                    when (result) {
+                        is Resource.Success -> goToBooking()
+                        is Resource.Failure -> toastErrorMessage(result.error)
+                    }
+                }
     }
 
     private fun applyTokenExchangeConfig() {
