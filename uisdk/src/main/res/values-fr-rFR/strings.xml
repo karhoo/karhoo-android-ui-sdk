@@ -20,7 +20,17 @@
     <string name="kh_uisdk_retrieving_quotes">Recherche des devis</string>
     <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="kh_uisdk_capacity">x %s</string>
-    <string name="kh_uisdk_quote_cancellation_minutes">Annulation gratuite jusqu’à %d minutes avant la prise en charge</string>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_start">Annulation gratuite jusqu’à</string>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_hours">
+        <item quantity="one">%d heure</item>
+        <item quantity="other">%d heures</item>
+    </plurals>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_ending">avant la prise en charge</string>
+    <string name="kh_uisdk_quote_cancellation_and_keyword">et</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Annulation sans frais jusqu\'au départ du chauffeur</string>
 
     <!-- Activity Titles -->

@@ -15,7 +15,17 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_capacity">x %s</string>
-    <string name="kh_uisdk_quote_cancellation_minutes">Cancelación gratuita hasta %d minutos antes de la recogida</string>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancelación gratuita hasta</string>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_hours">
+        <item quantity="one">%d hora</item>
+        <item quantity="other">%d horas</item>
+    </plurals>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d minutos</item>
+    </plurals>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_ending">antes de la recogida</string>
+    <string name="kh_uisdk_quote_cancellation_and_keyword">y</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Cancelación gratuita hasta que el conductor esté en camino</string>
 
     <!-- Activity Titles -->

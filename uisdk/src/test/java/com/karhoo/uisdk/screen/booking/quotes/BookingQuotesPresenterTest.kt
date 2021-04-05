@@ -1,12 +1,15 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
 import android.content.Context
+import android.content.res.Resources
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesMVP
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.BookingQuotesViewMock
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.ServiceCancellationExtTests
+import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.*
@@ -20,6 +23,7 @@ class BookingQuotesPresenterTest {
     private val view: BookingQuotesViewMock = BookingQuotesViewMock()
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(view)
     private val testContext: Context = mock()
+    private var resources: Resources = mock()
 
     @Before
     fun setup() {
@@ -29,8 +33,11 @@ class BookingQuotesPresenterTest {
         view.catgText = null
         view.showCancellation = null
 
-        whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_minutes)).thenReturn(TEST_CANCELLATION_TEXT)
+        whenever(testContext.resources).thenReturn(resources)
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
+        whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
     }
 
     @Test
@@ -65,7 +72,7 @@ class BookingQuotesPresenterTest {
     fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the cancellation text has the correct value`() {
         presenter.checkCancellationSLAMinutes(UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, testContext)
 
-        assertEquals(view.cancellationMinutesText!!, String.format(TEST_CANCELLATION_TEXT, TEST_TEN_MINUTES))
+        assertEquals(view.cancellationMinutesText!!, String.format(TEST_CANCELLATION_TEXT, TEST_TWO))
     }
 
     @Test
@@ -84,8 +91,6 @@ class BookingQuotesPresenterTest {
 
     companion object {
         private const val TEST_STRING = "test"
-        private const val TEST_ZERO_MINUTES = 0
-        private const val TEST_TEN_MINUTES = 2
-        const val TEST_CANCELLATION_TEXT = "Free cancellation up to %d mins before pickup"
+        const val TEST_CANCELLATION_TEXT = "Free cancellation up to %d minutes before pickup"
     }
 }

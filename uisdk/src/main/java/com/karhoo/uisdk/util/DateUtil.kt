@@ -49,4 +49,13 @@ object DateUtil {
         return DateTime.parse(date, DateTimeFormat.forPattern("yyyy-MM-dd"))
     }
 
+    fun roundMinutesInHours(minutes: Int): Int {
+        return minutes / HOUR_IN_MINUTES
+    }
+
+    fun getLeftOverMinutesFromHours(minutes: Int): Int {
+        return minutes % HOUR_IN_MINUTES
+    }
+
+    private const val HOUR_IN_MINUTES = 60
 }

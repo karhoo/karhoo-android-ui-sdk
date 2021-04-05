@@ -19,7 +19,17 @@
     <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_capacity">x %s</string>
-    <string name="kh_uisdk_quote_cancellation_minutes">Free cancellation up to %d mins before pickup</string>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="kh_uisdk_quote_cancellation_before_pickup_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
+    <string name="kh_uisdk_quote_cancellation_and_keyword">and</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>
 
     <!-- Activity Titles -->
