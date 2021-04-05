@@ -165,7 +165,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     private fun clearDestination() {
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
-                                                    .DestinationAddressEvent(null))
+                .DestinationAddressEvent(null))
     }
 
     private fun handleVehicleValidity(vehicles: QuoteList) {
@@ -191,11 +191,24 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     private fun updateVehicles(vehicles: QuoteList) {
         handleVehiclePolling(vehicles)
-        availabilityHandler?.get()?.hasAvailability = true
-        currentCategories(currentCategories = vehicles.categories.keys.toList())
-        availableVehicles = vehicles.categories
-        currentAvailableQuotes()
-        filterVehicles()
+
+        var hasQuotes = false
+        vehicles.categories.forEach {
+            if (it.value.isNotEmpty()) {
+               hasQuotes = true
+            }
+        }
+
+        if (vehicles.status == QuoteStatus.COMPLETED && !hasQuotes) {
+            availabilityHandler?.get()?.hasNoResults = true
+        } else {
+            availabilityHandler?.get()?.hasNoResults = false
+            availabilityHandler?.get()?.hasAvailability = true
+            currentCategories(currentCategories = vehicles.categories.keys.toList())
+            availableVehicles = vehicles.categories
+            currentAvailableQuotes()
+            filterVehicles()
+        }
     }
 
     private fun currentCategories(currentCategories: List<String>) {

@@ -32,6 +32,8 @@ interface QuotesListMVP {
 
         fun showNoAvailability()
 
+        fun showNoResultsText(show: Boolean)
+
         fun hideNoAvailability()
 
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
