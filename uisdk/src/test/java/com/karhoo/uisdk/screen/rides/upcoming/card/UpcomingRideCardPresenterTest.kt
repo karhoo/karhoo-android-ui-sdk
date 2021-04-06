@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.rides.upcoming.card
 
 import android.content.Context
+import android.content.res.Resources
 import com.karhoo.sdk.api.model.*
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -8,6 +9,7 @@ import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.booking.quotes.BookingQuotesPresenterTest
 import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
+import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
@@ -23,6 +25,7 @@ class UpcomingRideCardPresenterTest {
     private var analytics: Analytics = mock()
     private var context: Context = mock()
     private lateinit var presenter: UpcomingRideCardPresenter
+    private var resources: Resources = mock()
 
     /**
      * When:    the user selects track
@@ -31,7 +34,11 @@ class UpcomingRideCardPresenterTest {
      */
     @Before
     fun setup() {
-        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_minutes)).thenReturn(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT)
+        whenever(context.resources).thenReturn(resources)
+        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO_MINUTES, TEST_TWO_MINUTES)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO_MINUTES))
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 

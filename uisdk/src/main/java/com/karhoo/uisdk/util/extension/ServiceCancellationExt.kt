@@ -6,27 +6,33 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
+import com.karhoo.uisdk.util.TimeUtil
 
 fun ServiceCancellation.getCancellationText(context: Context): String? {
-    var text: String?
+    var cancellationText: String?
 
     when (this.type) {
         CANCELLATION_TIME_BEFORE_PICKUP -> {
-            text = String.format(context.getString(R.string.kh_uisdk_quote_cancellation_minutes), minutes)
-
             if (minutes == 0) {
-                text = null
+                cancellationText = null
+            } else {
+                val hours: Int = TimeUtil.roundMinutesInHours(minutes)
+                val leftOverMinutes: Int = TimeUtil.getLeftOverMinutesFromHours(minutes)
+
+                cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
+                cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
+                cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)
             }
         }
         CANCELLATION_BEFORE_DRIVER_EN_ROUTE -> {
-            text = context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)
+            cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)
         }
         else -> {
-            text = null
+            cancellationText = null
         }
     }
 
-    return text
+    return cancellationText
 }
 
 fun ServiceCancellation.hasValidCancellationDependingOnTripStatus(tripStatus: TripStatus): Boolean {

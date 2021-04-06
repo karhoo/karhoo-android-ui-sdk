@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.screen.rides.detail
 
 import android.content.Context
+import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Fare
 import com.karhoo.sdk.api.model.FareBreakdown
 import com.karhoo.sdk.api.model.Price
@@ -18,7 +18,6 @@ import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
@@ -27,6 +26,8 @@ import com.karhoo.uisdk.screen.rides.detail.RideDetailPresenter.Companion.TRIP_I
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.ServiceCancellationExtTests
+import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -74,6 +75,7 @@ class RideDetailPresenterTest {
     private val observerTripInfoCaptor = argumentCaptor<Observer<Resource<TripInfo>>>()
     private val pollingTimeCaptor = argumentCaptor<Long>()
     private var fareCaptor = argumentCaptor<(Resource<Fare>) -> Unit>()
+    private var resources: Resources = mock()
 
     @Before
     fun setUp() {
@@ -82,7 +84,11 @@ class RideDetailPresenterTest {
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
-        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_minutes)).thenReturn(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT)
+        whenever(context.resources).thenReturn(resources)
+        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
