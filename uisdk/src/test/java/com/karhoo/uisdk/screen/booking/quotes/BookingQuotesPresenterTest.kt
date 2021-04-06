@@ -34,7 +34,7 @@ class BookingQuotesPresenterTest {
         view.showCancellation = null
 
         whenever(testContext.resources).thenReturn(resources)
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)

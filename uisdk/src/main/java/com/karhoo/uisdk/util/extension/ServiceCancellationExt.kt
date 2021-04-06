@@ -6,7 +6,7 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
-import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.TimeUtil
 
 fun ServiceCancellation.getCancellationText(context: Context): String? {
     var cancellationText: String?
@@ -16,15 +16,11 @@ fun ServiceCancellation.getCancellationText(context: Context): String? {
             if (minutes == 0) {
                 cancellationText = null
             } else {
-                val hours: Int = DateUtil.roundMinutesInHours(minutes)
-                val leftOverMinutes: Int = DateUtil.getLeftOverMinutesFromHours(minutes)
+                val hours: Int = TimeUtil.roundMinutesInHours(minutes)
+                val leftOverMinutes: Int = TimeUtil.getLeftOverMinutesFromHours(minutes)
 
                 cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
-
-                if (hours > 0) cancellationText += context.resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_hours, hours, hours) + " "
-                if (hours > 0 && leftOverMinutes > 0) cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_and_keyword) + " "
-                if (leftOverMinutes > 0) cancellationText += context.resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, leftOverMinutes, leftOverMinutes) + " "
-
+                cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
                 cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)
             }
         }

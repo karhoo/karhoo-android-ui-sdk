@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.rides.detail
 import android.content.Context
 import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Fare
 import com.karhoo.sdk.api.model.FareBreakdown
 import com.karhoo.sdk.api.model.Price
@@ -19,7 +18,6 @@ import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
@@ -87,7 +85,7 @@ class RideDetailPresenterTest {
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
         whenever(context.resources).thenReturn(resources)
-        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
+        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)

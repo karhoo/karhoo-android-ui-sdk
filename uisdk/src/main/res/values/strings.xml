@@ -20,11 +20,11 @@
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_capacity">x %s</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
-    <plurals name="kh_uisdk_quote_cancellation_before_pickup_hours">
+    <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
     </plurals>
-    <plurals name="kh_uisdk_quote_cancellation_before_pickup_minutes">
+    <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>

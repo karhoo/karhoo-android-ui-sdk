@@ -35,7 +35,7 @@ class UpcomingRideCardPresenterTest {
     @Before
     fun setup() {
         whenever(context.resources).thenReturn(resources)
-        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TWO_MINUTES, TEST_TWO_MINUTES)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO_MINUTES))
+        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO_MINUTES, TEST_TWO_MINUTES)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO_MINUTES))
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)

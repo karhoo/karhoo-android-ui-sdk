@@ -2,7 +2,6 @@ package com.karhoo.uisdk.util
 
 import android.content.Context
 import android.content.res.Resources
-import com.karhoo.sdk.api.model.ServiceAgreements
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
@@ -24,13 +23,13 @@ class ServiceCancellationExtTests {
     @Before
     fun setup() {
         whenever(context.resources).thenReturn(resources)
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_ONE, TEST_ONE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTE, TEST_ONE))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TWO, TEST_TWO)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_TEN, TEST_TEN)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TEN))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_minutes, TEST_THIRTY, TEST_THIRTY)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_THIRTY))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_hours, TEST_ONE, TEST_ONE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOUR, TEST_ONE))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_hours, TEST_TWO, TEST_TWO)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOURS, TEST_TWO))
-        whenever(resources.getQuantityString(R.plurals.kh_uisdk_quote_cancellation_before_pickup_hours, TEST_THREE, TEST_THREE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOURS, TEST_TWO))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_ONE, TEST_ONE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTE, TEST_ONE))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO, TEST_TWO)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TEN, TEST_TEN)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TEN))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_THIRTY, TEST_THIRTY)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_THIRTY))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_hours_plural, TEST_ONE, TEST_ONE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOUR, TEST_ONE))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_hours_plural, TEST_TWO, TEST_TWO)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOURS, TEST_TWO))
+        whenever(resources.getQuantityString(R.plurals.kh_uisdk_hours_plural, TEST_THREE, TEST_THREE)).thenReturn(String.format(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOURS, TEST_TWO))
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
