@@ -50,5 +50,4 @@ class MainRobot : BaseTestRobot() {
     fun userClicksOnSignInButton() {
         clickButton(R.id.signInButton)
     }
-
 }
