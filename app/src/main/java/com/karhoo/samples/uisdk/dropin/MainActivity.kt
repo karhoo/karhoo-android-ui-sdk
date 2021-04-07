@@ -8,9 +8,12 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.karhoo.samples.uisdk.dropin.config.GuestConfig
-import com.karhoo.samples.uisdk.dropin.config.TokenExchangeConfig
+import com.karhoo.samples.uisdk.dropin.config.AdyenGuestConfig
+import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
+import com.karhoo.samples.uisdk.dropin.config.BraintreeGuestConfig
+import com.karhoo.samples.uisdk.dropin.config.BraintreeTokenExchangeConfig
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooApi.setConfiguration
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
@@ -29,22 +32,37 @@ class MainActivity : AppCompatActivity() {
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
-        findViewById<Button>(R.id.bookTripButtonGuest).setOnClickListener {
+        findViewById<Button>(R.id.bookTripButtonBraintreeGuest).setOnClickListener {
             showLoading()
 
-            applyGuestConfig()
+            applyBraintreeGuestConfig()
 
             goToBooking()
         }
 
-        findViewById<Button>(R.id.bookTripButtonTokenExchange).setOnClickListener {
+        findViewById<Button>(R.id.bookTripButtonBraintreeTokenExchange).setOnClickListener {
             showLoading()
 
-            applyTokenExchangeConfig()
+            applyBraintreeTokenExchangeConfig()
 
             loginTokenExchange()
         }
 
+        findViewById<Button>(R.id.bookTripButtonAdyenGuest).setOnClickListener {
+            showLoading()
+
+            applyAdyenGuestConfig()
+
+            goToBooking()
+        }
+
+        findViewById<Button>(R.id.bookTripButtonAdyenTokenExchange).setOnClickListener {
+            showLoading()
+
+            applyAdyenTokenExchangeConfig()
+
+            loginTokenExchange()
+        }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             showLoginInputDialog()
@@ -77,29 +95,49 @@ class MainActivity : AppCompatActivity() {
                 }
     }
 
-    private fun applyTokenExchangeConfig() {
+    private fun applyBraintreeTokenExchangeConfig() {
         KarhooUISDK.apply {
             setConfiguration(
-                TokenExchangeConfig(
-                    applicationContext
-                )
+                    BraintreeTokenExchangeConfig(
+                            applicationContext
+                    )
             )
         }
     }
 
-    private fun applyGuestConfig() {
+    private fun applyBraintreeGuestConfig() {
         KarhooUISDK.apply {
             setConfiguration(
-                GuestConfig(
-                    applicationContext
-                )
+                    BraintreeGuestConfig(
+                            applicationContext
+                    )
+            )
+        }
+    }
+
+    private fun applyAdyenTokenExchangeConfig() {
+        KarhooUISDK.apply {
+            setConfiguration(
+                    AdyenTokenExchangeConfig(
+                            applicationContext
+                    )
+            )
+        }
+    }
+
+    private fun applyAdyenGuestConfig() {
+        KarhooUISDK.apply {
+            setConfiguration(
+                    AdyenGuestConfig(
+                            applicationContext
+                    )
             )
         }
     }
 
     private fun loginTokenExchange() {
         KarhooApi.userService.logout()
-        val token: String = BuildConfig.BRAINTREE_AUTH_TOKEN
+        val token: String = BuildConfig.ADYEN_AUTH_TOKEN
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
                 is Resource.Success -> goToBooking()

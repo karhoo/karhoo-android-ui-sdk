@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="40dp"
     tools:context=".MainActivity">
 
     <TextView
@@ -11,7 +12,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome_message"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,23 +27,43 @@
         />
 
     <Button
-        android:id="@+id/bookTripButtonGuest"
+        android:id="@+id/bookTripButtonBraintreeGuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/bookTripButtonLogin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_guest"
+        android:text="@string/book_a_trip_braintree_guest"
         />
 
     <Button
-        android:id="@+id/bookTripButtonTokenExchange"
+        android:id="@+id/bookTripButtonBraintreeTokenExchange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonGuest"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeGuest"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_token_exchange"
+        android:text="@string/book_a_trip_braintree_token_exchange"
+        />
+
+    <Button
+        android:id="@+id/bookTripButtonAdyenGuest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeTokenExchange"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/book_a_trip_adyen_guest"
+        />
+
+    <Button
+        android:id="@+id/bookTripButtonAdyenTokenExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenGuest"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/book_a_trip_adyen_token_exchange"
         />
 
     <ProgressBar
@@ -52,7 +72,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonTokenExchange"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

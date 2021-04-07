@@ -10,14 +10,18 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
 
-class GuestConfig(private val context: Context) : KarhooUISDKConfiguration {
+class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfiguration {
 
     override fun context(): Context {
         return context
     }
 
     override fun environment(): KarhooEnvironment {
-        return KarhooEnvironment.Sandbox()
+        return KarhooEnvironment.Custom(
+            host = BuildConfig.STAGING_HOST,
+            authHost = BuildConfig.STAGING_AUTH_HOST,
+            guestHost = BuildConfig.STAGING_GUEST_HOST
+        )
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
@@ -25,10 +29,9 @@ class GuestConfig(private val context: Context) : KarhooUISDKConfiguration {
     }
 
     override fun authenticationMethod(): AuthenticationMethod {
-        return AuthenticationMethod.Guest(
-            identifier = BuildConfig.BRAINTREE_GUEST_CHECKOUT_IDENTIFIER,
-            referer = BuildConfig.GUEST_CHECKOUT_REFERER,
-            organisationId = BuildConfig.BRAINTREE_GUEST_CHECKOUT_ORGANISATION_ID
+        return AuthenticationMethod.TokenExchange(
+            clientId = BuildConfig.ADYEN_CLIENT_ID,
+            scope = BuildConfig.ADYEN_CLIENT_SCOPE
         )
     }
 
