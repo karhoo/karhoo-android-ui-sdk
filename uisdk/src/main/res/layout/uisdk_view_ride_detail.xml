@@ -69,6 +69,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginBottom="@dimen/spacing_small"
@@ -87,7 +88,8 @@
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Sample location" />
 
         </LinearLayout>
@@ -96,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/spacing_small">
@@ -112,7 +115,8 @@
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Pharmacy" />
 
         </LinearLayout>

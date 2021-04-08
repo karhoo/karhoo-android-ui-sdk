@@ -86,7 +86,8 @@
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Sample location" />
 
         </LinearLayout>
@@ -111,7 +112,8 @@
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Pharmacy" />
 
         </LinearLayout>
