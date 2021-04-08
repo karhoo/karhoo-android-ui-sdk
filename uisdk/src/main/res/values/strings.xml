@@ -400,4 +400,7 @@
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Submit</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
+
+    <!--  Logger  -->
+    <string name="kh_uisdk_logger_sdk_not_configured" translatable="false">UISDK not configured. Please configure the KarhooUISDKConfiguration or visit https://developer.karhoo.com/docs/using-the-ui-sdk for more info</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.karhoo.samples.uisdk.dropin
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -13,16 +14,23 @@ import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
 import com.karhoo.samples.uisdk.dropin.config.BraintreeGuestConfig
 import com.karhoo.samples.uisdk.dropin.config.BraintreeTokenExchangeConfig
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.KarhooApi.setConfiguration
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loadingProgressBar: View
+
+    init {
+        Thread.setDefaultUncaughtExceptionHandler { _, _ ->
+            this.startActivity(Intent(this, MainActivity::class.java))
+            exitProcess(0)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

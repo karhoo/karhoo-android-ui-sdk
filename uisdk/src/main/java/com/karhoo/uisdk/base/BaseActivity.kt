@@ -6,6 +6,7 @@ import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.LayoutRes
@@ -16,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
@@ -26,6 +28,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_base.snackBarContainer
@@ -44,6 +47,10 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     abstract val layout: Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (!KarhooUISDKConfigurationProvider.isConfigurationInitialized()) {
+            Logger.error(getString(R.string.kh_uisdk_logger_sdk_not_configured))
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(layout)
         backgroundFade = snackBarContainer?.background as TransitionDrawable?
