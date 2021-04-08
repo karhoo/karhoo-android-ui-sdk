@@ -7,9 +7,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.karhoo.karhootraveller.common.preferences
-import com.karhoo.karhootraveller.menu.menu
-import com.karhoo.karhootraveller.profile.user.userProfile
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
@@ -26,7 +23,6 @@ import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PUBLIC_KEY
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.FLEET_INFO_ALT
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
@@ -569,24 +565,24 @@ class AdyenBookingTests : Launch {
      * Then:  I can see: First Name, Last Name, email, country code, mobile number, add card
      * button is not visible
      **/
-    @Test
-    @AllowFlaky(attempts = 10)
-    fun fullCheckProfilePageAdyenUser() {
-        preferences {
-            setUserPreferenceAdyen(USER_INFO_ADYEN)
-        }
-        booking(this) {
-            pressMenuButton()
-        }
-        menu {
-            clickOnProfileButton()
-        }
-        userProfile {
-            mediumSleep()
-        } result {
-            fullScreenCheckCardRegisteredAdyen()
-        }
-    }
+//    @Test
+//    @AllowFlaky(attempts = 10)
+//    fun fullCheckProfilePageAdyenUser() {
+//        preferences {
+//            setUserPreferenceAdyen(USER_INFO_ADYEN)
+//        }
+//        booking(this) {
+//            pressMenuButton()
+//        }
+//        menu {
+//            clickOnProfileButton()
+//        }
+//        userProfile {
+//            mediumSleep()
+//        } result {
+//            fullScreenCheckCardRegisteredAdyen()
+//        }
+//    }
 
     override fun launch(intent: Intent?) {
         intent?.let {

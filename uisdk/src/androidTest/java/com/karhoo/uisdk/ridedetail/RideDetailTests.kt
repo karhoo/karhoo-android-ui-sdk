@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.karhoo.karhootraveller.R
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
@@ -266,73 +265,73 @@ class RideDetailTests : Launch {
         }
     }
 
-    /**
-     * Given:   I am on the ride details of a requested ride with a cancellation SLA before pickup
-     * When:    The card is shown
-     * Then:    The cancellation SLA text is shown
-     **/
-    @Test
-    fun checkCancellationTextForRequestedRideWithSLA() {
-        serverRobot {
-            successfulToken()
-        }
-        rideDetail(this, TRIP_REQUESTED_INTENT_WITH_CANCELLATION_SLA) {
-            shortSleep()
-        } result {
-            viewIsVisible(R.id.rideDetailCancellationText)
-        }
-    }
-
-    /**
-     * Given:   I am on the ride details of a confirmed ride with a cancellation SLA before pickup
-     * When:    The card is shown
-     * Then:    The cancellation SLA text is shown
-     **/
-    @Test
-    fun checkCancellationTextForConfirmedRideWithSLA() {
-        serverRobot {
-            successfulToken()
-        }
-        rideDetail(this, TRIP_CONFIRMED_INTENT_WITH_CANCELLATION_SLA) {
-            shortSleep()
-        } result {
-            viewIsVisible(R.id.rideDetailCancellationText)
-        }
-    }
-
-    /**
-     * Given:   I am on the ride details of a confirmed ride without a cancellation SLA
-     * When:    The card is shown
-     * Then:    The cancellation SLA text is not shown
-     **/
-    @Test
-    fun checkCancellationTextForConfirmedRideWithoutSLA() {
-        serverRobot {
-            successfulToken()
-        }
-        rideDetail(this, TRIP_STATE_CONFIRMED) {
-            shortSleep()
-        } result {
-            viewIsNotVisible(R.id.rideDetailCancellationText)
-        }
-    }
-
-    /**
-     * Given:   I am on the ride details of a on boarded ride with a cancellation SLA
-     * When:    The card is shown
-     * Then:    The cancellation SLA text is not shown
-     **/
-    @Test
-    fun checkCancellationTextForOnBoardedRideWithSLA() {
-        serverRobot {
-            successfulToken()
-        }
-        rideDetail(this, TRIP_STATE_ON_BOARDED) {
-            shortSleep()
-        } result {
-            viewIsNotVisible(R.id.rideDetailCancellationText)
-        }
-    }
+//    /**
+//     * Given:   I am on the ride details of a requested ride with a cancellation SLA before pickup
+//     * When:    The card is shown
+//     * Then:    The cancellation SLA text is shown
+//     **/
+//    @Test
+//    fun checkCancellationTextForRequestedRideWithSLA() {
+//        serverRobot {
+//            successfulToken()
+//        }
+//        rideDetail(this, TRIP_REQUESTED_INTENT_WITH_CANCELLATION_SLA) {
+//            shortSleep()
+//        } result {
+//            viewIsVisible(R.id.rideDetailCancellationText)
+//        }
+//    }
+//
+//    /**
+//     * Given:   I am on the ride details of a confirmed ride with a cancellation SLA before pickup
+//     * When:    The card is shown
+//     * Then:    The cancellation SLA text is shown
+//     **/
+//    @Test
+//    fun checkCancellationTextForConfirmedRideWithSLA() {
+//        serverRobot {
+//            successfulToken()
+//        }
+//        rideDetail(this, TRIP_CONFIRMED_INTENT_WITH_CANCELLATION_SLA) {
+//            shortSleep()
+//        } result {
+//            viewIsVisible(R.id.rideDetailCancellationText)
+//        }
+//    }
+//
+//    /**
+//     * Given:   I am on the ride details of a confirmed ride without a cancellation SLA
+//     * When:    The card is shown
+//     * Then:    The cancellation SLA text is not shown
+//     **/
+//    @Test
+//    fun checkCancellationTextForConfirmedRideWithoutSLA() {
+//        serverRobot {
+//            successfulToken()
+//        }
+//        rideDetail(this, TRIP_STATE_CONFIRMED) {
+//            shortSleep()
+//        } result {
+//            viewIsNotVisible(R.id.rideDetailCancellationText)
+//        }
+//    }
+//
+//    /**
+//     * Given:   I am on the ride details of a on boarded ride with a cancellation SLA
+//     * When:    The card is shown
+//     * Then:    The cancellation SLA text is not shown
+//     **/
+//    @Test
+//    fun checkCancellationTextForOnBoardedRideWithSLA() {
+//        serverRobot {
+//            successfulToken()
+//        }
+//        rideDetail(this, TRIP_STATE_ON_BOARDED) {
+//            shortSleep()
+//        } result {
+//            viewIsNotVisible(R.id.rideDetailCancellationText)
+//        }
+//    }
 
 
     /**
