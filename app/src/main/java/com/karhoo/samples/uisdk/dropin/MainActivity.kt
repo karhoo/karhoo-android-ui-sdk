@@ -65,6 +65,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
+            KarhooUISDK.apply {
+                setConfiguration(KarhooConfig(applicationContext))
+            }
             showLoginInputDialog()
         }
     }
