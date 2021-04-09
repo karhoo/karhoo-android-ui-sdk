@@ -8,7 +8,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.karhoo.samples.uisdk.dropin.config.*
+import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
+import com.karhoo.samples.uisdk.dropin.config.AdyenGuestConfig
+import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
+import com.karhoo.samples.uisdk.dropin.config.BraintreeTokenExchangeConfig
+import com.karhoo.samples.uisdk.dropin.config.BraintreeGuestConfig
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooApi.setConfiguration
 import com.karhoo.sdk.api.KarhooError
