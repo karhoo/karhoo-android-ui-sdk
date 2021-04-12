@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.R
@@ -29,7 +30,7 @@ class RecentsListView @JvmOverloads constructor(context: Context,
             adapter.setItemClickListener { _, position, locationInfo -> saveLocationAndNotifyActions(locationInfo, position) }
 
             recycler.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                layoutManager = GridLayoutManager(context, 1)
                 setHasFixedSize(true)
                 adapter = this@RecentsListView.adapter
             }

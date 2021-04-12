@@ -20,5 +20,4 @@ class RecentAddressAdapter(private val context: Context) : BaseRecyclerAdapter<L
 
         view.bindViews(position, R.drawable.uisdk_ic_location_recent, location, itemClickListener)
     }
-
 }
