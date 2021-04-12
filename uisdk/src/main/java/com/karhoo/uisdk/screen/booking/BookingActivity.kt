@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -61,15 +60,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private var quote: Quote? = null
 
-    ////////////////////////////////////////////
     private var tripDetails: TripInfo? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
     private var outboundTripId: String? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
     private var journeyInfo: JourneyInfo? = null
     private var passengerDetails: PassengerDetails? = null
     private var bookingComments: String? = ""
 
-    ////////////////////////////////////////////
-    private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
+    private var isGuest: Boolean = false
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -77,6 +74,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onCreate(savedInstanceState: Bundle?) {
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
+
+        isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
         if (callingActivity != null) {
             KarhooUISDK.analytics?.bookingWithCallbackOpened()
