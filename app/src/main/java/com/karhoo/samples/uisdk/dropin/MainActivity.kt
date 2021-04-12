@@ -9,10 +9,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenGuestConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
-import com.karhoo.samples.uisdk.dropin.config.BraintreeGuestConfig
 import com.karhoo.samples.uisdk.dropin.config.BraintreeTokenExchangeConfig
+import com.karhoo.samples.uisdk.dropin.config.BraintreeGuestConfig
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.request.UserLogin
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
             applyBraintreeTokenExchangeConfig()
 
-            loginTokenExchange()
+            loginTokenExchange(BuildConfig.BRAINTREE_AUTH_TOKEN)
         }
 
         findViewById<Button>(R.id.bookTripButtonAdyenGuest).setOnClickListener {
@@ -69,10 +70,13 @@ class MainActivity : AppCompatActivity() {
 
             applyAdyenTokenExchangeConfig()
 
-            loginTokenExchange()
+            loginTokenExchange(BuildConfig.ADYEN_AUTH_TOKEN)
         }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
+            KarhooUISDK.apply {
+                setConfiguration(KarhooConfig(applicationContext))
+            }
             showLoginInputDialog()
         }
     }
@@ -143,9 +147,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginTokenExchange() {
+    private fun loginTokenExchange(token: String) {
         KarhooApi.userService.logout()
-        val token: String = BuildConfig.ADYEN_AUTH_TOKEN
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
                 is Resource.Success -> goToBooking()
