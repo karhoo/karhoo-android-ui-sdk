@@ -339,6 +339,29 @@ For example, the following widgets/views can be customised:
 
 Each screen in the UISDK automatically routes to the next. You may want to only use particular screens in the UISDK and custom screens for others. For example you may want to book a trip with the UISDK but use your own address search screen. You can inject a routing implementation to override the navigation flow in the UISDK. To do this you would create your own screen builder and inject it into the SDK.
 
+## Set up for developing the SDK
+This project uses the Gradle build system.
+
+First download the project by cloning this repository or downloading an archived
+snapshot. (See the options at the top of the page.)
+
+In Android Studio, use the "Import non-Android Studio project" or "Import Project" option.
+If prompted for a gradle configuration accept the default settings.
+
+Alternatively use the `gradlew build` command to build the project directly.
+
+## Getting Started with the sample app
+The demo app require that you add your own set of API keys:
+
+- Create a file in the app directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
+- Add the API keys and configurations to secure.properties. You can also take a look at the `secure.properties.template` as an example.
+    - [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+    - Enable Firebase analytics/crashlytics and add config file to the project (google-service.json) (Optional)
+    - Add GUEST CHECKOUT configuration for your account in order to enable the guest checkout journey
+    - Add Staging environment configuration in order to be able to use Staging environment
+- Update fabric API key in app/build.gradle
+- Build and run
+
 ## Issues
 
 ### 🐛 Bugs
