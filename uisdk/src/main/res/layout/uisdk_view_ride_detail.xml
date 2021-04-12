@@ -425,6 +425,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end|center_vertical"
+            android:paddingStart="@dimen/spacing_xsmall"
+            android:paddingEnd="@dimen/spacing_xsmall"
             android:orientation="horizontal">
 
             <Button
