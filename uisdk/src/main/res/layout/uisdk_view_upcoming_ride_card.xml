@@ -146,7 +146,7 @@
                 android:id="@+id/callButton"
                 style="@style/Text.Action"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spacing_large"
                 android:layout_weight="1"
                 android:text="@string/kh_uisdk_contact_fleet" />
 
@@ -154,9 +154,9 @@
                 android:id="@+id/trackButton"
                 style="@style/Text.Action"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/spacing_large"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_marginStart="@dimen/spacing_xsmall"
                 android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>
