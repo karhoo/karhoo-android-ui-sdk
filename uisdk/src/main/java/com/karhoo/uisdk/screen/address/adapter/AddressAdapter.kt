@@ -37,10 +37,6 @@ class AddressAdapter(private val context: Context,
         val place = addresses[position]
 
         view.bindViews(position, R.drawable.uisdk_ic_location_pin, place, itemClickListener)
-
-        view.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-        val layoutParams = view.layoutParams.width
-        Log.d("PD36", layoutParams.toString())
     }
 
 }
