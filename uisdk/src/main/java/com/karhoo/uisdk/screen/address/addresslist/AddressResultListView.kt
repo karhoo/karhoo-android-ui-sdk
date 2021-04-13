@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
