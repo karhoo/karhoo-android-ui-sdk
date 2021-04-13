@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.address.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import com.karhoo.sdk.api.model.Place
 import com.karhoo.uisdk.R
@@ -16,7 +17,9 @@ class AddressAdapter(private val context: Context,
     private var query: String = ""
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): AddressItemView {
-        return AddressItemView(context)
+        val view = AddressItemView(context)
+        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        return view
     }
 
     fun setItems(addresses: Addresses) {
@@ -34,6 +37,10 @@ class AddressAdapter(private val context: Context,
         val place = addresses[position]
 
         view.bindViews(position, R.drawable.uisdk_ic_location_pin, place, itemClickListener)
+
+        view.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+        val layoutParams = view.layoutParams.width
+        Log.d("PD36", layoutParams.toString())
     }
 
 }

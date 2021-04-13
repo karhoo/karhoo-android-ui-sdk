@@ -30,7 +30,7 @@ class RecentsListView @JvmOverloads constructor(context: Context,
             adapter.setItemClickListener { _, position, locationInfo -> saveLocationAndNotifyActions(locationInfo, position) }
 
             recycler.apply {
-                layoutManager = GridLayoutManager(context, 1)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 setHasFixedSize(true)
                 adapter = this@RecentsListView.adapter
             }

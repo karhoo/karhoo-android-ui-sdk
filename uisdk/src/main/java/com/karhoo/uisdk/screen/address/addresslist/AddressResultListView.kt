@@ -41,7 +41,7 @@ class AddressResultListView @JvmOverloads constructor(
         }
 
         recycler.apply {
-            layoutManager = GridLayoutManager(context, 1)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = addressAdapter
         }
     }

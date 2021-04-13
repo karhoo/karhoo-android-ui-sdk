@@ -2,7 +2,10 @@ package com.karhoo.uisdk.screen.address.adapter
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import com.karhoo.sdk.api.model.LocationInfo

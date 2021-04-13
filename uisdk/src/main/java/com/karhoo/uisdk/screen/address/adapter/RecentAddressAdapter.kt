@@ -10,7 +10,9 @@ import com.karhoo.uisdk.base.BaseRecyclerView
 class RecentAddressAdapter(private val context: Context) : BaseRecyclerAdapter<LocationInfo, AddressItemView>() {
 
     override fun onCreateItemView(parent: ViewGroup, viewType: Int): AddressItemView {
-        return AddressItemView(context)
+        val view = AddressItemView(context)
+        view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        return view
     }
 
     override fun onBindViewHolder(holder: BaseRecyclerView<AddressItemView>, position: Int) {
