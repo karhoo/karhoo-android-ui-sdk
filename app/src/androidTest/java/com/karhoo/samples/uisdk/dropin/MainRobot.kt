@@ -15,16 +15,8 @@ fun main(launch: Launch, func: MainRobot.() -> Unit) = MainRobot().apply {
 
 class MainRobot : BaseTestRobot() {
 
-    fun userClicksOnBookATripGuest() {
-        clickButton(R.id.bookTripButtonGuest)
-    }
-
     fun userClicksOnBookATripLogin() {
         clickButton(R.id.bookTripButtonLogin)
-    }
-
-    fun userClicksOnBookATripToken() {
-        clickButton(R.id.bookTripButtonTokenExchange)
     }
 
     fun validEmailAndPasswordLogin() {
