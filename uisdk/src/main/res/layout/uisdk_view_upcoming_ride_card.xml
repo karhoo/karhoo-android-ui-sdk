@@ -139,22 +139,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/callButton"
                 style="@style/Text.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_large"
+                android:layout_weight="1"
                 android:text="@string/kh_uisdk_contact_fleet" />
 
             <Button
                 android:id="@+id/trackButton"
                 style="@style/Text.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_large"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_xsmall"
                 android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>

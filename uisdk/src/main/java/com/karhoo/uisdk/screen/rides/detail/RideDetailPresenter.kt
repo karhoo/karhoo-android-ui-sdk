@@ -157,10 +157,10 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             view?.apply {
                 hideContactOptions()
                 displayReportIssueButton()
-            }
-            if (!trip.origin?.placeId.isNullOrEmpty()
-                    && !trip.destination?.placeId.isNullOrEmpty()) {
-                view?.displayRebookButton()
+                if (!trip.origin?.placeId.isNullOrEmpty()
+                        && !trip.destination?.placeId.isNullOrEmpty()) {
+                    displayRebookButton()
+                }
             }
         }
     }
