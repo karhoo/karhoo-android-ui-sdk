@@ -1,58 +1,47 @@
 package com.karhoo.uisdk.util
 
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.util.Currency
+import java.util.Locale
 
 object CurrencyUtils {
 
     fun getFormattedPrice(currency: String?, price: Int): String {
         return if (currency.isNullOrEmpty()) "" else {
             val currency = Currency.getInstance(currency)
-            intToPrice(currency, price)
+            currencyAwareFormatting(price.toLong(), currency)
         }
     }
 
     fun intToPrice(currency: Currency, price: Int): String {
-
-        val cost = price.toString()
-        val low = currency.defaultFractionDigits
-
-        val (costHi, costLow) = getDisplayPrice(cost, low)
-
-        return String.format("%s%s.%s", currency.symbol, costHi, costLow)
+        return currencyAwareFormatting(price.toLong(), currency)
     }
 
     fun intToRangedPrice(currency: Currency, lowPrice: Int, highPrice: Int): String {
-        val lowCost = lowPrice.toString()
-        val highCost = highPrice.toString()
-        val low = currency.defaultFractionDigits
-
-        val (costHiPrice, costHighFraction) = getDisplayPrice(highCost, low)
-        val (costLowPrice, costLowFraction) = getDisplayPrice(lowCost, low)
-
-        return String.format("%s%s.%s - %s.%s",
-                             currency.symbol,
-                             costLowPrice,
-                             costLowFraction,
-                             costHiPrice,
-                             costHighFraction)
+        val lowCostString = currencyAwareFormatting(lowPrice.toLong(), currency, includeCurrencySymbol = true)
+        val highCostString = currencyAwareFormatting(highPrice.toLong(), currency, includeCurrencySymbol = false)
+        return String.format("%s - %s", lowCostString, highCostString)
     }
 
     fun intToPriceNoSymbol(currency: Currency, price: Int): String {
-        val cost = Integer.toString(price)
-        val low = currency.defaultFractionDigits
-
-        val costHiEndIndex = if (cost.length - low > 0) cost.length - low else 0
-        val costHi = if (costHiEndIndex == 0) "0" else cost.substring(0, costHiEndIndex)
-        val costLow = cost.substring(costHiEndIndex)
-
-        return String.format("%s.%s", costHi, costLow)
+        return currencyAwareFormatting(price.toLong(), currency, includeCurrencySymbol = false)
     }
 
-    private fun getDisplayPrice(cost: String, low: Int): Pair<String, String> {
-        val costHiEndIndex = if (cost.length - low > 0) cost.length - low else 0
-        val costHi = if (costHiEndIndex == 0) "0" else cost.substring(0, costHiEndIndex)
-        val costLow = cost.substring(costHiEndIndex, cost.length)
-        return Pair(costHi, costLow)
+    private fun currencyAwareFormatting(amount: Long,
+                                        currency: Currency,
+                                        includeCurrencySymbol: Boolean = true,
+                                        locale: Locale = Locale.getDefault()): String {
+        val currencyFormat: DecimalFormat = DecimalFormat.getCurrencyInstance(locale) as DecimalFormat
+        currencyFormat.currency = currency
+        if (!includeCurrencySymbol) {
+            val decimalFormatSymbols = currencyFormat.decimalFormatSymbols
+            decimalFormatSymbols.currencySymbol = ""
+            currencyFormat.decimalFormatSymbols = decimalFormatSymbols
+        }
+        currencyFormat.setMinimumFractionDigits(currency.defaultFractionDigits)
+        currencyFormat.setMaximumFractionDigits(currency.defaultFractionDigits)
+        val value = BigDecimal.valueOf(amount, currency.defaultFractionDigits)
+        return currencyFormat.format(value)
     }
-
 }

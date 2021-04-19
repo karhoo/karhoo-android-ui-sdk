@@ -22,6 +22,50 @@ class CurrencyUtilsTest {
         assertEquals("£10.00", priceString)
     }
 
+    @Test
+    fun `when formatting Jordanian Dinnar prices, should display 3 fraction digits`() {
+        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JOD"), price = 10000)
+        assertEquals("JOD10.000", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen prices, should display 0 fraction digits`() {
+        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 180)
+        assertEquals("JPY180", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen over one thousand prices, should display 0 fraction digits and thousand comma separator`() {
+        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 1800)
+        assertEquals("JPY1,800", formattedString)
+    }
+
+    @Test
+    fun `when formatting UK Pounds prices with no symbol, should display 3 fraction digits`() {
+        val priceString = CurrencyUtils.intToPriceNoSymbol(
+                currency = Currency.getInstance("GBP"),
+                price = 1000)
+        assertEquals("10.00", priceString)
+    }
+
+    @Test
+    fun `when formatting Jordanian Dinnar prices with no symbol, should display 3 fraction digits`() {
+        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JOD"), price = 10000)
+        assertEquals("10.000", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen prices with no symbol, should display 0 fraction digits`() {
+        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 180)
+        assertEquals("180", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen over one thousand prices with no symbol, should display 0 fraction digits and thousand comma separator`() {
+        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 1800)
+        assertEquals("1,800", formattedString)
+    }
+
     /**
      * Given:   A high and low price
      * When:    Getting the formatted string
@@ -34,6 +78,24 @@ class CurrencyUtilsTest {
                 highPrice = 1000,
                 lowPrice = 500)
         assertEquals("£5.00 - 10.00", priceString)
+    }
+
+    @Test
+    fun `when formatting Jordanian Dinnar range prices, should display them with 3 fraction digits`() {
+        val priceString = CurrencyUtils.intToRangedPrice(
+                currency = Currency.getInstance("JOD"),
+                highPrice = 10000,
+                lowPrice = 5000)
+        assertEquals("JOD5.000 - 10.000", priceString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen range prices, should display them with 0 fraction digits`() {
+        val priceString = CurrencyUtils.intToRangedPrice(
+                currency = Currency.getInstance("JPY"),
+                highPrice = 1000,
+                lowPrice = 500)
+        assertEquals("JPY500 - 1,000", priceString)
     }
 
     /**
@@ -56,5 +118,23 @@ class CurrencyUtilsTest {
     fun `formatted currency string returned for currency string and price`() {
         val formattedString = CurrencyUtils.getFormattedPrice(currency = "GBP", price = 1000)
         assertEquals("£10.00", formattedString)
+    }
+
+    @Test
+    fun `when formatting Jordanian Dinnar prices with string currency code, should display 3 fraction digits`() {
+        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JOD", price = 10000)
+        assertEquals("JOD10.000", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen prices with string currency code, should display 0 fraction digits`() {
+        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 180)
+        assertEquals("JPY180", formattedString)
+    }
+
+    @Test
+    fun `when formatting Japanese Yen over one thousand prices with string currency code, should display 0 fraction digits and thousand comma separator`() {
+        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 1800)
+        assertEquals("JPY1,800", formattedString)
     }
 }
