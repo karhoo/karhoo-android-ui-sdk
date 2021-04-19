@@ -8,34 +8,34 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:914dc37ddf3f85951c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+          "client_id": "123",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
+                "bundle_id": "123"
               }
             }
           ]
@@ -44,106 +44,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:8e3ca591752a6dcd1c7974",
-        "android_client_info": {
-          "package_name": "com.karhoo.karhootraveller.accor"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:086db37d059c4ebe1c7974",
-        "android_client_info": {
-          "package_name": "com.karhoo.karhootraveller.barclays"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:1dd932f6034864c31c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.debug"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+          "client_id": "123",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
+                "bundle_id": "123"
               }
             }
           ]
@@ -152,106 +80,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:96566c0147de2b2e1c7974",
-        "android_client_info": {
-          "package_name": "com.karhoo.karhootraveller.goldman"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:82c3c73e0c3df3c91c7974",
-        "android_client_info": {
-          "package_name": "com.karhoo.karhootraveller.groundScope"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:1753215f85497c141c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.prodQA"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+          "client_id": "123",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
+                "bundle_id": "123"
               }
             }
           ]
@@ -260,34 +116,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:fdd5bc8e6a21c92d1c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.sandbox"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+          "client_id": "123",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
+                "bundle_id": "123"
               }
             }
           ]
@@ -296,34 +152,34 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:785182441373:android:c335649e32f89a521c7974",
+        "mobilesdk_app_id": "123",
         "android_client_info": {
           "package_name": "com.karhoo.karhootraveller.staging"
         }
       },
       "oauth_client": [
         {
-          "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+          "client_id": "123",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGNUkXRV3hThCs3jd2ooVW_eO-zduIHXY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "785182441373-47ig1jn7mhrhtf78re65qs5s2gqckni8.apps.googleusercontent.com",
+              "client_id": "123",
               "client_type": 3
             },
             {
-              "client_id": "785182441373-2clcntomei3rsdhr14ani1qmo0jd9pui.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "karhoo.enterprise.traveller.goldmansachs"
+                "bundle_id": "123"
               }
             }
           ]
