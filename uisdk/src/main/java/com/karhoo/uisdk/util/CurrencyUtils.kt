@@ -7,31 +7,31 @@ import java.util.Locale
 
 object CurrencyUtils {
 
-    fun getFormattedPrice(currency: String?, price: Int): String {
+    fun getFormattedPrice(currency: String?, price: Int, locale: Locale = Locale.getDefault()): String {
         return if (currency.isNullOrEmpty()) "" else {
             val currency = Currency.getInstance(currency)
-            currencyAwareFormatting(price.toLong(), currency)
+            currencyAwareFormatting(price.toLong(), currency, locale)
         }
     }
 
-    fun intToPrice(currency: Currency, price: Int): String {
-        return currencyAwareFormatting(price.toLong(), currency)
+    fun intToPrice(currency: Currency, price: Int, locale: Locale = Locale.getDefault()): String {
+        return currencyAwareFormatting(price.toLong(), currency, locale)
     }
 
-    fun intToRangedPrice(currency: Currency, lowPrice: Int, highPrice: Int): String {
-        val lowCostString = currencyAwareFormatting(lowPrice.toLong(), currency, includeCurrencySymbol = true)
-        val highCostString = currencyAwareFormatting(highPrice.toLong(), currency, includeCurrencySymbol = false)
+    fun intToRangedPrice(currency: Currency, lowPrice: Int, highPrice: Int, locale: Locale = Locale.getDefault()): String {
+        val lowCostString = currencyAwareFormatting(lowPrice.toLong(), currency, locale, includeCurrencySymbol = true)
+        val highCostString = currencyAwareFormatting(highPrice.toLong(), currency, locale, includeCurrencySymbol = false)
         return String.format("%s - %s", lowCostString, highCostString)
     }
 
-    fun intToPriceNoSymbol(currency: Currency, price: Int): String {
-        return currencyAwareFormatting(price.toLong(), currency, includeCurrencySymbol = false)
+    fun intToPriceNoSymbol(currency: Currency, price: Int, locale: Locale = Locale.getDefault()): String {
+        return currencyAwareFormatting(price.toLong(), currency, locale, includeCurrencySymbol = false)
     }
 
     private fun currencyAwareFormatting(amount: Long,
                                         currency: Currency,
-                                        includeCurrencySymbol: Boolean = true,
-                                        locale: Locale = Locale.getDefault()): String {
+                                        locale: Locale,
+                                        includeCurrencySymbol: Boolean = true): String {
         val currencyFormat: DecimalFormat = DecimalFormat.getCurrencyInstance(locale) as DecimalFormat
         currencyFormat.currency = currency
         if (!includeCurrencySymbol) {
