@@ -2,6 +2,7 @@ package com.karhoo.samples.uisdk.dropin
 
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
@@ -9,8 +10,8 @@ import com.karhoo.samples.uisdk.dropin.common.preferences
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.samples.uisdk.dropin.common.Launch
-import com.karhoo.samples.uisdk.dropin.common.serverRobot
 import com.karhoo.samples.uisdk.dropin.common.testrunner.TravellerTestConfig
+import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.trip.trip
@@ -48,10 +49,11 @@ import org.junit.runner.RunWith
 import java.net.HttpURLConnection.HTTP_OK
 
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class EndToEndBraintreeUserTest : Launch {
 
     @get:Rule
-    var wireMockRule = WireMockRule(WireMockConfiguration.options().port(TravellerTestConfig.PORT_NUMBER), false)
+    var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
     @get:Rule
     val activityRule: ActivityTestRule<MainActivity> =
@@ -67,18 +69,29 @@ class EndToEndBraintreeUserTest : Launch {
         activityRule.launchActivity(Intent())
     }
 
-    @Before
     fun clearUser() {
         preferences {
-//            clearUserPreference()
+            clearUserPreference()
         }
+    }
+
+    @Before
+    fun setUp() {
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
+            paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
+            userProfileResponse(HTTP_OK, USER_INFO)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+        }
+        clearUser()
     }
 
     @After
     fun tearDown() {
-        preferences {
-//            clearUserPreference()
-        }
+        wireMockRule.resetAll()
+        clearUser()
     }
 
     /**
@@ -89,14 +102,6 @@ class EndToEndBraintreeUserTest : Launch {
     @Test
     @AllowFlaky(attempts = 5)
     fun endToEndTestWithBraintreeUser() {
-        serverRobot {
-            successfulToken()
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
-            paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
-            userProfileResponse(HTTP_OK, USER_INFO)
-            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-        }
         main(this) {
             userClicksOnBookATripLogin()
             mediumSleep()

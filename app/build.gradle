@@ -14,7 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.karhoo.samples.uisdk.dropin.common.testrunner.TravellerTestRunner"
 
         def secureProps = new Properties()
         if (file("secure.properties").exists()) {

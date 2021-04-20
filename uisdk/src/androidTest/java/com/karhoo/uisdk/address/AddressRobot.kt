@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.address
 
 import com.google.gson.Gson
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
@@ -30,6 +31,12 @@ class AddressRobot : BaseTestRobot() {
 
     fun clearAddressSearchList() {
         clickButton(R.id.clearSearchButtonIcon)
+    }
+
+    fun noRecentAddresses() {
+        preferences {
+            setStringPreference("SharedPreferencesLocationStore.LocationsKey", Gson().toJson(emptyList<LocationInfo>()))
+        }
     }
 
     fun setDefaultRecents() {

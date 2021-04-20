@@ -507,6 +507,7 @@ class TripTests : Launch {
         trip(this) {
             clickOnDriverDetails()
         } result {
+            shortSleep()
             DERFullScreenCheck(
                     pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
                     destinationText = TRIP_DER.destination?.displayAddress.orEmpty()

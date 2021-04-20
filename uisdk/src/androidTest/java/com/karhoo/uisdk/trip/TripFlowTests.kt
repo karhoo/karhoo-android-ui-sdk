@@ -32,6 +32,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
@@ -47,6 +48,10 @@ class TripFlowTests : Launch {
     var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
     private var flakyRule = FlakyTestRule()
+
+    @get:Rule
+    var chain: RuleChain = RuleChain.outerRule(flakyRule)
+            .around(activityRule)
 
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
