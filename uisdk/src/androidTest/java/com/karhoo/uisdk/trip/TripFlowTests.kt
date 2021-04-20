@@ -198,6 +198,7 @@ class TripFlowTests : Launch {
         rideDetail {
             mediumSleep()
         } result {
+            shortSleep()
             completedRideFullCheckFromTrip()
         }
     }

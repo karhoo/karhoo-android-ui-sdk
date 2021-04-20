@@ -209,11 +209,13 @@ class BraintreeBookingTests : Launch {
         booking(this, INITIAL_TRIP_INTENT) {
             shortSleep()
         } result {
+            shortSleep()
             quotesListNotExpanded(LAST_FLEET)
         }
         booking {
             pressExpandListButton()
         } result {
+            shortSleep()
             quotesListIsExpanded(LAST_FLEET)
         }
     }
