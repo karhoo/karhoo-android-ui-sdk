@@ -8,7 +8,7 @@ import java.util.Locale
 fun Currency.intToRangedPrice(lowPrice: Int, highPrice: Int, locale: Locale = Locale.getDefault()): String {
     val lowCostString = this.formatted(lowPrice, locale, includeCurrencySymbol = true)
     val highCostString = this.formatted(highPrice, locale, includeCurrencySymbol = false)
-    return String.format("%s - %s", lowCostString, highCostString)
+    return "$lowCostString - $highCostString"
 }
 
 fun Currency.intToPriceNoSymbol(price: Int, locale: Locale = Locale.getDefault()): String {

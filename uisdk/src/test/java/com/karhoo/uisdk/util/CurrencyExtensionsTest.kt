@@ -380,7 +380,7 @@ class CurrencyExtensionsTest {
      */
     private fun assertCurrencyFormatting(currencyCode: String, expectedAmountString: String, actualString: String, locale: Locale) {
         val expectedCurrencySymbol = expectedCurrencySymbol(locale, currencyCode)
-        val expectedPriceString = String.format("%s%s", expectedCurrencySymbol, expectedAmountString)
+        val expectedPriceString = "$expectedCurrencySymbol$expectedAmountString"
         assertEquals(expectedPriceString, actualString)
     }
 
