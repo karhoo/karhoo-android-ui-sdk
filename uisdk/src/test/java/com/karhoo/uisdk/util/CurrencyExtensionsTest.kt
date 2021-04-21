@@ -9,7 +9,11 @@ import java.util.Currency
 import java.util.Locale
 
 @RunWith(MockitoJUnitRunner::class)
-class CurrencyUtilsTest {
+class CurrencyExtensionsTest {
+
+    val gbpCurrency = Currency.getInstance("GBP")
+    val jodCurrency = Currency.getInstance("JOD")
+    val jpyCurrency = Currency.getInstance("JPY")
 
     /**
      * Given:   A high price is available
@@ -18,13 +22,12 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `high price formatted correctly for individual price`() {
-        val formattedString = CurrencyUtils.intToPrice(
-                currency = Currency.getInstance("GBP"),
+        val formattedString = gbpCurrency.formatted(
                 price = 1000,
                 locale = Locale.UK
         )
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "10.00",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -33,9 +36,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JOD"), price = 10000, locale = Locale.UK)
+        val formattedString = jodCurrency.formatted(price = 10000, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "10.000",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -44,9 +47,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen prices, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 180, locale = Locale.UK)
+        val formattedString = jpyCurrency.formatted(price = 180, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "180",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -55,9 +58,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 1800, locale = Locale.UK)
+        val formattedString = jpyCurrency.formatted(price = 1800, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "1,800",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -66,8 +69,7 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting UK Pounds prices with no symbol, should display 3 fraction digits`() {
-        val priceString = CurrencyUtils.intToPriceNoSymbol(
-                currency = Currency.getInstance("GBP"),
+        val priceString = gbpCurrency.intToPriceNoSymbol(
                 price = 1000,
                 locale = Locale.UK
         )
@@ -76,19 +78,19 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices with no symbol, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JOD"), price = 10000, locale = Locale.UK)
+        val formattedString = jodCurrency.intToPriceNoSymbol(price = 10000, locale = Locale.UK)
         assertEquals("10.000", formattedString)
     }
 
     @Test
     fun `when formatting Japanese Yen prices with no symbol, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 180, locale = Locale.UK)
+        val formattedString = jpyCurrency.intToPriceNoSymbol(price = 180, locale = Locale.UK)
         assertEquals("180", formattedString)
     }
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices with no symbol, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 1800, locale = Locale.UK)
+        val formattedString = jpyCurrency.intToPriceNoSymbol(price = 1800, locale = Locale.UK)
         assertEquals("1,800", formattedString)
     }
 
@@ -99,14 +101,13 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `range pricing formatted correctly when given a high and low price`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("GBP"),
+        val formattedString = gbpCurrency.intToRangedPrice(
                 highPrice = 1000,
                 lowPrice = 500,
                 locale = Locale.UK
         )
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "5.00 - 10.00",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -115,14 +116,13 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar range prices, should display them with 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("JOD"),
+        val formattedString = jodCurrency.intToRangedPrice(
                 highPrice = 10000,
                 lowPrice = 5000,
                 locale = Locale.UK
         )
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "5.000 - 10.000",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -131,29 +131,17 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen range prices, should display them with 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("JPY"),
+        val formattedString = jpyCurrency.intToRangedPrice(
                 highPrice = 1000,
                 lowPrice = 500,
                 locale = Locale.UK
         )
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "500 - 1,000",
                 actualString = formattedString,
                 locale = Locale.UK
         )
-    }
-
-    /**
-     * Given:   A formatted currency String is requested
-     * When:    There is a null currency code
-     * Then:    An empty string is returned
-     */
-    @Test
-    fun `empty string returned for null currency string`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = null, price = 100, locale = Locale.UK)
-        assertEquals("", formattedString)
     }
 
     /**
@@ -163,9 +151,9 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `formatted currency string returned for currency string and price`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "GBP", price = 1000, locale = Locale.UK)
+        val formattedString = gbpCurrency.formatted(price = 1000, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "10.00",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -174,9 +162,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices with string currency code, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JOD", price = 10000, locale = Locale.UK)
+        val formattedString = jodCurrency.formatted(price = 10000, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "10.000",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -185,9 +173,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen prices with string currency code, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 180, locale = Locale.UK)
+        val formattedString = jpyCurrency.formatted(price = 180, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "180",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -196,9 +184,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices with string currency code, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 1800, locale = Locale.UK)
+        val formattedString = jpyCurrency.formatted(price = 1800, locale = Locale.UK)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "1,800",
                 actualString = formattedString,
                 locale = Locale.UK
@@ -212,13 +200,12 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `high price formatted correctly for individual price with US locale`() {
-        val formattedString = CurrencyUtils.intToPrice(
-                currency = Currency.getInstance("GBP"),
+        val formattedString = gbpCurrency.formatted(
                 price = 1000,
                 locale = Locale.US
         )
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "10.00",
                 actualString = formattedString,
                 locale = Locale.US
@@ -227,9 +214,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices with US locale, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JOD"), price = 10000, locale = Locale.US)
+        val formattedString = jodCurrency.formatted(price = 10000, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "10.000",
                 actualString = formattedString,
                 locale = Locale.US
@@ -238,9 +225,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen prices with US locale, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 180, locale = Locale.US)
+        val formattedString = jpyCurrency.formatted(price = 180, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "180",
                 actualString = formattedString,
                 locale = Locale.US
@@ -249,9 +236,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices with US locale, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.intToPrice(currency = Currency.getInstance("JPY"), price = 1800, locale = Locale.US)
+        val formattedString = jpyCurrency.formatted(price = 1800, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "1,800",
                 actualString = formattedString,
                 locale = Locale.US
@@ -260,8 +247,7 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting UK Pounds prices with no symbol with US locale, should display 3 fraction digits`() {
-        val priceString = CurrencyUtils.intToPriceNoSymbol(
-                currency = Currency.getInstance("GBP"),
+        val priceString = gbpCurrency.intToPriceNoSymbol(
                 price = 1000,
                 locale = Locale.US
         )
@@ -270,19 +256,19 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices with no symbol with US locale, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JOD"), price = 10000, locale = Locale.US)
+        val formattedString = jodCurrency.intToPriceNoSymbol(price = 10000, locale = Locale.US)
         assertEquals("10.000", formattedString)
     }
 
     @Test
     fun `when formatting Japanese Yen prices with no symbol with US locale, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 180, locale = Locale.US)
+        val formattedString = jpyCurrency.intToPriceNoSymbol(price = 180, locale = Locale.US)
         assertEquals("180", formattedString)
     }
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices with no symbol with US locale, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.intToPriceNoSymbol(currency = Currency.getInstance("JPY"), price = 1800, locale = Locale.US)
+        val formattedString = jpyCurrency.intToPriceNoSymbol(price = 1800, locale = Locale.US)
         assertEquals("1,800", formattedString)
     }
 
@@ -293,14 +279,13 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `range pricing formatted correctly when given a high and low price with US locale`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("GBP"),
+        val formattedString = gbpCurrency.intToRangedPrice(
                 highPrice = 1000,
                 lowPrice = 500,
                 locale = Locale.US
         )
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "5.00 - 10.00",
                 actualString = formattedString,
                 locale = Locale.US
@@ -309,14 +294,13 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar range prices with US locale, should display them with 3 fraction digits`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("JOD"),
+        val formattedString = jodCurrency.intToRangedPrice(
                 highPrice = 10000,
                 lowPrice = 5000,
                 locale = Locale.US
         )
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "5.000 - 10.000",
                 actualString = formattedString,
                 locale = Locale.US
@@ -325,29 +309,17 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen range prices with US locale, should display them with 0 fraction digits`() {
-        val formattedString = CurrencyUtils.intToRangedPrice(
-                currency = Currency.getInstance("JPY"),
+        val formattedString = jpyCurrency.intToRangedPrice(
                 highPrice = 1000,
                 lowPrice = 500,
                 locale = Locale.US
         )
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "500 - 1,000",
                 actualString = formattedString,
                 locale = Locale.US
         )
-    }
-
-    /**
-     * Given:   A formatted currency String is requested
-     * When:    There is a null currency code
-     * Then:    An empty string is returned
-     */
-    @Test
-    fun `empty string returned for null currency string with US locale`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = null, price = 100, locale = Locale.US)
-        assertEquals("", formattedString)
     }
 
     /**
@@ -357,9 +329,9 @@ class CurrencyUtilsTest {
      */
     @Test
     fun `formatted currency string returned for currency string and price with US locale`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "GBP", price = 1000, locale = Locale.US)
+        val formattedString = gbpCurrency.formatted(price = 1000, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "GBP",
+                currencyCode = gbpCurrency.currencyCode,
                 expectedAmountString = "10.00",
                 actualString = formattedString,
                 locale = Locale.US
@@ -368,9 +340,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Jordanian Dinnar prices with string currency code, with US locale, should display 3 fraction digits`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JOD", price = 10000, locale = Locale.US)
+        val formattedString = jodCurrency.formatted(price = 10000, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JOD",
+                currencyCode = jodCurrency.currencyCode,
                 expectedAmountString = "10.000",
                 actualString = formattedString,
                 locale = Locale.US
@@ -379,9 +351,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen prices with string currency code, with US locale, should display 0 fraction digits`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 180, locale = Locale.US)
+        val formattedString = jpyCurrency.formatted(price = 180, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "180",
                 actualString = formattedString,
                 locale = Locale.US
@@ -390,9 +362,9 @@ class CurrencyUtilsTest {
 
     @Test
     fun `when formatting Japanese Yen over one thousand prices with string currency code, with US locale, should display 0 fraction digits and thousand comma separator`() {
-        val formattedString = CurrencyUtils.getFormattedPrice(currency = "JPY", price = 1800, locale = Locale.US)
+        val formattedString = jpyCurrency.formatted(price = 1800, locale = Locale.US)
         assertCurrencyFormatting(
-                currencyCode = "JPY",
+                currencyCode = jpyCurrency.currencyCode,
                 expectedAmountString = "1,800",
                 actualString = formattedString,
                 locale = Locale.US

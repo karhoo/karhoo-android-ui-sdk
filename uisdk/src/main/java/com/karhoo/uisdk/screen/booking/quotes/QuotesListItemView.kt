@@ -13,10 +13,11 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.toLocalisedString
+import com.karhoo.uisdk.util.formatted
+import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.categoryText
@@ -100,14 +101,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 } else {
                     try {
                         val currency = Currency.getInstance(it.price.currencyCode?.trim())
-                        priceText.text = CurrencyUtils.intToPrice(currency, it.price.highPrice)
+                        priceText.text = currency.formatted(it.price.highPrice)
 
                         when (vehicleDetails.quoteSource) {
-                            QuoteSource.FLEET -> priceText.text = CurrencyUtils.intToPrice(
-                                    currency = currency,
-                                    price = vehicleDetails.price.highPrice)
-                            QuoteSource.MARKET -> priceText.text = CurrencyUtils.intToRangedPrice(
-                                    currency = currency,
+                            QuoteSource.FLEET -> priceText.text = currency.formatted(vehicleDetails.price.highPrice)
+                            QuoteSource.MARKET -> priceText.text = currency.intToRangedPrice(
                                     lowPrice = vehicleDetails.price.lowPrice,
                                     highPrice = vehicleDetails.price.highPrice)
                         }

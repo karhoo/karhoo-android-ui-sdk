@@ -25,9 +25,9 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
+import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
@@ -175,7 +175,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
 
     private fun quotePriceToAmount(quote: Quote?): String {
         val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, quote?.price?.highPrice.orZero())
+        return currency.intToPriceNoSymbol(quote?.price?.highPrice.orZero())
     }
 
     private fun updateCardDetails(paymentData: String?) {

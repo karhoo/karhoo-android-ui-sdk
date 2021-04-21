@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
-import com.karhoo.uisdk.util.CurrencyUtils
+import com.karhoo.uisdk.util.formatted
 import java.util.Currency
 
 class PastRideCardPresenter(
@@ -47,7 +47,7 @@ class PastRideCardPresenter(
                     } else if (fare.data.breakdown.total != 0) {
                         fare.data.breakdown.let {
                             val currency = Currency.getInstance(it.currency)
-                            val price = CurrencyUtils.intToPrice(currency, it.total)
+                            val price = currency.formatted(it.total)
                             view?.displayPrice(price)
                         }
                     }
