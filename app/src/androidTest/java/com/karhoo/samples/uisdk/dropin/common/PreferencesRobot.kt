@@ -4,6 +4,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.PAYMENTS_TOKEN

@@ -43,6 +43,7 @@ import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -429,6 +430,7 @@ class GuestBookingTests : Launch {
      * When:    I select the menu button
      * Then:    I can see the following options in the menu: Feedback, Help, About
      **/
+    @Ignore
     @Test
     fun checkMenuItemsGuestCheckout() {
         serverRobot {

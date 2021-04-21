@@ -5,7 +5,7 @@ import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
 import com.karhoo.sdk.api.KarhooApi.setConfiguration
 import com.karhoo.uisdk.KarhooUISDK
 
-class KarhooApplication : Application() {
+open class KarhooApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
