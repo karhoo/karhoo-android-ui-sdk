@@ -17,10 +17,10 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
+import com.karhoo.uisdk.util.formatted
 import java.util.Currency
 
 private val LIVE_STATES = arrayOf(
@@ -142,8 +142,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     private fun getPriceFromTrip(price: Price): String {
         val currency = Currency.getInstance(price.currency)
-        val value = price.total
-        return CurrencyUtils.intToPrice(currency, value)
+        return currency.formatted(price.total)
     }
 
     override fun bindButtons() {

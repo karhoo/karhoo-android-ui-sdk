@@ -19,12 +19,11 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DateUtil
-import com.karhoo.uisdk.util.ViewsConstants
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toLocalisedString
+import com.karhoo.uisdk.util.formatted
 import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.bookingDateText
 import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.bookingTimeText
 import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.dropoffAddressText
@@ -67,7 +66,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
         scheduledDateViewBinder.bind(this, trip)
 
         val currency = Currency.getInstance(trip.quote?.currency)
-        fareText.text = CurrencyUtils.intToPrice(currency, trip.quote?.total.orZero())
+        fareText.text = currency.formatted(trip.quote?.total.orZero())
 
         fareTypeText.text = quoteType?.toLocalisedString(context.applicationContext).orEmpty()
 
