@@ -8,6 +8,8 @@ src="https://cdn.karhoo.com/s/images/logos/karhoo_logo.png"
 </a>
 </div>
 
+[![](https://jitpack.io/v/karhoo/karhoo-android-ui-sdk.svg)](https://jitpack.io/#karhoo/karhoo-android-ui-sdk)
+
 <h1>Karhoo Android UI SDK</h1>
 
 The UI SDK extends our [**Network SDK**](https://github.com/karhoo/karhoo-android-sdk) with ready to use screens and views for your end users to book rides with [**Karhoo**](https://karhoo.com/) in your application.
