@@ -16,7 +16,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="top"
             android:layout_marginRight="@dimen/spacing_xsmall">
 
             <ProgressBar
@@ -69,6 +69,17 @@
                         android:maxLines="1"
                         tools:text="Quote Name" />
 
+                    <TextView
+                        android:id="@+id/categoryText"
+                        style="@style/Text.Alternative.XSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:textSize="@dimen/text_size_small"
+                        tools:text="Car" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -106,37 +117,6 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/priceLayout"
-                        android:layout_alignParentStart="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/etaText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="left"
-                            android:maxLines="1"
-                            android:text="@string/kh_uisdk_loading_min"
-                            android:textColor="@color/off_black"
-                            android:textSize="@dimen/text_size_medium"
-                            tools:text="99 min" />
-
-                        <TextView
-                            android:id="@+id/categoryText"
-                            style="@style/Text.Alternative.XSmall"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="left"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:textSize="@dimen/text_size_small"
-                            tools:text="Car" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
                         android:id="@+id/priceLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -145,6 +125,17 @@
                         android:layout_marginLeft="@dimen/spacing_xxxsmall"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/etaText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:maxLines="1"
+                            android:text="@string/kh_uisdk_loading_min"
+                            android:textColor="@color/off_black"
+                            android:textSize="@dimen/text_size_medium"
+                            tools:text="99 min" />
 
                         <TextView
                             android:id="@+id/priceText"
@@ -177,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="invisible"
                 tools:text="Free cancellation up to 21 minutes before pickup" />
         </LinearLayout>
