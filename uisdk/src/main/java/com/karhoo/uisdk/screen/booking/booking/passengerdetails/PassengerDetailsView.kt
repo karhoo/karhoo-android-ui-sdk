@@ -103,22 +103,22 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
 
     private fun initialiseFieldErrors() {
         firstNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
 
         lastNameLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
 
         emailLayout.apply {
-            setErrorMsg(R.string.invalid_email)
+            setErrorMsg(R.string.kh_uisdk_invalid_email)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
 
         mobileNumberLayout.apply {
-            setErrorMsg(R.string.invalid_phone_number)
+            setErrorMsg(R.string.kh_uisdk_invalid_phone_number)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
     }

@@ -1,15 +1,12 @@
 package com.karhoo.uisdk.screen.booking.address.addressbar
 
 import android.content.Intent
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import org.joda.time.DateTime
 
 interface AddressBarMVP {

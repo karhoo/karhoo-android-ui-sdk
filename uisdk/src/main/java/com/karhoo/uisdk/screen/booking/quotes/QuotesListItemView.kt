@@ -10,15 +10,15 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
-import com.karhoo.uisdk.util.CurrencyUtils
-import com.karhoo.uisdk.util.LogoTransformation
-import com.karhoo.uisdk.util.extension.convertDpToPixels
+import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.toLocalisedString
+import com.karhoo.uisdk.util.formatted
+import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.categoryText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.etaText
@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.pickupTypeText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.priceText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteNameText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteProgressBar
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteCancellationText
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
@@ -45,7 +46,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesListItem,
-                                                        defStyleAttr, R.style.KhQuoteListItemView)
+                defStyleAttr, R.style.KhQuoteListItemView)
         val layout = typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
                 .layout.uisdk_view_quotes_item)
         typedArray.recycle()
@@ -58,9 +59,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
-        categoryText.text = String.format("%s%s",
-                                          vehicleDetails.vehicle.vehicleClass?.substring(0, 1)?.toUpperCase(),
-                                          vehicleDetails.vehicle.vehicleClass?.substring(1))
+        categoryText.text = vehicleDetails.vehicle.vehicleClass?.capitalize()
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
@@ -68,6 +67,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setPickupType(vehicleDetails.pickupType)
         setCapacity(vehicleDetails.vehicle)
+        setCancellationSLA(vehicleDetails.serviceAgreements?.freeCancellation)
 
         tag = vehicleDetails
 
@@ -75,21 +75,13 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun loadImage(url: String?) {
-        val logoSize = resources.getDimension(R.dimen.logo_size).convertDpToPixels()
-
-        val picasso = Picasso.with(context)
-        val creator: RequestCreator
-
-        creator = if (url.isNullOrEmpty()) {
-            picasso.load(R.drawable.uisdk_ic_quotes_logo_empty)
-        } else {
-            picasso.load(url)
-        }
-
-        creator.placeholder(R.drawable.uisdk_ic_quotes_logo_empty)
-                .resize(logoSize, logoSize)
-                .transform(LogoTransformation(resources.getInteger(R.integer.logo_radius)))
-                .into(logoImage, object : Callback {
+        PicassoLoader.loadImage(context,
+                logoImage,
+                url,
+                R.drawable.uisdk_ic_quotes_logo_empty,
+                R.dimen.logo_size,
+                R.integer.logo_radius,
+                object : Callback {
                     override fun onSuccess() {
                         stopLoading()
                     }
@@ -109,14 +101,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 } else {
                     try {
                         val currency = Currency.getInstance(it.price.currencyCode?.trim())
-                        priceText.text = CurrencyUtils.intToPrice(currency, it.price.highPrice)
+                        priceText.text = currency.formatted(it.price.highPrice)
 
                         when (vehicleDetails.quoteSource) {
-                            QuoteSource.FLEET -> priceText.text = CurrencyUtils.intToPrice(
-                                    currency = currency,
-                                    price = vehicleDetails.price.highPrice)
-                            QuoteSource.MARKET -> priceText.text = CurrencyUtils.intToRangedPrice(
-                                    currency = currency,
+                            QuoteSource.FLEET -> priceText.text = currency.formatted(vehicleDetails.price.highPrice)
+                            QuoteSource.MARKET -> priceText.text = currency.intToRangedPrice(
                                     lowPrice = vehicleDetails.price.lowPrice,
                                     highPrice = vehicleDetails.price.highPrice)
                         }
@@ -133,24 +122,24 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         return when (quoteType ?: QuoteType.ESTIMATED) {
             QuoteType.FIXED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.fixed_fare)
+                context.getString(R.string.kh_uisdk_fixed_fare)
             }
             QuoteType.METERED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.metered)
+                context.getString(R.string.kh_uisdk_metered)
             }
             QuoteType.ESTIMATED -> {
                 fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
-                context.getString(R.string.estimated_fare)
+                context.getString(R.string.kh_uisdk_estimated_fare)
             }
-            else -> context.getString(R.string.estimated_fare)
+            else -> context.getString(R.string.kh_uisdk_estimated_fare)
         }
     }
 
     private fun setEta(etaTime: Int?, isPrebook: Boolean) {
         etaText.visibility = if (isPrebook) View.GONE else View.VISIBLE
         val etaTimeString = etaTime?.toString() ?: "~"
-        etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.min))
+        etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
     }
 
     private fun setPickupType(pickupType: PickupType?) {
@@ -171,6 +160,17 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         capacityWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
                 people = vehicle.passengerCapacity)
+    }
+
+    private fun setCancellationSLA(serviceCancellation: ServiceCancellation?) {
+        val text = serviceCancellation?.getCancellationText(context)
+
+        if (text.isNullOrEmpty()) {
+            quoteCancellationText.visibility = View.GONE
+        } else {
+            quoteCancellationText.text = text
+            quoteCancellationText.visibility = View.VISIBLE
+        }
     }
 
     private fun startLoading() {

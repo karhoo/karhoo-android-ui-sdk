@@ -11,7 +11,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 
 internal class QuotesListPresenter(view: QuotesListMVP.View, private val analytics: Analytics?)
     : BasePresenter<QuotesListMVP.View>(),
-      QuotesListMVP.Presenter, AvailabilityHandler {
+        QuotesListMVP.Presenter, AvailabilityHandler {
 
     private var currentVehicles: List<Quote> = mutableListOf()
     private var isExpanded: Boolean = false
@@ -22,6 +22,11 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
         set(value) {
             field = value
             shouldShowQuotesList()
+        }
+    override var hasNoResults: Boolean = false
+        set(value) {
+            field = value
+            view?.showNoResultsText(hasNoResults)
         }
 
     init {

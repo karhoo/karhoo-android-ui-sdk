@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.address.options
 
 import android.location.Location
 import com.google.android.gms.common.api.ResolvableApiException
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.base.BasePresenter
@@ -35,8 +36,8 @@ class AddressOptionsPresenter(view: AddressOptionsMVP.View,
                 // Do nothing
             }
 
-            override fun onLocationInfoUnavailable(errorMessage: String) {
-                view?.showSnackbar(SnackbarConfig(text = errorMessage))
+            override fun onLocationInfoUnavailable(errorMessage: String, karhooError: KarhooError?) {
+                view?.showSnackbar(SnackbarConfig(text = errorMessage, karhooError = karhooError))
             }
 
             override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {

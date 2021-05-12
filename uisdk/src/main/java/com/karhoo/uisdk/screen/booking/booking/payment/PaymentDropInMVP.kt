@@ -3,8 +3,9 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Quote
 
 interface PaymentDropInMVP {
 
@@ -12,26 +13,26 @@ interface PaymentDropInMVP {
 
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
-        fun initialiseChangeCard(price: QuotePrice?)
+        fun initialiseChangeCard(quote: Quote?)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
+        fun initialiseGuestPayment(quote: Quote?)
 
-        fun initialisePaymentFlow(price: QuotePrice?)
+        fun initialisePaymentFlow(quote: Quote?)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, price: QuotePrice?)
+        fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?)
     }
 
     interface Presenter {
 
         fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
-        fun getPaymentNonce(price: QuotePrice?)
+        fun getPaymentNonce(quote: Quote?)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
+        fun initialiseGuestPayment(quote: Quote?)
 
-        fun sdkInit(price: QuotePrice?)
+        fun sdkInit(quote: Quote?)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
     }
@@ -44,23 +45,23 @@ interface PaymentDropInMVP {
 
         fun updatePaymentViewVisbility(visibility: Int)
 
-        fun initialiseChangeCard(price: QuotePrice?)
+        fun initialiseChangeCard(quote: Quote?)
 
-        fun initialiseGuestPayment(price: QuotePrice?)
+        fun initialiseGuestPayment(quote: Quote?)
 
-        fun initialisePaymentFlow(price: QuotePrice?)
+        fun initialisePaymentFlow(quote: Quote?)
 
-        fun showError(@StringRes error: Int)
+        fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
-        fun showPaymentDialog(braintreeSDKToken: String)
+        fun showPaymentDialog(karhooError: KarhooError?)
 
-        fun showPaymentUI(sdkToken: String, paymentData: String? = null, price: QuotePrice? = null)
+        fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 
         fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
 
         fun refresh()
 
-        fun showPaymentFailureDialog()
+        fun showPaymentFailureDialog(error: KarhooError? = null)
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String? = null)
     }

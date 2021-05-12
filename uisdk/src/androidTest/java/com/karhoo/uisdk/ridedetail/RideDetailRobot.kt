@@ -7,11 +7,13 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
+import com.karhoo.uisdk.util.TestData.Companion.BOOKING_FEE_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.HELP_TEXT
 import com.karhoo.uisdk.util.TestData.Companion.KARHOO_ID
 import com.karhoo.uisdk.util.TestData.Companion.PAST_DATE_TIME
 import com.karhoo.uisdk.util.TestData.Companion.PREBOOK_TIME_DATE
 import com.karhoo.uisdk.util.TestData.Companion.PRICE_TOTAL
+import com.karhoo.uisdk.util.TestData.Companion.PROCEED_WITH_CANCELLATION
 import com.karhoo.uisdk.util.TestData.Companion.TEST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_ID
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLE_DETAILS
@@ -30,30 +32,34 @@ class RideDetailRobot : BaseTestRobot() {
     }
 
     fun clickCancelRideDetails() {
-        clickButton(R.id.cancelRideButton)
+        clickButton(R.id.cancelButton)
     }
 
     fun confirmCancellationRideDetails() {
-        clickOnButtonInAlertDialog(AlertDialogButton.POSITIVE)
+        clickOnButtonInAlertDialog(AlertDialogButton.NEGATIVE)
     }
 
     fun clickOnCancel() {
-        dialogClickButtonByText(R.string.cancel)
-    }
-
-    fun clickOnDismiss() {
-        dialogClickButtonByText(R.string.dismiss)
+        dialogClickButtonByText(R.string.kh_uisdk_cancel)
     }
 
     fun clickOnReportIssue() {
         clickButton(R.id.reportIssueButton)
+    }
+
+    fun checkCancellationFeeIsNotShown() {
+        dialogTextIsVisibleString(PROCEED_WITH_CANCELLATION)
+    }
+
+    fun checkCancellationFeeIsShown() {
+        dialogTextIsVisibleString(BOOKING_FEE_NOTIFICATION)
     }
 }
 
 class ResultRobot : BaseTestRobot() {
 
     fun couldNotCancelMessageIsDisplayed() {
-        dialogTextIsVisible(R.string.difficulties_cancelling_message)
+        dialogTextIsVisible(R.string.kh_uisdk_difficulties_cancelling_message)
     }
 
     fun checkErrorIsShown(expectedText: Int) {
@@ -69,7 +75,7 @@ class ResultRobot : BaseTestRobot() {
         pastRideVehicleDetailsVisible(VEHICLE_DETAILS)
         pastRideStateIconVisible()
         pastRideStatusLabelVisible()
-        pastRideStatusVisible(R.string.completed)
+        pastRideStatusVisible(R.string.kh_uisdk_completed)
         pastRidePriceLabelVisible()
         pastRidePriceIsVisible(PRICE_TOTAL)
         pastRideKarhooIdLabelVisible()
@@ -77,6 +83,7 @@ class ResultRobot : BaseTestRobot() {
         pastTripRatingFieldsVisible()
         pastTripRebookButtonVisibleAndEnabled()
         pastTripReportIssueButtonVisibleAndEnabled()
+        pastRideContactOptionsNotVisible()
     }
 
     fun completedRideFullCheckFromTrip() {
@@ -88,7 +95,7 @@ class ResultRobot : BaseTestRobot() {
         pastRideVehicleDetailsVisible(VEHICLE_DETAILS)
         pastRideStateIconVisible()
         pastRideStatusLabelVisible()
-        pastRideStatusVisible(R.string.completed)
+        pastRideStatusVisible(R.string.kh_uisdk_completed)
         pastRideBaseFareLabelIsVisible()
         pastRideKarhooIdLabelVisible()
         pastRideKarhooIdVisible(TRIP_ID)
@@ -138,15 +145,15 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun pastRidePriceLabelVisible() {
-        textIsVisible(R.string.price)
+        textIsVisible(R.string.kh_uisdk_price)
     }
 
     fun baseFareLabelIsVisible() {
-        textIsVisible(R.string.faretype_info_base)
+        textIsVisible(R.string.kh_uisdk_faretype_info_base)
     }
 
     fun pastRideBaseFareLabelIsVisible() {
-        textIsVisible(R.string.base)
+        textIsVisible(R.string.kh_uisdk_base)
     }
 
     fun pastRidePriceIsVisible(expectedText: String) {
@@ -178,8 +185,12 @@ class ResultRobot : BaseTestRobot() {
         buttonIsEnabled(R.id.reportIssueButton)
     }
 
+    fun pastRideContactOptionsNotVisible() {
+        viewIsNotVisible(R.id.contactOptionsWidget)
+    }
+
     fun checkForPendingState() {
-        textIsVisible(R.string.pending)
+        textIsVisible(R.string.kh_uisdk_pending)
     }
 
     fun cancelledByUserRideFullCheck() {
@@ -191,9 +202,9 @@ class ResultRobot : BaseTestRobot() {
         pastRideVehicleDetailsVisible(VEHICLE_DETAILS)
         pastRideStateIconVisible()
         pastRideStatusLabelVisible()
-        pastRideStatusVisible(R.string.cancelled)
+        pastRideStatusVisible(R.string.kh_uisdk_cancelled)
         pastRideBaseFareLabelIsVisible()
-        pastRideBaseFareShowsAsPending(R.string.cancelled)
+        pastRideBaseFareShowsAsPending(R.string.kh_uisdk_cancelled)
         pastRideKarhooIdLabelVisible()
         pastRideKarhooIdVisible(TRIP_ID)
         pastTripRebookButtonVisibleAndEnabled()
@@ -206,7 +217,7 @@ class ResultRobot : BaseTestRobot() {
         pickUpAndDropOffIconVisible()
         pickUpAddressVisible(address = ADDRESS_ORIGIN)
         dropOffAddressVisible(address = ADDRESS_DESTINATION)
-        rideStatusVisible(status = R.string.confirmed)
+        rideStatusVisible(status = R.string.kh_uisdk_confirmed)
         upcomingTripPriceChecks(fare = PRICE_TOTAL)
         upcomingTripIDVisible(trip = TRIP_ID)
         upcomingTripcCancelRideButtonIsEnabled()
@@ -228,63 +239,63 @@ class ResultRobot : BaseTestRobot() {
         upcomingVehicleDetailsVisible(VEHICLE_DETAILS)
         pickUpAddressVisible(address = ADDRESS_ORIGIN)
         dropOffAddressVisible(address = ADDRESS_DESTINATION)
-        rideStatusVisible(status = R.string.confirmed)
+        rideStatusVisible(status = R.string.kh_uisdk_confirmed)
         upcomingTripPriceChecks(fare = PRICE_TOTAL)
         upcomingTripIDVisible(trip = TRIP_ID)
         upcomingTripcCancelRideButtonIsEnabled()
         upcomingTripCallFleetButtonIsEnabled()
     }
 
-    fun upcomingTripFleetNameVisible(fleet: String) {
+    private fun upcomingTripFleetNameVisible(fleet: String) {
         stringIsVisibleIsDescendant(fleet, R.id.bookingTermsText)
     }
 
-    fun upcomingRideFleetLogoVisible() {
+    private fun upcomingRideFleetLogoVisible() {
         viewIsVisible(R.id.logoImage)
     }
 
-    fun pickUpAndDropOffIconVisible() {
+    private fun pickUpAndDropOffIconVisible() {
         viewIsVisible(R.id.pickupBallIcon)
         viewIsVisible(R.id.dropoffBallIcon)
     }
 
-    fun pickUpAddressVisible(address: String) {
+    private fun pickUpAddressVisible(address: String) {
         stringIsVisibleIsDescendant(address, R.id.pickupLabel)
     }
 
-    fun dropOffAddressVisible(address: String) {
+    private fun dropOffAddressVisible(address: String) {
         stringIsVisibleIsDescendant(address, R.id.dropOffLabel)
     }
 
-    fun rideStatusVisible(status: Int) {
+    private fun rideStatusVisible(status: Int) {
         viewIsVisible(R.id.stateIcon)
         textIsVisibleIsDescendant(status, R.id.stateText)
     }
 
-    fun upcomingTripPriceChecks(fare: String) {
+    private fun upcomingTripPriceChecks(fare: String) {
         viewIsVisible(R.id.priceTypeText)
         stringIsVisibleIsDescendant(fare, R.id.priceText)
     }
 
-    fun upcomingTripIDVisible(trip: String) {
+    private fun upcomingTripIDVisible(trip: String) {
         stringIsVisible(KARHOO_ID)
         stringIsVisibleIsDescendant(trip, R.id.karhooId)
     }
 
-    fun upcomingTripcCancelRideButtonIsEnabled() {
-        buttonIsEnabled(R.id.cancelRideButton)
+    private fun upcomingTripcCancelRideButtonIsEnabled() {
+        buttonIsEnabled(R.id.cancelButton)
     }
 
-    fun upcomingTripCallFleetButtonIsEnabled() {
+    private fun upcomingTripCallFleetButtonIsEnabled() {
         buttonIsEnabled(R.id.contactFleetButton)
     }
 
-    fun upcomingVehicleDetailsVisible(vehicle: String) {
+    private fun upcomingVehicleDetailsVisible(vehicle: String) {
         stringIsVisibleIsDescendant(vehicle, R.id.carText)
     }
 
-    fun upcomingTripcCancelRideButtonIsNotVisible() {
-        viewIsNotVisible(R.id.cancelRideButton)
+    private fun upcomingTripcCancelRideButtonIsNotVisible() {
+        viewIsNotVisible(R.id.cancelButton)
     }
 
     fun upcomingPassengerOnBoardRideDetailsFullCheck() {
@@ -294,7 +305,7 @@ class ResultRobot : BaseTestRobot() {
         upcomingVehicleDetailsVisible(VEHICLE_DETAILS)
         pickUpAddressVisible(address = ADDRESS_ORIGIN)
         dropOffAddressVisible(address = ADDRESS_DESTINATION)
-        rideStatusVisible(status = R.string.pass_on_board)
+        rideStatusVisible(status = R.string.kh_uisdk_pass_on_board)
         upcomingTripPriceChecks(fare = PRICE_TOTAL)
         upcomingTripIDVisible(trip = TRIP_ID)
         upcomingTripcCancelRideButtonIsNotVisible()
@@ -307,19 +318,19 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun cancelDialogIsNotVisible() {
-        textIsNotVisible(R.string.cancel_your_ride)
+        textIsNotVisible(R.string.kh_uisdk_cancel_your_ride)
     }
 
     fun cancelConfirmationIsVisible() {
-        dialogTextIsVisible(R.string.cancel_ride_successful)
-        dialogTextIsVisible(R.string.cancel_ride_successful_message)
+        dialogTextIsVisible(R.string.kh_uisdk_cancel_ride_successful)
+        dialogTextIsVisible(R.string.kh_uisdk_cancel_ride_successful_message)
     }
 
     fun helpTextIsVisibleReportIssue() {
         stringIsVisibleIsDescendantWeb(HELP_TEXT, R.id.khWebView)
     }
 
-    fun contactDetailFieldsReportIssue() {
+    private fun contactDetailFieldsReportIssue() {
         stringIsVisibleIsDescendantWeb("Contact Details", R.id.khWebView)
         stringIsVisibleIsDescendantWeb("Full Name", R.id.khWebView)
         stringIsVisibleIsDescendantWeb("Email", R.id.khWebView)
@@ -328,7 +339,7 @@ class ResultRobot : BaseTestRobot() {
         stringIsVisibleIsDescendantWeb("Description", R.id.khWebView)
     }
 
-    fun correctDetailsFilledReportIssue() {
+    private fun correctDetailsFilledReportIssue() {
         stringIsVisibleIsDescendantWeb(TestData.USER.firstName, R.id.khWebView)
         stringIsVisibleIsDescendantWeb(TestData.USER.lastName, R.id.khWebView)
         stringIsVisibleIsDescendantWeb(TestData.USER.email, R.id.khWebView)

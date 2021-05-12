@@ -61,16 +61,20 @@ class BookingLOCTest : Launch {
     fun snackbarShowsToUserWhenWifiIsDisabledBooking() {
         serverRobot {
             successfulToken()
+            quoteIdResponse(HttpURLConnection.HTTP_OK, TestData.QUOTE_LIST_ID_ASAP)
+            quotesResponse(HttpURLConnection.HTTP_OK, TestData.VEHICLES_ASAP)
+            paymentsProviderResponse(HttpURLConnection.HTTP_OK, TestData.BRAINTREE_PROVIDER)
             sdkInitResponse(HttpURLConnection.HTTP_OK, BRAINTREE_TOKEN)
             reverseGeocodeResponse(HttpURLConnection.HTTP_OK, REVERSE_GEO_SUCCESS)
         }
         booking(this, BraintreeBookingTests.CLEAN_TRIP_INTENT) {
+            mediumSleep()
             networkServiceRobot {
                 disableNetwork(activityRule.activity.applicationContext)
             }
             longSleep()
         } result {
-            checkSnackbarWithText(R.string.network_error)
+            checkSnackbarWithText(R.string.kh_uisdk_network_error)
         }
     }
 

@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus
 
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.util.AttributeSet
 import android.widget.RelativeLayout
 import androidx.annotation.StringRes
@@ -9,9 +9,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.screen.trip.bookingstatus.tripinfo.TripInfoActions
@@ -73,8 +77,8 @@ class BookingStatusView @JvmOverloads constructor(
         actions?.showTopBarNotification(text)
     }
 
-    override fun showTemporaryError(error: String) {
-        actions?.showSnackbar(SnackbarConfig(text = error))
+    override fun showTemporaryError(error: String, karhooError: KarhooError?) {
+        actions?.showSnackbar(SnackbarConfig(text = error, karhooError = karhooError))
     }
 
     override fun tripInfoVisibility(isVisible: Boolean) {
@@ -83,20 +87,23 @@ class BookingStatusView @JvmOverloads constructor(
         }
     }
 
-    override fun goToCleanBooking() {
+    override fun goToNextScreen() {
         actions?.goToCleanBooking()
     }
 
     override fun showCancellationDialog(tripDetails: TripInfo) {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.title_dispatch_cancelled)
-                .setMessage(String.format(context
-                                                  .getString(R.string.dispatch_cancelled),
-                                          if (tripDetails.fleetInfo == null) context.getString(R.string.quote) else tripDetails.fleetInfo?.name))
-                .setPositiveButton(R.string.ok) { _, _ -> actions?.goToCleanBooking() }
-                .setNegativeButton(R.string.alternative) { _, _ -> actions?.goToPrefilledBooking(tripDetails) }
-                .setCancelable(false)
-                .show()
+        val message = String.format(context.getString(R.string.kh_uisdk_dispatch_cancelled),
+                                    if (tripDetails.fleetInfo == null) context.getString(R.string.kh_uisdk_quote) else tripDetails.fleetInfo?.name)
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.kh_uisdk_title_dispatch_cancelled,
+                message = message,
+                cancellable = false,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
+                                                         DialogInterface.OnClickListener { _, _ -> actions?.goToCleanBooking() }),
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_alternative,
+                                                         DialogInterface.OnClickListener { _, _ -> actions?.goToPrefilledBooking(tripDetails) }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
     }
 
     override fun tripComplete(tripDetails: TripInfo) {

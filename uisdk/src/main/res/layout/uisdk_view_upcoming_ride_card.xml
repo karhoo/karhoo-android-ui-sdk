@@ -60,10 +60,10 @@
                 android:paddingTop="@dimen/spacing_xxxsmall"
                 android:paddingRight="@dimen/spacing_xxsmall"
                 android:paddingBottom="@dimen/spacing_xxxsmall"
-                android:text="@string/pickup_type_meet_and_greet"
+                android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_size_xsmall"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -76,17 +76,18 @@
 
             <ImageView
                 android:id="@+id/pickupBallIcon"
+                style="@style/KhPickUpDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall"
-                style="@style/KhPickUpDot" />
+                android:layout_marginEnd="@dimen/spacing_xsmall" />
 
             <TextView
                 android:id="@+id/pickupLabel"
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Sample location" />
 
         </LinearLayout>
@@ -101,17 +102,18 @@
 
             <ImageView
                 android:id="@+id/dropoffBallIcon"
+                style="@style/KhDropOffDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall"
-                style="@style/KhDropOffDot" />
+                android:layout_marginEnd="@dimen/spacing_xsmall" />
 
             <TextView
                 android:id="@+id/dropOffLabel"
                 style="@style/Text.Primary.SmallMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:lines="1"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="Pharmacy" />
 
         </LinearLayout>
@@ -124,26 +126,38 @@
             android:layout_marginBottom="@dimen/spacing_xsmall"
             tools:text="Fiat Panda" />
 
+        <TextView
+            android:id="@+id/upcomingRideCancellationText"
+            style="@style/Text.Primary.Small.Green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:visibility="gone"
+            tools:text="Free cancellation up to 21 minutes before pickup"
+            tools:visibility="visible" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:gravity="end|center_vertical"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/callButton"
                 style="@style/Text.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/call" />
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_large"
+                android:layout_weight="1"
+                android:text="@string/kh_uisdk_contact_fleet" />
 
             <Button
                 android:id="@+id/trackButton"
                 style="@style/Text.Action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/spacing_small"
-                android:text="@string/track_driver" />
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_large"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>
 

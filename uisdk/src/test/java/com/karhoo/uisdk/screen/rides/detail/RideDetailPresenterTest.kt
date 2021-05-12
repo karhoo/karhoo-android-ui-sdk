@@ -1,11 +1,10 @@
 package com.karhoo.uisdk.screen.rides.detail
 
 import android.content.Context
+import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.Fare
 import com.karhoo.sdk.api.model.FareBreakdown
-import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -14,19 +13,21 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
-import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
+import com.karhoo.uisdk.screen.booking.quotes.BookingQuotesPresenterTest
 import com.karhoo.uisdk.screen.rides.detail.RideDetailPresenter.Companion.TRIP_INFO_UPDATE_PERIOD
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
+import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
+import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.ServiceCancellationExtTests
+import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -39,7 +40,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.junit.MockitoJUnitRunner
@@ -54,9 +54,7 @@ class RideDetailPresenterTest {
     private val tripsService: TripsService = mock()
     private val tripDetailsCall: PollCall<TripInfo> = mock()
     private val scheduledDateViewBinder: ScheduledDateViewBinder = mock()
-    private val analytics: Analytics = mock()
     private val feedbackCompletedTripsStore: FeedbackCompletedTripsStore = mock()
-    private val cancelTripCall: Call<Void> = mock()
     private val observable: Observable<TripInfo> = mock()
     private var fareService: FareService = mock()
     private var fareCall: Call<Fare> = mock()
@@ -71,25 +69,27 @@ class RideDetailPresenterTest {
             trip = EMPTY_TRIP,
             tripsService = tripsService,
             scheduledDateBinder = scheduledDateViewBinder,
-            analytics = analytics,
             feedbackCompletedTripsStore = feedbackCompletedTripsStore,
             fareService = fareService)
 
-    private val cancelTripLambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
     private val observerTripInfoCaptor = argumentCaptor<Observer<Resource<TripInfo>>>()
     private val pollingTimeCaptor = argumentCaptor<Long>()
     private var fareCaptor = argumentCaptor<(Resource<Fare>) -> Unit>()
+    private var resources: Resources = mock()
 
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         Locale.setDefault(Locale.UK)
-        doNothing().whenever(cancelTripCall).execute(cancelTripLambdaCaptor.capture())
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(observerTripInfoCaptor.capture(), anyLong())
+        whenever(context.resources).thenReturn(resources)
+        whenever(context.resources.getQuantityString(R.plurals.kh_uisdk_minutes_plurals, TEST_TWO, TEST_TWO)).thenReturn(String.format(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES, TEST_TWO))
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     /**
@@ -100,11 +100,11 @@ class RideDetailPresenterTest {
     @Test
     fun `when state is bound then display cancelled icon with cancelled text`() {
         val cancelledTrip = TripInfo(tripState = TripStatus.CANCELLED_BY_USER)
-        presenter = RideDetailPresenter(view, cancelledTrip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, cancelledTrip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
     }
 
     /**
@@ -115,11 +115,11 @@ class RideDetailPresenterTest {
     @Test
     fun `when state is bound and there are no drivers a cancelled icon should show`() {
         val noDriverTrip = TripInfo(tripState = TripStatus.NO_DRIVERS)
-        presenter = RideDetailPresenter(view, noDriverTrip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, noDriverTrip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
     }
 
     /**
@@ -130,11 +130,11 @@ class RideDetailPresenterTest {
     @Test
     fun `when state is bound then display completed icon with completed text`() {
         val completedTrip = TripInfo(tripState = TripStatus.COMPLETED)
-        presenter = RideDetailPresenter(view, completedTrip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, completedTrip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.ride_state_completed, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.off_black)
     }
 
     /**
@@ -153,7 +153,6 @@ class RideDetailPresenterTest {
                 trip = tripWithNullFare,
                 tripsService = tripsService,
                 scheduledDateBinder = scheduledDateViewBinder,
-                analytics = analytics,
                 feedbackCompletedTripsStore = feedbackCompletedTripsStore,
                 fareService = fareService)
 
@@ -181,7 +180,6 @@ class RideDetailPresenterTest {
                 trip = tripWithNullFare,
                 tripsService = tripsService,
                 scheduledDateBinder = scheduledDateViewBinder,
-                analytics = analytics,
                 feedbackCompletedTripsStore = feedbackCompletedTripsStore,
                 fareService = fareService)
 
@@ -209,7 +207,6 @@ class RideDetailPresenterTest {
                 trip = tripWithFare,
                 tripsService = tripsService,
                 scheduledDateBinder = scheduledDateViewBinder,
-                analytics = analytics,
                 feedbackCompletedTripsStore = feedbackCompletedTripsStore,
                 fareService = fareService)
 
@@ -236,7 +233,7 @@ class RideDetailPresenterTest {
                 vehicle = Vehicle(),
                 quote = Price(total = 123, currency = "GBP"))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
         presenter.onResume()
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(trip))
 
@@ -255,9 +252,7 @@ class RideDetailPresenterTest {
      */
     @Test
     fun `observer is added to observable for guest booking`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         val trip = TripInfo(
                 tripId = TRIP_ID,
                 followCode = FOLLOW_CODE,
@@ -269,7 +264,7 @@ class RideDetailPresenterTest {
                 quote = Price(total = 123, currency = "GBP"))
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
         presenter.onResume()
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(trip))
 
@@ -292,7 +287,7 @@ class RideDetailPresenterTest {
                 origin = TripLocationInfo(),
                 vehicle = Vehicle())
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
         presenter.onResume()
 
         verify(observable, never()).subscribe(any(), any())
@@ -313,7 +308,7 @@ class RideDetailPresenterTest {
                 vehicle = Vehicle(),
                 quote = Price(total = 123, currency = "GBP"))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
         presenter.onResume()
         presenter.onPause()
         verify(observable).unsubscribe(any())
@@ -332,7 +327,7 @@ class RideDetailPresenterTest {
                 origin = TripLocationInfo(placeId = "ORIGIN01"),
                 destination = TripLocationInfo(placeId = "DESTINATION01"))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
         verify(view).displayRebookButton()
@@ -351,7 +346,7 @@ class RideDetailPresenterTest {
                 origin = TripLocationInfo(placeId = "ORIGIN01"),
                 destination = TripLocationInfo(placeId = "DESTINATION01"))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
         verify(view).displayReportIssueButton()
@@ -370,11 +365,11 @@ class RideDetailPresenterTest {
                 origin = TripLocationInfo(placeId = "ORIGIN01"),
                 destination = TripLocationInfo(placeId = "DESTINATION01"))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).hideCancelRideButton()
-        verify(view).hideContactFleetButton()
+        verify(view).hideContactOptions()
+        verify(view).hideContactOptions()
     }
 
     /**
@@ -388,7 +383,7 @@ class RideDetailPresenterTest {
                 tripId = TRIP_ID,
                 tripState = TripStatus.DRIVER_EN_ROUTE)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
         verify(view).hideRebookButton()
@@ -406,10 +401,10 @@ class RideDetailPresenterTest {
                 tripId = TRIP_ID,
                 tripState = TripStatus.ARRIVED)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).displayCancelRideButton()
+        verify(view).displayContactOptions()
     }
 
     /**
@@ -418,15 +413,15 @@ class RideDetailPresenterTest {
      * Then:    hide cancel ride
      */
     @Test
-    fun `hides cancel ride button when POB`() {
+    fun `shows contact options when POB`() {
         val trip = TripInfo(
                 tripId = TRIP_ID,
                 tripState = TripStatus.PASSENGER_ON_BOARD)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).hideCancelRideButton()
+        verify(view).displayContactOptions()
     }
 
     /**
@@ -440,124 +435,10 @@ class RideDetailPresenterTest {
                 tripId = TRIP_ID,
                 tripState = TripStatus.PASSENGER_ON_BOARD)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindButtons()
-        verify(view).displayContactFleetButton()
-    }
-
-    /**
-     * Given:   A trip with a fleet phone number
-     * When:    contact fleet
-     * Then:    make call to fleet phone number
-     */
-    @Test
-    fun `makes call to fleet phone number`() {
-        val PHONE_NUMBER = "+441234567891"
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                tripState = TripStatus.DRIVER_EN_ROUTE,
-                fleetInfo = FleetInfo(phoneNumber = PHONE_NUMBER))
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-
-        presenter.contactFleet()
-        verify(view).makeCall(PHONE_NUMBER)
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel has started
-     * Then:    An event that the user pressed cancel should be sent
-     */
-    @Test
-    fun `user presses cancel trip fires event`() {
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                origin = TripLocationInfo(),
-                destination = TripLocationInfo(),
-                tripState = TripStatus.CONFIRMED,
-                vehicle = Vehicle())
-
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-        presenter.cancelTrip()
-
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Success(mock()))
-
-        verify(analytics).userCancelTrip(trip)
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel has started
-     * Then:    the loading dialog is shown
-     */
-    @Test
-    fun `user presses cancel shows loading dialog`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(mock())
-
-        verify(view).displayLoadingDialog()
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel is unsuccessful
-     * Then:    The view should be told to display the call dialog
-     */
-    @Test
-    fun `user cancels trip unsuccessfully`() {
-        val FLEET_NAME = "Keaney's Cars"
-        val FLEET_NUMBER = "+353 1234 567891"
-        val trip = TripInfo(
-                tripId = TRIP_ID,
-                fleetInfo = FleetInfo(
-                        name = FLEET_NAME,
-                        phoneNumber = FLEET_NUMBER))
-
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Failure(mock()))
-
-        verify(view).displayCallToCancelDialog(FLEET_NUMBER, FLEET_NAME)
-    }
-
-    /**
-     * Given:   fleet info is null
-     * When:    attempting to cancel trip, sdk callback onServiceError
-     * Then:    show error
-     */
-    @Test
-    fun `show error when attempting to cancel on service error trip and fleet info is null`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(view).hideLoadingDialog()
-        verify(view).displayError(anyInt())
-    }
-
-    /**
-     * Given:   A user wishes to cancel a trip
-     * When:    The cancel is successful by karhoo
-     * Then:    The view should be told to display the complete dialog
-     */
-    @Test
-    fun `user cancels trip successfully by karhoo`() {
-        whenever(tripsService.cancel(TripCancellation(TRIP_ID))).thenReturn(cancelTripCall)
-
-        presenter.cancelTrip()
-        cancelTripLambdaCaptor.firstValue.invoke(Resource.Success(mock()))
-
-        verify(view).hideLoadingDialog()
-        verify(view).displayTripCancelledDialog()
+        verify(view).displayContactOptions()
     }
 
     /**
@@ -587,7 +468,7 @@ class RideDetailPresenterTest {
                 flightNumber = FLIGHT_NUM,
                 comments = FLIGHT_COMMENTS)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindFlightDetails()
         verify(view).displayFlightDetails(FLIGHT_NUM, "")
@@ -604,7 +485,7 @@ class RideDetailPresenterTest {
                 tripId = TRIP_ID,
                 flightNumber = "KH002",
                 comments = null)
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindComments()
 
@@ -625,7 +506,7 @@ class RideDetailPresenterTest {
                 flightNumber = "KH002",
                 comments = TRIP_COMMENTS)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindComments()
         verify(view).displayComments(TRIP_COMMENTS)
@@ -642,7 +523,7 @@ class RideDetailPresenterTest {
                 tripState = TripStatus.CONFIRMED,
                 quote = Price(total = 123, currency = "GBP", quoteType = QuoteType.METERED))
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindPrice()
 
@@ -670,7 +551,7 @@ class RideDetailPresenterTest {
         val trip = TripInfo(
                 tripId = TRIP_ID)
 
-        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, analytics, feedbackCompletedTripsStore)
+        presenter = RideDetailPresenter(view, trip, tripsService, scheduledDateViewBinder, feedbackCompletedTripsStore)
 
         presenter.bindDate()
 
@@ -691,26 +572,101 @@ class RideDetailPresenterTest {
         verify(view).showFeedbackSubmitted()
     }
 
-    private fun createInstanceOfVoid(): Void? {
-        return try {
-            val constructor = Void::class.java.getDeclaredConstructor()
-            constructor.isAccessible = true
-            constructor.newInstance()
-        } catch (e: Exception) {
-            null
-        }
+    /**
+     * Given:   The trip has a service cancellation of type before pickup with a tripStatus different
+     *          than requested or confirmed
+     * Then:    The cancellation text is not shown
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup with a passenger on board trip state, the cancellation text is not shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.PASSENGER_ON_BOARD,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view, never()).showCancellationText(any())
+        verify(view, never()).setCancellationText(any())
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before pickup with a tripStatus equal to confirmed
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.CONFIRMED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to confirmed
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.CONFIRMED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.REQUESTED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
+        presenter.checkCancellationSLA(
+                TripStatus.REQUESTED,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
     }
 
     companion object {
         private val BREAKDOWN_NO_CURRENCY = FareBreakdown(
                 total = 2134,
                 currency = ""
-                                                         )
+        )
 
         private val FARE_NO_CURRENCY = Fare(
                 state = "COMPLETE",
                 breakdown = BREAKDOWN_NO_CURRENCY
-                                           )
+        )
 
         private val FARE_COMPLETE = FARE_NO_CURRENCY.copy(
                 breakdown = BREAKDOWN_NO_CURRENCY.copy(

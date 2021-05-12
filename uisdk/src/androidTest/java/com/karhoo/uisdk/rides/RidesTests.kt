@@ -12,6 +12,8 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.trip.trip
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITHOUT_BOOKING_FEE
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITH_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.FARE_CANCELLED
 import com.karhoo.uisdk.util.TestData.Companion.FARE_COMPLETE
@@ -28,6 +30,7 @@ import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_INCOMPLETE
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.RIDE_SCREEN_PREBOOKED_CANCELLED_BY_USER
+import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
@@ -107,7 +110,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.completed)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_completed)
         }
     }
 
@@ -126,7 +129,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -146,7 +149,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -166,7 +169,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedStatus(R.string.cancelled)
+            pastBookingHasExpectedStatus(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -185,7 +188,7 @@ class RidesTests : Launch {
             clickPastBookingsTabButton()
             shortSleep()
         } result {
-            pastBookingHasExpectedPrice(R.string.cancelled)
+            pastBookingHasExpectedPrice(R.string.kh_uisdk_cancelled)
         }
     }
 
@@ -233,7 +236,7 @@ class RidesTests : Launch {
         rides(this) {
             shortSleep()
         } result {
-            checkErrorMessageIsShown(R.string.K0001)
+            checkErrorMessageIsShown(R.string.kh_uisdk_K0001)
         }
     }
 
@@ -271,6 +274,7 @@ class RidesTests : Launch {
             shortSleep()
         } result {
             pickUpTypeLabelNotVisibleOnDropoffUpcoming()
+            callFleetButtonIsEnabled()
         }
     }
 
@@ -330,25 +334,27 @@ class RidesTests : Launch {
             shortSleep()
         }
         serverRobot {
-            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
-            TestData.TRIP.tripId)
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITH_BOOKING_FEE, trip = TRIP.tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
         }
         rideDetail {
             clickCancelRideDetails()
-            clickOnCancel()
+            clickOnOkay()
         } result {
             cancelConfirmationIsVisible()
         }
     }
 
     /**
-     * Given:   I am on the ride details screen
-     * When:    I successfully cancel a prebooked ride
-     * And:     I click on Dismiss the canfirmation dialog
-     * Then:    I am taken back to the upcoming rides screen
+     * Given:  I am on the ride details screen
+     * When:   I successfully cancel a prebooked ride
+     * And:    There is no cancellation fee
+     * And:    I click on Dismiss the confirmation dialog
+     * Then:   I am not shown a cancellation fee
+     * And:    I am taken back to the upcoming rides screen when I accept the cancellation
      **/
     @Test
-    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebook() {
+    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebookWithoutFee() {
         serverRobot {
             successfulToken()
             upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
@@ -361,13 +367,58 @@ class RidesTests : Launch {
             shortSleep()
         }
         serverRobot {
-            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip =
-            TestData.TRIP.tripId)
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITHOUT_BOOKING_FEE, trip = TRIP
+                    .tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
             upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
         }
         rideDetail {
             clickCancelRideDetails()
-            clickOnCancel()
+            checkCancellationFeeIsNotShown()
+            clickOnDismiss()
+            clickCancelRideDetails()
+            clickOnOkay()
+            clickOnDismiss()
+        }
+        rides {
+            shortSleep()
+        } result {
+            checkNoUpcomingBookings()
+        }
+    }
+
+    /**
+     * Given:  I am on the ride details screen
+     * When:   I successfully cancel a prebooked ride
+     * And:    There is a cancellation fee
+     * And:    I click on Dismiss the confirmation dialog
+     * Then:   I am shown the cancellation fee
+     * And:    I am taken back to the upcoming rides screen when I accept the cancellation
+     **/
+    @Test
+    fun userIsTakenToUpcomingRidesScreenAfterCancellingPrebookWithFee() {
+        serverRobot {
+            successfulToken()
+            upcomingRidesResponse(HTTP_OK, RIDE_SCREEN_PREBOOKED)
+        }
+        rides(this) {
+            shortSleep()
+            clickOnFirstRide()
+        }
+        rideDetail {
+            shortSleep()
+        }
+        serverRobot {
+            cancelFeeResponse(code = HTTP_OK, response = CANCEL_WITH_BOOKING_FEE, trip = TRIP.tripId)
+            cancelResponse(code = HTTP_NO_CONTENT, response = RIDE_SCREEN_CANCELLED_USER, trip = TRIP.tripId)
+            upcomingRidesResponse(HTTP_OK, TRIP_HISTORY_EMPTY)
+        }
+        rideDetail {
+            clickCancelRideDetails()
+            checkCancellationFeeIsShown()
+            clickOnDismiss()
+            clickCancelRideDetails()
+            clickOnOkay()
             clickOnDismiss()
         }
         rides {
@@ -560,8 +611,8 @@ class RidesTests : Launch {
         trip {
             longSleep()
         } result {
-            DERFullScreenCheck(pickupText = TestData.TRIP_DER.origin?.displayAddress.orEmpty(),
-                               destinationText = TestData.TRIP_DER.destination?.displayAddress.orEmpty())
+            DERFullScreenCheck(pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
+                               destinationText = TRIP_DER.destination?.displayAddress.orEmpty())
         }
     }
 

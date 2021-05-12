@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/spacing_xxsmall"
-        android:text="@string/rate_trip_label"
+        android:text="@string/kh_uisdk_rate_trip_label"
         android:textStyle="bold" />
 
     <RatingBar
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/star_poor"
+            android:text="@string/kh_uisdk_star_poor"
             android:textSize="@dimen/text_size_xsmall"
             android:visibility="gone" />
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/star_fair"
+            android:text="@string/kh_uisdk_star_fair"
             android:textSize="@dimen/text_size_xsmall"
             android:visibility="gone" />
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/star_good"
+            android:text="@string/kh_uisdk_star_good"
             android:textSize="@dimen/text_size_xsmall"
             android:visibility="gone" />
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/star_great"
+            android:text="@string/kh_uisdk_star_great"
             android:textSize="@dimen/text_size_xsmall"
             android:visibility="gone" />
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/star_excellent"
+            android:text="@string/kh_uisdk_star_excellent"
             android:textSize="@dimen/text_size_xsmall"
             android:visibility="gone" />
 
@@ -83,8 +83,8 @@
         style="@style/TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="@string/additional_feedback"
-        android:text="@string/submit_button_text"
+        android:tag="@string/kh_uisdk_additional_feedback"
+        android:text="@string/kh_uisdk_submit_button_text"
         android:visibility="gone" />
 
 </LinearLayout>

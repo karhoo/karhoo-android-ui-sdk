@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.LayoutArrayPagerAdapter
@@ -64,13 +65,13 @@ class UpcomingRidesView @JvmOverloads constructor(
         upcomingRidesAdapter.items = upcomingRides
     }
 
-    override fun showError(@StringRes errorMessage: Int) {
+    override fun showError(@StringRes errorMessage: Int, karhooError: KarhooError?) {
         ridesLoading?.hideLoading()
         swipeRefreshLayout.isRefreshing = false
         recyclerView.visibility = View.INVISIBLE
         emptyStateLayout.visibility = View.INVISIBLE
         errorStateWidget.visibility = View.VISIBLE
-        errorStateWidget.setErrorMessage(resources.getString(errorMessage))
+        errorStateWidget.setErrorMessage(resources.getString(errorMessage), karhooError)
     }
 
     override fun refresh() {

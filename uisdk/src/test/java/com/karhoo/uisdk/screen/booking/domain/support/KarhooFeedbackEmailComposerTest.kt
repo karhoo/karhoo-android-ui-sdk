@@ -93,15 +93,15 @@ Last name: last name
     }
 
     private fun prepareStrings() {
-        whenever(context.getString(R.string.feedback_email)).thenReturn("feedback@karhoo.com")
-        whenever(context.getString(R.string.feedback)).thenReturn("Feedback")
-        whenever(context.getString(R.string.email_info)).thenReturn("Please do not delete this information")
-        whenever(context.getString(R.string.support_email)).thenReturn("support@karhoo.com")
-        whenever(context.getString(R.string.support_report_issue)).thenReturn("Report Issue")
-        whenever(context.getString(R.string.email_report_issue_message)).thenReturn("Please use the space below to report")
-        whenever(context.getString(R.string.supplier_email)).thenReturn("siupplier@karhoo.com")
-        whenever(context.getString(R.string.fleet_recommendation_subject)).thenReturn("Fleet recommendation in my area")
-        whenever(context.getString(R.string.fleet_recommendation_body)).thenReturn("Thank you for recommending a fleet in your area")
+        whenever(context.getString(R.string.kh_uisdk_feedback_email)).thenReturn("feedback@karhoo.com")
+        whenever(context.getString(R.string.kh_uisdk_feedback)).thenReturn("Feedback")
+        whenever(context.getString(R.string.kh_uisdk_email_info)).thenReturn("Please do not delete this information")
+        whenever(context.getString(R.string.kh_uisdk_support_email)).thenReturn("support@karhoo.com")
+        whenever(context.getString(R.string.kh_uisdk_support_report_issue)).thenReturn("Report Issue")
+        whenever(context.getString(R.string.kh_uisdk_email_report_issue_message)).thenReturn("Please use the space below to report")
+        whenever(context.getString(R.string.kh_uisdk_supplier_email)).thenReturn("siupplier@karhoo.com")
+        whenever(context.getString(R.string.kh_uisdk_fleet_recommendation_subject)).thenReturn("Fleet recommendation in my area")
+        whenever(context.getString(R.string.kh_uisdk_fleet_recommendation_body)).thenReturn("Thank you for recommending a fleet in your area")
     }
 
     @Test

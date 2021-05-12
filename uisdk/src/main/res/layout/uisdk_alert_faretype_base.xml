@@ -10,7 +10,7 @@
         style="@style/Text.Primary.XLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/base"
+        android:text="@string/kh_uisdk_base"
         android:textAllCaps="true" />
 
     <FrameLayout
@@ -40,6 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/faretype_info_base" />
+        android:text="@string/kh_uisdk_faretype_info_base" />
 
 </LinearLayout>

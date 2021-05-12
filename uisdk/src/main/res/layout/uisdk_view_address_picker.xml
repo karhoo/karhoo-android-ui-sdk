@@ -82,7 +82,7 @@
         android:maxLines="2"
         android:paddingEnd="@dimen/spacing_small"
         android:paddingRight="@dimen/spacing_small"
-        android:text="@string/address_picker_add_pickup"
+        android:text="@string/kh_uisdk_address_picker_add_pickup"
         app:layout_constraintBottom_toTopOf="@id/guidelineCentre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineLeft"
@@ -179,7 +179,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:text="@string/address_picker_dropoff_booking" />
+            android:text="@string/kh_uisdk_address_picker_dropoff_booking" />
 
         <ImageView
             android:id="@+id/clearDestinationButtonIcon"

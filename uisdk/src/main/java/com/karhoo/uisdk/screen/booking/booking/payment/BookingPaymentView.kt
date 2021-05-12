@@ -3,13 +3,15 @@ package com.karhoo.uisdk.screen.booking.booking.payment
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -88,23 +90,24 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun changeCard() {
         cardDetailsVisibility(GONE)
+        editCardButtonVisibility(GONE)
         cardNumberText.isEnabled = false
-        changeCardLabel.visibility = GONE
         changeCardProgressBar.visibility = VISIBLE
         cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
         cardDetailsVisibility(VISIBLE)
+        editCardButtonVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = GONE
     }
 
-    override fun initialisePaymentFlow(price: QuotePrice?) {
-        dropInView?.initialisePaymentFlow(price)
+    override fun initialisePaymentFlow(quote: Quote?) {
+        dropInView?.initialisePaymentFlow(quote)
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        dropInView?.initialiseGuestPayment(price)
+    override fun initialiseGuestPayment(quote: Quote?) {
+        dropInView?.initialiseGuestPayment(quote)
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
@@ -115,6 +118,14 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private fun cardDetailsVisibility(visibility: Int) {
         cardLogoImage.visibility = visibility
         cardNumberText.visibility = visibility
+    }
+
+    private fun editCardButtonVisibility(visibility: Int) {
+        KarhooApi.userStore.savedPaymentInfo?.let {
+            changeCardLabel.visibility = visibility
+        } ?: run {
+            changeCardLabel.visibility = GONE
+        }
     }
 
     private fun setCardType(cardType: CardType?) {
@@ -131,12 +142,12 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         dropInView?.onActivityResult(requestCode, resultCode, data)
     }
 
-    override fun showError(error: Int) {
-        cardActions?.showErrorDialog(error)
+    override fun showError(error: Int, karhooError: KarhooError?) {
+        cardActions?.showErrorDialog(error, karhooError)
     }
 
-    override fun showPaymentDialog(braintreeSDKToken: String) {
-        paymentActions?.showPaymentDialog()
+    override fun showPaymentDialog(karhooError: KarhooError?) {
+        paymentActions?.showPaymentDialog(karhooError)
     }
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -145,12 +156,13 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                 bindViews(it.cardType, it.lastFour)
                 changeCardProgressBar.visibility = INVISIBLE
                 cardDetailsVisibility(VISIBLE)
+                editCardButtonVisibility(View.VISIBLE)
                 changeCardLabel.visibility = VISIBLE
                 paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
                 setCardType(it.cardType)
             }
         } ?: run {
-            cardNumberText.text = resources.getString(R.string.add_payment)
+            cardNumberText.text = resources.getString(R.string.kh_uisdk_add_payment)
             changeCardLabel.visibility = GONE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
             paymentLayout.background = ContextCompat.getDrawable(context, addPaymentBackground)
@@ -158,15 +170,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.handlePaymentDetailsUpdate()
     }
 
-    override fun showPaymentUI(sdkToken: String, paymentData: String?, price: QuotePrice?) {
+    override fun showPaymentUI(sdkToken: String, paymentData: String?, quote: Quote?) {
         paymentActions?.showPaymentUI()
         dropInView?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
-        paymentData, price = price)
+        paymentData, quote = quote)
     }
 
-    override fun showPaymentFailureDialog() {
+    override fun showPaymentFailureDialog(error: KarhooError?) {
         refresh()
-        paymentActions?.showPaymentFailureDialog()
+        paymentActions?.showPaymentFailureDialog(error)
     }
 
     override fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -181,8 +193,8 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentLayout.visibility = visibility
     }
 
-    override fun initialiseChangeCard(price: QuotePrice?) {
-        dropInView?.initialiseChangeCard(price)
+    override fun initialiseChangeCard(quote: Quote?) {
+        dropInView?.initialiseChangeCard(quote)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {

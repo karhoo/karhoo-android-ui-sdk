@@ -10,8 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/prebook_image_height"
         android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginTop="@dimen/spacing_medium_small"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +22,7 @@
         android:layout_marginStart="@dimen/spacing_xsmall"
         android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_xsmall"
-        android:text="@string/ride_confirmed"
+        android:text="@string/kh_uisdk_ride_confirmed"
         android:textColor="@color/off_black"
         android:textSize="@dimen/text_size_xlarge"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +65,7 @@
         android:paddingTop="@dimen/spacing_xxxsmall"
         android:paddingRight="@dimen/spacing_xxsmall"
         android:paddingBottom="@dimen/spacing_xxxsmall"
-        android:text="@string/pickup_type_meet_and_greet"
+        android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
         android:textColor="@color/text_white"
         android:textSize="@dimen/text_size_small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,23 +106,23 @@
 
     <ImageView
         android:id="@+id/pickupIcon"
+        style="@style/KhPickUpDot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="@+id/pickupAddressText"
         app:layout_constraintEnd_toStartOf="@+id/pickupAddressText"
-        app:layout_constraintTop_toTopOf="@+id/pickupAddressText"
-        style="@style/KhPickUpDot" />
+        app:layout_constraintTop_toTopOf="@+id/pickupAddressText" />
 
     <ImageView
         android:id="@+id/dropoffIcon"
+        style="@style/KhDropOffDot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="@+id/dropoffAddressText"
         app:layout_constraintEnd_toStartOf="@+id/dropoffAddressText"
-        app:layout_constraintTop_toTopOf="@+id/dropoffAddressText"
-        style="@style/KhDropOffDot" />
+        app:layout_constraintTop_toTopOf="@+id/dropoffAddressText" />
 
     <View
         android:id="@+id/pickupDropoffDivider"

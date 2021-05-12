@@ -32,4 +32,8 @@ internal object KarhooUISDKConfigurationProvider {
     fun simulatePaymentProvider(): Boolean {
         return configuration.simulatePaymentProvider()
     }
+
+    fun isConfigurationInitialized(): Boolean {
+        return this::configuration.isInitialized
+    }
 }

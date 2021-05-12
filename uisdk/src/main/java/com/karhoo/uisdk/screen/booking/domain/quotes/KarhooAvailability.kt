@@ -49,8 +49,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     override fun cleanup() {
-        bookingStatusStateViewModel.viewStates().removeObserver(observer)
         cancelVehicleCallback()
+        bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
 
     override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingStatus> {
@@ -64,6 +64,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     @Suppress("NestedBlockDepth")
     private fun requestVehicleAvailability(bookingStatus: BookingStatus?) {
+        cancelVehicleCallback()
         bookingStatus?.pickup?.let { bookingStatusPickup ->
             bookingStatus.destination?.let { bookingStatusDestination ->
                 vehiclesObserver = quotesCallback()
@@ -154,25 +155,25 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             }
             KarhooError.OriginAndDestinationIdentical -> {
                 clearDestination()
-                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
-                returnErrorStringOrLogoutIfRequired(error)))
+                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
+                returnErrorStringOrLogoutIfRequired(error), karhooError = error))
             }
-            else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, stringId =
-            returnErrorStringOrLogoutIfRequired(error)))
+            else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
+            returnErrorStringOrLogoutIfRequired(error), karhooError = error))
         }
     }
 
     private fun clearDestination() {
         bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
-                                                    .DestinationAddressEvent(null))
+                .DestinationAddressEvent(null))
     }
-    
+
     private fun handleVehicleValidity(vehicles: QuoteList) {
 
-        val refreshDelay = if (vehicles.validity >= VALIDITY_DEFAULT_INTERVAL) {
-            vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
-        } else {
-            VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+        val refreshDelay = when {
+            vehicles.validity == -1 -> 0
+            vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+            else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
         }
 
         GlobalScope.launch {
@@ -190,11 +191,24 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     private fun updateVehicles(vehicles: QuoteList) {
         handleVehiclePolling(vehicles)
-        availabilityHandler?.get()?.hasAvailability = true
-        currentCategories(currentCategories = vehicles.categories.keys.toList())
-        availableVehicles = vehicles.categories
-        currentAvailableQuotes()
-        filterVehicles()
+
+        var hasQuotes = false
+        vehicles.categories.forEach {
+            if (it.value.isNotEmpty()) {
+               hasQuotes = true
+            }
+        }
+
+        if (vehicles.status == QuoteStatus.COMPLETED && !hasQuotes) {
+            availabilityHandler?.get()?.hasNoResults = true
+        } else {
+            availabilityHandler?.get()?.hasNoResults = false
+            availabilityHandler?.get()?.hasAvailability = true
+            currentCategories(currentCategories = vehicles.categories.keys.toList())
+            availableVehicles = vehicles.categories
+            currentAvailableQuotes()
+            filterVehicles()
+        }
     }
 
     private fun currentCategories(currentCategories: List<String>) {

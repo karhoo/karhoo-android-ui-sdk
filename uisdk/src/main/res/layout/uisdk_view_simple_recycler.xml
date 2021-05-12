@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         style="@style/Text.Faded.Medium"
-        android:text="@string/results_empty"
+        android:text="@string/kh_uisdk_results_empty"
         android:textStyle="normal"
         android:visibility="gone" />
 

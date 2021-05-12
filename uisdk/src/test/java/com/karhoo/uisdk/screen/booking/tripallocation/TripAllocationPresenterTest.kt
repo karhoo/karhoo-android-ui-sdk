@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.tripallocation
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
@@ -13,7 +12,6 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.sdk.call.PollCall
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationPresenter
@@ -21,6 +19,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.assertEquals
@@ -44,10 +43,6 @@ class TripAllocationPresenterTest {
 
     @InjectMocks
     private lateinit var presenter: TripAllocationPresenter
-    private val TRIP_ID = "12trip34id"
-    private val FOLLOW_CODE = "followid"
-    private val FLEET_NAME = "Keane's Magic Motahs"
-    private val PHONE_NUMBER = "+44123 567891"
     private val tripRequested = TripInfo(
             tripId = TRIP_ID,
             fleetInfo = FleetInfo(name = FLEET_NAME, phoneNumber = PHONE_NUMBER),
@@ -70,9 +65,7 @@ class TripAllocationPresenterTest {
 
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
         whenever(tripDetailsCall.observable()).thenReturn(observable)
         doNothing().whenever(observable).subscribe(tripLambdaCaptor.capture(), anyLong())
@@ -100,9 +93,7 @@ class TripAllocationPresenterTest {
      */
     @Test
     fun `trip info updated with follow code if guest booking`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
         presenter.waitForAllocation(tripRequested)
         tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripDriverEnRoute))
@@ -152,9 +143,7 @@ class TripAllocationPresenterTest {
      */
     @Test
     fun `go to web tracking screen when guest booking trip with follow code is beyond allocated`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
 
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
 
@@ -189,9 +178,7 @@ class TripAllocationPresenterTest {
      */
     @Test
     fun `display guest booking failed when trip goes to dispatch cancelled`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
 
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
 
@@ -226,9 +213,8 @@ class TripAllocationPresenterTest {
      */
     @Test
     fun `display trip cancelled when guest booking trip goes to user cancelled`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
+
         whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
 
         presenter.waitForAllocation(tripRequested)
@@ -251,7 +237,114 @@ class TripAllocationPresenterTest {
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showCallToCancelDialog(PHONE_NUMBER, FLEET_NAME)
+        verify(view).showCallToCancelDialog(PHONE_NUMBER, FLEET_NAME, KarhooError.Unexpected)
     }
 
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a karhoo user booking
+     * And:     there has been no booking cancellation or completion
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `delayed allocation alert shown for delayed allocation for karhoo user`() {
+        presenter.waitForAllocation(tripRequested)
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view).showAllocationDelayAlert(tripRequested)
+    }
+
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a karhoo user booking
+     * And:     the booking has been cancelled by the user
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `no alert shown for delayed allocation for karhoo user after user cancellation`() {
+        whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
+
+        presenter.waitForAllocation(tripRequested)
+        tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripUserCancelled))
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
+    }
+
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a karhoo user booking
+     * And:     the booking has been cancelled by karhoo
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `no alert shown for delayed allocation for karhoo user after karhoo cancellation`() {
+        whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
+
+        presenter.waitForAllocation(tripRequested)
+        tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripDispatchCancelled))
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
+    }
+
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a karhoo user booking
+     * And:     a driver has been allocated
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `no alert shown for delayed allocation for karhoo user after driver allocation`() {
+        whenever(tripsService.trackTrip(TRIP_ID)).thenReturn(tripDetailsCall)
+
+        presenter.waitForAllocation(tripRequested)
+        tripLambdaCaptor.firstValue.onValueChanged(Resource.Success(tripDriverEnRoute))
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
+    }
+
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a token auth booking
+     * And:     there has been no booking cancellation or completion
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `delayed allocation alert shown for delayed allocation for token auth user`() {
+        UnitTestUISDKConfig.setTokenAuthentication(context)
+        presenter.waitForAllocation(tripRequested)
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view).showAllocationDelayAlert(tripRequested)
+    }
+
+    /**
+     * Given:   there is an allocation delay
+     * When:    it is a guest booking
+     * Then:    then no alert is displayed
+     */
+    @Test
+    fun `no alert shown for delayed allocation for guest booking`() {
+        UnitTestUISDKConfig.setGuestAuthentication(context)
+        whenever(tripsService.trackTrip(FOLLOW_CODE)).thenReturn(tripDetailsCall)
+        presenter.waitForAllocation(tripRequested)
+
+        presenter.handleAllocationDelay(tripRequested)
+
+        verify(view, never()).showAllocationDelayAlert(tripRequested)
+    }
+
+    companion object {
+        private const val TRIP_ID = "12trip34id"
+        private const val FOLLOW_CODE = "followid"
+        private const val FLEET_NAME = "Keane's Magic Motahs"
+        private const val PHONE_NUMBER = "+44123 567891"
+    }
 }

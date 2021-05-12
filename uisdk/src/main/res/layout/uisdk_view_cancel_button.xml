@@ -31,7 +31,7 @@
         android:layout_alignBottom="@id/progressBar"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
-        android:text="@string/cancelling"
+        android:text="@string/kh_uisdk_cancelling"
         android:textAllCaps="true"
         android:visibility="invisible"
         tools:visibility="visible" />

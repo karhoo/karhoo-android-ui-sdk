@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import kotlin.jvm.Throws
 
 @RunWith(MockitoJUnitRunner::class)
 class BookingMapPresenterTest {
@@ -107,8 +108,8 @@ class BookingMapPresenterTest {
      */
     @Test
     fun `Show snackbar on error`() {
-        val resId: Int = R.string.K4001
-        presenter.onError(resId)
+        val resId: Int = R.string.kh_uisdk_K4001
+        presenter.onError(resId, null)
 
         verify(view).showSnackbar(any())
     }

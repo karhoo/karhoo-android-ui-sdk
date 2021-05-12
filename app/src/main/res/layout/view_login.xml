@@ -12,7 +12,7 @@
     <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
         android:id="@+id/emailLayout"
         style="@style/AppTheme.EditText"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_medium_small"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -23,7 +23,7 @@
             style="@style/AppTheme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/email_hint"
+            android:hint="@string/kh_uisdk_email_hint"
             android:inputType="textEmailAddress"
             android:theme="@style/AppTheme.EditText" />
 
@@ -32,7 +32,7 @@
     <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
         android:id="@+id/passwordLayout"
         style="@style/AppTheme.LoginPassword"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:theme="@style/AppTheme.LoginPassword"
@@ -44,7 +44,7 @@
             style="@style/AppTheme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/password_hint"
+            android:hint="@string/kh_uisdk_password_hint"
             android:inputType="textPassword"
             android:theme="@style/AppTheme.EditText" />
 
@@ -57,9 +57,9 @@
         android:layout_height="56dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_medium_small"
+        android:layout_marginBottom="@dimen/spacing_medium_small"
         android:background="@drawable/uisdk_ripple_background"
-        android:enabled="false"
-        android:text="@string/sign_in_but"
+        android:text="@string/kh_uisdk_sign_in_but"
         tools:enabled="false" />
 
 </LinearLayout>

@@ -3,11 +3,15 @@ package com.karhoo.uisdk.screen.booking.quotes
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
@@ -29,6 +33,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
+import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
@@ -40,7 +45,7 @@ class QuotesListView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), QuotesSortView.Listener,
-      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget {
+        QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -63,6 +68,11 @@ class QuotesListView @JvmOverloads constructor(
         chevronIcon.setOnClickListener { presenter.showMore() }
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPause() {
+        availabilityProvider?.cleanup()
+    }
+
     override fun setChevronState(isExpanded: Boolean) {
         val stateSet = intArrayOf(android.R.attr.state_checked * if (isExpanded) 1 else -1)
         chevronIcon.setImageState(stateSet, true)
@@ -74,7 +84,7 @@ class QuotesListView @JvmOverloads constructor(
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                      .QuotesListCollapsed)
+                    .QuotesListCollapsed)
         }
     }
 
@@ -91,12 +101,13 @@ class QuotesListView @JvmOverloads constructor(
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                                                   .Error(SnackbarConfig(text = resources
                                                           .getString(R.string
-                                                                             .destination_price_error))))
+                                                                             .kh_uisdk_destination_price_error))))
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
                                 bookingStatusStateViewModel: BookingStatusStateViewModel,
                                 bookingQuotesViewModel: BookingQuotesViewModel) {
+        lifecycleOwner.lifecycle.addObserver(this)
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
@@ -106,10 +117,6 @@ class QuotesListView @JvmOverloads constructor(
 
         this.bookingQuotesViewModel = bookingQuotesViewModel
         bookingQuotesViewModel.viewStates().observe(lifecycleOwner, watchBookingQuotesStatus())
-    }
-
-    override fun cleanup() {
-        availabilityProvider?.cleanup()
     }
 
     private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
@@ -142,7 +149,7 @@ class QuotesListView @JvmOverloads constructor(
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
-                                                              .animation_duration_slide_out_or_in_quotes).toLong())
+                            .animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isQuotesListVisible = true
@@ -188,26 +195,30 @@ class QuotesListView @JvmOverloads constructor(
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
                                             priority = SnackbarPriority.NORMAL,
-                                            action = SnackbarAction(resources.getString(R.string.contact)) {
+                                            action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
                                                 val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
                                                 showNoCoverageEmail?.let {intent ->
                                                     activity.startActivity(intent)
                                                 }
                                             },
-                                            text = resources.getString(R.string.no_availability))
+                                            text = resources.getString(R.string.kh_uisdk_no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .Error(snackbarConfig))
+                .Error(snackbarConfig))
 
+    }
+
+    override fun showNoResultsText(show: Boolean) {
+        quotesRecyclerView.showNoResultsText(show)
     }
 
     override fun hideNoAvailability() {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
+                .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .Error(snackbarConfig))
+                .Error(snackbarConfig))
     }
 
     override fun setQuotesListVisibility() {
@@ -222,7 +233,7 @@ class QuotesListView @JvmOverloads constructor(
             availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
                                                       KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
                                                       it, lifecycleOwner).apply {
-                setAllCategory(resources.getString(R.string.all_category))
+                setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)
             }

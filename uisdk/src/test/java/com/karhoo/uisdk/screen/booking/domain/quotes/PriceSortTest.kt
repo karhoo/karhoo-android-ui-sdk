@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
-import com.karhoo.sdk.api.model.FleetInfo
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Fleet
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.network.request.QuoteQTA
 import junit.framework.Assert.assertEquals
@@ -59,11 +59,11 @@ class PriceSortTest {
     @Test
     fun `sorted by QTA when prices are equal`() {
         val v1 = Quote(price = QuotePrice(highPrice = 5),
-                         vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 8)))
+                       vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 8)))
         val v2 = Quote(price = QuotePrice(highPrice = 5),
-                         vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)))
+                       vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 10)))
         val v3 = Quote(price = QuotePrice(highPrice = 5),
-                         vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 3)))
+                       vehicle = QuoteVehicle(vehicleQta = QuoteQTA(highMinutes = 3)))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortedOrder = listOf(v3, v1, v2)
         val result = vehiclesToSort.sortedWith(priceSort)
@@ -78,9 +78,9 @@ class PriceSortTest {
      */
     @Test
     fun `sorted by quote name when equal prices and no QTAs`() {
-        val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "B Cars"))
-        val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "Z Cars"))
-        val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"))
+        val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "B Cars"))
+        val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "Z Cars"))
+        val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortedOrder = listOf(v3, v1, v2)
 
@@ -96,12 +96,12 @@ class PriceSortTest {
      */
     @Test
     fun `sorted alphabetically by category name when quote is same, equal prices and no QTAs`() {
-        val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"),
-                         vehicle = QuoteVehicle(vehicleClass = "ABC"))
-        val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"),
-                         vehicle = QuoteVehicle(vehicleClass = "XYZ"))
-        val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = FleetInfo(name = "A Cars"),
-                         vehicle = QuoteVehicle(vehicleClass = "DEF"))
+        val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
+                       vehicle = QuoteVehicle(vehicleClass = "ABC"))
+        val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
+                       vehicle = QuoteVehicle(vehicleClass = "XYZ"))
+        val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
+                       vehicle = QuoteVehicle(vehicleClass = "DEF"))
         val vehiclesToSort = listOf(v1, v2, v3)
         val expectedSortOrder = listOf(v1, v3, v2)
 

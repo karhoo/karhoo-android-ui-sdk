@@ -70,8 +70,8 @@ class TripMapPresenter(view: TripMapMVP.View,
         this.origin?.let { origin ->
             this.destination?.let { destination ->
                 view?.apply {
-                    addPinToMap(origin, true, R.string.address_pick_up)
-                    addPinToMap(destination, false, R.string.address_drop_off)
+                    addPinToMap(origin, true, R.string.kh_uisdk_address_pick_up)
+                    addPinToMap(destination, false, R.string.kh_uisdk_address_drop_off)
                     zoomMapToIncludeLatLngs(1, origin, destination)
                     setUserLocationVisibility(tripState)
                 }

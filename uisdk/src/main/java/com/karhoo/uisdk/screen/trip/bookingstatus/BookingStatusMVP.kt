@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.trip.bookingstatus
 
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 
 interface BookingStatusMVP {
@@ -15,7 +16,7 @@ interface BookingStatusMVP {
 
         fun updateStatus(@StringRes status: Int, quote: String)
 
-        fun showTemporaryError(error: String)
+        fun showTemporaryError(error: String, karhooError: KarhooError?)
 
         fun tripComplete(tripDetails: TripInfo)
 

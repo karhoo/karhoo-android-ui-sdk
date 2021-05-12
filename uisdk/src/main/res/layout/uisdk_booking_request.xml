@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Text.Black.XLarge"
-                android:text="@string/passenger_details"
+                android:text="@string/kh_uisdk_passenger_details"
                 android:layout_marginStart="@dimen/spacing_grid_first_column"
                 android:layout_marginEnd="@dimen/spacing_grid_second_column" />
 
@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Text.Black.XLarge"
-        android:text="@string/payment_details"
+        android:text="@string/kh_uisdk_payment_details"
         android:layout_marginStart="@dimen/spacing_grid_first_column"
         android:layout_marginEnd="@dimen/spacing_grid_second_column"
         android:layout_marginTop="@dimen/spacing_grid_row"

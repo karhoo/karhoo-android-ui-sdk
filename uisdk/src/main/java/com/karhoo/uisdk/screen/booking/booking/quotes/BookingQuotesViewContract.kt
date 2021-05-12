@@ -12,7 +12,6 @@ interface BookingQuotesViewContract {
         fun initAvailability(lifecycleOwner: LifecycleOwner)
         fun setQuotesListVisibility()
         fun bindViewToData(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
-        fun cleanup()
     }
 
     sealed class BookingQuotesEvent {

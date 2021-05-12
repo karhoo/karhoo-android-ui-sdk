@@ -48,8 +48,8 @@ class RidesActivity : BaseActivity(), RidesLoading {
     }
 
     override fun initialiseViews() {
-        val pages = arrayOf(LayoutArrayPagerAdapter.Page(getString(R.string.title_page_upcoming), R.layout.uisdk_page_rides_upcoming),
-                            LayoutArrayPagerAdapter.Page(getString(R.string.title_page_past), R.layout.uisdk_page_rides_past))
+        val pages = arrayOf(LayoutArrayPagerAdapter.Page(getString(R.string.kh_uisdk_title_page_upcoming), R.layout.uisdk_page_rides_upcoming),
+                            LayoutArrayPagerAdapter.Page(getString(R.string.kh_uisdk_title_page_past), R.layout.uisdk_page_rides_past))
         adapter = LayoutArrayPagerAdapter(pages)
         viewPager.adapter = adapter
     }

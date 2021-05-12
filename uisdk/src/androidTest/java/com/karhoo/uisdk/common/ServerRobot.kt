@@ -216,12 +216,21 @@ class ServerRobot {
                         )
     }
 
+    fun cancelFeeResponse(code: Int, response: Any, delayInMillis: Int = 0, trip: String) {
+        mockGetResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.BOOKING_CANCEL_FEE.replace("{id}", trip),
+                delayInMillis = delayInMillis
+                        )
+    }
+
     fun sdkInitResponse(code: Int, response: Any, delayInMillis: Int = 0) {
         mockPostResponse(
                 code = code,
                 response = response,
                 endpoint = APITemplate.SDK_INITIALISER_METHOD +
-                        "?organisation_id=0987&currency=$DEFAULT_CURRENCY",
+                        "?organisation_id=organisation_id&currency=$DEFAULT_CURRENCY",
                 delayInMillis = delayInMillis
                         )
     }
@@ -250,6 +259,15 @@ class ServerRobot {
                 code = code,
                 response = response,
                 endpoint = APITemplate.BOOKING_HISTORY_METHOD,
+                delayInMillis = 0
+                        )
+    }
+
+    fun cancelRideResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+                code = code,
+                response = response,
+                endpoint = APITemplate.CANCEL_BOOKING_METHOD,
                 delayInMillis = 0
                         )
     }

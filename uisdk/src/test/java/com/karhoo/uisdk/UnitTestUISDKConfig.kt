@@ -34,4 +34,24 @@ AuthenticationMethod =
     override fun analyticsProvider(): AnalyticProvider? {
         return null
     }
+
+    companion object {
+        fun setGuestAuthentication(context: Context) {
+            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                           context,
+                                                                                           authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        }
+
+        fun setKarhooAuthentication(context: Context) {
+            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                           context,
+                                                                                           authenticationMethod = AuthenticationMethod.KarhooUser()))
+        }
+
+        fun setTokenAuthentication(context: Context) {
+            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
+                                                                                           context,
+                                                                                           authenticationMethod = AuthenticationMethod.TokenExchange("clientId", "scope")))
+        }
+    }
 }

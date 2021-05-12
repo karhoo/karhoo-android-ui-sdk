@@ -24,7 +24,7 @@ class RecentsListView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_simple_recycler, this)
 
         if (!isInEditMode) {
-            emptyText.setText(R.string.recents_empty)
+            emptyText.setText(R.string.kh_uisdk_recents_empty)
 
             adapter.setItemClickListener { _, position, locationInfo -> saveLocationAndNotifyActions(locationInfo, position) }
 

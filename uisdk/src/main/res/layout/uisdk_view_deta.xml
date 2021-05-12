@@ -13,7 +13,7 @@
         android:layout_marginTop="@dimen/spacing_xxxsmall"
         android:layout_marginEnd="@dimen/spacing_small"
         style="@style/Text.Faded.Small"
-        android:text="@string/arrival"
+        android:text="@string/kh_uisdk_arrival"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

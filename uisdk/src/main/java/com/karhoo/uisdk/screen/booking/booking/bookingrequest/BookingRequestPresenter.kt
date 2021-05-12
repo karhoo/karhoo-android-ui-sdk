@@ -23,6 +23,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
+import com.karhoo.uisdk.screen.booking.booking.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -80,9 +81,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
-            view?.initialiseGuestPayment(quote?.price)
+            view?.initialiseGuestPayment(quote)
         } else {
-            view?.initialisePaymentProvider(quote?.price)
+            view?.initialisePaymentProvider(quote)
         }
         analytics?.bookingRequested(currentTripInfo(), outboundTripId)
     }
@@ -114,9 +115,9 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
-            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog()
-            KarhooError.InvalidRequestPayload -> handleError(R.string.booking_details_error)
-            else -> handleError(returnErrorStringOrLogoutIfRequired(error))
+            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(error)
+            KarhooError.InvalidRequestPayload -> handleError(R.string.kh_uisdk_booking_details_error, error)
+            else -> handleError(returnErrorStringOrLogoutIfRequired(error), error)
         }
     }
 
@@ -124,10 +125,13 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.removeCurrentUser()
         }
+        if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) {
+            userStore.clearSavedPaymentInfo()
+        }
     }
 
     override fun handleChangeCard() {
-        view?.initialiseChangeCard(quote?.price)
+        view?.initialiseChangeCard(quote)
     }
 
     override fun setBookingFields(allFieldsValid: Boolean) {
@@ -160,23 +164,22 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    override fun passBackPaymentIdentifiers(nonce: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
-        val passengerDetails = if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() is AuthenticationMethod.KarhooUser)
-            getPassengerDetails() else passengerDetails
+    override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
+        val passenger = if (KarhooUISDKConfigurationProvider.configuration
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
 
-        passengerDetails?.let {
-            val metadata = tripId?.let { hashMapOf(TRIP_ID to nonce) }
+        passenger?.let {
+            val metadata = tripId?.let { hashMapOf(TRIP_ID to identifier) }
 
             tripsService.book(TripBooking(
                     comments = comments,
                     flightNumber = flightDetails?.flightNumber,
                     meta = metadata,
-                    nonce = nonce,
-                    quoteId = quote?.id?.orEmpty(),
+                    nonce = identifier,
+                    quoteId = quote?.id.orEmpty(),
                     passengers = Passengers(
                             additionalPassengers = 0,
-                            passengerDetails = listOf(passengerDetails),
+                            passengerDetails = listOf(passenger),
                             luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {
@@ -220,18 +223,18 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             view?.setCapacity(quote.vehicle)
             view?.animateIn()
         } else if (origin == null) {
-            handleError(R.string.origin_book_error)
+            handleError(R.string.kh_uisdk_origin_book_error, null)
         } else if (destination == null) {
-            handleError(R.string.destination_book_error)
+            handleError(R.string.kh_uisdk_destination_book_error, null)
         }
     }
 
-    override fun handleError(@StringRes stringId: Int) {
+    override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError()
         view?.enableCancelButton()
         bookingRequestStateViewModel?.process(BookingRequestViewContract
                                                       .BookingRequestEvent
-                                                      .BookingError(stringId))
+                                                      .BookingError(stringId, karhooError))
     }
 
     private fun handleBookingType(quote: Quote) {

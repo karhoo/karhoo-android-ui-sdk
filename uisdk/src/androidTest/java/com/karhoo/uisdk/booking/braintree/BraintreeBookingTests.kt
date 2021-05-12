@@ -15,10 +15,10 @@ import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.util.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
-import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
@@ -107,7 +107,8 @@ class BraintreeBookingTests : Launch {
         booking(this, null) {
             mediumSleep()
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            // R.string.kh_uisdk_K0001
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
@@ -126,7 +127,7 @@ class BraintreeBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.no_availability)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }
@@ -149,7 +150,7 @@ class BraintreeBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.no_availability)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }
@@ -208,11 +209,13 @@ class BraintreeBookingTests : Launch {
         booking(this, INITIAL_TRIP_INTENT) {
             shortSleep()
         } result {
+            shortSleep()
             quotesListNotExpanded(LAST_FLEET)
         }
         booking {
             pressExpandListButton()
         } result {
+            shortSleep()
             quotesListIsExpanded(LAST_FLEET)
         }
     }
@@ -522,7 +525,6 @@ class BraintreeBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
-            sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
         }
         booking(this, INITIAL_TRIP_INTENT) {

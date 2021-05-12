@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.base.listener
 
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
 interface ErrorView {
@@ -11,7 +12,7 @@ interface ErrorView {
 
     fun showTopBarNotification(value: String)
 
-    fun showErrorDialog(@StringRes stringId: Int)
+    fun showErrorDialog(@StringRes stringId: Int, karhooError: KarhooError? = null)
 
     fun dismissSnackbar()
 

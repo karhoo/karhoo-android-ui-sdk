@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/eta_margin"
         android:elevation="@dimen/spacing_xsmall"
-        android:text="@string/mins"
+        android:text="@string/kh_uisdk_mins"
         android:textColor="@color/med_grey"
         android:textSize="@dimen/text_size_small"
         app:layout_constraintLeft_toLeftOf="parent"

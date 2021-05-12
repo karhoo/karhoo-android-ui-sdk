@@ -2,7 +2,8 @@ package com.karhoo.uisdk.screen.trip.bookingstatus.contact
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.sdk.api.model.BookingFee
+import com.karhoo.sdk.api.model.BookingFeePrice
 import com.karhoo.sdk.api.model.Driver
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.TripInfo
@@ -13,7 +14,6 @@ import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.analytics.Analytics
 import com.nhaarman.mockitokotlin2.any
@@ -42,6 +42,9 @@ class ContactOptionsPresenterTest {
     private var view: ContactOptionsMVP.View = mock()
     private var tripsService: TripsService = mock()
     private var analytics: Analytics = mock()
+    private val bookingFeeCall: Call<BookingFee> = mock()
+    private val bookingFeeCaptor = argumentCaptor<(Resource<BookingFee>) -> Unit>()
+    private val lambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
 
     @Captor
     private lateinit var cancellationCaptor: ArgumentCaptor<TripCancellation>
@@ -52,6 +55,8 @@ class ContactOptionsPresenterTest {
         private const val TRIP_ID = "someTripId"
         private const val FOLLOW_CODE = "followCode"
     }
+
+    private val bookingFee = BookingFeePrice(currency = "GBP", value = 5200)
 
     private var fleetInfo = FleetInfo(
             name = "Some mad oul fleet",
@@ -81,13 +86,12 @@ class ContactOptionsPresenterTest {
 
     private lateinit var presenter: ContactOptionsPresenter
 
-    private val lambdaCaptor = argumentCaptor<(Resource<Void>) -> Unit>()
-
     @Before
     fun setUp() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
+
+        whenever(tripsService.cancellationFee(any())).thenReturn(bookingFeeCall)
+        doNothing().whenever(bookingFeeCall).execute(bookingFeeCaptor.capture())
 
         presenter = ContactOptionsPresenter(
                 view = view,
@@ -102,12 +106,10 @@ class ContactOptionsPresenterTest {
      * Then:    The view should be told to display the complete dialog
      */
     @Test
-    fun `user cancels trip successfully`() {
+    fun `user requests cancels trip successfully`() {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -136,9 +138,10 @@ class ContactOptionsPresenterTest {
      * When:    The cancel has started
      * And:     It is a guest booking
      * Then:    The correct identifier is sent
+     * And:     The cancel button is hidden
      */
     @Test
-    fun `cancel trip uses correct identifier`() {
+    fun `cancel trip uses correct identifier and hides cancel button`() {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
@@ -146,6 +149,7 @@ class ContactOptionsPresenterTest {
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
 
         verify(tripsService).cancel(capture(cancellationCaptor))
+        verify(view).enableCancelButton()
         assertEquals(TRIP_ID, cancellationCaptor.value.tripIdentifier)
     }
 
@@ -157,9 +161,7 @@ class ContactOptionsPresenterTest {
      */
     @Test
     fun `cancel guest booking trip uses correct identifier`() {
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        UnitTestUISDKConfig.setGuestAuthentication(context)
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
@@ -180,13 +182,11 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString())
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
     }
 
     /**
@@ -199,8 +199,6 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -218,8 +216,6 @@ class ContactOptionsPresenterTest {
         whenever(tripsService.cancel(any())).thenReturn(cancelTripCall)
 
         presenter.onTripInfoChanged(tripDetails)
-        presenter.cancelPressed()
-        verify(view, atLeastOnce()).showCancelConfirmationDialog()
 
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Success(mock()))
@@ -243,13 +239,15 @@ class ContactOptionsPresenterTest {
      * Given:   A trip with driver number & fleet number available in passenger on board state
      * When:    observing trip status
      * Then:    enable call fleet & disable call driver
+     * And:     disable cancel button
      */
     @Test
-    fun `passenger on board enables call fleet`() {
+    fun `passenger on board enables call fleet and hides cancel button`() {
         presenter.onTripInfoChanged(tripDetailsPassengerOnBoard)
 
         verify(view).enableCallFleet()
         verify(view).disableCallDriver()
+        verify(view).disableCancelButton()
     }
 
     /**
@@ -301,7 +299,7 @@ class ContactOptionsPresenterTest {
         presenter.cancelTrip()
         lambdaCaptor.firstValue.invoke(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showError(anyInt())
+        verify(view).showError(anyInt(), any())
     }
 
     /**
@@ -310,10 +308,189 @@ class ContactOptionsPresenterTest {
      * Then:    Then the contact options should be disabled
      */
     @Test
-    fun `hide all contact options when trip is POB`() {
-        presenter.onTripInfoChanged(emptyTripInfo)
-        verify(view).disableCallFleet()
+    fun `show call fleet option when trip is POB`() {
+        presenter.onTripInfoChanged(tripDetailsPassengerOnBoard)
+
+        verify(view).enableCallFleet()
         verify(view).disableCallDriver()
+        verify(view).disableCancelButton()
     }
 
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    The call fails
+     * Then:    Then view is updated with the error
+     */
+    @Test
+    fun `a guest booking cancellation fee request failure uses the follow code`() {
+        UnitTestUISDKConfig.setGuestAuthentication(context)
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(tripsService).cancellationFee(FOLLOW_CODE)
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
+        verify(view).showLoadingDialog(false)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    The call fails
+     * Then:    Then view is updated with the error
+     */
+    @Test
+    fun `a cancellation fee request failure correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
+
+        verify(tripsService).cancellationFee(TRIP_ID)
+        verify(view, atLeastOnce()).showCallToCancelDialog(anyString(), anyString(), any())
+        verify(view).showLoadingDialog(false)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There is a null cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a null cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = null)))
+
+        verify(view).showCancellationFee("", TRIP_ID)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There there is no cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a no cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee()))
+
+        verify(view).showCancellationFee("", TRIP_ID)
+    }
+
+    /**
+     * Given:   The cancellation fee is requested
+     * When:    There is a valid cancellation fee
+     * Then:    Then the information is returned to the user
+     */
+    @Test
+    fun `a valid cancellation fee response correctly updates the view`() {
+        presenter.onTripInfoChanged(tripDetails)
+
+        presenter.cancelPressed()
+
+        bookingFeeCaptor.firstValue.invoke(Resource.Success(BookingFee(fee = bookingFee)))
+
+        verify(view).showCancellationFee("£52.00", TRIP_ID)
+    }
+
+    /**
+     * Given:   A trip is in REQUESTED state
+     * When:    The trip is validated
+     * Then:    Then the contact driver option and cancel options should be enabled
+     */
+    @Test
+    fun `show cancel option and call driver option when trip is requested`() {
+        val requestedTrip = TripInfo(tripId = TRIP_ID,
+                                     tripState = TripStatus.REQUESTED,
+                                     fleetInfo = fleetInfo,
+                                     vehicle = vehicle)
+
+        presenter.onTripInfoChanged(requestedTrip)
+
+        verify(view).disableCallFleet()
+        verify(view).enableCallDriver()
+        verify(view).enableCancelButton()
+    }
+
+    /**
+     * Given:   A trip is in CONFIRMED state
+     * When:    The trip is validated
+     * Then:    Then the contact driver option and cancel options should be enabled
+     */
+    @Test
+    fun `show cancel option and call driver option when trip is confirmed`() {
+        val requestedTrip = TripInfo(tripId = TRIP_ID,
+                                     tripState = TripStatus.CONFIRMED,
+                                     fleetInfo = fleetInfo,
+                                     vehicle = vehicle)
+
+        presenter.onTripInfoChanged(requestedTrip)
+
+        verify(view).disableCallFleet()
+        verify(view).enableCallDriver()
+        verify(view).enableCancelButton()
+    }
+
+    /**
+     * Given:   A trip is in DER state
+     * When:    The trip is validated
+     * Then:    Then the contact driver option and cancel options should be enabled
+     */
+    @Test
+    fun `show cancel and call driver options when driver is en route`() {
+        val derTrip = TripInfo(tripId = TRIP_ID,
+                               tripState = TripStatus.DRIVER_EN_ROUTE,
+                               fleetInfo = fleetInfo)
+
+        presenter.onTripInfoChanged(derTrip)
+
+        verify(view).enableCallFleet()
+        verify(view).disableCallDriver()
+        verify(view).enableCancelButton()
+    }
+
+    /**
+     * Given:   A trip is in ARRIVED state
+     * When:    The trip is validated
+     * Then:    Then the contact fleet option should be enabled
+     * And:     The cancel option should be disabled
+     */
+    @Test
+    fun `hide cancel option and show call fleet option when driver has arrived`() {
+        val arrivedTrip = TripInfo(tripId = TRIP_ID,
+                                   tripState = TripStatus.ARRIVED,
+                                   fleetInfo = fleetInfo)
+
+        presenter.onTripInfoChanged(arrivedTrip)
+
+        verify(view).enableCallFleet()
+        verify(view).disableCallDriver()
+        verify(view).disableCancelButton()
+    }
+
+    /**
+     * Given:   A trip is in COMPLETED state
+     * When:    The trip is validated
+     * Then:    Then the cancel and contact options should be disabled
+     */
+    @Test
+    fun `hide cancel and contact option when trip is completed`() {
+        val completedTrip = TripInfo(tripId = TRIP_ID,
+                                   tripState = TripStatus.COMPLETED,
+                                   fleetInfo = fleetInfo)
+
+        presenter.onTripInfoChanged(completedTrip)
+
+        verify(view).disableCallFleet()
+        verify(view).disableCallDriver()
+        verify(view).disableCancelButton()
+    }
 }

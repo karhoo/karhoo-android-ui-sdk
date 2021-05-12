@@ -9,11 +9,12 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.adyen.AdyenAmount
 import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.response.Resource
@@ -24,9 +25,9 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentDropInMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
-import com.karhoo.uisdk.util.CurrencyUtils
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
+import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
@@ -37,8 +38,7 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
-    var price: QuotePrice? = null
-
+    var quote: Quote? = null
     private var tripId: String = ""
 
     init {
@@ -46,10 +46,10 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         userStore.addSavedPaymentObserver(this)
     }
 
-    override fun getDropInConfig(context: Context, publicKey: String): Any {
+    override fun getDropInConfig(context: Context, sdkToken: String): Any {
         val amount = Amount()
-        amount.currency = price?.currencyCode ?: DEFAULT_CURRENCY
-        amount.value = price?.highPrice.orZero()
+        amount.currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
+        amount.value = quote?.price?.highPrice.orZero()
 
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
                 KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
@@ -64,34 +64,44 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 .setAmount(amount)
                 .setEnvironment(environment)
                 .setShopperLocale(Locale.getDefault())
-                .addCardConfiguration(createCardConfig(context, publicKey))
+                .addCardConfiguration(createCardConfig(context, sdkToken))
                 .build()
     }
 
-    override fun getPaymentNonce(price: QuotePrice?) {
-        passBackThreeDSecureNonce(price)
+    override fun getPaymentNonce(quote: Quote?) {
+        passBackThreeDSecureNonce(quote)
     }
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY)
+            val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY) ?: ""
             val payload = JSONObject(dataString)
-            when (payload.optString(AdyenPaymentView.RESULT_CODE, "")) {
+            when (payload.optString(RESULT_CODE, "")) {
                 AdyenPaymentView.AUTHORISED -> {
                     this.tripId = payload.optString(TRIP_ID, "")
-                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, null))
+                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
                 }
-                else -> view?.showPaymentFailureDialog()
+                else -> {
+                    val error = convertToKarhooError(payload)
+                    view?.showPaymentFailureDialog(error)
+                }
             }
         } else {
             view?.refresh()
         }
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        passBackThreeDSecureNonce(price)
+    private fun convertToKarhooError(payload: JSONObject): KarhooError {
+        val result = payload.optString(RESULT_CODE, "")
+        val refusalReason = payload.optString(REFUSAL_REASON, "")
+        val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
+        return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
+    }
+
+    override fun initialiseGuestPayment(quote: Quote?) {
+        passBackThreeDSecureNonce(quote)
     }
 
     override fun onSavedPaymentInfoChanged(userPaymentInfo: SavedPaymentInfo?) {
@@ -99,8 +109,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    override fun sdkInit(price: QuotePrice?) {
-        this.price = price
+    override fun sdkInit(quote: Quote?) {
+        this.quote = quote
         paymentsService.getAdyenPublicKey().execute { result ->
             when (result) {
                 is Resource.Success -> {
@@ -109,7 +119,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                         getPaymentMethods()
                     }
                 }
-                is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
@@ -124,7 +135,8 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     private fun getPaymentMethods() {
-        val amount = AdyenAmount(price?.currencyCode ?: DEFAULT_CURRENCY, price?.highPrice.orZero())
+        val amount = AdyenAmount(quote?.price?.currencyCode ?: DEFAULT_CURRENCY
+                                 , quote?.price?.highPrice.orZero())
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
         } else {
@@ -134,18 +146,19 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                     when (result) {
                         is Resource.Success -> {
                             result.data.let {
-                                view?.showPaymentUI(this.adyenKey, it, this.price)
+                                view?.showPaymentUI(this.adyenKey, it, this.quote)
                             }
                         }
-                        is Resource.Failure -> view?.showError(R.string.something_went_wrong)
+                        is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                        //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
             }
         }
     }
 
-    private fun passBackThreeDSecureNonce(price: QuotePrice?) {
-        val amount = quotePriceToAmount(price)
+    private fun passBackThreeDSecureNonce(quote: Quote?) {
+        val amount = quotePriceToAmount(quote)
         when {
             KarhooUISDKConfigurationProvider.simulatePaymentProvider() -> {
                 view?.threeDSecureNonce(tripId, tripId)
@@ -154,18 +167,21 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 view?.threeDSecureNonce(tripId, tripId, amount)
             }
             else -> {
-                view?.showError(R.string.payment_issue_message)
+                view?.showError(R.string.kh_uisdk_something_went_wrong, karhooError = KarhooError.FailedToCallMoneyService)
+                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
 
-    private fun quotePriceToAmount(price: QuotePrice?): String {
-        val currency = Currency.getInstance(price?.currencyCode?.trim())
-        return CurrencyUtils.intToPriceNoSymbol(currency, price?.highPrice.orZero())
+    private fun quotePriceToAmount(quote: Quote?): String {
+        val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
+        return currency.intToPriceNoSymbol(quote?.price?.highPrice.orZero())
     }
 
     private fun updateCardDetails(paymentData: String?) {
-        paymentData?.let {
+        if (paymentData.isNullOrEmpty()) {
+            view?.refresh()
+        } else {
             val additionalData = JSONObject(paymentData)
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")
@@ -173,11 +189,14 @@ class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
                 SavedPaymentInfo(newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
             userStore.savedPaymentInfo = savedPaymentInfo
-        } ?: view?.refresh()
+        }
     }
 
     companion object {
         const val CARD_SUMMARY = "cardSummary"
         const val PAYMENT_METHOD = "paymentMethod"
+        const val RESULT_CODE = "resultCode"
+        const val REFUSAL_REASON = "refusalReason"
+        const val REFUSAL_REASON_CODE = "refusalReasonCode"
     }
 }

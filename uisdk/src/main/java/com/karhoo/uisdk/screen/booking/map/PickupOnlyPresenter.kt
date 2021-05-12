@@ -19,7 +19,7 @@ internal class PickupOnlyPresenter(private val addressService: AddressService) :
                 .execute { result ->
                     when (result) {
                         is Resource.Success -> owner?.setPickupLocation(result.data)
-                        is Resource.Failure -> owner?.onError(returnErrorStringOrLogoutIfRequired(result.error))
+                        is Resource.Failure -> owner?.onError(returnErrorStringOrLogoutIfRequired(result.error), result.error)
                     }
                 }
     }

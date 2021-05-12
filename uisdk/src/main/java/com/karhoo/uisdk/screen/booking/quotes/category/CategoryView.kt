@@ -35,7 +35,7 @@ internal class CategoryView @JvmOverloads constructor(context: Context, attrs: A
     }
 
     fun setCategoryName(categoryName: String) {
-        if (categoryName != resources.getString(R.string.all_category)) {
+        if (categoryName != resources.getString(R.string.kh_uisdk_all_category)) {
             val resId = resources.getIdentifier(categoryName.toLowerCase(), "string", context.packageName)
             if (resId == 0) {
                 this.categoryName.text = categoryName
