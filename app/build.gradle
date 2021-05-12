@@ -60,7 +60,6 @@ android {
 
 dependencies {
     implementation project(path: ':uisdk')
-    api 'com.braintreepayments.api:drop-in:4.4.0'
 
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

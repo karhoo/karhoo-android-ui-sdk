@@ -12,7 +12,14 @@ fun Currency.intToRangedPrice(lowPrice: Int, highPrice: Int, locale: Locale = Lo
 }
 
 fun Currency.intToPriceNoSymbol(price: Int, locale: Locale = Locale.getDefault()): String {
-    return this.formatted(price, locale, includeCurrencySymbol = false)
+    val cost = Integer.toString(price)
+    val low = defaultFractionDigits
+
+    val costHiEndIndex = if (cost.length - low > 0) cost.length - low else 0
+    val costHi = if (costHiEndIndex == 0) "0" else cost.substring(0, costHiEndIndex)
+    val costLow = cost.substring(costHiEndIndex)
+
+    return String.format("%s.%s", costHi, costLow)
 }
 
 fun Currency.formatted(price: Int,
