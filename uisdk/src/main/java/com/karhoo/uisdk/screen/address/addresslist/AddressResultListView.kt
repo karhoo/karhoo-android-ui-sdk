@@ -8,6 +8,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Place
 import com.karhoo.uisdk.KarhooUISDK
@@ -71,8 +72,8 @@ class AddressResultListView @JvmOverloads constructor(
         actions?.addressSelected(location, addressPositionInList)
     }
 
-    override fun showError(@StringRes errorMessage: Int) {
-        actions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage)))
+    override fun showError(@StringRes errorMessage: Int, karhooError: KarhooError?) {
+        actions?.showSnackbar(SnackbarConfig(text = resources.getString(errorMessage), karhooError = karhooError))
     }
 
 }

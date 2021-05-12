@@ -19,6 +19,7 @@ interface AvailabilityProvider {
 
 interface AvailabilityHandler {
     var hasAvailability: Boolean
+    var hasNoResults: Boolean
 
     fun handleAvailabilityError(snackbarConfig: SnackbarConfig)
 }

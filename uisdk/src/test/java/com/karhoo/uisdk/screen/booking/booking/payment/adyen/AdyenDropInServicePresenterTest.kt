@@ -1,13 +1,18 @@
 package com.karhoo.uisdk.screen.booking.booking.payment.adyen
 
+import android.content.Context
 import com.adyen.checkout.dropin.service.CallResult
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ACCEPT_HEADER
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.ALLOW_3DS
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.BROWSER_INFO
 import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.PAYMENTS_PAYLOAD
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.SUPPLY_PARTNER_ID
+import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenDropInServicePresenter.Companion.USER_AGENT
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -29,10 +34,12 @@ class AdyenDropInServicePresenterTest {
 
     private val mutableList = mutableListOf(PAYMENT_METHOD, AMOUNT, SHOPPER_REFERENCE, RANDOM)
     private var jsonObject: JSONObject = mock()
+    private var context: Context = mock()
     private var paymentJson: JSONObject = JSONObject("{\"type\": \"scheme\",\n\"holderName\": " +
                                                              "\"Test\"}")
     private var amountJson: JSONObject = JSONObject("{ \"currency\": \"GBP\" }")
     private val service: AdyenDropInServiceMVP.Service = mock()
+    private var dropInRepository: AdyenDropInServiceMVP.Repository = mock()
     private val paymentsService: PaymentsService = mock()
     private val paymentsCall: Call<JSONObject> = mock()
     private val paymentsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
@@ -50,6 +57,7 @@ class AdyenDropInServicePresenterTest {
         whenever(jsonObject.get(AMOUNT)).thenReturn(amountJson)
         whenever(jsonObject.get(SHOPPER_REFERENCE)).thenReturn("")
         whenever(jsonObject.get(RANDOM)).thenReturn("{}")
+        whenever(dropInRepository.supplyPartnerId).thenReturn(SUPPLIER_ID)
 
         whenever(paymentsService.getAdyenPayments(any())).thenReturn(paymentsCall)
         doNothing().whenever(paymentsCall).execute(paymentsCaptor.capture())
@@ -57,7 +65,7 @@ class AdyenDropInServicePresenterTest {
         whenever(paymentsService.getAdyenPaymentDetails(any())).thenReturn(paymentsDetailsCall)
         doNothing().whenever(paymentsDetailsCall).execute(paymentsDetailsCaptor.capture())
 
-        presenter = AdyenDropInServicePresenter(service, paymentsService)
+        presenter = AdyenDropInServicePresenter(context, service, paymentsService, dropInRepository)
     }
 
     /**
@@ -72,7 +80,10 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPayments(requestCaptor.capture())
 
-        val payloadJson = JSONObject(requestCaptor.firstValue).getJSONObject(PAYMENTS_PAYLOAD)
+        val requestJson = JSONObject(requestCaptor.firstValue)
+        val payloadJson = requestJson.getJSONObject(PAYMENTS_PAYLOAD)
+        val partnerId = requestJson.getString(SUPPLY_PARTNER_ID)
+        assertEquals(SUPPLIER_ID, partnerId)
         assertTrue(payloadJson.has(AMOUNT))
         assertTrue(payloadJson.has(PAYMENT_METHOD))
         assertTrue(payloadJson.has(RANDOM))
@@ -81,6 +92,10 @@ class AdyenDropInServicePresenterTest {
         val additionalData = payloadJson.getJSONObject(ADDITIONAL_DATA)
         assertTrue(additionalData.has(ALLOW_3DS))
         assertEquals("true", additionalData.get(ALLOW_3DS))
+        assertTrue(payloadJson.has(BROWSER_INFO))
+        val browserInfo = payloadJson.getJSONObject(BROWSER_INFO)
+        assertTrue(browserInfo.has(USER_AGENT))
+        assertTrue(browserInfo.has(ACCEPT_HEADER))
         verify(jsonObject).keys()
         verify(jsonObject).get(PAYMENT_METHOD)
         verify(jsonObject).get(AMOUNT)
@@ -122,7 +137,7 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTripId(TRIP_ID)
+        verify(dropInRepository).tripId = TRIP_ID
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -144,7 +159,7 @@ class AdyenDropInServicePresenterTest {
         paymentsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPayments(any())
-        verify(service).storeTripId(TRIP_ID)
+        verify(dropInRepository).tripId = TRIP_ID
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
@@ -212,7 +227,6 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
     }
@@ -235,7 +249,6 @@ class AdyenDropInServicePresenterTest {
         paymentsDetailsCaptor.firstValue.invoke(Resource.Success(response))
 
         verify(paymentsService).getAdyenPaymentDetails(any())
-        verify(service, never()).storeTripId(TRIP_ID)
         verify(service).handleResult(resultsCaptor.capture())
         assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
     }
@@ -247,6 +260,7 @@ class AdyenDropInServicePresenterTest {
         private const val SHOPPER_REFERENCE = "shopperReference"
         private const val PAYMENT_METHOD = "paymentMethod"
         private const val TRIP_ID = "1234"
+        private const val SUPPLIER_ID = "SPID"
         private const val TRIP_ID_KEY = AdyenDropInServicePresenter.TRIP_ID
         private const val RETURN_URL = "http://adyen.return.url"
     }

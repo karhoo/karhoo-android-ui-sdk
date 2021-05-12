@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.tripallocation
 
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.network.observable.Observable
@@ -18,35 +19,44 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
     private var tripDetailsObserver: Observer<Resource<TripInfo>>? = null
     private var tripDetailsObservable: Observable<TripInfo>? = null
     private var trip: TripInfo? = null
+    private var showAllocationAlert: Boolean = false
 
     init {
         attachView(view)
     }
 
-    override fun waitForAllocation(trip: TripInfo) {
-        this.trip = trip
-        checkForAllocationOrCancellation(trip)
-        val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip.followCode else trip.tripId
-        tripIdentifier?.let { observeTripInfo(it) }
-    }
-
     override fun cancelTrip() {
+        showAllocationAlert = false
         val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip?.followCode else trip?.tripId
         tripIdentifier?.let {
             tripsService
                     .cancel(TripCancellation(tripIdentifier = it))
                     .execute { result ->
                         when (result) {
-                            is Resource.Failure -> handleFailedCancellation()
+                            is Resource.Failure -> handleFailedCancellation(result.error)
                         }
                     }
         }
     }
 
-    private fun handleFailedCancellation() {
+    override fun handleAllocationDelay(trip: TripInfo) {
+        if(!KarhooUISDKConfigurationProvider.isGuest() && showAllocationAlert) {
+            view?.showAllocationDelayAlert(trip)
+        }
+    }
+
+    override fun waitForAllocation(trip: TripInfo) {
+        showAllocationAlert = true
+        this.trip = trip
+        checkForAllocationOrCancellation(trip)
+        val tripIdentifier = if (KarhooUISDKConfigurationProvider.isGuest()) trip.followCode else trip.tripId
+        tripIdentifier?.let { observeTripInfo(it) }
+    }
+
+    private fun handleFailedCancellation(karhooError: KarhooError?) {
         val number = trip?.fleetInfo?.phoneNumber.orEmpty()
         val fleet = trip?.fleetInfo?.name.orEmpty()
-        view?.showCallToCancelDialog(number, fleet)
+        view?.showCallToCancelDialog(number, fleet, karhooError)
     }
 
     private fun checkForAllocationOrCancellation(trip: TripInfo) {
@@ -62,11 +72,8 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
     }
 
     private fun tripAllocated(trip: TripInfo) {
-        tripDetailsObservable?.apply {
-            tripDetailsObserver?.let {
-                unsubscribe(it)
-            }
-        }
+        showAllocationAlert = false
+        unsubscribeFromUpdates()
         if (isGuest()) {
             trip.followCode?.let { view?.displayWebTracking(it) } ?: view?.goToTrip(trip)
         } else {
@@ -75,21 +82,23 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
     }
 
     private fun tripCancelled(trip: TripInfo) {
-        tripDetailsObservable?.apply {
-            tripDetailsObserver?.let {
-                unsubscribe(it)
-            }
-        }
+        showAllocationAlert = false
+        unsubscribeFromUpdates()
         view?.displayBookingFailed(trip.fleetInfo?.name.orEmpty())
     }
 
     private fun tripCancelledByUser() {
+        showAllocationAlert = false
+        unsubscribeFromUpdates()
+        view?.displayTripCancelledSuccess()
+    }
+
+    override fun unsubscribeFromUpdates() {
         tripDetailsObservable?.apply {
             tripDetailsObserver?.let {
                 unsubscribe(it)
             }
         }
-        view?.displayTripCancelledSuccess()
     }
 
     private fun observeTripInfo(tripIdentifier: String) {
@@ -112,6 +121,4 @@ class TripAllocationPresenter(view: TripAllocationMVP.View,
             }
         }
     }
-
-
 }

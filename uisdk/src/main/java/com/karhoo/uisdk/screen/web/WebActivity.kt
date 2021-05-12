@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.screen.web
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.http.SslError
@@ -15,6 +15,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import kotlinx.android.synthetic.main.uisdk_activity_web.activityWebView
 import kotlinx.android.synthetic.main.uisdk_activity_web.progressBar
 
@@ -66,12 +69,13 @@ class WebActivity : BaseActivity() {
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(this@WebActivity, R.style.DialogTheme)
-                    .setMessage(R.string.notification_error_ssl_cert_invalid)
-                    .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
-                    .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }
-                    .create()
-                    .show()
+            val config = KarhooAlertDialogConfig(
+                    messageResId = R.string.kh_uisdk_notification_error_ssl_cert_invalid,
+                    positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_continue_journey,
+                                                             DialogInterface.OnClickListener { _, _ -> handler?.proceed() }),
+                    negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
+                                                     DialogInterface.OnClickListener { _, _ -> handler?.cancel() }))
+            KarhooAlertDialogHelper(this@WebActivity).showAlertDialog(config)
         }
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {

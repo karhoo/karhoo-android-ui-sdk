@@ -211,7 +211,7 @@ package com.karhoo.uisdk.screen.booking.map;
 //     */
 //    @Test
 //    public void onErrorShowErrorInView() {
-//        int errorId = R.string.booking_error;
+//        int errorId = R.string.kh_uisdk_booking_error;
 //        presenter.onError(errorId);
 //        verify(view).showError(errorId);
 //    }

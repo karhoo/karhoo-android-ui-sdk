@@ -75,7 +75,7 @@ class RatedQuestionView @JvmOverloads constructor(
 
     private fun setErrors() {
         commentEditTextLayout.apply {
-            setErrorMsg(R.string.invalid_empty_field)
+            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
             setErrorTextAppearance(R.style.Text_Red_Small)
         }
     }

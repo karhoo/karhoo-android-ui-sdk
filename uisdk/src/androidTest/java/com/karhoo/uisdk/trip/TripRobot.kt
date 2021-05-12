@@ -3,6 +3,7 @@ package com.karhoo.uisdk.trip
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.REG_PLATE
 import org.junit.Assert
 
@@ -32,23 +33,23 @@ class TripRobot : BaseTestRobot() {
     }
 
     fun clickConfirmCancellation() {
-        clickOnButtonInAlertDialog(AlertDialogButton.POSITIVE)
-    }
-
-    fun clickDoneOnRideSummary() {
-        clickButton(R.id.doneButton)
-    }
-
-    fun clickBookReturnRide() {
-        clickButton(R.id.bookReturnButton)
+        dialogClickButtonByText(R.string.kh_uisdk_ok)
     }
 
     fun clickAlternativeButton() {
-        dialogClickButtonByText(R.string.alternative)
+        dialogClickButtonByText(R.string.kh_uisdk_alternative)
     }
 
     fun clickOKOnCancelledConfirmation() {
-        dialogClickButtonByText(R.string.ok)
+        dialogClickButtonByText(R.string.kh_uisdk_dismiss)
+    }
+
+    fun checkCancellationFeeIsNotShown() {
+        dialogTextIsVisibleString(TestData.PROCEED_WITH_CANCELLATION)
+    }
+
+    fun checkCancellationFeeIsShown() {
+        dialogTextIsVisibleString(TestData.BOOKING_FEE_NOTIFICATION)
     }
 
 }
@@ -68,71 +69,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun cancellationConfirmation() {
-        textIsVisible(R.string.cancel_ride_successful)
-    }
-
-    fun tripSummaryLogoVisible() {
-        viewIsVisible(R.id.karhooLogoIcon)
-    }
-
-    fun tripSummaryRideSummaryLabel() {
-        viewIsVisible(R.id.rideSummaryLabel)
+        textIsVisible(R.string.kh_uisdk_cancel_ride_successful)
     }
 
     fun tripSummaryPickUpLogoVisible() {
         viewIsVisible(R.id.pickUpFullIcon)
-    }
-
-    fun tripSummaryPickUpAddressVisible(address: String) {
-        Assert.assertEquals(address, getStringFromTextView(R.id.pickUpText))
-    }
-
-    fun tripSummaryDestinationAddressVisible(address: String) {
-        Assert.assertEquals(address, getStringFromTextView(R.id.dropOffText))
-    }
-
-    fun tripSummaryDateLabelVisible() {
-        viewIsVisible(R.id.dateLabel)
-    }
-
-    fun tripSummaryDateVisible() {
-        viewIsVisible(R.id.dateOfBookingText)
-    }
-
-    fun tripSummaryFleetLabelIsVisible() {
-        viewIsVisible(R.id.fleetNameLabel)
-    }
-
-    fun tripSummaryFleetNameIsVisible() {
-        viewIsVisible(R.id.fleetNameText)
-    }
-
-    fun tripSummaryPaymentSummaryLabelIsVisible() {
-        viewIsVisible(R.id.paymentSummaryLabel)
-    }
-
-    fun tripSummaryQuoteFareLabelIsVisible() {
-        viewIsVisible(R.id.estimatedLabel)
-    }
-
-    fun tripSummaryQuoteFareIsVisible() {
-        viewIsVisible(R.id.estimatedFareText)
-    }
-
-    fun tripSummaryTotalLabelIsVisible() {
-        viewIsVisible(R.id.totalLabel)
-    }
-
-    fun tripSummaryTotalFareIsVisible() {
-        viewIsVisible(R.id.totalFareText)
-    }
-
-    fun tripSummaryBookReturnRideButtonEnabled() {
-        buttonIsEnabled(R.id.bookReturnButton)
-    }
-
-    fun tripSummaryDoneButtonIsEnabled() {
-        buttonIsEnabled(R.id.doneButton)
     }
 
     fun driverPhotoPlaceHolderPresent() {
@@ -174,11 +115,6 @@ class ResultRobot : BaseTestRobot() {
     fun pickUpAddressField() {
         viewIsVisible(R.id.subtitlePickupLabel)
         viewIsVisible(R.id.pickupLabel)
-    }
-
-    fun dropOffAddressField() {
-        viewIsVisible(R.id.subtitlleDropoffLabel)
-        viewIsVisible(R.id.dropOffText)
     }
 
     fun PickUpAddressVisible(address: String) {
@@ -234,11 +170,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun alternativeButtonIsEnabled() {
-        dialogButtonByTextIsEnabled(R.string.alternative)
+        dialogButtonByTextIsEnabled(R.string.kh_uisdk_alternative)
     }
 
     fun okCancelledByFleetButtonEnabled() {
-        dialogButtonByTextIsEnabled(R.string.ok)
+        dialogButtonByTextIsEnabled(R.string.kh_uisdk_ok)
     }
 
     fun pickUpAddressCheck(pickupAddress: String) {
@@ -250,29 +186,9 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fleetCancelledAfterDERVisible() {
-        dialogTextIsVisible(R.string.title_dispatch_cancelled)
+        dialogTextIsVisible(R.string.kh_uisdk_title_dispatch_cancelled)
         alternativeButtonIsEnabled()
         okCancelledByFleetButtonEnabled()
-    }
-
-    fun tripSummaryFullCheck(pickupText: String, destinationText: String) {
-        tripSummaryLogoVisible()
-        tripSummaryRideSummaryLabel()
-        tripSummaryPickUpLogoVisible()
-        tripSummaryPickUpAddressVisible(pickupText)
-        //        tripSummaryDropOffLogoVisible()
-        tripSummaryDestinationAddressVisible(destinationText)
-        tripSummaryDateLabelVisible()
-        tripSummaryDateVisible()
-        tripSummaryFleetLabelIsVisible()
-        tripSummaryFleetNameIsVisible()
-        tripSummaryPaymentSummaryLabelIsVisible()
-        tripSummaryQuoteFareIsVisible()
-        tripSummaryQuoteFareLabelIsVisible()
-        tripSummaryTotalLabelIsVisible()
-        tripSummaryTotalFareIsVisible()
-        tripSummaryBookReturnRideButtonEnabled()
-        tripSummaryDoneButtonIsEnabled()
     }
 
     fun driverDERDetailsFullCheck() {
@@ -396,6 +312,14 @@ class ResultRobot : BaseTestRobot() {
     fun checkAfterAlternativeSelected(pickupText: String, destinationText: String) {
         pickUpAddressCheck(pickupText)
         dropOffAddressCheck(destinationText)
+    }
+
+    fun notificationStringCheck(notification: String) {
+        stringIsVisibleIsDescendant(notification, R.id.notificationLabel)
+    }
+
+    fun notificationIntCheck(notification: Int) {
+        textIsVisibleIsDescendant(notification, R.id.notificationLabel)
     }
 
 }

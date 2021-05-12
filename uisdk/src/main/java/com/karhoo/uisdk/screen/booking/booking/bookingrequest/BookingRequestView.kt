@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -20,10 +19,10 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
@@ -31,6 +30,9 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -90,7 +92,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         View.inflate(context, R.layout.uisdk_booking_request, this)
         isGuest = isGuest()
         attachListeners()
-        bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.add_flight_details))
+        bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
         presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
     }
@@ -110,7 +112,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateBookingButtonForGuest() {
-        bookingRequestLabel.text = resources.getString(R.string.checkout_as_guest)
+        bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
     }
 
     override fun showAuthenticatedUserBookingFields() {
@@ -180,8 +182,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .drawable.uisdk_gradient_enabled)
     }
 
-    override fun initialiseChangeCard(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialiseChangeCard(price = price)
+    override fun initialiseChangeCard(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
     override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
@@ -214,7 +216,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     override fun bindEta(quote: Quote, card: String) {
         bindQuoteAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
-                                              context.getString(R.string.estimated_arrival_time),
+                                              context.getString(R.string.kh_uisdk_estimated_arrival_time),
                                               quote.quoteType)
     }
 
@@ -233,12 +235,16 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bindQuoteAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.estimated_arrival_time), currency)
+        bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.kh_uisdk_estimated_arrival_time), currency)
     }
 
     private fun bindQuoteAndTerms(vehicle: Quote) {
-        bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl, vehicle.fleet.name.orEmpty(),
-                                             vehicle.vehicle.vehicleClass.orEmpty())
+        bookingRequestQuotesWidget.bindViews(
+                vehicle.fleet.logoUrl,
+                vehicle.fleet.name.orEmpty(),
+                vehicle.vehicle.vehicleClass.orEmpty(),
+                vehicle.serviceAgreements?.freeCancellation
+        )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
@@ -291,24 +297,28 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 people = vehicle.passengerCapacity)
     }
 
-    override fun showPaymentFailureDialog() {
-        AlertDialog.Builder(context, R.style.DialogTheme)
-                .setTitle(R.string.payment_issue)
-                .setMessage(R.string.payment_issue_message)
-                .setPositiveButton(R.string.add_card) { dialog, _ ->
-                    onPaymentHandlePositive()
-                    dialog.dismiss()
-                }
-                .setNegativeButton(R.string.cancel) { dialog, _ ->
-                    onPaymentHandleCancelled()
-                    dialog.dismiss()
-                }
-                .show()
+    override fun showPaymentFailureDialog(error: KarhooError?) {
+        val config = KarhooAlertDialogConfig(
+                titleResId = R.string.kh_uisdk_payment_issue,
+                messageResId = R.string.kh_uisdk_payment_issue_message,
+                karhooError = error,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
+                                                         DialogInterface.OnClickListener { dialog, _ ->
+                                                             onPaymentHandlePositive()
+                                                             dialog.dismiss()
+                                                         }),
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
+                                                         DialogInterface.OnClickListener { dialog, _ ->
+                                                             onPaymentHandleCancelled()
+                                                             dialog.dismiss()
+                                                         }))
+        KarhooAlertDialogHelper(context).showAlertDialog(config)
+
     }
 
-    override fun showErrorDialog(stringId: Int) {
+    override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
         resetBookingButton()
-        presenter.handleError(stringId)
+        presenter.handleError(stringId, karhooError)
     }
 
     override fun handleChangeCard() {
@@ -337,34 +347,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
             bookingRequestButton.onLoadingComplete()
             animateOut()
 
-            val prebookConfirmationView = PrebookConfirmationView(context).apply {
+            var prebookConfirmationView = PrebookConfirmationView(context).apply {
                 bind(quoteType, tripInfo)
             }
-
-            AlertDialog.Builder(context, R.style.DialogTheme)
-                    .setView(prebookConfirmationView)
-                    .setCancelable(false)
-                    .setNegativeButton(R.string.dismiss) { dialog, _ -> finishedBooking(dialog) }
-                    .setPositiveButton(R.string.ride_details) { dialog, _ ->
-                        finishedBooking(dialog)
-                        val taskStackBuilder = TaskStackBuilder.create(context)
-                                .addNextIntent(BookingActivity.Builder.builder.build(context))
-                        if (!isGuest()) {
-                            taskStackBuilder.addNextIntent(RidesActivity.Builder.builder.build(context))
-                        }
-                        taskStackBuilder.addNextIntent(RideDetailActivity.Builder.newBuilder()
-                                                               .trip(tripInfo).build(context))
-                        taskStackBuilder.startActivities()
-                    }
-                    .show().window?.setLayout(
-                            resources.displayMetrics.widthPixels,
-                            (resources.displayMetrics.heightPixels * BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR).toInt())
+            prebookConfirmationView.actions = this
         }
     }
 
-    private fun finishedBooking(dialog: DialogInterface) {
+    override fun finishedBooking() {
         presenter.resetBooking()
-        dialog.dismiss()
     }
 
     private fun onPaymentHandlePositive() {
@@ -395,20 +386,20 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                              bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
     }
 
-    override fun initialisePaymentProvider(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(price)
+    override fun initialisePaymentProvider(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(quote)
     }
 
-    override fun initialiseGuestPayment(price: QuotePrice?) {
-        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(price)
+    override fun initialiseGuestPayment(quote: Quote?) {
+        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
     }
 
     override fun handlePaymentDetailsUpdate() {
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 
-    override fun showPaymentDialog() {
-        showPaymentFailureDialog()
+    override fun showPaymentDialog(error: KarhooError?) {
+        showPaymentFailureDialog(error)
     }
 
     override fun setPassengerDetailsValidity(isValid: Boolean) {

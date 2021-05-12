@@ -1,11 +1,11 @@
 package com.karhoo.uisdk.testsuites
 
 import com.karhoo.uisdk.address.AddressTests
+import com.karhoo.uisdk.booking.GuestBookingTests
+import com.karhoo.uisdk.booking.adyen.AdyenBookingFlowTests
 import com.karhoo.uisdk.booking.adyen.AdyenBookingTests
 import com.karhoo.uisdk.booking.braintree.BraintreeBookingFlowTests
 import com.karhoo.uisdk.booking.braintree.BraintreeBookingTests
-import com.karhoo.uisdk.booking.GuestBookingTests
-import com.karhoo.uisdk.booking.adyen.AdyenBookingFlowTests
 import com.karhoo.uisdk.ridedetail.RideDetailTests
 import com.karhoo.uisdk.rides.RidesFlowTests
 import com.karhoo.uisdk.rides.RidesTests

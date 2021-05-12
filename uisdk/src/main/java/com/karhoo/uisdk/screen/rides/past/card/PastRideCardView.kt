@@ -110,7 +110,7 @@ class PastRideCardView @JvmOverloads constructor(
     }
 
     override fun displayNoDateAvailable() {
-        dateTimeText.setText(R.string.pending)
+        dateTimeText.setText(R.string.kh_uisdk_pending)
     }
 
     override fun displayState(@DrawableRes icon: Int, @StringRes state: Int, @ColorRes color: Int) {
@@ -121,7 +121,7 @@ class PastRideCardView @JvmOverloads constructor(
 
     override fun displayPricePending() {
         priceText.setTextColor(ContextCompat.getColor(context, R.color.med_grey))
-        priceText.setText(R.string.cancelled)
+        priceText.setText(R.string.kh_uisdk_cancelled)
     }
 
     override fun displayPrice(price: String) {

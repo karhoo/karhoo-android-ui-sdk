@@ -35,11 +35,15 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE
+import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES
 import com.karhoo.uisdk.util.TestSDKConfig
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -108,6 +112,168 @@ class GuestBookingTests : Launch {
             shortSleep()
         } result {
             fullASAPQuotesListCheckGuest()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes with a cancellation service agreement
+     * When:    Checking the quotes
+     * Then:    The user can see the free cancellation text
+     **/
+    @Test
+    fun fullQuoteListCheckCancellationTextForGuestUser() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextVisible()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes with a cancellation service agreement before driver en route
+     * When:    Checking the quotes
+     * Then:    The user can see the free cancellation text
+     **/
+    @Test
+    fun fullQuoteListCheckCancellationBeforeDriverEnRouteTextForGuestUser() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextVisible()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes with a cancellation service agreement having 0 minutes
+     * When:    Checking the quotes
+     * Then:    The user can not see the free cancellation text
+     **/
+    @Test
+    fun checkNotVisibleCancellationTextForGuestUserAndZeroMinutesSLA() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextNotVisible()
+        }
+    }
+
+    /**
+     * Given:   Received some quotes without a cancellation service agreement
+     * When:    Checking the quotes
+     * Then:    The user can not see the free cancellation text
+     **/
+    @Test
+    fun checkVisibleCancellationTextForGuestUser() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+        } result {
+            freeCancellationTextNotVisible()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is shown on the details page
+     **/
+    @Test
+    fun cancellationTextVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsShown()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
+     *          of type BeforeDriverEnRoute
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is shown on the details page
+     **/
+    @Test
+    fun cancellationTextVisibleBeforeDriverEnRouteInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsShown()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
+     *          with 0 minutes
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is NOT shown on the details page
+     **/
+    @Test
+    fun cancellationTextWithZeroMinutesNotVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsNotShown()
+        }
+    }
+
+    /**
+     * Given:   I have selected a quote on guest checkout mode that doesn't have a cancellation SLA
+     * And:     I am on the guest details page
+     * Then:    The cancellation text is NOT shown on the details page
+     **/
+    @Test
+    fun cancellationTextNotVisibleInTheGuestDetailsPage() {
+        serverRobot {
+            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quotesResponse(HTTP_OK, VEHICLES_ASAP)
+        }
+        booking(this, INITIAL_TRIP_INTENT) {
+            shortSleep()
+            pressFirstQuote()
+            shortSleep()
+        } result {
+            checkCancellationTextInDetailsPageIsNotShown()
         }
     }
 
@@ -264,6 +430,7 @@ class GuestBookingTests : Launch {
      * When:    I select the menu button
      * Then:    I can see the following options in the menu: Feedback, Help, About
      **/
+    @Ignore
     @Test
     fun checkMenuItemsGuestCheckout() {
         serverRobot {

@@ -1,18 +1,22 @@
 package com.karhoo.uisdk.screen.booking.booking.tripallocation
 
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 
 interface TripAllocationMVP {
 
     interface Presenter {
-
         fun cancelTrip()
+
+        fun handleAllocationDelay(trip: TripInfo)
 
         fun waitForAllocation(trip: TripInfo)
 
+        fun unsubscribeFromUpdates()
     }
 
     interface View {
+        fun showAllocationDelayAlert(trip: TripInfo)
 
         fun displayBookingFailed(fleetName: String)
 
@@ -22,8 +26,7 @@ interface TripAllocationMVP {
 
         fun displayWebTracking(followCode: String)
 
-        fun showCallToCancelDialog(number: String, quote: String)
-
+        fun showCallToCancelDialog(number: String, quote: String, karhooError: KarhooError?)
     }
 
     interface Actions {

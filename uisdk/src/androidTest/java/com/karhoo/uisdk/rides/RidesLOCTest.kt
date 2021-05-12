@@ -56,7 +56,7 @@ class RidesLOCTest : Launch {
             longSleep()
         } result {
             shortSleep()
-            checkErrorIsShown(R.string.network_error)
+            checkErrorIsShown(R.string.kh_uisdk_network_error)
         }
     }
 

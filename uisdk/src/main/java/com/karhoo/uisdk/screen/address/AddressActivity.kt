@@ -94,7 +94,7 @@ class AddressActivity : BaseActivity(), AddressResultListMVP.Actions, AddressSea
         }
 
         addressSearchWidget.apply {
-            setHint(if (addressType == AddressType.PICKUP) getString(R.string.enter_pickup) else getString(R.string.enter_destination))
+            setHint(if (addressType == AddressType.PICKUP) getString(R.string.kh_uisdk_enter_pickup) else getString(R.string.kh_uisdk_enter_destination))
             setAddressSearchProvider(addressSearchProvider)
             actions = this@AddressActivity
         }

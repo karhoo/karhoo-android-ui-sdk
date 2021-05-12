@@ -22,6 +22,7 @@
     <color name="sort_grad_start_secondary">@color/secondary</color>
     <color name="light_green_grad">#00E5E5</color>
     <color name="dark_green_grad">#00E500</color>
+    <color name="cancellation_green">#33AC2E</color>
 
     <!-- Greys -->
     <color name="off_black">#333333</color>

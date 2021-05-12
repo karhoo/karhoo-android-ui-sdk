@@ -13,6 +13,7 @@ import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
 import com.karhoo.sdk.api.model.PaymentsNonce
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.UserInfo
 import com.karhoo.sdk.api.network.request.SDKInitRequest
@@ -44,6 +45,8 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BraintreePaymentPresenterTest {
 
+    private val price: QuotePrice = QuotePrice(highPrice = 100, currencyCode = "GBP")
+
     private var context: Context = mock()
     private var data: Intent = mock()
     private var dropInResult: DropInResult = mock()
@@ -52,7 +55,7 @@ class BraintreePaymentPresenterTest {
     private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var userStore: UserStore = mock()
     private var paymentView: PaymentDropInMVP.Actions = mock()
-    private var price: QuotePrice = mock()
+    private var quote: Quote = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
     private val addPaymentCall: Call<PaymentsNonce> = mock()
@@ -81,6 +84,7 @@ class BraintreePaymentPresenterTest {
         doNothing().whenever(addPaymentCall).execute(addPaymentCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
+        whenever(quote.price).thenReturn(price)
 
         braintreePaymentPresenter = BraintreePaymentPresenter(
                 paymentsService = paymentsService,
@@ -99,10 +103,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `nonce returned when guest payment is initialised`() {
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
-        whenever(price.highPrice).thenReturn(100)
-
-        braintreePaymentPresenter.initialiseGuestPayment(price)
+        braintreePaymentPresenter.initialiseGuestPayment(quote)
 
         verify(paymentView).threeDSecureNonce("", "", "1.00")
     }
@@ -120,7 +121,7 @@ class BraintreePaymentPresenterTest {
                         authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"),
                         handleBraintree = false))
 
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -136,7 +137,7 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `change card pressed for logged in user and correct organisation id is used`() {
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
@@ -159,11 +160,11 @@ class BraintreePaymentPresenterTest {
                         authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"),
                         handleBraintree = true))
         whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(paymentView, never()).showError(R.string.something_went_wrong)
+        verify(paymentView, never()).showError(R.string.kh_uisdk_something_went_wrong, null)
         verify(userStore).savedPaymentInfo
 
     }
@@ -180,11 +181,11 @@ class BraintreePaymentPresenterTest {
                                                                                        context,
                                                                                        authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId"), handleBraintree = true))
         whenever(userStore.savedPaymentInfo).thenReturn(SavedPaymentInfo(CARD_ENDING, CardType.VISA))
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
-        verify(paymentView, never()).showPaymentUI(BRAINTREE_SDK_TOKEN, null, price)
+        verify(paymentView, never()).showPaymentUI(BRAINTREE_SDK_TOKEN, null, quote)
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
@@ -200,12 +201,12 @@ class BraintreePaymentPresenterTest {
     @Test
     fun `change card pressed and result is successful`() {
         setAuthenticatedUser()
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
 
         verify(paymentView).showPaymentUI(sdkToken = BRAINTREE_SDK_TOKEN, paymentData = null,
-                                          price = null)
+                                          quote = null)
     }
 
     /**
@@ -215,11 +216,11 @@ class BraintreePaymentPresenterTest {
      */
     @Test
     fun `change card pressed and result is unsuccessful`() {
-        braintreePaymentPresenter.sdkInit(price)
+        braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(R.string.something_went_wrong)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**
@@ -264,11 +265,11 @@ class BraintreePaymentPresenterTest {
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
 
-        braintreePaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showError(R.string.something_went_wrong)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**
@@ -281,18 +282,18 @@ class BraintreePaymentPresenterTest {
     @Test
     fun `logged in user get nonce failure shows payment dialog`() {
         setAuthenticatedUser()
-
+        val price = QuotePrice(currencyCode = DEFAULT_CURRENCY, highPrice =
+        EXPECTED_AMOUNT_AS_STRING.toInt())
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-        whenever(price.highPrice).thenReturn(EXPECTED_AMOUNT_AS_STRING.toInt())
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
+        whenever(quote.price).thenReturn(price)
 
-        braintreePaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showPaymentDialog(BRAINTREE_SDK_TOKEN)
+        verify(paymentView).showPaymentDialog(KarhooError.GeneralRequestError)
     }
 
     /**
@@ -308,15 +309,13 @@ class BraintreePaymentPresenterTest {
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-        whenever(price.highPrice).thenReturn(1500)
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
 
-        braintreePaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
 
-        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "15.00")
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "1.00")
     }
 
     /**
@@ -334,10 +333,8 @@ class BraintreePaymentPresenterTest {
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
         whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-        whenever(price.highPrice).thenReturn(1500)
-        whenever(price.currencyCode).thenReturn(DEFAULT_CURRENCY)
 
-        braintreePaymentPresenter.getPaymentNonce(price)
+        braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
@@ -477,7 +474,7 @@ class BraintreePaymentPresenterTest {
         addPaymentCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(paymentsService).addPaymentMethod(any())
-        verify(paymentView).showError(R.string.something_went_wrong)
+        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
     }
 
     /**
@@ -500,15 +497,6 @@ class BraintreePaymentPresenterTest {
         verify(paymentsService).addPaymentMethod(any())
         verify(paymentView).updatePaymentDetails(savedPaymentInfo)
         verify(paymentView).handlePaymentDetailsUpdate()
-    }
-
-    private fun setGuestUser(handleBraintree: Boolean = false) {
-        KarhooUISDKConfigurationProvider.setConfig(
-                configuration = UnitTestUISDKConfig(
-                        context = context,
-                        authenticationMethod = AuthenticationMethod.Guest("identifier",
-                                                                          "referer", "guestOrganisationId"),
-                        handleBraintree = handleBraintree))
     }
 
     private fun setAuthenticatedUser() {

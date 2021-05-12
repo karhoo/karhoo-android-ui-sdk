@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.map
 
 import androidx.annotation.StringRes
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 
 interface BookingMapStategy {
@@ -28,7 +29,7 @@ interface BookingMapStategy {
 
         fun locateAndUpdate()
 
-        fun onError(@StringRes errorMessage: Int)
+        fun onError(@StringRes errorMessage: Int, karhooError: KarhooError?)
 
     }
 

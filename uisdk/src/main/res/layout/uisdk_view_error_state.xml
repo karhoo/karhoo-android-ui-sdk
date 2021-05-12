@@ -17,12 +17,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium_small"
-            android:text="@string/something_went_wrong"
+            android:text="@string/kh_uisdk_something_went_wrong"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/errorText"
             style="@style/Text.Faded.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/errorCode"
+            style="@style/Text.Faded.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal" />

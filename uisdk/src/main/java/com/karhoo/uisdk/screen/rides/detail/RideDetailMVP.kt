@@ -1,8 +1,13 @@
 package com.karhoo.uisdk.screen.rides.detail
 
+import android.content.Context
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -12,8 +17,6 @@ interface RideDetailMVP {
         fun bindState()
 
         fun bindPrice()
-
-        fun bindCard()
 
         fun bindButtons()
 
@@ -25,16 +28,21 @@ interface RideDetailMVP {
 
         fun bindDate()
 
-        fun cancelTrip()
-
-        fun contactFleet()
-
         fun baseFarePressed()
 
         fun onResume()
 
         fun onPause()
 
+        fun addTripInfoObserver(tripInfoListener: OnTripInfoChangedListener?)
+
+        fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context)
+
+        interface OnTripInfoChangedListener {
+
+            fun onTripInfoChanged(tripInfo: TripInfo?)
+
+        }
     }
 
     interface View : ScheduledDateView {
@@ -66,13 +74,9 @@ interface RideDetailMVP {
 
         fun hideReportIssueButton()
 
-        fun displayCancelRideButton()
+        fun displayContactOptions()
 
-        fun hideCancelRideButton()
-
-        fun displayContactFleetButton()
-
-        fun hideContactFleetButton()
+        fun hideContactOptions()
 
         fun makeCall(number: String)
 
@@ -82,13 +86,15 @@ interface RideDetailMVP {
 
         fun displayTripCancelledDialog()
 
-        fun displayError(@StringRes errorMessage: Int)
-
-        fun displayCallToCancelDialog(number: String, quote: String)
+        fun displayError(@StringRes errorMessage: Int, karhooError: KarhooError?)
 
         fun displayBaseFareDialog()
 
         fun showFeedbackSubmitted()
+
+        fun showCancellationText(show: Boolean)
+
+        fun setCancellationText(text: String)
 
         interface Actions {
 

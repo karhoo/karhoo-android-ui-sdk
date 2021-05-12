@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.uisdk.KarhooUISDK
@@ -193,11 +194,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         mapView.getMapAsync { googleMap ->
             googleMap.clear()
             val origin = LatLng(pickup.latitude, pickup.longitude)
-            addPinToMap(origin, pickupPinRes, R.string.address_pick_up)
+            addPinToMap(origin, pickupPinRes, R.string.kh_uisdk_address_pick_up)
             val destination = dropoff?.let { LatLng(dropoff.latitude, dropoff.longitude) }
             destination?.let {
                 googleMap.setMaxZoomPreference(BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE)
-                addPinToMap(destination, dropOffPinRes, R.string.address_drop_off)
+                addPinToMap(destination, dropOffPinRes, R.string.kh_uisdk_address_drop_off)
                 googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
@@ -309,15 +310,15 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 }
 
                 override fun onLocationServicesDisabled() {
-                    val snackbarAction = SnackbarAction(resources.getString(R.string.settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
+                    val snackbarAction = SnackbarAction(resources.getString(R.string.kh_uisdk_settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
                     showSnackbar(SnackbarConfig(type = SnackbarType.BLOCKING,
                                                 priority = SnackbarPriority.HIGH,
                                                 action = snackbarAction,
-                                                text = resources.getString(R.string.location_disabled)))
+                                                text = resources.getString(R.string.kh_uisdk_location_disabled)))
                 }
 
-                override fun onLocationInfoUnavailable(errorMessage: String) {
-                    showSnackbar(SnackbarConfig(text = errorMessage))
+                override fun onLocationInfoUnavailable(errorMessage: String, karhooError: KarhooError?) {
+                    showSnackbar(SnackbarConfig(text = errorMessage, karhooError = karhooError))
                 }
 
                 override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {
@@ -402,7 +403,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     //endregion
 
-    override fun showErrorDialog(stringId: Int) {
+    override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
         // Do nothing
     }
 

@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.web
 
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.net.http.SslError
 import android.util.AttributeSet
@@ -13,6 +13,9 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
+import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.formattedTripId
 import kotlinx.android.synthetic.main.uisdk_view_web.view.khWebViewToolbar
@@ -84,12 +87,14 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
             super.onReceivedSslError(view, handler, error)
-            AlertDialog.Builder(context, R.style.DialogTheme)
-                    .setMessage(R.string.notification_error_ssl_cert_invalid)
-                    .setPositiveButton(R.string.continue_journey) { _, _ -> handler?.proceed() }
-                    .setNegativeButton(R.string.cancel) { _, _ -> handler?.cancel() }
-                    .create()
-                    .show()
+            val config = KarhooAlertDialogConfig(
+                    messageResId = R.string.kh_uisdk_notification_error_ssl_cert_invalid,
+                    positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_continue_journey,
+                                                             DialogInterface.OnClickListener { _, _ -> handler?.proceed() }),
+                    negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
+                                                             DialogInterface.OnClickListener { _, _ -> handler?.cancel() }))
+            KarhooAlertDialogHelper(context).showAlertDialog(config)
+
         }
 
         override fun onLoadResource(view: WebView?, url: String?) {

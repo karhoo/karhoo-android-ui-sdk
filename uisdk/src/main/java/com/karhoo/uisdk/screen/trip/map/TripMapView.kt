@@ -105,11 +105,11 @@ class TripMapView @JvmOverloads constructor(context: Context,
                     .withListener(this)
                     .check()
         } else {
-            val snackbarAction = SnackbarAction(resources.getString(R.string.settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
+            val snackbarAction = SnackbarAction(resources.getString(R.string.kh_uisdk_settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
             val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING,
                                                 priority = SnackbarPriority.NORMAL,
                                                 action = snackbarAction,
-                                                text = resources.getString(R.string.location_disabled))
+                                                text = resources.getString(R.string.kh_uisdk_location_disabled))
             actions?.showSnackbar(snackbarConfig)
         }
     }
@@ -175,15 +175,15 @@ class TripMapView @JvmOverloads constructor(context: Context,
 
     private fun setRationalShown(isShown: Boolean) {
         context
-                .getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
-                .edit().putBoolean(context.getString(R.string.location_rationale_shown), isShown)
+                .getSharedPreferences(context.getString(R.string.kh_uisdk_permissions), Context.MODE_PRIVATE)
+                .edit().putBoolean(context.getString(R.string.kh_uisdk_location_rationale_shown), isShown)
                 .apply()
     }
 
     private fun rationalShown(): Boolean {
         return context
-                .getSharedPreferences(context.getString(R.string.permissions), Context.MODE_PRIVATE)
-                .getBoolean(context.getString(R.string.location_rationale_shown), false)
+                .getSharedPreferences(context.getString(R.string.kh_uisdk_permissions), Context.MODE_PRIVATE)
+                .getBoolean(context.getString(R.string.kh_uisdk_location_rationale_shown), false)
     }
 
     override fun onPermissionDenied(response: PermissionDeniedResponse) {

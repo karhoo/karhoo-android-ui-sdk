@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/secondary</item>
@@ -300,8 +300,6 @@
 
     <style name="KhBookingETAPriceView">
         <item name="android:background">@drawable/uisdk_background_eta_price_view_rounded</item>
-        <item name="headerText">@style/Text.White.Small</item>
-        <item name="detailsText">@style/Text.White.XXLarge.Bold</item>
         <item name="textAllCaps">true</item>
     </style>
 

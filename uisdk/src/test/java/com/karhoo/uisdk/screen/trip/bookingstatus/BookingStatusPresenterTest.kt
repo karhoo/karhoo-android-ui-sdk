@@ -87,7 +87,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Failure(KarhooError.Unexpected))
 
-        verify(view).showTemporaryError(anyString())
+        verify(view).showTemporaryError(anyString(), any())
     }
 
     /**
@@ -158,7 +158,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.REQUESTED)))
 
-        verify(view, never()).updateStatus(R.string.initialised, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_initialised, FLEET_NAME)
     }
 
     /**
@@ -171,7 +171,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.REQUESTED)))
 
-        verify(view, never()).updateStatus(R.string.requested, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_requested, FLEET_NAME)
     }
 
     /**
@@ -184,7 +184,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.CONFIRMED)))
 
-        verify(view, never()).updateStatus(R.string.confirmed, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_confirmed, FLEET_NAME)
     }
 
     /**
@@ -197,7 +197,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.DRIVER_EN_ROUTE)))
 
-        verify(view).updateStatus(R.string.driver_en_route, FLEET_NAME)
+        verify(view).updateStatus(R.string.kh_uisdk_driver_en_route, FLEET_NAME)
     }
 
     /**
@@ -210,7 +210,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.ARRIVED)))
 
-        verify(view).updateStatus(R.string.arrived, FLEET_NAME)
+        verify(view).updateStatus(R.string.kh_uisdk_arrived, FLEET_NAME)
     }
 
     /**
@@ -223,7 +223,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.PASSENGER_ON_BOARD)))
 
-        verify(view).updateStatus(R.string.pass_on_board, FLEET_NAME)
+        verify(view).updateStatus(R.string.kh_uisdk_pass_on_board, FLEET_NAME)
     }
 
     /**
@@ -236,7 +236,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.COMPLETED)))
 
-        verify(view, never()).updateStatus(R.string.completed, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_completed, FLEET_NAME)
     }
 
     /**
@@ -249,7 +249,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.CANCELLED_BY_USER)))
 
-        verify(view, never()).updateStatus(R.string.cancelled_by_user, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_cancelled_by_user, FLEET_NAME)
     }
 
     /**
@@ -262,7 +262,7 @@ class BookingStatusPresenterTest {
         presenter.monitorTrip(TRIP_ID)
         observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripDetailsWithState(TripStatus.CANCELLED_BY_DISPATCH)))
 
-        verify(view, never()).updateStatus(R.string.cancelled_by_dispatch, FLEET_NAME)
+        verify(view, never()).updateStatus(R.string.kh_uisdk_cancelled_by_dispatch, FLEET_NAME)
     }
 
     /**

@@ -6,18 +6,25 @@ import org.json.JSONObject
 interface AdyenDropInServiceMVP {
 
     interface Service {
-
-        fun clearTransactionId()
-
         fun handleResult(callResult: CallResult)
-
-        fun storeTripId(transactionId: String)
     }
 
     interface Presenter {
 
         fun getAdyenPayments(paymentComponentData: JSONObject, returnUrl: String)
 
-        fun getAdyenPaymentDetails(actionComponentData: JSONObject, transactionId: String?)
+        fun getAdyenPaymentDetails(actionComponentData: JSONObject, tripId: String?)
+
+        fun clearTripId()
+
+        fun getCachedTripId(): String?
+    }
+
+    interface Repository {
+        var tripId: String?
+
+        var supplyPartnerId: String?
+
+        fun clearTripId()
     }
 }

@@ -36,7 +36,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isEnabled
-import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withHint
@@ -62,6 +61,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Assert
 import java.util.Date
+import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 
@@ -161,6 +161,9 @@ open abstract class BaseTestRobot {
     fun dialogTextIsNotVisible(text: Int) =
             onView(withText(text)).inRoot(isDialog()).check(matches(not(isDisplayed())))
 
+    fun dialogTextIsVisibleString(text: String) =
+            onView(withText(text)).inRoot(isDialog()).check(matches(isDisplayed()))
+
     fun viewIsVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(isDisplayed()))
 
@@ -198,6 +201,12 @@ open abstract class BaseTestRobot {
 
     fun viewIsVisibleIsDescendant(id: Int, resId: Int): ViewInteraction =
             onView(allOf(withId(id), isDescendantOfA(withId(resId))))
+
+    fun viewIsVisibleInDescendant(id: Int, resId: Int): ViewInteraction =
+            onView(allOf(withId(id), withEffectiveVisibility(Visibility.VISIBLE), isDescendantOfA(withId(resId))))
+
+    fun viewIsNotVisibleInDescendant(id: Int, resId: Int): ViewInteraction =
+            onView(allOf(withId(id), withEffectiveVisibility(Visibility.GONE), isDescendantOfA(withId(resId))))
 
     fun viewIsFocused(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(hasFocus()))
@@ -260,6 +269,10 @@ open abstract class BaseTestRobot {
         onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
     }
 
+    fun checkSnackbarWithText(expectedText: String) {
+        onView(allOf(withId(com.google.android.material.R.id.snackbar_text), withText(expectedText))).check(matches(isDisplayed()))
+    }
+
     fun checkSnackbarButtonIsEnabled(button: Int) {
         onView(allOf(withId(R.id.snackbar_action), withText(button))).check(matches(isEnabled()))
     }
@@ -274,6 +287,14 @@ open abstract class BaseTestRobot {
         onView(allOf(isAssignableFrom(TextView::class.java),
                      withParent(isAssignableFrom(Toolbar::class.java))))
                 .check(matches(withText(expectedText)))
+    }
+
+    fun clickOnDismiss() {
+        dialogClickButtonByText(R.string.kh_uisdk_dismiss)
+    }
+
+    fun clickOnOkay() {
+        dialogClickButtonByText(R.string.kh_uisdk_ok)
     }
 
     fun clickBackToolbarButton() {

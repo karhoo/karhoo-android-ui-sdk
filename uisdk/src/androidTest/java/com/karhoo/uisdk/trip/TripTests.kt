@@ -17,8 +17,10 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.ARRIVED_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.DER_NOTIFICATION
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.QUOTE_LIST_ID_ASAP
@@ -104,7 +106,7 @@ class TripTests : Launch {
         trip(this) {
             shortSleep()
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
@@ -255,18 +257,21 @@ class TripTests : Launch {
     }
 
     /**
-     * Given:   Trip status is DER
+     * Given:   Trip status is DER (driver en route)
      * When:    When I cancel the trip
      * Then:    The trip is confirmed as cancelled
      **/
     @Test
     @AllowFlaky(attempts = 5)
-    fun cancelWhenDERSuccessfully() {
+    fun cancelWithoutBookingFeeWhenDERSuccessfully() {
         mockTripSuccessResponse(
                 status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
                 details = TRIP_DER)
         serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
             cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
@@ -275,31 +280,71 @@ class TripTests : Launch {
         trip(this) {
             clickOnDriverDetails()
             clickOnCancelRide()
-            clickConfirmCancellation()
+            checkCancellationFeeIsNotShown()
+            clickOnDismiss()
+            clickOnCancelRide()
+            clickOnOkay()
         } result {
             cancellationConfirmation()
         }
     }
 
     /**
-     * Given:   Trip status is Arrived
+     * Given:   Trip status is DER (driver en route)
      * When:    When I cancel the trip
      * Then:    The trip is confirmed as cancelled
      **/
     @Test
     @AllowFlaky(attempts = 5)
-    fun cancelWhenDriverArrivedSuccessfully() {
+    fun cancelWithBookingFeeWhenDERSuccessfully() {
         mockTripSuccessResponse(
-                status = TRIP_STATUS_ARRIVED,
+                status = TRIP_STATUS_DER,
                 tracking = DRIVER_TRACKING,
-                details = TRIP_ARRIVED)
+                details = TRIP_DER)
         serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITH_BOOKING_FEE,
+                              trip = TRIP.tripId)
             cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
                     trip = TRIP.tripId)
         }
         trip(this) {
+            clickOnDriverDetails()
+            clickOnCancelRide()
+            checkCancellationFeeIsShown()
+            clickOnDismiss()
+            clickOnCancelRide()
+            clickOnOkay()
+        } result {
+            cancellationConfirmation()
+        }
+    }
+
+    /**
+     * Given:   Trip status is Driver En Route
+     * When:    When I cancel the trip
+     * Then:    The trip is confirmed as cancelled
+     **/
+    @Test
+    @AllowFlaky(attempts = 5)
+    fun cancelWhenDriverEnRouteSuccessfully() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_DER,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_DER)
+        serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = TestData.CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
+            cancelResponse(
+                    code = HTTP_CREATED,
+                    response = TRIP_STATUS_CANCELLED_BY_USER,
+                    trip = TRIP.tripId)
+        }
+        trip(this) {
+            mediumSleep()
             clickOnDriverDetails()
             clickOnCancelRide()
             clickConfirmCancellation()
@@ -331,8 +376,8 @@ class TripTests : Launch {
 
     /**
      * Given:   Trip status is Arrived
-     * When:    When I cancel the trip cancellation
-     * Then:    The trip continues as normal
+     * When:    Ride details is clicked
+     * Then:    The trip continues as normal, Cancel option is not available
      **/
     @Test
     @AllowFlaky(attempts = 5)
@@ -343,10 +388,9 @@ class TripTests : Launch {
                 details = TRIP_ARRIVED)
         trip(this) {
             clickOnDriverDetails()
-            clickOnCancelRide()
-            clickOnCancelYourRideCancellation()
             shortSleep()
         } result {
+            noCancelButtonVisible()
             checkRideInProgress()
         }
     }
@@ -463,6 +507,7 @@ class TripTests : Launch {
         trip(this) {
             clickOnDriverDetails()
         } result {
+            shortSleep()
             DERFullScreenCheck(
                     pickupText = TRIP_DER.origin?.displayAddress.orEmpty(),
                     destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
@@ -514,6 +559,58 @@ class TripTests : Launch {
                     destinationText = TRIP_DER.destination?.displayAddress.orEmpty()
                               )
             noNumberPlateDERCheck()
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to driver en route
+     * Then:    I can see the driver en route notification at the top of the screen
+     **/
+    @Test
+    @AllowFlaky(attempts = 3)
+    fun DERNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_DER,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_DER)
+        trip(this) {
+        } result {
+            notificationStringCheck(DER_NOTIFICATION)
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to driver arrived
+     * Then:    I can see the driver arrived notification at the top of the screen
+     **/
+    @Test
+    fun arrivedNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_ARRIVED,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_ARRIVED)
+        trip(this) {
+        } result {
+            notificationStringCheck(ARRIVED_NOTIFICATION)
+        }
+    }
+
+    /**
+     * Given:   I am on the trip screen
+     * When:    The status of the ride changes to Passenger on board
+     * Then:    I can see the POB notification at the top of the screen
+     **/
+    @Test
+    fun POBNotificationIsVisible() {
+        mockTripSuccessResponse(
+                status = TRIP_STATUS_POB,
+                tracking = DRIVER_TRACKING,
+                details = TRIP_POB)
+        trip(this) {
+        } result {
+            notificationIntCheck(R.string.kh_uisdk_pass_on_board)
         }
     }
 

@@ -22,7 +22,7 @@ class UpcomingRidesPresenter(view: UpcomingRidesMVP.View,
                 .execute { result ->
                     when (result) {
                         is Resource.Success -> handleSuccessfulTripHistory(result.data)
-                        is Resource.Failure -> view?.showError(returnErrorStringOrLogoutIfRequired(result.error))
+                        is Resource.Failure -> view?.showError(returnErrorStringOrLogoutIfRequired(result.error), result.error)
                     }
                 }
     }

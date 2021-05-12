@@ -14,6 +14,7 @@ import com.karhoo.uisdk.ridedetail.rideDetail
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
+import com.karhoo.uisdk.util.TestData.Companion.CANCEL_WITHOUT_BOOKING_FEE
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
@@ -31,6 +32,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
@@ -46,6 +48,10 @@ class TripFlowTests : Launch {
     var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
     private var flakyRule = FlakyTestRule()
+
+    @get:Rule
+    var chain: RuleChain = RuleChain.outerRule(flakyRule)
+            .around(activityRule)
 
     @get:Rule
     val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -109,6 +115,9 @@ class TripFlowTests : Launch {
                 details = TRIP_DER,
                 reverseGeo = REVERSE_GEO_SUCCESS)
         serverRobot {
+            cancelFeeResponse(code = HTTP_OK,
+                              response = CANCEL_WITHOUT_BOOKING_FEE,
+                              trip = TRIP.tripId)
             cancelResponse(
                     code = HTTP_CREATED,
                     response = TRIP_STATUS_CANCELLED_BY_USER,
@@ -189,6 +198,7 @@ class TripFlowTests : Launch {
         rideDetail {
             mediumSleep()
         } result {
+            shortSleep()
             completedRideFullCheckFromTrip()
         }
     }

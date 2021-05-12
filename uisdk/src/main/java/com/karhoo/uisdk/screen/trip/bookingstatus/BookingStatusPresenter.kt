@@ -32,7 +32,7 @@ internal class BookingStatusPresenter(view: BookingStatusMVP.View, private val t
                 override fun onValueChanged(value: Resource<TripInfo>) {
                     when (value) {
                         is Resource.Success -> handleTripUpdated(value.data)
-                        is Resource.Failure -> view?.showTemporaryError(value.error.userFriendlyMessage)
+                        is Resource.Failure -> view?.showTemporaryError(value.error.userFriendlyMessage, value.error)
                     }
                 }
             }
@@ -69,11 +69,11 @@ internal class BookingStatusPresenter(view: BookingStatusMVP.View, private val t
                     view?.setCancelEnabled(true)
                 }
                 TripStatus.DRIVER_EN_ROUTE -> {
-                    view?.updateStatus(R.string.driver_en_route, tripDetails.fleetInfo?.name.orEmpty())
+                    view?.updateStatus(R.string.kh_uisdk_driver_en_route, tripDetails.fleetInfo?.name.orEmpty())
                     view?.setCancelEnabled(true)
                 }
                 TripStatus.ARRIVED -> {
-                    view?.updateStatus(R.string.arrived, tripDetails.fleetInfo?.name.orEmpty())
+                    view?.updateStatus(R.string.kh_uisdk_arrived, tripDetails.fleetInfo?.name.orEmpty())
                     view?.setCancelEnabled(true)
                     val tripIdentifier = tripInfo?.tripId.orEmpty()
                     if (tripIdentifier.isNotBlank()) {
@@ -86,7 +86,7 @@ internal class BookingStatusPresenter(view: BookingStatusMVP.View, private val t
                     }
                 }
                 TripStatus.PASSENGER_ON_BOARD -> {
-                    view?.updateStatus(R.string.pass_on_board, tripDetails.fleetInfo?.name.orEmpty())
+                    view?.updateStatus(R.string.kh_uisdk_pass_on_board, tripDetails.fleetInfo?.name.orEmpty())
                     view?.setCancelEnabled(false)
                 }
                 TripStatus.COMPLETED -> {

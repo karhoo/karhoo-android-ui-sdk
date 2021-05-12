@@ -6,11 +6,11 @@ import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 
 fun formattedTripId(context: Context, tripId: String?): String {
 
-    tripId?.let { return context.getString(R.string.trip_id, it) }
+    tripId?.let { return context.getString(R.string.kh_uisdk_trip_id, it) }
 
     val prefs = KarhooPreferenceStore.getInstance(context.applicationContext)
     val lastTripId = prefs.lastTrip?.displayTripId
-    lastTripId?.let { return context.getString(R.string.last_trip_id, it) }
+    lastTripId?.let { return context.getString(R.string.kh_uisdk_last_trip_id, it) }
 
-    return context.getString(R.string.last_trip_id_not_set)
+    return context.getString(R.string.kh_uisdk_last_trip_id_not_set)
 }

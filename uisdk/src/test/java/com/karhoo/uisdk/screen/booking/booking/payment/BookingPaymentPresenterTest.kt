@@ -10,6 +10,8 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.ADYEN
+import com.karhoo.uisdk.util.BRAINTREE
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
@@ -76,7 +78,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `provider call not made if there is a stored provider`() {
-        whenever(userStore.paymentProvider).thenReturn(Provider("Adyen"))
+        whenever(userStore.paymentProvider).thenReturn(Provider(ADYEN))
 
         presenter.getPaymentProvider()
 
@@ -96,7 +98,7 @@ class BookingPaymentPresenterTest {
 
         paymentProviderCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(view).showError(R.string.something_went_wrong)
+        verify(view).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
 
     /**
@@ -115,7 +117,7 @@ class BookingPaymentPresenterTest {
     }
 
     companion object {
-        private val adyenProvider = Provider(id = "Adyen")
-        private val braintreeProvider = Provider(id = "Braintree")
+        private val adyenProvider = Provider(id = ADYEN)
+        private val braintreeProvider = Provider(id = BRAINTREE)
     }
 }

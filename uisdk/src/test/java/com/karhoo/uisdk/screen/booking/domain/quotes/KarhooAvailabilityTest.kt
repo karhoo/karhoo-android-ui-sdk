@@ -4,16 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteId
-import com.karhoo.sdk.api.model.QuoteList
-import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.analytics.Analytics
+import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
@@ -24,6 +21,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -48,6 +46,7 @@ class KarhooAvailabilityTest {
     private lateinit var categoriesViewModel: CategoriesViewModel
     private lateinit var availability: AvailabilityProvider
     private var lifecycle = LifecycleRegistry(lifecycleOwner)
+    private lateinit var availabilityHandler: AvailabilityHandler
     private lateinit var bookingStatusStateViewModel: BookingStatusStateViewModel
 
     private val lambdaCaptor = argumentCaptor<com.karhoo.sdk.api.network.observable
@@ -71,8 +70,17 @@ class KarhooAvailabilityTest {
                 liveFleetsViewModel = liveFleetsViewModel,
                 lifecycleOwner = lifecycleOwner,
                 categoriesViewModel = categoriesViewModel
-                                         )
+        )
 
+        availabilityHandler = object : AvailabilityHandler {
+            override var hasAvailability: Boolean = false
+            override var hasNoResults: Boolean = false
+            override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
+            }
+        }
+
+        availabilityHandler.hasNoResults = false
+        availabilityHandler.hasAvailability = false
     }
 
     /**
@@ -90,8 +98,8 @@ class KarhooAvailabilityTest {
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
-                                                                          id = QuoteId(),
-                                                                          validity = 30)))
+                id = QuoteId(),
+                validity = 30)))
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
             assertEquals(7, it?.size)
         })
@@ -112,8 +120,8 @@ class KarhooAvailabilityTest {
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
         lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
-                                                                          id = QuoteId(),
-                                                                          validity = 30)))
+                id = QuoteId(),
+                validity = 30)))
 
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
             assertEquals(3, it?.size)
@@ -139,11 +147,65 @@ class KarhooAvailabilityTest {
 
         availability.setAllCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
-                                                                          id = QuoteId(),
-                                                                          validity = 30)))
+                id = QuoteId(),
+                validity = 30)))
 
         availability.filterVehicleListByCategory(MPV)
         verify(analytics).vehicleSelected(MPV, null)
+    }
+
+    @Test
+    fun `When getting some quotes categories with empty quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES_WITH_EMPTY_QUOTES, QuoteStatus.PROGRESSING)
+
+        Assert.assertTrue(availabilityHandler.hasAvailability)
+    }
+
+    @Test
+    fun `When getting some quotes categories with empty quotes and a complete status, the availability handler will be set to no result`() {
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES_WITH_EMPTY_QUOTES, QuoteStatus.COMPLETED)
+
+        Assert.assertTrue(availabilityHandler.hasNoResults)
+    }
+
+    @Test
+    fun `When getting some quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES, QuoteStatus.PROGRESSING)
+
+        Assert.assertTrue(availabilityHandler.hasAvailability)
+    }
+
+    @Test
+    fun `When getting some quotes and a complete status, the availability handler will have hasAvailability set to true`() {
+        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES, QuoteStatus.COMPLETED)
+
+        Assert.assertTrue(availabilityHandler.hasAvailability)
+    }
+
+    private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {
+        val observer = availability.bookingStatusObserver()
+        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+
+        availability.setAvailabilityHandler(availabilityHandler)
+        availability.setAllCategory(ALL)
+        lambdaCaptor.firstValue.onValueChanged(
+                Resource.Success(
+                        QuoteList(
+                                categories = categories,
+                                id = QuoteId(),
+                                status = status,
+                                validity = 30
+                        )
+                )
+        )
     }
 
     companion object {
@@ -165,7 +227,11 @@ class KarhooAvailabilityTest {
                     add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
                     add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
                 }
-                              )
+        )
+        val CATEGORIES_WITH_EMPTY_QUOTES = mapOf(
+                SALOON to mutableListOf<Quote>(),
+                MPV to mutableListOf<Quote>()
+        )
     }
 
 }

@@ -2,15 +2,17 @@ package com.karhoo.uisdk.address
 
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
+import androidx.test.rule.GrantPermissionRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.common.Launch
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.address.AddressActivity
+import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.NO_ADDRESS_FOUND
 import com.karhoo.uisdk.util.TestData.Companion.PLACE_SEARCH
@@ -20,24 +22,37 @@ import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_INCORRECT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.USER
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
+import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
+import java.net.HttpURLConnection
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_INTERNAL_ERROR
 import java.net.HttpURLConnection.HTTP_NOT_FOUND
 
 @RunWith(AndroidJUnit4::class)
+@LargeTest
 class AddressTests : Launch {
 
     @get:Rule
     var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
+    private var flakyRule = FlakyTestRule()
+
     @get:Rule
     val activityRule: ActivityTestRule<AddressActivity> =
             ActivityTestRule(AddressActivity::class.java, false, false)
+
+    @get:Rule
+    var chain: RuleChain = RuleChain.outerRule(flakyRule)
+            .around(activityRule)
+
+    @get:Rule
+    val grantPermissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
     private val intent = Intent().apply {
         putExtra("address::type", AddressType.PICKUP)
@@ -47,6 +62,11 @@ class AddressTests : Launch {
     fun setUp() {
         preferences {
             setUserPreference(USER)
+        }
+        serverRobot {
+            successfulToken()
+            paymentsProviderResponse(HttpURLConnection.HTTP_OK, TestData.BRAINTREE_PROVIDER)
+            sdkInitResponse(HttpURLConnection.HTTP_OK, TestData.BRAINTREE_TOKEN)
         }
     }
 
@@ -79,7 +99,6 @@ class AddressTests : Launch {
     @Test
     fun searchingForAnAddressReturnsResultsSuccessfully() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH)
         }
         address(this) {
@@ -101,7 +120,6 @@ class AddressTests : Launch {
     @AllowFlaky(attempts = 5)
     fun searchingForAnInvalidAddressReturnsNoResult() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_NOT_FOUND, NO_ADDRESS_FOUND)
         }
         address(this) {
@@ -134,7 +152,6 @@ class AddressTests : Launch {
     @Test
     fun noAddressSearchResultsAfterClearingAddressSearch() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH)
         }
 
@@ -157,7 +174,6 @@ class AddressTests : Launch {
     @Test
     fun userSuccessfullyEntersNewAddressAfterClearingPreviousSearch() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH)
         }
 
@@ -187,7 +203,6 @@ class AddressTests : Launch {
     @Test
     fun poweredByGoogleVisibleOnValidAddressSearchScreen() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH)
         }
         address(this) {
@@ -207,7 +222,6 @@ class AddressTests : Launch {
     @Test
     fun poweredByGoogleVisibleOnInvalidAddressSearch() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_NOT_FOUND, NO_ADDRESS_FOUND)
         }
 
@@ -240,6 +254,7 @@ class AddressTests : Launch {
     @Test
     fun noRecentAddressesDisplayedIfUserHasNoRecent() {
         address(this) {
+            noRecentAddresses()
         } result {
             noRecentFound()
             setLocationOnMapButtonIsEnabled()
@@ -255,13 +270,12 @@ class AddressTests : Launch {
     @Test
     fun checkSnackbarErrorText() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_INTERNAL_ERROR, GENERAL_ERROR)
         }
         address(this) {
             search(SEARCH_GENERAL_ADDRESS)
         } result {
-            checkSnackbarWithText(R.string.K0001)
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
@@ -352,12 +366,13 @@ class AddressTests : Launch {
      * Then:    I can see the plane symbol next to the address
      **/
     @Test
+    @AllowFlaky(attempts = 3)
     fun airportSymbolCheckAddressSearch() {
         serverRobot {
-            successfulToken()
             addressListResponse(HTTP_CREATED, PLACE_SEARCH_AIRPORT)
         }
         address(this) {
+            noRecentAddresses()
             search(SEARCH_AIRPORT_ADDRESS)
         } result {
             airportSymbolIsVisible()

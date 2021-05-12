@@ -5,7 +5,6 @@ import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
@@ -26,9 +25,10 @@ import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.UnitTestUISDKConfig
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
+import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
@@ -38,6 +38,8 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.service.preference.PreferenceStore
+import com.karhoo.uisdk.util.ADYEN
+import com.karhoo.uisdk.util.BRAINTREE
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -230,7 +232,7 @@ class BookingRequestPresenterTest {
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
                                                              .BookingError(R.string
-                                                                                   .destination_book_error))
+                                                                                   .kh_uisdk_destination_book_error, null))
     }
 
     /**
@@ -251,7 +253,8 @@ class BookingRequestPresenterTest {
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.origin_book_error))
+                                                             .BookingError(R.string
+                                                                                   .kh_uisdk_origin_book_error, null))
     }
 
     /**
@@ -460,7 +463,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).initialiseGuestPayment(price)
+        verify(view).initialiseGuestPayment(quote)
     }
 
     /**
@@ -487,7 +490,7 @@ class BookingRequestPresenterTest {
         requestPresenter.makeBooking()
 
         verify(analytics).bookingRequested(any(), anyString())
-        verify(view).initialiseGuestPayment(price)
+        verify(view).initialiseGuestPayment(quote)
     }
 
     /**
@@ -510,7 +513,7 @@ class BookingRequestPresenterTest {
         verify(view).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.K0001))
+                                                             .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
     }
 
     /**
@@ -534,7 +537,8 @@ class BookingRequestPresenterTest {
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract
                                                              .BookingRequestEvent
-                                                             .BookingError(R.string.booking_details_error))
+                                                             .BookingError(R.string
+                                                                                   .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
     }
 
     /**
@@ -550,7 +554,7 @@ class BookingRequestPresenterTest {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
-        verify(view).showPaymentFailureDialog()
+        verify(view).showPaymentFailureDialog(KarhooError.CouldNotBookPaymentPreAuthFailed)
     }
 
     /**
@@ -611,7 +615,7 @@ class BookingRequestPresenterTest {
     @Test
     fun `Braintree booking request has null meta`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
-        whenever(userStore.paymentProvider).thenReturn(Provider("Braintree"))
+        whenever(userStore.paymentProvider).thenReturn(Provider(BRAINTREE))
 
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
@@ -678,25 +682,49 @@ class BookingRequestPresenterTest {
         verify(userStore, never()).removeCurrentUser()
     }
 
+    /**
+     * Given:   The user leaves the booking screen
+     * When:    The user is a Braintree user
+     * Then:    The saved payment info is not removed
+     */
+    @Test
+    fun `clear data does not remove saved payment info for Braintree users`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = Provider(id = BRAINTREE)
+
+        requestPresenter.clearData()
+
+        verify(userStore, never()).removeCurrentUser()
+    }
+
+    /**
+     * Given:   The user leaves the booking screen
+     * When:    The user is an Adyen user
+     * Then:    The saved payment info is removed
+     */
+    @Test
+    fun `clear data removes saved payment info for Adyen users`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = Provider(id = ADYEN)
+
+        requestPresenter.clearData()
+
+        verify(userStore, never()).removeCurrentUser()
+    }
+
     private fun setGuestUser() {
         whenever(userStore.currentUser).thenReturn(UserInfo())
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+        setGuestAuthentication(context)
     }
 
     private fun setTokenUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.TokenExchange(clientId = "some", scope = "some")))
+        setTokenAuthentication(context)
     }
 
     private fun setAuthenticatedUser() {
         whenever(userStore.currentUser).thenReturn(userDetails)
-        KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                       context,
-                                                                                       authenticationMethod = AuthenticationMethod.KarhooUser()))
+        setKarhooAuthentication(context)
     }
 
     companion object {

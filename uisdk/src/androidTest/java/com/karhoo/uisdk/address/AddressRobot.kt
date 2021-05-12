@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.address
 
 import com.google.gson.Gson
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
 import com.karhoo.uisdk.common.Launch
@@ -30,6 +31,12 @@ class AddressRobot : BaseTestRobot() {
 
     fun clearAddressSearchList() {
         clickButton(R.id.clearSearchButtonIcon)
+    }
+
+    fun noRecentAddresses() {
+        preferences {
+            setStringPreference("SharedPreferencesLocationStore.LocationsKey", Gson().toJson(emptyList<LocationInfo>()))
+        }
     }
 
     fun setDefaultRecents() {
@@ -87,7 +94,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun noRecentFound() {
-        checkTextViewIfMultiMatches(R.id.emptyText, R.string.recents_empty)
+        checkTextViewIfMultiMatches(R.id.emptyText, R.string.kh_uisdk_recents_empty)
     }
 
     fun checkErrorIsShown(expectedText: Int) {
@@ -95,19 +102,19 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun checkAddressPickUpPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
     }
 
     fun checkAddressDestinationPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
     }
 
     fun enterPickupHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
     }
 
     fun enterDestinationHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
     }
 
     fun clearAddressButtonIsNotClickable() {

@@ -67,7 +67,7 @@ class AddressOptionsPresenterTest {
 
         presenter.getCurrentLocation()
 
-        lambdaCaptor.firstValue.onLocationInfoUnavailable("")
+        lambdaCaptor.firstValue.onLocationInfoUnavailable("", null)
 
         verify(view).showSnackbar(any())
 

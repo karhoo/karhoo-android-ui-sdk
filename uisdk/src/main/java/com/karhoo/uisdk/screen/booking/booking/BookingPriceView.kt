@@ -8,7 +8,8 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.util.CurrencyUtils
+import com.karhoo.uisdk.util.formatted
+import com.karhoo.uisdk.util.intToRangedPrice
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaTypeText
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
@@ -49,7 +50,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
                   currency: Currency) {
         etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
                 .getString(R.string
-        .min))
+        .kh_uisdk_min))
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
@@ -63,11 +64,10 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     private fun bindRemainingViews(vehicle: Quote, typeEta: String, currency: Currency) {
         when (vehicle.quoteSource) {
             QuoteSource.FLEET -> {
-                priceText.text = CurrencyUtils.intToPrice(currency, vehicle.price.highPrice)
+                priceText.text = currency.formatted(vehicle.price.highPrice)
             }
             QuoteSource.MARKET -> {
-                priceText.text = CurrencyUtils.intToRangedPrice(currency, vehicle.price.lowPrice,
-                                                                vehicle.price.highPrice)
+                priceText.text = currency.intToRangedPrice(vehicle.price.lowPrice, vehicle.price.highPrice)
             }
         }
         etaTypeText.text = typeEta
@@ -75,7 +75,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     }
 
     fun bindETAOnly(time: Int?, typeEta: String, typePrice: QuoteType) {
-        etaText.text = String.format("%s %s", time ?: "~", context.getString(R.string.min))
+        etaText.text = String.format("%s %s", time ?: "~", context.getString(R.string.kh_uisdk_min))
         etaTypeText.text = typeEta
         setContainerVisibility(R.dimen.spacing_none, GONE)
     }
