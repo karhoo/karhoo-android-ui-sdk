@@ -70,6 +70,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
 
     override fun mapMoved(position: LatLng?) {
         timer?.let {
+            it.purge()
             it.cancel()
             timer = null
         }
