@@ -56,7 +56,6 @@ import com.karhoo.uisdk.util.extension.showShadowedPolyLine
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.bookingMapLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 @Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(context: Context,
@@ -154,11 +153,9 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 }
 
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
-                pickupPinIcon.visibility = View.VISIBLE
             } else {
                 zoom(null)
                 isMyLocationEnabled = false
-                pickupPinIcon.visibility = View.GONE
             }
         }
 
@@ -172,6 +169,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
             googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            addPinToMap(position, pickupPinRes, R.string.kh_uisdk_address_pick_up)
         } else {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     LatLng(MAP_DEFAULT_LOCATION_LATITUDE,
@@ -215,7 +213,6 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
             }
                     ?: googleMap.setMaxZoomPreference(BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT)
-            pickupPinIcon.visibility = View.GONE
             zoomMapToMarkers(origin, destination)
 
             this.origin = origin
@@ -260,10 +257,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun clearMarkers() {
-        if (pickupPinIcon.visibility == View.GONE) {
-            pickupPinIcon.visibility = View.VISIBLE
-            googleMap?.clear()
-        }
+        googleMap?.clear()
     }
 
     //region map lifecycle
@@ -367,17 +361,9 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun onCameraIdle() {
-        presenter.mapMoved(googleMap?.cameraPosition?.target)
-        googleMap?.setOnCameraIdleListener { }
     }
 
     override fun onCameraMoveStarted(reason: Int) {
-        when (reason) {
-            GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE -> {
-                presenter.mapDragged()
-                googleMap?.setOnCameraIdleListener(this)
-            }
-        }
     }
 
     //region Map Padding

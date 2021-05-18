@@ -11,6 +11,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.extension.configure
+import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import kotlinx.android.synthetic.main.uisdk_view_address_options.view.addressOptions
 import kotlinx.android.synthetic.main.uisdk_view_address_options.view.currentLocation
@@ -43,7 +44,7 @@ class AddressOptionsView @JvmOverloads constructor(context: Context,
     }
 
     private fun shouldShowMapSearchOptions(): Boolean {
-        return isLocateMeEnabled(context)
+        return isLocateMeEnabled(context) && !isGuest()
     }
 
     override fun didGetCurrentLocation(location: LocationInfo) {
