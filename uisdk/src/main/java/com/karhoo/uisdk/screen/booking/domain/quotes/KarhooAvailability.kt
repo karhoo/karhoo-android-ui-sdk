@@ -43,12 +43,16 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
 
     private val observer = createObservable()
+    private var cleanedUp: Boolean
 
     init {
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, observer)
+        cleanedUp = false
     }
 
+
     override fun cleanup() {
+        cleanedUp = true
         cancelVehicleCallback()
         bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
@@ -178,7 +182,9 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
         GlobalScope.launch {
             delay(refreshDelay)
-            vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
+            if(!cleanedUp) {
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
+            }
         }
     }
 
