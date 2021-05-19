@@ -22,6 +22,7 @@ import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
@@ -43,16 +44,14 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
 
     private val observer = createObservable()
-    private var cleanedUp: Boolean
+    private var vehiclesJob: Job? = null
 
     init {
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, observer)
-        cleanedUp = false
     }
 
 
     override fun cleanup() {
-        cleanedUp = true
         cancelVehicleCallback()
         bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
@@ -86,6 +85,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     private fun cancelVehicleCallback() {
         vehiclesObserver?.let { vehiclesObservable?.apply { unsubscribe(it) } }
+        vehiclesJob?.cancel()
         availableVehicles = mutableMapOf()
         currentAvailableQuotes()
         updateFleets(mutableListOf())
@@ -180,11 +180,9 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
         }
 
-        GlobalScope.launch {
+        vehiclesJob = GlobalScope.launch {
             delay(refreshDelay)
-            if(!cleanedUp) {
-                vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
-            }
+            vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
         }
     }
 
