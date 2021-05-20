@@ -66,7 +66,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var passengerDetails: PassengerDetails? = null
     private var bookingComments: String? = ""
 
-    private var isGuest: Boolean = false
+    private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -74,8 +74,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onCreate(savedInstanceState: Bundle?) {
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
-
-        isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
         if (callingActivity != null) {
             KarhooUISDK.analytics?.bookingWithCallbackOpened()
