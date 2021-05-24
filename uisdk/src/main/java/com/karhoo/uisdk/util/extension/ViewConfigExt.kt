@@ -37,7 +37,7 @@ fun hasLocationPermission(context: Context): Boolean {
 }
 
 fun isLocateMeEnabled(context: Context): Boolean {
-    return hasLocationPermission(context) && !KarhooUISDKConfigurationProvider.isGuest()
+    return hasLocationPermission(context)
 }
 
 fun isGuest(): Boolean {

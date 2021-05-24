@@ -10,7 +10,7 @@ internal class PickupOnlyPresenter(private val addressService: AddressService) :
     private var owner: BookingMapStategy.Owner? = null
 
     override fun mapMoved(position: LatLng) {
-        if (position.latitude == 0.0 || position.longitude == 0.0) {
+        if (position.latitude == 0.0 && position.longitude == 0.0) {
             return
         }
 

@@ -58,23 +58,21 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
-private const val MAP_DEFAULT_ZOOM = 16.0f
-
 @Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(context: Context,
                                                attrs: AttributeSet? = null,
                                                @AttrRes defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr),
-      GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveStartedListener,
-      BookingMapMVP.View, LifecycleObserver {
+        GoogleMap.OnCameraIdleListener, GoogleMap.OnCameraMoveStartedListener,
+        BookingMapMVP.View, LifecycleObserver {
 
     private var isDeepLink: Boolean = false
     var initialLocation: LatLng? = null
     private var googleMap: GoogleMap? = null
 
     private var presenter: BookingMapMVP.Presenter = BookingMapPresenter(this,
-                                                                         PickupOnlyPresenter(KarhooApi.addressService),
-                                                                         PickupDropoffPresenter(), KarhooUISDK.analytics)
+            PickupOnlyPresenter(KarhooApi.addressService),
+            PickupDropoffPresenter(), KarhooUISDK.analytics)
 
     private val locationProvider: LocationProvider = LocationProvider(context, KarhooUISDK.karhooApi.addressService)
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
@@ -94,12 +92,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     init {
         getCustomisationParameters(context, attrs, defStyleAttr)
         View.inflate(context, R.layout.uisdk_view_booking_map, this)
-        presenter.checkLocateUser()
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingMapView,
-                                                        defStyleAttr, R.style.KhBookingMapViewStyle)
+                defStyleAttr, R.style.KhBookingMapViewStyle)
         pickupPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapPickupPin, R.drawable
                 .uisdk_ic_pickup_pin)
         dropOffPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapDropOffPin, R
@@ -118,13 +115,13 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     override fun zoomMapToOriginAndDestination() {
         zoomMapToOriginAndDestination(origin = Position(origin?.latitude.orZero(), origin?.longitude.orZero()),
-                                      destination = Position(destination?.latitude.orZero(), destination?.longitude.orZero()))
+                destination = Position(destination?.latitude.orZero(), destination?.longitude.orZero()))
     }
 
     override fun zoomMapToOriginAndDestination(origin: Position, destination: Position?) {
         googleMap?.let {
             it.setPadding(0, 0,
-                          0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                    0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
             val destinationLatLng = destination?.let {
                 LatLng(destination.latitude, destination
                         .longitude)
@@ -143,20 +140,32 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 isIndoorEnabled = false
                 uiSettings.isMyLocationButtonEnabled = false
                 uiSettings.isMapToolbarEnabled = false
-                setOnCameraIdleListener(this@BookingMapView)
-                setOnCameraMoveStartedListener(this@BookingMapView)
                 with(TypedValue()) {
                     resources.getValue(R.dimen.map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
                 }
-                zoom(initialLocation)
+
+                if (initialLocation != null) {
+                    zoom(initialLocation)
+                } else {
+                    zoom(null)
+                    getCurrentLocation()
+                }
 
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
                 pickupPinIcon.visibility = View.VISIBLE
+                showLocateUserButton()
+
             } else {
+                zoom(null)
                 isMyLocationEnabled = false
                 pickupPinIcon.visibility = View.GONE
             }
+        }
+
+        googleMap?.setOnMapLoadedCallback {
+            googleMap?.setOnCameraIdleListener(this@BookingMapView)
+            googleMap?.setOnCameraMoveStartedListener(this@BookingMapView)
         }
     }
 
@@ -165,7 +174,10 @@ class BookingMapView @JvmOverloads constructor(context: Context,
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
             googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
         } else {
-            val cameraUpdate = CameraUpdateFactory.zoomTo(MAP_DEFAULT_ZOOM)
+            val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                    LatLng(MAP_DEFAULT_LOCATION_LATITUDE,
+                            MAP_DEFAULT_LOCATION_LONGITUDE),
+                    MAP_DEFAULT_NO_PERMISSIONS_ZOOM)
             googleMap?.moveCamera(cameraUpdate)
         }
     }
@@ -216,9 +228,9 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
             MapUtil.bitmapDescriptorFromVector(context, markerIcon)?.let {
                 val marker = googleMap?.addMarker(MarkerOptions()
-                                                          .draggable(false)
-                                                          .icon(it)
-                                                          .position(latLng))
+                        .draggable(false)
+                        .icon(it)
+                        .position(latLng))
                 marker?.title = context.getString(title)
             }
         }
@@ -249,10 +261,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun clearMarkers() {
-        if (pickupPinIcon.visibility == View.GONE) {
-            pickupPinIcon.visibility = View.VISIBLE
-            googleMap?.clear()
-        }
+        googleMap?.clear()
     }
 
     //region map lifecycle
@@ -287,10 +296,10 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun onResume() {
         isLocateMeEnabled = isLocateMeEnabled(context)
         mapView.onResume()
-        getAddress()
+        getCurrentLocation()
     }
 
-    private fun getAddress() {
+    private fun getCurrentLocation() {
         if (isLocateMeEnabled) {
             locationProvider.getAddress(object : LocationInfoListener {
                 override fun onLocationInfoReady(locationInfo: LocationInfo) {
@@ -303,18 +312,17 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                                 longitude = it.longitude
                             })
                         }
-                        zoom(null)
                         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
-                                                                     .PickUpAddressEvent(locationInfo))
+                                .PickUpAddressEvent(locationInfo))
                     }
                 }
 
                 override fun onLocationServicesDisabled() {
                     val snackbarAction = SnackbarAction(resources.getString(R.string.kh_uisdk_settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
                     showSnackbar(SnackbarConfig(type = SnackbarType.BLOCKING,
-                                                priority = SnackbarPriority.HIGH,
-                                                action = snackbarAction,
-                                                text = resources.getString(R.string.kh_uisdk_location_disabled)))
+                            priority = SnackbarPriority.HIGH,
+                            action = snackbarAction,
+                            text = resources.getString(R.string.kh_uisdk_location_disabled)))
                 }
 
                 override fun onLocationInfoUnavailable(errorMessage: String, karhooError: KarhooError?) {
@@ -352,9 +360,10 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun doReverseGeolocate() {
+        getCurrentLocation()
+
         shouldReverseGeolocate = isLocateMeEnabled && !isDeepLink
         isDeepLink = false
-        getAddress()
     }
 
     override fun onCameraIdle() {
@@ -382,7 +391,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     fun setDefaultPadding() {
         googleMap?.setPadding(0, 0,
-                              0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
 
         animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_quotes)
     }
@@ -448,5 +457,12 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
         animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
+    }
+
+    companion object {
+        private const val MAP_DEFAULT_NO_PERMISSIONS_ZOOM = 5.0f
+        private const val MAP_DEFAULT_ZOOM = 16f
+        private const val MAP_DEFAULT_LOCATION_LATITUDE = 50.999763
+        private const val MAP_DEFAULT_LOCATION_LONGITUDE = 1.614991
     }
 }
