@@ -86,7 +86,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     override fun setPickupLocation(pickupLocation: LocationInfo?) {
         if (!mapMoving) {
             bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
-                                                         .PickUpAddressEvent(pickupLocation))
+                    .PickUpAddressEvent(pickupLocation))
         }
     }
 
@@ -131,10 +131,6 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     }
 
     override fun checkLocateUser() {
-        if (isGuest()) {
-            view?.hideLocateUserButton()
-        } else {
-            view?.showLocateUserButton()
-        }
+        view?.showLocateUserButton()
     }
 }

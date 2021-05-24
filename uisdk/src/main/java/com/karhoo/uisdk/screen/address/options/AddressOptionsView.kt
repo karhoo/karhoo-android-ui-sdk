@@ -44,7 +44,7 @@ class AddressOptionsView @JvmOverloads constructor(context: Context,
     }
 
     private fun shouldShowMapSearchOptions(): Boolean {
-        return isLocateMeEnabled(context) && !isGuest()
+        return isLocateMeEnabled(context)
     }
 
     override fun didGetCurrentLocation(location: LocationInfo) {
