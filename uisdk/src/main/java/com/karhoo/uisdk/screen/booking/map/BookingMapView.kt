@@ -261,7 +261,10 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun clearMarkers() {
-        googleMap?.clear()
+        if (pickupPinIcon.visibility == View.GONE) {
+            pickupPinIcon.visibility = View.VISIBLE
+            googleMap?.clear()
+        }
     }
 
     //region map lifecycle
