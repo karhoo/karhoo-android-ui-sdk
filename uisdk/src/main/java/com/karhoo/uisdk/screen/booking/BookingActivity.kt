@@ -75,8 +75,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
 
-        isGuest = KarhooUISDKConfigurationProvider.isGuest()
-
         if (callingActivity != null) {
             KarhooUISDK.analytics?.bookingWithCallbackOpened()
         }
