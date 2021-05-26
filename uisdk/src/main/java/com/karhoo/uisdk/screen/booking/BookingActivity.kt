@@ -278,6 +278,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBackPressed() {
+        if (bookingRequestWidget.onBackPressed()) {
+//            bookingStatusStateViewModel.currentState
+            onResume()
+            return
+        }
+        if (quotesListWidget.hideList()) {
+            return
+        }
         if (navigationDrawerWidget.closeIfOpen()) {
             super.onBackPressed()
         }

@@ -193,6 +193,15 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId)
     }
 
+    override fun onBackPressed(): Boolean {
+        return if (visibility == View.VISIBLE) {
+            cancelButton.callOnClick()
+            true
+        } else {
+            false
+        }
+    }
+
     override fun animateIn() {
         backgroundFade?.startTransition(containerAnimateIn.duration.toInt())
         bookingRequestLayout.startAnimation(containerAnimateIn)
