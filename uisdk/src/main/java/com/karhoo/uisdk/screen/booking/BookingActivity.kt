@@ -278,12 +278,15 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBackPressed() {
+        // if (BookingRequestView is opened we close it and return
         if (bookingRequestWidget.onBackPressed()) {
-//            bookingStatusStateViewModel.currentState
             onResume()
             return
         }
-        if (quotesListWidget.hideList()) {
+        // if destination set we clear it, close the quotes list and return
+        if (bookingStatusStateViewModel.currentState.destination != null) {
+            bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
+                    .DestinationAddressEvent(null))
             return
         }
         if (navigationDrawerWidget.closeIfOpen()) {
