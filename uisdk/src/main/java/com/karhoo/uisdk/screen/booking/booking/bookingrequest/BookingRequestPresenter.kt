@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
@@ -79,6 +80,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         bookTrip()
     }
 
+    override fun isPaymentSet(): Boolean {
+        return userStore.savedPaymentInfo != null
+    }
+
     private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             view?.initialiseGuestPayment(quote)
@@ -140,27 +145,13 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             is AuthenticationMethod.Guest -> {
                 view?.updateBookingButtonForGuest()
                 view?.showGuestBookingFields()
-                setBookingEnablement(allFieldsValid)
             }
             is AuthenticationMethod.TokenExchange -> {
                 view?.showGuestBookingFields(details = getPassengerDetails())
-                setBookingEnablement(allFieldsValid)
             }
             else -> {
                 view?.showAuthenticatedUserBookingFields()
-                setBookingEnablement(true)
             }
-        }
-    }
-
-    override fun setBookingEnablement(hasValidPaxDetails: Boolean) {
-        if (userStore.savedPaymentInfo == null) {
-            view?.disableBooking()
-        } else if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
-                        AuthenticationMethod.KarhooUser || hasValidPaxDetails) {
-            view?.enableBooking()
-        } else {
-            view?.disableBooking()
         }
     }
 

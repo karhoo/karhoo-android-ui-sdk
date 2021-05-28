@@ -14,6 +14,8 @@ interface PassengerDetailsMVP {
         fun bindEditMode(isEditing: Boolean)
 
         fun allFieldsValid(): Boolean
+
+        fun findAndfocusFirstInvalid(): Boolean
     }
 
     interface Presenter {
@@ -34,10 +36,4 @@ interface PassengerDetailsMVP {
 
         fun validateMobileNumber(code: String, number: String): String
     }
-
-    interface Actions {
-
-        fun setPassengerDetailsValidity(isValid: Boolean)
-    }
-
 }
