@@ -17,7 +17,8 @@ interface BookingRequestViewContract {
         fun bindViewToBookingRequest(lifecycleOwner: LifecycleOwner, bookingRequestStateViewModel:
         BookingRequestStateViewModel)
         fun resetBookingButton()
-        fun showBookingRequest(quote: Quote, outboundTripId: String? = null)
+        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMeta: 
+        HashMap<String, String>?)
         fun onBackPressed(): Boolean
     }
 

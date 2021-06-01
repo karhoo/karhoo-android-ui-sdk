@@ -186,11 +186,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMeta:
+    HashMap<String, String>?) {
         bookingRequestButton.onLoadingComplete()
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
-        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId)
+        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMeta = bookingMeta)
     }
 
     override fun onBackPressed(): Boolean {
