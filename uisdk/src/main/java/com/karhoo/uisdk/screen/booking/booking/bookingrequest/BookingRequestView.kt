@@ -141,7 +141,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
         bookingRequestLinearLayout.setOnClickListener {
             it.hideSoftKeyboard()
-            Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show()
         }
 
         containerAnimateOut.setAnimationListener(object : SimpleAnimationListener() {
