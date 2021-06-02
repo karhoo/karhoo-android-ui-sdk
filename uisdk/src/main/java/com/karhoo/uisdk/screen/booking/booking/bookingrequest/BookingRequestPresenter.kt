@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
