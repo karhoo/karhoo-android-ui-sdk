@@ -93,6 +93,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         bookingMapWidget.onCreate(savedInstanceState, this, bookingStatusStateViewModel,
                                   tripDetails?.destination == null, journeyInfo != null)
+
+        bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
     }
 
     override fun onResume() {
@@ -142,7 +144,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             journeyInfo = extras.getParcelable(Builder.EXTRA_JOURNEY_INFO)
             passengerDetails = extras.getParcelable(Builder.EXTRA_PASSENGER_DETAILS)
             bookingComments = extras.getString(Builder.EXTRA_COMMENTS)
-            bookingMetadata = extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
+            val injectedBookingMetadata = extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
+            injectedBookingMetadata?.let {
+                bookingMetadata?.putAll(it)
+            }
         }
     }
 

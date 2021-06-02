@@ -9,6 +9,8 @@ interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConf
 
     fun logo(): Drawable?
 
+    fun bookingMetadata(): HashMap<String, String>? = null
+
 }
 
 internal object KarhooUISDKConfigurationProvider {
