@@ -127,7 +127,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
-//        disableBooking()
         presenter.clearData()
     }
 
