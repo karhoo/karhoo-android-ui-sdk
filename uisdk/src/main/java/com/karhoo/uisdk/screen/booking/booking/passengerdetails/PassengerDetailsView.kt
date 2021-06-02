@@ -81,12 +81,16 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
      *  @param view The view that last had the focus and can close the keyboard
      */
     private fun hideKeyboardIfNothingFocus(view: View) {
-        if (!firstNameInput.hasFocus()
-                && !lastNameInput.hasFocus()
+        if (!nameHasFocus()
                 && !emailInput.hasFocus()
                 && !mobileNumberInput.hasFocus()) {
             view.hideSoftKeyboard()
         }
+    }
+
+    private fun nameHasFocus(): Boolean {
+        return firstNameInput.hasFocus()
+                || lastNameInput.hasFocus()
     }
 
     private fun getPhoneNumberValidator(): PhoneNumberValidator {
@@ -176,12 +180,13 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
         updatePassengerDetailsMask.visibility = if (isEditing) View.GONE else View.VISIBLE
     }
 
-    internal fun getFirstInvalid(): SelfValidatingTextLayout? {
-        if (!firstNameLayout.isValid) return firstNameLayout
-        if (!lastNameLayout.isValid) return lastNameLayout
-        if (!emailLayout.isValid) return emailLayout
-        if (!mobileNumberLayout.isValid) return mobileNumberLayout
-        return null
+    private fun getFirstInvalid(): SelfValidatingTextLayout? {
+        var invalidTextLayout: SelfValidatingTextLayout? = null
+        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
+        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
+        if (!emailLayout.isValid) invalidTextLayout = emailLayout
+        if (!mobileNumberLayout.isValid) invalidTextLayout = mobileNumberLayout
+        return invalidTextLayout
     }
 
     override fun allFieldsValid(): Boolean {
