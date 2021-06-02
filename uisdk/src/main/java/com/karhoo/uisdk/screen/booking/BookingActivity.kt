@@ -278,7 +278,12 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBackPressed() {
-        // if (BookingRequestView is opened we close it and return
+        // if Webview is visible we hide it
+        if (khWebView?.visibility == View.VISIBLE) {
+            khWebView?.hide()
+            return
+        }
+        // if BookingRequestView is opened we close it and return
         if (bookingRequestWidget.onBackPressed()) {
             onResume()
             return
