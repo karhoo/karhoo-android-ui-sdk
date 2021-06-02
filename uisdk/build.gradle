@@ -67,7 +67,7 @@ afterEvaluate {
 
 dependencies {
 
-    api 'com.github.karhoo:karhoo-android-sdk:develop-SNAPSHOT'
+    api 'com.github.karhoo:karhoo-android-sdk:1.3.0'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
