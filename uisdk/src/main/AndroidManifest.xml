@@ -37,7 +37,7 @@
             android:name="com.karhoo.uisdk.screen.booking.BookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.karhoo.uisdk.screen.trip.TripActivity"
             android:label="@string/kh_uisdk_title_activity_trip"
