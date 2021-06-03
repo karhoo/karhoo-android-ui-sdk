@@ -546,6 +546,33 @@ class BookingRequestPresenterTest {
     }
 
     /**
+     * Given:   Meta dictionary is passed into the Booking Request component
+     * When:    Booking a trip
+     * Then:    The meta is sent through in the Booking API meta field
+     */
+    @Test
+    fun `Booking meta data injected in the Booking Request contains meta`() {
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+        val map = hashMapOf<String, String>()
+        map[BOOKING__META_MAP_KEY] = BOOKING__META_MAP_VALUE
+
+        requestPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map)
+        requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
+
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
+                                                    bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Success(trip))
+
+        verify(tripsService).book(tripBookingCaptor.capture())
+        val tripBooking: TripBooking = tripBookingCaptor.firstValue
+        assertNotNull(tripBooking.meta)
+        assertEquals(IDENTIFIER, tripBooking.meta?.get(TRIP_ID))
+        assertEquals(IDENTIFIER, tripBooking.nonce)
+        assertEquals(BOOKING__META_MAP_VALUE, tripBooking.meta?.get(BOOKING__META_MAP_KEY))
+    }
+
+    /**
      * Given:   The payment identifier (nonce or trip id) is passed back for booking trip
      * When:    It is a Braintree payment
      * The:     The nonce is sent through on the request
@@ -668,5 +695,7 @@ class BookingRequestPresenterTest {
 
     companion object {
         private const val IDENTIFIER = "3dsNonceOrTripId"
+        private const val BOOKING__META_MAP_KEY = "map_key"
+        private const val BOOKING__META_MAP_VALUE = "map_value"
     }
 }

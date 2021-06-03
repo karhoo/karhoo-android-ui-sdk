@@ -16,20 +16,23 @@ interface BookingRequestViewContract {
         fun bindViewToBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel)
         fun bindViewToBookingRequest(lifecycleOwner: LifecycleOwner, bookingRequestStateViewModel:
         BookingRequestStateViewModel)
+
         fun resetBookingButton()
-        fun showBookingRequest(quote: Quote, outboundTripId: String? = null)
+        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMetadata:
+        HashMap<String, String>?)
+
         fun onBackPressed(): Boolean
     }
 
     sealed class BookingRequestEvent {
         data class TermsAndConditionsRequested(val url: String) : BookingRequestEvent()
         data class BookingSuccess(val tripInfo: TripInfo) : BookingRequestEvent()
-        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?): BookingRequestEvent()
+        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestEvent()
     }
 
     sealed class BookingRequestAction {
         data class ShowTermsAndConditions(val url: String) : BookingRequestAction()
         object WaitForTripAllocation : BookingRequestAction()
-        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?): BookingRequestAction()
+        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestAction()
     }
 }

@@ -156,10 +156,11 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
+    HashMap<String, String>?) {
         bookingRequestButton.onLoadingComplete()
         visibility = View.VISIBLE
-        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId)
+        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
     }
 
     override fun onBackPressed(): Boolean {
@@ -222,7 +223,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
                 vehicle.serviceAgreements?.freeCancellation
-        )
+                                            )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
