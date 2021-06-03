@@ -11,7 +11,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -34,7 +33,6 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
-import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
