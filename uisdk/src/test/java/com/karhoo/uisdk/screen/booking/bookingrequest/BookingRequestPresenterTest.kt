@@ -617,7 +617,7 @@ class BookingRequestPresenterTest {
         val map = hashMapOf<String, String>()
         map[BOOKING__META_MAP_KEY] = BOOKING__META_MAP_VALUE
 
-        requestPresenter.showBookingRequest(quote, outboundTripId = null, bookingMeta = map)
+        requestPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map)
         requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,

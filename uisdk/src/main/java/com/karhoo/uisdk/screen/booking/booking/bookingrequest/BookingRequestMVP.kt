@@ -88,7 +88,7 @@ interface BookingRequestMVP {
 
         fun setBookingFields(allFieldsValid: Boolean)
 
-        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMeta:
+        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null)
 
         fun resetBooking()

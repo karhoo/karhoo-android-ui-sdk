@@ -11,7 +11,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
 import androidx.lifecycle.Lifecycle
@@ -35,17 +34,13 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.view.LoadingButtonView
-import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
-import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
-import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PREBOOK_CONF_DIALOG_WIDTH_HEIGHT_FACTOR
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
@@ -186,12 +181,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMeta:
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?) {
         bookingRequestButton.onLoadingComplete()
         presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
-        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMeta = bookingMeta)
+        presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
     }
 
     override fun onBackPressed(): Boolean {
@@ -254,7 +249,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
                 vehicle.serviceAgreements?.freeCancellation
-        )
+                                            )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 

@@ -50,7 +50,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     private var outboundTripId: String? = null
     private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
-    private var bookingMeta: HashMap<String, String>? = null
+    private var bookingMetadata: HashMap<String, String>? = null
 
     init {
         attachView(view)
@@ -170,7 +170,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                         .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
 
         passenger?.let {
-            val metadata = getBookingMetaMap(identifier, tripId)
+            val metadata = getBookingMetadataMap(identifier, tripId)
 
             tripsService.book(TripBooking(
                     comments = comments,
@@ -191,8 +191,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         }
     }
 
-    private fun getBookingMetaMap(identifier: String, tripId: String?): HashMap<String, String>? {
-        return bookingMeta?.let {
+    private fun getBookingMetadataMap(identifier: String, tripId: String?): HashMap<String, String>? {
+        return bookingMetadata?.let {
             it[TRIP_ID] = identifier
             it
         } ?: run {
@@ -218,10 +218,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMeta:
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?) {
         refreshPaymentDetails()
-        this.bookingMeta = bookingMeta
+        this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
             this.quote = quote
             this.outboundTripId = outboundTripId
