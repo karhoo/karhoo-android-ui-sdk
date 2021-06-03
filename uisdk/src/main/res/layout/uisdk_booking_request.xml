@@ -19,6 +19,7 @@
         android:background="@drawable/uisdk_white_rounded_top_background">
 
         <LinearLayout
+            android:id="@+id/bookingRequestLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

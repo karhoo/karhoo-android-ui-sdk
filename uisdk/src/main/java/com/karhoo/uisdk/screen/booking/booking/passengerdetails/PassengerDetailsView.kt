@@ -12,6 +12,8 @@ import com.karhoo.uisdk.base.validator.EmailValidator
 import com.karhoo.uisdk.base.validator.EmptyFieldValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
 import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+import com.karhoo.uisdk.util.extension.hideSoftKeyboard
+import com.karhoo.uisdk.util.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryCodeSpinner
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailInput
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailLayout
@@ -30,7 +32,6 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
 
     private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
 
-    var actions: PassengerDetailsMVP.Actions? = null
 
     private val locale: String
         @TargetApi(Build.VERSION_CODES.N)
@@ -53,7 +54,7 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
     }
 
     private fun initialiseFieldListeners() {
-        firstNameInput.setOnFocusChangeListener { _, hasFocus ->
+        firstNameInput.setOnFocusChangeListener { view, hasFocus ->
             onFocusChanged(firstNameLayout, hasFocus)
         }
 
@@ -74,6 +75,23 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
         }
     }
 
+    /**
+     *  Method used to check if any input text has focus, if not then we close the keyboard
+     *  @param view The view that last had the focus and can close the keyboard
+     */
+    private fun hideKeyboardIfNothingFocus(view: View) {
+        if (!nameHasFocus()
+                && !emailInput.hasFocus()
+                && !mobileNumberInput.hasFocus()) {
+            view.hideSoftKeyboard()
+        }
+    }
+
+    private fun nameHasFocus(): Boolean {
+        return firstNameInput.hasFocus()
+                || lastNameInput.hasFocus()
+    }
+
     private fun getPhoneNumberValidator(): PhoneNumberValidator {
         val validator = PhoneNumberValidator()
         countryCodeSpinner?.selectedItem?.let {
@@ -84,8 +102,8 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
 
     private fun onFocusChanged(layout: SelfValidatingTextLayout, hasFocus: Boolean) {
         layout.setFocus(hasFocus)
-        actions?.setPassengerDetailsValidity(allFieldsValid())
         if (!hasFocus) {
+            hideKeyboardIfNothingFocus(layout)
             presenter.updatePassengerDetails(
                     firstName = firstNameInput.text.toString(),
                     lastName = lastNameInput.text.toString(),
@@ -127,6 +145,19 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
         presenter.prefillForPassengerDetails(passengerDetails)
     }
 
+    /**
+     * Checks of any field is invalid, if so we focus on it and open the keyboard
+     * @return if we find any invalid field we return `true`
+     */
+    override fun findAndfocusFirstInvalid(): Boolean {
+        getFirstInvalid()?.let {
+            it.requestFocus()
+            it.editText?.showSoftKeyboard()
+            return true
+        }
+        return false
+    }
+
     override fun getPassengerDetails(): PassengerDetails {
         return PassengerDetails(
                 firstName = firstNameInput.text.toString(),
@@ -146,6 +177,15 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
 
     override fun bindEditMode(isEditing: Boolean) {
         updatePassengerDetailsMask.visibility = if (isEditing) View.GONE else View.VISIBLE
+    }
+
+    private fun getFirstInvalid(): SelfValidatingTextLayout? {
+        var invalidTextLayout: SelfValidatingTextLayout? = null
+        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
+        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
+        if (!emailLayout.isValid) invalidTextLayout = emailLayout
+        if (!mobileNumberLayout.isValid) invalidTextLayout = mobileNumberLayout
+        return invalidTextLayout
     }
 
     override fun allFieldsValid(): Boolean {

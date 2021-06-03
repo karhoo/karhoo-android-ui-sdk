@@ -43,18 +43,7 @@ import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestFlightDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestLayout
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPassengerDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPaymentDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestQuotesWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.bookingRequestTermsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.cancelButton
-import kotlinx.android.synthetic.main.uisdk_booking_request.view.passengerDetailsHeading
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
+import kotlinx.android.synthetic.main.uisdk_booking_request.view.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 import org.joda.time.DateTime
 import java.util.Currency
@@ -65,7 +54,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                                                    defStyleAttr: Int = 0)
     : ConstraintLayout(context, attrs, defStyleAttr), BookingRequestMVP.Actions,
       BookingRequestMVP.View, BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
-      BookingRequestViewContract.BookingRequestWidget, PassengerDetailsMVP.Actions, LoadingButtonView.Actions, LifecycleObserver {
+      BookingRequestViewContract.BookingRequestWidget, LoadingButtonView.Actions, LifecycleObserver {
 
     private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom)
     private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom)
@@ -134,22 +123,23 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         isGuest = isGuest()
-        presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
-        disableBooking()
         presenter.clearData()
     }
 
     private fun attachListeners() {
         bookingRequestQuotesWidget.setOnClickListener {}
         cancelButton.setOnClickListener {
-            disableBooking()
             presenter.clearData()
             hideSoftKeyboard()
             hideWindow()
+        }
+
+        bookingRequestLinearLayout.setOnClickListener {
+            it.hideSoftKeyboard()
         }
 
         containerAnimateOut.setAnimationListener(object : SimpleAnimationListener() {
@@ -161,20 +151,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
         bookingRequestButton.actions = this
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
-        bookingRequestPassengerDetailsWidget.actions = this
         bookingRequestTermsWidget.actions = this
-    }
-
-    override fun disableBooking() {
-        bookingRequestButton.isEnabled = false
-        bookingButtonLayout.background = ContextCompat.getDrawable(context, R
-                .drawable.uisdk_gradient_approved)
-    }
-
-    override fun enableBooking() {
-        bookingRequestButton.isEnabled = true
-        bookingButtonLayout.background = ContextCompat.getDrawable(context, R
-                .drawable.uisdk_gradient_enabled)
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
@@ -184,7 +161,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?) {
         bookingRequestButton.onLoadingComplete()
-        presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
         visibility = View.VISIBLE
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
     }
@@ -260,9 +236,25 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun onLoadingButtonClick() {
-        hideSoftKeyboard()
-        presenter.makeBooking()
-        cancelButton.isEnabled = false
+         if (bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid() || !focusPaymentIfNotSet()) {
+             bookingRequestButton.onLoadingComplete()
+         } else {
+             hideSoftKeyboard()
+             presenter.makeBooking()
+             cancelButton.isEnabled = false
+         }
+    }
+
+    /**
+     * Checks if the payment method is set, if not we open the payment view
+     * @return return true if set
+     */
+    private fun focusPaymentIfNotSet(): Boolean {
+        if (!presenter.isPaymentSet()) {
+            bookingRequestPaymentDetailsWidget.callOnClick()
+            return false
+        }
+        return true
     }
 
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
@@ -400,15 +392,11 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun handlePaymentDetailsUpdate() {
-        presenter.setBookingEnablement(bookingRequestPassengerDetailsWidget.allFieldsValid())
+        // not used
     }
 
     override fun showPaymentDialog(error: KarhooError?) {
         showPaymentFailureDialog(error)
-    }
-
-    override fun setPassengerDetailsValidity(isValid: Boolean) {
-        presenter.setBookingEnablement(isValid)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
