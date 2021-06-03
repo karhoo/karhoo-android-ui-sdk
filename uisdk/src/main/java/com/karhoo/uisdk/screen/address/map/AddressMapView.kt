@@ -1,7 +1,11 @@
 package com.karhoo.uisdk.screen.address.map
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -18,8 +22,14 @@ import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressType
+import com.karhoo.uisdk.base.snackbar.SnackbarAction
+import com.karhoo.uisdk.base.snackbar.SnackbarConfig
+import com.karhoo.uisdk.base.snackbar.SnackbarPriority
+import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
@@ -44,7 +54,8 @@ class AddressMapView @JvmOverloads constructor(context: Context,
     var initialLocation: LatLng? = null
     var actions: AddressMapMVP.Actions? = null
 
-    private val presenter: AddressMapMVP.Presenter = AddressMapPresenter(this)
+    private val presenter: AddressMapMVP.Presenter = AddressMapPresenter(this,
+            locationProvider = LocationProvider(context, KarhooUISDK.karhooApi.addressService))
 
     init {
         View.inflate(context, R.layout.uisdk_view_address_map, this)
@@ -91,15 +102,21 @@ class AddressMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun onCameraIdle() {
+        googleMap?.setOnCameraIdleListener { }
         presenter.getAddress(Position(
-                googleMap?.cameraPosition?.target?.latitude.orZero(),
-                googleMap?.cameraPosition?.target?.longitude.orZero()))
+                    googleMap?.cameraPosition?.target?.latitude.orZero(),
+                    googleMap?.cameraPosition?.target?.longitude.orZero()))
     }
 
-    override fun onCameraMoveStarted(p0: Int) {
-        //kill any callbacks
+    override fun onCameraMoveStarted(reason: Int) {
+        when (reason) {
+            GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE -> {
+                googleMap?.setOnCameraIdleListener(this@AddressMapView)
+            }
+        }
     }
 
+    @SuppressLint("MissingPermission")
     private fun setupMap() {
         googleMap?.apply {
             if (isLocateMeEnabled(context)) {
@@ -108,22 +125,22 @@ class AddressMapView @JvmOverloads constructor(context: Context,
                 isIndoorEnabled = false
                 uiSettings.isMyLocationButtonEnabled = false
                 uiSettings.isMapToolbarEnabled = false
-                setOnCameraIdleListener(this@AddressMapView)
                 setOnCameraMoveStartedListener(this@AddressMapView)
                 with(TypedValue()) {
                     resources.getValue(R.dimen.map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
                 }
-                zoom(initialLocation)
-
+                presenter.getLastLocation()
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
             } else {
                 isMyLocationEnabled = false
+                zoom(initialLocation)
             }
+
         }
     }
 
-    private fun zoom(position: LatLng?) {
+    override fun zoom(position: LatLng?) {
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
             googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
@@ -152,6 +169,10 @@ class AddressMapView @JvmOverloads constructor(context: Context,
         }
     }
 
+    override fun showSnackbar(snackbarConfig: SnackbarConfig) {
+        actions?.showSnackbar(snackbarConfig)
+    }
+
     override fun hideMap() {
         visibility = GONE
     }
@@ -169,5 +190,13 @@ class AddressMapView @JvmOverloads constructor(context: Context,
                 }
             }
         }
+    }
+
+    override fun showLocationDisabledSnackbar() {
+        val snackbarAction = SnackbarAction(resources.getString(R.string.kh_uisdk_settings)) { (context as Activity).startActivity(Intent(Settings.ACTION_SETTINGS)) }
+        actions?.showSnackbar(SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
+                priority = SnackbarPriority.HIGH,
+                action = snackbarAction,
+                text = resources.getString(R.string.kh_uisdk_location_disabled)))
     }
 }
