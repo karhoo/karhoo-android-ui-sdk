@@ -64,6 +64,7 @@ class AddressMapPresenter(view: AddressMapMVP.View,
             }
 
             override fun onResolutionRequired(resolvableApiException: ResolvableApiException) {
+                // not used
             }
         })
     }
