@@ -29,16 +29,16 @@ android {
             file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
         }
         release {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.karhoo.com/"')
         }
         sandbox {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.sandbox.karhoo.com/follow/"')
+            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.sandbox.karhoo.com/"')
         }
         prodQA {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.karhoo.com/follow/follow/"')
+            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.karhoo.com/"')
         }
         debug {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://agent-portal.stg.karhoo.net/follow/"')
+            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.stg.karhoo.net/"')
         }
     }
     lintOptions {
