@@ -26,6 +26,7 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider.isUser
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -234,7 +235,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun onLoadingButtonClick() {
-         if (bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid() || !focusPaymentIfNotSet()) {
+         if (!isUser() && (bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid() || !focusPaymentIfNotSet())) {
              bookingRequestButton.onLoadingComplete()
          } else {
              hideSoftKeyboard()
