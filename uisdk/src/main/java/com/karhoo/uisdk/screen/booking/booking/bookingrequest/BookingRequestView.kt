@@ -236,15 +236,22 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun onLoadingButtonClick() {
-        if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() !is AuthenticationMethod.KarhooUser &&
-                (bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid() || !focusPaymentIfNotSet())) {
+        if (!isKarhooUser() && !formIsValid()){
             bookingRequestButton.onLoadingComplete()
         } else {
             hideSoftKeyboard()
             presenter.makeBooking()
             cancelButton.isEnabled = false
         }
+    }
+
+    private fun isKarhooUser(): Boolean {
+        return KarhooUISDKConfigurationProvider.configuration
+                .authenticationMethod() is AuthenticationMethod.KarhooUser
+    }
+
+    private fun formIsValid(): Boolean {
+        return !bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid() && focusPaymentIfNotSet()
     }
 
     /**
