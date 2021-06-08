@@ -26,10 +26,6 @@ internal object KarhooUISDKConfigurationProvider {
         return configuration.authenticationMethod() is AuthenticationMethod.Guest
     }
 
-    fun isUser(): Boolean {
-        return configuration.authenticationMethod() is AuthenticationMethod.KarhooUser
-    }
-
     fun getGuestOrganisationId(): String? {
         return if (isGuest()) (configuration.authenticationMethod() as
                 AuthenticationMethod.Guest).organisationId else null
