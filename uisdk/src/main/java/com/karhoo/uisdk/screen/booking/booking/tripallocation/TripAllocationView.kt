@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.booking.BookingCodes
@@ -37,6 +36,7 @@ import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_I
 import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_LONG
 import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_SHORT
 import com.karhoo.uisdk.util.extension.convertDpToPixels
+import com.karhoo.uisdk.util.extension.guestTripTrackingUrl
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationOneLabel
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationTwoLabel
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.cancelButton
@@ -72,7 +72,7 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.isEnabled = true
         cancelButton.setListener { cancelTrip() }
         presenter?.waitForAllocation(trip)
-        if(!KarhooUISDKConfigurationProvider.isGuest()) {
+        if (!KarhooUISDKConfigurationProvider.isGuest()) {
             handler.postDelayed({ presenter?.handleAllocationDelay(trip) }, ALLOCATION_ALERT_DELAY)
         }
 
@@ -187,13 +187,14 @@ class TripAllocationView @JvmOverloads constructor(
                                                          DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
-
         actions?.onBookingCancelledOrFinished()
     }
 
     override fun displayWebTracking(followCode: String) {
+        val environment = KarhooUISDKConfigurationProvider.configuration.environment()
+        val trackingUrl = resources.getString(environment.guestTripTrackingUrl(), followCode)
         val trackingWebIntent = WebActivity.Builder.builder
-                .url(BuildConfig.KARHOO_WEB_TRACKING_URL + followCode)
+                .url(trackingUrl)
                 .build(context)
         context.startActivity(BookingActivity.Builder.builder.build(context))
         context.startActivity(trackingWebIntent)
@@ -213,8 +214,9 @@ class TripAllocationView @JvmOverloads constructor(
                                                              context.startActivity(RideDetailActivity.Builder.newBuilder()
                                                                                            .trip(trip)
                                                                                            .build(context))
-                                                             actions?.onBookingCancelledOrFinished() })
-                )
+                                                             actions?.onBookingCancelledOrFinished()
+                                                         })
+                                            )
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 

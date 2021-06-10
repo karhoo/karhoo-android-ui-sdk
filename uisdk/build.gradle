@@ -28,18 +28,6 @@ android {
         if (file("../app/secure.properties").exists()) {
             file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
         }
-        release {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.karhoo.com/"')
-        }
-        sandbox {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.sandbox.karhoo.com/"')
-        }
-        prodQA {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.karhoo.com/"')
-        }
-        debug {
-            buildConfigField("String", "KARHOO_WEB_TRACKING_URL", '"https://follow.stg.karhoo.net/"')
-        }
     }
     lintOptions {
     }
