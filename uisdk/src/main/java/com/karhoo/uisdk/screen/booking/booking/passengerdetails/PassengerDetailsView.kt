@@ -181,10 +181,10 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
 
     private fun getFirstInvalid(): SelfValidatingTextLayout? {
         var invalidTextLayout: SelfValidatingTextLayout? = null
-        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
-        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
-        if (!emailLayout.isValid) invalidTextLayout = emailLayout
         if (!mobileNumberLayout.isValid) invalidTextLayout = mobileNumberLayout
+        if (!emailLayout.isValid) invalidTextLayout = emailLayout
+        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
+        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
         return invalidTextLayout
     }
 
