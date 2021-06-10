@@ -180,12 +180,11 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
     }
 
     private fun getFirstInvalid(): SelfValidatingTextLayout? {
-        var invalidTextLayout: SelfValidatingTextLayout? = null
-        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
-        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
-        if (!emailLayout.isValid) invalidTextLayout = emailLayout
-        if (!mobileNumberLayout.isValid) invalidTextLayout = mobileNumberLayout
-        return invalidTextLayout
+        if (!firstNameLayout.isValid) return firstNameLayout
+        if (!lastNameLayout.isValid) return lastNameLayout
+        if (!emailLayout.isValid) return emailLayout
+        if (!mobileNumberLayout.isValid) return mobileNumberLayout
+        return null
     }
 
     override fun allFieldsValid(): Boolean {
