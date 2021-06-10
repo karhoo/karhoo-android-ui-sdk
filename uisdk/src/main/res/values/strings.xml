@@ -401,7 +401,7 @@
     <string name="kh_uisdk_pay_button">Submit</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
 
-    <string name="kh_uisdk_guest_trip_tracking_prod" translatable="false">https://follow.karhoo.com/%s</string>
+    <string name="kh_uisdk_guest_trip_tracking_production" translatable="false">https://follow.karhoo.com/%s</string>
     <string name="kh_uisdk_guest_trip_tracking_sandbox" translatable="false">https://follow.sandbox.karhoo.com/%s</string>
     <string name="kh_uisdk_guest_trip_tracking_custom" translatable="false">https://follow.stg.karhoo.com/%s</string>
     <!--  Logger  -->
