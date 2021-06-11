@@ -261,6 +261,9 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun clearMarkers() {
+        if (pickupPinIcon.visibility == View.GONE) {
+            pickupPinIcon.visibility = View.VISIBLE
+        }
         googleMap?.clear()
     }
 
