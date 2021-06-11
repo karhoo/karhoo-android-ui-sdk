@@ -29,6 +29,7 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_ending_asap">après réservation</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">avant la prise en charge</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">et</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Annulation sans frais jusqu\'au départ du chauffeur</string>

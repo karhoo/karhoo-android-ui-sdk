@@ -21,7 +21,7 @@ fun ServiceCancellation.getCancellationText(context: Context): String? {
 
                 cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
                 cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
-                cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)
+                cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending_asap)
             }
         }
         CANCELLATION_BEFORE_DRIVER_EN_ROUTE -> {
