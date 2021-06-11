@@ -27,7 +27,6 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/uisdk_nav_header_main"
-            app:itemIconTint="@color/secondary"
             app:menu="@menu/uisdk_navigation_menu" />
 
     </com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView>
