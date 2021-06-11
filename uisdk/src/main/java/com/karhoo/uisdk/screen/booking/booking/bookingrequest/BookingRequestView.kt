@@ -252,18 +252,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
                 .authenticationMethod() is AuthenticationMethod.KarhooUser
     }
 
-    /**
-     * Checks if the payment method is set, if not we open the payment view
-     * @return return true if set
-     */
-    private fun focusPaymentIfNotSet(): Boolean {
-        if (!presenter.isPaymentSet()) {
-            bookingRequestPaymentDetailsWidget.callOnClick()
-            return false
-        }
-        return true
-    }
-
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
         bookingRequestButton.onLoadingComplete()
     }
