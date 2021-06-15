@@ -2,11 +2,7 @@ package com.karhoo.uisdk.screen.rides.detail
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.model.Price
-import com.karhoo.sdk.api.model.QuoteType
-import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
@@ -216,18 +212,20 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         unsubscribeObservers()
     }
 
-    override fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context) {
-        if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(tripStatus) == false) {
-            return
-        }
+    override fun checkCancellationSLA(trip: TripInfo, serviceCancellation: ServiceCancellation?, context: Context) {
+        trip.tripState?.let {
+            if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(it) == false) {
+                return
+            }
 
-        val cancellationText = serviceCancellation?.getCancellationText(context)
+            val cancellationText = serviceCancellation?.getCancellationText(context, isPrebook = trip.dateScheduled != null)
 
-        if (cancellationText.isNullOrEmpty()) {
-            view?.showCancellationText(false)
-        } else {
-            view?.setCancellationText(cancellationText)
-            view?.showCancellationText(true)
+            if (cancellationText.isNullOrEmpty()) {
+                view?.showCancellationText(false)
+            } else {
+                view?.setCancellationText(cancellationText)
+                view?.showCancellationText(true)
+            }
         }
     }
 

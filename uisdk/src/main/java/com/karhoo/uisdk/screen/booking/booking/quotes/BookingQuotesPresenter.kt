@@ -6,8 +6,8 @@ import com.karhoo.uisdk.util.extension.getCancellationText
 import java.util.*
 
 class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP.Presenter {
-    override fun checkCancellationSLAMinutes(serviceCancellation: ServiceCancellation?, context: Context) {
-        val text = serviceCancellation?.getCancellationText(context)
+    override fun checkCancellationSLAMinutes(serviceCancellation: ServiceCancellation?, context: Context, isPrebook: Boolean) {
+        val text = serviceCancellation?.getCancellationText(context, isPrebook)
 
         if (text.isNullOrEmpty()) {
             view.showCancellationText(false)

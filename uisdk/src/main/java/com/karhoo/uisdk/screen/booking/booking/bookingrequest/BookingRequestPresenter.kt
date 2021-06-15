@@ -243,11 +243,14 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         if (scheduledDate != null) {
             scheduledDate?.let {
                 view?.bindPrebook(quote, "", it)
+                view?.bindQuoteAndTerms(quote, isPrebook = true)
             }
         } else if (destination != null && quote.price.highPrice > 0) {
             view?.bindPriceAndEta(quote, "")
+            view?.bindQuoteAndTerms(quote, isPrebook = false)
         } else {
             view?.bindEta(quote, "")
+            view?.bindQuoteAndTerms(quote, isPrebook = false)
         }
     }
 

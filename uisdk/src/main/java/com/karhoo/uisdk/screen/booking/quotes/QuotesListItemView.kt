@@ -67,7 +67,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setPickupType(vehicleDetails.pickupType)
         setCapacity(vehicleDetails.vehicle)
-        setCancellationSLA(vehicleDetails.serviceAgreements?.freeCancellation)
+        setCancellationSLA(vehicleDetails.serviceAgreements?.freeCancellation, isPrebook)
 
         tag = vehicleDetails
 
@@ -162,8 +162,8 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 people = vehicle.passengerCapacity)
     }
 
-    private fun setCancellationSLA(serviceCancellation: ServiceCancellation?) {
-        val text = serviceCancellation?.getCancellationText(context)
+    private fun setCancellationSLA(serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
+        val text = serviceCancellation?.getCancellationText(context , isPrebook)
 
         if (text.isNullOrEmpty()) {
             quoteCancellationText.visibility = View.GONE

@@ -31,9 +31,7 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
                 view.displayTrackDriverButton()
         }
 
-        trip.tripState?.let {
-            checkCancellationSLAMinutes(it, trip.serviceAgreements?.freeCancellation, context)
-        }
+            checkCancellationSLAMinutes(trip, trip.serviceAgreements?.freeCancellation, context)
     }
 
     override fun call() {
@@ -53,19 +51,21 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
         view?.goToDetails(trip)
     }
 
-    private fun checkCancellationSLAMinutes(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context) {
-        if (serviceCancellation?.hasValidCancellationDependingOnTripStatus(tripStatus) == false) {
-            view?.showCancellationText(false)
-            return
-        }
+    private fun checkCancellationSLAMinutes(trip: TripInfo, serviceCancellation: ServiceCancellation?, context: Context) {
+        trip.tripState?.let {
+            if (serviceCancellation?.hasValidCancellationDependingOnTripStatus(it) == false) {
+                view?.showCancellationText(false)
+                return
+            }
 
-        val text = serviceCancellation?.getCancellationText(context)
+            val text = serviceCancellation?.getCancellationText(context, isPrebook = trip.dateScheduled != null)
 
-        if (text.isNullOrEmpty()) {
-            view?.showCancellationText(false)
-        } else {
-            view?.setCancellationText(text)
-            view?.showCancellationText(true)
+            if (text.isNullOrEmpty()) {
+                view?.showCancellationText(false)
+            } else {
+                view?.setCancellationText(text)
+                view?.showCancellationText(true)
+            }
         }
     }
 }

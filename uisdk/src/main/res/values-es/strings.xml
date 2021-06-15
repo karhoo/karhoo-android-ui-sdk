@@ -24,7 +24,7 @@
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
     </plurals>
-    <string name="kh_uisdk_quote_cancellation_before_pickup_ending_asap">después de la reserva</string>
+    <string name="kh_uisdk_quote_cancellation_after_booking_ending">después de la reserva</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">antes de la recogida</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">y</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Cancelación gratuita hasta que el conductor esté en camino</string>
