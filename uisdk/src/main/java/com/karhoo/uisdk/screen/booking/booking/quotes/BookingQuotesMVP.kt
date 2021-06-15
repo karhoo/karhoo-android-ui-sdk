@@ -13,7 +13,7 @@ interface BookingQuotesMVP {
     }
 
     interface Presenter {
-        fun checkCancellationSLAMinutes(serviceCancellation: ServiceCancellation?, context: Context, isPrebook: Boolean)
+        fun checkCancellationSLAMinutes(context: Context, serviceCancellation: ServiceCancellation?, isPrebook: Boolean)
         fun capitalizeCategory(category: String)
     }
 }

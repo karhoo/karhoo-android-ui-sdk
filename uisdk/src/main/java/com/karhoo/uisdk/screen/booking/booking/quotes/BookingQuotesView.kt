@@ -37,7 +37,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
     fun bindViews(url: String?, quoteName: String, category: String, serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
         quoteNameText.text = quoteName
         presenter.capitalizeCategory(category)
-        presenter.checkCancellationSLAMinutes(serviceCancellation, context, isPrebook)
+        presenter.checkCancellationSLAMinutes(context, serviceCancellation, isPrebook)
         loadImage(url)
     }
 

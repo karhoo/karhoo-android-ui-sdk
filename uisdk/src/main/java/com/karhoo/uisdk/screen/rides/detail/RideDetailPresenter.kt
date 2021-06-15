@@ -212,7 +212,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         unsubscribeObservers()
     }
 
-    override fun checkCancellationSLA(trip: TripInfo, serviceCancellation: ServiceCancellation?, context: Context) {
+    override fun checkCancellationSLA(context: Context, trip: TripInfo, serviceCancellation: ServiceCancellation?) {
         trip.tripState?.let {
             if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(it) == false) {
                 return

@@ -36,7 +36,7 @@ interface RideDetailMVP {
 
         fun addTripInfoObserver(tripInfoListener: OnTripInfoChangedListener?)
 
-        fun checkCancellationSLA(trip: TripInfo, serviceCancellation: ServiceCancellation?, context: Context)
+        fun checkCancellationSLA(context: Context, trip: TripInfo, serviceCancellation: ServiceCancellation?)
 
         interface OnTripInfoChangedListener {
 
