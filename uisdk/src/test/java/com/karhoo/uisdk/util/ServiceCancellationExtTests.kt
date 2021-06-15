@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class ServiceCancellationExtTests {
     private var context: Context = mock()
     private var resources: Resources = mock()
+    private var isPrebook: Boolean = mock()
 
     @Before
     fun setup() {
@@ -41,56 +42,56 @@ class ServiceCancellationExtTests {
     fun `When getting the cancellation text for a before pickup SLA of 1 minute, then the correct TEST_RESULT_1 is returned `() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_ONE)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_1)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_1)
     }
 
     @Test
     fun `When getting the cancellation text for a before pickup SLA of 10 minutes, then the correct TEST_RESULT_2 is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_TEN)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_2)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_2)
     }
 
     @Test
     fun `When getting the cancellation text for a before pickup SLA of 60 minutes, then the correct TEST_RESULT_3 is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_SIXTY)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_3)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_3)
     }
 
     @Test
     fun `When getting the cancellation text for a before time pickup of 120 minutes, then the correct TEST_RESULT_4 is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_ONE_HUNDRED_TWENTY)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_4)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_4)
     }
 
     @Test
     fun `When getting the cancellation text for a before pickup SLA of 150 minutes, then the correct TEST_RESULT_5 is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_ONE_HUNDRED_FIFTY)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_5)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_5)
     }
 
     @Test
     fun `When getting the cancellation text for a before pickup SLA of 121 minutes, then the correct TEST_RESULT_6 is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_ONE_HUNDRED_TWENTY_ONE)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_6)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_6)
     }
 
     @Test
     fun `When getting the cancellation text for a before pickup SLA with 0 minutes, then a null text is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_ZERO)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), null)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), null)
     }
 
     @Test
     fun `When getting the cancellation text for a before driver en route SLA, then the correct text is returned`() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_BEFORE_DRIVER_EN_ROUTE)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     @Test
@@ -127,7 +128,7 @@ class ServiceCancellationExtTests {
     fun `When getting the cancellation text for a before pickup SLA of 2 minute, then the correct TEST_RESULT_7 is returned `() {
         val serviceCancellation = ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, TEST_TWO)
 
-        Assert.assertEquals(serviceCancellation.getCancellationText(context), TEST_RESULT_7)
+        Assert.assertEquals(serviceCancellation.getCancellationText(context, isPrebook), TEST_RESULT_7)
     }
 
     companion object {
