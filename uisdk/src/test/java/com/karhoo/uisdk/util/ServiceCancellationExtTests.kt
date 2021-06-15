@@ -3,6 +3,7 @@ package com.karhoo.uisdk.util
 import android.content.Context
 import android.content.res.Resources
 import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
@@ -19,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class ServiceCancellationExtTests {
     private var context: Context = mock()
     private var resources: Resources = mock()
-    private var isPrebook: Boolean = mock()
+    private var isPrebook: Boolean = TripInfo().dateScheduled != null
 
     @Before
     fun setup() {

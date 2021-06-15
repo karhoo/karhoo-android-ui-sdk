@@ -580,7 +580,7 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before pickup with a passenger on board trip state, the cancellation text is not shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.PASSENGER_ON_BOARD,
+                TripInfo(),
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
                 context)
 
@@ -597,7 +597,7 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
+                TripInfo(),
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
                 context)
 
@@ -614,7 +614,7 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
+                TripInfo(),
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
                 context)
 
@@ -632,7 +632,7 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
+                TripInfo(),
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
                 context)
 
@@ -649,7 +649,7 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
+                TripInfo(),
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
                 context)
 

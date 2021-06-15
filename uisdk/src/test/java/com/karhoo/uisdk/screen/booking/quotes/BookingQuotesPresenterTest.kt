@@ -2,12 +2,14 @@ package com.karhoo.uisdk.screen.booking.quotes
 
 import android.content.Context
 import android.content.res.Resources
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesMVP
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.BookingQuotesViewMock
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.mock
@@ -24,7 +26,7 @@ class BookingQuotesPresenterTest {
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(view)
     private val testContext: Context = mock()
     private var resources: Resources = mock()
-    private var isPrebook: Boolean = mock()
+    private var isPrebook: Boolean = TripInfo().dateScheduled != null
 
     @Before
     fun setup() {
@@ -73,7 +75,7 @@ class BookingQuotesPresenterTest {
     fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the cancellation text has the correct value`() {
         presenter.checkCancellationSLAMinutes(UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, testContext, isPrebook)
 
-        assertEquals(view.cancellationMinutesText!!, String.format(TEST_CANCELLATION_TEXT, TEST_TWO))
+        assertEquals(view.cancellationMinutesText!!, TEST_CANCELLATION_TEXT)
     }
 
     @Test
