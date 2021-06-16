@@ -26,7 +26,6 @@ class BookingQuotesPresenterTest {
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(view)
     private val testContext: Context = mock()
     private var resources: Resources = mock()
-    private var isPrebook: Boolean = TripInfo().dateScheduled != null
 
     @Before
     fun setup() {
@@ -41,6 +40,7 @@ class BookingQuotesPresenterTest {
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
+        whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_AFTER_BOOKING_END)
     }
 
     @Test
@@ -52,49 +52,56 @@ class BookingQuotesPresenterTest {
 
     @Test
     fun `When checking the cancellation SLA minutes, if a null value is received, then the cancellation text is not visible`() {
-        presenter.checkCancellationSLAMinutes(testContext, null, isPrebook)
+        presenter.checkCancellationSLAMinutes(testContext, null, false)
 
         assertFalse(view.showCancellation!!)
     }
 
     @Test
     fun `When checking the cancellation SLA minutes for a before pickup agreement, if zero minutes are received, then the cancellation text is not visible`() {
-        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_ZERO_MINUTES.freeCancellation, isPrebook)
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_ZERO_MINUTES.freeCancellation, false)
 
         assertFalse(view.showCancellation!!)
     }
 
     @Test
     fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the cancellation text is visible`() {
-        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, isPrebook)
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, false)
 
         assertTrue(view.showCancellation!!)
     }
 
     @Test
-    fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the cancellation text has the correct value`() {
-        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, isPrebook)
+    fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the asap cancellation text has the correct value`() {
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, false)
 
-        assertEquals(view.cancellationMinutesText!!, TEST_CANCELLATION_TEXT)
+        assertEquals(view.cancellationMinutesText!!, String.format(TEST_CANCELLATION_TEXT_ASAP, 2))
+    }
+
+    @Test
+    fun `When checking the cancellation SLA minutes for a before pickup agreement, if a number of minutes are received, then the prebook cancellation text has the correct value`() {
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation, true)
+
+        assertEquals(view.cancellationMinutesText!!, String.format(TEST_CANCELLATION_TEXT_PREBOOK, 2))
     }
 
     @Test
     fun `When checking the cancellation SLA minutes for a before driver en route agreement, then the cancellation text is visible`() {
-        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation, isPrebook)
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation, false)
 
         assertTrue(view.showCancellation!!)
     }
 
     @Test
     fun `When checking the cancellation SLA minutes for a before driver en route agreement, then the cancellation text has the correct value`() {
-        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation, isPrebook)
+        presenter.checkCancellationSLAMinutes(testContext, UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation, false)
 
         assertEquals(view.cancellationMinutesText!!,TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
     }
 
     companion object {
         private const val TEST_STRING = "test"
-        const val TEST_CANCELLATION_TEXT = "Free cancellation up to %d minutes before pickup"
+        const val TEST_CANCELLATION_TEXT_PREBOOK = "Free cancellation up to %d minutes before pickup"
         const val TEST_CANCELLATION_TEXT_ASAP = "Free cancellation up to %d minutes after booking"
     }
 }

@@ -17,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
+import java.util.Date
 
 @RunWith(MockitoJUnitRunner::class)
 class UpcomingRideCardPresenterTest {
@@ -103,21 +104,39 @@ class UpcomingRideCardPresenterTest {
     }
 
     /**
-     * Given:   An upcoming trip
+     * Given:   An upcoming asap trip
      * When:    There is a free cancellation SLA before pickup
      * Then:    The view should show correctly the cancellation SLA textview
      * Then:    The view should set the correct text in the cancellation SLA textview
      */
     @Test
-    fun `When we have a free cancellation SLA with before pickup, the cancellation text is visible`() {
+    fun `When we have a free cancellation SLA with before pickup, the asap cancellation text is visible`() {
         presenter = UpcomingRideCardPresenter(view,
-                TRIP_DETAILS_SLA_BEFORE_PICKUP,
+                TRIP_DETAILS_SLA_BEFORE_PICKUP_ASAP,
                 scheduledDateViewBinder,
                 analytics,
                 context)
 
         verify(view).showCancellationText(true)
         verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_ASAP, TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   An upcoming prebook trip
+     * When:    There is a free cancellation SLA before pickup
+     * Then:    The view should show correctly the cancellation SLA textview
+     * Then:    The view should set the correct text in the cancellation SLA textview
+     */
+    @Test
+    fun `When we have a free cancellation SLA with before pickup, the prebook cancellation text is visible`() {
+        presenter = UpcomingRideCardPresenter(view,
+                TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK,
+                scheduledDateViewBinder,
+                analytics,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_PREBOOK, TEST_TWO_MINUTES))
     }
 
     /**
@@ -216,8 +235,13 @@ class UpcomingRideCardPresenterTest {
                 tripState = TripStatus.CONFIRMED,
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE
         )
-        private val TRIP_DETAILS_SLA_BEFORE_PICKUP = TRIP_DETAILS.copy(
+        private val TRIP_DETAILS_SLA_BEFORE_PICKUP_ASAP = TRIP_DETAILS.copy(
                 tripState = TripStatus.CONFIRMED,
+                serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
+        )
+        private val TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK = TRIP_DETAILS.copy(
+                tripState = TripStatus.CONFIRMED,
+                dateScheduled = Date(),
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
         )
         private val TRIP_DETAILS_SLA_ZERO_MINUTES = TRIP_DETAILS.copy(
