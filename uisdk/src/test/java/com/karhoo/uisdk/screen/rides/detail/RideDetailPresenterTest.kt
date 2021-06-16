@@ -51,6 +51,7 @@ class RideDetailPresenterTest {
 
     private var context: Context = mock()
     private val view: RideDetailMVP.View = mock()
+    private val tripInfo: TripInfo = mock()
     private val tripsService: TripsService = mock()
     private val tripDetailsCall: PollCall<TripInfo> = mock()
     private val scheduledDateViewBinder: ScheduledDateViewBinder = mock()
@@ -90,6 +91,7 @@ class RideDetailPresenterTest {
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_AFTER_BOOKING_END)
     }
 
     /**
@@ -581,7 +583,7 @@ class RideDetailPresenterTest {
     fun `When the trip has a service cancellation of type before pickup with a passenger on board trip state, the cancellation text is not shown`() {
         presenter.checkCancellationSLA(
                 context,
-                TripInfo(),
+                tripInfo,
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view, never()).showCancellationText(any())
@@ -598,7 +600,7 @@ class RideDetailPresenterTest {
     fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
                 context,
-                TripInfo(),
+                tripInfo,
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view).showCancellationText(true)
@@ -615,7 +617,7 @@ class RideDetailPresenterTest {
     fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
                 context,
-                TripInfo(),
+                tripInfo,
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation)
 
         verify(view).showCancellationText(true)
@@ -633,7 +635,7 @@ class RideDetailPresenterTest {
     fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
                 context,
-                TripInfo(),
+                tripInfo,
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation)
 
         verify(view).showCancellationText(true)
@@ -650,7 +652,7 @@ class RideDetailPresenterTest {
     fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
         presenter.checkCancellationSLA(
                 context,
-                TripInfo(),
+                tripInfo,
                 UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view).showCancellationText(true)

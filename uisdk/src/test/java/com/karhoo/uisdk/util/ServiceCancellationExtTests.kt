@@ -135,6 +135,7 @@ class ServiceCancellationExtTests {
     companion object {
         const val TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START = "Free cancellation up to"
         const val TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END = "before pickup"
+        const val TEST_CANCELLATION_TEXT_AFTER_BOOKING_END = "after booking"
         const val TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTE = "%d minute"
         const val TEST_CANCELLATION_TEXT_BEFORE_PICKUP_MINUTES = "%d minutes"
         const val TEST_CANCELLATION_TEXT_BEFORE_PICKUP_HOUR = "%d hour"
