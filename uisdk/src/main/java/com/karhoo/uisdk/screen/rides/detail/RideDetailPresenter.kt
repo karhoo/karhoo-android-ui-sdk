@@ -2,7 +2,11 @@ package com.karhoo.uisdk.screen.rides.detail
 
 import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.Price
+import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource

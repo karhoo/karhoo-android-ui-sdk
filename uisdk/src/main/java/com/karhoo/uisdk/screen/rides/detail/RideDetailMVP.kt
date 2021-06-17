@@ -6,7 +6,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
