@@ -2,7 +2,15 @@ package com.karhoo.uisdk.screen.rides.upcoming.card
 
 import android.content.Context
 import android.content.res.Resources
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceAgreements
+import com.karhoo.sdk.api.model.Driver
+import com.karhoo.sdk.api.model.Vehicle
+import com.karhoo.sdk.api.model.Position
+import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.FleetInfo
+import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
