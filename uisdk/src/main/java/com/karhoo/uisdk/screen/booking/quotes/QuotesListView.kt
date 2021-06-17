@@ -77,7 +77,7 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
-        if (collapsiblePanelView.panelState == CollapsiblePanelView.PanelState.EXPANDED) {
+        if (collapsiblePanelView.panelState == PanelState.EXPANDED) {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
@@ -118,9 +118,7 @@ class QuotesListView @JvmOverloads constructor(
 
     private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
         return Observer { quoteListStatus ->
-            quoteListStatus?.let {
-                it.selectedQuote
-            }
+            quoteListStatus?.selectedQuote
         }
     }
 
@@ -138,7 +136,7 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
-        quotesSortWidget.prebookChanged(isPrebook)
+        quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
     }
 
     override fun showList() {
