@@ -226,9 +226,8 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             var isPrebook = false
 
             trip.dateScheduled?.let { dateScheduled ->
-                val tripBookedDate = DateUtil.parseDateString(trip.dateBooked)
                 isPrebook = trip.dateScheduled != null && trip.dateBooked != null &&
-                        !dateScheduled.equals(tripBookedDate)
+                        !dateScheduled.equals(trip.dateBooked)
             }
 
             val cancellationText = serviceCancellation?.getCancellationText(context, isPrebook)

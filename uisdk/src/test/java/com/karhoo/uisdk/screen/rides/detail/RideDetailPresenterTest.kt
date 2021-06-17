@@ -617,8 +617,8 @@ class RideDetailPresenterTest {
     @Test
     fun `When the prebook trip has a service cancellation of type before pickup, the prebook cancellation text is shown`() {
         tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
-                            dateBooked = "2021-06-17T09:39:24Z",
-                            dateScheduled = DateUtil.parseDateString("2021-06-18T09:39:24Z"))
+                            dateBooked = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
+                            dateScheduled = DateUtil.parseDateString("2021-06-20T09:39:24Z"))
         presenter.checkCancellationSLA(
                 context,
                 tripInfo,
@@ -692,8 +692,8 @@ class RideDetailPresenterTest {
     @Test
     fun `When the prebook trip has a service cancellation of type before pickup with a requested status, the prebook cancellation text is shown`() {
         tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
-                            dateBooked = "2021-06-17T09:39:24Z",
-                            dateScheduled = DateUtil.parseDateString("2021-06-18T09:39:24Z"))
+                            dateBooked = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
+                            dateScheduled = DateUtil.parseDateString("2021-06-20T09:39:24Z"))
         presenter.checkCancellationSLA(
                 context,
                 tripInfo,
