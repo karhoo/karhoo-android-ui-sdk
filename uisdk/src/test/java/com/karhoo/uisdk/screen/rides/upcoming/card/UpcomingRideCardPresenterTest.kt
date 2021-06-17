@@ -241,6 +241,7 @@ class UpcomingRideCardPresenterTest {
         )
         private val TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK = TRIP_DETAILS.copy(
                 tripState = TripStatus.CONFIRMED,
+                dateBooked = Date().toString(),
                 dateScheduled = Date(),
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
         )
