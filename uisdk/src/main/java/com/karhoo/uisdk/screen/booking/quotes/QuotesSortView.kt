@@ -23,7 +23,6 @@ class QuotesSortView @JvmOverloads constructor(
 
     private var unselectedColor: Int = R.color.off_black
     private var selectedColor: Int = R.color.off_white
-    private var leftBackgroundDisabled: Int = R.drawable.uisdk_ic_sort_left_disabled
     private var leftBackground: Int = R.drawable.uisdk_sort_left_background
 
     private var listener: Listener? = null
@@ -144,31 +143,9 @@ class QuotesSortView @JvmOverloads constructor(
     fun destinationChanged(bookingStatus: BookingStatus?) {
         hasDestination = bookingStatus?.destination != null
         isPrebook = bookingStatus?.date != null
-        if (hasDestination && isPrebook) {
-            setSelectedSortMethod(SortMethod.PRICE)
-        } else {
-            setSelectedSortMethod(SortMethod.ETA)
-        }
+        val sortMethod = if (hasDestination && isPrebook) SortMethod.PRICE else SortMethod.ETA
+        setSelectedSortMethod(sortMethod)
         listener?.onUserChangedSortMethod(selectedSortMethod)
-    }
-
-    fun prebookChanged(isPrebook: Boolean) {
-        this.isPrebook = isPrebook
-        if (isPrebook) {
-            disableETA()
-        } else {
-            enableETA()
-        }
-    }
-
-    private fun enableETA() {
-        setSelectedSortMethod(SortMethod.ETA)
-        etaLayout.background = ContextCompat.getDrawable(context, leftBackground)
-    }
-
-    private fun disableETA() {
-        etaLayout.isActivated = false
-        etaLayout.background = ContextCompat.getDrawable(context, leftBackgroundDisabled)
     }
 
     interface Listener {
