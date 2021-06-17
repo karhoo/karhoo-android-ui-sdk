@@ -2,13 +2,22 @@ package com.karhoo.uisdk.screen.rides.upcoming.card
 
 import android.content.Context
 import android.content.res.Resources
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceAgreements
+import com.karhoo.sdk.api.model.Driver
+import com.karhoo.sdk.api.model.Vehicle
+import com.karhoo.sdk.api.model.Position
+import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.FleetInfo
+import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.booking.quotes.BookingQuotesPresenterTest
 import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
+import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -17,7 +26,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.Date
 
 @RunWith(MockitoJUnitRunner::class)
 class UpcomingRideCardPresenterTest {
@@ -241,8 +249,8 @@ class UpcomingRideCardPresenterTest {
         )
         private val TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK = TRIP_DETAILS.copy(
                 tripState = TripStatus.CONFIRMED,
-                dateBooked = Date().toString(),
-                dateScheduled = Date(),
+                dateBooked = "2021-06-17T09:39:24Z",
+                dateScheduled = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
         )
         private val TRIP_DETAILS_SLA_ZERO_MINUTES = TRIP_DETAILS.copy(

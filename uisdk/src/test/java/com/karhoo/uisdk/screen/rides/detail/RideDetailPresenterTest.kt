@@ -26,6 +26,7 @@ import com.karhoo.uisdk.screen.rides.detail.RideDetailPresenter.Companion.TRIP_I
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.any
@@ -616,8 +617,8 @@ class RideDetailPresenterTest {
     @Test
     fun `When the prebook trip has a service cancellation of type before pickup, the prebook cancellation text is shown`() {
         tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
-                            dateBooked = Date().toString(),
-                            dateScheduled = Date())
+                            dateBooked = "2021-06-17T09:39:24Z",
+                            dateScheduled = DateUtil.parseDateString("2021-06-18T09:39:24Z"))
         presenter.checkCancellationSLA(
                 context,
                 tripInfo,
@@ -691,8 +692,8 @@ class RideDetailPresenterTest {
     @Test
     fun `When the prebook trip has a service cancellation of type before pickup with a requested status, the prebook cancellation text is shown`() {
         tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
-                            dateBooked = Date().toString(),
-                            dateScheduled = Date())
+                            dateBooked = "2021-06-17T09:39:24Z",
+                            dateScheduled = DateUtil.parseDateString("2021-06-18T09:39:24Z"))
         presenter.checkCancellationSLA(
                 context,
                 tripInfo,
