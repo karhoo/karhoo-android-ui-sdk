@@ -77,9 +77,7 @@ class RideDetailView @JvmOverloads constructor(
             contactOptionsWidget.observeTripStatus(it)
         }
 
-        trip.tripState?.let {
-            presenter?.checkCancellationSLA(it, trip.serviceAgreements?.freeCancellation, context)
-        }
+            presenter?.checkCancellationSLA(context, trip, trip.serviceAgreements?.freeCancellation)
     }
 
     private fun setTripRating(trip: TripInfo) {

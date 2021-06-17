@@ -28,6 +28,7 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <string name="kh_uisdk_quote_cancellation_after_booking_ending">after booking</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">and</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>

@@ -29,6 +29,8 @@ interface BookingRequestMVP {
 
         fun bindPriceAndEta(quote: Quote, card: String)
 
+        fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean)
+
         fun displayFlightDetailsField(poiType: PoiType?)
 
         fun enableCancelButton()

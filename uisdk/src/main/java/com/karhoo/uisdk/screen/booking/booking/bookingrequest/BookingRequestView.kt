@@ -195,14 +195,12 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindEta(quote: Quote, card: String) {
-        bindQuoteAndTerms(quote)
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
                 context.getString(R.string.kh_uisdk_estimated_arrival_time),
                 quote.quoteType)
     }
 
     override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
-        bindQuoteAndTerms(quote)
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
@@ -213,18 +211,18 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
-        bindQuoteAndTerms(quote)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
         bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.kh_uisdk_estimated_arrival_time), currency)
     }
 
-    private fun bindQuoteAndTerms(vehicle: Quote) {
+    override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
         bookingRequestQuotesWidget.bindViews(
                 vehicle.fleet.logoUrl,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
-                vehicle.serviceAgreements?.freeCancellation
+                vehicle.serviceAgreements?.freeCancellation,
+                isPrebook
         )
         bookingRequestTermsWidget.bindViews(vehicle)
     }

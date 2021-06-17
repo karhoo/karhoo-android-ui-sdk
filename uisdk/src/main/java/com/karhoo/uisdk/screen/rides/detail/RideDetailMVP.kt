@@ -6,7 +6,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -36,7 +35,7 @@ interface RideDetailMVP {
 
         fun addTripInfoObserver(tripInfoListener: OnTripInfoChangedListener?)
 
-        fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context)
+        fun checkCancellationSLA(context: Context, trip: TripInfo, serviceCancellation: ServiceCancellation?)
 
         interface OnTripInfoChangedListener {
 

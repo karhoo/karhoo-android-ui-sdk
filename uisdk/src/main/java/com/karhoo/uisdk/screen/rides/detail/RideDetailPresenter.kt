@@ -17,6 +17,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
+import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
@@ -216,18 +217,28 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         unsubscribeObservers()
     }
 
-    override fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context) {
-        if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(tripStatus) == false) {
-            return
-        }
+    override fun checkCancellationSLA(context: Context, trip: TripInfo, serviceCancellation: ServiceCancellation?) {
+        trip.tripState?.let {
+            if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(it) == false) {
+                return
+            }
 
-        val cancellationText = serviceCancellation?.getCancellationText(context)
+            var isPrebook = false
 
-        if (cancellationText.isNullOrEmpty()) {
-            view?.showCancellationText(false)
-        } else {
-            view?.setCancellationText(cancellationText)
-            view?.showCancellationText(true)
+            trip.dateScheduled?.let { dateScheduled ->
+                val tripBookedDate = DateUtil.parseDateString(trip.dateBooked)
+                isPrebook = trip.dateScheduled != null && trip.dateBooked != null &&
+                        !dateScheduled.equals(tripBookedDate)
+            }
+
+            val cancellationText = serviceCancellation?.getCancellationText(context, isPrebook)
+
+            if (cancellationText.isNullOrEmpty()) {
+                view?.showCancellationText(false)
+            } else {
+                view?.setCancellationText(cancellationText)
+                view?.showCancellationText(true)
+            }
         }
     }
 
