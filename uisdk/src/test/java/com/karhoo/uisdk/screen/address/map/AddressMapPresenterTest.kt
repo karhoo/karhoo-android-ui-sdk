@@ -1,10 +1,13 @@
 package com.karhoo.uisdk.screen.address.map
 
+import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.address.AddressService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationInfoListener
+import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -22,8 +25,10 @@ class AddressMapPresenterTest {
 
     private val view: AddressMapMVP.View = mock()
     private val addressService: AddressService = mock()
+    private var locationProvider: LocationProvider = mock()
     private val locationInfo: LocationInfo = mock()
     private val locationCall: Call<LocationInfo> = mock()
+    private val lambdaLocationInfoCaptor = argumentCaptor<LocationInfoListener>()
 
     lateinit var presenter: AddressMapPresenter
 
@@ -31,7 +36,7 @@ class AddressMapPresenterTest {
 
     @Before
     fun setUp() {
-        presenter = AddressMapPresenter(view = view, addressService = addressService)
+        presenter = AddressMapPresenter(view = view, addressService = addressService, locationProvider = locationProvider)
         doNothing().whenever(locationCall).execute(lambdaCaptor.capture())
     }
 
@@ -104,6 +109,51 @@ class AddressMapPresenterTest {
 
         verify(view).updateDisplayAddress("Paddington")
     }
+
+    /**
+     * Given:   A request to get the current address is made
+     * When:    The result is location info unavailable
+     * Then:    The view should show a snackbar
+     */
+    @Test
+    fun `get current location unavailable shows snackbar`() {
+        doNothing().whenever(locationProvider).getAddress(lambdaLocationInfoCaptor.capture())
+        presenter.getLastLocation()
+        lambdaLocationInfoCaptor.firstValue.onLocationInfoUnavailable("", null)
+
+        verify(view).showSnackbar(any())
+    }
+
+    /**
+     * Given:   A request to get the current address is made
+     * When:    The result is location disabled
+     * Then:    The view should show a snackbar
+     */
+    @Test
+    fun `get current location disabled shows snackbar`() {
+        doNothing().whenever(locationProvider).getAddress(lambdaLocationInfoCaptor.capture())
+        presenter.getLastLocation()
+        lambdaLocationInfoCaptor.firstValue.onLocationServicesDisabled()
+
+        verify(view).showLocationDisabledSnackbar()
+    }
+
+    /**
+     * Given:   A request to get the current address is made
+     * When:    The result is a valid location
+     * Then:    The view should zoom and update display address
+     */
+    @Test
+    fun `get current location zooms and updates`() {
+        doNothing().whenever(locationProvider).getAddress(lambdaLocationInfoCaptor.capture())
+        whenever(locationInfo.displayAddress).thenReturn("karhoo street")
+        whenever(locationInfo.position).thenReturn(Position(0.1, 0.1))
+        presenter.getLastLocation()
+        lambdaLocationInfoCaptor.firstValue.onLocationInfoReady(locationInfo)
+        verify(view).zoom(LatLng(0.1, 0.1))
+        verify(view).updateDisplayAddress("karhoo street")
+    }
+
 
     /**
      * Given:   The back arrow is pressed

@@ -28,7 +28,7 @@ interface QuotesListMVP {
 
         fun showList()
 
-        fun hideList()
+        fun hideList(): Boolean
 
         fun showNoAvailability()
 

@@ -28,6 +28,7 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
+    <string name="kh_uisdk_quote_cancellation_after_booking_ending">after booking</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">and</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>
@@ -401,6 +402,9 @@
     <string name="kh_uisdk_pay_button">Submit</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
 
+    <string name="kh_uisdk_guest_trip_tracking_production" translatable="false">https://follow.karhoo.com/%s</string>
+    <string name="kh_uisdk_guest_trip_tracking_sandbox" translatable="false">https://follow.sandbox.karhoo.com/%s</string>
+    <string name="kh_uisdk_guest_trip_tracking_custom" translatable="false">https://follow.stg.karhoo.com/%s</string>
     <!--  Logger  -->
     <string name="kh_uisdk_logger_sdk_not_configured" translatable="false">UISDK not configured. Please configure the KarhooUISDKConfiguration or visit https://developer.karhoo.com/docs/using-the-ui-sdk for more info</string>
 </resources>

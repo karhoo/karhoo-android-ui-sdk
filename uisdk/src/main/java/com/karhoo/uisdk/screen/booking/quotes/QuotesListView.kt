@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.quotes
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
 import androidx.core.view.isVisible
@@ -33,7 +32,6 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes.view.collapsiblePanelView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelectorWidget
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
@@ -56,7 +54,6 @@ class QuotesListView @JvmOverloads constructor(
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
 
     private var isQuotesListVisible = false
-        private set
 
     init {
         inflate(context, R.layout.uisdk_view_quotes, this)
@@ -80,7 +77,7 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
-        if (collapsiblePanelView.panelState == CollapsiblePanelView.PanelState.EXPANDED) {
+        if (collapsiblePanelView.panelState == PanelState.EXPANDED) {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
@@ -99,9 +96,9 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun sortChoiceRequiresDestination() {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                                                  .Error(SnackbarConfig(text = resources
-                                                          .getString(R.string
-                                                                             .kh_uisdk_destination_price_error))))
+                .Error(SnackbarConfig(text = resources
+                        .getString(R.string
+                                .kh_uisdk_destination_price_error))))
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
@@ -121,9 +118,7 @@ class QuotesListView @JvmOverloads constructor(
 
     private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
         return Observer { quoteListStatus ->
-            quoteListStatus?.let {
-                it.selectedQuote
-            }
+            quoteListStatus?.selectedQuote
         }
     }
 
@@ -141,7 +136,7 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
-        quotesSortWidget.prebookChanged(isPrebook)
+        quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
     }
 
     override fun showList() {
@@ -160,8 +155,8 @@ class QuotesListView @JvmOverloads constructor(
         }
     }
 
-    override fun hideList() {
-        if (isQuotesListVisible) {
+    override fun hideList(): Boolean {
+        return if (isQuotesListVisible) {
 
             val translation = when (collapsiblePanelView.panelState) {
                 PanelState.COLLAPSED -> resources.getDimension(R.dimen.quote_list_height)
@@ -181,7 +176,9 @@ class QuotesListView @JvmOverloads constructor(
                     .withEndAction {
                         isQuotesListVisible = false
                     }
-
+            true
+        } else {
+            false
         }
     }
 
@@ -194,14 +191,14 @@ class QuotesListView @JvmOverloads constructor(
         val emailComposer = KarhooFeedbackEmailComposer(context)
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
-                                            priority = SnackbarPriority.NORMAL,
-                                            action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
-                                                val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
-                                                showNoCoverageEmail?.let {intent ->
-                                                    activity.startActivity(intent)
-                                                }
-                                            },
-                                            text = resources.getString(R.string.kh_uisdk_no_availability))
+                priority = SnackbarPriority.NORMAL,
+                action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
+                    val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
+                    showNoCoverageEmail?.let { intent ->
+                        activity.startActivity(intent)
+                    }
+                },
+                text = resources.getString(R.string.kh_uisdk_no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                 .Error(snackbarConfig))
 
@@ -231,8 +228,8 @@ class QuotesListView @JvmOverloads constructor(
         availabilityProvider?.cleanup()
         bookingStatusStateViewModel?.let {
             availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
-                                                      KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
-                                                      it, lifecycleOwner).apply {
+                    KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
+                    it, lifecycleOwner).apply {
                 setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)
