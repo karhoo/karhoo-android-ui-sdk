@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.address.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.ViewGroup
 import com.karhoo.sdk.api.model.Place
 import com.karhoo.uisdk.R

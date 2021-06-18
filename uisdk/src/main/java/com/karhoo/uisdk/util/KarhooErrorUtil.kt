@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.util
 
-import android.content.Context
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.R
