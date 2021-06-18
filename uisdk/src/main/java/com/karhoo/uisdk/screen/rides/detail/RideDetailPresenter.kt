@@ -17,7 +17,6 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
-import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
@@ -226,9 +225,8 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             var isPrebook = false
 
             trip.dateScheduled?.let { dateScheduled ->
-                val tripBookedDate = DateUtil.parseDateString(trip.dateBooked)
                 isPrebook = trip.dateScheduled != null && trip.dateBooked != null &&
-                        !dateScheduled.equals(tripBookedDate)
+                        !dateScheduled.equals(trip.dateBooked)
             }
 
             val cancellationText = serviceCancellation?.getCancellationText(context, isPrebook)

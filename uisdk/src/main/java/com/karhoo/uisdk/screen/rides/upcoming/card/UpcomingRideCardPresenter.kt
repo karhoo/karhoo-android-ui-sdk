@@ -7,7 +7,6 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
-import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
 
@@ -62,9 +61,8 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
             var isPrebook = false
 
             trip.dateScheduled?.let { dateScheduled ->
-                val tripBookedDate = DateUtil.parseDateString(trip.dateBooked)
                 isPrebook = trip.dateScheduled != null && trip.dateBooked != null &&
-                        !dateScheduled.equals(tripBookedDate)
+                        !dateScheduled.equals(trip.dateBooked)
             }
 
             val text = serviceCancellation?.getCancellationText(context, isPrebook)
