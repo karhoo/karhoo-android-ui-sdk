@@ -45,6 +45,7 @@
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
         android:backgroundTint="@color/primary"
+        app:tint="@color/white"
         app:borderWidth="@dimen/spacing_none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

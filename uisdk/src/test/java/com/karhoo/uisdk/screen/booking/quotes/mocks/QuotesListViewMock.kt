@@ -34,7 +34,8 @@ class QuotesListViewMock: QuotesListMVP.View {
     override fun showList() {
     }
 
-    override fun hideList() {
+    override fun hideList(): Boolean {
+        return true
     }
 
     override fun showNoAvailability() {

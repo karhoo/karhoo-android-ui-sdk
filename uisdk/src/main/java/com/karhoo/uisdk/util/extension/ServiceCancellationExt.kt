@@ -8,7 +8,7 @@ import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
 import com.karhoo.uisdk.util.TimeUtil
 
-fun ServiceCancellation.getCancellationText(context: Context): String? {
+fun ServiceCancellation.getCancellationText(context: Context, isPrebook: Boolean): String? {
     var cancellationText: String?
 
     when (this.type) {
@@ -19,9 +19,15 @@ fun ServiceCancellation.getCancellationText(context: Context): String? {
                 val hours: Int = TimeUtil.roundMinutesInHours(minutes)
                 val leftOverMinutes: Int = TimeUtil.getLeftOverMinutesFromHours(minutes)
 
-                cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
-                cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
-                cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)
+                if (isPrebook) {
+                    cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
+                    cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
+                    cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)
+                } else {
+                    cancellationText = context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start) + " "
+                    cancellationText += TimeUtil.getHourAndMinutesFormattedText(context, leftOverMinutes, hours)
+                    cancellationText += context.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)
+                }
             }
         }
         CANCELLATION_BEFORE_DRIVER_EN_ROUTE -> {

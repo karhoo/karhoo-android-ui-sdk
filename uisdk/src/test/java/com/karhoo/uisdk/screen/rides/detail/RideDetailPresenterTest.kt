@@ -26,6 +26,7 @@ import com.karhoo.uisdk.screen.rides.detail.RideDetailPresenter.Companion.TRIP_I
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
+import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.any
@@ -51,6 +52,7 @@ class RideDetailPresenterTest {
 
     private var context: Context = mock()
     private val view: RideDetailMVP.View = mock()
+    private var tripInfo: TripInfo = mock()
     private val tripsService: TripsService = mock()
     private val tripDetailsCall: PollCall<TripInfo> = mock()
     private val scheduledDateViewBinder: ScheduledDateViewBinder = mock()
@@ -61,8 +63,7 @@ class RideDetailPresenterTest {
 
     private val TRIP_ID = "trip001"
     private val FOLLOW_CODE = "follow001"
-    private val EMPTY_TRIP: TripInfo = TripInfo(
-            tripId = TRIP_ID)
+    private val EMPTY_TRIP: TripInfo = TripInfo(tripId = TRIP_ID)
 
     private var presenter: RideDetailPresenter = RideDetailPresenter(
             view = view,
@@ -90,6 +91,7 @@ class RideDetailPresenterTest {
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(UpcomingRideCardPresenterTest.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_AFTER_BOOKING_END)
     }
 
     /**
@@ -580,9 +582,9 @@ class RideDetailPresenterTest {
     @Test
     fun `When the trip has a service cancellation of type before pickup with a passenger on board trip state, the cancellation text is not shown`() {
         presenter.checkCancellationSLA(
-                TripStatus.PASSENGER_ON_BOARD,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
-                context)
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view, never()).showCancellationText(any())
         verify(view, never()).setCancellationText(any())
@@ -595,14 +597,35 @@ class RideDetailPresenterTest {
      * Then:    The cancellation text is the correct one
      */
     @Test
-    fun `When the trip has a service cancellation of type before pickup, the cancellation text is shown`() {
+    fun `When the asap trip has a service cancellation of type before pickup, the asap cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED)
         presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
-                context)
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view).showCancellationText(true)
-        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_ASAP, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before pickup with a tripStatus equal to confirmed
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the prebook trip has a service cancellation of type before pickup, the prebook cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
+                            dateBooked = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
+                            dateScheduled = DateUtil.parseDateString("2021-06-20T09:39:24Z"))
+        presenter.checkCancellationSLA(
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_PREBOOK, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
     }
 
     /**
@@ -613,10 +636,11 @@ class RideDetailPresenterTest {
      */
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a confirmed status, the cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED)
         presenter.checkCancellationSLA(
-                TripStatus.CONFIRMED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
-                context)
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation)
 
         verify(view).showCancellationText(true)
         verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
@@ -631,10 +655,11 @@ class RideDetailPresenterTest {
      */
     @Test
     fun `When the trip has a service cancellation of type before driver en route with a requested status, the cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED)
         presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation,
-                context)
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.freeCancellation)
 
         verify(view).showCancellationText(true)
         verify(view).setCancellationText(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
@@ -647,14 +672,35 @@ class RideDetailPresenterTest {
      * Then:    The cancellation text is the correct one
      */
     @Test
-    fun `When the trip has a service cancellation of type before pickup with a requested status, the cancellation text is shown`() {
+    fun `When the asap trip has a service cancellation of type before pickup with a requested status, the asap cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED)
         presenter.checkCancellationSLA(
-                TripStatus.REQUESTED,
-                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation,
-                context)
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
 
         verify(view).showCancellationText(true)
-        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_ASAP, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   The trip has a service cancellation of type before driver en route with a tripStatus equal to requested
+     *
+     * Then:    The cancellation text is shown
+     * Then:    The cancellation text is the correct one
+     */
+    @Test
+    fun `When the prebook trip has a service cancellation of type before pickup with a requested status, the prebook cancellation text is shown`() {
+        tripInfo = TripInfo(tripState = TripStatus.CONFIRMED,
+                            dateBooked = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
+                            dateScheduled = DateUtil.parseDateString("2021-06-20T09:39:24Z"))
+        presenter.checkCancellationSLA(
+                context,
+                tripInfo,
+                UpcomingRideCardPresenterTest.CANCELLATION_AGREEMENT_BEFORE_PICKUP.freeCancellation)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_PREBOOK, UpcomingRideCardPresenterTest.TEST_TWO_MINUTES))
     }
 
     companion object {

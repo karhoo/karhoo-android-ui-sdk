@@ -2,13 +2,22 @@ package com.karhoo.uisdk.screen.rides.upcoming.card
 
 import android.content.Context
 import android.content.res.Resources
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.sdk.api.model.ServiceAgreements
+import com.karhoo.sdk.api.model.Driver
+import com.karhoo.sdk.api.model.Vehicle
+import com.karhoo.sdk.api.model.Position
+import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.FleetInfo
+import com.karhoo.sdk.api.model.TripLocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.booking.quotes.BookingQuotesPresenterTest
 import com.karhoo.uisdk.util.CANCELLATION_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
+import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -40,6 +49,7 @@ class UpcomingRideCardPresenterTest {
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(context.getString(R.string.kh_uisdk_quote_cancellation_before_driver_departure)).thenReturn(TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT)
+        whenever(context.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_AFTER_BOOKING_END)
     }
 
     @Test
@@ -102,21 +112,39 @@ class UpcomingRideCardPresenterTest {
     }
 
     /**
-     * Given:   An upcoming trip
+     * Given:   An upcoming asap trip
      * When:    There is a free cancellation SLA before pickup
      * Then:    The view should show correctly the cancellation SLA textview
      * Then:    The view should set the correct text in the cancellation SLA textview
      */
     @Test
-    fun `When we have a free cancellation SLA with before pickup, the cancellation text is visible`() {
+    fun `When we have a free cancellation SLA with before pickup, the asap cancellation text is visible`() {
         presenter = UpcomingRideCardPresenter(view,
-                TRIP_DETAILS_SLA_BEFORE_PICKUP,
+                TRIP_DETAILS_SLA_BEFORE_PICKUP_ASAP,
                 scheduledDateViewBinder,
                 analytics,
                 context)
 
         verify(view).showCancellationText(true)
-        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT, TEST_TWO_MINUTES))
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_ASAP, TEST_TWO_MINUTES))
+    }
+
+    /**
+     * Given:   An upcoming prebook trip
+     * When:    There is a free cancellation SLA before pickup
+     * Then:    The view should show correctly the cancellation SLA textview
+     * Then:    The view should set the correct text in the cancellation SLA textview
+     */
+    @Test
+    fun `When we have a free cancellation SLA with before pickup, the prebook cancellation text is visible`() {
+        presenter = UpcomingRideCardPresenter(view,
+                TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK,
+                scheduledDateViewBinder,
+                analytics,
+                context)
+
+        verify(view).showCancellationText(true)
+        verify(view).setCancellationText(String.format(BookingQuotesPresenterTest.TEST_CANCELLATION_TEXT_PREBOOK, TEST_TWO_MINUTES))
     }
 
     /**
@@ -215,8 +243,14 @@ class UpcomingRideCardPresenterTest {
                 tripState = TripStatus.CONFIRMED,
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE
         )
-        private val TRIP_DETAILS_SLA_BEFORE_PICKUP = TRIP_DETAILS.copy(
+        private val TRIP_DETAILS_SLA_BEFORE_PICKUP_ASAP = TRIP_DETAILS.copy(
                 tripState = TripStatus.CONFIRMED,
+                serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
+        )
+        private val TRIP_DETAILS_SLA_BEFORE_PICKUP_PREBOOK = TRIP_DETAILS.copy(
+                tripState = TripStatus.CONFIRMED,
+                dateBooked = DateUtil.parseDateString("2021-06-18T09:39:24Z"),
+                dateScheduled = DateUtil.parseDateString("2021-06-20T09:39:24Z"),
                 serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_PICKUP
         )
         private val TRIP_DETAILS_SLA_ZERO_MINUTES = TRIP_DETAILS.copy(

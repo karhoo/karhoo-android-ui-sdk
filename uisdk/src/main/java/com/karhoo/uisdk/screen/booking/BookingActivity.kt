@@ -65,8 +65,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var journeyInfo: JourneyInfo? = null
     private var passengerDetails: PassengerDetails? = null
     private var bookingComments: String? = ""
+    private var bookingMetadata: HashMap<String, String>? = null
 
-    private var isGuest: Boolean = false
+    private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -74,8 +75,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onCreate(savedInstanceState: Bundle?) {
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
-
-        isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
         if (callingActivity != null) {
             KarhooUISDK.analytics?.bookingWithCallbackOpened()
@@ -94,6 +93,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         bookingMapWidget.onCreate(savedInstanceState, this, bookingStatusStateViewModel,
                                   tripDetails?.destination == null, journeyInfo != null)
+
+        bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
     }
 
     override fun onResume() {
@@ -143,7 +144,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             journeyInfo = extras.getParcelable(Builder.EXTRA_JOURNEY_INFO)
             passengerDetails = extras.getParcelable(Builder.EXTRA_PASSENGER_DETAILS)
             bookingComments = extras.getString(Builder.EXTRA_COMMENTS)
-            bookingComments = ""
+            val injectedBookingMetadata = extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
+            injectedBookingMetadata?.let {
+                bookingMetadata?.putAll(it)
+            }
         }
     }
 
@@ -256,7 +260,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
-                    bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId)
+                    bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId, bookingMetadata)
                 }
             }
         }
@@ -280,6 +284,22 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBackPressed() {
+        // if Webview is visible we hide it
+        if (khWebView?.visibility == View.VISIBLE) {
+            khWebView?.hide()
+            return
+        }
+        // if BookingRequestView is opened we close it and return
+        if (bookingRequestWidget.onBackPressed()) {
+            onResume()
+            return
+        }
+        // if destination set we clear it, close the quotes list and return
+        if (bookingStatusStateViewModel.currentState.destination != null) {
+            bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
+                    .DestinationAddressEvent(null))
+            return
+        }
         if (navigationDrawerWidget.closeIfOpen()) {
             super.onBackPressed()
         }
@@ -408,6 +428,17 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         /**
+         * If an [metadata] is passed in the activity, it will be used as part of the
+         * Booking API meta data
+         */
+        fun bookingMetadata(metadata: HashMap<String, String>?): Builder {
+            metadata?.let {
+                extrasBundle.putSerializable(EXTRA_META, it)
+            }
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
@@ -433,6 +464,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             const val EXTRA_JOURNEY_INFO = "journey::info"
             const val EXTRA_PASSENGER_DETAILS = "booking::passenger"
             const val EXTRA_COMMENTS = "booking::comments"
+            const val EXTRA_META = "booking::meta"
 
             val builder: Builder
                 get() = Builder()

@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider.isGuest
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -70,6 +69,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
 
     override fun mapMoved(position: LatLng?) {
         timer?.let {
+            it.purge()
             it.cancel()
             timer = null
         }
@@ -85,7 +85,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     override fun setPickupLocation(pickupLocation: LocationInfo?) {
         if (!mapMoving) {
             bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
-                                                         .PickUpAddressEvent(pickupLocation))
+                    .PickUpAddressEvent(pickupLocation))
         }
     }
 
@@ -130,10 +130,6 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     }
 
     override fun checkLocateUser() {
-        if (isGuest()) {
-            view?.hideLocateUserButton()
-        } else {
-            view?.showLocateUserButton()
-        }
+        view?.showLocateUserButton()
     }
 }

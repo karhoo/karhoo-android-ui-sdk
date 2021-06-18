@@ -51,6 +51,7 @@ import org.joda.time.DateTime
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -123,16 +124,14 @@ class BookingRequestPresenterTest {
      * Given:   A user see the booking screen
      * When:    They are a logged in user
      * Then:    The correct input fields are displayed
-     * And:     The booking button is enabled
      */
     @Test
-    fun `user without saved card sees the correct input fields and booking button is disabled`() {
+    fun `user without saved card sees the correct input fields`() {
         setAuthenticatedUser()
 
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view).disableBooking()
         verify(view, never()).updateBookingButtonForGuest()
     }
 
@@ -140,10 +139,9 @@ class BookingRequestPresenterTest {
      * Given:   A user see the booking screen
      * When:    They are a logged in user
      * Then:    The correct input fields are displayed
-     * And:     The booking button is enabled
      */
     @Test
-    fun `user with saved card sees the correct input fields and booking button is enabled`() {
+    fun `user with saved card sees the correct input fields`() {
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
 
         setAuthenticatedUser()
@@ -151,8 +149,22 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view).enableBooking()
         verify(view, never()).updateBookingButtonForGuest()
+    }
+
+
+    /**
+     * Given:   A user see the booking screen
+     * When:    They are a logged in user
+     * Then:    The correct payment is acknowledged
+     */
+    @Test
+    fun `user payment returns valid`() {
+        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
+
+        setAuthenticatedUser()
+
+        assertTrue(requestPresenter.isPaymentSet())
     }
 
     /**
@@ -160,36 +172,14 @@ class BookingRequestPresenterTest {
      * When:    They are a guest user
      * And:     The input fields are not all valid
      * Then:    The correct input fields are displayed
-     * And:     The booking button is disabled
      */
     @Test
-    fun `guest user sees the correct input fields and booking button is disabled`() {
+    fun `guest user sees the correct input fields`() {
         setGuestUser()
 
         requestPresenter.setBookingFields(false)
 
         verify(view).showGuestBookingFields(PassengerDetails())
-        verify(view).disableBooking()
-        verify(view).updateBookingButtonForGuest()
-    }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a guest user
-     * And:     The input fields are all valid
-     * Then:    The correct input fields are displayed
-     * And:     The booking button is enabled
-     */
-    @Test
-    fun `guest user sees the correct input fields and booking button is enabled`() {
-        setGuestUser()
-
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        requestPresenter.setBookingFields(true)
-
-        verify(view).showGuestBookingFields(PassengerDetails())
-        verify(view).enableBooking()
         verify(view).updateBookingButtonForGuest()
     }
 
@@ -198,10 +188,9 @@ class BookingRequestPresenterTest {
      * When:    They are a token exchange user
      * And:     The input fields are all valid
      * Then:    The correct input fields are displayed
-     * And:     The booking button is enabled
      */
     @Test
-    fun `token exchange user sees the correct input fields and booking button is enabled`() {
+    fun `token exchange user sees the correct input fields`() {
         setTokenUser()
 
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
@@ -209,7 +198,6 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(true)
 
         verify(view).showGuestBookingFields(passengerDetails)
-        verify(view).enableBooking()
         verify(view, never()).updateBookingButtonForGuest()
     }
 
@@ -318,55 +306,6 @@ class BookingRequestPresenterTest {
         verify(view).setCapacity(vehicleAttributes)
         verify(view).animateIn()
         verify(view).bindPrebook(quote, "", scheduledDate)
-    }
-
-    /**
-     * Given:   A user sets the booking enablement
-     * When:    The user has a payment card
-     * And:     The passenger details are invalid
-     * Then:    The view is updated to disable booking
-     */
-    @Test
-    fun `disable booking when passenger details are invalid and there are card details`() {
-        setGuestUser()
-
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        requestPresenter.setBookingEnablement(false)
-
-        verify(view).disableBooking()
-    }
-
-    /**
-     * Given:   A user sets the booking enablement
-     * When:    The user does not have a payment card
-     * And:     The passenger details are invalid
-     * Then:    The view is updated to disable booking
-     */
-    @Test
-    fun `disable booking when passenger details are valid and there are no card details`() {
-        setGuestUser()
-
-        requestPresenter.setBookingEnablement(false)
-
-        verify(view).disableBooking()
-    }
-
-    /**
-     * Given:   A user sets the booking enablement
-     * When:    The user has a payment card
-     * And:     The passenger details are invalid
-     * Then:    The view is updated to disable booking
-     */
-    @Test
-    fun `enable booking when passenger details are valid and there are card details`() {
-        setGuestUser()
-
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        requestPresenter.setBookingEnablement(true)
-
-        verify(view).enableBooking()
     }
 
     /**
@@ -607,6 +546,33 @@ class BookingRequestPresenterTest {
     }
 
     /**
+     * Given:   Meta dictionary is passed into the Booking Request component
+     * When:    Booking a trip
+     * Then:    The meta is sent through in the Booking API meta field
+     */
+    @Test
+    fun `Booking meta data injected in the Booking Request contains meta`() {
+        whenever(tripsService.book(any())).thenReturn(tripCall)
+        val map = hashMapOf<String, String>()
+        map[BOOKING__META_MAP_KEY] = BOOKING__META_MAP_VALUE
+
+        requestPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map)
+        requestPresenter.watchBookingRequest(bookingRequestStateViewModel)
+
+        requestPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
+                                                    bookingComment)
+
+        tripCaptor.firstValue.invoke(Resource.Success(trip))
+
+        verify(tripsService).book(tripBookingCaptor.capture())
+        val tripBooking: TripBooking = tripBookingCaptor.firstValue
+        assertNotNull(tripBooking.meta)
+        assertEquals(IDENTIFIER, tripBooking.meta?.get(TRIP_ID))
+        assertEquals(IDENTIFIER, tripBooking.nonce)
+        assertEquals(BOOKING__META_MAP_VALUE, tripBooking.meta?.get(BOOKING__META_MAP_KEY))
+    }
+
+    /**
      * Given:   The payment identifier (nonce or trip id) is passed back for booking trip
      * When:    It is a Braintree payment
      * The:     The nonce is sent through on the request
@@ -729,5 +695,7 @@ class BookingRequestPresenterTest {
 
     companion object {
         private const val IDENTIFIER = "3dsNonceOrTripId"
+        private const val BOOKING__META_MAP_KEY = "map_key"
+        private const val BOOKING__META_MAP_VALUE = "map_value"
     }
 }

@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.format.DateFormat
 import org.joda.time.DateTime
@@ -47,6 +48,22 @@ object DateUtil {
 
     fun parseSimpleDate(date: String): DateTime {
         return DateTime.parse(date, DateTimeFormat.forPattern("yyyy-MM-dd"))
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun parseDateString(dateString: String?): Date {
+        return try {
+            dateString?.let {
+                val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
+                    timeZone = TimeZone.getTimeZone("UTC")
+                }
+                formatter.parse(dateString)
+            } ?: run {
+                Date()
+            }
+        } catch (e: Exception) {
+            Date()
+        }
     }
 
 }

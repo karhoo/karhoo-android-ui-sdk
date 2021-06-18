@@ -216,18 +216,27 @@ class RideDetailPresenter(view: RideDetailMVP.View,
         unsubscribeObservers()
     }
 
-    override fun checkCancellationSLA(tripStatus: TripStatus, serviceCancellation: ServiceCancellation?, context: Context) {
-        if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(tripStatus) == false) {
-            return
-        }
+    override fun checkCancellationSLA(context: Context, trip: TripInfo, serviceCancellation: ServiceCancellation?) {
+        trip.tripState?.let {
+            if(serviceCancellation?.hasValidCancellationDependingOnTripStatus(it) == false) {
+                return
+            }
 
-        val cancellationText = serviceCancellation?.getCancellationText(context)
+            var isPrebook = false
 
-        if (cancellationText.isNullOrEmpty()) {
-            view?.showCancellationText(false)
-        } else {
-            view?.setCancellationText(cancellationText)
-            view?.showCancellationText(true)
+            trip.dateScheduled?.let { dateScheduled ->
+                isPrebook = trip.dateScheduled != null && trip.dateBooked != null &&
+                        !dateScheduled.equals(trip.dateBooked)
+            }
+
+            val cancellationText = serviceCancellation?.getCancellationText(context, isPrebook)
+
+            if (cancellationText.isNullOrEmpty()) {
+                view?.showCancellationText(false)
+            } else {
+                view?.setCancellationText(cancellationText)
+                view?.showCancellationText(true)
+            }
         }
     }
 

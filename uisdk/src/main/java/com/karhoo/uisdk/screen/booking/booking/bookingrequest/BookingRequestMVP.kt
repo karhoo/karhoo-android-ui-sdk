@@ -29,11 +29,9 @@ interface BookingRequestMVP {
 
         fun bindPriceAndEta(quote: Quote, card: String)
 
-        fun disableBooking()
+        fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean)
 
         fun displayFlightDetailsField(poiType: PoiType?)
-
-        fun enableBooking()
 
         fun enableCancelButton()
 
@@ -81,14 +79,15 @@ interface BookingRequestMVP {
 
         fun makeBooking()
 
+        fun isPaymentSet(): Boolean
+
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
                                        passengerDetails: PassengerDetails? = null, comments: String)
 
-        fun setBookingEnablement(hasValidPaxDetails: Boolean)
-
         fun setBookingFields(allFieldsValid: Boolean)
 
-        fun showBookingRequest(quote: Quote, outboundTripId: String? = null)
+        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMetadata:
+        HashMap<String, String>? = null)
 
         fun resetBooking()
 

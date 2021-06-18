@@ -50,6 +50,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     private var outboundTripId: String? = null
     private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
+    private var bookingMetadata: HashMap<String, String>? = null
 
     init {
         attachView(view)
@@ -77,6 +78,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
     override fun makeBooking() {
         bookTrip()
+    }
+
+    override fun isPaymentSet(): Boolean {
+        return userStore.savedPaymentInfo != null
     }
 
     private fun bookTrip() {
@@ -140,27 +145,13 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
             is AuthenticationMethod.Guest -> {
                 view?.updateBookingButtonForGuest()
                 view?.showGuestBookingFields()
-                setBookingEnablement(allFieldsValid)
             }
             is AuthenticationMethod.TokenExchange -> {
                 view?.showGuestBookingFields(details = getPassengerDetails())
-                setBookingEnablement(allFieldsValid)
             }
             else -> {
                 view?.showAuthenticatedUserBookingFields()
-                setBookingEnablement(true)
             }
-        }
-    }
-
-    override fun setBookingEnablement(hasValidPaxDetails: Boolean) {
-        if (userStore.savedPaymentInfo == null) {
-            view?.disableBooking()
-        } else if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
-                        AuthenticationMethod.KarhooUser || hasValidPaxDetails) {
-            view?.enableBooking()
-        } else {
-            view?.disableBooking()
         }
     }
 
@@ -169,7 +160,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                         .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
 
         passenger?.let {
-            val metadata = tripId?.let { hashMapOf(TRIP_ID to identifier) }
+            val metadata = getBookingMetadataMap(identifier, tripId)
 
             tripsService.book(TripBooking(
                     comments = comments,
@@ -187,6 +178,15 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                             is Resource.Failure -> onTripBookFailure(result.error)
                         }
                     }
+        }
+    }
+
+    private fun getBookingMetadataMap(identifier: String, tripId: String?): HashMap<String, String>? {
+        return bookingMetadata?.let {
+            it[TRIP_ID] = identifier
+            it
+        } ?: run {
+            tripId?.let { hashMapOf(TRIP_ID to identifier) }
         }
     }
 
@@ -208,8 +208,10 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?) {
+    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
+    HashMap<String, String>?) {
         refreshPaymentDetails()
+        this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
             this.quote = quote
             this.outboundTripId = outboundTripId
@@ -241,11 +243,14 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         if (scheduledDate != null) {
             scheduledDate?.let {
                 view?.bindPrebook(quote, "", it)
+                view?.bindQuoteAndTerms(quote, isPrebook = true)
             }
         } else if (destination != null && quote.price.highPrice > 0) {
             view?.bindPriceAndEta(quote, "")
+            view?.bindQuoteAndTerms(quote, isPrebook = false)
         } else {
             view?.bindEta(quote, "")
+            view?.bindQuoteAndTerms(quote, isPrebook = false)
         }
     }
 
