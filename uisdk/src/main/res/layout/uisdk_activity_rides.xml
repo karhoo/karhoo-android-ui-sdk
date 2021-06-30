@@ -14,7 +14,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/secondary"
         android:minHeight="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat"
@@ -58,14 +57,12 @@
 
     <Button
         android:id="@+id/bookRideButton"
+        style="@style/KhRidesBookButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/full_width_button_height"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/uisdk_booking_button_background"
-        android:text="@string/kh_uisdk_book_now"
-        android:textColor="@color/text_white" />
+        android:layout_alignParentBottom="true" />
 
     <include layout="@layout/uisdk_activity_base" />
 

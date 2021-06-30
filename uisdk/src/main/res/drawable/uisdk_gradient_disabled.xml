@@ -2,7 +2,7 @@
     android:shape="rectangle">
     <gradient
         android:angle="0"
-        android:endColor="@color/khTransparentSecondaryColor"
-        android:startColor="@color/khTransparentSecondaryColor"
+        android:endColor="@color/KhButtonDisabledColor"
+        android:startColor="@color/KhButtonDisabledColor"
         android:type="linear" />
 </shape>

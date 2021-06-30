@@ -4,12 +4,13 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/primary</item>
         <item name="colorControlNormal">@color/med_grey</item>
         <item name="colorControlActivated">@color/primary</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
         <item name="android:windowSharedElementEnterTransition">
             @transition/uisdk_change_image_transform
         </item>
@@ -70,7 +71,6 @@
     <style name="AppTheme.Toolbar">
         <item name="colorControlNormal">@color/off_white</item>
         <item name="android:textColorSecondary">@color/off_white</item>
-        <item name="actionMenuTextColor">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/off_white</item>
         <item name="android:background">@color/primary</item>
     </style>
@@ -87,14 +87,12 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="android:background">@drawable/uisdk_gradient_toolbar</item>
         <item name="android:popupElevation">@dimen/elevation_default</item>
-        <item name="actionMenuTextColor">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.TransparentActionBar.Theme" parent="AppTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/primary</item>
         <item name="android:textColorSecondary">@color/primary</item>
-        <item name="actionMenuTextColor">@color/primary</item>
         <item name="android:textColorPrimary">@color/primary</item>
     </style>
 
@@ -330,7 +328,7 @@
         <item name="srcCompat">@drawable/uisdk_ic_dropoff_pin</item>
     </style>
 
-    <style name="KhBookButton">
+    <style name="KhMainButtonBackground">
         <item name="android:background">@drawable/uisdk_booking_button_background</item>
     </style>
 
@@ -339,6 +337,13 @@
         <item name="borderWidth">0dp</item>
         <item name="srcCompat">@drawable/uisdk_ic_check</item>
         <item name="tint">@color/white</item>
+    </style>
+
+    <style name="KhRidesBookButton" parent="KhMainButtonBackground">
+        <item name="backgroundColor">@drawable/uisdk_booking_button_background</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:text">@string/kh_uisdk_book_now</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
 </resources>
