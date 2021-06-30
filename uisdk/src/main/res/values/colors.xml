@@ -57,7 +57,7 @@
     <color name="divider">#E2E2E2</color>
 
     <!-- Tab Color Selector -->
-    <color name="tab_indicator">@color/primary</color>
+    <color name="tab_indicator">@color/colorAccent</color>
 
     <!-- CANCEL BUTTON -->
     <color name="transluscent_white">#CCFFFFFF</color>
@@ -66,6 +66,9 @@
     <!-- RatingBar -->
     <color name="duskYellow">#edd413</color>
     <color name="lightGrey">#bab9b5</color>
+
+    <color name="khTransparentSecondaryColor">#66181447</color>
+    <color name="khTimePickerColor">@color/primary</color>
 
     <!-- Icon -->
     <color name="icon_blue">#181A47</color>
