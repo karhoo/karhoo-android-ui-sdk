@@ -234,7 +234,7 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun onLoadingButtonClick() {
-         if (!isKarhooUser() && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()){
+        if (!isKarhooUser() && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()) {
             bookingRequestButton.onLoadingComplete()
         } else if (!presenter.isPaymentSet()) {
             bookingRequestPaymentDetailsWidget.callOnClick()
