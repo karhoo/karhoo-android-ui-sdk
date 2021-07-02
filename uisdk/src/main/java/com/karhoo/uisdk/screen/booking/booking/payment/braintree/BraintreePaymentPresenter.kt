@@ -165,11 +165,7 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun sdkInit(quote: Quote?) {
-        val currency = quote?.let {
-            it.price.currencyCode?.trim()
-        }.run {
-            DEFAULT_CURRENCY
-        }
+        val currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         val sdkInitRequest = getSDKInitRequest(currency)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
