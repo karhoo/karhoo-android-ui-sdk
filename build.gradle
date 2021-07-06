@@ -26,6 +26,24 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        // If you're using the Google Play Services Gradle plugin,
+        // you will also need to add this to your build.gradle to
+        // avoid a dependency resolution issue:
+        components.all {
+            allVariants {
+                withDependencies { deps ->
+                    deps.each { dep ->
+                        if (dep.group == 'net.minidev' && dep.name =='json-smart') {
+                            dep.version {
+                                prefer "2.3"
+                            }
+                            dep.because "resolving dependencies issue"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -45,10 +63,10 @@ allprojects {
         mavenLocal()
         maven { url 'https://jitpack.io' }
         maven {
-            url "https://cardinalcommerce.bintray.com/android"
+            url "https://cardinalcommerceprod.jfrog.io/artifactory/android"
             credentials {
-                username 'braintree-team-sdk@cardinalcommerce'
-                password '220cc9476025679c4e5c843666c27d97cfb0f951'
+                username 'braintree_team_sdk'
+                password 'AKCp8jQcoDy2hxSWhDAUQKXLDPDx6NYRkqrgFLRc3qDrayg6rrCbJpsKKyMwaykVL8FWusJpp'
             }
         }
     }
