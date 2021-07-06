@@ -30,9 +30,9 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestContract
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivityPresenter
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivityPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -95,7 +95,7 @@ class BookingRequestPresenterTest {
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()
     private val userStore: UserStore = mock()
-    private var view: BookingRequestMVP.View = mock()
+    private var view: BookingRequestContract.View = mock()
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -105,7 +105,7 @@ class BookingRequestPresenterTest {
     private val tripCall: Call<TripInfo> = mock()
     private val tripCaptor = argumentCaptor<(Resource<TripInfo>) -> Unit>()
 
-    private lateinit var requestPresenter: BookingRequestPresenter
+    private lateinit var requestPresenter: BookingRequestActivityPresenter
 
     @Before
     fun setUp() {
@@ -116,7 +116,7 @@ class BookingRequestPresenterTest {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        requestPresenter = BookingRequestPresenter(view, analytics, preferenceStore, tripsService,
+        requestPresenter = BookingRequestActivityPresenter(view, analytics, preferenceStore, tripsService,
                                                    userStore)
     }
 

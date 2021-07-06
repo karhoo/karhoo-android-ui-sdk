@@ -4,7 +4,6 @@
     android:id="@+id/bookingRequestLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
     android:fitsSystemWindows="true"
     android:background="@color/transparent">
 
@@ -113,4 +112,7 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/uisdk_activity_base" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

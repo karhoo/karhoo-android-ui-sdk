@@ -16,7 +16,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestContract
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.DateUtil
@@ -41,7 +41,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
         defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr), ScheduledDateView {
     private val scheduledDateViewBinder = ScheduledDateViewBinder()
-    var actions: BookingRequestMVP.Actions? = null
+    var actions: BookingRequestContract.Actions? = null
 
     init {
         View.inflate(context, R.layout.uisdk_alert_prebook_confirmation, this)

@@ -16,12 +16,8 @@ import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestState
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import org.joda.time.DateTime
 
-interface BookingRequestMVP {
+interface BookingRequestContract {
     interface View {
-
-        fun animateIn()
-
-        fun animateOut()
 
         fun bindEta(quote: Quote, card: String)
 
@@ -64,7 +60,6 @@ interface BookingRequestMVP {
         fun hideLoading()
 
         fun updateBookingButtonForGuest()
-
     }
 
     interface Presenter {
@@ -100,7 +95,7 @@ interface BookingRequestMVP {
 
         fun onPaymentFailureDialogCancelled()
 
-        fun onTermsAndConditionsRequested(url: String?)
+        fun setBookingStatus(bookingStatus: BookingStatus?)
     }
 
     interface Actions : PaymentActions {
