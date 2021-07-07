@@ -47,7 +47,7 @@ afterEvaluate {
 
                 groupId = 'com.karhoo'
                 artifactId = 'uisdk'
-                version = '1.4.0'
+                version = '1.4.1-rc1'
             }
         }
     }

@@ -8,13 +8,18 @@ src="https://cdn.karhoo.com/s/images/logos/karhoo_logo.png"
 </a>
 </div>
 
-<h1>Karhoo Android UI SDK</h1>
+#Karhoo Android UI SDK
 
 The UI SDK extends our [**Network SDK**](https://github.com/karhoo/karhoo-android-sdk) with ready to use screens and views for your end users to book rides with [**Karhoo**](https://karhoo.com/) in your application.
 
 For more general information about the SDKs, checkout [**the karhoo developer portal**](https://developer.karhoo.com/docs/build-apps-using-sdks)
 
 ## Installation
+Stable Release
+```gradle
+implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.4.1'
+```
+Canary Release
 ```gradle
 implementation 'com.github.karhoo:karhoo-android-ui-sdk:develop-SNAPSHOT'
 ```
