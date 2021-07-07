@@ -32,6 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/KhBookingMapLocationIcon" />
+        style="@style/KhBookingMapLocateMeButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
