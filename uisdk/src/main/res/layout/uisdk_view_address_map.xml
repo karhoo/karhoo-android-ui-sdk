@@ -30,26 +30,23 @@
 
         <ImageView
             android:id="@+id/pickupPinIcon"
+            style="@style/KhAddressMapPickupIcon"
             android:layout_width="@dimen/spacing_medium"
             android:layout_height="@dimen/spacing_medium_large"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/icon_size_medium"
-            app:srcCompat="@drawable/uisdk_ic_dropoff_pin" />
+            android:layout_marginBottom="@dimen/icon_size_medium" />
 
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addressSelectButton"
+        style="@style/KhAddressMapSelectLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_small"
         android:layout_marginBottom="@dimen/spacing_small"
-        android:backgroundTint="@color/primary"
-        app:tint="@color/white"
-        app:borderWidth="@dimen/spacing_none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/uisdk_ic_check">
+        app:layout_constraintEnd_toEndOf="parent">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

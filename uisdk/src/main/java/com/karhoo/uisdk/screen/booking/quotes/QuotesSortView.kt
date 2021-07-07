@@ -51,18 +51,15 @@ class QuotesSortView @JvmOverloads constructor(
             addTab(quotesSortTabLayout.newTab())
             addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
-                    if (tab.position == 0) {
-                        etaClicked()
-                    } else {
-                        priceClicked()
-                    }
+                    setSortingMethodByTabPosition(tab.position)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab) {
                     // Do nothing
                 }
+
                 override fun onTabReselected(tab: TabLayout.Tab) {
-                    // Do nothing
+                    setSortingMethodByTabPosition(tab.position)
                 }
             })
         }
@@ -70,10 +67,10 @@ class QuotesSortView @JvmOverloads constructor(
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesSortView,
-                                                        defStyleAttr, R.style.KhQuotesSortView)
+                defStyleAttr, R.style.KhQuotesSortView)
         val rightBackground = typedArray.getResourceId(R.styleable
-                                                               .QuotesSortView_rightBackground, R
-                                                               .drawable.uisdk_sort_right_background)
+                .QuotesSortView_rightBackground, R
+                .drawable.uisdk_sort_right_background)
         leftBackground = typedArray.getResourceId(R.styleable.QuotesSortView_leftBackground, R
                 .drawable
                 .uisdk_sort_left_background)
@@ -88,14 +85,12 @@ class QuotesSortView @JvmOverloads constructor(
     private fun etaClicked() {
         if (!isPrebook) {
             setSelectedSortMethod(SortMethod.ETA)
-            listener?.onUserChangedSortMethod(selectedSortMethod)
         }
     }
 
     private fun priceClicked() {
         if (hasDestination) {
             setSelectedSortMethod(SortMethod.PRICE)
-            listener?.onUserChangedSortMethod(selectedSortMethod)
         } else {
             listener?.sortChoiceRequiresDestination()
         }
@@ -105,12 +100,10 @@ class QuotesSortView @JvmOverloads constructor(
         this.selectedSortMethod = selectedSortMethod
         when (selectedSortMethod) {
             SortMethod.ETA -> activateEtaButton()
-            SortMethod.PRICE -> if (isPrebook) {
-                activatePriceButtonForPrebook()
-            } else {
-                activatePriceButton()
-            }
+            SortMethod.PRICE -> activatePriceButton()
         }
+
+        listener?.onUserChangedSortMethod(selectedSortMethod)
     }
 
     private fun activateEtaButton() {
@@ -131,21 +124,17 @@ class QuotesSortView @JvmOverloads constructor(
         priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
     }
 
-    private fun activatePriceButtonForPrebook() {
-        // deactivate eta button
-        etaLayout.isActivated = false
-        etaLabel.setTextColor(ContextCompat.getColor(context, unselectedColor))
-        // activate highPrice button
-        priceLayout.isActivated = true
-        priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
-    }
-
     fun destinationChanged(bookingStatus: BookingStatus?) {
         hasDestination = bookingStatus?.destination != null
         isPrebook = bookingStatus?.date != null
         val sortMethod = if (hasDestination && isPrebook) SortMethod.PRICE else SortMethod.ETA
         setSelectedSortMethod(sortMethod)
-        listener?.onUserChangedSortMethod(selectedSortMethod)
+    }
+
+    private fun setSortingMethodByTabPosition(position: Int) = if (position == 0) {
+        etaClicked()
+    } else {
+        priceClicked()
     }
 
     interface Listener {

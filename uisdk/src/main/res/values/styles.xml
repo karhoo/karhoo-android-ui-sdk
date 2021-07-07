@@ -4,12 +4,13 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/secondary</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
         <item name="colorAccent">@color/primary</item>
         <item name="colorControlNormal">@color/med_grey</item>
         <item name="colorControlActivated">@color/primary</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>
+        <item name="android:actionMenuTextColor">@color/colorAccent</item>
         <item name="android:windowSharedElementEnterTransition">
             @transition/uisdk_change_image_transform
         </item>
@@ -36,8 +37,8 @@
     </style>
 
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/secondary</item>
-        <item name="colorControlNormal">@color/primary_green</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="colorControlNormal">@color/secondary</item>
         <item name="android:textColor">@color/dark_grey</item>
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
@@ -70,8 +71,8 @@
     <style name="AppTheme.Toolbar">
         <item name="colorControlNormal">@color/off_white</item>
         <item name="android:textColorSecondary">@color/off_white</item>
-        <item name="actionMenuTextColor">@color/off_black</item>
         <item name="android:textColorPrimary">@color/off_white</item>
+        <item name="android:background">@color/primary</item>
     </style>
 
     <style name="AppTheme.Overflow" parent="AppTheme">
@@ -92,20 +93,18 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorControlNormal">@color/primary</item>
         <item name="android:textColorSecondary">@color/primary</item>
-        <item name="actionMenuTextColor">@color/primary</item>
         <item name="android:textColorPrimary">@color/primary</item>
     </style>
 
     <style name="AppTheme.EditText" parent="AppTheme">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="colorAccent">@color/primary</item>
-        <item name="colorControlNormal">@color/med_grey</item>
+        <item name="colorControlNormal">@color/dark_grey</item>
         <item name="colorControlActivated">@color/primary</item>
         <item name="colorControlHighlight">@color/primary</item>
     </style>
 
     <style name="AppTheme.EditTextWithHint" parent="AppTheme.EditText">
-        <item name="android:textColorHint">@color/primary</item>
         <item name="android:backgroundTint">@color/off_white</item>
     </style>
 
@@ -260,14 +259,21 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
 
+    <style name="KhBookingMapLocateMeButton">
+        <item name="srcCompat">@drawable/uisdk_ic_location</item>
+        <item name="android:tint">@color/black</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="borderWidth">0dp</item>
+    </style>
+
     <style name="KhBookingMapLocationIcon">
         <item name="srcCompat">@drawable/uisdk_ic_location</item>
-        <item name="android:backgroundTint">@color/off_white</item>
+        <item name="android:tint">@color/black</item>
     </style>
 
     <style name="KhBookingMapSelectorIcon">
         <item name="srcCompat">@drawable/uisdk_ic_map_selector</item>
-        <item name="android:backgroundTint">@color/off_white</item>
+        <item name="android:tint">@color/black</item>
     </style>
 
     <style name="KhQuotesSortTabs" parent="Widget.Design.TabLayout">
@@ -316,6 +322,28 @@
         <item name="addCardIcon">@drawable/uisdk_ic_plus</item>
         <item name="lineText">@style/Text.Black</item>
         <item name="actionText">@style/Text.Action.Primary</item>
+    </style>
+
+    <style name="KhAddressMapPickupIcon">
+        <item name="srcCompat">@drawable/uisdk_ic_dropoff_pin</item>
+    </style>
+
+    <style name="KhMainButtonBackground">
+        <item name="android:background">@drawable/uisdk_booking_button_background</item>
+    </style>
+
+    <style name="KhAddressMapSelectLocation">
+        <item name="android:backgroundTint">@color/secondary</item>
+        <item name="borderWidth">0dp</item>
+        <item name="srcCompat">@drawable/uisdk_ic_check</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+    <style name="KhRidesBookButton" parent="KhMainButtonBackground">
+        <item name="backgroundColor">@drawable/uisdk_booking_button_background</item>
+        <item name="backgroundTint">@null</item>
+        <item name="android:text">@string/kh_uisdk_book_now</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
 </resources>

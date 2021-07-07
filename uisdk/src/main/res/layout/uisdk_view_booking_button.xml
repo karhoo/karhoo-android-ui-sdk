@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bookingButtonLayout"
+    style="@style/KhMainButtonBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/uisdk_booking_button_background"
     android:orientation="vertical">
 
     <LinearLayout
