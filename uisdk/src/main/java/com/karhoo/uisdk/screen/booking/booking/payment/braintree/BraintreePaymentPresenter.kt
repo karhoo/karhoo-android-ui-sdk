@@ -165,8 +165,8 @@ class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
     }
 
     override fun sdkInit(quote: Quote?) {
-        //currency is temporarily hardcoded to DEFAULT_CURRENCY as it isn't used by the backend to fix DROID-1536. Also hardcoded to DEFAULT_CURRENCY in the iOS code.
-        val sdkInitRequest = getSDKInitRequest(DEFAULT_CURRENCY)
+        val currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
+        val sdkInitRequest = getSDKInitRequest(currency)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
