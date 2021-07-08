@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -264,16 +265,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     this.quote = actions.quote
 
                     val intent = Intent(this, BookingRequestActivity::class.java)
-                    intent.putExtra(BookingRequestActivity.QUOTE_KEY, actions.quote)
-                    intent.putExtra(BookingRequestActivity.OUTBOUND_TRIP_ID_KEY, outboundTripId)
-                    intent.putExtra(BookingRequestActivity.BOOKING_METADATA_KEY, bookingMetadata)
-                    intent.putExtra(BookingRequestActivity.BOOKING_STATUS_KEY,
+                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_QUOTE_KEY, actions.quote)
+                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY, outboundTripId)
+                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_METADATA_KEY, bookingMetadata)
+                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_STATUS_KEY,
                             BookingStatus(bookingStatusStateViewModel.currentState.pickup,
                                     bookingStatusStateViewModel.currentState.destination,
                                     bookingStatusStateViewModel.currentState.date))
-                    startActivity(intent)
-
-//                    bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId, bookingMetadata)
+                    startActivityForResult(intent, REQ_CODE_BOOKING_REQUEST_ACTIVITY)
                 }
             }
         }
@@ -287,6 +286,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST ||
                 requestCode == REQ_CODE_ADYEN) {
 //            bookingRequestWidget.onActivityResult(requestCode, resultCode, data)
+        } else if(resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
+            waitForTripAllocation()
+            tripAllocationWidget.waitForAllocation(data?.extras?.get(BookingRequestActivity.BOOKING_REQUEST_TRIP_INFO_KEY) as TripInfo)
         } else if (resultCode == RESULT_OK && data != null) {
             when (requestCode) {
                 AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
@@ -325,7 +327,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun waitForTripAllocation() {
         quotesListWidget.hideList()
         addressBarWidget.visibility = View.INVISIBLE
-//        bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
@@ -486,6 +487,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     companion object {
         private const val REQ_CODE_BRAINTREE = 301
+        private const val REQ_CODE_BOOKING_REQUEST_ACTIVITY = 304
         private const val REQ_CODE_BRAINTREE_GUEST = 302
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001
         private const val NAVIGATION_ICON_DELAY = 100L

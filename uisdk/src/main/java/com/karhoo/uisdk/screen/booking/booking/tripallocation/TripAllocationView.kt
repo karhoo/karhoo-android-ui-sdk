@@ -56,7 +56,7 @@ class TripAllocationView @JvmOverloads constructor(
         View.inflate(context, R.layout.uisdk_view_trip_allocation, this)
     }
 
-    private fun waitForAllocation(trip: TripInfo) {
+    fun waitForAllocation(trip: TripInfo) {
         presenter = TripAllocationPresenter(this, KarhooApi.tripService)
         val animUpwards = resources.getDimension(R.dimen.spacing_xsmall).convertDpToPixels().toFloat()
         findingYourTripLabel.animate()

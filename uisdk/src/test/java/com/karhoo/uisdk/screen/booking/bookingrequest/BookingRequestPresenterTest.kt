@@ -264,7 +264,6 @@ class BookingRequestPresenterTest {
         verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindPriceAndEta(quote, "")
     }
 
@@ -284,7 +283,6 @@ class BookingRequestPresenterTest {
         requestPresenter.showBookingRequest(quote)
 
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindEta(quote, "")
     }
 
@@ -304,7 +302,6 @@ class BookingRequestPresenterTest {
         requestPresenter.showBookingRequest(quote)
 
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindPrebook(quote, "", scheduledDate)
     }
 
@@ -519,7 +516,6 @@ class BookingRequestPresenterTest {
         requestPresenter.onPaymentFailureDialogCancelled()
 
         verify(view).hideLoading()
-        verify(view).animateOut()
     }
 
     /**
@@ -613,7 +609,6 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
         verify(preferenceStore).lastTrip = trip
-        verify(view).animateOut()
         verify(view).onTripBookedSuccessfully(trip)
         verify(view, never()).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract

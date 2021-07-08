@@ -39,7 +39,6 @@ import kotlinx.android.synthetic.main.uisdk_booking_request.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.*
 import org.joda.time.DateTime
 import java.util.*
-import kotlin.collections.HashMap
 
 class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, BookingRequestContract.Actions,
         BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
@@ -47,9 +46,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override val layout: Int
         get() = R.layout.uisdk_booking_request
 
-    private lateinit var containerAnimateIn: Animation
-    private lateinit var containerAnimateOut: Animation
-    private var backgroundFade: TransitionDrawable? = null
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
@@ -75,8 +71,8 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
 
         extras?.let { extras ->
-            val quote = extras.getParcelable<Quote>(QUOTE_KEY)
-            val bookingStatus = extras.getParcelable<BookingStatus>(BOOKING_STATUS_KEY)
+            val quote = extras.getParcelable<Quote>(BOOKING_REQUEST_QUOTE_KEY)
+            val bookingStatus = extras.getParcelable<BookingStatus>(BOOKING_REQUEST_STATUS_KEY)
 
             if (quote != null) {
                 bookingRequestButton.onLoadingComplete()
@@ -84,10 +80,10 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
                 presenter.setBookingStatus(bookingStatus)
                 presenter.showBookingRequest(
                         quote = quote,
-                        outboundTripId = extras.getString(OUTBOUND_TRIP_ID_KEY),
-                        bookingMetadata = extras.getSerializable(BOOKING_METADATA_KEY) as HashMap<String, String>?
+                        outboundTripId = extras.getString(BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY),
+                        bookingMetadata = extras.getSerializable(BOOKING_REQUEST_METADATA_KEY) as HashMap<String, String>?
                 )
-                initialiseChangeCard(quote)
+                //initialiseChangeCard(quote)
             }
         }
 
@@ -96,13 +92,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override fun handleExtras() {}
 
     override fun showGuestBookingFields(details: PassengerDetails) {
-        val constraintSet = ConstraintSet()
-        constraintSet.constrainHeight(R.id.bookingRequestScrollView, 0)
-        constraintSet.clone(bookingRequestLayout)
-        constraintSet.connect(R.id.bookingRequestScrollView, ConstraintSet.TOP, ConstraintSet.PARENT_ID,
-                ConstraintSet.TOP, 0)
-        constraintSet.applyTo(bookingRequestLayout)
-
         bookingRequestPassengerDetailsWidget.visibility = ConstraintLayout.VISIBLE
         bookingRequestCommentsWidget.visibility = ConstraintLayout.VISIBLE
         passengerDetailsHeading.visibility = ConstraintLayout.VISIBLE
@@ -117,11 +106,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         bookingRequestPassengerDetailsWidget.visibility = ConstraintLayout.GONE
         bookingRequestCommentsWidget.visibility = ConstraintLayout.GONE
         passengerDetailsHeading.visibility = ConstraintLayout.GONE
-
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(bookingRequestLayout)
-        constraintSet.constrainHeight(R.id.bookingRequestScrollView, ConstraintSet.WRAP_CONTENT)
-        constraintSet.applyTo(bookingRequestLayout)
     }
 
     override fun onPause() {
@@ -146,9 +130,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     private fun attachListeners() {
-//        bindViewToBookingStatus(this, bookingStatusStateViewModel)
-//        bindViewToBookingRequest(this, bookingRequestStateViewModel)
-
         bookingRequestQuotesWidget.setOnClickListener {}
         cancelButton.setOnClickListener {
             presenter.clearData()
@@ -177,12 +158,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         bookingRequestLayout.visibility = View.VISIBLE
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
     }
-
-//    override fun onBackPressed() {
-//        if (bookingRequestLayout.visibility == View.VISIBLE) {
-//            cancelButton.callOnClick()
-//        }
-//    }
 
     override fun bindViewToBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
     }
@@ -224,9 +199,8 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     private fun hideWindow() {
-//        if (containerAnimateOut.hasEnded() || !containerAnimateOut.hasStarted()) {
         presenter.onPaymentFailureDialogCancelled()
-//        }
+        finish();
     }
 
     override fun onLoadingButtonClick() {
@@ -244,6 +218,12 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
         bookingRequestButton.onLoadingComplete()
+
+        val data = Intent()
+        data.putExtra(BOOKING_REQUEST_TRIP_INFO_KEY, tripInfo)
+
+        setResult(RESULT_OK, data)
+        finish()
     }
 
     override fun onError() {
@@ -253,7 +233,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override fun resetBookingButton() {
         bookingRequestButton.onLoadingComplete()
         cancelButton.isEnabled = true
-        bookingRequestLayout.setOnClickListener { hideWindow() }
     }
 
     override fun enableCancelButton() {
@@ -393,9 +372,11 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     companion object {
-        const val QUOTE_KEY = "BOOKING_REQUEST_INPUT_QUOTE"
-        const val OUTBOUND_TRIP_ID_KEY = "BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY"
-        const val BOOKING_METADATA_KEY = "BOOKING_REQUEST_METADATA_KEY"
-        const val BOOKING_STATUS_KEY = "BOOKING_STATUS_KEY"
+        const val BOOKING_REQUEST_QUOTE_KEY = "BOOKING_REQUEST_INPUT_QUOTE"
+        const val BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY = "BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY"
+        const val BOOKING_REQUEST_METADATA_KEY = "BOOKING_REQUEST_METADATA_KEY"
+        const val BOOKING_REQUEST_STATUS_KEY = "BOOKING_STATUS_KEY"
+        const val BOOKING_REQUEST_TRIP_INFO_KEY = "TRIP_INFO_KEY"
+        const val BOOKING_REQUEST_PASSENGER_KEY = "PASSENGER_KEY"
     }
 }
