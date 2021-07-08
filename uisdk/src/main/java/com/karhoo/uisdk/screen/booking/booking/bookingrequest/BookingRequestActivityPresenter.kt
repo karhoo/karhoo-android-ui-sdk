@@ -184,9 +184,9 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
     }
 
     private fun getBookingMetadataMap(identifier: String, tripId: String?): HashMap<String, String>? {
-        return bookingMetadata?.let {
-            it[TRIP_ID] = identifier
-            it
+        return bookingMetadata?.let { bookingData ->
+            tripId?.let { bookingData[TRIP_ID] = identifier }
+            bookingData
         } ?: run {
             tripId?.let { hashMapOf(TRIP_ID to identifier) }
         }
