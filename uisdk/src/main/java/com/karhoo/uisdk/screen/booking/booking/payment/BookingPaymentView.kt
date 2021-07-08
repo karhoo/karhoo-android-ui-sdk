@@ -24,7 +24,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
                                                    defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View,
-      BookingPaymentMVP.Widget, PaymentDropInMVP.Actions {
+        BookingPaymentMVP.Widget, PaymentDropInMVP.Actions {
 
     private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
 
@@ -68,7 +68,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPaymentView,
-                                                        defStyleAttr, R.style.KhPaymentView)
+                defStyleAttr, R.style.KhPaymentView)
         addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus)
@@ -151,17 +151,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        savedPaymentInfo?.let {
-            apply {
-                bindViews(it.cardType, it.lastFour)
-                changeCardProgressBar.visibility = INVISIBLE
-                cardDetailsVisibility(VISIBLE)
-                editCardButtonVisibility(View.VISIBLE)
-                changeCardLabel.visibility = VISIBLE
-                paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
-                setCardType(it.cardType)
-            }
-        } ?: run {
+        if (savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()) {
+            bindViews(savedPaymentInfo.cardType, savedPaymentInfo.lastFour)
+            changeCardProgressBar.visibility = INVISIBLE
+            cardDetailsVisibility(VISIBLE)
+            editCardButtonVisibility(View.VISIBLE)
+            changeCardLabel.visibility = VISIBLE
+            paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
+            setCardType(savedPaymentInfo.cardType)
+        } else {
             cardNumberText.text = resources.getString(R.string.kh_uisdk_add_payment)
             changeCardLabel.visibility = GONE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)

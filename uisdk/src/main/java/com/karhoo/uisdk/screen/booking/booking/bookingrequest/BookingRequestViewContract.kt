@@ -20,8 +20,6 @@ interface BookingRequestViewContract {
         fun resetBookingButton()
         fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>?)
-
-        fun onBackPressed(): Boolean
     }
 
     sealed class BookingRequestEvent {
