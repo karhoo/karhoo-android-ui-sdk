@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.SslErrorHandler
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -18,6 +19,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.formattedTripId
+import kotlinx.android.synthetic.main.uisdk_activity_web.*
 import kotlinx.android.synthetic.main.uisdk_view_web.view.khWebViewToolbar
 import kotlinx.android.synthetic.main.uisdk_view_web.view.progressBar
 import kotlinx.android.synthetic.main.uisdk_view_web.view.webView
@@ -80,8 +82,8 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
 
     private inner class KarhooWebViewClient : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            webView?.loadUrl(url)
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            webView?.loadUrl(request.url.toString())
             return false
         }
 
