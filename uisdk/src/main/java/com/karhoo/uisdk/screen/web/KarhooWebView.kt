@@ -19,7 +19,6 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.formattedTripId
-import kotlinx.android.synthetic.main.uisdk_activity_web.*
 import kotlinx.android.synthetic.main.uisdk_view_web.view.khWebViewToolbar
 import kotlinx.android.synthetic.main.uisdk_view_web.view.progressBar
 import kotlinx.android.synthetic.main.uisdk_view_web.view.webView
