@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
