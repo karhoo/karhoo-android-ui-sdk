@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.driverNameText
 import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.driverPhotoImage
 import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.layoutRoot
+import java.lang.Exception
 
 private const val DRIVER_PHOTO_URL = "DriverPhotoActivity.URL"
 private const val DRIVER_NAME = "DriverPhotoActivity.DRIVER_NAME"
@@ -48,14 +49,14 @@ class DriverPhotoActivity : BaseActivity() {
         val url = extras?.getString(DRIVER_PHOTO_URL, "")
 
         supportPostponeEnterTransition()
-        Picasso.with(this)
+        Picasso.get()
                 .load(url)
                 .into(driverPhotoImage, object : Callback {
                     override fun onSuccess() {
                         supportStartPostponedEnterTransition()
                     }
 
-                    override fun onError() {
+                    override fun onError(e: Exception?) {
                         supportStartPostponedEnterTransition()
                     }
                 })

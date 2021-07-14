@@ -17,7 +17,7 @@ object PicassoLoader {
                   callback: Callback? = null) {
         val logoSize = context.resources.getDimension(logoSizeDimenId).convertDpToPixels()
 
-        val picasso = Picasso.with(context)
+        val picasso = Picasso.get()
         val creator: RequestCreator
 
         creator = if (!url.isNullOrBlank()) {
