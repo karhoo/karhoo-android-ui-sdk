@@ -45,7 +45,7 @@ interface BookingRequestContract {
 
         fun setCapacity(vehicle: QuoteVehicle)
 
-        fun showGuestBookingFields(details: PassengerDetails = PassengerDetails())
+        fun showGuestBookingFields(details: PassengerDetails?)
 
         fun showAuthenticatedUserBookingFields()
 
@@ -53,13 +53,11 @@ interface BookingRequestContract {
 
         fun showPaymentUI()
 
+        fun showLoading(show: Boolean)
+
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
-
-        fun hideLoading()
-
-        fun updateBookingButtonForGuest()
     }
 
     interface Presenter {
@@ -69,8 +67,6 @@ interface BookingRequestContract {
         fun handleChangeCard()
 
         fun handleError(stringId: Int, karhooError: KarhooError?)
-
-        fun hideBookingRequest()
 
         fun makeBooking()
 

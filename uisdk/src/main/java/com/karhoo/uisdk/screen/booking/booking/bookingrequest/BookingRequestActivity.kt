@@ -1,20 +1,20 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.view.View
-import android.view.animation.Animation
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.*
+import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.sdk.api.model.PoiType
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
@@ -28,13 +28,11 @@ import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
-import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_activity_base.*
+import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_request.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.*
 import org.joda.time.DateTime
@@ -60,13 +58,13 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
         presenter = BookingRequestActivityPresenter(this,
                 KarhooUISDK.analytics,
-                KarhooPreferenceStore.getInstance(this.applicationContext),
+                KarhooPreferenceStore.getInstance(applicationContext),
                 KarhooApi.tripService,
                 KarhooApi.userStore)
 
         isGuest = isGuest()
         attachListeners()
-        bookingRequestFlightDetailsWidget.setHintText(this.getString(R.string.kh_uisdk_add_flight_details))
+        bookingRequestFlightDetailsWidget.setHintText(getString(R.string.kh_uisdk_add_flight_details))
         presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
 
@@ -76,7 +74,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
             if (quote != null) {
                 bookingRequestButton.onLoadingComplete()
-                bookingRequestLayout.visibility = View.VISIBLE
+                bookingRequestLayout.visibility = VISIBLE
                 presenter.setBookingStatus(bookingStatus)
                 presenter.showBookingRequest(
                         quote = quote,
@@ -105,35 +103,30 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         finish()
     }
 
-    override fun handleExtras() {}
+    override fun showGuestBookingFields(details: PassengerDetails?) {
+        if(details == null) {
+            bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
+        }
 
-    override fun showGuestBookingFields(details: PassengerDetails) {
-        bookingRequestPassengerDetailsWidget.visibility = ConstraintLayout.VISIBLE
-        bookingRequestCommentsWidget.visibility = ConstraintLayout.VISIBLE
-        passengerDetailsHeading.visibility = ConstraintLayout.VISIBLE
-        bookingRequestPassengerDetailsWidget.setPassengerDetails(details)
-    }
-
-    override fun updateBookingButtonForGuest() {
-        bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
+        bookingRequestPassengerDetailsWidget.visibility = VISIBLE
+        bookingRequestCommentsWidget.visibility = VISIBLE
+        passengerDetailsHeading.visibility = VISIBLE
+        bookingRequestPassengerDetailsWidget.setPassengerDetails(details ?: PassengerDetails())
     }
 
     override fun showAuthenticatedUserBookingFields() {
-        bookingRequestPassengerDetailsWidget.visibility = ConstraintLayout.GONE
-        bookingRequestCommentsWidget.visibility = ConstraintLayout.GONE
-        passengerDetailsHeading.visibility = ConstraintLayout.GONE
+        bookingRequestPassengerDetailsWidget.visibility = GONE
+        bookingRequestCommentsWidget.visibility = GONE
+        passengerDetailsHeading.visibility = GONE
     }
 
     override fun onPause() {
         super.onPause()
         if (holdOpenForPaymentFlow) {
-            resetBookingButton()
+            showLoading(false)
             holdOpenForPaymentFlow = false
-        } else {
-            presenter.hideBookingRequest()
         }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -150,7 +143,8 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         cancelButton.setOnClickListener {
             presenter.clearData()
             it.hideSoftKeyboard()
-            hideWindow()
+            presenter.onPaymentFailureDialogCancelled()
+            finish();
         }
 
         bookingRequestLinearLayout.setOnClickListener {
@@ -161,7 +155,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestTermsWidget.actions = this
-
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
@@ -171,19 +164,13 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?) {
         bookingRequestButton.onLoadingComplete()
-        bookingRequestLayout.visibility = View.VISIBLE
+        bookingRequestLayout.visibility = VISIBLE
         presenter.showBookingRequest(quote = quote, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
-    }
-
-    override fun bindViewToBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
-    }
-
-    override fun bindViewToBookingRequest(lifecycleOwner: LifecycleOwner, bookingRequestStateViewModel: BookingRequestStateViewModel) {
     }
 
     override fun bindEta(quote: Quote, card: String) {
         bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
-                this.getString(R.string.kh_uisdk_estimated_arrival_time),
+                getString(R.string.kh_uisdk_estimated_arrival_time),
                 quote.quoteType)
     }
 
@@ -214,11 +201,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
-    private fun hideWindow() {
-        presenter.onPaymentFailureDialogCancelled()
-        finish();
-    }
-
     override fun onLoadingButtonClick() {
         if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser
                 && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()) {
@@ -246,11 +228,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         bookingRequestButton.onLoadingComplete()
     }
 
-    override fun resetBookingButton() {
-        bookingRequestButton.onLoadingComplete()
-        cancelButton.isEnabled = true
-    }
-
     override fun enableCancelButton() {
         cancelButton.isEnabled = true
     }
@@ -258,9 +235,9 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override fun displayFlightDetailsField(poiType: PoiType?) {
         when (poiType) {
             PoiType.AIRPORT -> {
-                bookingRequestFlightDetailsWidget.visibility = View.VISIBLE
+                bookingRequestFlightDetailsWidget.visibility = VISIBLE
             }
-            else -> bookingRequestFlightDetailsWidget.visibility = View.GONE
+            else -> bookingRequestFlightDetailsWidget.visibility = GONE
         }
     }
 
@@ -279,23 +256,27 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
                 titleResId = R.string.kh_uisdk_payment_issue,
                 messageResId = R.string.kh_uisdk_payment_issue_message,
                 karhooError = error,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            onPaymentHandlePositive()
-                            dialog.dismiss()
-                        }),
-                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
-                        DialogInterface.OnClickListener { dialog, _ ->
-                            onPaymentHandleCancelled()
-                            dialog.dismiss()
-                        }))
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card) { dialog, _ ->
+                    onPaymentHandle(true)
+                    dialog.dismiss()
+                },
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel) { dialog, _ ->
+                    onPaymentHandle(false)
+                    dialog.dismiss()
+                })
         KarhooAlertDialogHelper(this).showAlertDialog(config)
+    }
 
+    override fun handlePaymentDetailsUpdate() {
+        // Do nothing
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
-        resetBookingButton()
         presenter.handleError(stringId, karhooError)
+    }
+
+    override fun handleExtras() {
+        // Do nothings
     }
 
     override fun handleChangeCard() {
@@ -311,7 +292,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
-        val activityWasStartedForResult = this.callingActivity != null
+        val activityWasStartedForResult = callingActivity != null
 
         if (activityWasStartedForResult) {
             val data = Intent().apply {
@@ -322,7 +303,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         } else {
             bookingRequestButton.onLoadingComplete()
 
-            var prebookConfirmationView = PrebookConfirmationView(this).apply {
+            val prebookConfirmationView = PrebookConfirmationView(this).apply {
                 bind(quoteType, tripInfo)
             }
             prebookConfirmationView.actions = this
@@ -333,22 +314,20 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         presenter.resetBooking()
     }
 
-    private fun onPaymentHandlePositive() {
+    private fun onPaymentHandle(positive: Boolean) = if (positive) {
         presenter.onPaymentFailureDialogPositive()
-    }
-
-    private fun onPaymentHandleCancelled() {
+    } else {
         presenter.onPaymentFailureDialogCancelled()
     }
 
-    override fun hideLoading() {
-        cancelButton.isEnabled = true
-        bookingRequestButton.onLoadingComplete()
-    }
-
-    private fun showLoading() {
-        cancelButton.isEnabled = false
-        bookingRequestButton.showLoading()
+    override fun showLoading(show: Boolean) {
+        if (show) {
+            cancelButton.isEnabled = false
+            bookingRequestButton.showLoading()
+        } else {
+            cancelButton.isEnabled = true
+            bookingRequestButton.onLoadingComplete()
+        }
     }
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
@@ -356,7 +335,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
-        showLoading()
+        showLoading(true)
         presenter.passBackPaymentIdentifiers(threeDSNonce, tripId,
                 bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
     }
@@ -367,10 +346,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
     override fun initialiseGuestPayment(quote: Quote?) {
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
-    }
-
-    override fun handlePaymentDetailsUpdate() {
-        // not used
     }
 
     override fun showPaymentDialog(error: KarhooError?) {

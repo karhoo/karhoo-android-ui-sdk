@@ -96,9 +96,6 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
         return userStore.savedPaymentInfo != null
     }
 
-    override fun hideBookingRequest() {
-    }
-
     private fun currentTripInfo(): TripInfo {
         return TripInfo(
                 origin = origin?.toTripLocationDetails(),
@@ -113,7 +110,6 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
         if (date != null) {
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
-            hideBookingRequest()
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(BookingRequestViewContract.BookingRequestEvent
                                                           .BookingSuccess(tripInfo))
@@ -145,8 +141,7 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
 
         when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
-                view?.updateBookingButtonForGuest()
-                view?.showGuestBookingFields()
+                view?.showGuestBookingFields(null)
             }
             is AuthenticationMethod.TokenExchange -> {
                 view?.showGuestBookingFields(details = getPassengerDetails())
@@ -256,13 +251,12 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
     }
 
     override fun onPaymentFailureDialogPositive() {
-        view?.hideLoading()
+        view?.showLoading(false)
         handleChangeCard()
     }
 
     override fun onPaymentFailureDialogCancelled() {
-        view?.hideLoading()
-        hideBookingRequest()
+        view?.showLoading(false)
     }
 
     companion object {

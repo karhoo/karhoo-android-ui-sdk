@@ -132,7 +132,7 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).updateBookingButtonForGuest()
+        verify(view, never()).showGuestBookingFields(any())
     }
 
     /**
@@ -149,7 +149,7 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).updateBookingButtonForGuest()
+        verify(view, never()).showGuestBookingFields(any())
     }
 
 
@@ -179,8 +179,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(false)
 
-        verify(view).showGuestBookingFields(PassengerDetails())
-        verify(view).updateBookingButtonForGuest()
+        verify(view).showGuestBookingFields(null)
     }
 
     /**
@@ -198,7 +197,6 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(true)
 
         verify(view).showGuestBookingFields(passengerDetails)
-        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -502,7 +500,7 @@ class BookingRequestPresenterTest {
     fun `Select Positive option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogPositive()
 
-        verify(view).hideLoading()
+        verify(view).showLoading(false)
         verify(view).initialiseChangeCard(null)
     }
 
@@ -515,7 +513,7 @@ class BookingRequestPresenterTest {
     fun `Select Negative option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogCancelled()
 
-        verify(view).hideLoading()
+        verify(view).showLoading(false)
     }
 
     /**

@@ -66,7 +66,7 @@
         <activity
             android:name="com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.web.WebActivity"
             android:label="@string/kh_uisdk_title_activity_trip"
