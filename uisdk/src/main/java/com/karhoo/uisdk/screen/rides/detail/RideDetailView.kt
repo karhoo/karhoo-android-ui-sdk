@@ -97,7 +97,7 @@ class RideDetailView @JvmOverloads constructor(
     private fun loadLogo(trip: TripInfo) {
         val fleetInfo: FleetInfo? = trip.fleetInfo
         if (!fleetInfo?.logoUrl.isNullOrEmpty()) {
-            Picasso.with(context)
+            Picasso.get()
                     .load(trip.fleetInfo?.logoUrl)
                     .into(logoImage)
         }
