@@ -167,11 +167,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         quotesListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
-//        bookingRequestWidget.apply {
-
-//            bindViewToBookingStatus(this@BookingActivity, bookingStatusStateViewModel)
-//            bindViewToBookingRequest(this@BookingActivity, bookingRequestStateViewModel)
-//        }
         addressBarWidget.setJourneyInfo(journeyInfo)
 
         locateMeButton.setOnClickListener {
@@ -195,7 +190,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         lifecycle.apply {
             addObserver(bookingMapWidget)
-//            addObserver(bookingRequestWidget)
         }
     }
 
@@ -285,7 +279,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST ||
                 requestCode == REQ_CODE_ADYEN) {
-//            bookingRequestWidget.onActivityResult(requestCode, resultCode, data)
         } else if(resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
             waitForTripAllocation()
             tripAllocationWidget.waitForAllocation(data?.extras?.get(BookingRequestActivity.BOOKING_REQUEST_TRIP_INFO_KEY) as TripInfo)
@@ -304,11 +297,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             khWebView?.hide()
             return
         }
-        // if BookingRequestView is opened we close it and return
-//        if (bookingRequestWidget.onBackPressed()) {
-//            onResume()
-//            return
-//        }
         // if destination set we clear it, close the quotes list and return
         if (bookingStatusStateViewModel.currentState.destination != null) {
             bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent

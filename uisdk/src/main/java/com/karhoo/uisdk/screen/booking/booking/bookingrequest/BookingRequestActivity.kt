@@ -83,10 +83,26 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
                         outboundTripId = extras.getString(BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY),
                         bookingMetadata = extras.getSerializable(BOOKING_REQUEST_METADATA_KEY) as HashMap<String, String>?
                 )
-                //initialiseChangeCard(quote)
+            } else {
+                finishWithError(BOOKING_REQUEST_ERROR_NO_QUOTE)
             }
+        } ?: run {
+            finishWithError(BOOKING_REQUEST_ERROR_NO_QUOTE)
         }
+    }
 
+    /**
+     * Method used for finishing up the booking request activity with an error
+     * The activity which launches the BookingRequestActivity should handle the error result
+     * under BOOKING_REQUEST_ERROR (result code 10) and act accordingly
+     * @param error reason for closing the BookingRequestActivity
+     */
+    private fun finishWithError(error: String) {
+        val data = Intent()
+        data.putExtra(BOOKING_REQUEST_ERROR_KEY, error)
+
+        setResult(BOOKING_REQUEST_ERROR, data)
+        finish()
     }
 
     override fun handleExtras() {}
@@ -184,7 +200,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     override fun bindPriceAndEta(quote: Quote, card: String) {
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget?.bindViews(quote, this.getString(R.string.kh_uisdk_estimated_arrival_time), currency)
+        bookingRequestPriceWidget?.bindViews(quote, getString(R.string.kh_uisdk_estimated_arrival_time), currency)
     }
 
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
@@ -204,7 +220,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun onLoadingButtonClick() {
-        if (!(KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.KarhooUser)
+        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser
                 && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()) {
             bookingRequestButton.onLoadingComplete()
         } else if (!presenter.isPaymentSet()) {
@@ -295,15 +311,14 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
-        val activity = this as Activity
-        val activityWasStartedForResult = activity.callingActivity != null
+        val activityWasStartedForResult = this.callingActivity != null
 
         if (activityWasStartedForResult) {
             val data = Intent().apply {
                 putExtra(BookingCodes.BOOKED_TRIP, tripInfo)
             }
-            activity.setResult(Activity.RESULT_OK, data)
-            activity.finish()
+            setResult(Activity.RESULT_OK, data)
+            finish()
         } else {
             bookingRequestButton.onLoadingComplete()
 
@@ -378,5 +393,10 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         const val BOOKING_REQUEST_STATUS_KEY = "BOOKING_STATUS_KEY"
         const val BOOKING_REQUEST_TRIP_INFO_KEY = "TRIP_INFO_KEY"
         const val BOOKING_REQUEST_PASSENGER_KEY = "PASSENGER_KEY"
+
+        /** Errors outputted by the Booking Request Activity**/
+        const val BOOKING_REQUEST_ERROR = 10
+        const val BOOKING_REQUEST_ERROR_KEY = "BOOKING_REQUEST_ERROR_KEY"
+        const val BOOKING_REQUEST_ERROR_NO_QUOTE = "BOOKING_REQUEST_ERROR_NO_QUOTE"
     }
 }
