@@ -12,12 +12,12 @@ String[] fileFilter = [
 ]
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
@@ -47,7 +47,7 @@ afterEvaluate {
 
                 groupId = 'com.karhoo'
                 artifactId = 'uisdk'
-                version = '1.4.1'
+                version = '1.4.2'
             }
         }
     }
@@ -55,7 +55,7 @@ afterEvaluate {
 
 dependencies {
 
-    api 'com.github.karhoo:karhoo-android-sdk:1.4.0'
+    api 'com.github.karhoo:karhoo-android-sdk:1.4.1'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
@@ -64,7 +64,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'com.karumi:dexter:4.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'

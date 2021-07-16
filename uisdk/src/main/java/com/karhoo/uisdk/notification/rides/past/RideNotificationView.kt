@@ -21,6 +21,7 @@ import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import java.lang.Exception
 
 class RideNotificationView : RideNotificationContract.View {
     lateinit var context: Context
@@ -81,12 +82,12 @@ class RideNotificationView : RideNotificationContract.View {
         if (trip.fleetInfo?.logoUrl.isNullOrBlank()) {
             contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_quotes_logo_empty)
         } else {
-            Picasso.with(context).load(trip.fleetInfo?.logoUrl).into(object : Target {
+            Picasso.get().load(trip.fleetInfo?.logoUrl).into(object : Target {
                 override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
                     // Do nothing
                 }
 
-                override fun onBitmapFailed(errorDrawable: Drawable?) {
+                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
                     contentView.setImageViewResource(R.id.logoImage, R.drawable.uisdk_ic_quotes_logo_empty)
                 }
 

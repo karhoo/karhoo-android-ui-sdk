@@ -8,9 +8,9 @@ import android.graphics.Bitmap
 import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.webkit.SslErrorHandler
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.karhoo.uisdk.R
@@ -40,7 +40,6 @@ class WebActivity : BaseActivity() {
                 setSupportZoom(false)
             }
             isDrawingCacheEnabled = true
-            setOnTouchListener(ScrollTouchListener())
             webViewClient = KarhooWebViewClient()
         }
 
@@ -62,8 +61,8 @@ class WebActivity : BaseActivity() {
 
     private inner class KarhooWebViewClient : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-            activityWebView?.loadUrl(url)
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            activityWebView?.loadUrl(request.url.toString())
             return false
         }
 
@@ -88,12 +87,6 @@ class WebActivity : BaseActivity() {
             progressBar.visibility = View.GONE
         }
 
-    }
-
-    private inner class ScrollTouchListener : View.OnTouchListener {
-        override fun onTouch(v: View, event: MotionEvent): Boolean {
-            return event.action == MotionEvent.ACTION_MOVE
-        }
     }
 
     /**

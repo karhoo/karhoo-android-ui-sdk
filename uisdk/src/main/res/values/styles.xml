@@ -309,10 +309,16 @@
         <item name="textAllCaps">true</item>
     </style>
 
-    <style name="KhBookingTermsView">
+    <style name="KhBookingTermsText">
         <item name="android:background">@drawable/uisdk_background_light_grey_rounded</item>
-        <item name="termsText">@style/Text.Alternative.Small</item>
-        <item name="termsLinkText">@style/Text.Action.Primary.Small</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="KhBookingTermsTitleText">
+        <item name="android:background">@drawable/uisdk_background_light_grey_rounded</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/text_alternative</item>
     </style>
 
     <style name="KhPaymentView">

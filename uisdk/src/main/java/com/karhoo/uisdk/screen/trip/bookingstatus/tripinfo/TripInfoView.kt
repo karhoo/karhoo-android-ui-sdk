@@ -101,7 +101,7 @@ class TripInfoView @JvmOverloads constructor(context: Context,
         } else {
             val logoSize = resources.getDimension(R.dimen.logo_size).convertDpToPixels()
 
-            Picasso.with(context)
+            Picasso.get()
                     .load(url)
                     .placeholder(R.drawable.uisdk_ic_driver_photo)
                     .error(R.drawable.uisdk_ic_driver_photo)

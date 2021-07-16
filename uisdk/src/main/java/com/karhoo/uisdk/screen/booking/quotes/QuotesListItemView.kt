@@ -86,7 +86,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                         stopLoading()
                     }
 
-                    override fun onError() {
+                    override fun onError(e: java.lang.Exception?) {
                         //Do Nothing
                     }
                 })
