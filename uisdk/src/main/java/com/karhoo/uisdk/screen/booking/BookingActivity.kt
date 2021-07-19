@@ -30,7 +30,7 @@ import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActi
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
+import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
@@ -53,7 +53,7 @@ import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
-        TripAllocationMVP.Actions {
+        TripAllocationContract.Actions {
 
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
@@ -257,15 +257,15 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
 
-                    val intent = Intent(this, BookingRequestActivity::class.java)
-                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_QUOTE_KEY, actions.quote)
-                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY, outboundTripId)
-                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_METADATA_KEY, bookingMetadata)
-                    intent.putExtra(BookingRequestActivity.BOOKING_REQUEST_STATUS_KEY,
-                            BookingStatus(bookingStatusStateViewModel.currentState.pickup,
+                    val builder = BookingRequestActivity.Builder()
+                            .quote(actions.quote)
+                            .outboundTripId(outboundTripId)
+                            .bookingMetadata(bookingMetadata)
+                            .bookingStatus(BookingStatus(bookingStatusStateViewModel.currentState.pickup,
                                     bookingStatusStateViewModel.currentState.destination,
                                     bookingStatusStateViewModel.currentState.date))
-                    startActivityForResult(intent, REQ_CODE_BOOKING_REQUEST_ACTIVITY)
+
+                    startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
                 }
             }
         }
@@ -278,7 +278,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
             waitForTripAllocation()
-            tripAllocationWidget.waitForAllocation(data?.extras?.get(BookingRequestActivity.BOOKING_REQUEST_TRIP_INFO_KEY) as TripInfo)
+            tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
         } else if (resultCode == RESULT_OK && data != null) {
             when (requestCode) {
                 AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)

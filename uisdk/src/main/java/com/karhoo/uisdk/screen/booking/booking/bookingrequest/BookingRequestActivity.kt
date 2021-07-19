@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking.bookingrequest
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
@@ -104,7 +105,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun showGuestBookingFields(details: PassengerDetails?) {
-        if(details == null) {
+        if (details == null) {
             bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
         }
 
@@ -280,7 +281,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun handleChangeCard() {
-        initialiseChangeCard()
+        presenter.handleChangeCard()
     }
 
     override fun handleViewVisibility(visibility: Int) {
@@ -359,6 +360,68 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
     override fun showWebView(url: String?) {
         url?.let { khWebView?.show(it) }
+    }
+
+    /**
+     * Intent Builder
+     */
+    class Builder {
+
+        private val extrasBundle: Bundle = Bundle()
+
+        /**
+         * The activity will take the quote object and
+         * use this to prepopulate eta, pricing, vechicle details fields
+         * @param quote mandatory param for starting up the Booking Request Activity
+         */
+        fun quote(quote: Quote): Builder {
+            extrasBundle.putParcelable(BOOKING_REQUEST_QUOTE_KEY, quote)
+            return this
+        }
+
+        /**
+         * The [outboundTripId] is expected when the trip is booked from a 'rebook' button in another activity,
+         * It's used for analytics purposes only
+         */
+        fun outboundTripId(outboundTripId: String?): Builder {
+            extrasBundle.putString(BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY, outboundTripId)
+            return this
+        }
+
+        /**
+         * If an [metadata] is passed in the activity, it will be used as part of the
+         * Booking API meta data
+         */
+        fun bookingMetadata(metadata: HashMap<String, String>?): Builder {
+            extrasBundle.putSerializable(BOOKING_REQUEST_METADATA_KEY, metadata)
+            return this
+        }
+
+        /**
+         * By passing booking status into the Booking activity it will automatically prefill the origin
+         * destination and date of the desired trip. This will only use the details available inside
+         * the BookingStatus object.
+         */
+        fun bookingStatus(bookingStatus: BookingStatus): Builder {
+            extrasBundle.putParcelable(BOOKING_REQUEST_STATUS_KEY, bookingStatus)
+            return this
+        }
+
+        /**
+         * If a passenger is added, then it will be used to prefill the passenger details in the booking request component
+         */
+        fun passengerDetails(passenger: PassengerDetails): Builder {
+            extrasBundle.putParcelable(BOOKING_REQUEST_PASSENGER_KEY, passenger)
+            return this
+        }
+
+        /**
+         * Returns a launchable Intent to the configured booking activity with the given
+         * builder parameters in the extras bundle
+         */
+        fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.bookingRequest).apply {
+            putExtras(extrasBundle)
+        }
     }
 
     companion object {
