@@ -61,7 +61,7 @@ class TripAllocationView @JvmOverloads constructor(
         waitForAllocation(data?.extras?.get(BookingRequestActivity.BOOKING_REQUEST_TRIP_INFO_KEY) as TripInfo)
     }
 
-    fun waitForAllocation(trip: TripInfo) {
+    private fun waitForAllocation(trip: TripInfo) {
         presenter = TripAllocationPresenter(this, KarhooApi.tripService)
         val animUpwards = resources.getDimension(R.dimen.spacing_xsmall).convertDpToPixels().toFloat()
         findingYourTripLabel.animate()
