@@ -12,9 +12,9 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.extension.isGuest
 
-class TripAllocationPresenter(view: TripAllocationMVP.View,
+class TripAllocationPresenter(view: TripAllocationContract.View,
                               private val tripsService: TripsService)
-    : BasePresenter<TripAllocationMVP.View>(), TripAllocationMVP.Presenter {
+    : BasePresenter<TripAllocationContract.View>(), TripAllocationContract.Presenter {
 
     private var tripDetailsObserver: Observer<Resource<TripInfo>>? = null
     private var tripDetailsObservable: Observable<TripInfo>? = null

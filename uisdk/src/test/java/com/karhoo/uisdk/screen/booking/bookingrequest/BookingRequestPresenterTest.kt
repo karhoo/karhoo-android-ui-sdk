@@ -30,9 +30,9 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestMVP
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestContract
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivityPresenter
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivityPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -95,7 +95,7 @@ class BookingRequestPresenterTest {
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()
     private val userStore: UserStore = mock()
-    private var view: BookingRequestMVP.View = mock()
+    private var view: BookingRequestContract.View = mock()
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -105,7 +105,7 @@ class BookingRequestPresenterTest {
     private val tripCall: Call<TripInfo> = mock()
     private val tripCaptor = argumentCaptor<(Resource<TripInfo>) -> Unit>()
 
-    private lateinit var requestPresenter: BookingRequestPresenter
+    private lateinit var requestPresenter: BookingRequestActivityPresenter
 
     @Before
     fun setUp() {
@@ -116,7 +116,7 @@ class BookingRequestPresenterTest {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        requestPresenter = BookingRequestPresenter(view, analytics, preferenceStore, tripsService,
+        requestPresenter = BookingRequestActivityPresenter(view, analytics, preferenceStore, tripsService,
                                                    userStore)
     }
 
@@ -132,7 +132,7 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).updateBookingButtonForGuest()
+        verify(view, never()).showGuestBookingFields(any())
     }
 
     /**
@@ -149,7 +149,7 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(false)
 
         verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).updateBookingButtonForGuest()
+        verify(view, never()).showGuestBookingFields(any())
     }
 
 
@@ -179,8 +179,7 @@ class BookingRequestPresenterTest {
 
         requestPresenter.setBookingFields(false)
 
-        verify(view).showGuestBookingFields(PassengerDetails())
-        verify(view).updateBookingButtonForGuest()
+        verify(view).showGuestBookingFields(null)
     }
 
     /**
@@ -198,7 +197,6 @@ class BookingRequestPresenterTest {
         requestPresenter.setBookingFields(true)
 
         verify(view).showGuestBookingFields(passengerDetails)
-        verify(view, never()).updateBookingButtonForGuest()
     }
 
     /**
@@ -264,7 +262,6 @@ class BookingRequestPresenterTest {
         verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindPriceAndEta(quote, "")
     }
 
@@ -284,7 +281,6 @@ class BookingRequestPresenterTest {
         requestPresenter.showBookingRequest(quote)
 
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindEta(quote, "")
     }
 
@@ -304,7 +300,6 @@ class BookingRequestPresenterTest {
         requestPresenter.showBookingRequest(quote)
 
         verify(view).setCapacity(vehicleAttributes)
-        verify(view).animateIn()
         verify(view).bindPrebook(quote, "", scheduledDate)
     }
 
@@ -505,7 +500,7 @@ class BookingRequestPresenterTest {
     fun `Select Positive option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogPositive()
 
-        verify(view).hideLoading()
+        verify(view).showLoading(false)
         verify(view).initialiseChangeCard(null)
     }
 
@@ -518,8 +513,7 @@ class BookingRequestPresenterTest {
     fun `Select Negative option on Payment Failure Dialog`() {
         requestPresenter.onPaymentFailureDialogCancelled()
 
-        verify(view).hideLoading()
-        verify(view).animateOut()
+        verify(view).showLoading(false)
     }
 
     /**
@@ -613,7 +607,6 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
         verify(preferenceStore).lastTrip = trip
-        verify(view).animateOut()
         verify(view).onTripBookedSuccessfully(trip)
         verify(view, never()).enableCancelButton()
         verify(bookingRequestStateViewModel).process(BookingRequestViewContract

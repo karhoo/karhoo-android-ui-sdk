@@ -4,19 +4,19 @@
     android:id="@+id/bookingRequestLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:fitsSystemWindows="true"
-    android:background="@color/transparent">
+    android:background="@color/transparent"
+    android:fitsSystemWindows="true">
+
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/bookingRequestScrollView"
-        android:layout_width="@dimen/spacing_none"
-        android:layout_height="@dimen/spacing_none"
-        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/uisdk_white_rounded_top_background"
+        app:layout_constraintBottom_toTopOf="@+id/bookingRequestButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@drawable/uisdk_white_rounded_top_background">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/bookingRequestLinearLayout"
@@ -29,9 +29,9 @@
                 android:id="@+id/cancelButton"
                 android:layout_width="@dimen/spacing_medium_small"
                 android:layout_height="@dimen/spacing_medium_small"
+                android:layout_gravity="end"
                 android:layout_marginEnd="@dimen/spacing_xsmall"
-                android:src="@drawable/uisdk_ic_close"
-                android:layout_gravity="end" />
+                android:src="@drawable/uisdk_ic_close" />
 
             <com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesView
                 android:id="@+id/bookingRequestQuotesWidget"
@@ -45,18 +45,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_grid_second_column"
+                android:layout_marginTop="@dimen/spacing_grid_row"
                 android:layout_marginEnd="@dimen/spacing_grid_second_column"
-                android:layout_marginBottom="@dimen/spacing_grid_row"
-                android:layout_marginTop="@dimen/spacing_grid_row" />
+                android:layout_marginBottom="@dimen/spacing_grid_row" />
 
             <TextView
                 android:id="@+id/passengerDetailsHeading"
+                style="@style/Text.Black.XLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Text.Black.XLarge"
-                android:text="@string/kh_uisdk_passenger_details"
                 android:layout_marginStart="@dimen/spacing_grid_first_column"
-                android:layout_marginEnd="@dimen/spacing_grid_second_column" />
+                android:layout_marginEnd="@dimen/spacing_grid_second_column"
+                android:text="@string/kh_uisdk_passenger_details" />
 
             <com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsView
                 android:id="@+id/bookingRequestPassengerDetailsWidget"
@@ -81,14 +81,14 @@
 
             <TextView
                 android:id="@+id/paymentHeader"
+                style="@style/Text.Black.XLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Text.Black.XLarge"
-                android:text="@string/kh_uisdk_payment_details"
                 android:layout_marginStart="@dimen/spacing_grid_first_column"
-                android:layout_marginEnd="@dimen/spacing_grid_second_column"
                 android:layout_marginTop="@dimen/spacing_grid_row"
-                android:layout_marginBottom="@dimen/spacing_grid_row" />
+                android:layout_marginEnd="@dimen/spacing_grid_second_column"
+                android:layout_marginBottom="@dimen/spacing_grid_row"
+                android:text="@string/kh_uisdk_payment_details" />
 
             <com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentView
                 android:id="@+id/bookingRequestPaymentDetailsWidget"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_grid_second_column"
                 android:layout_marginEnd="@dimen/spacing_grid_second_column"
-                android:layout_marginBottom="@dimen/spacing_small"/>
+                android:layout_marginBottom="@dimen/spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.booking.BookingTermsView
                 android:id="@+id/bookingRequestTermsWidget"
@@ -106,11 +106,17 @@
                 android:layout_marginEnd="@dimen/spacing_grid_second_column"
                 android:layout_marginBottom="@dimen/spacing_small" />
 
-            <com.karhoo.uisdk.base.view.LoadingButtonView
-                android:id="@+id/bookingRequestButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.karhoo.uisdk.base.view.LoadingButtonView
+        android:id="@+id/bookingRequestButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include layout="@layout/uisdk_activity_base" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,12 +35,12 @@ import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
 import java.util.Date
 
-class BookingRequestPresenter(view: BookingRequestMVP.View,
-                              private val analytics: Analytics?,
-                              private val preferenceStore: PreferenceStore,
-                              private val tripsService: TripsService,
-                              private val userStore: UserStore)
-    : BasePresenter<BookingRequestMVP.View>(), BookingRequestMVP.Presenter, LifecycleObserver {
+class BookingRequestActivityPresenter(view: BookingRequestContract.View,
+                                      private val analytics: Analytics?,
+                                      private val preferenceStore: PreferenceStore,
+                                      private val tripsService: TripsService,
+                                      private val userStore: UserStore)
+    : BasePresenter<BookingRequestContract.View>(), BookingRequestContract.Presenter, LifecycleObserver {
 
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
@@ -56,6 +56,13 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         attachView(view)
     }
 
+    override fun setBookingStatus(bookingStatus: BookingStatus?) {
+        bookingStatus?.let {
+            scheduledDate = it.date
+            destination = it.destination
+            origin = it.pickup
+        }
+    }
     override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus> {
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         return Observer { currentStatus ->
@@ -77,14 +84,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun makeBooking() {
-        bookTrip()
-    }
-
-    override fun isPaymentSet(): Boolean {
-        return userStore.savedPaymentInfo != null
-    }
-
-    private fun bookTrip() {
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             view?.initialiseGuestPayment(quote)
         } else {
@@ -93,8 +92,8 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         analytics?.bookingRequested(currentTripInfo(), outboundTripId)
     }
 
-    override fun hideBookingRequest() {
-        view?.animateOut()
+    override fun isPaymentSet(): Boolean {
+        return userStore.savedPaymentInfo != null
     }
 
     private fun currentTripInfo(): TripInfo {
@@ -111,7 +110,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
         if (date != null) {
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
-            hideBookingRequest()
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(BookingRequestViewContract.BookingRequestEvent
                                                           .BookingSuccess(tripInfo))
@@ -143,8 +141,7 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
 
         when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
-                view?.updateBookingButtonForGuest()
-                view?.showGuestBookingFields()
+                view?.showGuestBookingFields(null)
             }
             is AuthenticationMethod.TokenExchange -> {
                 view?.showGuestBookingFields(details = getPassengerDetails())
@@ -223,7 +220,6 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
                 else -> view?.displayFlightDetailsField(null)
             }
             view?.setCapacity(quote.vehicle)
-            view?.animateIn()
         } else if (origin == null) {
             handleError(R.string.kh_uisdk_origin_book_error, null)
         } else if (destination == null) {
@@ -255,21 +251,12 @@ class BookingRequestPresenter(view: BookingRequestMVP.View,
     }
 
     override fun onPaymentFailureDialogPositive() {
-        view?.hideLoading()
+        view?.showLoading(false)
         handleChangeCard()
     }
 
     override fun onPaymentFailureDialogCancelled() {
-        view?.hideLoading()
-        hideBookingRequest()
-    }
-
-    override fun onTermsAndConditionsRequested(url: String?) {
-        url?.let {
-            bookingRequestStateViewModel?.process(BookingRequestViewContract
-                                                          .BookingRequestEvent
-                                                          .TermsAndConditionsRequested(it))
-        }
+        view?.showLoading(false)
     }
 
     companion object {

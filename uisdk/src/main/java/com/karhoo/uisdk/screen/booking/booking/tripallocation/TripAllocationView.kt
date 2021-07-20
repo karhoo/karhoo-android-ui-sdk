@@ -23,6 +23,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
@@ -46,14 +47,18 @@ class TripAllocationView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr), TripAllocationMVP.View {
+    : FrameLayout(context, attrs, defStyleAttr), TripAllocationContract.View, TripAllocationContract.Widget {
 
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
-    private var presenter: TripAllocationMVP.Presenter? = null
-    var actions: TripAllocationMVP.Actions? = null
+    private var presenter: TripAllocationContract.Presenter? = null
+    var actions: TripAllocationContract.Actions? = null
 
     init {
         View.inflate(context, R.layout.uisdk_view_trip_allocation, this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        waitForAllocation(data?.extras?.get(BookingRequestActivity.BOOKING_REQUEST_TRIP_INFO_KEY) as TripInfo)
     }
 
     private fun waitForAllocation(trip: TripInfo) {
