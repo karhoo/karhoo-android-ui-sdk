@@ -455,11 +455,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
+        hideLocateUserButton()
     }
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
-        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
+        hideLocateUserButton()
     }
 
     companion object {
