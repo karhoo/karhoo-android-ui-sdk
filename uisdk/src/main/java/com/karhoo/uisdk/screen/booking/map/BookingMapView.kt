@@ -388,6 +388,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun setNoBottomPadding() {
         googleMap?.setPadding(0, 0, 0, 0)
         recentreMapIfDestinationIsNull()
+        showLocateUserButton()
 
         animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
     }
@@ -395,8 +396,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun setDefaultPadding() {
         googleMap?.setPadding(0, 0,
                 0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
-
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in_quotes)
+        hideLocateUserButton()
     }
 
     private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
@@ -455,11 +455,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
-        hideLocateUserButton()
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
     }
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
-        hideLocateUserButton()
+        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
     }
 
     companion object {
