@@ -154,7 +154,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
                 pickupPinIcon.visibility = View.VISIBLE
-                showLocateUserButton()
+                showLocationButton(true)
 
             } else {
                 zoom(null)
@@ -388,7 +388,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun setNoBottomPadding() {
         googleMap?.setPadding(0, 0, 0, 0)
         recentreMapIfDestinationIsNull()
-        showLocateUserButton()
+        showLocationButton(true)
 
         animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
     }
@@ -396,7 +396,8 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     fun setDefaultPadding() {
         googleMap?.setPadding(0, 0,
                 0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
-        hideLocateUserButton()
+
+        showLocationButton(false)
     }
 
     private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
@@ -444,14 +445,14 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         presenter.locationPermissionGranted()
     }
 
-    override fun hideLocateUserButton() {
-        locateMeButton.visibility = View.INVISIBLE
-        locateMeButton.isClickable = false
-    }
-
-    override fun showLocateUserButton() {
-        locateMeButton.visibility = View.VISIBLE
-        locateMeButton.isClickable = true
+    override fun showLocationButton(show: Boolean) {
+        if (show) {
+            locateMeButton.visibility = View.VISIBLE
+            locateMeButton.isClickable = true
+        } else {
+            locateMeButton.visibility = View.INVISIBLE
+            locateMeButton.isClickable = false
+        }
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
