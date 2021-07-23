@@ -34,10 +34,8 @@ interface BookingMapMVP {
         fun resetMap()
 
         fun locationPermissionGranted()
-
-        fun hideLocateUserButton()
-
-        fun showLocateUserButton()
+        
+        fun showLocationButton(show: Boolean)
 
         fun updateMapViewForQuotesListVisibilityCollapsed()
 
