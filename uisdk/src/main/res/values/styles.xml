@@ -116,8 +116,9 @@
         <item name="colorControlHighlight">@color/primary</item>
     </style>
 
-    <style name="AppTheme.HelperEditText" parent="AppTheme.EditText">
-        <item name="android:textSize">@dimen/text_size_small</item>
+    <style name="HelperEditText" parent="AppTheme.EditText">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_gray_black</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -299,9 +300,35 @@
         <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
     </style>
 
-    <style name="KhBookingQuotesView">
-        <item name="quotesHeaderText">@style/Text.Black.Medium.Bold</item>
-        <item name="quotesDetailsText">@style/Text.Alternative.XSmall</item>
+    <style name="KhBookingQuotesViewFleetTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="fontWeight">600</item>
+    </style>
+
+    <style name="KhBookingQuotesViewFleetType">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/kh_gray_black</item>
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="fontWeight">600</item>
+    </style>
+
+    <style name="KhBookingQuotesViewFleetCancellation">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+    <style name="KhBookingCheckoutBackToQuotes">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="KhBookingETAPriceView">
@@ -310,15 +337,16 @@
     </style>
 
     <style name="KhBookingTermsText">
-        <item name="android:background">@drawable/uisdk_background_light_grey_rounded</item>
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
 
     <style name="KhBookingTermsTitleText">
-        <item name="android:background">@drawable/uisdk_background_light_grey_rounded</item>
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textColor">@color/text_alternative</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/barlow_regular</item>
+        <item name="fontFamily">@font/barlow_regular</item>
+        <item name="fontWeight">600</item>
     </style>
 
     <style name="KhPaymentView">

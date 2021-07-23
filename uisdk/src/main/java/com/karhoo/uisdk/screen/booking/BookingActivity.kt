@@ -48,7 +48,6 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocat
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
 import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestPassengerDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
@@ -180,7 +179,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         passengerDetails?.let {
-            bookingRequestPassengerDetailsWidget.setPassengerDetails(it)
+
         }
 
         bookingComments?.let {

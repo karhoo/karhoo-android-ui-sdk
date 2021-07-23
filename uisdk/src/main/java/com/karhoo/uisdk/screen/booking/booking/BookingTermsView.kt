@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.booking
 
 import android.content.Context
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
@@ -24,9 +25,11 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
     fun bindViews(vehicle: Quote) {
         bookingTermsText.text = String.format(resources.getString(R.string.kh_uisdk_booking_terms),
                                               vehicle.fleet.name)
+        termsConditionsText.paintFlags = termsConditionsText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         termsConditionsText.setOnClickListener {
             actions?.showWebView(vehicle.fleet.termsConditionsUrl)
         }
+        cancellationText.paintFlags = cancellationText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         cancellationText.setOnClickListener {
             actions?.showWebView(vehicle.fleet.termsConditionsUrl)
         }

@@ -5,4 +5,5 @@
         android:endColor="@color/KhButtonDisabledColor"
         android:startColor="@color/KhButtonDisabledColor"
         android:type="linear" />
+    <corners android:radius="12dp" />
 </shape>

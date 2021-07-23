@@ -390,6 +390,9 @@
     <string name="kh_uisdk_payment_details">Détails de paiement</string>
     <string name="kh_uisdk_checkout_as_guest">Commander en mode invité</string>
 
+    <!-- Booking Checkout Component -->
+    <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
+
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Envoyer</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>

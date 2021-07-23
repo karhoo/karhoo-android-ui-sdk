@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.booking.quotes
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.PicassoLoader
@@ -14,24 +13,10 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
                                                   attrs: AttributeSet? = null,
                                                   defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr), BookingQuotesMVP.View {
 
-    private var headerTextStyle: Int = R.style.Text_Black_Medium_Bold
-    private var detailsTextStyle: Int = R.style.Text_Alternative_XSmall
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(this)
 
     init {
         inflate(context, R.layout.uisdk_view_booking_quotes, this)
-        getCustomisationParameters(context, attrs, defStyleAttr)
-    }
-
-    private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingQuotesView,
-                defStyleAttr, R.style.KhBookingQuotesView)
-        headerTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_headerText,
-                R.style.Text_Black_Medium_Bold)
-        detailsTextStyle = typedArray.getResourceId(R.styleable.BookingQuotesView_detailsText,
-                R.style.Text_Alternative_XSmall)
-        TextViewCompat.setTextAppearance(quoteNameText, headerTextStyle)
-        TextViewCompat.setTextAppearance(categoryText, detailsTextStyle)
     }
 
     fun bindViews(url: String?, quoteName: String, category: String, serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {

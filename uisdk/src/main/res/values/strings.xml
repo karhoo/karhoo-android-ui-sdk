@@ -344,7 +344,7 @@
     <string name="kh_uisdk_flight_number">Flight Number</string>
     <string name="kh_uisdk_meeting_point">Meeting Point</string>
     <string name="kh_uisdk_info">Info</string>
-    <string name="kh_uisdk_add_flight_details">Add flight details</string>
+    <string name="kh_uisdk_add_flight_details">Add flight details (Optional)</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
     <string name="kh_uisdk_pickup_type_curbside">Curbside</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and Greet</string>
@@ -374,7 +374,7 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_trip_id_label">Trip ID</string>
-    <string name="kh_uisdk_additional_comments">Additional comments</string>
+    <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
     <string name="kh_uisdk_question_one">How happy were you with the selection of quotes for your trip (e.g. Fleets, Prices and ETAs)?</string>
     <string name="kh_uisdk_question_one_id" translatable="false">quote_selection</string>
     <string name="kh_uisdk_question_two">How was your experience with finding the pick-up location and meeting your driver?</string>
@@ -396,7 +396,10 @@
     <!-- Guest Checkout -->
     <string name="kh_uisdk_passenger_details">Passenger Details</string>
     <string name="kh_uisdk_payment_details">Payment Details</string>
-    <string name="kh_uisdk_checkout_as_guest">Check-out as guest</string>
+    <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
+
+    <!-- Booking Checkout Component -->
+    <string name="kh_uisdk_booking_checkout_back_button">Back</string>
 
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Submit</string>

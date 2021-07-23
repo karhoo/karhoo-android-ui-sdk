@@ -66,7 +66,6 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
         isGuest = isGuest()
         attachListeners()
         bookingRequestFlightDetailsWidget.setHintText(getString(R.string.kh_uisdk_add_flight_details))
-        presenter.setBookingFields(bookingRequestPassengerDetailsWidget.allFieldsValid())
         TextViewCompat.setTextAppearance(bookingRequestLabel, R.style.ButtonText)
 
         extras?.let { extras ->
@@ -109,16 +108,11 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
             bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
         }
 
-        bookingRequestPassengerDetailsWidget.visibility = VISIBLE
         bookingRequestCommentsWidget.visibility = VISIBLE
-        passengerDetailsHeading.visibility = VISIBLE
-        bookingRequestPassengerDetailsWidget.setPassengerDetails(details ?: PassengerDetails())
     }
 
     override fun showAuthenticatedUserBookingFields() {
-        bookingRequestPassengerDetailsWidget.visibility = GONE
         bookingRequestCommentsWidget.visibility = GONE
-        passengerDetailsHeading.visibility = GONE
     }
 
     override fun onPause() {
@@ -203,8 +197,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
     }
 
     override fun onLoadingButtonClick() {
-        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser
-                && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()) {
+        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser) {
             bookingRequestButton.onLoadingComplete()
         } else if (!presenter.isPaymentSet()) {
             bookingRequestPaymentDetailsWidget.callOnClick()
@@ -337,8 +330,7 @@ class BookingRequestActivity : BaseActivity(), BookingRequestContract.View, Book
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading(true)
-        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId,
-                bookingRequestPassengerDetailsWidget.getPassengerDetails(), bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, null, bookingComments)
     }
 
     override fun initialisePaymentProvider(quote: Quote?) {
