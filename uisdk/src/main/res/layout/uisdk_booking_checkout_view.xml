@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/uisdk_white_rounded_top_background"
-        app:layout_constraintBottom_toTopOf="@+id/bookingRequestButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,28 +22,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="@dimen/spacing_xsmall">
-
-            <LinearLayout
-                android:id="@+id/cancelButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="@dimen/spacing_grid_first_column"
-                android:layout_marginBottom="@dimen/spacing_medium_small"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/kh_ic_chevron_left_black" />
-
-                <TextView
-                    style="@style/KhBookingCheckoutBackToQuotes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/kh_uisdk_booking_checkout_back_button" />
-            </LinearLayout>
 
             <com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesView
                 android:id="@+id/bookingRequestQuotesWidget"
@@ -108,15 +85,5 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.karhoo.uisdk.base.view.LoadingButtonView
-        android:id="@+id/bookingRequestButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <include layout="@layout/uisdk_activity_base" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,8 +26,8 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
+import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity.BookingCheckoutActivity
+import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
@@ -47,7 +47,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
@@ -228,14 +228,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingRequestOutputs(): Observer<in BookingRequestViewContract.BookingRequestAction> {
+    private fun bindToBookingRequestOutputs(): Observer<in BookingCheckoutViewContract.BookingRequestAction> {
         return Observer { actions ->
             when (actions) {
-                is BookingRequestViewContract.BookingRequestAction.ShowTermsAndConditions ->
+                is BookingCheckoutViewContract.BookingRequestAction.ShowTermsAndConditions ->
                     showWebView(actions.url)
-                is BookingRequestViewContract.BookingRequestAction.WaitForTripAllocation ->
+                is BookingCheckoutViewContract.BookingRequestAction.WaitForTripAllocation ->
                     waitForTripAllocation()
-                is BookingRequestViewContract.BookingRequestAction.HandleBookingError ->
+                is BookingCheckoutViewContract.BookingRequestAction.HandleBookingError ->
                     showErrorDialog(actions.stringId, actions.karhooError)
             }
         }
@@ -256,7 +256,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
 
-                    val builder = BookingRequestActivity.Builder()
+                    val builder = BookingCheckoutActivity.Builder()
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)

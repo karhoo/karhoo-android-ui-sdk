@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingrequest
+package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
@@ -35,12 +35,12 @@ import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
 import java.util.Date
 
-class BookingRequestActivityPresenter(view: BookingRequestContract.View,
-                                      private val analytics: Analytics?,
-                                      private val preferenceStore: PreferenceStore,
-                                      private val tripsService: TripsService,
-                                      private val userStore: UserStore)
-    : BasePresenter<BookingRequestContract.View>(), BookingRequestContract.Presenter, LifecycleObserver {
+internal class BookingCheckoutViewPresenter(view: BookingCheckoutViewContract.View,
+                                   private val analytics: Analytics?,
+                                   private val preferenceStore: PreferenceStore,
+                                   private val tripsService: TripsService,
+                                   private val userStore: UserStore)
+    : BasePresenter<BookingCheckoutViewContract.View>(), BookingCheckoutViewContract.Presenter, LifecycleObserver {
 
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
@@ -111,8 +111,7 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
             view?.onTripBookedSuccessfully(tripInfo)
-            bookingRequestStateViewModel?.process(BookingRequestViewContract.BookingRequestEvent
-                                                          .BookingSuccess(tripInfo))
+            bookingRequestStateViewModel?.process(BookingCheckoutViewContract.BookingRequestEvent.BookingSuccess(tripInfo))
         }
     }
 
@@ -205,8 +204,9 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
         view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
     }
 
-    override fun showBookingRequest(quote: Quote, outboundTripId: String?, bookingMetadata:
+    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?) {
+        setBookingStatus(bookingStatus)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
@@ -229,10 +229,7 @@ class BookingRequestActivityPresenter(view: BookingRequestContract.View,
 
     override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError()
-        view?.enableCancelButton()
-        bookingRequestStateViewModel?.process(BookingRequestViewContract
-                                                      .BookingRequestEvent
-                                                      .BookingError(stringId, karhooError))
+        bookingRequestStateViewModel?.process(BookingCheckoutViewContract.BookingRequestEvent.BookingError(stringId, karhooError))
     }
 
     private fun handleBookingType(quote: Quote) {

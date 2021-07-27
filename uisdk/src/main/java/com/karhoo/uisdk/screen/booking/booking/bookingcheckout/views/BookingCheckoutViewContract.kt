@@ -1,5 +1,7 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingrequest
+package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views
 
+import android.content.Intent
+import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -9,6 +11,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.fragment.BookingCheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -16,7 +19,7 @@ import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestState
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import org.joda.time.DateTime
 
-interface BookingRequestContract {
+interface BookingCheckoutViewContract {
     interface View {
 
         fun bindEta(quote: Quote, card: String)
@@ -28,8 +31,6 @@ interface BookingRequestContract {
         fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean)
 
         fun displayFlightDetailsField(poiType: PoiType?)
-
-        fun enableCancelButton()
 
         fun initialiseChangeCard(quote: Quote? = null)
 
@@ -58,6 +59,10 @@ interface BookingRequestContract {
         fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
+
+        fun startBooking()
+
+        fun setLoadingButtonCallback(loadingButtonCallback: BookingCheckoutFragmentContract.LoadingButtonListener)
     }
 
     interface Presenter {
@@ -77,7 +82,7 @@ interface BookingRequestContract {
 
         fun setBookingFields(allFieldsValid: Boolean)
 
-        fun showBookingRequest(quote: Quote, outboundTripId: String? = null, bookingMetadata:
+        fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null)
 
         fun resetBooking()
@@ -96,6 +101,25 @@ interface BookingRequestContract {
 
     interface Actions : PaymentActions {
         fun finishedBooking()
+    }
+
+
+    interface BookingRequestViewWidget {
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
+        HashMap<String, String>?)
+    }
+
+    sealed class BookingRequestEvent {
+        data class TermsAndConditionsRequested(val url: String) : BookingRequestEvent()
+        data class BookingSuccess(val tripInfo: TripInfo) : BookingRequestEvent()
+        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestEvent()
+    }
+
+    sealed class BookingRequestAction {
+        data class ShowTermsAndConditions(val url: String) : BookingRequestAction()
+        object WaitForTripAllocation : BookingRequestAction()
+        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestAction()
     }
 
 }

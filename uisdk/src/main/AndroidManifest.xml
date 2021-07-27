@@ -64,7 +64,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity"
+            android:name="com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity.BookingCheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
