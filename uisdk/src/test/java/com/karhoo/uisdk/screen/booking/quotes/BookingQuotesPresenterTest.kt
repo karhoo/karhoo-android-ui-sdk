@@ -2,16 +2,13 @@ package com.karhoo.uisdk.screen.booking.quotes
 
 import android.content.Context
 import android.content.res.Resources
-import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesMVP
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.BookingQuotesViewMock
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
-import com.karhoo.uisdk.util.CANCELLATION_TIME_BEFORE_PICKUP
 import com.karhoo.uisdk.util.ServiceCancellationExtTests
-import com.karhoo.uisdk.util.ServiceCancellationExtTests.Companion.TEST_TWO
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert.*

@@ -10,44 +10,33 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 class QuotesListViewMock: QuotesListMVP.View {
     var calledShowNowResults = false
 
-    override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) {
-    }
+    override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?)
 
-    override fun destinationChanged(bookingStatus: BookingStatus) {
-    }
+    override fun destinationChanged(bookingStatus: BookingStatus)
 
-    override fun updateList(quoteList: List<Quote>) {
-    }
+    override fun updateList(quoteList: List<Quote>)
 
-    override fun setSortMethod(sortMethod: SortMethod) {
-    }
+    override fun setSortMethod(sortMethod: SortMethod)
 
-    override fun togglePanelState() {
-    }
+    override fun togglePanelState()
 
-    override fun setChevronState(isExpanded: Boolean) {
-    }
+    override fun setChevronState(isExpanded: Boolean)
 
-    override fun prebook(isPrebook: Boolean) {
-    }
+    override fun prebook(isPrebook: Boolean)
 
-    override fun showList() {
-    }
+    override fun showList()
 
     override fun hideList(): Boolean {
         return true
     }
 
-    override fun showNoAvailability() {
-    }
+    override fun showNoAvailability()
 
     override fun showNoResultsText(show: Boolean) {
         calledShowNowResults = show
     }
 
-    override fun hideNoAvailability() {
-    }
+    override fun hideNoAvailability()
 
-    override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
-    }
+    override fun showSnackbarError(snackbarConfig: SnackbarConfig)
 }
