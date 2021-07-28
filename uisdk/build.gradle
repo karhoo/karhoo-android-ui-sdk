@@ -20,6 +20,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        buildConfigField 'int', 'VERSION_CODE', "${versionCode}" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
+        buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\"" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
