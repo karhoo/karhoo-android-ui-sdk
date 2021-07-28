@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.5.21'
     repositories {
         maven {
             url 'https://maven.google.com/'
@@ -11,16 +11,14 @@ buildscript {
         mavenCentral()
         mavenLocal()
         google()
-        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.4'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'io.fabric.tools:gradle:1.30.0'
         classpath 'com.jaredsburrows:gradle-license-plugin:0.8.1'
         classpath 'com.novoda:bintray-release:0.9.2'
-        classpath 'org.jacoco:org.jacoco.core:0.8.2'
+        classpath 'org.jacoco:org.jacoco.core:0.8.4'
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.5'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
@@ -48,8 +46,7 @@ buildscript {
 }
 
 plugins {
-    id "com.palantir.jacoco-full-report" version "0.4.0"
-    id("io.gitlab.arturbosch.detekt").version("1.12.0")
+    id("io.gitlab.arturbosch.detekt").version("1.17.1")
 }
 
 allprojects {
@@ -151,10 +148,10 @@ ext.enableJacoco = { Project project, String variant, String[] projectFileFilter
         group = "Reporting"
         description = "Generate Jacoco coverage reports for the ${project.name} with the " +
                 "$variant variant."
-        classDirectories = files([ javaClasses ], [ kotlinClasses ])
-        additionalSourceDirs = files(coverageSourceDirs)
-        sourceDirectories = files(coverageSourceDirs)
-        executionData = files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
+        classDirectories.from files([ javaClasses ], [ kotlinClasses ])
+        additionalSourceDirs.from files(coverageSourceDirs)
+        sourceDirectories.from files(coverageSourceDirs)
+        executionData.from files("${project.buildDir}/jacoco/test${capVariant}UnitTest.exec")
         reports {
             xml.enabled = true
             html.enabled = true
