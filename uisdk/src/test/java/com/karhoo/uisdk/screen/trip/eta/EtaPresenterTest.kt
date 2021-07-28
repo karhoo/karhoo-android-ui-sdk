@@ -182,12 +182,12 @@ class EtaPresenterTest {
         private const val TRIP_ID = "1234"
         private const val ORIGIN_ETA = 23
         private const val DESTINATION_ETA = 43
-        private const val DRIVER_POSITION = DriverTrackingInfo(
+        private val DRIVER_POSITION = DriverTrackingInfo(
                 position = Position(0.5, 0.4),
                 originEta = ORIGIN_ETA,
                 destinationEta = DESTINATION_ETA,
                 direction = Direction(kph = 10, heading = 180))
-        private const val TRIP_NULL_STATE = TripState(TripStatus.COMPLETED)
+        private val TRIP_NULL_STATE = TripState(TripStatus.COMPLETED)
 
         private fun tripWithState(state: TripStatus) = TripState(state)
     }

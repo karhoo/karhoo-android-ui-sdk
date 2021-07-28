@@ -98,6 +98,7 @@ class BookingQuotesPresenterTest {
 
     companion object {
         private const val TEST_STRING = "test"
+        private const val TEST_TWO = 2
         const val TEST_CANCELLATION_TEXT_PREBOOK = "Free cancellation up to %d minutes before pickup"
         const val TEST_CANCELLATION_TEXT_ASAP = "Free cancellation up to %d minutes after booking"
     }

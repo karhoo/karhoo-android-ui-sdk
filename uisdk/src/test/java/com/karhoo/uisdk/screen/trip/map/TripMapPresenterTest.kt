@@ -355,8 +355,8 @@ class TripMapPresenterTest {
         private const val HEADING = 180
         private val DRIVER_POSITION = DriverTrackingInfo(position = Position(LAT, LNG), direction
         = Direction(kph = KPH, heading = HEADING))
-        private const val ORIGIN = Position(0.111, 0.222)
-        private const val DESTINATION = Position(0.333, 0.444)
+        private val ORIGIN = Position(0.111, 0.222)
+        private val DESTINATION = Position(0.333, 0.444)
 
         private fun tripWithState(state: TripStatus?): TripInfo {
             return TripInfo(

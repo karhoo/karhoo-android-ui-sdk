@@ -10,33 +10,33 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 class QuotesListViewMock: QuotesListMVP.View {
     var calledShowNowResults = false
 
-    override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?)
+    override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) { /** do nothing **/ }
 
-    override fun destinationChanged(bookingStatus: BookingStatus)
+    override fun destinationChanged(bookingStatus: BookingStatus) { /** do nothing **/ }
 
-    override fun updateList(quoteList: List<Quote>)
+    override fun updateList(quoteList: List<Quote>) { /** do nothing **/ }
 
-    override fun setSortMethod(sortMethod: SortMethod)
+    override fun setSortMethod(sortMethod: SortMethod) { /** do nothing **/ }
 
-    override fun togglePanelState()
+    override fun togglePanelState() { /** do nothing **/ }
 
-    override fun setChevronState(isExpanded: Boolean)
+    override fun setChevronState(isExpanded: Boolean) { /** do nothing **/ }
 
-    override fun prebook(isPrebook: Boolean)
+    override fun prebook(isPrebook: Boolean) { /** do nothing **/ }
 
-    override fun showList()
+    override fun showList() { /** do nothing **/ }
 
     override fun hideList(): Boolean {
         return true
     }
 
-    override fun showNoAvailability()
+    override fun showNoAvailability() { /** do nothing **/ }
 
     override fun showNoResultsText(show: Boolean) {
         calledShowNowResults = show
     }
 
-    override fun hideNoAvailability()
+    override fun hideNoAvailability() { /** do nothing **/ }
 
-    override fun showSnackbarError(snackbarConfig: SnackbarConfig)
+    override fun showSnackbarError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }
 }
