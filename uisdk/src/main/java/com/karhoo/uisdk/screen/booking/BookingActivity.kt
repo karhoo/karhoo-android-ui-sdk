@@ -26,8 +26,8 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity.BookingCheckoutActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.activity.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
@@ -228,14 +228,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingRequestOutputs(): Observer<in BookingCheckoutViewContract.BookingRequestAction> {
+    private fun bindToBookingRequestOutputs(): Observer<in CheckoutViewContract.Action> {
         return Observer { actions ->
             when (actions) {
-                is BookingCheckoutViewContract.BookingRequestAction.ShowTermsAndConditions ->
+                is CheckoutViewContract.Action.ShowTermsAndConditions ->
                     showWebView(actions.url)
-                is BookingCheckoutViewContract.BookingRequestAction.WaitForTripAllocation ->
+                is CheckoutViewContract.Action.WaitForTripAllocation ->
                     waitForTripAllocation()
-                is BookingCheckoutViewContract.BookingRequestAction.HandleBookingError ->
+                is CheckoutViewContract.Action.HandleBookingError ->
                     showErrorDialog(actions.stringId, actions.karhooError)
             }
         }
@@ -256,7 +256,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
 
-                    val builder = BookingCheckoutActivity.Builder()
+                    val builder = CheckoutActivity.Builder()
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)

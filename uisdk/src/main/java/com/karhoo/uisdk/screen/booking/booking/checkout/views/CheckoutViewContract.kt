@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views
+package com.karhoo.uisdk.screen.booking.booking.checkout.views
 
 import android.content.Intent
 import androidx.annotation.StringRes
@@ -11,7 +11,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.fragment.BookingCheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -19,7 +19,7 @@ import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestState
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import org.joda.time.DateTime
 
-interface BookingCheckoutViewContract {
+interface CheckoutViewContract {
     interface View {
 
         fun bindEta(quote: Quote, card: String)
@@ -52,7 +52,7 @@ interface BookingCheckoutViewContract {
 
         fun showPaymentFailureDialog(error: KarhooError?)
 
-        fun showPaymentUI()
+        fun waitForPaymentFlow()
 
         fun showLoading(show: Boolean)
 
@@ -62,7 +62,7 @@ interface BookingCheckoutViewContract {
 
         fun startBooking()
 
-        fun setLoadingButtonCallback(loadingButtonCallback: BookingCheckoutFragmentContract.LoadingButtonListener)
+        fun setLoadingButtonCallback(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener)
     }
 
     interface Presenter {
@@ -104,22 +104,22 @@ interface BookingCheckoutViewContract {
     }
 
 
-    interface BookingRequestViewWidget {
+    interface Widget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>?)
     }
 
-    sealed class BookingRequestEvent {
-        data class TermsAndConditionsRequested(val url: String) : BookingRequestEvent()
-        data class BookingSuccess(val tripInfo: TripInfo) : BookingRequestEvent()
-        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestEvent()
+    sealed class Event {
+        data class TermsAndConditionsRequested(val url: String) : Event()
+        data class BookingSuccess(val tripInfo: TripInfo) : Event()
+        data class BookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : Event()
     }
 
-    sealed class BookingRequestAction {
-        data class ShowTermsAndConditions(val url: String) : BookingRequestAction()
-        object WaitForTripAllocation : BookingRequestAction()
-        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : BookingRequestAction()
+    sealed class Action {
+        data class ShowTermsAndConditions(val url: String) : Action()
+        object WaitForTripAllocation : Action()
+        data class HandleBookingError(@StringRes val stringId: Int, val karhooError: KarhooError?) : Action()
     }
 
 }

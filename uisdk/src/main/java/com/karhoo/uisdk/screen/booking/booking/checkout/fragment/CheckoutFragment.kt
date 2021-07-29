@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.fragment
+package com.karhoo.uisdk.screen.booking.booking.checkout.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,13 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity.BookingCheckoutActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutView
+import com.karhoo.uisdk.screen.booking.booking.checkout.activity.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutView
 import java.util.HashMap
 
-internal class BookingCheckoutFragment : Fragment(), LoadingButtonView.Actions {
+internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
     private lateinit var bookingRequestButton: LoadingButtonView
-    private lateinit var bookingCheckoutView: BookingCheckoutView
+    private lateinit var checkoutView: CheckoutView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_checkout_fragment, container, false)
 
@@ -23,10 +23,10 @@ internal class BookingCheckoutFragment : Fragment(), LoadingButtonView.Actions {
         bookingRequestButton.actions = this
         bookingRequestButton.onLoadingComplete()
 
-        bookingCheckoutView = view.findViewById(R.id.bookingCheckoutView)
+        checkoutView = view.findViewById(R.id.bookingCheckoutView)
 
         val bundle = arguments as Bundle
-        bookingCheckoutView.setLoadingButtonCallback(object  :BookingCheckoutFragmentContract.LoadingButtonListener {
+        checkoutView.setLoadingButtonCallback(object  :CheckoutFragmentContract.LoadingButtonListener {
             override fun onLoadingComplete() {
                 bookingRequestButton.onLoadingComplete()
             }
@@ -36,11 +36,11 @@ internal class BookingCheckoutFragment : Fragment(), LoadingButtonView.Actions {
             }
         })
 
-        bookingCheckoutView.showBookingRequest(
-                quote = bundle.getParcelable(BookingCheckoutActivity.BOOKING_REQUEST_QUOTE_KEY)!!,
-                bookingStatus = bundle.getParcelable(BookingCheckoutActivity.BOOKING_REQUEST_STATUS_KEY),
-                outboundTripId = bundle.getString(BookingCheckoutActivity.BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY),
-                bookingMetadata = bundle.getSerializable(BookingCheckoutActivity.BOOKING_REQUEST_METADATA_KEY) as HashMap<String, String>?
+        checkoutView.showBookingRequest(
+                quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+                bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+                bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
         )
 
         return view;
@@ -50,13 +50,13 @@ internal class BookingCheckoutFragment : Fragment(), LoadingButtonView.Actions {
         if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser) {
             bookingRequestButton.onLoadingComplete()
         } else {
-            bookingCheckoutView.startBooking()
+            checkoutView.startBooking()
         }
     }
 
     companion object {
-        fun newInstance(arguments: Bundle): BookingCheckoutFragment {
-            val fragment = BookingCheckoutFragment()
+        fun newInstance(arguments: Bundle): CheckoutFragment {
+            val fragment = CheckoutFragment()
 
             fragment.arguments = arguments
             return fragment

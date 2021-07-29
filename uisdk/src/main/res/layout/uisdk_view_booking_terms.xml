@@ -42,7 +42,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:layout_marginBottom="@dimen/spacing_xsmall"
-        android:background="@color/colorAccent"
+        android:background="@color/med_grey"
         app:layout_constraintBottom_toBottomOf="@+id/cancellationText"
         app:layout_constraintStart_toEndOf="@+id/termsConditionsText"
         app:layout_constraintTop_toTopOf="@+id/cancellationText" />

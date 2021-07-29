@@ -118,7 +118,7 @@
 
     <style name="HelperEditText" parent="AppTheme.EditText">
         <item name="android:textSize">@dimen/text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_gray_black</item>
+        <item name="android:textColor">@color/kh_fleet_type_text_color</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -304,30 +304,21 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/text_size_small_medium</item>
-        <item name="android:fontFamily">@font/barlow_regular</item>
-        <item name="fontFamily">@font/barlow_regular</item>
-        <item name="fontWeight">600</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetType">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textColor">@color/kh_gray_black</item>
-        <item name="android:fontFamily">@font/barlow_regular</item>
-        <item name="fontFamily">@font/barlow_regular</item>
-        <item name="fontWeight">600</item>
+        <item name="android:textColor">@color/kh_fleet_type_text_color</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetCancellation">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="fontFamily">@font/barlow_regular</item>
         <item name="android:textColor">@color/black</item>
-        <item name="fontWeight">400</item>
     </style>
 
     <style name="KhBookingCheckoutBackToQuotes">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="fontFamily">@font/barlow_regular</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -344,9 +335,6 @@
     <style name="KhBookingTermsTitleText">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/barlow_regular</item>
-        <item name="fontFamily">@font/barlow_regular</item>
-        <item name="fontWeight">600</item>
     </style>
 
     <style name="KhPaymentView">

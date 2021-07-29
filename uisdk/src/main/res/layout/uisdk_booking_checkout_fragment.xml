@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutView
+    <com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutView
         android:id="@+id/bookingCheckoutView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

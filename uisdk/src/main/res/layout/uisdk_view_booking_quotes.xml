@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/kh_spacing_semi_small"
-    android:paddingEnd="@dimen/kh_spacing_semi_small"
+    android:paddingStart="@dimen/kh_uisdk_spacing_semi_small"
+    android:paddingEnd="@dimen/kh_uisdk_spacing_semi_small"
     android:clickable="false">
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="@dimen/kh_quotes_logo_size"
-        android:layout_height="@dimen/kh_quotes_logo_size"
+        android:layout_width="@dimen/kh_uisdk_quotes_logo_size"
+        android:layout_height="@dimen/kh_uisdk_quotes_logo_size"
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -22,7 +22,7 @@
         style="@style/KhBookingQuotesViewFleetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_spacing_semi_small"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
         android:layout_marginEnd="@dimen/spacing_xxsmall"
         android:ellipsize="end"
         android:maxLines="2"
@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/logoImage"
         app:layout_constraintTop_toTopOf="@+id/logoImage"
-        tools:text="Uber" />
+        tools:text="Addison Lee" />
 
     <TextView
         android:id="@+id/categoryText"

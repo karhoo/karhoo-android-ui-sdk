@@ -51,7 +51,7 @@ interface BookingPaymentMVP {
 
         fun handleChangeCard()
 
-        fun showPaymentUI()
+        fun waitForPaymentFlow()
 
         fun showPaymentFailureDialog(error: KarhooError?)
 

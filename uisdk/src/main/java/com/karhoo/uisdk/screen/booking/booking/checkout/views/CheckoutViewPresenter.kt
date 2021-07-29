@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views
+package com.karhoo.uisdk.screen.booking.booking.checkout.views
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
@@ -35,12 +35,12 @@ import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
 import java.util.Date
 
-internal class BookingCheckoutViewPresenter(view: BookingCheckoutViewContract.View,
-                                   private val analytics: Analytics?,
-                                   private val preferenceStore: PreferenceStore,
-                                   private val tripsService: TripsService,
-                                   private val userStore: UserStore)
-    : BasePresenter<BookingCheckoutViewContract.View>(), BookingCheckoutViewContract.Presenter, LifecycleObserver {
+internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
+                                     private val analytics: Analytics?,
+                                     private val preferenceStore: PreferenceStore,
+                                     private val tripsService: TripsService,
+                                     private val userStore: UserStore)
+    : BasePresenter<CheckoutViewContract.View>(), CheckoutViewContract.Presenter, LifecycleObserver {
 
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
@@ -111,7 +111,7 @@ internal class BookingCheckoutViewPresenter(view: BookingCheckoutViewContract.Vi
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
             view?.onTripBookedSuccessfully(tripInfo)
-            bookingRequestStateViewModel?.process(BookingCheckoutViewContract.BookingRequestEvent.BookingSuccess(tripInfo))
+            bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingSuccess(tripInfo))
         }
     }
 
@@ -229,7 +229,7 @@ internal class BookingCheckoutViewPresenter(view: BookingCheckoutViewContract.Vi
 
     override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError()
-        bookingRequestStateViewModel?.process(BookingCheckoutViewContract.BookingRequestEvent.BookingError(stringId, karhooError))
+        bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingError(stringId, karhooError))
     }
 
     private fun handleBookingType(quote: Quote) {

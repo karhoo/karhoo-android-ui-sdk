@@ -19,7 +19,6 @@ class BookingOptionalInfoView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_view_booking_comments, this)
         initialiseFieldListeners()
-        setHintText(context.getString(R.string.kh_uisdk_additional_comments))
     }
 
     private fun initialiseFieldListeners() {

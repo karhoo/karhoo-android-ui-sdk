@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views
+package com.karhoo.uisdk.screen.booking.booking.checkout.views
 
 import android.app.Activity
 import android.content.Context
@@ -23,7 +23,7 @@ import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.fragment.BookingCheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.booking.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.booking.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
@@ -36,18 +36,18 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
 import org.joda.time.DateTime
 import java.util.*
 
-internal class BookingCheckoutView @JvmOverloads constructor(context: Context,
-                                                    attrs: AttributeSet? = null,
-                                                    defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), BookingCheckoutViewContract.View, BookingCheckoutViewContract.Actions,
+internal class CheckoutView @JvmOverloads constructor(context: Context,
+                                                      attrs: AttributeSet? = null,
+                                                      defStyleAttr: Int = 0)
+    : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View, CheckoutViewContract.Actions,
         BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
-        BookingCheckoutViewContract.BookingRequestViewWidget {
+        CheckoutViewContract.Widget {
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
 
-    private lateinit var presenter: BookingCheckoutViewContract.Presenter
-    private lateinit var loadingButtonCallback: BookingCheckoutFragmentContract.LoadingButtonListener
+    private lateinit var presenter: CheckoutViewContract.Presenter
+    private lateinit var loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener
 
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
@@ -55,7 +55,7 @@ internal class BookingCheckoutView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
-        presenter = BookingCheckoutViewPresenter(this,
+        presenter = CheckoutViewPresenter(this,
                 KarhooUISDK.analytics,
                 KarhooPreferenceStore.getInstance(context),
                 KarhooApi.tripService,
@@ -66,7 +66,7 @@ internal class BookingCheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
     }
 
-    override fun setLoadingButtonCallback(loadingButtonCallback: BookingCheckoutFragmentContract.LoadingButtonListener) {
+    override fun setLoadingButtonCallback(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener) {
         this.loadingButtonCallback = loadingButtonCallback
     }
 
@@ -102,7 +102,6 @@ internal class BookingCheckoutView @JvmOverloads constructor(context: Context,
     }
 
     private fun attachListeners() {
-        bookingRequestQuotesWidget.setOnClickListener {}
         bookingRequestLinearLayout.setOnClickListener {
             it.hideSoftKeyboard()
         }
@@ -223,7 +222,7 @@ internal class BookingCheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.visibility = visibility
     }
 
-    override fun showPaymentUI() {
+    override fun waitForPaymentFlow() {
         holdOpenForPaymentFlow = true
     }
 

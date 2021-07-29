@@ -6,7 +6,7 @@ import com.karhoo.uisdk.base.MenuHandler
 import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity.BookingCheckoutActivity
+import com.karhoo.uisdk.screen.booking.booking.checkout.activity.CheckoutActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
@@ -22,7 +22,7 @@ object KarhooUISDK {
 
         var booking: Class<*> = BookingActivity::class.java
 
-        var bookingRequest: Class<*> = BookingCheckoutActivity::class.java
+        var checkout: Class<*> = CheckoutActivity::class.java
 
         var address: Class<*> = AddressActivity::class.java
 

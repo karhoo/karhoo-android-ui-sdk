@@ -5,10 +5,10 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.base.state.BaseStateViewModel
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewContract
 
 class BookingRequestStateViewModel(application: Application) : BaseStateViewModel<BookingRequestStatus,
-        BookingCheckoutViewContract.BookingRequestAction, BookingCheckoutViewContract.BookingRequestEvent>
+        CheckoutViewContract.Action, CheckoutViewContract.Event>
                                                                (application) {
     init {
         viewState = BookingRequestStatus(null)
@@ -16,29 +16,29 @@ class BookingRequestStateViewModel(application: Application) : BaseStateViewMode
 
     // update the state by using a set of predefined contracts. Some of the event can trigger an
     // action to be performed (e.g. output of the widget)
-    override fun process(viewEvent: BookingCheckoutViewContract.BookingRequestEvent) {
+    override fun process(viewEvent: CheckoutViewContract.Event) {
         super.process(viewEvent)
         when (viewEvent) {
-            is BookingCheckoutViewContract.BookingRequestEvent.TermsAndConditionsRequested ->
+            is CheckoutViewContract.Event.TermsAndConditionsRequested ->
                 showTermsAndConditions(viewEvent.url)
-            is BookingCheckoutViewContract.BookingRequestEvent.BookingSuccess ->
+            is CheckoutViewContract.Event.BookingSuccess ->
                 updateBookingRequestStatus(viewEvent.tripInfo)
-            is BookingCheckoutViewContract.BookingRequestEvent.BookingError ->
+            is CheckoutViewContract.Event.BookingError ->
                 handleBookingError(viewEvent.stringId, viewEvent.karhooError)
         }
     }
 
     private fun handleBookingError(@StringRes stringId: Int, karhooError: KarhooError?) {
-        viewAction = BookingCheckoutViewContract.BookingRequestAction.HandleBookingError(stringId,
+        viewAction = CheckoutViewContract.Action.HandleBookingError(stringId,
                                                                                         karhooError)
     }
 
     private fun showTermsAndConditions(url: String) {
-        viewAction = BookingCheckoutViewContract.BookingRequestAction.ShowTermsAndConditions(url)
+        viewAction = CheckoutViewContract.Action.ShowTermsAndConditions(url)
     }
 
     private fun updateBookingRequestStatus(tripInfo: TripInfo) {
-        viewAction = BookingCheckoutViewContract.BookingRequestAction.WaitForTripAllocation
+        viewAction = CheckoutViewContract.Action.WaitForTripAllocation
         viewState = BookingRequestStatus(tripInfo)
     }
 }

@@ -30,9 +30,9 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewPresenter
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewPresenter
+import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -94,7 +94,7 @@ class BookingRequestPresenterTest {
     private val savedPaymentInfo: SavedPaymentInfo = mock()
     private val tripsService: TripsService = mock()
     private val userStore: UserStore = mock()
-    private var view: BookingCheckoutViewContract.View = mock()
+    private var view: CheckoutViewContract.View = mock()
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
@@ -104,7 +104,7 @@ class BookingRequestPresenterTest {
     private val tripCall: Call<TripInfo> = mock()
     private val tripCaptor = argumentCaptor<(Resource<TripInfo>) -> Unit>()
 
-    private lateinit var checkoutPresenter: BookingCheckoutViewPresenter
+    private lateinit var checkoutPresenter: CheckoutViewPresenter
 
     @Before
     fun setUp() {
@@ -115,7 +115,7 @@ class BookingRequestPresenterTest {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        checkoutPresenter = BookingCheckoutViewPresenter(view, analytics, preferenceStore, tripsService,
+        checkoutPresenter = CheckoutViewPresenter(view, analytics, preferenceStore, tripsService,
                                                    userStore)
     }
 
@@ -214,8 +214,8 @@ class BookingRequestPresenterTest {
 
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError()
-        verify(bookingRequestStateViewModel).process(BookingCheckoutViewContract
-                                                             .BookingRequestEvent
+        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+                                                             .Event
                                                              .BookingError(R.string
                                                                                    .kh_uisdk_destination_book_error, null))
     }
@@ -236,8 +236,8 @@ class BookingRequestPresenterTest {
 
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError()
-        verify(bookingRequestStateViewModel).process(BookingCheckoutViewContract
-                                                             .BookingRequestEvent
+        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+                                                             .Event
                                                              .BookingError(R.string
                                                                                    .kh_uisdk_origin_book_error, null))
     }
@@ -443,8 +443,8 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError()
-        verify(bookingRequestStateViewModel).process(BookingCheckoutViewContract
-                                                             .BookingRequestEvent
+        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+                                                             .Event
                                                              .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
     }
 
@@ -467,8 +467,8 @@ class BookingRequestPresenterTest {
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
         verify(view).onError()
-        verify(bookingRequestStateViewModel).process(BookingCheckoutViewContract
-                                                             .BookingRequestEvent
+        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+                                                             .Event
                                                              .BookingError(R.string
                                                                                    .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
     }
@@ -606,8 +606,8 @@ class BookingRequestPresenterTest {
 
         verify(preferenceStore).lastTrip = trip
         verify(view).onTripBookedSuccessfully(trip)
-        verify(bookingRequestStateViewModel).process(BookingCheckoutViewContract
-                                                             .BookingRequestEvent.BookingSuccess(trip))
+        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+                                                             .Event.BookingSuccess(trip))
     }
 
     /**

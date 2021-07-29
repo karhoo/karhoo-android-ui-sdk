@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.bookingcheckout.activity
+package com.karhoo.uisdk.screen.booking.booking.checkout.activity
 
 import android.content.Context
 import android.content.Intent
@@ -8,45 +8,42 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.fragment.BookingCheckoutFragment
-import com.karhoo.uisdk.screen.booking.booking.bookingcheckout.views.BookingCheckoutViewContract
+import com.karhoo.uisdk.screen.booking.booking.checkout.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.booking.payment.PaymentActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import java.util.*
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
+import java.util.HashMap
 
-class BookingCheckoutActivity : BaseActivity(), PaymentActions {
+class CheckoutActivity : BaseActivity(), PaymentActions {
     override val layout: Int
         get() = R.layout.uisdk_booking_checkout_activity
 
-    private var isGuest: Boolean = false
-
-    private var holdOpenForPaymentFlow = false
-
-    private lateinit var presenter: BookingCheckoutViewContract.Presenter
-    private lateinit var fragment: BookingCheckoutFragment
+    private lateinit var fragment: CheckoutFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(checkoutToolbar)
+        checkoutToolbar.setNavigationOnClickListener { finish() }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         extras?.let { extras ->
-            val quote = extras.getParcelable<Quote>(BOOKING_REQUEST_QUOTE_KEY)
+            val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
-            if (quote != null) {
+            quote?.let {
                 val ft = supportFragmentManager.beginTransaction()
 
-                fragment = BookingCheckoutFragment.newInstance(
-                        extras
-                )
+                fragment = CheckoutFragment.newInstance(extras)
 
-                ft.add(R.id.checkoutActivityFragmentContainer, fragment,
-                        fragment::class.java.name
-                ).commit()
-            } else {
-                finishWithError(BOOKING_REQUEST_ERROR_NO_QUOTE)
+                ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+                        .commit()
+            } ?: run {
+                finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
         } ?: run {
-            finishWithError(BOOKING_REQUEST_ERROR_NO_QUOTE)
+            finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
         }
     }
 
@@ -62,9 +59,8 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
      */
     private fun finishWithError(error: String) {
         val data = Intent()
-        data.putExtra(BookingCheckoutActivity.BOOKING_REQUEST_ERROR_KEY, error)
-
-        setResult(BookingCheckoutActivity.BOOKING_REQUEST_ERROR, data)
+        data.putExtra(BOOKING_CHECKOUT_ERROR_KEY, error)
+        setResult(BOOKING_CHECKOUT_ERROR, data)
         finish()
     }
 
@@ -89,7 +85,7 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * @param quote mandatory param for starting up the Booking Request Activity
          */
         fun quote(quote: Quote): Builder {
-            extrasBundle.putParcelable(BOOKING_REQUEST_QUOTE_KEY, quote)
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_QUOTE_KEY, quote)
             return this
         }
 
@@ -98,7 +94,7 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * It's used for analytics purposes only
          */
         fun outboundTripId(outboundTripId: String?): Builder {
-            extrasBundle.putString(BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY, outboundTripId)
+            extrasBundle.putString(BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY, outboundTripId)
             return this
         }
 
@@ -107,7 +103,7 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * Booking API meta data
          */
         fun bookingMetadata(metadata: HashMap<String, String>?): Builder {
-            extrasBundle.putSerializable(BOOKING_REQUEST_METADATA_KEY, metadata)
+            extrasBundle.putSerializable(BOOKING_CHECKOUT_METADATA_KEY, metadata)
             return this
         }
 
@@ -117,7 +113,7 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * the BookingStatus object.
          */
         fun bookingStatus(bookingStatus: BookingStatus): Builder {
-            extrasBundle.putParcelable(BOOKING_REQUEST_STATUS_KEY, bookingStatus)
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingStatus)
             return this
         }
 
@@ -125,7 +121,7 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * If a passenger is added, then it will be used to prefill the passenger details in the booking request component
          */
         fun passengerDetails(passenger: PassengerDetails): Builder {
-            extrasBundle.putParcelable(BOOKING_REQUEST_PASSENGER_KEY, passenger)
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_PASSENGER_KEY, passenger)
             return this
         }
 
@@ -133,22 +129,22 @@ class BookingCheckoutActivity : BaseActivity(), PaymentActions {
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
-        fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.bookingRequest).apply {
+        fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.checkout).apply {
             putExtras(extrasBundle)
         }
     }
 
     companion object {
-        const val BOOKING_REQUEST_QUOTE_KEY = "BOOKING_REQUEST_INPUT_QUOTE"
-        const val BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY = "BOOKING_REQUEST_OUTBOUND_TRIP_ID_KEY"
-        const val BOOKING_REQUEST_METADATA_KEY = "BOOKING_REQUEST_METADATA_KEY"
-        const val BOOKING_REQUEST_STATUS_KEY = "BOOKING_STATUS_KEY"
-        const val BOOKING_REQUEST_TRIP_INFO_KEY = "TRIP_INFO_KEY"
-        const val BOOKING_REQUEST_PASSENGER_KEY = "PASSENGER_KEY"
+        const val BOOKING_CHECKOUT_QUOTE_KEY = "BOOKING_CHECKOUT_INPUT_QUOTE_KEY"
+        const val BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY = "BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY"
+        const val BOOKING_CHECKOUT_METADATA_KEY = "BOOKING_CHECKOUT_METADATA_KEY"
+        const val BOOKING_CHECKOUT_STATUS_KEY = "BOOKING_STATUS_KEY"
+        const val BOOKING_CHECKOUT_TRIP_INFO_KEY = "TRIP_INFO_KEY"
+        const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
 
         /** Errors outputted by the Booking Request Activity**/
-        const val BOOKING_REQUEST_ERROR = 10
-        const val BOOKING_REQUEST_ERROR_KEY = "BOOKING_REQUEST_ERROR_KEY"
-        const val BOOKING_REQUEST_ERROR_NO_QUOTE = "BOOKING_REQUEST_ERROR_NO_QUOTE"
+        const val BOOKING_CHECKOUT_ERROR = 10
+        const val BOOKING_CHECKOUT_ERROR_KEY = "BOOKING_CHECKOUT_ERROR_KEY"
+        const val BOOKING_CHECKOUT_ERROR_NO_QUOTE = "BOOKING_CHECKOUT_ERROR_NO_QUOTE_KEY"
     }
 }
