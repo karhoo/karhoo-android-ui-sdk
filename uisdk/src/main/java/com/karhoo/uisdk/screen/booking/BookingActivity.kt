@@ -26,11 +26,11 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.checkout.activity.CheckoutActivity
-import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo

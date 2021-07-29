@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.base.state.BaseStateViewModel
-import com.karhoo.uisdk.screen.booking.booking.checkout.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
 
 class BookingRequestStateViewModel(application: Application) : BaseStateViewModel<BookingRequestStatus,
         CheckoutViewContract.Action, CheckoutViewContract.Event>

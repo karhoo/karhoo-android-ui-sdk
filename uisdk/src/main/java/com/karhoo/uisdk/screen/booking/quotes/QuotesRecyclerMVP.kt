@@ -3,7 +3,7 @@ package com.karhoo.uisdk.screen.booking.quotes
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category

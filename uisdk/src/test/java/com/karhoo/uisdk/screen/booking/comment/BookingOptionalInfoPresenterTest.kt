@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.comment
 
-import com.karhoo.uisdk.screen.booking.booking.comment.BookingOptionalInfoMVP
-import com.karhoo.uisdk.screen.booking.booking.comment.BookingOptionalInfoPresenter
+import com.karhoo.uisdk.screen.booking.checkout.comment.BookingOptionalInfoMVP
+import com.karhoo.uisdk.screen.booking.checkout.comment.BookingOptionalInfoPresenter
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals
