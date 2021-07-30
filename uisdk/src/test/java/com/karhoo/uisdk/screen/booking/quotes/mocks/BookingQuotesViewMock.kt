@@ -1,6 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.mocks
 
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesMVP
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesMVP
 
 class BookingQuotesViewMock: BookingQuotesMVP.View {
     var cancellationMinutesText: String? = null

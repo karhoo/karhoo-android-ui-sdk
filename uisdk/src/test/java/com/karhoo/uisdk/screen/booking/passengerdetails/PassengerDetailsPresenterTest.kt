@@ -2,8 +2,8 @@ package com.karhoo.uisdk.screen.booking.passengerdetails
 
 import android.content.res.Resources
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsMVP
-import com.karhoo.uisdk.screen.booking.booking.passengerdetails.PassengerDetailsPresenter
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsMVP
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsPresenter
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify

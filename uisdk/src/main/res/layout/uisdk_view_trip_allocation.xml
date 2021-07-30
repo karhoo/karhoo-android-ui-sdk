@@ -67,7 +67,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/findingYourTripLabel" />
 
-    <com.karhoo.uisdk.screen.booking.booking.tripallocation.CancelButton
+    <com.karhoo.uisdk.screen.booking.checkout.tripallocation.CancelButton
         android:id="@+id/cancelButton"
         android:layout_width="@dimen/allocation_cancel_width"
         android:layout_height="@dimen/allocation_cancel_height"

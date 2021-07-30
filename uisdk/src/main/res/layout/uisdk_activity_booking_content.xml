@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationView
+    <com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
         android:id="@+id/tripAllocationWidget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

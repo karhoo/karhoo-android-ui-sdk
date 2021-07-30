@@ -13,8 +13,8 @@ import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.sdk.call.Call
 import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationPresenter
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationPresenter
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
