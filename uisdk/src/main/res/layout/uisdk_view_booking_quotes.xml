@@ -4,60 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
+    android:paddingStart="@dimen/kh_uisdk_spacing_semi_small"
+    android:paddingEnd="@dimen/kh_uisdk_spacing_semi_small"
     android:clickable="false">
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="@dimen/quotes_logo_size"
-        android:layout_height="@dimen/quotes_logo_size"
-        android:layout_gravity="center_vertical|left"
+        android:layout_width="@dimen/kh_uisdk_quotes_logo_size"
+        android:layout_height="@dimen/kh_uisdk_quotes_logo_size"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineCentre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/uisdk_ic_profile" />
 
     <TextView
         android:id="@+id/quoteNameText"
-        style="@style/KhBookingQuotesView"
+        style="@style/KhBookingQuotesViewFleetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
         android:layout_marginEnd="@dimen/spacing_xxsmall"
         android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@id/guidelineCentre"
+        android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@id/capacityWidget"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/logoImage"
+        app:layout_constraintTop_toTopOf="@+id/logoImage"
         tools:text="Addison Lee" />
 
     <TextView
         android:id="@+id/categoryText"
-        style="@style/KhBookingQuotesView"
+        style="@style/KhBookingQuotesViewFleetType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="@id/quoteNameText"
-        app:layout_constraintTop_toBottomOf="@id/guidelineCentre"
-        tools:text="Car" />
+        app:layout_constraintTop_toBottomOf="@id/quoteNameText"
+        tools:text="Berline" />
 
     <TextView
         android:id="@+id/bookingQuoteCancellationText"
-        style="@style/Text.Primary.Small.Green"
+        style="@style/KhBookingQuotesViewFleetCancellation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xsmall"
         android:ellipsize="end"
         android:maxLines="2"
-        app:layout_constraintStart_toStartOf="@id/quoteNameText"
-        app:layout_constraintTop_toBottomOf="@id/categoryText"
+        app:layout_constraintStart_toStartOf="@id/logoImage"
+        app:layout_constraintTop_toBottomOf="@id/logoImage"
         tools:text="Free cancellation up to 21 minutes before pickup" />
 
     <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView

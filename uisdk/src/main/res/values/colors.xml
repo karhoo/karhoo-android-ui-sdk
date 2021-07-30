@@ -12,6 +12,8 @@
     <color name="secondary_yellow">#E09323</color>
     <color name="colorAccent">#FF4081</color>
     <color name="textColorError">@color/primary_red</color>
+    <color name="kh_uisdk_secondary_text_color">#8C8C8C</color>
+    <color name="kh_ic_chevron_left">@color/black</color>
 
     <!-- Gradients -->
     <color name="sort_grad_start_red">#FA0046</color>

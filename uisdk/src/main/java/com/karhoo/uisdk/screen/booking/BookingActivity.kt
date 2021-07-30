@@ -26,11 +26,11 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
@@ -47,8 +47,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestPassengerDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
@@ -180,7 +179,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         passengerDetails?.let {
-            bookingRequestPassengerDetailsWidget.setPassengerDetails(it)
+
         }
 
         bookingComments?.let {
@@ -229,14 +228,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingRequestOutputs(): Observer<in BookingRequestViewContract.BookingRequestAction> {
+    private fun bindToBookingRequestOutputs(): Observer<in CheckoutViewContract.Action> {
         return Observer { actions ->
             when (actions) {
-                is BookingRequestViewContract.BookingRequestAction.ShowTermsAndConditions ->
+                is CheckoutViewContract.Action.ShowTermsAndConditions ->
                     showWebView(actions.url)
-                is BookingRequestViewContract.BookingRequestAction.WaitForTripAllocation ->
+                is CheckoutViewContract.Action.WaitForTripAllocation ->
                     waitForTripAllocation()
-                is BookingRequestViewContract.BookingRequestAction.HandleBookingError ->
+                is CheckoutViewContract.Action.HandleBookingError ->
                     showErrorDialog(actions.stringId, actions.karhooError)
             }
         }
@@ -257,7 +256,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
 
-                    val builder = BookingRequestActivity.Builder()
+                    val builder = CheckoutActivity.Builder()
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)

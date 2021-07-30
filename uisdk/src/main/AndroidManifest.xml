@@ -64,7 +64,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestActivity"
+            android:name="com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -72,13 +72,13 @@
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screen.booking.booking.payment.adyen.AdyenResultActivity"
+        <activity android:name=".screen.booking.checkout.payment.adyen.AdyenResultActivity"
             android:label="@string/kh_uisdk_payment_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".screen.booking.booking.payment.adyen.AdyenDropInService"
+            android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>
