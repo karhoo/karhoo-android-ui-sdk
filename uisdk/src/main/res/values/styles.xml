@@ -118,7 +118,7 @@
 
     <style name="HelperEditText" parent="AppTheme.EditText">
         <item name="android:textSize">@dimen/text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_fleet_type_text_color</item>
+        <item name="android:textColor">@color/kh_uisdk_secondary_text_color</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -308,7 +308,7 @@
 
     <style name="KhBookingQuotesViewFleetType">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textColor">@color/kh_fleet_type_text_color</item>
+        <item name="android:textColor">@color/kh_uisdk_secondary_text_color</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetCancellation">
