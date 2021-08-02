@@ -30,7 +30,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/logoImage"
         app:layout_constraintTop_toTopOf="@+id/logoImage"
-        tools:text="Uber" />
+        tools:text="Karhoo" />
 
     <TextView
         android:id="@+id/categoryText"
