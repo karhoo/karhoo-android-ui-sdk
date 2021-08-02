@@ -1,6 +1,6 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment
 
-interface PaymentActions {
+interface WebViewActions {
 
     fun showWebView(url: String?)
 

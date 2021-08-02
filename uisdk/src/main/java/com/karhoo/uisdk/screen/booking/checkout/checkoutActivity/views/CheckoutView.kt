@@ -41,13 +41,14 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       defStyleAttr: Int = 0)
     : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View, CheckoutViewContract.Actions,
         BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
-        CheckoutViewContract.Widget {
+        CheckoutViewContract.BookingRequestViewWidget {
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
 
-    private lateinit var presenter: CheckoutViewContract.Presenter
+    private var presenter: CheckoutViewContract.Presenter
     private lateinit var loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener
+    private lateinit var termsListener: CheckoutFragmentContract.TermsListener
 
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
@@ -66,8 +67,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
     }
 
-    override fun setLoadingButtonCallback(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener) {
+    override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener, termsListener: CheckoutFragmentContract.TermsListener) {
         this.loadingButtonCallback = loadingButtonCallback
+        this.termsListener = termsListener
     }
 
     override fun showGuestBookingFields(details: PassengerDetails?) {
@@ -150,6 +152,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
                 vehicle.serviceAgreements?.freeCancellation,
+                vehicle.vehicle.vehicleTags,
                 isPrebook
         )
         bookingRequestTermsWidget.bindViews(vehicle)
@@ -222,7 +225,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.visibility = visibility
     }
 
-    override fun waitForPaymentFlow() {
+    override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
     }
 
@@ -286,7 +289,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showWebView(url: String?) {
-        // PASS the info to the fragment -> to start the khWebView from the activity !!!!!
+        termsListener.showWebViewOnPress(url)
     }
 
     // fragment should pass on the activity result

@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentActions
+import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.bookingTermsText
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.cancellationText
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.termsConditionsText
@@ -16,7 +16,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
                                                  defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr) {
 
-    var actions: PaymentActions? = null
+    var actions: WebViewActions? = null
 
     init {
         inflate(context, R.layout.uisdk_view_booking_terms, this)

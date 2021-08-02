@@ -6,7 +6,8 @@
     <dimen name="spacing_xxsmall">4dp</dimen>
     <dimen name="spacing_xsmall">8dp</dimen>
     <dimen name="spacing_small">16dp</dimen>
-    <dimen name="kh_uisdk_spacing_semi_small">10dp</dimen>
+    <dimen name="spacing_small_intermediate">12dp</dimen>
+    <dimen name="kh_spacing_semi_small">10dp</dimen>
     <dimen name="spacing_medium_small">24dp</dimen>
     <dimen name="spacing_medium">32dp</dimen>
     <dimen name="spacing_medium_large">40dp</dimen>
@@ -134,7 +135,7 @@
     <!--Line spacing-->
     <dimen name="booking_line_spacing">8sp</dimen>
     <dimen name="flight_details_line_spacing">4sp</dimen>
-    <dimen name="kh_uisdk_quotes_logo_size">52dp</dimen>
+    <dimen name="kh_quotes_logo_size">72dp</dimen>
     <dimen name="capacity_image_size">24dp</dimen>
 
     <!--Grid spacing-->

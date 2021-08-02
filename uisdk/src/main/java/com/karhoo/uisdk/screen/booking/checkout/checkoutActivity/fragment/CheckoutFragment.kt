@@ -11,7 +11,8 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutView
-import java.util.HashMap
+import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import java.util.*
 
 internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
     private lateinit var bookingRequestButton: LoadingButtonView
@@ -26,13 +27,19 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
         checkoutView = view.findViewById(R.id.bookingCheckoutView)
 
         val bundle = arguments as Bundle
-        checkoutView.setLoadingButtonCallback(object  :CheckoutFragmentContract.LoadingButtonListener {
+        checkoutView.setListeners(object  : CheckoutFragmentContract.LoadingButtonListener {
             override fun onLoadingComplete() {
                 bookingRequestButton.onLoadingComplete()
             }
 
             override fun showLoading() {
                 bookingRequestButton.showLoading()
+            }
+        }, object : CheckoutFragmentContract.TermsListener {
+            override fun showWebViewOnPress(url: String?) {
+                if(activity is WebViewActions) {
+                    (activity as WebViewActions).showWebView(url)
+                }
             }
         })
 

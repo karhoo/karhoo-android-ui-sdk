@@ -9,13 +9,13 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragment
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentActions
+import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
 import java.util.HashMap
 
-class CheckoutActivity : BaseActivity(), PaymentActions {
+class CheckoutActivity : BaseActivity(), WebViewActions {
     override val layout: Int
         get() = R.layout.uisdk_booking_checkout_activity
 
