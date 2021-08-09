@@ -9,7 +9,7 @@ import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 interface BookingQuotesMVP {
 
     interface View {
-        fun setCapacity(luggage: Int, people: Int)
+        fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int)
         fun setCancellationText(text: String)
         fun setCategoryText(text: String)
         fun showCancellationText(show: Boolean)

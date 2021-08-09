@@ -8,9 +8,10 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/bookingCommentsLayout"
-        android:layout_width="@dimen/spacing_none"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,15 +19,13 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bookingCommentsInput"
-            style="@style/HelperEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/kh_uisdk_additional_comments"
             android:inputType="text"
-            android:paddingStart="@dimen/spacing_medium_small"
-            android:paddingBottom="@dimen/spacing_medium_small"
-            android:hint="@string/kh_uisdk_additional_comments" />
+            android:paddingStart="@dimen/spacing_small_intermediate" />
 
-    </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/updateUserDetailsProgressBar"

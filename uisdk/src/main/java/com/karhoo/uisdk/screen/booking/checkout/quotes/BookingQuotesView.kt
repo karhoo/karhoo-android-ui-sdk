@@ -3,6 +3,9 @@ package com.karhoo.uisdk.screen.booking.checkout.quotes
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -97,55 +100,48 @@ class BookingQuotesView @JvmOverloads constructor(
     }
 
     private fun expandLearnMoreSection() {
-        if (isExpandedSectionShown) {
-            expandedCapacityList
-                .animate()
-                .alpha(VISIBLE_ALPHA)
-                .withEndAction {
-                    expandedCapacityList.visibility = VISIBLE
-                }
-                .duration = SHORT_ANIMATION_DURATION
-
-            capacityWidget
-                .animate()
-                .alpha(TRANSPARENT_ALPHA)
-                .duration = SHORT_ANIMATION_DURATION
-
-            fleetDescription
-                .animate()
-                .alpha(TRANSPARENT_ALPHA)
-                .withEndAction {
-                    fleetDescription.visibility = VISIBLE
-                }
-                .duration = SHORT_ANIMATION_DURATION
-        } else {
-            expandedCapacityList
-                .animate()
-                .alpha(TRANSPARENT_ALPHA)
-                .withEndAction {
-                    expandedCapacityList.visibility = GONE
-                }
-                .duration = SHORT_ANIMATION_DURATION
-            capacityWidget
-                .animate()
-                .alpha(VISIBLE_ALPHA)
-                .withEndAction {
-                    capacityWidget.visibility = VISIBLE
-                }
-                .duration = SHORT_ANIMATION_DURATION
-
-            fleetDescription
-                .animate()
-                .alpha(VISIBLE_ALPHA)
-                .withEndAction {
-                    fleetDescription.visibility = GONE
-                }
-                .duration = SHORT_ANIMATION_DURATION
-        }
+        setAnimation(isExpandedSectionShown, expandedCapacityList, isExpandedSectionShown)
+        setAnimation(!isExpandedSectionShown, capacityWidget, !isExpandedSectionShown)
+        setAnimation(isExpandedSectionShown, fleetDescription, isExpandedSectionShown)
     }
 
-    override fun setCapacity(luggage: Int, people: Int) {
-        capacityWidget.setCapacity(luggage, people, 2)
+    private fun setAnimation(
+        fadeIn: Boolean,
+        view: View,
+        showView: Boolean
+    ) {
+        val animationType = if (fadeIn) {
+            R.anim.kh_uisdk_fade_in
+        } else {
+            R.anim.kh_uisdk_fade_out
+        }
+
+        val animation = AnimationUtils.loadAnimation(context, animationType)
+
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                if (showView) {
+                    view.visibility = VISIBLE
+                }
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                //Do nothing
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                view.clearAnimation()
+                if (!showView) {
+                    view.visibility = GONE
+                }
+            }
+        })
+
+        view.startAnimation(animation)
+    }
+
+    override fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int) {
+        capacityWidget.setCapacity(luggage, people, otherCapabilities)
     }
 
     override fun setCapabilities(capabilities: List<Capability>) {
@@ -157,9 +153,6 @@ class BookingQuotesView @JvmOverloads constructor(
     }
 
     companion object {
-        const val SHORT_ANIMATION_DURATION: Long = 200
-        const val TRANSPARENT_ALPHA: Float = 0.0f
-        const val VISIBLE_ALPHA: Float = 1.0F
         private const val COLUMN_TOTAL_NO: Int = 2
     }
 }

@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesView
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
 import java.util.Currency
 
@@ -16,7 +15,7 @@ class BookingPriceView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
 
-    private lateinit var presenter: BookingPriceViewContract.Presenter
+    private var presenter: BookingPriceViewContract.Presenter
 
     init {
         inflate(context, R.layout.uisdk_view_booking_time_price, this)
@@ -58,21 +57,9 @@ class BookingPriceView @JvmOverloads constructor(
         setContainerVisibility(R.dimen.spacing_medium, VISIBLE)
         pricingTypeTextLayout.setOnClickListener {
             if (priceInfoLayout.visibility == VISIBLE) {
-                priceInfoLayout
-                    .animate()
-                    .alpha(BookingQuotesView.TRANSPARENT_ALPHA)
-                    .withEndAction {
-                        priceInfoLayout.visibility = GONE
-                    }
-                    .duration = BookingQuotesView.SHORT_ANIMATION_DURATION
-
+                priceInfoLayout.visibility = GONE
             } else {
-                priceInfoLayout
-                    .animate()
-                    .alpha(BookingQuotesView.VISIBLE_ALPHA).withEndAction {
-                        priceInfoLayout.visibility = VISIBLE
-                    }
-                    .duration = BookingQuotesView.SHORT_ANIMATION_DURATION
+                priceInfoLayout.visibility = VISIBLE
             }
         }
     }

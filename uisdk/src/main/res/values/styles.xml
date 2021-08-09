@@ -118,7 +118,8 @@
 
     <style name="HelperEditText" parent="AppTheme.EditText">
         <item name="android:textSize">@dimen/text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_secondary_text_color</item>
+        <item name="android:textColor">@color/edit_text_default_color</item>
+        <item name="android:textColorHint">@color/kh_uisdk_secondary_text_color</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -389,7 +390,7 @@
     </style>
 
     <style name="KhBookingPriceValueText">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/spacing_xxxsmall</item>

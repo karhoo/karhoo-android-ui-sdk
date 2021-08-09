@@ -191,8 +191,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
-                luggage = vehicle.luggageCapacity,
-                people = vehicle.passengerCapacity)
+            luggage = vehicle.luggageCapacity,
+            people = vehicle.passengerCapacity,
+            otherCapabilities = capabilities.size)
 
         bookingRequestQuotesWidget.setCapabilities(capabilities)
     }

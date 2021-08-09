@@ -20,7 +20,7 @@ class CapacityView @JvmOverloads constructor(context: Context,
         peopleCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, people.toString())
 
         otherCapabilities?.let {
-            otherCapabilitiesText.text = resources.getString(R.string.kh_uisdk_extra_capabilities, it)
+            otherCapabilitiesText.text = resources.getString(R.string.kh_uisdk_extra_capabilities, it - DEFAULT_CAPABILITIES_NO)
             otherCapabilitiesText.visibility = VISIBLE
         } ?: run {
             otherCapabilitiesText.visibility = GONE
@@ -33,6 +33,10 @@ class CapacityView @JvmOverloads constructor(context: Context,
         } else {
             capacitiesLayout.visibility = GONE
         }
+    }
+
+    companion object {
+        private const val DEFAULT_CAPABILITIES_NO = 2
     }
 
 }

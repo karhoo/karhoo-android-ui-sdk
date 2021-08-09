@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
     android:clickable="false"
     android:paddingStart="@dimen/kh_spacing_semi_small"
     android:paddingEnd="@dimen/kh_spacing_semi_small">
@@ -58,16 +57,16 @@
     <TextView
         android:id="@+id/bookingQuoteCancellationText"
         style="@style/KhBookingQuotesViewFleetCancellation"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="2"
-        app:layout_constraintBottom_toBottomOf="@id/quoteLearnMoreContainer"
-        app:layout_constraintStart_toStartOf="@id/logoImage"
+        app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoImage"
-        tools:text="Free cancellation up to 21 minutes before pickup" />
+        tools:text="Free cancellation up to 21 minutes before pickup " />
 
     <LinearLayout
         android:id="@+id/quoteLearnMoreContainer"
