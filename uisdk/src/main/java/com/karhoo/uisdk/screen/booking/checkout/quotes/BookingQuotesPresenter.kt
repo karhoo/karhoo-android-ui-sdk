@@ -1,13 +1,13 @@
 package com.karhoo.uisdk.screen.booking.checkout.quotes
 
 import android.content.Context
-import android.graphics.drawable.Drawable
+import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import com.karhoo.sdk.api.model.ServiceCancellation
-import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.util.extension.getCancellationText
 import java.util.*
 
@@ -28,12 +28,12 @@ class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP
         view.setCategoryText(category.capitalize(Locale.getDefault()))
     }
 
-    override fun createTagsString(tags: List<String>, shortVersion: Boolean): Spannable {
+    override fun createTagsString(tags: List<TagType>, resources: Resources, shortVersion: Boolean): Spannable {
         val tagsText = SpannableStringBuilder("")
 
-        tags.forEachIndexed { index, tag ->
-            val span: Spannable = SpannableString("  ${tag.capitalize(Locale.ROOT)} ")
-            val icon = getTagIcon(tag)
+        tags.forEachIndexed { index, tagType ->
+            val span: Spannable = SpannableString("  ${tagType.tag.capitalize(Locale.ROOT)} ")
+            val icon = tagType.getTagIcon(resources)
             val image = icon?.let {
                 it.setBounds(0, 0, (it.intrinsicWidth / INTRINSIC_BOUND_FACTOR).toInt(), (it.intrinsicWidth / INTRINSIC_BOUND_FACTOR).toInt())
                 ImageSpan(it, ImageSpan.ALIGN_BASELINE)
@@ -51,18 +51,6 @@ class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP
         }
 
         return tagsText
-    }
-
-    private fun getTagIcon(tag: String): Drawable? {
-        return when (tag.toLowerCase(Locale.ROOT)) {
-            "executive" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_executive)
-            "wheelchair" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_wheelchair)
-            "electric" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_electric)
-            "childseat" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_child_seat)
-            "taxi" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_cab)
-            "hybrid" -> view.getDrawableResource(R.drawable.kh_uisdk_ic_hybrid)
-            else -> view.getDrawableResource(R.drawable.kh_uisdk_ic_other_vehicle)
-        }
     }
 
     companion object {

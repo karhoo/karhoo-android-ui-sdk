@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.TagType
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 
 class BookingQuotesView @JvmOverloads constructor(context: Context,
@@ -21,18 +22,18 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_booking_quotes, this)
     }
 
-    fun bindViews(url: String?, quoteName: String, category: String, serviceCancellation: ServiceCancellation?, tags: List<String>, isPrebook: Boolean) {
+    fun bindViews(url: String?, quoteName: String, category: String, serviceCancellation: ServiceCancellation?, tags: List<TagType>, isPrebook: Boolean) {
         quoteNameText.text = quoteName
         presenter.capitalizeCategory(category)
         presenter.checkCancellationSLAMinutes(context, serviceCancellation, isPrebook)
         loadImage(url)
 
         if (tags.isNotEmpty()) {
-            vehicleTags.text = presenter.createTagsString(tags, !isExpandedSectionShown)
+            vehicleTags.text = presenter.createTagsString(tags, resources, !isExpandedSectionShown)
         }
 
         quoteLearnMoreContainer.setOnClickListener {
-            vehicleTags.text = presenter.createTagsString(tags, !isExpandedSectionShown)
+            vehicleTags.text = presenter.createTagsString(tags, resources, !isExpandedSectionShown)
 
             val arrowIcon = if(isExpandedSectionShown) getDrawableResource(R.drawable.kh_uisdk_ic_keyboard_arrow_up_small) else getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
             quoteLearnMoreIcon.setImageDrawable(arrowIcon)
