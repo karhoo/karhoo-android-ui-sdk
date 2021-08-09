@@ -26,7 +26,6 @@ class RatingView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_star_rating, this)
-        configure()
 
         additionalFeedbackButton.setOnClickListener {
             (context as Activity).startActivity(FeedbackActivity.Builder.newBuilder()
@@ -36,7 +35,6 @@ class RatingView @JvmOverloads constructor(
 
         ratingBar.setOnRatingBarChangeListener { _: RatingBar, rating: Float, _: Boolean ->
             ratingLabel.visibility = View.VISIBLE
-            additionalFeedbackButton.configure()
             ratingLabel.setText(R.string.kh_uisdk_rating_submitted)
             KarhooUISDK.analytics?.submitRating(tripId = trip?.tripId.orEmpty(), rating = rating)
         }

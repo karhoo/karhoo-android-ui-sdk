@@ -62,7 +62,6 @@ class RideDetailView @JvmOverloads constructor(
         displayText(trip)
         setListeners(trip)
         bindPickupType(trip.meetingPoint?.pickupType)
-        setTripRating(trip)
 
         presenter?.apply {
             bindFlightDetails()
@@ -78,14 +77,6 @@ class RideDetailView @JvmOverloads constructor(
         }
 
             presenter?.checkCancellationSLA(context, trip, trip.serviceAgreements?.freeCancellation)
-    }
-
-    private fun setTripRating(trip: TripInfo) {
-        if (trip.tripState == TripStatus.COMPLETED) {
-            starRatingWidget.visibility = View.VISIBLE
-            ratingDivider.visibility = View.VISIBLE
-            starRatingWidget.trip = trip
-        }
     }
 
     private fun setListeners(trip: TripInfo) {

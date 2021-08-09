@@ -28,9 +28,6 @@ class AddressOptionsView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_address_options, this)
 
         if (shouldShowMapSearchOptions()) {
-            if(!isGuest()) {
-                configure()
-            }
 
             setOnMap.setOnClickListener {
                 actions?.pickFromMap()
