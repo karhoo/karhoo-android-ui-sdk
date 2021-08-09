@@ -154,6 +154,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 vehicle.vehicle.vehicleClass.orEmpty(),
                 vehicle.serviceAgreements?.freeCancellation,
                 vehicle.vehicle.vehicleTags,
+                vehicle.fleet.description,
                 isPrebook
         )
         bookingRequestTermsWidget.bindViews(vehicle)

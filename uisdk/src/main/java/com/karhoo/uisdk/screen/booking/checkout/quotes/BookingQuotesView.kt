@@ -33,6 +33,7 @@ class BookingQuotesView @JvmOverloads constructor(
         category: String,
         serviceCancellation: ServiceCancellation?,
         tags: List<String>,
+        description: String?,
         isPrebook: Boolean
     ) {
         quoteNameText.text = quoteName
@@ -42,6 +43,10 @@ class BookingQuotesView @JvmOverloads constructor(
 
         if (tags.isNotEmpty()) {
             vehicleTags.text = presenter.createTagsString(tags, !isExpandedSectionShown)
+        }
+
+        if (!description.isNullOrBlank()) {
+            fleetDescription.text = description
         }
 
         expandedCapacityList.apply {
@@ -62,20 +67,7 @@ class BookingQuotesView @JvmOverloads constructor(
 
             quoteLearnMoreIcon.setImageDrawable(arrowIcon)
 
-            if (isExpandedSectionShown) {
-                expandedCapacityList.animate().alpha(VISIBLE_ALPHA).withEndAction {
-                    expandedCapacityList.visibility = VISIBLE
-                }.duration = SHORT_ANIMATION_DURATION
-                capacityWidget.animate().alpha(TRANSPARENT_ALPHA).duration =
-                    SHORT_ANIMATION_DURATION
-            } else {
-                expandedCapacityList.animate().alpha(TRANSPARENT_ALPHA).withEndAction {
-                    expandedCapacityList.visibility = GONE
-                }.duration = SHORT_ANIMATION_DURATION
-                capacityWidget.animate().alpha(VISIBLE_ALPHA).withEndAction {
-                    capacityWidget.visibility = VISIBLE
-                }.duration = SHORT_ANIMATION_DURATION
-            }
+            expandLearnMoreSection()
         }
     }
 
@@ -102,6 +94,54 @@ class BookingQuotesView @JvmOverloads constructor(
             R.dimen.logo_size,
             R.integer.logo_radius
         )
+    }
+
+    private fun expandLearnMoreSection() {
+        if (isExpandedSectionShown) {
+            expandedCapacityList
+                .animate()
+                .alpha(VISIBLE_ALPHA)
+                .withEndAction {
+                    expandedCapacityList.visibility = VISIBLE
+                }
+                .duration = SHORT_ANIMATION_DURATION
+
+            capacityWidget
+                .animate()
+                .alpha(TRANSPARENT_ALPHA)
+                .duration = SHORT_ANIMATION_DURATION
+
+            fleetDescription
+                .animate()
+                .alpha(TRANSPARENT_ALPHA)
+                .withEndAction {
+                    fleetDescription.visibility = VISIBLE
+                }
+                .duration = SHORT_ANIMATION_DURATION
+        } else {
+            expandedCapacityList
+                .animate()
+                .alpha(TRANSPARENT_ALPHA)
+                .withEndAction {
+                    expandedCapacityList.visibility = GONE
+                }
+                .duration = SHORT_ANIMATION_DURATION
+            capacityWidget
+                .animate()
+                .alpha(VISIBLE_ALPHA)
+                .withEndAction {
+                    capacityWidget.visibility = VISIBLE
+                }
+                .duration = SHORT_ANIMATION_DURATION
+
+            fleetDescription
+                .animate()
+                .alpha(VISIBLE_ALPHA)
+                .withEndAction {
+                    fleetDescription.visibility = GONE
+                }
+                .duration = SHORT_ANIMATION_DURATION
+        }
     }
 
     override fun setCapacity(luggage: Int, people: Int) {

@@ -62,11 +62,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:ellipsize="end"
-        android:maxLines="2"
         android:gravity="center_vertical"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="@id/quoteLearnMoreContainer"
         app:layout_constraintStart_toStartOf="@id/logoImage"
         app:layout_constraintTop_toBottomOf="@id/logoImage"
-        app:layout_constraintBottom_toBottomOf="@id/quoteLearnMoreContainer"
         tools:text="Free cancellation up to 21 minutes before pickup" />
 
     <LinearLayout
@@ -83,8 +83,8 @@
             style="@style/KhQuoteLearnMore"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="2"
             android:text="@string/kh_uisdk_quote_learn_more" />
 
@@ -106,6 +106,18 @@
         android:layout_marginTop="@dimen/margin_16"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/bookingQuoteCancellationText"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/fleetDescription"
+        style="@style/KhBookingQuotesViewFleetDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_16"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/expandedCapacityList"
+        tools:text="This is a fleet description and it's purpose is to show the description of a fleet. This is part of the Karhoo UI SDK "
         tools:visibility="visible" />
 
     <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
