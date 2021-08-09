@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:clickable="false"
     android:paddingStart="@dimen/kh_spacing_semi_small"
     android:paddingEnd="@dimen/kh_spacing_semi_small">
@@ -62,8 +63,10 @@
         android:layout_marginTop="@dimen/spacing_xsmall"
         android:ellipsize="end"
         android:maxLines="2"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="@id/logoImage"
         app:layout_constraintTop_toBottomOf="@id/logoImage"
+        app:layout_constraintBottom_toBottomOf="@id/quoteLearnMoreContainer"
         tools:text="Free cancellation up to 21 minutes before pickup" />
 
     <LinearLayout
@@ -79,7 +82,8 @@
             android:id="@+id/quoteLearnMore"
             style="@style/KhQuoteLearnMore"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/kh_uisdk_quote_learn_more" />
@@ -88,7 +92,8 @@
             android:id="@+id/quoteLearnMoreIcon"
             style="@style/KhQuoteLearnMoreIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/spacing_xxxsmall"
             android:paddingTop="@dimen/spacing_xxxsmall" />
     </LinearLayout>

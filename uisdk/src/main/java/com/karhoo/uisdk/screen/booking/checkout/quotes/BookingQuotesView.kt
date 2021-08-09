@@ -14,9 +14,11 @@ import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAda
 import com.karhoo.uisdk.util.PicassoLoader
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 
-class BookingQuotesView @JvmOverloads constructor(context: Context,
-                                                  attrs: AttributeSet? = null,
-                                                  defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr), BookingQuotesMVP.View {
+class BookingQuotesView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr), BookingQuotesMVP.View {
 
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(this)
     private var isExpandedSectionShown = false
@@ -25,12 +27,14 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         inflate(context, R.layout.uisdk_view_booking_quotes, this)
     }
 
-    fun bindViews(url: String?,
-                  quoteName: String,
-                  category: String,
-                  serviceCancellation: ServiceCancellation?,
-                  tags: List<String>,
-                  isPrebook: Boolean) {
+    fun bindViews(
+        url: String?,
+        quoteName: String,
+        category: String,
+        serviceCancellation: ServiceCancellation?,
+        tags: List<String>,
+        isPrebook: Boolean
+    ) {
         quoteNameText.text = quoteName
         presenter.capitalizeCategory(category)
         presenter.checkCancellationSLAMinutes(context, serviceCancellation, isPrebook)
@@ -42,7 +46,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
         expandedCapacityList.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = GridLayoutManager(context, COLUMN_TOTAL_NO)
             adapter = CapabilityAdapter(context)
         }
 
@@ -58,8 +62,20 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
             quoteLearnMoreIcon.setImageDrawable(arrowIcon)
 
-            capacityWidget.visibility = if(isExpandedSectionShown) GONE else VISIBLE
-            expandedCapacityList.visibility = if(isExpandedSectionShown) VISIBLE else GONE
+            if (isExpandedSectionShown) {
+                expandedCapacityList.animate().alpha(VISIBLE_ALPHA).withEndAction {
+                    expandedCapacityList.visibility = VISIBLE
+                }.duration = SHORT_ANIMATION_DURATION
+                capacityWidget.animate().alpha(TRANSPARENT_ALPHA).duration =
+                    SHORT_ANIMATION_DURATION
+            } else {
+                expandedCapacityList.animate().alpha(TRANSPARENT_ALPHA).withEndAction {
+                    expandedCapacityList.visibility = GONE
+                }.duration = SHORT_ANIMATION_DURATION
+                capacityWidget.animate().alpha(VISIBLE_ALPHA).withEndAction {
+                    capacityWidget.visibility = VISIBLE
+                }.duration = SHORT_ANIMATION_DURATION
+            }
         }
     }
 
@@ -78,12 +94,14 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
     }
 
     private fun loadImage(url: String?) {
-        PicassoLoader.loadImage(context,
-                logoImage,
-                url,
-                R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.logo_size,
-                R.integer.logo_radius)
+        PicassoLoader.loadImage(
+            context,
+            logoImage,
+            url,
+            R.drawable.uisdk_ic_quotes_logo_empty,
+            R.dimen.logo_size,
+            R.integer.logo_radius
+        )
     }
 
     override fun setCapacity(luggage: Int, people: Int) {
@@ -96,5 +114,12 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
 
     override fun getDrawableResource(id: Int): Drawable? {
         return ResourcesCompat.getDrawable(resources, id, null)
+    }
+
+    companion object {
+        const val SHORT_ANIMATION_DURATION: Long = 200
+        const val TRANSPARENT_ALPHA: Float = 0.0f
+        const val VISIBLE_ALPHA: Float = 1.0F
+        private const val COLUMN_TOTAL_NO: Int = 2
     }
 }

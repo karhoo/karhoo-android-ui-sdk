@@ -6,13 +6,15 @@ import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesView
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
 import java.util.Currency
 
-class BookingPriceView @JvmOverloads constructor(context: Context,
-                                                 attrs: AttributeSet? = null,
-                                                 defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
+class BookingPriceView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
 
     private lateinit var presenter: BookingPriceViewContract.Presenter
 
@@ -23,18 +25,26 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         presenter.attachView(this)
     }
 
-    fun bindViews(vehicle: Quote,
-                  typeEta: String,
-                  currency: Currency) {
-        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
-                .getString(R.string
-                        .kh_uisdk_min))
+    fun bindViews(
+        vehicle: Quote,
+        typeEta: String,
+        currency: Currency
+    ) {
+        etaText.text = String.format(
+            "%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
+                .getString(
+                    R.string
+                        .kh_uisdk_min
+                )
+        )
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
-    fun bindPrebook(vehicle: Quote, time: String,
-                    typeEta: String,
-                    currency: Currency) {
+    fun bindPrebook(
+        vehicle: Quote, time: String,
+        typeEta: String,
+        currency: Currency
+    ) {
         etaText.text = time
         bindRemainingViews(vehicle, typeEta, currency)
     }
@@ -47,7 +57,23 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         etaTypeText.text = typeEta
         setContainerVisibility(R.dimen.spacing_medium, VISIBLE)
         pricingTypeTextLayout.setOnClickListener {
-            priceInfoLayout.visibility = if (priceInfoLayout.visibility == VISIBLE) GONE else VISIBLE
+            if (priceInfoLayout.visibility == VISIBLE) {
+                priceInfoLayout
+                    .animate()
+                    .alpha(BookingQuotesView.TRANSPARENT_ALPHA)
+                    .withEndAction {
+                        priceInfoLayout.visibility = GONE
+                    }
+                    .duration = BookingQuotesView.SHORT_ANIMATION_DURATION
+
+            } else {
+                priceInfoLayout
+                    .animate()
+                    .alpha(BookingQuotesView.VISIBLE_ALPHA).withEndAction {
+                        priceInfoLayout.visibility = VISIBLE
+                    }
+                    .duration = BookingQuotesView.SHORT_ANIMATION_DURATION
+            }
         }
     }
 
