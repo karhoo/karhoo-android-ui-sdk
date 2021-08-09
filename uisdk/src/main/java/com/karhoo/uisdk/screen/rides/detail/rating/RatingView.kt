@@ -10,7 +10,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
-import com.karhoo.uisdk.util.extension.configure
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.additionalFeedbackButton
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.labelLayout
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.ratingBar
