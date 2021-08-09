@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
@@ -28,6 +29,8 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.PreferenceStore
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
@@ -63,6 +66,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             origin = it.pickup
         }
     }
+
     override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus> {
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         return Observer { currentStatus ->
@@ -219,7 +223,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                 }
                 else -> view?.displayFlightDetailsField(null)
             }
-            view?.setCapacity(quote.vehicle)
+            view?.setCapacityAndCapabilities(createCapabilityByType(quote.fleet.capabilities, quote.vehicle), quote.vehicle)
         } else if (origin == null) {
             handleError(R.string.kh_uisdk_origin_book_error, null)
         } else if (destination == null) {
@@ -254,6 +258,27 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     override fun onPaymentFailureDialogCancelled() {
         view?.showLoading(false)
+    }
+
+    private fun createCapabilityByType(capabilityTypes: List<String>?, vehicle: QuoteVehicle): List<Capability> {
+        val capabilitiesList = arrayListOf<Capability>()
+
+        capabilitiesList.add(Capability(CapabilityAdapter.PASSENGERS_MAX, vehicle.passengerCapacity))
+        capabilitiesList.add(Capability(CapabilityAdapter.BAGGAGE_MAX, vehicle.luggageCapacity))
+
+        if (capabilityTypes != null) {
+            for (capability in capabilityTypes) {
+                when (capability) {
+                    CapabilityAdapter.GPS_TRACKING,
+                    CapabilityAdapter.TRAIN_TRACKING,
+                    CapabilityAdapter.FLIGHT_TRACKING -> {
+                        capabilitiesList.add(Capability(capability))
+                    }
+                }
+            }
+        }
+
+        return capabilitiesList
     }
 
     companion object {

@@ -300,9 +300,9 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun capacityChecksGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.briefcaseIcon, R.id.bookingRequestQuotesWidget)
         viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestQuotesWidget)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.passengerIcon, R.id.bookingRequestQuotesWidget)
         viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestQuotesWidget)
     }
 
@@ -562,9 +562,9 @@ class ResultRobot : BaseTestRobot() {
         if (vehicle != null) {
             textStringIsVisibleIsDescendant(vehicle, R.id.categoryText)
         }
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.briefcaseIcon, R.id.bookingRequestLayout)
         viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestLayout)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.passengerIcon, R.id.bookingRequestLayout)
         viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestLayout)
     }
 

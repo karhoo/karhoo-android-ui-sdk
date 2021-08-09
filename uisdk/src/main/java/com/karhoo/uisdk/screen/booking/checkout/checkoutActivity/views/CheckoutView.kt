@@ -27,6 +27,7 @@ import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.Checko
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
@@ -187,10 +188,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         flightNumber?.let { bookingRequestFlightDetailsWidget.setBookingOptionalInfo(it) }
     }
 
-    override fun setCapacity(vehicle: QuoteVehicle) {
+    override fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
                 people = vehicle.passengerCapacity)
+
+        bookingRequestQuotesWidget.setCapabilities(capabilities)
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {

@@ -14,7 +14,8 @@
     <string name="kh_uisdk_address_drop_off">Destino</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
     <string name="kh_uisdk_loading_min">min</string>
-    <string name="kh_uisdk_capacity">x %s</string>
+    <string name="kh_uisdk_capacity">%s</string>
+    <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancelación gratuita hasta</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hora</item>

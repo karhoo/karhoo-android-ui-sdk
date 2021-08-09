@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 
 interface BookingQuotesMVP {
 
@@ -13,6 +14,7 @@ interface BookingQuotesMVP {
         fun setCategoryText(text: String)
         fun showCancellationText(show: Boolean)
         fun getDrawableResource(id: Int): Drawable?
+        fun setCapabilities(capabilities: List<Capability>)
     }
 
     interface Presenter {

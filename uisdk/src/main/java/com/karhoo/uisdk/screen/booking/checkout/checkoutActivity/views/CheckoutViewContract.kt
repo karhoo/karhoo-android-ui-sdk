@@ -17,6 +17,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import org.joda.time.DateTime
 
 interface CheckoutViewContract {
@@ -44,7 +45,7 @@ interface CheckoutViewContract {
 
         fun populateFlightDetailsField(flightNumber: String?)
 
-        fun setCapacity(vehicle: QuoteVehicle)
+        fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle)
 
         fun showGuestBookingFields(details: PassengerDetails?)
 

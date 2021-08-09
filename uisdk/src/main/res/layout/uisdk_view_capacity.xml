@@ -2,60 +2,78 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout3"
+    android:id="@+id/capacitiesLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/luggageImage"
+        android:id="@+id/passengerIcon"
         android:layout_width="@dimen/capacity_image_size"
         android:layout_height="@dimen/capacity_image_size"
+        android:layout_margin="4dp"
+        android:background="@drawable/kh_uisdk_gray_circle"
         android:paddingTop="@dimen/spacing_xxsmall"
         android:paddingBottom="@dimen/spacing_xxsmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/peopleCapacityText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uisdk_ic_luggage" />
-
-    <ImageView
-        android:id="@+id/peopleImage"
-        android:layout_width="@dimen/capacity_image_size"
-        android:layout_height="@dimen/capacity_image_size"
-        android:paddingTop="@dimen/spacing_xxsmall"
-        android:paddingBottom="@dimen/spacing_xxsmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/peopleCapacityText"
-        app:layout_constraintStart_toEndOf="@+id/luggageCapacityText"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/uisdk_ic_people" />
+        app:srcCompat="@drawable/kh_uisdk_ic_passengers" />
 
     <TextView
         android:id="@+id/peopleCapacityText"
-        style="@style/Text.Alternative.SmallMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/peopleImage"
-        app:layout_constraintTop_toTopOf="@+id/luggageImage"
-        app:layout_constraintBottom_toBottomOf="@id/luggageImage"
-        tools:text="x 4" />
+        style="@style/Text.Black"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/kh_uisdk_white_circle"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:translationX="-8dp"
+        app:layout_constraintStart_toEndOf="@+id/passengerIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4" />
+
+    <ImageView
+        android:id="@+id/briefcaseIcon"
+        android:layout_width="@dimen/capacity_image_size"
+        android:layout_height="@dimen/capacity_image_size"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/kh_uisdk_gray_circle"
+        android:paddingTop="@dimen/spacing_xxsmall"
+        android:paddingBottom="@dimen/spacing_xxsmall"
+        app:layout_constraintStart_toEndOf="@+id/peopleCapacityText"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/kh_uisdk_ic_briefcase" />
 
     <TextView
         android:id="@+id/luggageCapacityText"
-        style="@style/Text.Alternative.SmallMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Text.Black"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/kh_uisdk_white_circle"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="1"
-        app:layout_constraintEnd_toStartOf="@+id/peopleImage"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/luggageImage"
-        app:layout_constraintTop_toTopOf="@+id/luggageImage"
-        app:layout_constraintBottom_toBottomOf="@id/luggageImage"
-        tools:text="x 2" />
+        android:textSize="12sp"
+        android:translationX="-8dp"
+        app:layout_constraintStart_toEndOf="@+id/briefcaseIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/otherCapabilitiesText"
+        style="@style/Text.Black"
+        android:layout_width="@dimen/capacity_image_size"
+        android:layout_height="@dimen/capacity_image_size"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/kh_uisdk_gray_circle"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/luggageCapacityText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="+2"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
