@@ -30,6 +30,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
@@ -153,7 +154,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 vehicle.fleet.name.orEmpty(),
                 vehicle.vehicle.vehicleClass.orEmpty(),
                 vehicle.serviceAgreements?.freeCancellation,
-                vehicle.vehicle.vehicleTags,
+                vehicle.vehicle.vehicleTags.map {
+                    return@map TagType(it)
+                },
                 vehicle.fleet.description,
                 isPrebook
         )

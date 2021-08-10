@@ -9,11 +9,10 @@ import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
 import java.util.Currency
 
-class BookingPriceView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
+class BookingPriceView @JvmOverloads constructor(context: Context,
+                                                 attrs: AttributeSet? = null,
+                                                 defStyleAttr: Int = 0)
+    : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
 
     private var presenter: BookingPriceViewContract.Presenter
 
@@ -24,26 +23,18 @@ class BookingPriceView @JvmOverloads constructor(
         presenter.attachView(this)
     }
 
-    fun bindViews(
-        vehicle: Quote,
-        typeEta: String,
-        currency: Currency
-    ) {
-        etaText.text = String.format(
-            "%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
-                .getString(
-                    R.string
-                        .kh_uisdk_min
-                )
-        )
+    fun bindViews(vehicle: Quote,
+                  typeEta: String,
+                  currency: Currency) {
+        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
+                .getString(R.string
+                        .kh_uisdk_min))
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
-    fun bindPrebook(
-        vehicle: Quote, time: String,
-        typeEta: String,
-        currency: Currency
-    ) {
+    fun bindPrebook(vehicle: Quote, time: String,
+                    typeEta: String,
+                    currency: Currency) {
         etaText.text = time
         bindRemainingViews(vehicle, typeEta, currency)
     }
@@ -56,11 +47,7 @@ class BookingPriceView @JvmOverloads constructor(
         etaTypeText.text = typeEta
         setContainerVisibility(R.dimen.spacing_medium, VISIBLE)
         pricingTypeTextLayout.setOnClickListener {
-            if (priceInfoLayout.visibility == VISIBLE) {
-                priceInfoLayout.visibility = GONE
-            } else {
-                priceInfoLayout.visibility = VISIBLE
-            }
+            priceInfoLayout.visibility = if (priceInfoLayout.visibility == VISIBLE) GONE else VISIBLE
         }
     }
 

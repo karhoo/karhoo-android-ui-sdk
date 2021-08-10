@@ -15,6 +15,7 @@ import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.TagType
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 
 class BookingQuotesView @JvmOverloads constructor(
@@ -35,7 +36,7 @@ class BookingQuotesView @JvmOverloads constructor(
         quoteName: String,
         category: String,
         serviceCancellation: ServiceCancellation?,
-        tags: List<String>,
+        tags: List<TagType>,
         description: String?,
         isPrebook: Boolean
     ) {
