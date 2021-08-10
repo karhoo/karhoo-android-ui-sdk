@@ -12,7 +12,7 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentActions
+import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -52,7 +52,7 @@ interface CheckoutViewContract {
 
         fun showPaymentFailureDialog(error: KarhooError?)
 
-        fun waitForPaymentFlow()
+        fun showPaymentUI()
 
         fun showLoading(show: Boolean)
 
@@ -62,7 +62,10 @@ interface CheckoutViewContract {
 
         fun startBooking()
 
-        fun setLoadingButtonCallback(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener)
+        fun setListeners(
+                loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
+                termsListener: CheckoutFragmentContract.TermsListener
+        )
     }
 
     interface Presenter {
@@ -99,12 +102,12 @@ interface CheckoutViewContract {
         fun setBookingStatus(bookingStatus: BookingStatus?)
     }
 
-    interface Actions : PaymentActions {
+    interface Actions : WebViewActions {
         fun finishedBooking()
     }
 
 
-    interface Widget {
+    interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>?)

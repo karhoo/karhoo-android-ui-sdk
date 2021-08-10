@@ -398,6 +398,16 @@
     <string name="kh_uisdk_payment_details">Payment Details</string>
     <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
 
+    <!-- Booking Checkout Component -->
+    <string name="kh_uisdk_booking_checkout_back_button">Back</string>
+    <!-- Booking Price View -->
+    <string name="kh_uisdk_price_info_text_estimated">This fleet is a non-regulated taxi. The quote is an estimate based on the trip factors (distance, time, etc). Please refer to the fleet\'s Terms and Conditions for more information.</string>
+    <string name="kh_uisdk_price_info_text_metered">This fleet is a regulated metered taxi. The quote is an estimate based on the trip factors (distance, time, etc).</string>
+    <string name="kh_uisdk_price_info_text_fixed">This fleet charges a flat fare. The final fare may be affected by extras (tolls, delay, etc), please check the fleet\'s Terms and Conditions.</string>
+    <string name="kh_uisdk_price_meet_and_greet">Meet and greet</string>
+    <!--  Quote View Learn More  -->
+    <string name="kh_uisdk_quote_learn_more">Learn more</string>
+
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Submit</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>

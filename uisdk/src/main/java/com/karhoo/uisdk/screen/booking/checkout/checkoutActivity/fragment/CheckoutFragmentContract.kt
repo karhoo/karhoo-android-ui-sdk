@@ -5,4 +5,8 @@ interface CheckoutFragmentContract {
         fun onLoadingComplete()
         fun showLoading()
     }
+
+    interface TermsListener {
+        fun showWebViewOnPress(url: String?)
+    }
 }

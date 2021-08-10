@@ -169,7 +169,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, quote: Quote?) {
-        paymentActions?.waitForPaymentFlow()
         dropInView?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
         paymentData, quote = quote)
     }

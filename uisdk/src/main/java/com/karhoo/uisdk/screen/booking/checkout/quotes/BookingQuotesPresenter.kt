@@ -1,9 +1,16 @@
 package com.karhoo.uisdk.screen.booking.checkout.quotes
 
 import android.content.Context
+import android.content.res.Resources
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ImageSpan
 import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.util.extension.getCancellationText
 import java.util.*
+
 
 class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP.Presenter {
     override fun checkCancellationSLAMinutes(context: Context, serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
@@ -19,5 +26,34 @@ class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP
 
     override fun capitalizeCategory(category: String) {
         view.setCategoryText(category.capitalize(Locale.getDefault()))
+    }
+
+    override fun createTagsString(tags: List<TagType>, resources: Resources, shortVersion: Boolean): Spannable {
+        val tagsText = SpannableStringBuilder("")
+
+        tags.forEachIndexed { index, tagType ->
+            val span: Spannable = SpannableString("  ${tagType.tag.capitalize(Locale.ROOT)} ")
+            val icon = tagType.getTagIcon(resources)
+            val image = icon?.let {
+                it.setBounds(0, 0, (it.intrinsicWidth / INTRINSIC_BOUND_FACTOR).toInt(), (it.intrinsicWidth / INTRINSIC_BOUND_FACTOR).toInt())
+                ImageSpan(it, ImageSpan.ALIGN_BASELINE)
+            }
+            image?.let {
+                span.setSpan(image, 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
+            }
+
+            tagsText.append(span)
+
+            if (shortVersion && index == 1) {
+                tagsText.append(" + ").append((tags.size - 1 - index).toString())
+                return tagsText
+            }
+        }
+
+        return tagsText
+    }
+
+    companion object {
+        private const val INTRINSIC_BOUND_FACTOR = 1.5
     }
 }

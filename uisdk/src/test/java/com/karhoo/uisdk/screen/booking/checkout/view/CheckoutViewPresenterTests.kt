@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.bookingrequest
+package com.karhoo.uisdk.screen.booking.checkout.view
 
 import android.content.Context
 import com.braintreepayments.api.models.PaymentMethodNonce
@@ -58,7 +58,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.Silent::class)
-class BookingRequestPresenterTest {
+class CheckoutViewPresenterTests {
 
     private val vehicleAttributes: QuoteVehicle = QuoteVehicle(passengerCapacity = 2,
                                                                luggageCapacity = 2)
