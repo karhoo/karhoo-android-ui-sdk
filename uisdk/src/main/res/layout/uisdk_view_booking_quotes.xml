@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="false"
-    android:paddingStart="@dimen/kh_spacing_semi_small"
-    android:paddingEnd="@dimen/kh_spacing_semi_small">
+    android:clickable="false">
 
     <ImageView
         android:id="@+id/logoImage"
@@ -59,7 +57,7 @@
         style="@style/KhBookingQuotesViewFleetCancellation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:layout_marginTop="@dimen/margin_16"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="2"
@@ -72,7 +70,7 @@
         android:id="@+id/quoteLearnMoreContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xsmall"
+        android:padding="@dimen/margin_16"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logoImage">
@@ -104,7 +102,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/margin_16"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/bookingQuoteCancellationText"
+        app:layout_constraintTop_toBottomOf="@+id/quoteLearnMoreContainer"
         tools:visibility="visible" />
 
     <TextView

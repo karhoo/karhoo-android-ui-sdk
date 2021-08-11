@@ -322,6 +322,21 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="KhActionCellTitle">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="KhActionCellSubtitle">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="KhPassengerViewTitle">
+        <item name="android:textSize">@dimen/text_size_xxlarge</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="KhQuoteLearnMore">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/colorAccent</item>

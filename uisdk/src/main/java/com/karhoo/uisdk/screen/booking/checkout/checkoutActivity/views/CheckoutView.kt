@@ -35,15 +35,18 @@ import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.*
 import org.joda.time.DateTime
 import java.util.*
 
-internal class CheckoutView @JvmOverloads constructor(context: Context,
-                                                      attrs: AttributeSet? = null,
-                                                      defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View, CheckoutViewContract.Actions,
-        BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
-        CheckoutViewContract.BookingRequestViewWidget {
+internal class CheckoutView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
+    CheckoutViewContract.Actions,
+    BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+    CheckoutViewContract.BookingRequestViewWidget {
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
@@ -51,6 +54,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private var presenter: CheckoutViewContract.Presenter
     private lateinit var loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener
     private lateinit var termsListener: CheckoutFragmentContract.TermsListener
+    private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
 
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
@@ -58,20 +62,35 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
-        presenter = CheckoutViewPresenter(this,
-                KarhooUISDK.analytics,
-                KarhooPreferenceStore.getInstance(context),
-                KarhooApi.tripService,
-                KarhooApi.userStore)
+        presenter = CheckoutViewPresenter(
+            this,
+            KarhooUISDK.analytics,
+            KarhooPreferenceStore.getInstance(context),
+            KarhooApi.tripService,
+            KarhooApi.userStore
+        )
 
         isGuest = isGuest()
         attachListeners()
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
+
+        //Default binding
+        bindPassenger(passengersDetailLayout.retrievePassenger())
+        bindPaymentMethod(null)
+
+        bookingCheckoutPassengerView.setOnClickListener {
+            showPassengerDetails(true)
+        }
     }
 
-    override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener, termsListener: CheckoutFragmentContract.TermsListener) {
+    override fun setListeners(
+        loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
+        termsListener: CheckoutFragmentContract.TermsListener,
+        passengersListener: CheckoutFragmentContract.PassengersListener
+    ) {
         this.loadingButtonCallback = loadingButtonCallback
         this.termsListener = termsListener
+        this.passengersListener = passengersListener
     }
 
     override fun showGuestBookingFields(details: PassengerDetails?) {
@@ -119,46 +138,61 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
-    HashMap<String, String>?) {
+    override fun showBookingRequest(
+        quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
+        HashMap<String, String>?
+    ) {
         loadingButtonCallback.onLoadingComplete()
-        bookingRequestLayout.visibility = View.VISIBLE
-        presenter.showBookingRequest(quote = quote, bookingStatus = bookingStatus, outboundTripId = outboundTripId, bookingMetadata = bookingMetadata)
+        bookingCheckoutViewLayout.visibility = View.VISIBLE
+        presenter.showBookingRequest(
+            quote = quote,
+            bookingStatus = bookingStatus,
+            outboundTripId = outboundTripId,
+            bookingMetadata = bookingMetadata
+        )
     }
 
     override fun bindEta(quote: Quote, card: String) {
-        bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
-                context.getString(R.string.kh_uisdk_estimated_arrival_time),
-                quote.quoteType)
+        bookingRequestPriceWidget.bindETAOnly(
+            quote.vehicle.vehicleQta.highMinutes,
+            context.getString(R.string.kh_uisdk_estimated_arrival_time),
+            quote.quoteType
+        )
     }
 
     override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget.bindPrebook(quote,
-                time,
-                DateUtil.getDateFormat(date),
-                currency)
+        bookingRequestPriceWidget.bindPrebook(
+            quote,
+            time,
+            DateUtil.getDateFormat(date),
+            currency
+        )
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget?.bindViews(quote, context.getString(R.string.kh_uisdk_estimated_arrival_time), currency)
+        bookingRequestPriceWidget?.bindViews(
+            quote,
+            context.getString(R.string.kh_uisdk_estimated_arrival_time),
+            currency
+        )
     }
 
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
         bookingRequestQuotesWidget.bindViews(
-                vehicle.fleet.logoUrl,
-                vehicle.fleet.name.orEmpty(),
-                vehicle.vehicle.vehicleClass.orEmpty(),
-                vehicle.serviceAgreements?.freeCancellation,
-                vehicle.vehicle.vehicleTags.map {
-                    return@map TagType(it)
-                },
-                vehicle.fleet.description,
-                isPrebook
+            vehicle.fleet.logoUrl,
+            vehicle.fleet.name.orEmpty(),
+            vehicle.vehicle.vehicleClass.orEmpty(),
+            vehicle.serviceAgreements?.freeCancellation,
+            vehicle.vehicle.vehicleTags.map {
+                return@map TagType(it)
+            },
+            vehicle.fleet.description,
+            isPrebook
         )
         bookingRequestTermsWidget.bindViews(vehicle)
     }
@@ -196,24 +230,25 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestQuotesWidget.setCapacity(
             luggage = vehicle.luggageCapacity,
             people = vehicle.passengerCapacity,
-            otherCapabilities = capabilities.size)
+            otherCapabilities = capabilities.size
+        )
 
         bookingRequestQuotesWidget.setCapabilities(capabilities)
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.kh_uisdk_payment_issue,
-                messageResId = R.string.kh_uisdk_payment_issue_message,
-                karhooError = error,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card) { dialog, _ ->
-                    onPaymentHandle(true)
-                    dialog.dismiss()
-                },
-                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel) { dialog, _ ->
-                    onPaymentHandle(false)
-                    dialog.dismiss()
-                })
+            titleResId = R.string.kh_uisdk_payment_issue,
+            messageResId = R.string.kh_uisdk_payment_issue_message,
+            karhooError = error,
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card) { dialog, _ ->
+                onPaymentHandle(true)
+                dialog.dismiss()
+            },
+            negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel) { dialog, _ ->
+                onPaymentHandle(false)
+                dialog.dismiss()
+            })
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
@@ -309,8 +344,51 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         if (!presenter.isPaymentSet()) {
             bookingRequestPaymentDetailsWidget.callOnClick()
         } else {
-            (bookingRequestLayout as View).hideSoftKeyboard()
+            (bookingCheckoutViewLayout as View).hideSoftKeyboard()
             presenter.makeBooking()
         }
+    }
+
+    override fun bindPassenger(passengerDetails: PassengerDetails?) {
+        bookingCheckoutPassengerView.setActionIcon(R.drawable.kh_uisdk_ic_user)
+
+        passengerDetails?.let {
+            bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
+            bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
+
+            passengersDetailLayout.setPassengerDetails(it)
+
+        } ?: run {
+            bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
+            bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
+        }
+    }
+
+    override fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?) {
+        bookingCheckoutPaymentView.setActionIcon(R.drawable.uidsk_ic_card_visa)
+
+        paymentInfo?.let {
+            bookingCheckoutPaymentView.setTitle(paymentInfo.lastFour)
+            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
+        } ?: run {
+            bookingCheckoutPaymentView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method))
+            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_mean))
+        }
+    }
+
+    override fun showPassengerDetails(show: Boolean) {
+        this.passengersDetailLayout.visibility = if(show) VISIBLE else GONE
+        bookingCheckoutViewLayout.visibility =  if(show) GONE else VISIBLE
+
+        passengersListener.onPassengerPageVisibilityChanged(show)
+
+        if(arePassengerDetailsValid()) {
+            passengersListener.onPassengerSelected(passengersDetailLayout.getPassengerDetails())
+            bindPassenger(passengersDetailLayout.getPassengerDetails())
+        }
+    }
+
+    override fun arePassengerDetailsValid(): Boolean {
+        return passengersDetailLayout.areFieldsValid()
     }
 }

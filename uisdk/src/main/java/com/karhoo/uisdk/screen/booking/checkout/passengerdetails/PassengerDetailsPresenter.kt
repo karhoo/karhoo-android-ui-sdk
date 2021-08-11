@@ -1,6 +1,8 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
 import android.content.res.Resources
+import androidx.preference.PreferenceManager
+import com.google.gson.Gson
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.formatMobileNumber
@@ -21,8 +23,8 @@ class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<
         attachView(view)
     }
 
-    override fun passengerDetailsValue(): PassengerDetails {
-        return passengerDetails ?: PassengerDetails()
+    override fun passengerDetailsValue(): PassengerDetails? {
+        return passengerDetails
     }
 
     override fun prefillForPassengerDetails(passengerDetails: PassengerDetails) {
@@ -49,7 +51,12 @@ class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<
 
     override fun updatePassengerDetails(firstName: String, lastName: String, email: String,
                                         mobilePhoneNumber: String) {
+        if(passengerDetails == null) {
+            passengerDetails = PassengerDetails()
+        }
         passengerDetails = passengerDetails?.copy(firstName = firstName, lastName = lastName,
                                                   email = email, phoneNumber = mobilePhoneNumber)
+
+        passengerDetails?.let { view?.storePassenger(it) }
     }
 }

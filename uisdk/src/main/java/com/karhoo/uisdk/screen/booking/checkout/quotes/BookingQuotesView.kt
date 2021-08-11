@@ -46,7 +46,7 @@ class BookingQuotesView @JvmOverloads constructor(
         loadImage(url)
 
         if (tags.isNotEmpty()) {
-            vehicleTags.text = presenter.createTagsString(tags, !isExpandedSectionShown)
+            vehicleTags.text = presenter.createTagsString(tags, resources, !isExpandedSectionShown)
         }
 
         if (!description.isNullOrBlank()) {
@@ -62,7 +62,7 @@ class BookingQuotesView @JvmOverloads constructor(
         quoteLearnMoreContainer.setOnClickListener {
             isExpandedSectionShown = !isExpandedSectionShown
 
-            vehicleTags.text = presenter.createTagsString(tags, !isExpandedSectionShown)
+            vehicleTags.text = presenter.createTagsString(tags, resources, !isExpandedSectionShown)
 
             val arrowIcon = if (isExpandedSectionShown)
                 getDrawableResource(R.drawable.kh_uisdk_ic_keyboard_arrow_up_small)

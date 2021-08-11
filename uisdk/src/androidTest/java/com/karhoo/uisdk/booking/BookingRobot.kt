@@ -72,7 +72,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressBookRideButton() {
-        clickButton(R.id.bookingRequestButton)
+        clickButton(R.id.checkoutActionButton)
     }
 
     fun clickOnLocateMeButton() {
@@ -516,11 +516,11 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkoutAsGuestButtonIsDisabled() {
         bookButtonTextIsCheckoutGuest()
-        buttonIsDisabled(R.id.bookingRequestButton)
+        buttonIsDisabled(R.id.checkoutActionButton)
     }
 
     fun bookButtonTextIsCheckoutGuest() {
-        textIsVisibleIsDescendant(R.string.kh_uisdk_checkout_as_guest, R.id.bookingRequestButton)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_checkout_as_guest, R.id.checkoutActionButton)
     }
 
     fun fullCheckFilledGuestDetailsPage() {
@@ -529,7 +529,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkoutAsGuestButtonIsEnabled() {
         bookButtonTextIsCheckoutGuest()
-        buttonIsEnabled(R.id.bookingRequestButton)
+        buttonIsEnabled(R.id.checkoutActionButton)
     }
 
     fun bookARideScreenIsVisible() {
@@ -596,7 +596,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun bookButtonIsEnabled() {
-        buttonIsEnabled(R.id.bookingRequestButton)
+        buttonIsEnabled(R.id.checkoutActionButton)
     }
 
     fun quotesListIsExpanded(fleetName: String) {

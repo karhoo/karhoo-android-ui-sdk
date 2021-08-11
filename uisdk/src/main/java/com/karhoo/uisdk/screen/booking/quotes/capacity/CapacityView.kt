@@ -6,23 +6,28 @@ import android.widget.LinearLayout
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_capacity.view.*
 
-class CapacityView @JvmOverloads constructor(context: Context,
-                                             attrs: AttributeSet? = null,
-                                             defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), CapacityMVP.View {
+class CapacityView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr), CapacityMVP.View {
 
     init {
         inflate(context, R.layout.uisdk_view_capacity, this)
     }
 
     override fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int?) {
-        luggageCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, luggage.toString())
+        luggageCapacityText.text =
+            resources.getString(R.string.kh_uisdk_capacity, luggage.toString())
         peopleCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, people.toString())
 
-        otherCapabilities?.let {
-            otherCapabilitiesText.text = resources.getString(R.string.kh_uisdk_extra_capabilities, it - DEFAULT_CAPABILITIES_NO)
+        val capabilitiesCount = otherCapabilities?.minus(DEFAULT_CAPABILITIES_NO)
+
+        if (capabilitiesCount != null && capabilitiesCount > 0) {
+            otherCapabilitiesText.text =
+                resources.getString(R.string.kh_uisdk_extra_capabilities, capabilitiesCount)
             otherCapabilitiesText.visibility = VISIBLE
-        } ?: run {
+        } else {
             otherCapabilitiesText.visibility = GONE
         }
     }

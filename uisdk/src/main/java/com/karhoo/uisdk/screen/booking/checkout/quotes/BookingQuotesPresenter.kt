@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.quotes
 
 import android.content.Context
+import android.content.res.Resources
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.SpannableStringBuilder

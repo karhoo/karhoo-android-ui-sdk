@@ -136,6 +136,7 @@
     <dimen name="booking_line_spacing">8sp</dimen>
     <dimen name="flight_details_line_spacing">4sp</dimen>
     <dimen name="kh_quotes_logo_size">72dp</dimen>
+    <dimen name="kh_quote_action_view_size">24dp</dimen>
     <dimen name="capacity_image_size">24dp</dimen>
 
     <!--Grid spacing-->

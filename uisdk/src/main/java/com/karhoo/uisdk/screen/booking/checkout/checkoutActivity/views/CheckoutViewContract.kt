@@ -65,8 +65,17 @@ interface CheckoutViewContract {
 
         fun setListeners(
                 loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-                termsListener: CheckoutFragmentContract.TermsListener
+                termsListener: CheckoutFragmentContract.TermsListener,
+                passengersListener: CheckoutFragmentContract.PassengersListener
         )
+
+        fun bindPassenger(passengerDetails: PassengerDetails?)
+
+        fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?)
+
+        fun showPassengerDetails(show: Boolean)
+
+        fun arePassengerDetailsValid(): Boolean
     }
 
     interface Presenter {

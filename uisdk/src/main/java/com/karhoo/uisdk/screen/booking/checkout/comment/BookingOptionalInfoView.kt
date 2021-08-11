@@ -34,7 +34,7 @@ class BookingOptionalInfoView @JvmOverloads constructor(context: Context,
     }
 
     fun setHintText(hint: String) {
-        bookingCommentsInput.hint = hint
+        bookingCommentsLayout.hint = hint
     }
 
     override fun setBookingOptionalInfo(comments: String) {

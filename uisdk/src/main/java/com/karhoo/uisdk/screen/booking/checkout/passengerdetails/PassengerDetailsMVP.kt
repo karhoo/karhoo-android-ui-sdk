@@ -7,7 +7,7 @@ interface PassengerDetailsMVP {
     interface View {
         fun setPassengerDetails(passengerDetails: PassengerDetails)
 
-        fun getPassengerDetails(): PassengerDetails
+        fun getPassengerDetails(): PassengerDetails?
 
         fun bindPassengerDetails(passengerDetails: PassengerDetails)
 
@@ -16,6 +16,12 @@ interface PassengerDetailsMVP {
         fun allFieldsValid(): Boolean
 
         fun findAndfocusFirstInvalid(): Boolean
+
+        fun areFieldsValid(): Boolean
+
+        fun storePassenger(passengerDetails: PassengerDetails)
+
+        fun retrievePassenger() :  PassengerDetails?
     }
 
     interface Presenter {
@@ -25,7 +31,7 @@ interface PassengerDetailsMVP {
 
         fun getCountryCodeFromPhoneNumber(number: String?, resources: Resources): String
 
-        fun passengerDetailsValue(): PassengerDetails
+        fun passengerDetailsValue(): PassengerDetails?
 
         fun prefillForPassengerDetails(passengerDetails: PassengerDetails)
 

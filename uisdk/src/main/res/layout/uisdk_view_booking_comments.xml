@@ -13,6 +13,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/kh_uisdk_additional_comments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,7 +22,6 @@
             android:id="@+id/bookingCommentsInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/kh_uisdk_additional_comments"
             android:inputType="text"
             android:paddingStart="@dimen/spacing_small_intermediate" />
 

@@ -14,7 +14,7 @@
     <color name="textColorError">@color/primary_red</color>
     <color name="kh_uisdk_secondary_text_color">#8C8C8C</color>
     <color name="kh_uisdk_tag_icon_fill_color">#00000000</color>
-    <color name="kh_uisdk_tag_icon_stroke_color">#000</color>
+    <color name="kh_uisdk_tag_icon_stroke_color">@color/kh_uisdk_secondary_text_color</color>
     <color name="kh_uisdk_light_gray">#F5F5F5</color>
     <color name="kh_ic_chevron_left">@color/black</color>
 

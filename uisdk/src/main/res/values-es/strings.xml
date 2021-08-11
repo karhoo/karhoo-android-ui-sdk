@@ -15,6 +15,11 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_capacity">%s</string>
+    <string name="kh_uisdk_gps_tracking">Seguimiento GPS</string>
+    <string name="kh_uisdk_train_tracking">Vincule su tren</string>
+    <string name="kh_uisdk_flight_tracking">Vincule su vuelo</string>
+    <string name="kh_uisdk_passengers_max">Máximo %d pasajero(s)</string>
+    <string name="kh_uisdk_baggage_max">Máximo %d piezas de equipaje</string>
     <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancelación gratuita hasta</string>
     <plurals name="kh_uisdk_hours_plural">

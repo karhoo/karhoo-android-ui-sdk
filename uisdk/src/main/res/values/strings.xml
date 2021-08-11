@@ -406,6 +406,11 @@
 
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Back</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>
+    <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_mean">Add payment mean</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Payment method</string>
     <!-- Booking Price View -->
     <string name="kh_uisdk_price_info_text_estimated">This fleet is a non-regulated taxi. The quote is an estimate based on the trip factors (distance, time, etc). Please refer to the fleet\'s Terms and Conditions for more information.</string>
     <string name="kh_uisdk_price_info_text_metered">This fleet is a regulated metered taxi. The quote is an estimate based on the trip factors (distance, time, etc).</string>
