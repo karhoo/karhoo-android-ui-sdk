@@ -150,7 +150,7 @@ class TripAllocationView @JvmOverloads constructor(
             activity.finish()
         } else {
             val intent = TripActivity.Builder.builder
-                    .tripInfo(trip)
+                    .tripInfo(trip = trip, backToBooking = true)
                     .build(context)
             context.startActivity(intent)
         }
