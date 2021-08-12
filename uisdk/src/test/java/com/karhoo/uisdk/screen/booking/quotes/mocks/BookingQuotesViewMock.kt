@@ -17,7 +17,7 @@ class BookingQuotesViewMock: BookingQuotesMVP.View {
         this.cancellationMinutesText = text
     }
 
-    override fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int) {
+    override fun setCapacity(luggage: Int, people: Int, capabilitiesCount: Int) {
         this.capacityLuggage = luggage
         this.capacityPeople = people
     }

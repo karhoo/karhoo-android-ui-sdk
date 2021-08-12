@@ -15,7 +15,7 @@ import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.util.PicassoLoader
-import com.karhoo.uisdk.util.TagType
+import com.karhoo.uisdk.util.VehicleTags
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.bookingQuoteCancellationText
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.capacityWidget
 import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.categoryText
@@ -42,7 +42,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
                   quoteName: String,
                   category: String,
                   serviceCancellation: ServiceCancellation?,
-                  tags: List<TagType>,
+                  tags: List<VehicleTags>,
                   description: String?,
                   isPrebook: Boolean) {
         quoteNameText.text = quoteName
@@ -142,8 +142,8 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         view.startAnimation(animation)
     }
 
-    override fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int) {
-        capacityWidget.setCapacity(luggage, people, otherCapabilities)
+    override fun setCapacity(luggage: Int, people: Int, capabilitiesCount: Int) {
+        capacityWidget.setCapacity(luggage, people, capabilitiesCount)
     }
 
     override fun setCapabilities(capabilities: List<Capability>) {

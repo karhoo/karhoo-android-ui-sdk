@@ -7,7 +7,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ImageSpan
 import com.karhoo.sdk.api.model.ServiceCancellation
-import com.karhoo.uisdk.util.TagType
+import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.getCancellationText
 import java.util.Locale
 
@@ -27,7 +27,7 @@ class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP
         view.setCategoryText(category.capitalize(Locale.getDefault()))
     }
 
-    override fun createTagsString(tags: List<TagType>, resources: Resources, shortVersion: Boolean): Spannable {
+    override fun createTagsString(tags: List<VehicleTags>, resources: Resources, shortVersion: Boolean): Spannable {
         val tagsText = SpannableStringBuilder("")
 
         tags.forEachIndexed { index, tagType ->
