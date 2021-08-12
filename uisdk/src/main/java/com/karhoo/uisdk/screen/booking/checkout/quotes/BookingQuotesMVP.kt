@@ -5,8 +5,8 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.text.Spannable
 import com.karhoo.sdk.api.model.ServiceCancellation
-import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
+import com.karhoo.uisdk.util.TagType
 
 interface BookingQuotesMVP {
 

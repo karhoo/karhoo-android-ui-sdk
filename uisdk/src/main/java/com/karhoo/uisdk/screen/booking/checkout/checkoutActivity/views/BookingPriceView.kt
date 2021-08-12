@@ -6,7 +6,15 @@ import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pickUpTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeTextLayout
 import java.util.Currency
 
 class BookingPriceView @JvmOverloads constructor(context: Context,
@@ -26,9 +34,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     fun bindViews(vehicle: Quote,
                   typeEta: String,
                   currency: Currency) {
-        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
-                .getString(R.string
-                        .kh_uisdk_min))
+        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context.getString(R.string.kh_uisdk_min))
         bindRemainingViews(vehicle, typeEta, currency)
     }
 

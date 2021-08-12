@@ -11,8 +11,8 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
@@ -101,11 +101,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun currentTripInfo(): TripInfo {
-        return TripInfo(
-                origin = origin?.toTripLocationDetails(),
-                destination = destination?.toTripLocationDetails(),
-                dateScheduled = Date(scheduledDate?.millis.orZero()),
-                quote = Price(total = quote?.price?.highPrice.orZero()))
+        return TripInfo(origin = origin?.toTripLocationDetails(),
+                        destination = destination?.toTripLocationDetails(),
+                        dateScheduled = Date(scheduledDate?.millis.orZero()),
+                        quote = Price(total = quote?.price?.highPrice.orZero()))
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
@@ -162,16 +161,14 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         passenger?.let {
             val metadata = getBookingMetadataMap(identifier, tripId)
 
-            tripsService.book(TripBooking(
-                    comments = comments,
-                    flightNumber = flightDetails?.flightNumber,
-                    meta = metadata,
-                    nonce = identifier,
-                    quoteId = quote?.id.orEmpty(),
-                    passengers = Passengers(
-                            additionalPassengers = 0,
-                            passengerDetails = listOf(passenger),
-                            luggage = Luggage(total = 0))))
+            tripsService.book(TripBooking(comments = comments,
+                                          flightNumber = flightDetails?.flightNumber,
+                                          meta = metadata,
+                                          nonce = identifier,
+                                          quoteId = quote?.id.orEmpty(),
+                                          passengers = Passengers(additionalPassengers = 0,
+                                                                  passengerDetails = listOf(passenger),
+                                                                  luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> onTripBookSuccess(result.data)

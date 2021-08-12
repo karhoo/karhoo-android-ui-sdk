@@ -9,7 +9,7 @@ import android.text.style.ImageSpan
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.util.extension.getCancellationText
-import java.util.*
+import java.util.Locale
 
 class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP.Presenter {
     override fun checkCancellationSLAMinutes(context: Context, serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {

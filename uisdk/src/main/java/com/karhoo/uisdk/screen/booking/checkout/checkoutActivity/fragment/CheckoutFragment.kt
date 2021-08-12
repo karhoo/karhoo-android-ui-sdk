@@ -13,7 +13,7 @@ import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import java.util.*
+import java.util.HashMap
 
 internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
     private lateinit var bookingRequestButton: LoadingButtonView
@@ -21,11 +21,9 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
     private lateinit var presenter: CheckoutPresenter
     private var isShowingPassengerDetails: Boolean = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_checkout_fragment, container, false)
 
         presenter = CheckoutPresenter()
@@ -67,19 +65,18 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
             }
         })
 
-        checkoutView.showBookingRequest(
-            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-            bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
-            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-            bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
-        )
+        checkoutView.showBookingRequest(quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+                                        bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                                        outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+                                        bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
+                                       )
 
         return view;
     }
 
     override fun onLoadingButtonClick() {
-        if(isShowingPassengerDetails) {
-            if(checkoutView.arePassengerDetailsValid()) {
+        if (isShowingPassengerDetails) {
+            if (checkoutView.arePassengerDetailsValid()) {
                 checkoutView.showPassengerDetails(false)
                 bookingRequestButton.onLoadingComplete()
             }

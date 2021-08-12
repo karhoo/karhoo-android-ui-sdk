@@ -63,11 +63,10 @@ interface CheckoutViewContract {
 
         fun startBooking()
 
-        fun setListeners(
-                loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-                termsListener: CheckoutFragmentContract.TermsListener,
-                passengersListener: CheckoutFragmentContract.PassengersListener
-        )
+        fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
+                         termsListener: CheckoutFragmentContract.TermsListener,
+                         passengersListener: CheckoutFragmentContract.PassengersListener
+                        )
 
         fun bindPassenger(passengerDetails: PassengerDetails?)
 
@@ -91,7 +90,8 @@ interface CheckoutViewContract {
         fun isPaymentSet(): Boolean
 
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
-                                       passengerDetails: PassengerDetails? = null, comments: String)
+                                       passengerDetails: PassengerDetails? = null,
+                                       comments: String)
 
         fun setBookingFields(allFieldsValid: Boolean)
 
@@ -115,7 +115,6 @@ interface CheckoutViewContract {
     interface Actions : WebViewActions {
         fun finishedBooking()
     }
-
 
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
 
 import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
@@ -11,11 +12,11 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
+import com.karhoo.sdk.api.model.QuoteVehicle
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -33,20 +34,28 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.TagType
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.*
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPaymentView
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestFlightDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestLinearLayout
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPaymentDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 import org.joda.time.DateTime
-import java.util.*
+import java.util.Currency
+import java.util.HashMap
 
-internal class CheckoutView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
-    CheckoutViewContract.Actions,
-    BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
-    CheckoutViewContract.BookingRequestViewWidget {
+internal class CheckoutView @JvmOverloads constructor(context: Context,
+                                                      attrs: AttributeSet? = null,
+                                                      defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
+                                                                               CheckoutViewContract.Actions,
+                                                                               BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+                                                                               CheckoutViewContract.BookingRequestViewWidget {
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
@@ -62,13 +71,11 @@ internal class CheckoutView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
-        presenter = CheckoutViewPresenter(
-            this,
-            KarhooUISDK.analytics,
-            KarhooPreferenceStore.getInstance(context),
-            KarhooApi.tripService,
-            KarhooApi.userStore
-        )
+        presenter = CheckoutViewPresenter(this,
+                                          KarhooUISDK.analytics,
+                                          KarhooPreferenceStore.getInstance(context),
+                                          KarhooApi.tripService,
+                                          KarhooApi.userStore)
 
         isGuest = isGuest()
         attachListeners()
@@ -83,11 +90,9 @@ internal class CheckoutView @JvmOverloads constructor(
         }
     }
 
-    override fun setListeners(
-        loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-        termsListener: CheckoutFragmentContract.TermsListener,
-        passengersListener: CheckoutFragmentContract.PassengersListener
-    ) {
+    override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
+                              termsListener: CheckoutFragmentContract.TermsListener,
+                              passengersListener: CheckoutFragmentContract.PassengersListener) {
         this.loadingButtonCallback = loadingButtonCallback
         this.termsListener = termsListener
         this.passengersListener = passengersListener
@@ -138,62 +143,53 @@ internal class CheckoutView @JvmOverloads constructor(
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(
-        quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
-        HashMap<String, String>?
-    ) {
+    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?,
+                                    outboundTripId: String?,
+                                    bookingMetadata: HashMap<String, String>?) {
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         presenter.showBookingRequest(
-            quote = quote,
-            bookingStatus = bookingStatus,
-            outboundTripId = outboundTripId,
-            bookingMetadata = bookingMetadata
-        )
+                quote = quote,
+                bookingStatus = bookingStatus,
+                outboundTripId = outboundTripId,
+                bookingMetadata = bookingMetadata
+                                    )
     }
 
     override fun bindEta(quote: Quote, card: String) {
-        bookingRequestPriceWidget.bindETAOnly(
-            quote.vehicle.vehicleQta.highMinutes,
-            context.getString(R.string.kh_uisdk_estimated_arrival_time),
-            quote.quoteType
-        )
+        bookingRequestPriceWidget.bindETAOnly(quote.vehicle.vehicleQta.highMinutes,
+                                              context.getString(R.string.kh_uisdk_estimated_arrival_time),
+                                              quote.quoteType)
     }
 
     override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget.bindPrebook(
-            quote,
-            time,
-            DateUtil.getDateFormat(date),
-            currency
-        )
+        bookingRequestPriceWidget.bindPrebook(quote,
+                                              time,
+                                              DateUtil.getDateFormat(date),
+                                              currency)
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
         val currency = Currency.getInstance(quote.price.currencyCode)
 
-        bookingRequestPriceWidget?.bindViews(
-            quote,
-            context.getString(R.string.kh_uisdk_estimated_arrival_time),
-            currency
-        )
+        bookingRequestPriceWidget?.bindViews(quote,
+                                             context.getString(R.string.kh_uisdk_estimated_arrival_time),
+                                             currency)
     }
 
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
-        bookingRequestQuotesWidget.bindViews(
-            vehicle.fleet.logoUrl,
-            vehicle.fleet.name.orEmpty(),
-            vehicle.vehicle.vehicleClass.orEmpty(),
-            vehicle.serviceAgreements?.freeCancellation,
-            vehicle.vehicle.vehicleTags.map {
-                return@map TagType(it)
-            },
-            vehicle.fleet.description,
-            isPrebook
-        )
+        bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl,
+                                             vehicle.fleet.name.orEmpty(),
+                                             vehicle.vehicle.vehicleClass.orEmpty(),
+                                             vehicle.serviceAgreements?.freeCancellation,
+                                             vehicle.vehicle.vehicleTags.map {
+                                                 return@map TagType(it)
+                                             },
+                                             vehicle.fleet.description,
+                                             isPrebook)
         bookingRequestTermsWidget.bindViews(vehicle)
     }
 
@@ -202,11 +198,11 @@ internal class CheckoutView @JvmOverloads constructor(
 
         // TODO pass info to the fragment
 
-//        val data = Intent()
-//        data.putExtra(BookingCheckoutActivity.BOOKING_REQUEST_TRIP_INFO_KEY, tripInfo)
-//
-//        setResult(AppCompatActivity.RESULT_OK, data)
-//        finish()
+        //        val data = Intent()
+        //        data.putExtra(BookingCheckoutActivity.BOOKING_REQUEST_TRIP_INFO_KEY, tripInfo)
+        //
+        //        setResult(AppCompatActivity.RESULT_OK, data)
+        //        finish()
     }
 
     override fun onError() {
@@ -228,27 +224,29 @@ internal class CheckoutView @JvmOverloads constructor(
 
     override fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle) {
         bookingRequestQuotesWidget.setCapacity(
-            luggage = vehicle.luggageCapacity,
-            people = vehicle.passengerCapacity,
-            otherCapabilities = capabilities.size
-        )
+                luggage = vehicle.luggageCapacity,
+                people = vehicle.passengerCapacity,
+                otherCapabilities = capabilities.size
+                                              )
 
         bookingRequestQuotesWidget.setCapabilities(capabilities)
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-            titleResId = R.string.kh_uisdk_payment_issue,
-            messageResId = R.string.kh_uisdk_payment_issue_message,
-            karhooError = error,
-            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card) { dialog, _ ->
-                onPaymentHandle(true)
-                dialog.dismiss()
-            },
-            negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel) { dialog, _ ->
-                onPaymentHandle(false)
-                dialog.dismiss()
-            })
+                titleResId = R.string.kh_uisdk_payment_issue,
+                messageResId = R.string.kh_uisdk_payment_issue_message,
+                karhooError = error,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
+                                                         DialogInterface.OnClickListener { d, _ ->
+                                                             onPaymentHandle(true)
+                                                             d.dismiss()
+                                                         }),
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
+                                                         DialogInterface.OnClickListener { d, _ ->
+                                                             onPaymentHandle(false)
+                                                             d.dismiss()
+                                                         }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
@@ -377,12 +375,12 @@ internal class CheckoutView @JvmOverloads constructor(
     }
 
     override fun showPassengerDetails(show: Boolean) {
-        this.passengersDetailLayout.visibility = if(show) VISIBLE else GONE
-        bookingCheckoutViewLayout.visibility =  if(show) GONE else VISIBLE
+        this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
+        bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         passengersListener.onPassengerPageVisibilityChanged(show)
 
-        if(arePassengerDetailsValid()) {
+        if (arePassengerDetailsValid()) {
             passengersListener.onPassengerSelected(passengersDetailLayout.getPassengerDetails())
             bindPassenger(passengersDetailLayout.getPassengerDetails())
         }

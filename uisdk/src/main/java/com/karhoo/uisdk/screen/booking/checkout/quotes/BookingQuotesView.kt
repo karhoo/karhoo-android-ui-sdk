@@ -16,13 +16,20 @@ import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.TagType
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.bookingQuoteCancellationText
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.capacityWidget
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.categoryText
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.expandedCapacityList
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.fleetDescription
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.logoImage
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteLearnMoreContainer
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteLearnMoreIcon
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.quoteNameText
+import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.vehicleTags
 
-class BookingQuotesView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), BookingQuotesMVP.View {
+class BookingQuotesView @JvmOverloads constructor(context: Context,
+                                                  attrs: AttributeSet? = null,
+                                                  defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr), BookingQuotesMVP.View {
 
     private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(this)
     private var isExpandedSectionShown = false
@@ -31,15 +38,13 @@ class BookingQuotesView @JvmOverloads constructor(
         inflate(context, R.layout.uisdk_view_booking_quotes, this)
     }
 
-    fun bindViews(
-        url: String?,
-        quoteName: String,
-        category: String,
-        serviceCancellation: ServiceCancellation?,
-        tags: List<TagType>,
-        description: String?,
-        isPrebook: Boolean
-    ) {
+    fun bindViews(url: String?,
+                  quoteName: String,
+                  category: String,
+                  serviceCancellation: ServiceCancellation?,
+                  tags: List<TagType>,
+                  description: String?,
+                  isPrebook: Boolean) {
         quoteNameText.text = quoteName
         presenter.capitalizeCategory(category)
         presenter.checkCancellationSLAMinutes(context, serviceCancellation, isPrebook)
@@ -90,14 +95,12 @@ class BookingQuotesView @JvmOverloads constructor(
     }
 
     private fun loadImage(url: String?) {
-        PicassoLoader.loadImage(
-            context,
-            logoImage,
-            url,
-            R.drawable.uisdk_ic_quotes_logo_empty,
-            R.dimen.logo_size,
-            R.integer.logo_radius
-        )
+        PicassoLoader.loadImage(context,
+                                logoImage,
+                                url,
+                                R.drawable.uisdk_ic_quotes_logo_empty,
+                                R.dimen.logo_size,
+                                R.integer.logo_radius)
     }
 
     private fun expandLearnMoreSection() {
@@ -106,11 +109,9 @@ class BookingQuotesView @JvmOverloads constructor(
         setAnimation(isExpandedSectionShown, fleetDescription, isExpandedSectionShown)
     }
 
-    private fun setAnimation(
-        fadeIn: Boolean,
-        view: View,
-        showView: Boolean
-    ) {
+    private fun setAnimation(fadeIn: Boolean,
+                             view: View,
+                             showView: Boolean) {
         val animationType = if (fadeIn) {
             R.anim.kh_uisdk_fade_in
         } else {

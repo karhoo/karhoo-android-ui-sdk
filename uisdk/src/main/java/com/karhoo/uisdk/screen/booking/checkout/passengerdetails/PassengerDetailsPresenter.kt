@@ -1,16 +1,13 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
 import android.content.res.Resources
-import androidx.preference.PreferenceManager
-import com.google.gson.Gson
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.formatMobileNumber
 import com.karhoo.uisdk.util.getCodeFromMobileNumber
 import com.karhoo.uisdk.util.getMobileNumberWithoutCode
 
-class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<PassengerDetailsMVP
-.View>(), PassengerDetailsMVP.Presenter {
+class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<PassengerDetailsMVP.View>(), PassengerDetailsMVP.Presenter {
     var passengerDetails: PassengerDetails? = null
 
     override var isEditingMode = true
@@ -51,7 +48,7 @@ class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<
 
     override fun updatePassengerDetails(firstName: String, lastName: String, email: String,
                                         mobilePhoneNumber: String) {
-        if(passengerDetails == null) {
+        if (passengerDetails == null) {
             passengerDetails = PassengerDetails()
         }
         passengerDetails = passengerDetails?.copy(firstName = firstName, lastName = lastName,

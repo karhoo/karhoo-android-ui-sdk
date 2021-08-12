@@ -2,8 +2,7 @@ package com.karhoo.uisdk.screen.booking.checkout.comment
 
 import com.karhoo.uisdk.base.BasePresenter
 
-class BookingOptionalInfoPresenter(view: BookingOptionalInfoMVP.View) : BasePresenter<BookingOptionalInfoMVP
-.View>(), BookingOptionalInfoMVP.Presenter {
+class BookingOptionalInfoPresenter(view: BookingOptionalInfoMVP.View) : BasePresenter<BookingOptionalInfoMVP.View>(), BookingOptionalInfoMVP.Presenter {
     var comments: String? = null
     var isEditingMode = true
         set(value) {

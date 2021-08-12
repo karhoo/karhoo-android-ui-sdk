@@ -1,10 +1,9 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.preference.PreferenceManager
@@ -28,19 +27,15 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
-class PassengerDetailsView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+class PassengerDetailsView @JvmOverloads constructor(context: Context,
+                                                     attrs: AttributeSet? = null,
+                                                     defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
 
     private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
 
     private val phoneNumber: String
-        get() = presenter.validateMobileNumber(
-            code = countryCodeSpinner.selectedItem.toString(),
-            number = mobileNumberInput.text.toString()
-        )
+        get() = presenter.validateMobileNumber(code = countryCodeSpinner.selectedItem.toString(),
+                                               number = mobileNumberInput.text.toString())
 
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
@@ -75,7 +70,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         mobileNumberInput.addTextChangedListener {
             if (!PhoneNumberValidator().validate(mobileNumberInput.text.toString())) {
                 mobileNumberLayout.error =
-                    resources.getString(R.string.kh_uisdk_invalid_phone_number)
+                        resources.getString(R.string.kh_uisdk_invalid_phone_number)
             } else {
                 mobileNumberLayout.error = null
             }
@@ -93,8 +88,8 @@ class PassengerDetailsView @JvmOverloads constructor(
      */
     private fun hideKeyboardIfNothingFocus(view: View) {
         if (!nameHasFocus()
-            && !emailInput.hasFocus()
-            && !mobileNumberInput.hasFocus()
+                && !emailInput.hasFocus()
+                && !mobileNumberInput.hasFocus()
         ) {
             view.hideSoftKeyboard()
         }
@@ -112,12 +107,10 @@ class PassengerDetailsView @JvmOverloads constructor(
             } else {
                 v.clearFocus()
                 hideKeyboardIfNothingFocus(v)
-                presenter.updatePassengerDetails(
-                    firstName = firstNameInput.text.toString(),
-                    lastName = lastNameInput.text.toString(),
-                    email = emailInput.text.toString(),
-                    mobilePhoneNumber = phoneNumber
-                )
+                presenter.updatePassengerDetails(firstName = firstNameInput.text.toString(),
+                                                 lastName = lastNameInput.text.toString(),
+                                                 email = emailInput.text.toString(),
+                                                 mobilePhoneNumber = phoneNumber)
             }
         }
 
@@ -163,17 +156,17 @@ class PassengerDetailsView @JvmOverloads constructor(
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
         countryCodeSpinner.setCountryCode(
-            presenter.getCountryCodeFromPhoneNumber(
-                passengerDetails.phoneNumber,
-                resources
-            )
-        )
+                presenter.getCountryCodeFromPhoneNumber(
+                        passengerDetails.phoneNumber,
+                        resources
+                                                       )
+                                         )
         mobileNumberInput.setText(
-            presenter.removeCountryCodeFromPhoneNumber(
-                passengerDetails.phoneNumber,
-                resources
-            )
-        )
+                presenter.removeCountryCodeFromPhoneNumber(
+                        passengerDetails.phoneNumber,
+                        resources
+                                                          )
+                                 )
     }
 
     override fun bindEditMode(isEditing: Boolean) {

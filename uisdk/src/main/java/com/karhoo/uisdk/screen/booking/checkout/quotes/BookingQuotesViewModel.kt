@@ -19,14 +19,14 @@ class BookingQuotesViewModel(application: Application) :
         when (viewEvent) {
             is BookingQuotesViewContract.BookingQuotesEvent.QuotesListVisibilityChanged ->
                 setQuotesListVisibility(viewEvent.isVisible, viewEvent.panelState)
-            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListCollapsed         ->
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListCollapsed ->
                 setQuotesListCollapsed()
-            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded          ->
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded ->
                 setQuotesListExpanded()
-            is BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked           ->
+            is BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked ->
                 showBookingRequest(viewEvent.quote)
-            is BookingQuotesViewContract.BookingQuotesEvent.Availability                -> setHideNoAvailability()
-            is BookingQuotesViewContract.BookingQuotesEvent.Error                       ->
+            is BookingQuotesViewContract.BookingQuotesEvent.Availability -> setHideNoAvailability()
+            is BookingQuotesViewContract.BookingQuotesEvent.Error ->
                 setShowNoAvailability(viewEvent.snackbarConfig)
         }
     }

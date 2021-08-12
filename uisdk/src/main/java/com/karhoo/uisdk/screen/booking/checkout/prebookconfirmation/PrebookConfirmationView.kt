@@ -90,11 +90,11 @@ class PrebookConfirmationView @JvmOverloads constructor(
                                                              taskStackBuilder.startActivities()
                                                          }),
                 negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
-                                                         DialogInterface.OnClickListener {
-                                                             dialog, _ ->
+                                                         DialogInterface.OnClickListener { dialog, _ ->
                                                              actions?.finishedBooking()
                                                              dialog.dismiss()
-                                                             (dialog) }))
+                                                             (dialog)
+                                                         }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 

@@ -12,7 +12,7 @@ import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.Checko
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
 
 class CheckoutActivity : BaseActivity(), WebViewActions {

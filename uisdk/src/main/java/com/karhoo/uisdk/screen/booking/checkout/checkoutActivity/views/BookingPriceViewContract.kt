@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
 
 import com.karhoo.sdk.api.model.Quote
-import java.util.*
+import java.util.Currency
 
 interface BookingPriceViewContract {
     interface View {
