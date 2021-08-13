@@ -78,7 +78,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                           KarhooApi.userStore)
 
         isGuest = isGuest()
-        attachListeners()
+
+        bookingRequestLinearLayout.setOnClickListener {
+            it.hideSoftKeyboard()
+        }
+
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingRequestTermsWidget.actions = this
+
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
         //Default binding
@@ -127,16 +135,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     fun onStop() {
         presenter.onPaymentFailureDialogCancelled()
         presenter.clearData()
-    }
-
-    private fun attachListeners() {
-        bookingRequestLinearLayout.setOnClickListener {
-            it.hideSoftKeyboard()
-        }
-
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
-        bookingRequestTermsWidget.actions = this
     }
 
     override fun initialiseChangeCard(quote: Quote?) {

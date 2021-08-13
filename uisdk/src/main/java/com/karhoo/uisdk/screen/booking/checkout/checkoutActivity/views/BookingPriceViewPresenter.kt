@@ -5,7 +5,6 @@ import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import java.util.Currency
-import java.util.Locale
 
 class BookingPriceViewPresenter : BookingPriceViewContract.Presenter {
     private lateinit var view: BookingPriceViewContract.View
