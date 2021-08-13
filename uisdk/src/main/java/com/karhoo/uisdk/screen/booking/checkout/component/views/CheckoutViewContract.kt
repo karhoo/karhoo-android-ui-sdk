@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.content.Intent
 import androidx.annotation.StringRes
@@ -11,7 +11,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel

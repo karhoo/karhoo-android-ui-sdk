@@ -16,9 +16,9 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewPresenter
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel

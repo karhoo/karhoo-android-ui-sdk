@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver

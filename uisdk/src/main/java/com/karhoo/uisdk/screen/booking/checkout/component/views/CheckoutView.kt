@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.app.Activity
 import android.content.Context
@@ -24,7 +24,7 @@ import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus

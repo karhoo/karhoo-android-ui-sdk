@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment
+package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity.CheckoutActivity
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutView
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import java.util.HashMap
 

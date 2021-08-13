@@ -29,7 +29,7 @@
                 android:paddingStart="@dimen/spacing_grid_first_column"
                 android:paddingEnd="@dimen/spacing_grid_first_column" />
 
-            <com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.BookingPriceView
+            <com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceView
                 android:id="@+id/bookingRequestPriceWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_marginEnd="@dimen/spacing_grid_first_column"
                 android:orientation="horizontal">
 
-                <com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.ActionCellView
+                <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
                     android:id="@+id/bookingCheckoutPassengerView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:text="@string/kh_uisdk_payment_details"
                 android:visibility="gone" />
 
-            <com.karhoo.uisdk.screen.booking.checkout.BookingTermsView
+            <com.karhoo.uisdk.screen.booking.checkout.component.views.BookingTermsView
                 android:id="@+id/bookingRequestTermsWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

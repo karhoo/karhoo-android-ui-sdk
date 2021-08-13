@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity
+package com.karhoo.uisdk.screen.booking.checkout
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragment
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView

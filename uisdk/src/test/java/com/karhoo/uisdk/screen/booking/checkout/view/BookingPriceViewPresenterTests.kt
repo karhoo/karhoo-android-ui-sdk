@@ -3,8 +3,8 @@ package com.karhoo.uisdk.screen.booking.checkout.view
 import android.content.Context
 import com.karhoo.sdk.api.model.*
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.BookingPriceViewContract
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.BookingPriceViewPresenter
+import com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceViewContract
+import com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceViewPresenter
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert

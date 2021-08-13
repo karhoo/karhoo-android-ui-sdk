@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.content.Context
 import android.graphics.Paint

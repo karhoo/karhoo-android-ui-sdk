@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment
+package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
 import com.karhoo.sdk.api.network.request.PassengerDetails
 
