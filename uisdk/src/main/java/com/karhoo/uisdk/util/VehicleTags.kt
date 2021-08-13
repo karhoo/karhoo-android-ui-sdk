@@ -4,11 +4,10 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.core.content.res.ResourcesCompat
 import com.karhoo.uisdk.R
-import java.util.Locale
 
 data class VehicleTags(val tag: String) {
     fun getTagIcon(resources: Resources): Drawable? {
-        return when (tag.lowercase(Locale.ROOT)) {
+        return when (tag.toLowerCase()) {
             "executive" -> ResourcesCompat.getDrawable(
                     resources,
                     R.drawable.kh_uisdk_ic_tag_executive,

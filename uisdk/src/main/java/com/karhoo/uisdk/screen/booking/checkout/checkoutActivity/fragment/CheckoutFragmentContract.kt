@@ -8,7 +8,7 @@ interface CheckoutFragmentContract {
         fun showLoading()
     }
 
-    interface TermsListener {
+    interface WebViewListener {
         fun showWebViewOnPress(url: String?)
     }
 

@@ -64,9 +64,8 @@ interface CheckoutViewContract {
         fun startBooking()
 
         fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-                         termsListener: CheckoutFragmentContract.TermsListener,
-                         passengersListener: CheckoutFragmentContract.PassengersListener
-                        )
+                         webViewListener: CheckoutFragmentContract.WebViewListener,
+                         passengersListener: CheckoutFragmentContract.PassengersListener)
 
         fun bindPassenger(passengerDetails: PassengerDetails?)
 

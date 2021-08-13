@@ -1,16 +1,20 @@
 package com.karhoo.uisdk.screen.booking.checkout.view
 
+import android.content.Context
 import com.karhoo.sdk.api.model.*
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.BookingPriceViewContract
 import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.BookingPriceViewPresenter
+import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.nhaarman.mockitokotlin2.*
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import java.util.*
 
 class BookingPriceViewPresenterTests {
     private lateinit var priceViewPresenter: BookingPriceViewPresenter
+    private var context: Context = mock()
     private var view: BookingPriceViewContract.View = mock()
     private val quote: Quote = mock()
     private lateinit var quoteSource: QuoteSource
@@ -45,7 +49,7 @@ class BookingPriceViewPresenterTests {
         whenever(view.getString(R.string.kh_uisdk_price_meet_and_greet)).thenReturn(MEET_AND_GREET)
         priceViewPresenter.formatPickUpType(quote)
 
-        verify(view).setPickUpType(MEET_AND_GREET)
+        verify(view).setPickUpType(quote.pickupType)
     }
 
     @Test
@@ -54,34 +58,37 @@ class BookingPriceViewPresenterTests {
         whenever(view.getString(any())).thenReturn(null)
         priceViewPresenter.formatPickUpType(quote)
 
-        verify(view).setPickUpType(null)
+        verify(view).setPickUpType(quote.pickupType)
     }
 
     @Test
     fun `When formatting the pickup type in case of DEFAULT, the pickup type string is null`() {
         whenever(quote.pickupType).thenReturn(PickupType.DEFAULT)
-        whenever(view.getString(any())).thenReturn(null)
+        whenever(context.getString(any())).thenReturn("")
         priceViewPresenter.formatPickUpType(quote)
 
-        verify(view).setPickUpType(null)
+        verify(view).setPickUpType(quote.pickupType)
+        Assert.assertEquals(quote.pickupType?.toLocalisedString(context = context), "")
     }
 
     @Test
     fun `When formatting the pickup type in case of NOT_SET, the pickup type string is null`() {
         whenever(quote.pickupType).thenReturn(PickupType.NOT_SET)
-        whenever(view.getString(any())).thenReturn(null)
+        whenever(context.getString(any())).thenReturn("")
         priceViewPresenter.formatPickUpType(quote)
 
-        verify(view).setPickUpType(null)
+        verify(view).setPickUpType(quote.pickupType)
+        Assert.assertEquals(quote.pickupType?.toLocalisedString(context = context), "")
     }
 
     @Test
     fun `When formatting the pickup type in case of STANDBY, the pickup type string is null`() {
         whenever(quote.pickupType).thenReturn(PickupType.STANDBY)
-        whenever(view.getString(any())).thenReturn(null)
+        whenever(context.getString(R.string.kh_uisdk_pickup_type_standby)).thenReturn(STANDBY)
         priceViewPresenter.formatPickUpType(quote)
 
-        verify(view).setPickUpType(null)
+        verify(view).setPickUpType(quote.pickupType)
+        Assert.assertEquals(quote.pickupType?.toLocalisedString(context = context), STANDBY)
     }
 
     @Test
@@ -89,10 +96,9 @@ class BookingPriceViewPresenterTests {
         whenever(quote.quoteType).thenReturn(QuoteType.ESTIMATED)
         whenever(view.getString(R.string.kh_uisdk_estimated_fare)).thenReturn(ESTIMATED)
         whenever(view.getString(R.string.kh_uisdk_price_info_text_estimated)).thenReturn(ESTIMATED_INFO_TEXT)
-        priceViewPresenter.formatPricingType(quote)
+        priceViewPresenter.formatQuoteType(quote)
 
-        verify(view).setPricingType(ESTIMATED)
-        verify(view).setInfoText(ESTIMATED_INFO_TEXT)
+        verify(view).setQuoteTypeDetails(quote.quoteType)
     }
 
     @Test
@@ -100,10 +106,9 @@ class BookingPriceViewPresenterTests {
         whenever(quote.quoteType).thenReturn(QuoteType.METERED)
         whenever(view.getString(R.string.kh_uisdk_metered)).thenReturn(METERED)
         whenever(view.getString(R.string.kh_uisdk_price_info_text_metered)).thenReturn(METERED_INFO_TEXT)
-        priceViewPresenter.formatPricingType(quote)
+        priceViewPresenter.formatQuoteType(quote)
 
-        verify(view).setPricingType(METERED)
-        verify(view).setInfoText(METERED_INFO_TEXT)
+        verify(view).setQuoteTypeDetails(quote.quoteType)
     }
 
     @Test
@@ -111,16 +116,16 @@ class BookingPriceViewPresenterTests {
         whenever(quote.quoteType).thenReturn(QuoteType.FIXED)
         whenever(view.getString(R.string.kh_uisdk_fixed_fare)).thenReturn(FIXED)
         whenever(view.getString(R.string.kh_uisdk_price_info_text_fixed)).thenReturn(FIXED_INFO_TEXT)
-        priceViewPresenter.formatPricingType(quote)
+        priceViewPresenter.formatQuoteType(quote)
 
-        verify(view).setPricingType(FIXED)
-        verify(view).setInfoText(FIXED_INFO_TEXT)
+        verify(view).setQuoteTypeDetails(quote.quoteType)
     }
 
     companion object {
         private const val FLEET_PRICE_RESULT = "£0.10"
         private const val MARKET_PRICE_RESULT = "£0.03 - 0.10"
         private const val MEET_AND_GREET = "Meet and greet"
+        private const val STANDBY = "STANDBY"
         private const val ESTIMATED = "ESTIMATED"
         private const val METERED = "METERED"
         private const val FIXED = "FIXED"

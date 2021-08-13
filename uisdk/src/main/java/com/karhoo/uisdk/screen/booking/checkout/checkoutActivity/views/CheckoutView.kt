@@ -62,7 +62,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     private var presenter: CheckoutViewContract.Presenter
     private lateinit var loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener
-    private lateinit var termsListener: CheckoutFragmentContract.TermsListener
+    private lateinit var webViewListener: CheckoutFragmentContract.WebViewListener
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
 
     private val bookingComments: String
@@ -91,10 +91,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-                              termsListener: CheckoutFragmentContract.TermsListener,
+                              webViewListener: CheckoutFragmentContract.WebViewListener,
                               passengersListener: CheckoutFragmentContract.PassengersListener) {
         this.loadingButtonCallback = loadingButtonCallback
-        this.termsListener = termsListener
+        this.webViewListener = webViewListener
         this.passengersListener = passengersListener
     }
 
@@ -330,7 +330,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showWebView(url: String?) {
-        termsListener.showWebViewOnPress(url)
+        webViewListener.showWebViewOnPress(url)
     }
 
     // fragment should pass on the activity result

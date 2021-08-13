@@ -43,7 +43,7 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
             override fun showLoading() {
                 bookingRequestButton.showLoading()
             }
-        }, object : CheckoutFragmentContract.TermsListener {
+        }, object : CheckoutFragmentContract.WebViewListener {
             override fun showWebViewOnPress(url: String?) {
                 if (activity is WebViewActions) {
                     (activity as WebViewActions).showWebView(url)

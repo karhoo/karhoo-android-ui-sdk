@@ -494,21 +494,21 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun paymentEmptyDetailsCheckGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_add_payment, R.id.cardNumberText)
     }
 
     fun paymentCardDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingCheckoutView)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
     fun termsGuestDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingCheckoutView)
         textIsVisibleIsDescendant(R.string.kh_uisdk_booking_terms, R.id.bookingRequestTermsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_label_terms_and_conditions, R.id.bookingRequestTermsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_label_cancellation_policy, R.id.bookingRequestTermsWidget)

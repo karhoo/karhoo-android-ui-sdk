@@ -3,9 +3,12 @@ package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.extension.toLocalisedInfoString
+import com.karhoo.uisdk.util.extension.toLocalisedString
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaTypeText
 import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pickUpTypeText
@@ -47,7 +50,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
 
     private fun bindRemainingViews(quote: Quote, typeEta: String, currency: Currency) {
         presenter.formatPriceText(quote, currency)
-        presenter.formatPricingType(quote)
+        presenter.formatQuoteType(quote)
         presenter.formatPickUpType(quote)
 
         etaTypeText.text = typeEta
@@ -71,11 +74,11 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         return context.getString(id)
     }
 
-    override fun setPickUpType(pickUpType: String?) {
-        if (pickUpType != null) {
-            pickUpTypeText.text = pickUpType
+    override fun setPickUpType(pickUpType: PickupType?) {
+        pickUpType?.let {
+            pickUpTypeText.text = pickUpType.toLocalisedString(context)
             pickUpTypeText.visibility = VISIBLE
-        } else {
+        } ?: run {
             pickUpTypeText.visibility = GONE
         }
     }
@@ -84,11 +87,8 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         priceText.text = price
     }
 
-    override fun setPricingType(pricingType: String) {
-        pricingTypeText.text = pricingType
-    }
-
-    override fun setInfoText(text: String) {
-        priceInfoText.text = text
+    override fun setQuoteTypeDetails(quoteType: QuoteType) {
+        pricingTypeText.text = quoteType.toLocalisedString(context)
+        priceInfoText.text = quoteType.toLocalisedInfoString(context)
     }
 }
