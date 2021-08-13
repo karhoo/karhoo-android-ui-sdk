@@ -52,11 +52,11 @@
                     android:layout_marginEnd="@dimen/spacing_grid_first_column"
                     android:layout_weight="1" />
 
-                <com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.ActionCellView
-                    android:id="@+id/bookingCheckoutPaymentView"
+                <com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentView
+                    android:id="@+id/bookingRequestPaymentDetailsWidget"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
             </LinearLayout>
 
             <com.karhoo.uisdk.screen.booking.checkout.comment.BookingOptionalInfoView
@@ -84,14 +84,6 @@
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/spacing_grid_second_column"
                 android:text="@string/kh_uisdk_payment_details"
-                android:visibility="gone" />
-
-            <com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentView
-                android:id="@+id/bookingRequestPaymentDetailsWidget"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_grid_second_column"
-                android:layout_marginEnd="@dimen/spacing_grid_second_column"
                 android:visibility="gone" />
 
             <com.karhoo.uisdk.screen.booking.checkout.BookingTermsView

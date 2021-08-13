@@ -37,11 +37,11 @@ class CapabilityAdapter(private val context: Context) : BaseRecyclerAdapter<Capa
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun getCapabilityIcon(type: String): Int? {
         return when (type) {
-            GPS_TRACKING -> R.drawable.kh_uisdk_ic_map
-            FLIGHT_TRACKING -> R.drawable.kh_uisdk_ic_plane
-            TRAIN_TRACKING -> R.drawable.kh_uisdk_ic_metro
-            PASSENGERS_MAX -> R.drawable.kh_uisdk_ic_passengers
-            BAGGAGE_MAX -> R.drawable.kh_uisdk_ic_briefcase
+            GPS_TRACKING -> R.drawable.kh_uisdk_ic_capabilities_gps
+            FLIGHT_TRACKING -> R.drawable.kh_uisdk_ic_capabilities_flight_tracking
+            TRAIN_TRACKING -> R.drawable.kh_uisdk_ic_capabilities_train_tracking
+            PASSENGERS_MAX -> R.drawable.kh_uisdk_ic_capabilities_passengers
+            BAGGAGE_MAX -> R.drawable.kh_uisdk_ic_capabilities_baggage
             else -> null
         }
 

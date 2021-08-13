@@ -35,7 +35,6 @@ import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPaymentView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestFlightDetailsWidget
@@ -346,7 +345,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPassenger(passengerDetails: PassengerDetails?) {
-        bookingCheckoutPassengerView.setActionIcon(R.drawable.kh_uisdk_ic_user)
+        bookingCheckoutPassengerView.setActionIcon(R.drawable.kh_uisdk_ic_passenger)
 
         passengerDetails?.let {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
@@ -361,15 +360,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?) {
-        bookingCheckoutPaymentView.setActionIcon(R.drawable.uidsk_ic_card_visa)
-
-        paymentInfo?.let {
-            bookingCheckoutPaymentView.setTitle(paymentInfo.lastFour)
-            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-        } ?: run {
-            bookingCheckoutPaymentView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method))
-            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_mean))
-        }
+//        bookingCheckoutPaymentView.setActionIcon(R.drawable.uidsk_ic_card_visa)
+//
+//        paymentInfo?.let {
+//            bookingCheckoutPaymentView.setTitle(paymentInfo.lastFour)
+//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
+//        } ?: run {
+//            bookingCheckoutPaymentView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method))
+//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_mean))
+//        }
     }
 
     override fun showPassengerDetails(show: Boolean) {

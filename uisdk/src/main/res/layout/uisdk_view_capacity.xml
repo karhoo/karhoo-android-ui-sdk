@@ -16,14 +16,14 @@
         android:paddingBottom="@dimen/spacing_xxsmall"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kh_uisdk_ic_passengers" />
+        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_passengers" />
 
     <TextView
         android:id="@+id/peopleCapacityText"
         style="@style/Text.Black"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:background="@drawable/kh_uisdk_white_circle"
+        android:background="@drawable/kh_uisdk_capacities_circle"
         android:gravity="center"
         android:textSize="12sp"
         android:translationX="-8dp"
@@ -41,14 +41,14 @@
         android:paddingBottom="@dimen/spacing_xxsmall"
         app:layout_constraintStart_toEndOf="@+id/peopleCapacityText"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kh_uisdk_ic_briefcase" />
+        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_baggage" />
 
     <TextView
         android:id="@+id/luggageCapacityText"
         style="@style/Text.Black"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:background="@drawable/kh_uisdk_white_circle"
+        android:background="@drawable/kh_uisdk_capacities_circle"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"

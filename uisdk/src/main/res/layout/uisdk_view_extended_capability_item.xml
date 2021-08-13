@@ -18,7 +18,7 @@
         android:background="@drawable/kh_uisdk_gray_circle"
         android:paddingTop="@dimen/spacing_xxsmall"
         android:paddingBottom="@dimen/spacing_xxsmall"
-        tools:srcCompat="@drawable/kh_uisdk_ic_briefcase" />
+        tools:srcCompat="@drawable/kh_uisdk_ic_capabilities_baggage" />
 
     <TextView
         android:id="@+id/extendedCapabilityItemText"

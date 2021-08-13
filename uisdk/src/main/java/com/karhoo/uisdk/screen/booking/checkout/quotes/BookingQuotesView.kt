@@ -70,7 +70,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
             vehicleTags.text = presenter.createTagsString(tags, resources, !isExpandedSectionShown)
 
             val arrowIcon = if (isExpandedSectionShown)
-                getDrawableResource(R.drawable.kh_uisdk_ic_keyboard_arrow_up_small)
+                getDrawableResource(R.drawable.kh_uisdk_ic_arrow_up_small)
             else
                 getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
 
