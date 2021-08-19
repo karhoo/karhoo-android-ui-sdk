@@ -10,7 +10,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
-import com.karhoo.uisdk.util.extension.configure
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.additionalFeedbackButton
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.labelLayout
 import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.ratingBar
@@ -26,7 +25,6 @@ class RatingView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_star_rating, this)
-        configure()
 
         additionalFeedbackButton.setOnClickListener {
             (context as Activity).startActivity(FeedbackActivity.Builder.newBuilder()
@@ -36,7 +34,6 @@ class RatingView @JvmOverloads constructor(
 
         ratingBar.setOnRatingBarChangeListener { _: RatingBar, rating: Float, _: Boolean ->
             ratingLabel.visibility = View.VISIBLE
-            additionalFeedbackButton.configure()
             ratingLabel.setText(R.string.kh_uisdk_rating_submitted)
             KarhooUISDK.analytics?.submitRating(tripId = trip?.tripId.orEmpty(), rating = rating)
         }

@@ -20,7 +20,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -35,7 +34,30 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.*
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.bookingTermsText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsLayout
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dateTimeText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dropOffLabel
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightDetailsLayout
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightNumberText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.karhooId
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.logoImage
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.meetingPointText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupLabel
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupTypeText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceTypeText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.rebookRideButton
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.reportIssueButton
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.rideDetailCancellationText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.starRatingWidget
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateIcon
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateText
 import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
 import org.joda.time.DateTime
 
@@ -62,7 +84,6 @@ class RideDetailView @JvmOverloads constructor(
         displayText(trip)
         setListeners(trip)
         bindPickupType(trip.meetingPoint?.pickupType)
-        setTripRating(trip)
 
         presenter?.apply {
             bindFlightDetails()
@@ -77,15 +98,7 @@ class RideDetailView @JvmOverloads constructor(
             contactOptionsWidget.observeTripStatus(it)
         }
 
-            presenter?.checkCancellationSLA(context, trip, trip.serviceAgreements?.freeCancellation)
-    }
-
-    private fun setTripRating(trip: TripInfo) {
-        if (trip.tripState == TripStatus.COMPLETED) {
-            starRatingWidget.visibility = View.VISIBLE
-            ratingDivider.visibility = View.VISIBLE
-            starRatingWidget.trip = trip
-        }
+        presenter?.checkCancellationSLA(context, trip, trip.serviceAgreements?.freeCancellation)
     }
 
     private fun setListeners(trip: TripInfo) {
@@ -215,7 +228,7 @@ class RideDetailView @JvmOverloads constructor(
                 titleResId = R.string.kh_uisdk_cancel_ride_successful,
                 messageResId = R.string.kh_uisdk_cancel_ride_successful_message,
                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
-                        DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
+                                                         DialogInterface.OnClickListener { _, _ -> rideDetailActions?.finishActivity() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
     }
@@ -249,7 +262,7 @@ class RideDetailView @JvmOverloads constructor(
         val config = KarhooAlertDialogConfig(
                 view = BaseFareView(context),
                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_got_it,
-                        DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
+                                                         DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
 
     }
