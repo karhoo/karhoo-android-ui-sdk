@@ -15,8 +15,8 @@ import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import java.util.HashMap
 
-internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
-    private lateinit var bookingRequestButton: LoadingButtonView
+internal class CheckoutFragment : Fragment() {
+    private lateinit var checkoutActionButton: LoadingButtonView
     private lateinit var checkoutView: CheckoutView
     private lateinit var presenter: CheckoutPresenter
     private var isShowingPassengerDetails: Boolean = false
@@ -28,20 +28,23 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
 
         presenter = CheckoutPresenter()
 
-        bookingRequestButton = view.findViewById(R.id.checkoutActionButton)
-        bookingRequestButton.actions = this
-        bookingRequestButton.onLoadingComplete()
+        checkoutActionButton = view.findViewById(R.id.checkoutActionButton)
+        checkoutActionButton.onLoadingComplete()
 
         checkoutView = view.findViewById(R.id.bookingCheckoutView)
 
         val bundle = arguments as Bundle
         checkoutView.setListeners(object : CheckoutFragmentContract.LoadingButtonListener {
             override fun onLoadingComplete() {
-                bookingRequestButton.onLoadingComplete()
+                checkoutActionButton.onLoadingComplete()
             }
 
             override fun showLoading() {
-                bookingRequestButton.showLoading()
+                checkoutActionButton.showLoading()
+            }
+
+            override fun enableButton(enable: Boolean) {
+                checkoutActionButton.enableButton(enable)
             }
         }, object : CheckoutFragmentContract.WebViewListener {
             override fun showWebViewOnPress(url: String?) {
@@ -52,9 +55,9 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
         }, object : CheckoutFragmentContract.PassengersListener {
             override fun onPassengerPageVisibilityChanged(visible: Boolean) {
                 if (visible) {
-                    bookingRequestButton.setText(R.string.kh_uisdk_save)
+                    checkoutActionButton.setText(R.string.kh_uisdk_save)
                 } else {
-                    bookingRequestButton.setText(R.string.kh_uisdk_book_now)
+                    checkoutActionButton.setText(R.string.kh_uisdk_book_now)
                 }
 
                 isShowingPassengerDetails = visible
@@ -68,24 +71,33 @@ internal class CheckoutFragment : Fragment(), LoadingButtonView.Actions {
         checkoutView.showBookingRequest(quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
                                         bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
                                         outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-                                        bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
-                                       )
+                                        bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?)
 
-        return view;
+        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+            override fun onLoadingButtonClick() {
+                if (isShowingPassengerDetails) {
+                    if (checkoutView.arePassengerDetailsValid()) {
+                        checkoutView.showPassengerDetails(false)
+                        checkoutActionButton.onLoadingComplete()
+                    }
+                } else {
+                    if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser) {
+                        checkoutActionButton.onLoadingComplete()
+                    } else {
+                        checkoutView.startBooking()
+                    }
+                }
+            }
+        }
+
+        return view
     }
 
-    override fun onLoadingButtonClick() {
-        if (isShowingPassengerDetails) {
-            if (checkoutView.arePassengerDetailsValid()) {
-                checkoutView.showPassengerDetails(false)
-                bookingRequestButton.onLoadingComplete()
-            }
+    fun onBackPressed() {
+        if(isShowingPassengerDetails) {
+            checkoutView.showPassengerDetails(false)
         } else {
-            if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser) {
-                bookingRequestButton.onLoadingComplete()
-            } else {
-                checkoutView.startBooking()
-            }
+            activity?.finish()
         }
     }
 

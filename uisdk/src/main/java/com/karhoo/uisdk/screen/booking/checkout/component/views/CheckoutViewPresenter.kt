@@ -139,24 +139,20 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         view?.initialiseChangeCard(quote)
     }
 
-    override fun setBookingFields(allFieldsValid: Boolean) {
-
+    override fun getPassengerDetails() {
         when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
-                view?.showGuestBookingFields(null)
-            }
-            is AuthenticationMethod.TokenExchange -> {
-                view?.showGuestBookingFields(details = getPassengerDetails())
+                view?.fillInPassengerDetails(null)
             }
             else -> {
-                view?.showAuthenticatedUserBookingFields()
+                view?.fillInPassengerDetails(details = parsePassengerDetails())
             }
         }
     }
 
     override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
         val passenger = if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser) parsePassengerDetails() else passengerDetails
 
         passenger?.let {
             val metadata = getBookingMetadataMap(identifier, tripId)
@@ -187,7 +183,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    private fun getPassengerDetails(): PassengerDetails {
+    private fun parsePassengerDetails(): PassengerDetails {
         val user = userStore.currentUser
         return PassengerDetails(
                 firstName = user.firstName,

@@ -47,9 +47,7 @@ interface CheckoutViewContract {
 
         fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle)
 
-        fun showGuestBookingFields(details: PassengerDetails?)
-
-        fun showAuthenticatedUserBookingFields()
+        fun fillInPassengerDetails(details: PassengerDetails?)
 
         fun showPaymentFailureDialog(error: KarhooError?)
 
@@ -92,12 +90,12 @@ interface CheckoutViewContract {
                                        passengerDetails: PassengerDetails? = null,
                                        comments: String)
 
-        fun setBookingFields(allFieldsValid: Boolean)
-
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null)
 
         fun resetBooking()
+
+        fun getPassengerDetails()
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 

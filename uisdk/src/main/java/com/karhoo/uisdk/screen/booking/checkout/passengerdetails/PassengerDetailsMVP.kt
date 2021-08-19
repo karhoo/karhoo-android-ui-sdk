@@ -42,4 +42,8 @@ interface PassengerDetailsMVP {
 
         fun validateMobileNumber(code: String, number: String): String
     }
+
+    interface Validator {
+        fun onFieldsValidated(validated: Boolean)
+    }
 }

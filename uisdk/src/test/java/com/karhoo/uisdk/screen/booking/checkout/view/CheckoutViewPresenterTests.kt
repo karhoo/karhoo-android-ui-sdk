@@ -117,29 +117,8 @@ class CheckoutViewPresenterTests {
     fun `user without saved card sees the correct input fields`() {
         setAuthenticatedUser()
 
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).showGuestBookingFields(any())
+        verify(view, never()).fillInPassengerDetails(any())
     }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a logged in user
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `user with saved card sees the correct input fields`() {
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        setAuthenticatedUser()
-
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).showGuestBookingFields(any())
-    }
-
 
     /**
      * Given:   A user see the booking screen
@@ -153,38 +132,6 @@ class CheckoutViewPresenterTests {
         setAuthenticatedUser()
 
         assertTrue(checkoutPresenter.isPaymentSet())
-    }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a guest user
-     * And:     The input fields are not all valid
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `guest user sees the correct input fields`() {
-        setGuestUser()
-
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showGuestBookingFields(null)
-    }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a token exchange user
-     * And:     The input fields are all valid
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `token exchange user sees the correct input fields`() {
-        setTokenUser()
-
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        checkoutPresenter.setBookingFields(true)
-
-        verify(view).showGuestBookingFields(passengerDetails)
     }
 
     /**

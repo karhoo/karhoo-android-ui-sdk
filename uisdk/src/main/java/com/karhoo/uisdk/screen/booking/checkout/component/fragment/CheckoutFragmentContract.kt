@@ -6,6 +6,7 @@ interface CheckoutFragmentContract {
     interface LoadingButtonListener {
         fun onLoadingComplete()
         fun showLoading()
+        fun enableButton(enable: Boolean)
     }
 
     interface WebViewListener {

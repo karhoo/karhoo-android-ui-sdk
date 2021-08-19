@@ -27,15 +27,19 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
-class PassengerDetailsView @JvmOverloads constructor(context: Context,
-                                                     attrs: AttributeSet? = null,
-                                                     defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+class PassengerDetailsView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
 
     private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
+    var validationCallback: PassengerDetailsMVP.Validator? = null
 
     private val phoneNumber: String
-        get() = presenter.validateMobileNumber(code = countryCodeSpinner.selectedItem.toString(),
-                                               number = mobileNumberInput.text.toString())
+        get() = presenter.validateMobileNumber(
+                code = countryCodeSpinner.selectedItem.toString(),
+                number = mobileNumberInput.text.toString()
+                                              )
 
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
@@ -50,6 +54,8 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
             } else {
                 firstNameLayout.error = null
             }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
         }
         lastNameInput.addTextChangedListener {
             if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
@@ -57,6 +63,8 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
             } else {
                 lastNameLayout.error = null
             }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
         }
 
         emailInput.addTextChangedListener {
@@ -65,15 +73,32 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
             } else {
                 emailLayout.error = null
             }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
         }
 
         mobileNumberInput.addTextChangedListener {
-            if (!PhoneNumberValidator().validate(mobileNumberInput.text.toString())) {
+            if (!arePhoneFieldsValid()) {
                 mobileNumberLayout.error =
                         resources.getString(R.string.kh_uisdk_invalid_phone_number)
             } else {
                 mobileNumberLayout.error = null
             }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        countryCodeSpinner.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                if (!arePhoneFieldsValid()) {
+                    mobileNumberLayout.error =
+                            resources.getString(R.string.kh_uisdk_invalid_phone_number)
+                } else {
+                    mobileNumberLayout.error = null
+                }
+            }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
         }
 
         firstNameInput.onFocusChangeListener = createFocusChangeListener()
@@ -95,6 +120,12 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
         }
     }
 
+    private fun arePhoneFieldsValid(): Boolean {
+        return PhoneNumberValidator().validate(
+                mobileNumberInput.text.toString(),
+                countryCodeSpinner.selectedItem.toString())
+    }
+
     private fun nameHasFocus(): Boolean {
         return firstNameInput.hasFocus()
                 || lastNameInput.hasFocus()
@@ -107,25 +138,30 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
             } else {
                 v.clearFocus()
                 hideKeyboardIfNothingFocus(v)
-                presenter.updatePassengerDetails(firstName = firstNameInput.text.toString(),
-                                                 lastName = lastNameInput.text.toString(),
-                                                 email = emailInput.text.toString(),
-                                                 mobilePhoneNumber = phoneNumber)
+                presenter.updatePassengerDetails(
+                        firstName = firstNameInput.text.toString(),
+                        lastName = lastNameInput.text.toString(),
+                        email = emailInput.text.toString(),
+                        mobilePhoneNumber = phoneNumber)
             }
         }
 
     }
 
     override fun areFieldsValid(): Boolean {
-        var isValid = false
+        var isValid = true
         if (!EmptyFieldValidator().validate(firstNameInput.text.toString())) {
-            isValid = true
+            isValid = false
         } else if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
-            isValid = true
+            isValid = false
         } else if (!EmailValidator().validate(emailInput.text.toString())) {
-            isValid = true
-        } else if (!PhoneNumberValidator().validate(mobileNumberInput.text.toString())) {
-            isValid = true
+            isValid = false
+        } else if (!PhoneNumberValidator().validate(
+                        mobileNumberInput.text.toString(),
+                        countryCodeSpinner.selectedItem.toString()
+                                                   )
+        ) {
+            isValid = false
         }
         return isValid
     }

@@ -24,7 +24,9 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(checkoutToolbar)
-        checkoutToolbar.setNavigationOnClickListener { finish() }
+        checkoutToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -70,6 +72,10 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
 
     override fun showWebView(url: String?) {
         url?.let { khWebView?.show(it) }
+    }
+
+    override fun onBackPressed() {
+        fragment.onBackPressed()
     }
 
     /**

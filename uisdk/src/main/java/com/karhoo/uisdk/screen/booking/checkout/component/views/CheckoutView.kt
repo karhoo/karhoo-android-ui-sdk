@@ -25,6 +25,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsMVP
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentMVP
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
@@ -44,7 +45,6 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 import org.joda.time.DateTime
 import java.util.Currency
 import java.util.HashMap
@@ -89,11 +89,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
         //Default binding
-        bindPassenger(passengersDetailLayout.retrievePassenger())
+        presenter.getPassengerDetails()
         bindPaymentMethod(null)
 
         bookingCheckoutPassengerView.setOnClickListener {
             showPassengerDetails(true)
+        }
+
+        passengersDetailLayout.validationCallback = object : PassengerDetailsMVP.Validator {
+            override fun onFieldsValidated(validated: Boolean) {
+                loadingButtonCallback.enableButton(validated)
+            }
         }
     }
 
@@ -105,16 +111,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         this.passengersListener = passengersListener
     }
 
-    override fun showGuestBookingFields(details: PassengerDetails?) {
+    override fun fillInPassengerDetails(details: PassengerDetails?) {
         if (details == null) {
-            bookingRequestLabel.text = resources.getString(R.string.kh_uisdk_checkout_as_guest)
+            bindPassenger(passengersDetailLayout.retrievePassenger())
+        } else {
+            bindPassenger(details)
         }
-
-        bookingRequestCommentsWidget.visibility = View.VISIBLE
-    }
-
-    override fun showAuthenticatedUserBookingFields() {
-        bookingRequestCommentsWidget.visibility = View.GONE
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
