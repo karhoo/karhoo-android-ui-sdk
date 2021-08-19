@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.uisdk_view_trip_info.locateMeButton
 class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
 
     private var trip: TripInfo? = null
+    private var backToBooking: Boolean = false
 
     override val layout = R.layout.uisdk_activity_trip
 
@@ -74,7 +75,10 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
     }
 
     override fun handleExtras() {
-        trip = extras?.getParcelable(Builder.EXTRA_TRIP)
+        extras?.let {
+            trip = it.getParcelable(Builder.EXTRA_TRIP)
+            backToBooking = it.getBoolean(Builder.EXTRA_BACK_TO_BOOKING)
+        }
     }
 
     override fun initialiseViews() {
@@ -98,7 +102,11 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
     }
 
     override fun goToCleanBooking() {
-        startActivity(BookingActivity.Builder.builder.build(this))
+        if(backToBooking) {
+            startActivity(BookingActivity.Builder.builder.build(this))
+        } else {
+            finish()
+        }
     }
 
     override fun goToPrefilledBooking(trip: TripInfo) {
@@ -125,8 +133,9 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
          * The activity will take the origin and destination, if available from [tripInfo],
          * use this to prepopulate the addressview and begin fetching quotes
          */
-        fun tripInfo(trip: TripInfo): Builder {
+        fun tripInfo(trip: TripInfo, backToBooking: Boolean = false): Builder {
             extras.putParcelable(EXTRA_TRIP, trip)
+            extras.putBoolean(EXTRA_BACK_TO_BOOKING, backToBooking)
             return this
         }
 
@@ -140,6 +149,7 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
         companion object {
 
             const val EXTRA_TRIP = "extra::trip"
+            const val EXTRA_BACK_TO_BOOKING = "extra::backbooking"
 
             val builder: Builder
                 get() = Builder()

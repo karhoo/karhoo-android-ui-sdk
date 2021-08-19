@@ -17,7 +17,7 @@ For more general information about the SDKs, checkout [**the karhoo developer po
 ## Installation
 Stable Release
 ```gradle
-implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.4.1'
+implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.4.3'
 ```
 Canary Release
 ```gradle
