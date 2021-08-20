@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.content.Intent
 import androidx.annotation.StringRes
@@ -11,12 +11,13 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import org.joda.time.DateTime
 
 interface CheckoutViewContract {
@@ -44,11 +45,9 @@ interface CheckoutViewContract {
 
         fun populateFlightDetailsField(flightNumber: String?)
 
-        fun setCapacity(vehicle: QuoteVehicle)
+        fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle)
 
-        fun showGuestBookingFields(details: PassengerDetails?)
-
-        fun showAuthenticatedUserBookingFields()
+        fun fillInPassengerDetails(details: PassengerDetails?)
 
         fun showPaymentFailureDialog(error: KarhooError?)
 
@@ -62,10 +61,17 @@ interface CheckoutViewContract {
 
         fun startBooking()
 
-        fun setListeners(
-                loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
-                termsListener: CheckoutFragmentContract.TermsListener
-        )
+        fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
+                         webViewListener: CheckoutFragmentContract.WebViewListener,
+                         passengersListener: CheckoutFragmentContract.PassengersListener)
+
+        fun bindPassenger(passengerDetails: PassengerDetails?)
+
+        fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?)
+
+        fun showPassengerDetails(show: Boolean)
+
+        fun arePassengerDetailsValid(): Boolean
     }
 
     interface Presenter {
@@ -81,14 +87,15 @@ interface CheckoutViewContract {
         fun isPaymentSet(): Boolean
 
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
-                                       passengerDetails: PassengerDetails? = null, comments: String)
-
-        fun setBookingFields(allFieldsValid: Boolean)
+                                       passengerDetails: PassengerDetails? = null,
+                                       comments: String)
 
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null)
 
         fun resetBooking()
+
+        fun getPassengerDetails()
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 
@@ -105,7 +112,6 @@ interface CheckoutViewContract {
     interface Actions : WebViewActions {
         fun finishedBooking()
     }
-
 
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

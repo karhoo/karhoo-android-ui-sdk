@@ -1,12 +1,23 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
+import com.karhoo.uisdk.util.extension.toLocalisedInfoString
+import com.karhoo.uisdk.util.extension.toLocalisedString
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pickUpTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeTextLayout
 import java.util.Currency
 
 class BookingPriceView @JvmOverloads constructor(context: Context,
@@ -14,7 +25,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
                                                  defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.View {
 
-    private lateinit var presenter: BookingPriceViewContract.Presenter
+    private var presenter: BookingPriceViewContract.Presenter
 
     init {
         inflate(context, R.layout.uisdk_view_booking_time_price, this)
@@ -26,9 +37,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     fun bindViews(vehicle: Quote,
                   typeEta: String,
                   currency: Currency) {
-        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context
-                .getString(R.string
-                        .kh_uisdk_min))
+        etaText.text = String.format("%s %s", vehicle.vehicle.vehicleQta.highMinutes, context.getString(R.string.kh_uisdk_min))
         bindRemainingViews(vehicle, typeEta, currency)
     }
 
@@ -41,7 +50,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
 
     private fun bindRemainingViews(quote: Quote, typeEta: String, currency: Currency) {
         presenter.formatPriceText(quote, currency)
-        presenter.formatPricingType(quote)
+        presenter.formatQuoteType(quote)
         presenter.formatPickUpType(quote)
 
         etaTypeText.text = typeEta
@@ -65,11 +74,11 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         return context.getString(id)
     }
 
-    override fun setPickUpType(pickUpType: String?) {
-        if (pickUpType != null) {
-            pickUpTypeText.text = pickUpType
+    override fun setPickUpType(pickUpType: PickupType?) {
+        pickUpType?.let {
+            pickUpTypeText.text = pickUpType.toLocalisedString(context)
             pickUpTypeText.visibility = VISIBLE
-        } else {
+        } ?: run {
             pickUpTypeText.visibility = GONE
         }
     }
@@ -78,11 +87,8 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         priceText.text = price
     }
 
-    override fun setPricingType(pricingType: String) {
-        pricingTypeText.text = pricingType
-    }
-
-    override fun setInfoText(text: String) {
-        priceInfoText.text = text
+    override fun setQuoteTypeDetails(quoteType: QuoteType) {
+        pricingTypeText.text = quoteType.toLocalisedString(context)
+        priceInfoText.text = quoteType.toLocalisedInfoString(context)
     }
 }

@@ -19,7 +19,13 @@
     <string name="kh_uisdk_enter_destination_for_vehicles">Ajoutez une destination pour voir les véhicules disponibles.</string>
     <string name="kh_uisdk_retrieving_quotes">Recherche des devis</string>
     <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
-    <string name="kh_uisdk_capacity">x %s</string>
+    <string name="kh_uisdk_capacity">%s</string>
+    <string name="kh_uisdk_gps_tracking">Suivi GPS</string>
+    <string name="kh_uisdk_train_tracking">Associe votre train</string>
+    <string name="kh_uisdk_flight_tracking">Associe votre vol</string>
+    <string name="kh_uisdk_passengers_max">%d passager(s) max</string>
+    <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
+    <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Annulation gratuite jusqu’à</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d heure</item>
@@ -397,6 +403,11 @@
     <string name="kh_uisdk_price_info_text_metered">Cette flotte est un taxi à compteur réglementé. Le devis est une estimation basée sur les facteurs de la course (distance, temps, etc.).</string>
     <string name="kh_uisdk_price_info_text_fixed">Cette flotte applique un tarif forfaitaire. Le tarif final peut être affecté par des extras (péages, retard, etc.), veuillez consulter les conditions générales de la flotte.</string>
     <string name="kh_uisdk_price_meet_and_greet">Accueil pancarte</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Éditer</string>
+    <string name="kh_uisdk_booking_checkout_passenger">Passager</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter passager</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Ajouter un mode de paiement</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Mode de paiement</string>
 
     <!--  Quote View Learn More  -->
     <string name="kh_uisdk_quote_learn_more">Plus</string>

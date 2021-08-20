@@ -16,7 +16,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.DateUtil
@@ -90,11 +90,11 @@ class PrebookConfirmationView @JvmOverloads constructor(
                                                              taskStackBuilder.startActivities()
                                                          }),
                 negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss,
-                                                         DialogInterface.OnClickListener {
-                                                             dialog, _ ->
+                                                         DialogInterface.OnClickListener { dialog, _ ->
                                                              actions?.finishedBooking()
                                                              dialog.dismiss()
-                                                             (dialog) }))
+                                                             (dialog)
+                                                         }))
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 

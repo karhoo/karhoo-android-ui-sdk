@@ -159,11 +159,12 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun setCapacity(vehicle: QuoteVehicle) {
         capacityWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
-                people = vehicle.passengerCapacity)
+                people = vehicle.passengerCapacity,
+                otherCapabilities = null)
     }
 
     private fun setCancellationSLA(serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
-        val text = serviceCancellation?.getCancellationText(context , isPrebook)
+        val text = serviceCancellation?.getCancellationText(context, isPrebook)
 
         if (text.isNullOrEmpty()) {
             quoteCancellationText.visibility = View.GONE

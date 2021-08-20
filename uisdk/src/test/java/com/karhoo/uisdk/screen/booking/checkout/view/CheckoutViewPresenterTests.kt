@@ -5,21 +5,7 @@ import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.BraintreeSDKToken
-import com.karhoo.sdk.api.model.FlightDetails
-import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Organisation
-import com.karhoo.sdk.api.model.PaymentsNonce
-import com.karhoo.sdk.api.model.Poi
-import com.karhoo.sdk.api.model.PoiDetails
-import com.karhoo.sdk.api.model.PoiType
-import com.karhoo.sdk.api.model.Provider
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
-import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripLocationInfo
-import com.karhoo.sdk.api.model.UserInfo
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
@@ -30,12 +16,14 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewContract
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewPresenter
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views.CheckoutViewPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.PreferenceStore
 import com.karhoo.uisdk.util.ADYEN
 import com.karhoo.uisdk.util.BRAINTREE
@@ -61,24 +49,25 @@ import org.mockito.junit.MockitoJUnitRunner
 class CheckoutViewPresenterTests {
 
     private val vehicleAttributes: QuoteVehicle = QuoteVehicle(passengerCapacity = 2,
-                                                               luggageCapacity = 2)
+            luggageCapacity = 2)
     private val trip: TripInfo = TripInfo(
             tripId = "tripId1234",
             origin = TripLocationInfo(placeId = "placeId1234"),
             destination = TripLocationInfo(placeId = "placeId4321"))
     private val price: QuotePrice = QuotePrice(highPrice = 10, currencyCode = "GBP")
+    private val fleet: Fleet = Fleet(null, null, null, null, null, null, null)
     private val userDetails: UserInfo = UserInfo(firstName = "David",
-                                                 lastName = "Smith",
-                                                 email = "test.test@test.test",
-                                                 phoneNumber = "+441234 56789",
-                                                 userId = "123",
-                                                 locale = "en-GB",
-                                                 organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
+            lastName = "Smith",
+            email = "test.test@test.test",
+            phoneNumber = "+441234 56789",
+            userId = "123",
+            locale = "en-GB",
+            organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
     private val passengerDetails: PassengerDetails = PassengerDetails(firstName = "David",
-                                                                      lastName = "Smith",
-                                                                      email = "test.test@test.test",
-                                                                      phoneNumber = "+441234 56789",
-                                                                      locale = "en-GB")
+            lastName = "Smith",
+            email = "test.test@test.test",
+            phoneNumber = "+441234 56789",
+            locale = "en-GB")
     private val bookingComment = "Booking Comments"
 
     private val analytics: Analytics = mock()
@@ -116,7 +105,7 @@ class CheckoutViewPresenterTests {
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
         checkoutPresenter = CheckoutViewPresenter(view, analytics, preferenceStore, tripsService,
-                                                   userStore)
+                userStore)
     }
 
     /**
@@ -128,29 +117,8 @@ class CheckoutViewPresenterTests {
     fun `user without saved card sees the correct input fields`() {
         setAuthenticatedUser()
 
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).showGuestBookingFields(any())
+        verify(view, never()).fillInPassengerDetails(any())
     }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a logged in user
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `user with saved card sees the correct input fields`() {
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        setAuthenticatedUser()
-
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showAuthenticatedUserBookingFields()
-        verify(view, never()).showGuestBookingFields(any())
-    }
-
 
     /**
      * Given:   A user see the booking screen
@@ -164,38 +132,6 @@ class CheckoutViewPresenterTests {
         setAuthenticatedUser()
 
         assertTrue(checkoutPresenter.isPaymentSet())
-    }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a guest user
-     * And:     The input fields are not all valid
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `guest user sees the correct input fields`() {
-        setGuestUser()
-
-        checkoutPresenter.setBookingFields(false)
-
-        verify(view).showGuestBookingFields(null)
-    }
-
-    /**
-     * Given:   A user see the booking screen
-     * When:    They are a token exchange user
-     * And:     The input fields are all valid
-     * Then:    The correct input fields are displayed
-     */
-    @Test
-    fun `token exchange user sees the correct input fields`() {
-        setTokenUser()
-
-        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-
-        checkoutPresenter.setBookingFields(true)
-
-        verify(view).showGuestBookingFields(passengerDetails)
     }
 
     /**
@@ -215,9 +151,9 @@ class CheckoutViewPresenterTests {
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                                                             .Event
-                                                             .BookingError(R.string
-                                                                                   .kh_uisdk_destination_book_error, null))
+                .Event
+                .BookingError(R.string
+                        .kh_uisdk_destination_book_error, null))
     }
 
     /**
@@ -237,9 +173,9 @@ class CheckoutViewPresenterTests {
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                                                             .Event
-                                                             .BookingError(R.string
-                                                                                   .kh_uisdk_origin_book_error, null))
+                .Event
+                .BookingError(R.string
+                        .kh_uisdk_origin_book_error, null))
     }
 
     /**
@@ -252,6 +188,8 @@ class CheckoutViewPresenterTests {
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
         whenever(quote.price.highPrice).thenReturn(150)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(fleet)
 
         val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
@@ -260,7 +198,7 @@ class CheckoutViewPresenterTests {
 
         verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
-        verify(view).setCapacity(vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
         verify(view).bindPriceAndEta(quote, "")
     }
 
@@ -273,13 +211,14 @@ class CheckoutViewPresenterTests {
     fun `selected quote updates view with correct info for quote with zero highest price`() {
         whenever(quote.price.highPrice).thenReturn(0)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.fleet).thenReturn(fleet)
 
         val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
-        verify(view).setCapacity(vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
         verify(view).bindEta(quote, "")
     }
 
@@ -292,13 +231,15 @@ class CheckoutViewPresenterTests {
     fun `selected quote updates view with the correct info for prebooking`() {
         val scheduledDate = DateTime.now()
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(fleet)
 
         val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(locationDetails, locationDetails, scheduledDate))
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
-        verify(view).setCapacity(vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
         verify(view).bindPrebook(quote, "", scheduledDate)
     }
 
@@ -322,6 +263,9 @@ class CheckoutViewPresenterTests {
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(fleet)
 
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
@@ -341,8 +285,12 @@ class CheckoutViewPresenterTests {
     @Test
     fun `display and populate flight number field when pickup address has airport POI`() {
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-                                                                               PoiType.AIRPORT))
+        PoiType.AIRPORT))
         whenever(flightDetails.flightNumber).thenReturn("flight number")
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(fleet)
+
         val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
 
@@ -359,11 +307,15 @@ class CheckoutViewPresenterTests {
     @Test
     fun `display flight number field when pickup address has airport POI`() {
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-                                                                               PoiType.AIRPORT))
+        PoiType.AIRPORT))
         val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
         observer.onChanged(BookingStatus(origin, locationDetails, null))
 
-        checkoutPresenter.showBookingRequest(quote,null, "tripId", null)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(fleet)
+
+        checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
         verify(view).displayFlightDetailsField(origin.details.type)
         verify(view, never()).populateFlightDetailsField(anyString())
@@ -389,9 +341,10 @@ class CheckoutViewPresenterTests {
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
-
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.fleet).thenReturn(fleet)
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
-        checkoutPresenter.showBookingRequest(quote,null, "tripId", null)
+        checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
         checkoutPresenter.makeBooking()
 
@@ -416,6 +369,8 @@ class CheckoutViewPresenterTests {
         whenever(braintreePaymentNonce.description).thenReturn("desc")
         whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.fleet).thenReturn(fleet)
 
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         checkoutPresenter.showBookingRequest(quote, null, outboundTripId = "tripId")
@@ -438,14 +393,14 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails,
-                                                    bookingComment)
+                bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                                                             .Event
-                                                             .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
+                .Event
+                .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
     }
 
     /**
@@ -468,9 +423,9 @@ class CheckoutViewPresenterTests {
 
         verify(view).onError()
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                                                             .Event
-                                                             .BookingError(R.string
-                                                                                   .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
+                .Event
+                .BookingError(R.string
+                        .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
     }
 
     /**
@@ -526,7 +481,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                                                    bookingComment)
+                bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -552,7 +507,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                                                    bookingComment)
+                bookingComment)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -607,7 +562,7 @@ class CheckoutViewPresenterTests {
         verify(preferenceStore).lastTrip = trip
         verify(view).onTripBookedSuccessfully(trip)
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                                                             .Event.BookingSuccess(trip))
+                .Event.BookingSuccess(trip))
     }
 
     /**

@@ -4,8 +4,8 @@ interface CapacityMVP {
 
     interface View {
 
-        fun setCapacity(luggage: Int, people: Int)
-
+        fun setCapacity(luggage: Int, people: Int, otherCapabilities: Int?)
+        fun showCapacities(show: Boolean)
     }
 
 }

@@ -14,7 +14,13 @@
     <string name="kh_uisdk_address_drop_off">Destino</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
     <string name="kh_uisdk_loading_min">min</string>
-    <string name="kh_uisdk_capacity">x %s</string>
+    <string name="kh_uisdk_capacity">%s</string>
+    <string name="kh_uisdk_gps_tracking">Seguimiento GPS</string>
+    <string name="kh_uisdk_train_tracking">Vincule su tren</string>
+    <string name="kh_uisdk_flight_tracking">Vincule su vuelo</string>
+    <string name="kh_uisdk_passengers_max">Máximo %d pasajero(s)</string>
+    <string name="kh_uisdk_baggage_max">Máximo %d piezas de equipaje</string>
+    <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancelación gratuita hasta</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hora</item>
@@ -387,6 +393,11 @@
 
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Volver</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Editar</string>
+    <string name="kh_uisdk_booking_checkout_passenger">Pasajero</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Agregar pasajero</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Añadir método de pago</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Método de pago</string>
 
     <!-- Booking Price View -->
     <string name="kh_uisdk_price_info_text_estimated">Esta flota es un taxi no regulado. El presupuesto es una estimación basada en los factores del viaje (distancia, tiempo, etc.). Por favor, consulte los Términos y Condiciones de la flota para más información.</string>

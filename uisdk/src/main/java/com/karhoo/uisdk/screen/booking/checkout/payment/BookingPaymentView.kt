@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -29,17 +28,13 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
-    private var addPaymentBackground: Int = R.drawable.uisdk_background_light_grey_dashed_rounded
-    private var changePaymentBackground: Int = R.drawable.uisdk_background_white_rounded
-    private var lineTextStyle: Int = R.style.Text_Action
-    private var linkTextStyle: Int = R.style.Text_Action_Primary
 
     var paymentActions: BookingPaymentMVP.PaymentActions? = null
     var cardActions: BookingPaymentMVP.PaymentViewActions? = null
     private var dropInView: PaymentDropInMVP.View? = null
 
     init {
-        inflate(context, R.layout.uisdk_view_booking_payment, this)
+        inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
         presenter?.getPaymentProvider()
         if (!isInEditMode) {
@@ -72,32 +67,14 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus)
-        addPaymentBackground = typedArray.getResourceId(R.styleable.BookingPaymentView_addPaymentBackground, R
-                .drawable
-                .uisdk_background_light_grey_dashed_rounded)
-        changePaymentBackground = typedArray.getResourceId(R.styleable.BookingPaymentView_changePaymentBackground, R
-                .drawable
-                .uisdk_background_white_rounded)
-        lineTextStyle = typedArray.getResourceId(R.styleable.BookingPaymentView_lineText, R
-                .style
-                .Text_Action)
-        linkTextStyle = typedArray.getResourceId(R.styleable.BookingPaymentView_actionText, R
-                .style
-                .Text_Action_Primary)
-        TextViewCompat.setTextAppearance(cardNumberText, lineTextStyle)
-        TextViewCompat.setTextAppearance(changeCardLabel, linkTextStyle)
     }
 
     private fun changeCard() {
-        cardDetailsVisibility(GONE)
-        editCardButtonVisibility(GONE)
-        cardNumberText.isEnabled = false
         changeCardProgressBar.visibility = VISIBLE
         cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
-        cardDetailsVisibility(VISIBLE)
         editCardButtonVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = GONE
     }
@@ -113,11 +90,6 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
     private fun bindViews(cardType: CardType?, number: String) {
         cardNumberText.text = if (isGuest()) number else "•••• $number"
         setCardType(cardType)
-    }
-
-    private fun cardDetailsVisibility(visibility: Int) {
-        cardLogoImage.visibility = visibility
-        cardNumberText.visibility = visibility
     }
 
     private fun editCardButtonVisibility(visibility: Int) {
@@ -154,16 +126,15 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         if (savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()) {
             bindViews(savedPaymentInfo.cardType, savedPaymentInfo.lastFour)
             changeCardProgressBar.visibility = INVISIBLE
-            cardDetailsVisibility(VISIBLE)
             editCardButtonVisibility(View.VISIBLE)
             changeCardLabel.visibility = VISIBLE
-            paymentLayout.background = ContextCompat.getDrawable(context, changePaymentBackground)
+            changeCardLabel.text = resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
             setCardType(savedPaymentInfo.cardType)
         } else {
-            cardNumberText.text = resources.getString(R.string.kh_uisdk_add_payment)
-            changeCardLabel.visibility = GONE
+            cardNumberText.text = resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
+            changeCardLabel.text = resources.getString(R.string.kh_uisdk_add_payment)
+            changeCardLabel.visibility = VISIBLE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
-            paymentLayout.background = ContextCompat.getDrawable(context, addPaymentBackground)
         }
         paymentActions?.handlePaymentDetailsUpdate()
     }

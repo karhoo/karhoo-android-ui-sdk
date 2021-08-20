@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 
@@ -41,9 +42,11 @@ class LoadingButtonView @JvmOverloads constructor(context: Context,
         bookingProgressBar.visibility = View.VISIBLE
     }
 
+    fun enableButton(enable: Boolean) {
+        bookingButtonLayout.isEnabled = enable
+    }
+
     interface Actions {
-
         fun onLoadingButtonClick()
-
     }
 }

@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.views
+package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -28,6 +29,8 @@ import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
+import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.PreferenceStore
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toTripLocationDetails
@@ -63,6 +66,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             origin = it.pickup
         }
     }
+
     override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus> {
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         return Observer { currentStatus ->
@@ -97,11 +101,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun currentTripInfo(): TripInfo {
-        return TripInfo(
-                origin = origin?.toTripLocationDetails(),
-                destination = destination?.toTripLocationDetails(),
-                dateScheduled = Date(scheduledDate?.millis.orZero()),
-                quote = Price(total = quote?.price?.highPrice.orZero()))
+        return TripInfo(origin = origin?.toTripLocationDetails(),
+                        destination = destination?.toTripLocationDetails(),
+                        dateScheduled = Date(scheduledDate?.millis.orZero()),
+                        quote = Price(total = quote?.price?.highPrice.orZero()))
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
@@ -136,38 +139,32 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         view?.initialiseChangeCard(quote)
     }
 
-    override fun setBookingFields(allFieldsValid: Boolean) {
-
+    override fun getPassengerDetails() {
         when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
             is AuthenticationMethod.Guest -> {
-                view?.showGuestBookingFields(null)
-            }
-            is AuthenticationMethod.TokenExchange -> {
-                view?.showGuestBookingFields(details = getPassengerDetails())
+                view?.fillInPassengerDetails(null)
             }
             else -> {
-                view?.showAuthenticatedUserBookingFields()
+                view?.fillInPassengerDetails(details = parsePassengerDetails())
             }
         }
     }
 
     override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
         val passenger = if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() is AuthenticationMethod.KarhooUser) getPassengerDetails() else passengerDetails
+                        .authenticationMethod() is AuthenticationMethod.KarhooUser) parsePassengerDetails() else passengerDetails
 
         passenger?.let {
             val metadata = getBookingMetadataMap(identifier, tripId)
 
-            tripsService.book(TripBooking(
-                    comments = comments,
-                    flightNumber = flightDetails?.flightNumber,
-                    meta = metadata,
-                    nonce = identifier,
-                    quoteId = quote?.id.orEmpty(),
-                    passengers = Passengers(
-                            additionalPassengers = 0,
-                            passengerDetails = listOf(passenger),
-                            luggage = Luggage(total = 0))))
+            tripsService.book(TripBooking(comments = comments,
+                                          flightNumber = flightDetails?.flightNumber,
+                                          meta = metadata,
+                                          nonce = identifier,
+                                          quoteId = quote?.id.orEmpty(),
+                                          passengers = Passengers(additionalPassengers = 0,
+                                                                  passengerDetails = listOf(passenger),
+                                                                  luggage = Luggage(total = 0))))
                     .execute { result ->
                         when (result) {
                             is Resource.Success -> onTripBookSuccess(result.data)
@@ -186,7 +183,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    private fun getPassengerDetails(): PassengerDetails {
+    private fun parsePassengerDetails(): PassengerDetails {
         val user = userStore.currentUser
         return PassengerDetails(
                 firstName = user.firstName,
@@ -219,7 +216,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                 }
                 else -> view?.displayFlightDetailsField(null)
             }
-            view?.setCapacity(quote.vehicle)
+            view?.setCapacityAndCapabilities(createCapabilityByType(quote.fleet.capabilities, quote.vehicle), quote.vehicle)
         } else if (origin == null) {
             handleError(R.string.kh_uisdk_origin_book_error, null)
         } else if (destination == null) {
@@ -254,6 +251,27 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     override fun onPaymentFailureDialogCancelled() {
         view?.showLoading(false)
+    }
+
+    private fun createCapabilityByType(capabilityTypes: List<String>?, vehicle: QuoteVehicle): List<Capability> {
+        val capabilitiesList = arrayListOf<Capability>()
+
+        capabilitiesList.add(Capability(CapabilityAdapter.PASSENGERS_MAX, vehicle.passengerCapacity))
+        capabilitiesList.add(Capability(CapabilityAdapter.BAGGAGE_MAX, vehicle.luggageCapacity))
+
+        if (capabilityTypes != null) {
+            for (capability in capabilityTypes) {
+                when (capability) {
+                    CapabilityAdapter.GPS_TRACKING,
+                    CapabilityAdapter.TRAIN_TRACKING,
+                    CapabilityAdapter.FLIGHT_TRACKING -> {
+                        capabilitiesList.add(Capability(capability))
+                    }
+                }
+            }
+        }
+
+        return capabilitiesList
     }
 
     companion object {

@@ -18,7 +18,13 @@
     <string name="kh_uisdk_retrieving_quotes">Retrieving Quotes</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
-    <string name="kh_uisdk_capacity">x %s</string>
+    <string name="kh_uisdk_capacity">%s</string>
+    <string name="kh_uisdk_gps_tracking">GPS tracking</string>
+    <string name="kh_uisdk_train_tracking">Train tracking</string>
+    <string name="kh_uisdk_flight_tracking">Flight tracking</string>
+    <string name="kh_uisdk_passengers_max">%d passengers max</string>
+    <string name="kh_uisdk_baggage_max">%d luggages max</string>
+    <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hour</item>
@@ -400,6 +406,11 @@
 
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Back</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>
+    <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Add payment method</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Payment method</string>
     <!-- Booking Price View -->
     <string name="kh_uisdk_price_info_text_estimated">This fleet is a non-regulated taxi. The quote is an estimate based on the trip factors (distance, time, etc). Please refer to the fleet\'s Terms and Conditions for more information.</string>
     <string name="kh_uisdk_price_info_text_metered">This fleet is a regulated metered taxi. The quote is an estimate based on the trip factors (distance, time, etc).</string>

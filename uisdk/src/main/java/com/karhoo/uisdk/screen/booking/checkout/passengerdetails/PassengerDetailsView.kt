@@ -1,17 +1,19 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.addTextChangedListener
+import androidx.preference.PreferenceManager
+import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.validator.EmailValidator
 import com.karhoo.uisdk.base.validator.EmptyFieldValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
-import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryCodeSpinner
@@ -25,54 +27,84 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
-class PassengerDetailsView @JvmOverloads constructor(context: Context,
-                                                     attrs: AttributeSet? = null,
-                                                     defStyleAttr: Int = 0)
-    : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+class PassengerDetailsView @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
 
     private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
-
-
-    private val locale: String
-        @TargetApi(Build.VERSION_CODES.N)
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            resources.configuration.locales.get(0).toString()
-        } else {
-            resources.configuration.locale.toString()
-        }
+    var validationCallback: PassengerDetailsMVP.Validator? = null
 
     private val phoneNumber: String
         get() = presenter.validateMobileNumber(
                 code = countryCodeSpinner.selectedItem.toString(),
-                number = mobileNumberInput.text.toString())
+                number = mobileNumberInput.text.toString()
+                                              )
 
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
         initialiseFieldListeners()
-        initialiseFieldValidators()
-        initialiseFieldErrors()
+        retrievePassenger()
     }
 
     private fun initialiseFieldListeners() {
-        firstNameInput.setOnFocusChangeListener { view, hasFocus ->
-            onFocusChanged(firstNameLayout, hasFocus)
-        }
-
-        lastNameInput.setOnFocusChangeListener { _, hasFocus ->
-            onFocusChanged(lastNameLayout, hasFocus)
-        }
-
-        emailInput.setOnFocusChangeListener { _, hasFocus ->
-            onFocusChanged(emailLayout, hasFocus)
-            emailLayout.enableColoredError()
-        }
-
-        mobileNumberInput.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                mobileNumberLayout.setValidator(getPhoneNumberValidator())
+        firstNameInput.addTextChangedListener {
+            if (!EmptyFieldValidator().validate(firstNameInput.text.toString())) {
+                firstNameLayout.error = resources.getString(R.string.kh_uisdk_invalid_empty_field)
+            } else {
+                firstNameLayout.error = null
             }
-            onFocusChanged(mobileNumberLayout, hasFocus)
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
         }
+        lastNameInput.addTextChangedListener {
+            if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
+                lastNameLayout.error = resources.getString(R.string.kh_uisdk_invalid_empty_field)
+            } else {
+                lastNameLayout.error = null
+            }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        emailInput.addTextChangedListener {
+            if (!EmailValidator().validate(emailInput.text.toString())) {
+                emailLayout.error = resources.getString(R.string.kh_uisdk_invalid_email)
+            } else {
+                emailLayout.error = null
+            }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        mobileNumberInput.addTextChangedListener {
+            if (!arePhoneFieldsValid()) {
+                mobileNumberLayout.error =
+                        resources.getString(R.string.kh_uisdk_invalid_phone_number)
+            } else {
+                mobileNumberLayout.error = null
+            }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        countryCodeSpinner.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                if (!arePhoneFieldsValid()) {
+                    mobileNumberLayout.error =
+                            resources.getString(R.string.kh_uisdk_invalid_phone_number)
+                } else {
+                    mobileNumberLayout.error = null
+                }
+            }
+
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        firstNameInput.onFocusChangeListener = createFocusChangeListener()
+        lastNameInput.onFocusChangeListener = createFocusChangeListener()
+        emailInput.onFocusChangeListener = createFocusChangeListener()
+        mobileNumberInput.onFocusChangeListener = createFocusChangeListener()
     }
 
     /**
@@ -82,9 +114,16 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
     private fun hideKeyboardIfNothingFocus(view: View) {
         if (!nameHasFocus()
                 && !emailInput.hasFocus()
-                && !mobileNumberInput.hasFocus()) {
+                && !mobileNumberInput.hasFocus()
+        ) {
             view.hideSoftKeyboard()
         }
+    }
+
+    private fun arePhoneFieldsValid(): Boolean {
+        return PhoneNumberValidator().validate(
+                mobileNumberInput.text.toString(),
+                countryCodeSpinner.selectedItem.toString())
     }
 
     private fun nameHasFocus(): Boolean {
@@ -92,53 +131,39 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
                 || lastNameInput.hasFocus()
     }
 
-    private fun getPhoneNumberValidator(): PhoneNumberValidator {
-        val validator = PhoneNumberValidator()
-        countryCodeSpinner?.selectedItem?.let {
-            validator.setCountryCode(it.toString())
+    private fun createFocusChangeListener(): OnFocusChangeListener {
+        return OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                v.requestFocus()
+            } else {
+                v.clearFocus()
+                hideKeyboardIfNothingFocus(v)
+                presenter.updatePassengerDetails(
+                        firstName = firstNameInput.text.toString(),
+                        lastName = lastNameInput.text.toString(),
+                        email = emailInput.text.toString(),
+                        mobilePhoneNumber = phoneNumber)
+            }
         }
-        return validator
+
     }
 
-    private fun onFocusChanged(layout: SelfValidatingTextLayout, hasFocus: Boolean) {
-        layout.setFocus(hasFocus)
-        if (!hasFocus) {
-            hideKeyboardIfNothingFocus(layout)
-            presenter.updatePassengerDetails(
-                    firstName = firstNameInput.text.toString(),
-                    lastName = lastNameInput.text.toString(),
-                    email = emailInput.text.toString(),
-                    mobilePhoneNumber = phoneNumber)
+    override fun areFieldsValid(): Boolean {
+        var isValid = true
+        if (!EmptyFieldValidator().validate(firstNameInput.text.toString())) {
+            isValid = false
+        } else if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
+            isValid = false
+        } else if (!EmailValidator().validate(emailInput.text.toString())) {
+            isValid = false
+        } else if (!PhoneNumberValidator().validate(
+                        mobileNumberInput.text.toString(),
+                        countryCodeSpinner.selectedItem.toString()
+                                                   )
+        ) {
+            isValid = false
         }
-    }
-
-    private fun initialiseFieldValidators() {
-        mobileNumberLayout.setValidator(getPhoneNumberValidator())
-        firstNameLayout.setValidator(EmptyFieldValidator())
-        emailLayout.setValidator(EmailValidator())
-        lastNameLayout.setValidator(EmptyFieldValidator())
-    }
-
-    private fun initialiseFieldErrors() {
-        firstNameLayout.apply {
-            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
-            setErrorTextAppearance(R.style.Text_Red_Small)
-        }
-
-        lastNameLayout.apply {
-            setErrorMsg(R.string.kh_uisdk_invalid_empty_field)
-            setErrorTextAppearance(R.style.Text_Red_Small)
-        }
-
-        emailLayout.apply {
-            setErrorMsg(R.string.kh_uisdk_invalid_email)
-            setErrorTextAppearance(R.style.Text_Red_Small)
-        }
-
-        mobileNumberLayout.apply {
-            setErrorMsg(R.string.kh_uisdk_invalid_phone_number)
-            setErrorTextAppearance(R.style.Text_Red_Small)
-        }
+        return isValid
     }
 
     override fun setPassengerDetails(passengerDetails: PassengerDetails) {
@@ -158,40 +183,65 @@ class PassengerDetailsView @JvmOverloads constructor(context: Context,
         return false
     }
 
-    override fun getPassengerDetails(): PassengerDetails {
-        return PassengerDetails(
-                firstName = firstNameInput.text.toString(),
-                lastName = lastNameInput.text.toString(),
-                email = emailInput.text.toString(),
-                phoneNumber = phoneNumber,
-                locale = locale)
+    override fun getPassengerDetails(): PassengerDetails? {
+        return presenter.passengerDetailsValue()
     }
 
     override fun bindPassengerDetails(passengerDetails: PassengerDetails) {
         firstNameInput.setText(passengerDetails.firstName)
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
-        countryCodeSpinner.setCountryCode(presenter.getCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
-        mobileNumberInput.setText(presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
+        countryCodeSpinner.setCountryCode(
+                presenter.getCountryCodeFromPhoneNumber(
+                        passengerDetails.phoneNumber,
+                        resources
+                                                       )
+                                         )
+        mobileNumberInput.setText(
+                presenter.removeCountryCodeFromPhoneNumber(
+                        passengerDetails.phoneNumber,
+                        resources
+                                                          )
+                                 )
     }
 
     override fun bindEditMode(isEditing: Boolean) {
         updatePassengerDetailsMask.visibility = if (isEditing) View.GONE else View.VISIBLE
     }
 
-    private fun getFirstInvalid(): SelfValidatingTextLayout? {
-        var invalidTextLayout: SelfValidatingTextLayout? = null
-        if (!mobileNumberLayout.isValid) invalidTextLayout = mobileNumberLayout
-        if (!emailLayout.isValid) invalidTextLayout = emailLayout
-        if (!lastNameLayout.isValid) invalidTextLayout = lastNameLayout
-        if (!firstNameLayout.isValid) invalidTextLayout = firstNameLayout
+    private fun getFirstInvalid(): TextInputLayout? {
+        var invalidTextLayout: TextInputLayout? = null
+        if (mobileNumberLayout.error != null) invalidTextLayout = mobileNumberLayout
+        if (emailLayout.error != null) invalidTextLayout = emailLayout
+        if (lastNameLayout.error != null) invalidTextLayout = lastNameLayout
+        if (firstNameLayout.error != null) invalidTextLayout = firstNameLayout
         return invalidTextLayout
     }
 
     override fun allFieldsValid(): Boolean {
-        return emailLayout.isValid
-                && mobileNumberLayout.isValid
-                && firstNameLayout.isValid
-                && lastNameLayout.isValid
+        return emailLayout.error != null
+                && mobileNumberLayout.error != null
+                && firstNameLayout.error != null
+                && lastNameLayout.error != null
+    }
+
+    override fun storePassenger(passengerDetails: PassengerDetails) {
+        val pd = Gson().toJson(passengerDetails)
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+        sharedPrefs.edit().putString(PASSENGER_DETAILS_SHARED_PREFS, pd).apply()
+    }
+
+    override fun retrievePassenger(): PassengerDetails? {
+        return try {
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val json = sharedPrefs.getString(PASSENGER_DETAILS_SHARED_PREFS, null)
+            Gson().fromJson(json, PassengerDetails::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    companion object {
+        private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
     }
 }

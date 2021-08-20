@@ -2,6 +2,8 @@
 <resources>
 
     <integer name="map_anim_duration">200</integer>
+    <integer name="kr_uisdk_quote_view_anim_duration">400</integer>
+    <integer name="kr_uisdk_quote_view_anim_duration_short">200</integer>
     <integer name="snackbar_background_fade">250</integer>
 
     <!-- Flight screen-->

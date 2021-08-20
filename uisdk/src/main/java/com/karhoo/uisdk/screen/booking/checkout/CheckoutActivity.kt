@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.activity
+package com.karhoo.uisdk.screen.booking.checkout
 
 import android.content.Context
 import android.content.Intent
@@ -8,11 +8,11 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
-import com.karhoo.uisdk.screen.booking.checkout.checkoutActivity.fragment.CheckoutFragment
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
 
 class CheckoutActivity : BaseActivity(), WebViewActions {
@@ -24,7 +24,9 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(checkoutToolbar)
-        checkoutToolbar.setNavigationOnClickListener { finish() }
+        checkoutToolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -70,6 +72,10 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
 
     override fun showWebView(url: String?) {
         url?.let { khWebView?.show(it) }
+    }
+
+    override fun onBackPressed() {
+        fragment.onBackPressed()
     }
 
     /**
