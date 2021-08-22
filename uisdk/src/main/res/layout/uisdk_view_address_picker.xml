@@ -6,8 +6,8 @@
     style="@style/KhAddressPickerBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/spacing_xsmall"
-    android:layout_marginRight="@dimen/spacing_xsmall"
+    android:layout_marginLeft="@dimen/kh_uisdk_spacing_xsmall"
+    android:layout_marginRight="@dimen/kh_uisdk_spacing_xsmall"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -36,7 +36,7 @@
 
     <View
         android:id="@+id/addressDivider"
-        android:layout_width="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="@dimen/divider_height"
         android:background="@color/off_white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,13 +75,13 @@
     <TextView
         android:id="@+id/pickupLabel"
         style="@style/Text.Primary.Medium"
-        android:layout_width="@dimen/spacing_none"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:ellipsize="end"
         android:gravity="center_vertical|start"
         android:maxLines="2"
-        android:paddingEnd="@dimen/spacing_small"
-        android:paddingRight="@dimen/spacing_small"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_small"
+        android:paddingRight="@dimen/kh_uisdk_spacing_small"
         android:text="@string/kh_uisdk_address_picker_add_pickup"
         app:layout_constraintBottom_toTopOf="@id/guidelineCentre"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +129,7 @@
             android:id="@+id/dateTimeLabelLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/spacing_xsmall"
+            android:layout_marginLeft="@dimen/kh_uisdk_spacing_xsmall"
             android:animateLayoutChanges="true"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -162,7 +162,7 @@
 
     <LinearLayout
         android:id="@+id/dropoffLayout"
-        android:layout_width="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -173,7 +173,7 @@
         <TextView
             android:id="@+id/dropOffLabel"
             style="@style/Text.Action.Medium"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="@dimen/address_picker_height"
             android:layout_weight="1"
             android:ellipsize="end"
@@ -185,7 +185,7 @@
             android:id="@+id/clearDestinationButtonIcon"
             android:layout_width="@dimen/icon_size_large"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/spacing_small"
+            android:layout_marginLeft="@dimen/kh_uisdk_spacing_small"
             android:scaleType="centerInside"
             android:visibility="gone"
             app:srcCompat="@drawable/uisdk_ic_clear_red" />
@@ -194,7 +194,7 @@
             android:id="@+id/dateTimeDivider"
             android:layout_width="@dimen/divider_height"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
             android:background="@color/off_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="parent"

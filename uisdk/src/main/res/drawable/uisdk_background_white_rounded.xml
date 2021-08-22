@@ -5,6 +5,6 @@
     <stroke
         android:color="@color/light_grey"
         android:width="1dp" />
-    <corners android:radius="@dimen/spacing_xxsmall" />
+    <corners android:radius="@dimen/kh_uisdk_spacing_xxsmall" />
 
 </shape>

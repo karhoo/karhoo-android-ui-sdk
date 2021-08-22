@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/transparent_black_notification"
         android:gravity="center"
-        android:padding="@dimen/spacing_xxsmall"
+        android:padding="@dimen/kh_uisdk_spacing_xxsmall"
         android:textColor="@color/off_white"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

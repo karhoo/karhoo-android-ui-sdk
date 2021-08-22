@@ -7,10 +7,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginTop="@dimen/spacing_xxsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
-        android:layout_marginBottom="@dimen/spacing_xxsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
         android:animateLayoutChanges="true"
         android:elevation="@dimen/elevation_default"
         android:foreground="?android:attr/selectableItemBackground">
@@ -58,12 +58,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dateTimeText"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="@dimen/spacing_xxsmall"
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
                     android:background="@drawable/uisdk_background_off_black_rounded"
-                    android:paddingLeft="@dimen/spacing_xxsmall"
-                    android:paddingTop="@dimen/spacing_xxxsmall"
-                    android:paddingRight="@dimen/spacing_xxsmall"
-                    android:paddingBottom="@dimen/spacing_xxxsmall"
+                    android:paddingLeft="@dimen/kh_uisdk_spacing_xxsmall"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall"
+                    android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
+                    android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                     android:textColor="@color/text_white"
                     android:textSize="@dimen/text_size_xsmall" />
@@ -74,9 +74,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -85,7 +85,7 @@
                     style="@style/KhPickUpDot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_xsmall" />
+                    android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall" />
 
                 <TextView
                     android:id="@+id/pickupLabel"
@@ -105,14 +105,14 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/spacing_small">
+                android:paddingBottom="@dimen/kh_uisdk_spacing_small">
 
                 <ImageView
                     android:id="@+id/dropoffBallIcon"
                     style="@style/KhDropOffDot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_xsmall" />
+                    android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall" />
 
                 <TextView
                     android:id="@+id/dropOffLabel"
@@ -140,7 +140,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
@@ -174,7 +174,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
@@ -184,19 +184,19 @@
                     android:id="@+id/priceTypeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="@dimen/spacing_xxsmall"
+                    android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
                     android:text="@string/kh_uisdk_base" />
 
                 <ImageView
                     android:id="@+id/baseFareIcon"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/spacing_small"
+                    android:layout_height="@dimen/kh_uisdk_spacing_small"
                     android:scaleType="fitStart"
                     android:src="@drawable/uisdk_ic_help" />
 
                 <TextView
                     android:id="@+id/priceText"
-                    android:layout_width="@dimen/spacing_none"
+                    android:layout_width="@dimen/kh_uisdk_spacing_none"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
@@ -213,7 +213,7 @@
             <!-- START: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
@@ -221,7 +221,7 @@
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="@dimen/spacing_none"
+                    android:layout_width="@dimen/kh_uisdk_spacing_none"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
@@ -249,14 +249,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/spacing_large"
+                    android:layout_height="@dimen/kh_uisdk_spacing_large"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="@dimen/spacing_none"
+                        android:layout_width="@dimen/kh_uisdk_spacing_none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"
@@ -279,7 +279,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
-                    android:minHeight="@dimen/spacing_large"
+                    android:minHeight="@dimen/kh_uisdk_spacing_large"
                     android:orientation="horizontal"
                     android:visibility="gone">
 
@@ -287,17 +287,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:paddingRight="@dimen/spacing_medium_small"
+                        android:paddingRight="@dimen/kh_uisdk_spacing_medium_small"
                         android:text="@string/kh_uisdk_meeting_point" />
 
                     <TextView
                         android:id="@+id/meetingPointText"
-                        android:layout_width="@dimen/spacing_none"
+                        android:layout_width="@dimen/kh_uisdk_spacing_none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:paddingTop="@dimen/spacing_xxsmall"
-                        android:paddingBottom="@dimen/spacing_xxsmall"
+                        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
+                        android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
                         android:textColor="@color/off_black"
                         android:textSize="@dimen/text_size_small_medium" />
 
@@ -325,24 +325,24 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:gravity="center_vertical"
-                    android:minHeight="@dimen/spacing_large"
+                    android:minHeight="@dimen/kh_uisdk_spacing_large"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="start"
-                        android:paddingRight="@dimen/spacing_medium_small"
+                        android:paddingRight="@dimen/kh_uisdk_spacing_medium_small"
                         android:text="@string/kh_uisdk_info" />
 
                     <TextView
                         android:id="@+id/commentsText"
-                        android:layout_width="@dimen/spacing_none"
+                        android:layout_width="@dimen/kh_uisdk_spacing_none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:paddingTop="@dimen/spacing_xxsmall"
-                        android:paddingBottom="@dimen/spacing_xxsmall"
+                        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
+                        android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
                         android:textColor="@color/off_black"
                         android:textSize="@dimen/text_size_small_medium" />
 
@@ -365,14 +365,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="@dimen/spacing_none"
+                    android:layout_width="@dimen/kh_uisdk_spacing_none"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
@@ -394,7 +394,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginBottom="@dimen/spacing_xsmall"
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
                 android:visibility="gone"
                 tools:text="Free cancellation up to 21 minutes before pickup"
                 tools:visibility="visible" />
@@ -430,14 +430,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="end|center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="@dimen/spacing_xsmall"
-                android:paddingEnd="@dimen/spacing_xsmall">
+                android:paddingStart="@dimen/kh_uisdk_spacing_xsmall"
+                android:paddingEnd="@dimen/kh_uisdk_spacing_xsmall">
 
                 <Button
                     android:id="@+id/reportIssueButton"
                     style="@style/Text.Action"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/spacing_large"
+                    android:layout_height="@dimen/kh_uisdk_spacing_large"
                     android:layout_weight="1"
                     android:text="@string/kh_uisdk_report_issue" />
 
@@ -445,8 +445,8 @@
                     android:id="@+id/rebookRideButton"
                     style="@style/Text.Action"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/spacing_large"
-                    android:layout_marginLeft="@dimen/spacing_xsmall"
+                    android:layout_height="@dimen/kh_uisdk_spacing_large"
+                    android:layout_marginLeft="@dimen/kh_uisdk_spacing_xsmall"
                     android:layout_weight="1"
                     android:text="@string/kh_uisdk_rebook_ride"
                     android:visibility="visible" />

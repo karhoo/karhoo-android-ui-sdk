@@ -3,6 +3,6 @@
 
     <solid android:color="@color/off_black" />
 
-    <corners android:radius="@dimen/spacing_xsmall" />
+    <corners android:radius="@dimen/kh_uisdk_spacing_xsmall" />
 
 </shape>

@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/spacing_small">
+        android:padding="@dimen/kh_uisdk_spacing_small">
 
         <LinearLayout
             android:id="@+id/etaLayout"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:id="@+id/priceLayout"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:layout_marginTop="@dimen/spacing_xxxsmall"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -119,8 +119,8 @@
             style="@style/KhBookingPriceInfoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xxsmall"
-            android:layout_marginEnd="@dimen/spacing_small"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
             tools:text="@string/kh_uisdk_price_info_text_estimated">
 
 

@@ -390,7 +390,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         recentreMapIfDestinationIsNull()
         showLocationButton(true)
 
-        animateLocateMeButton(R.dimen.spacing_small, R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes)
+        animateLocateMeButton(R.dimen.kh_uisdk_spacing_small, R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes)
     }
 
     fun setDefaultPadding() {

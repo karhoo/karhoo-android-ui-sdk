@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:gravity="center"
-    android:minHeight="@dimen/spacing_large"
+    android:minHeight="@dimen/kh_uisdk_spacing_large"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/ratingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/spacing_xxsmall"
+        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
         android:text="@string/kh_uisdk_rate_trip_label"
         android:textStyle="bold" />
 
@@ -32,7 +32,7 @@
         android:visibility="gone">
 
         <TextView
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -41,7 +41,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -50,7 +50,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -59,7 +59,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -68,7 +68,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"

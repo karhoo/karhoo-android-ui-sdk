@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/spacing_xsmall"
-    android:layout_marginTop="@dimen/spacing_xxsmall"
-    android:layout_marginEnd="@dimen/spacing_xsmall"
-    android:layout_marginBottom="@dimen/spacing_xxsmall"
+    android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+    android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
+    android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
+    android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
     android:elevation="@dimen/elevation_default">
 
     <LinearLayout
@@ -54,12 +54,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/dateTimeText"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="@dimen/spacing_xxsmall"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
                 android:background="@drawable/uisdk_background_off_black_rounded"
-                android:paddingLeft="@dimen/spacing_xxsmall"
-                android:paddingTop="@dimen/spacing_xxxsmall"
-                android:paddingRight="@dimen/spacing_xxsmall"
-                android:paddingBottom="@dimen/spacing_xxxsmall"
+                android:paddingLeft="@dimen/kh_uisdk_spacing_xxsmall"
+                android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall"
+                android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
+                android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                 android:textColor="@color/text_white"
                 android:textSize="@dimen/text_size_xsmall"
@@ -72,14 +72,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/spacing_small">
+            android:paddingTop="@dimen/kh_uisdk_spacing_small">
 
             <ImageView
                 android:id="@+id/pickupBallIcon"
                 style="@style/KhPickUpDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall" />
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall" />
 
             <TextView
                 android:id="@+id/pickupLabel"
@@ -95,8 +95,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginBottom="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -105,7 +105,7 @@
                 style="@style/KhDropOffDot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_xsmall" />
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall" />
 
             <TextView
                 android:id="@+id/dropOffLabel"
@@ -123,7 +123,7 @@
             style="@style/Text.Faded.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
             tools:text="Fiat Panda" />
 
         <TextView
@@ -131,7 +131,7 @@
             style="@style/Text.Primary.Small.Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_xsmall"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
             android:visibility="gone"
             tools:text="Free cancellation up to 21 minutes before pickup"
             tools:visibility="visible" />
@@ -146,7 +146,7 @@
                 android:id="@+id/callButton"
                 style="@style/Text.Action"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_weight="1"
                 android:text="@string/kh_uisdk_contact_fleet" />
 
@@ -154,9 +154,9 @@
                 android:id="@+id/trackButton"
                 style="@style/Text.Action"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/spacing_large"
+                android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_xsmall"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
                 android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>

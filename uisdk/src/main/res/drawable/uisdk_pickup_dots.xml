@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/off_black" />
     <size
-        android:height="@dimen/spacing_xxsmall"
-        android:width="@dimen/spacing_xxsmall" />
-    <corners android:radius="@dimen/spacing_xxsmall" />
+        android:height="@dimen/kh_uisdk_spacing_xxsmall"
+        android:width="@dimen/kh_uisdk_spacing_xxsmall" />
+    <corners android:radius="@dimen/kh_uisdk_spacing_xxsmall" />
 </shape>

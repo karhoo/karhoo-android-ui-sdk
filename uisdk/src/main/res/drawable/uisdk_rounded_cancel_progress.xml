@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:radius="@dimen/spacing_small"
-        android:topLeftRadius="@dimen/spacing_small"
-        android:topRightRadius="@dimen/spacing_small" />
+        android:radius="@dimen/kh_uisdk_spacing_small"
+        android:topLeftRadius="@dimen/kh_uisdk_spacing_small"
+        android:topRightRadius="@dimen/kh_uisdk_spacing_small" />
 
     <solid android:color="@color/secondary" />
 

@@ -6,6 +6,6 @@
         android:width="4dp"
         android:height="2dp" />
     <corners
-        android:topLeftRadius="@dimen/spacing_small"
-        android:topRightRadius="@dimen/spacing_small" />
+        android:topLeftRadius="@dimen/kh_uisdk_spacing_small"
+        android:topRightRadius="@dimen/kh_uisdk_spacing_small" />
 </shape>

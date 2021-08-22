@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:paddingStart="@dimen/spacing_small_intermediate" />
+            android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -32,8 +32,8 @@
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,8 +42,8 @@
 
     <View
         android:id="@+id/updateBookingCommentsMask"
-        android:layout_width="@dimen/spacing_none"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"

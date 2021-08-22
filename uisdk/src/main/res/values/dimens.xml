@@ -1,20 +1,20 @@
 <resources>
 
     <!-- standard padding and spacing -->
-    <dimen name="spacing_none">0dp</dimen>
-    <dimen name="spacing_xxxsmall">2dp</dimen>
-    <dimen name="spacing_xxsmall">4dp</dimen>
-    <dimen name="spacing_xsmall">8dp</dimen>
-    <dimen name="spacing_small">16dp</dimen>
-    <dimen name="spacing_small_intermediate">12dp</dimen>
-    <dimen name="kh_spacing_semi_small">10dp</dimen>
-    <dimen name="spacing_medium_small">24dp</dimen>
-    <dimen name="spacing_medium">32dp</dimen>
-    <dimen name="spacing_medium_large">40dp</dimen>
-    <dimen name="spacing_large">56dp</dimen>
-    <dimen name="spacing_xlarge">64dp</dimen>
-    <dimen name="spacing_xxlarge">72dp</dimen>
-    <dimen name="spacing_xxxlarge">120dp</dimen>
+    <dimen name="kh_uisdk_spacing_none">0dp</dimen>
+    <dimen name="kh_uisdk_spacing_xxxsmall">2dp</dimen>
+    <dimen name="kh_uisdk_spacing_xxsmall">4dp</dimen>
+    <dimen name="kh_uisdk_spacing_xsmall">8dp</dimen>
+    <dimen name="kh_uisdk_spacing_small">16dp</dimen>
+    <dimen name="kh_uisdk_spacing_small_intermediate">12dp</dimen>
+    <dimen name="kh_uisdk_spacing_semi_small">10dp</dimen>
+    <dimen name="kh_uisdk_spacing_medium_small">24dp</dimen>
+    <dimen name="kh_uisdk_spacing_medium">32dp</dimen>
+    <dimen name="kh_uisdk_spacing_medium_large">40dp</dimen>
+    <dimen name="kh_uisdk_spacing_large">56dp</dimen>
+    <dimen name="kh_uisdk_spacing_xlarge">64dp</dimen>
+    <dimen name="kh_uisdk_spacing_xxlarge">72dp</dimen>
+    <dimen name="kh_uisdk_spacing_xxxlarge">120dp</dimen>
 
     <!-- standard text sizes -->
     <dimen name="text_size_xxxlarge">72sp</dimen>

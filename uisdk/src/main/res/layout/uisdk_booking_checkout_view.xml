@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="@dimen/spacing_xsmall">
+    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/bookingCheckoutViewLayout"
@@ -25,7 +25,7 @@
                 android:id="@+id/bookingRequestQuotesWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
                 android:paddingStart="@dimen/spacing_grid_first_column"
                 android:paddingEnd="@dimen/spacing_grid_first_column" />
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_grid_second_column"
                 android:layout_marginEnd="@dimen/spacing_grid_second_column"
-                android:layout_marginBottom="@dimen/spacing_small" />
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small" />
 
 
         </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/uisdk_colour_fade"
-    android:elevation="@dimen/spacing_small"
+    android:elevation="@dimen/kh_uisdk_spacing_small"
     android:orientation="vertical">
 
     <com.karhoo.uisdk.base.view.notification.TopNotificationView

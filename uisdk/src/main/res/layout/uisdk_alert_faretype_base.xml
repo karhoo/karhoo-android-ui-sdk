@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/spacing_small">
+    android:padding="@dimen/kh_uisdk_spacing_small">
 
     <TextView
         style="@style/Text.Primary.XLarge"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/spacing_medium_small"
+            android:layout_marginLeft="@dimen/kh_uisdk_spacing_medium_small"
             android:layout_marginBottom="@dimen/divider_height"
             android:src="@drawable/uisdk_ic_toll" />
 

@@ -18,9 +18,9 @@ class TimePickerTitleView @JvmOverloads constructor(context: Context,
         text = pickerTitle
         setBackgroundColor(ContextCompat.getColor(context, R.color.khTimePickerTitleBackgroundColor))
         setTextColor(ContextCompat.getColor(context, R.color.khTimePickerTitleTextColor))
-        setPadding(resources.getDimension(R.dimen.spacing_small).toInt(),
-                   resources.getDimension(R.dimen.spacing_xsmall).toInt(),
-                   resources.getDimension(R.dimen.spacing_small).toInt(), 0)
+        setPadding(resources.getDimension(R.dimen.kh_uisdk_spacing_small).toInt(),
+                   resources.getDimension(R.dimen.kh_uisdk_spacing_xsmall).toInt(),
+                   resources.getDimension(R.dimen.kh_uisdk_spacing_small).toInt(), 0)
         gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
         layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0F)
         return this
