@@ -141,7 +141,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 uiSettings.isMyLocationButtonEnabled = false
                 uiSettings.isMapToolbarEnabled = false
                 with(TypedValue()) {
-                    resources.getValue(R.dimen.map_zoom_max, this, true)
+                    resources.getValue(R.dimen.kh_uisdk_map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
                 }
 
@@ -172,7 +172,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun zoom(position: LatLng?) {
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
-            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null)
         } else {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     LatLng(MAP_DEFAULT_LOCATION_LATITUDE,
@@ -185,7 +185,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun moveTo(position: LatLng?) {
         position?.let {
             val cameraUpdate = CameraUpdateFactory.newLatLng(it)
-            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null)
         }
     }
 

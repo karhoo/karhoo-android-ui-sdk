@@ -195,7 +195,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     }
 
     private fun enableErrorLock() {
-        backgroundFade?.startTransition(resources.getInteger(R.integer.snackbar_background_fade))
+        backgroundFade?.startTransition(resources.getInteger(R.integer.kh_uisdk_snackbar_background_fade))
         snackBarContainer?.isClickable = true
     }
 

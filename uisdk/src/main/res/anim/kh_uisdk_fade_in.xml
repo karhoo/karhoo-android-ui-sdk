@@ -2,7 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/linear_interpolator">
     <alpha
-        android:duration="@integer/kr_uisdk_quote_view_anim_duration"
+        android:duration="@integer/kh_uisdk_quote_view_anim_duration"
         android:fromAlpha="0.0"
         android:toAlpha="1.0" />
 </set>

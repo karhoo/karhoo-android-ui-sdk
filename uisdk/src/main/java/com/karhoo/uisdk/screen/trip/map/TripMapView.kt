@@ -162,7 +162,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
             uiSettings.isMapToolbarEnabled = false
             isIndoorEnabled = false
             with(TypedValue()) {
-                resources.getValue(R.dimen.map_zoom_max, this, true)
+                resources.getValue(R.dimen.kh_uisdk_map_zoom_max, this, true)
                 setMaxZoomPreference(this.float)
             }
             setPadding(0, 0,
