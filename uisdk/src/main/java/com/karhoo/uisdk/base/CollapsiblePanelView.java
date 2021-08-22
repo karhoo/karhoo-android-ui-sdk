@@ -88,7 +88,7 @@ public class CollapsiblePanelView extends RelativeLayout {
                 }
             }
         });
-        anim.setDuration(getResources().getInteger(R.integer.animation_duration_slide_out_or_in));
+        anim.setDuration(getResources().getInteger(R.integer.kh_uisdk_animation_duration_slide_out_or_in));
         anim.start();
     }
 

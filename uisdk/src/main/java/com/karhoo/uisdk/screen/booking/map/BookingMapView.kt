@@ -390,7 +390,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         recentreMapIfDestinationIsNull()
         showLocationButton(true)
 
-        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
+        animateLocateMeButton(R.dimen.spacing_small, R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes)
     }
 
     fun setDefaultPadding() {
@@ -456,11 +456,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.quote_list_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
-        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     companion object {
