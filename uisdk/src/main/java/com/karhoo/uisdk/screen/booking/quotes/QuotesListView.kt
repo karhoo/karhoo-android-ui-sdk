@@ -144,7 +144,7 @@ class QuotesListView @JvmOverloads constructor(
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
-                            .animation_duration_slide_out_or_in_quotes).toLong())
+                            .kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isQuotesListVisible = true
@@ -165,7 +165,7 @@ class QuotesListView @JvmOverloads constructor(
 
             animate()
                     .translationY(translation)
-                    .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_quotes).toLong())
+                    .setDuration(resources.getInteger(R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         bookingQuotesViewModel?.process(
