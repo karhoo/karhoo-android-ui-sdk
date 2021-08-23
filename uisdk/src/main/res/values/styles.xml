@@ -327,6 +327,16 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="KhTextInputEditText">
+        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="KhTextInputEditTextHint">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="KhActionCellSubtitle">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:textColor">@color/colorAccent</item>
