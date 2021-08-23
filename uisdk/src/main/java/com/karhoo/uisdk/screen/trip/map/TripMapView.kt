@@ -68,7 +68,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
     private var driverCar: Marker? = null
     private var pickupPinRes: Int = R.drawable.uisdk_ic_pickup_pin
     private var dropOffPinRes: Int = R.drawable.uisdk_ic_dropoff_pin
-    private var curvedLineColour: Int = R.color.primary_blue
+    private var curvedLineColour: Int = R.color.kh_uisdk_primary_blue
     private var hasLocationPermission: Boolean = false
 
     override var userLocationVisible: Boolean
@@ -94,7 +94,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
         dropOffPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapDropOffPin, R
                 .drawable.uisdk_ic_dropoff_pin)
         curvedLineColour = typedArray.getResourceId(R.styleable.BookingMapView_curvedLineColor, R
-                .color.primary_blue)
+                .color.kh_uisdk_primary_blue)
         typedArray.recycle()
     }
 

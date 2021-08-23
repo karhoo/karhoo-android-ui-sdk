@@ -6,6 +6,6 @@
         android:topLeftRadius="@dimen/kh_uisdk_spacing_small"
         android:topRightRadius="@dimen/kh_uisdk_spacing_small" />
 
-    <solid android:color="@color/secondary" />
+    <solid android:color="@color/kh_uisdk_secondary" />
 
 </shape>

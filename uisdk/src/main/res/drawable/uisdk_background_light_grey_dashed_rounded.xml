@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/background_light_grey" />
+    <solid android:color="@color/kh_uisdk_background_light_grey" />
     <stroke
-        android:color="@color/med_grey"
+        android:color="@color/kh_uisdk_med_grey"
         android:dashWidth="@dimen/kh_uisdk_spacing_xxsmall"
         android:dashGap="@dimen/kh_uisdk_spacing_xxsmall"
         android:width="1dp" />

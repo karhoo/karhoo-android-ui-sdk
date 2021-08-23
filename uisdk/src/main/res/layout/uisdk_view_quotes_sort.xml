@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_nearest"
-            android:textColor="@color/off_white"
+            android:textColor="@color/kh_uisdk_off_white"
             android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
     </LinearLayout>
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_cheapest"
-            android:textColor="@color/primary"
+            android:textColor="@color/kh_uisdk_primary"
             android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
     </LinearLayout>
 

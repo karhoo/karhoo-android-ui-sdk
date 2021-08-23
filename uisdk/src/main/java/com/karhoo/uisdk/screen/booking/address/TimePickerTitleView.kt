@@ -16,8 +16,8 @@ class TimePickerTitleView @JvmOverloads constructor(context: Context,
     fun setTitle(@StringRes title: Int, timezone: String): View {
         val pickerTitle = "${resources.getString(title)} ($timezone)"
         text = pickerTitle
-        setBackgroundColor(ContextCompat.getColor(context, R.color.khTimePickerTitleBackgroundColor))
-        setTextColor(ContextCompat.getColor(context, R.color.khTimePickerTitleTextColor))
+        setBackgroundColor(ContextCompat.getColor(context, R.color.kh_uisdk_TimePickerTitleBackgroundColor))
+        setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_TimePickerTitleTextColor))
         setPadding(resources.getDimension(R.dimen.kh_uisdk_spacing_small).toInt(),
                    resources.getDimension(R.dimen.kh_uisdk_spacing_xsmall).toInt(),
                    resources.getDimension(R.dimen.kh_uisdk_spacing_small).toInt(), 0)

@@ -86,7 +86,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     private var pickupPinRes: Int = R.drawable.uisdk_ic_pickup_pin
     private var dropOffPinRes: Int = R.drawable.uisdk_ic_dropoff_pin
-    private var curvedLineColour: Int = R.color.primary_blue
+    private var curvedLineColour: Int = R.color.kh_uisdk_primary_blue
     private var isLocateMeEnabled = isLocateMeEnabled(context)
 
     init {
@@ -102,7 +102,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         dropOffPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapDropOffPin, R
                 .drawable.uisdk_ic_dropoff_pin)
         curvedLineColour = typedArray.getResourceId(R.styleable.BookingMapView_curvedLineColor, R
-                .color.primary_blue)
+                .color.kh_uisdk_primary_blue)
         typedArray.recycle()
     }
 
@@ -211,7 +211,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
             destination?.let {
                 googleMap.setMaxZoomPreference(BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE)
                 addPinToMap(destination, dropOffPinRes, R.string.kh_uisdk_address_drop_off)
-                googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
+                googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.kh_uisdk_transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
             }

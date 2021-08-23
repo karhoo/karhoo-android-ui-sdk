@@ -45,7 +45,7 @@
             android:id="@+id/categorySelectorWidget"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:background="@color/opacity_off_white"
+            android:background="@color/kh_uisdk_opacity_off_white"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

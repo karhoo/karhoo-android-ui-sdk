@@ -99,7 +99,7 @@
                     android:id="@+id/addressDivider"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/light_grey" />
+                    android:background="@color/kh_uisdk_light_grey" />
 
                 <LinearLayout
                     android:id="@+id/dropoffLayout"

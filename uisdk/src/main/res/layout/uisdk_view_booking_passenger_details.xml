@@ -96,7 +96,7 @@
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:layout_marginTop="@dimen/kh_uisdk_passenger_margin_top"
                 android:text="@string/kh_uisdk_code"
-                android:textColor="@color/med_grey" />
+                android:textColor="@color/kh_uisdk_med_grey" />
 
             <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
                 android:id="@+id/countryCodeSpinner"
@@ -105,7 +105,7 @@
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginBottom="@dimen/kh_uisdk_margin_medium"
-                android:backgroundTint="@color/med_grey"
+                android:backgroundTint="@color/kh_uisdk_med_grey"
                 android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
                 android:spinnerMode="dropdown" />
 

@@ -5,10 +5,10 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="@dimen/kh_uisdk_spacing_small" />
-            <solid android:color="@color/transluscent_black" />
+            <solid android:color="@color/kh_uisdk_transluscent_black" />
             <stroke
                 android:width="2dp"
-                android:color="@color/transluscent_white" />
+                android:color="@color/kh_uisdk_transluscent_white" />
         </shape>
     </item>
 

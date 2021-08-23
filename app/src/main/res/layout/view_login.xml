@@ -37,7 +37,7 @@
         android:layout_marginTop="@dimen/kh_uisdk_activity_vertical_margin"
         android:theme="@style/AppTheme.LoginPassword"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/primary">
+        app:passwordToggleTint="@color/kh_uisdk_primary">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordInput"
