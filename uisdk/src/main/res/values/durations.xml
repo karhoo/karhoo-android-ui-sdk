@@ -6,8 +6,8 @@
     <integer name="kh_uisdk_animation_duration_slide_out_or_in_categories">500</integer>
     <integer name="kh_uisdk_animation_duration_shared_element">400</integer>
 
-    <item name="visible" type="id" />
-    <item name="masked" type="id" />
+    <item name="kh_uisdk_visible" type="id" />
+    <item name="kh_uisdk_masked" type="id" />
 
 </resources>
 
