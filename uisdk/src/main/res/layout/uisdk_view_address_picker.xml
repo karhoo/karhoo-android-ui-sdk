@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/address_picker_left_width" />
+        app:layout_constraintGuide_begin="@dimen/kh_uisdk_address_picker_left_width" />
 
     <com.karhoo.uisdk.screen.booking.address.PickUpFullView
         android:id="@+id/pickupFullIcon"
@@ -37,7 +37,7 @@
     <View
         android:id="@+id/addressDivider"
         android:layout_width="@dimen/kh_uisdk_spacing_none"
-        android:layout_height="@dimen/divider_height"
+        android:layout_height="@dimen/kh_uisdk_divider_height"
         android:background="@color/off_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineLeft"
@@ -65,7 +65,7 @@
     <ImageView
         android:id="@+id/flipButtonIcon"
         style="@style/KhAddressPickerFlip"
-        android:layout_width="@dimen/address_picker_left_width"
+        android:layout_width="@dimen/kh_uisdk_address_picker_left_width"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +92,7 @@
         android:id="@+id/dateTimeLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginStart="@dimen/kh_uisdk_margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dropoffLayout"
@@ -101,10 +101,10 @@
         <ImageView
             android:id="@+id/scheduledIcon"
             style="@style/KhAddressPickerPrebookIcon"
-            android:layout_width="@dimen/icon_size_medium"
-            android:layout_height="@dimen/icon_size_medium"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:layout_marginRight="@dimen/margin_small"
+            android:layout_width="@dimen/kh_uisdk_icon_size_medium"
+            android:layout_height="@dimen/kh_uisdk_icon_size_medium"
+            android:layout_marginLeft="@dimen/kh_uisdk_margin_small"
+            android:layout_marginRight="@dimen/kh_uisdk_margin_small"
             android:scaleType="centerInside"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -113,10 +113,10 @@
 
         <ImageView
             android:id="@+id/clearDateTimeButtonIcon"
-            android:layout_width="@dimen/icon_size_medium"
-            android:layout_height="@dimen/icon_size_medium"
-            android:layout_marginLeft="@dimen/margin_small"
-            android:layout_marginRight="@dimen/margin_small"
+            android:layout_width="@dimen/kh_uisdk_icon_size_medium"
+            android:layout_height="@dimen/kh_uisdk_icon_size_medium"
+            android:layout_marginLeft="@dimen/kh_uisdk_margin_small"
+            android:layout_marginRight="@dimen/kh_uisdk_margin_small"
             android:scaleType="centerInside"
             app:tint="@color/off_black"
             android:visibility="gone"
@@ -149,7 +149,7 @@
 
             <TextView
                 android:id="@+id/dateTimeLowerText"
-                android:layout_width="@dimen/address_picker_width"
+                android:layout_width="@dimen/kh_uisdk_address_picker_width"
                 android:layout_height="wrap_content"
                 android:gravity="center|top"
                 android:maxLines="1"
@@ -174,7 +174,7 @@
             android:id="@+id/dropOffLabel"
             style="@style/Text.Action.Medium"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
-            android:layout_height="@dimen/address_picker_height"
+            android:layout_height="@dimen/kh_uisdk_address_picker_height"
             android:layout_weight="1"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -183,7 +183,7 @@
 
         <ImageView
             android:id="@+id/clearDestinationButtonIcon"
-            android:layout_width="@dimen/icon_size_large"
+            android:layout_width="@dimen/kh_uisdk_icon_size_large"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/kh_uisdk_spacing_small"
             android:scaleType="centerInside"
@@ -192,7 +192,7 @@
 
         <View
             android:id="@+id/dateTimeDivider"
-            android:layout_width="@dimen/divider_height"
+            android:layout_width="@dimen/kh_uisdk_divider_height"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
             android:background="@color/off_white"

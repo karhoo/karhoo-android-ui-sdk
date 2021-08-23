@@ -12,26 +12,26 @@
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
         android:animateLayoutChanges="true"
-        android:elevation="@dimen/elevation_default"
+        android:elevation="@dimen/kh_uisdk_elevation_default"
         android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/kh_uisdk_activity_vertical_margin"
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin">
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin">
 
                 <ImageView
                     android:id="@+id/logoImage"
-                    android:layout_width="@dimen/logo_size"
-                    android:layout_height="@dimen/logo_size"
+                    android:layout_width="@dimen/kh_uisdk_logo_size"
+                    android:layout_height="@dimen/kh_uisdk_logo_size"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true" />
 
@@ -73,9 +73,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -101,8 +101,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/kh_uisdk_spacing_small">
@@ -130,19 +130,19 @@
                 style="@style/Text.Faded.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin" />
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -155,9 +155,9 @@
 
                 <ImageView
                     android:id="@+id/stateIcon"
-                    android:layout_width="@dimen/icon_size_small"
-                    android:layout_height="@dimen/icon_size_small"
-                    android:layout_marginRight="@dimen/icon_size_small" />
+                    android:layout_width="@dimen/kh_uisdk_icon_size_small"
+                    android:layout_height="@dimen/kh_uisdk_icon_size_small"
+                    android:layout_marginRight="@dimen/kh_uisdk_icon_size_small" />
 
                 <TextView
                     android:id="@+id/stateText"
@@ -169,14 +169,14 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -207,15 +207,15 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider" />
 
             <!-- START: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -250,8 +250,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -276,8 +276,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:minHeight="@dimen/kh_uisdk_spacing_large"
                     android:orientation="horizontal"
@@ -305,7 +305,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/divider" />
 
                 <!-- END: MAKE VISIBLE WHEN MEETING POINT AVAILABLE -->
@@ -322,8 +322,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                     android:gravity="center_vertical"
                     android:minHeight="@dimen/kh_uisdk_spacing_large"
                     android:orientation="horizontal">
@@ -350,7 +350,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/divider"
                     android:visibility="visible" />
 
@@ -358,7 +358,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider"
                 android:visibility="gone" />
             <!-- END: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
@@ -366,8 +366,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -392,8 +392,8 @@
                 style="@style/Text.Primary.Small.Green"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
                 android:visibility="gone"
                 tools:text="Free cancellation up to 21 minutes before pickup"
@@ -401,7 +401,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider" />
 
             <com.karhoo.uisdk.screen.rides.detail.rating.RatingView
@@ -411,8 +411,8 @@
                 android:layout_below="@+id/toolbar"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:animateLayoutChanges="true"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -420,7 +420,7 @@
             <View
                 android:id="@+id/ratingDivider"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_height"
+                android:layout_height="@dimen/kh_uisdk_divider_height"
                 android:background="@color/divider"
                 android:visibility="gone"
                 tools:visibility="visible" />

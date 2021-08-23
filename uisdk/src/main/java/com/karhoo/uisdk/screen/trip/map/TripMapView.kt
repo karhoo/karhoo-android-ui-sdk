@@ -166,7 +166,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
                 setMaxZoomPreference(this.float)
             }
             setPadding(0, 0,
-                       0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom_trip))
+                       0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom_trip))
 
             presenter.mapIsReady()
             AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)

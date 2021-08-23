@@ -28,13 +28,13 @@
                 android:gravity="top|center_horizontal"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/kh_uisdk_spacing_xsmall"
-                android:paddingTop="@dimen/margin_small"
+                android:paddingTop="@dimen/kh_uisdk_margin_small"
                 android:paddingRight="@dimen/kh_uisdk_spacing_xsmall"
-                android:paddingBottom="@dimen/margin_small">
+                android:paddingBottom="@dimen/kh_uisdk_margin_small">
 
                 <com.karhoo.uisdk.screen.booking.address.PickUpFullView
                     android:id="@+id/pickupFullIcon"
-                    android:layout_width="@dimen/ic_left_width"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
                     android:layout_height="@dimen/kh_uisdk_spacing_none"
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:layout_weight="1"
@@ -42,7 +42,7 @@
 
                 <com.karhoo.uisdk.screen.booking.address.DropOffFullView
                     android:id="@+id/dropOffFullIcon"
-                    android:layout_width="@dimen/ic_left_width"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
                     android:layout_height="@dimen/kh_uisdk_spacing_none"
                     android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:layout_weight="1"
@@ -51,7 +51,7 @@
 
                 <ImageView
                     android:id="@+id/dropOffOnlyIcon"
-                    android:layout_width="@dimen/ic_left_width"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
                     android:layout_height="@dimen/kh_uisdk_spacing_none"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -70,7 +70,7 @@
                 <FrameLayout
                     android:id="@+id/pickupLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/trip_address_height">
+                    android:layout_height="@dimen/kh_uisdk_trip_address_height">
 
                     <TextView
                         android:id="@+id/subtitlePickupLabel"
@@ -98,7 +98,7 @@
                 <View
                     android:id="@+id/addressDivider"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
+                    android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/light_grey" />
 
                 <LinearLayout
@@ -110,7 +110,7 @@
                     <FrameLayout
                         android:id="@+id/dropoffFrameContainer"
                         android:layout_width="@dimen/kh_uisdk_spacing_none"
-                        android:layout_height="@dimen/trip_address_height"
+                        android:layout_height="@dimen/kh_uisdk_trip_address_height"
                         android:layout_weight="1">
 
                         <TextView

@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:paddingLeft="@dimen/kh_uisdk_activity_horizontal_margin"
+    android:paddingTop="@dimen/kh_uisdk_activity_vertical_margin"
+    android:paddingRight="@dimen/kh_uisdk_activity_horizontal_margin">
 
     <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
         android:id="@+id/emailLayout"
@@ -15,7 +15,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/kh_uisdk_activity_vertical_margin"
         android:theme="@style/AppTheme.EditText">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -34,7 +34,7 @@
         style="@style/AppTheme.LoginPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/kh_uisdk_activity_vertical_margin"
         android:theme="@style/AppTheme.LoginPassword"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/primary">

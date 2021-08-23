@@ -14,6 +14,7 @@ String[] fileFilter = [
 android {
     compileSdkVersion 30
     buildToolsVersion '30.0.3'
+    resourcePrefix 'kh_uisdk_'
 
     defaultConfig {
         minSdkVersion 21

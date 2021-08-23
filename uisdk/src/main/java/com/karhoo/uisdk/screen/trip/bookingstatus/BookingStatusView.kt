@@ -48,7 +48,7 @@ class BookingStatusView @JvmOverloads constructor(
 
             tripInfoCollapsibleLayout.apply {
                 setHeights(0F,
-                           resources.getDimension(R.dimen.collapsible_panel_collapsed_trip_info))
+                           resources.getDimension(R.dimen.kh_uisdk_collapsible_panel_collapsed_trip_info))
                 isEnabled = true
             }
 

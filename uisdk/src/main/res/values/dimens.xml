@@ -31,116 +31,116 @@
     <dimen name="kh_uisdk_text_vehicle_type">13sp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin_large">32dp</dimen>
+    <dimen name="kh_uisdk_activity_horizontal_margin">16dp</dimen>
+    <dimen name="kh_uisdk_activity_vertical_margin">16dp</dimen>
+    <dimen name="kh_uisdk_activity_vertical_margin_large">32dp</dimen>
 
     <!-- Splash Screen button sizes -->
-    <dimen name="button_register_width">160dp</dimen>
-    <dimen name="button_register_height">48dp</dimen>
+    <dimen name="kh_uisdk_button_register_width">160dp</dimen>
+    <dimen name="kh_uisdk_button_register_height">48dp</dimen>
 
     <!-- height of collapsible pane -->
-    <dimen name="collapsible_panel_collapsed_height">340dp</dimen>
-    <dimen name="collapsible_pane_expanded_height">420dp</dimen>
-    <dimen name="collapsible_panel_collapsed_trip_contact">105dp</dimen>
-    <dimen name="collapsible_panel_collapsed_trip_info">225dp</dimen>
+    <dimen name="kh_uisdk_collapsible_panel_collapsed_height">340dp</dimen>
+    <dimen name="kh_uisdk_collapsible_pane_expanded_height">420dp</dimen>
+    <dimen name="kh_uisdk_collapsible_panel_collapsed_trip_contact">105dp</dimen>
+    <dimen name="kh_uisdk_collapsible_panel_collapsed_trip_info">225dp</dimen>
 
     <!-- Quotes list height -->
-    <dimen name="quote_list_height">320dp</dimen>
+    <dimen name="kh_uisdk_quote_list_height">320dp</dimen>
 
-    <dimen name="logo_size">32dp</dimen>
-    <dimen name="driver_photo_size">48dp</dimen>
-    <integer name="logo_radius">12</integer>
-    <dimen name="logo_booking_status_radius">8dp</dimen>
+    <dimen name="kh_uisdk_logo_size">32dp</dimen>
+    <dimen name="kh_uisdk_driver_photo_size">48dp</dimen>
+    <integer name="kh_uisdk_logo_radius">12</integer>
+    <dimen name="kh_uisdk_logo_booking_status_radius">8dp</dimen>
 
     <!-- Address Picker -->
-    <dimen name="ic_left_width">26dp</dimen>
-    <dimen name="address_picker_left_width">42dp</dimen>
-    <dimen name="divider_height">1dp</dimen>
-    <dimen name="pickup_dropoff_line_width">2dp</dimen>
+    <dimen name="kh_uisdk_ic_left_width">26dp</dimen>
+    <dimen name="kh_uisdk_address_picker_left_width">42dp</dimen>
+    <dimen name="kh_uisdk_divider_height">1dp</dimen>
+    <dimen name="kh_uisdk_pickup_dropoff_line_width">2dp</dimen>
 
     <!-- Nav bar height -->
-    <dimen name="nav_header_height">160dp</dimen>
-    <dimen name="logo_background">68dp</dimen>
+    <dimen name="kh_uisdk_nav_header_height">160dp</dimen>
+    <dimen name="kh_uisdk_logo_background">68dp</dimen>
 
     <!--Location Pins-->
-    <dimen name="pin_width">38dp</dimen>
-    <dimen name="pin_height">54dp</dimen>
+    <dimen name="kh_uisdk_pin_width">38dp</dimen>
+    <dimen name="kh_uisdk_pin_height">54dp</dimen>
 
     <!--Driver Photo-->
-    <dimen name="photo_width">200dp</dimen>
-    <dimen name="photo_height">200dp</dimen>
+    <dimen name="kh_uisdk_photo_width">200dp</dimen>
+    <dimen name="kh_uisdk_photo_height">200dp</dimen>
 
     <!--Map Padding-->
-    <dimen name="map_padding_bottom">225dp</dimen>
-    <dimen name="map_padding_bottom_snackbar">85dp</dimen>
-    <dimen name="map_padding_bottom_trip">185dp</dimen>
+    <dimen name="kh_uisdk_map_padding_bottom">225dp</dimen>
+    <dimen name="kh_uisdk_map_padding_bottom_snackbar">85dp</dimen>
+    <dimen name="kh_uisdk_map_padding_bottom_trip">185dp</dimen>
 
-    <dimen name="elevation_default">5dp</dimen>
-    <dimen name="full_width_button_height">48dp</dimen>
-    <dimen name="icon_size_small">12dp</dimen>
-    <dimen name="icon_size">24dp</dimen>
-    <dimen name="icon_size_medium">20dp</dimen>
-    <dimen name="icon_size_large">32dp</dimen>
-    <dimen name="address_icon_size_default">17dp</dimen>
+    <dimen name="kh_uisdk_elevation_default">5dp</dimen>
+    <dimen name="kh_uisdk_full_width_button_height">48dp</dimen>
+    <dimen name="kh_uisdk_icon_size_small">12dp</dimen>
+    <dimen name="kh_uisdk_icon_size">24dp</dimen>
+    <dimen name="kh_uisdk_icon_size_medium">20dp</dimen>
+    <dimen name="kh_uisdk_icon_size_large">32dp</dimen>
+    <dimen name="kh_uisdk_address_icon_size_default">17dp</dimen>
 
     <!--Cancel Button-->
-    <dimen name="cancel_button_width">180dp</dimen>
-    <dimen name="cancel_button_height">25dp</dimen>
+    <dimen name="kh_uisdk_cancel_button_width">180dp</dimen>
+    <dimen name="kh_uisdk_cancel_button_height">25dp</dimen>
 
     <!--Country Code Padding-->
-    <dimen name="padding_default">6dp</dimen>
+    <dimen name="kh_uisdk_padding_default">6dp</dimen>
 
     <!--Pickup Dropoff-->
-    <dimen name="full_view_height">45dp</dimen>
+    <dimen name="kh_uisdk_full_view_height">45dp</dimen>
 
     <!--Rating-->
-    <dimen name="rating_wdith">240dp</dimen>
-    <dimen name="rating_height">50dp</dimen>
+    <dimen name="kh_uisdk_rating_wdith">240dp</dimen>
+    <dimen name="kh_uisdk_rating_height">50dp</dimen>
 
     <!--Trip Address-->
-    <dimen name="trip_address_height">50dp</dimen>
+    <dimen name="kh_uisdk_trip_address_height">50dp</dimen>
 
     <!--Quotes Recycler-->
-    <dimen name="quotes_height">286dp</dimen>
-    <dimen name="quotes_padding_bottom">90dp</dimen>
+    <dimen name="kh_uisdk_quotes_height">286dp</dimen>
+    <dimen name="kh_uisdk_quotes_padding_bottom">90dp</dimen>
 
     <!--Trip Allocation-->
-    <dimen name="allocation_wdith">190dp</dimen>
-    <dimen name="allocation_height">190dp</dimen>
-    <dimen name="allocation_top_margin">81dp</dimen>
-    <dimen name="allocation_cancel_width">180dp</dimen>
-    <dimen name="allocation_cancel_height">150dp</dimen>
+    <dimen name="kh_uisdk_allocation_wdith">190dp</dimen>
+    <dimen name="kh_uisdk_allocation_height">190dp</dimen>
+    <dimen name="kh_uisdk_allocation_top_margin">81dp</dimen>
+    <dimen name="kh_uisdk_allocation_cancel_width">180dp</dimen>
+    <dimen name="kh_uisdk_allocation_cancel_height">150dp</dimen>
 
     <!--Address-->
-    <dimen name="address_options_default">450dp</dimen>
-    <dimen name="address_picker_width">80dp</dimen>
-    <dimen name="address_picker_height">50dp</dimen>
+    <dimen name="kh_uisdk_address_options_default">450dp</dimen>
+    <dimen name="kh_uisdk_address_picker_width">80dp</dimen>
+    <dimen name="kh_uisdk_address_picker_height">50dp</dimen>
 
     <!--Flight Details-->
-    <dimen name="flight_details_width">128dp</dimen>
+    <dimen name="kh_uisdk_flight_details_width">128dp</dimen>
 
     <!--Prebook-->
-    <dimen name="prebook_image_height">39dp</dimen>
+    <dimen name="kh_uisdk_prebook_image_height">39dp</dimen>
 
 
     <!--Margins-->
-    <dimen name="margin_large">48dp</dimen>
-    <dimen name="margin_medium">26dp</dimen>
-    <dimen name="margin_default">20dp</dimen>
-    <dimen name="margin_small">12dp</dimen>
-    <dimen name="passenger_margin_top">14dp</dimen>
-    <dimen name="eta_margin">-3dp</dimen>
+    <dimen name="kh_uisdk_margin_large">48dp</dimen>
+    <dimen name="kh_uisdk_margin_medium">26dp</dimen>
+    <dimen name="kh_uisdk_margin_default">20dp</dimen>
+    <dimen name="kh_uisdk_margin_small">12dp</dimen>
+    <dimen name="kh_uisdk_passenger_margin_top">14dp</dimen>
+    <dimen name="kh_uisdk_eta_margin">-3dp</dimen>
 
     <!--Line spacing-->
-    <dimen name="booking_line_spacing">8sp</dimen>
-    <dimen name="flight_details_line_spacing">4sp</dimen>
-    <dimen name="kh_quotes_logo_size">72dp</dimen>
-    <dimen name="kh_quote_action_view_size">24dp</dimen>
-    <dimen name="capacity_image_size">24dp</dimen>
+    <dimen name="kh_uisdk_booking_line_spacing">8sp</dimen>
+    <dimen name="kh_uisdk_flight_details_line_spacing">4sp</dimen>
+    <dimen name="kh_uisdk_quotes_logo_size">72dp</dimen>
+    <dimen name="kh_uisdk_quote_action_view_size">24dp</dimen>
+    <dimen name="kh_uisdk_capacity_image_size">24dp</dimen>
 
     <!--Grid spacing-->
-    <dimen name="spacing_grid_row">12dp</dimen>
-    <dimen name="spacing_grid_second_column">28dp</dimen>
-    <dimen name="spacing_grid_first_column">16dp</dimen>
+    <dimen name="kh_uisdk_spacing_grid_row">12dp</dimen>
+    <dimen name="kh_uisdk_spacing_grid_second_column">28dp</dimen>
+    <dimen name="kh_uisdk_spacing_grid_first_column">16dp</dimen>
 </resources>

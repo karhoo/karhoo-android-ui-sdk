@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/kh_uisdk_spacing_medium_small"
-            android:layout_marginBottom="@dimen/divider_height"
+            android:layout_marginBottom="@dimen/kh_uisdk_divider_height"
             android:src="@drawable/uisdk_ic_toll" />
 
     </FrameLayout>

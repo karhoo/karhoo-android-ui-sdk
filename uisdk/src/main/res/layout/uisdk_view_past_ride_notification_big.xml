@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/logoImage"
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
+            android:layout_width="@dimen/kh_uisdk_logo_size"
+            android:layout_height="@dimen/kh_uisdk_logo_size"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             tools:src="@drawable/uisdk_ic_trip_completed" />
@@ -55,8 +55,8 @@
 
         <ImageView
             android:id="@+id/pickupBallIcon"
-            android:layout_width="@dimen/icon_size_small"
-            android:layout_height="@dimen/icon_size_small"
+            android:layout_width="@dimen/kh_uisdk_icon_size_small"
+            android:layout_height="@dimen/kh_uisdk_icon_size_small"
             android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
             app:srcCompat="@drawable/uisdk_ic_pickup" />
 
@@ -80,8 +80,8 @@
 
         <ImageView
             android:id="@+id/dropoffBallIcon"
-            android:layout_width="@dimen/icon_size_small"
-            android:layout_height="@dimen/icon_size_small"
+            android:layout_width="@dimen/kh_uisdk_icon_size_small"
+            android:layout_height="@dimen/kh_uisdk_icon_size_small"
             android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
             app:srcCompat="@drawable/uisdk_ic_destination" />
 
@@ -111,9 +111,9 @@
 
         <ImageView
             android:id="@+id/stateIcon"
-            android:layout_width="@dimen/icon_size_small"
-            android:layout_height="@dimen/icon_size_small"
-            android:layout_marginEnd="@dimen/icon_size_small"
+            android:layout_width="@dimen/kh_uisdk_icon_size_small"
+            android:layout_height="@dimen/kh_uisdk_icon_size_small"
+            android:layout_marginEnd="@dimen/kh_uisdk_icon_size_small"
             tools:src="@drawable/uisdk_ic_trip_completed" />
 
         <TextView

@@ -121,7 +121,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun zoomMapToOriginAndDestination(origin: Position, destination: Position?) {
         googleMap?.let {
             it.setPadding(0, 0,
-                    0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                    0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom))
             val destinationLatLng = destination?.let {
                 LatLng(destination.latitude, destination
                         .longitude)
@@ -395,7 +395,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     fun setDefaultPadding() {
         googleMap?.setPadding(0, 0,
-                0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom))
 
         showLocationButton(false)
     }
@@ -456,11 +456,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.kh_uisdk_quote_list_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
-        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.kh_uisdk_collapsible_pane_expanded_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     companion object {

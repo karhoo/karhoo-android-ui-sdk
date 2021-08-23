@@ -63,8 +63,8 @@
 
         <ImageView
             android:id="@+id/driverPhotoImage"
-            android:layout_width="@dimen/driver_photo_size"
-            android:layout_height="@dimen/driver_photo_size"
+            android:layout_width="@dimen/kh_uisdk_driver_photo_size"
+            android:layout_height="@dimen/kh_uisdk_driver_photo_size"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
             android:layout_marginBottom="@dimen/kh_uisdk_text_size_small"
