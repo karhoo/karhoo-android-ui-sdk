@@ -34,7 +34,7 @@
         android:id="@+id/minsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/eta_margin"
+        android:layout_marginTop="@dimen/kh_uisdk_eta_margin"
         android:elevation="@dimen/kh_uisdk_spacing_xsmall"
         android:text="@string/kh_uisdk_mins"
         android:textColor="@color/med_grey"

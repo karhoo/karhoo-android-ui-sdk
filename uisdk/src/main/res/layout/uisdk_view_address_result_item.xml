@@ -13,8 +13,8 @@
 
     <ImageView
         android:id="@+id/itemIcon"
-        android:layout_width="@dimen/address_icon_size_default"
-        android:layout_height="@dimen/address_icon_size_default"
+        android:layout_width="@dimen/kh_uisdk_address_icon_size_default"
+        android:layout_height="@dimen/kh_uisdk_address_icon_size_default"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
         app:srcCompat="@drawable/uisdk_ic_location_pin" />
 

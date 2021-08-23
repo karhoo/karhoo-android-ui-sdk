@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/kh_uisdk_spacing_xsmall"
-        android:paddingTop="@dimen/padding_default"
-        android:paddingBottom="@dimen/padding_default" />
+        android:paddingTop="@dimen/kh_uisdk_padding_default"
+        android:paddingBottom="@dimen/kh_uisdk_padding_default" />
 
 </LinearLayout>

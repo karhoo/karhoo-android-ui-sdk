@@ -18,9 +18,9 @@
 
             <ImageView
                 android:id="@+id/stateIcon"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
-                android:layout_marginEnd="@dimen/icon_size_small"
+                android:layout_width="@dimen/kh_uisdk_icon_size_small"
+                android:layout_height="@dimen/kh_uisdk_icon_size_small"
+                android:layout_marginEnd="@dimen/kh_uisdk_icon_size_small"
                 tools:src="@drawable/uisdk_ic_trip_completed" />
 
             <TextView

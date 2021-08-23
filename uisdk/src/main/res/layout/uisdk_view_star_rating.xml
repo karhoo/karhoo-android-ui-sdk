@@ -17,8 +17,8 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:layout_width="@dimen/rating_wdith"
-        android:layout_height="@dimen/rating_height"
+        android:layout_width="@dimen/kh_uisdk_rating_wdith"
+        android:layout_height="@dimen/kh_uisdk_rating_height"
         android:numStars="5"
         android:orientation="horizontal"
         android:stepSize="1"
@@ -26,7 +26,7 @@
 
     <LinearLayout
         android:id="@+id/labelLayout"
-        android:layout_width="@dimen/rating_wdith"
+        android:layout_width="@dimen/kh_uisdk_rating_wdith"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:visibility="gone">

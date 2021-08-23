@@ -86,7 +86,7 @@
     <style name="AppTheme.TransparentActionBar" parent="AppTheme">
         <item name="colorPrimary">@color/primary</item>
         <item name="android:background">@drawable/uisdk_gradient_toolbar</item>
-        <item name="android:popupElevation">@dimen/elevation_default</item>
+        <item name="android:popupElevation">@dimen/kh_uisdk_elevation_default</item>
     </style>
 
     <style name="AppTheme.TransparentActionBar.Theme" parent="AppTheme">

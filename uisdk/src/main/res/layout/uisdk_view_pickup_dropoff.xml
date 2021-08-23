@@ -7,14 +7,14 @@
     <com.karhoo.uisdk.screen.booking.address.PickUpFullView
         android:id="@+id/pickUpFullIcon"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/full_view_height"
+        android:layout_height="@dimen/kh_uisdk_full_view_height"
         android:layout_marginBottom="@dimen/kh_uisdk_text_size_small"
         android:paddingBottom="@dimen/kh_uisdk_text_size_small" />
 
     <com.karhoo.uisdk.screen.booking.address.DropOffFullView
         android:id="@+id/dropOffFullIcon"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/full_view_height"
+        android:layout_height="@dimen/kh_uisdk_full_view_height"
         android:layout_marginTop="@dimen/kh_uisdk_text_size_small"
         android:paddingTop="@dimen/kh_uisdk_text_size_small" />
 

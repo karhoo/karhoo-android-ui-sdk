@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/actionViewIcon"
-        android:layout_width="@dimen/kh_quote_action_view_size"
-        android:layout_height="@dimen/kh_quote_action_view_size"
+        android:layout_width="@dimen/kh_uisdk_quote_action_view_size"
+        android:layout_height="@dimen/kh_uisdk_quote_action_view_size"
         android:background="@drawable/kh_uisdk_ic_passenger"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
