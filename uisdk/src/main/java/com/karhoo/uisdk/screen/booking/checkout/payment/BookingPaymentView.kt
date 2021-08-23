@@ -132,7 +132,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
             setCardType(savedPaymentInfo.cardType)
         } else {
             cardNumberText.text = resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
-            changeCardLabel.text = resources.getString(R.string.kh_uisdk_add_payment)
+            changeCardLabel.text = resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
             changeCardLabel.visibility = VISIBLE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
         }
