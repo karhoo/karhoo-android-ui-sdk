@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/kh_uisdk_star_poor"
-            android:textSize="@dimen/text_size_xsmall"
+            android:textSize="@dimen/kh_uisdk_text_size_xsmall"
             android:visibility="gone" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/kh_uisdk_star_fair"
-            android:textSize="@dimen/text_size_xsmall"
+            android:textSize="@dimen/kh_uisdk_text_size_xsmall"
             android:visibility="gone" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/kh_uisdk_star_good"
-            android:textSize="@dimen/text_size_xsmall"
+            android:textSize="@dimen/kh_uisdk_text_size_xsmall"
             android:visibility="gone" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/kh_uisdk_star_great"
-            android:textSize="@dimen/text_size_xsmall"
+            android:textSize="@dimen/kh_uisdk_text_size_xsmall"
             android:visibility="gone" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/kh_uisdk_star_excellent"
-            android:textSize="@dimen/text_size_xsmall"
+            android:textSize="@dimen/kh_uisdk_text_size_xsmall"
             android:visibility="gone" />
 
     </LinearLayout>

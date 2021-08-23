@@ -61,7 +61,7 @@
                 android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
                 android:textColor="@color/text_white"
-                android:textSize="@dimen/text_size_xsmall"
+                android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                 android:visibility="gone"/>
 
         </RelativeLayout>
@@ -138,7 +138,7 @@
                 android:id="@+id/stateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small_medium" />
+                android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             <TextView
                 android:id="@+id/priceText"
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:textSize="@dimen/text_size_small_medium" />
+                android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
         </LinearLayout>
 

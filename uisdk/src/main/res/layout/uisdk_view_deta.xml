@@ -27,7 +27,7 @@
         android:letterSpacing="-0.02"
         android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
         android:textColor="@color/off_black"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/kh_uisdk_text_size_medium"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -27,7 +27,7 @@
                 android:id="@+id/stateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small_medium"
+                android:textSize="@dimen/kh_uisdk_text_size_small_medium"
                 tools:text="@string/kh_uisdk_ride_state_completed" />
 
         </LinearLayout>

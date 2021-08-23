@@ -28,7 +28,7 @@
             android:text="@string/kh_uisdk_booking_car"
             android:textAllCaps="true"
             android:textColor="@color/off_white"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/kh_uisdk_text_size_large" />
 
     </LinearLayout>
 

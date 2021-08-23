@@ -33,7 +33,7 @@
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xxlarge"
         android:text="@string/kh_uisdk_finding_your_ride"
         android:textColor="@color/text_white"
-        android:textSize="@dimen/text_size_xxlarge"
+        android:textSize="@dimen/kh_uisdk_text_size_xxlarge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
         android:paddingRight="@dimen/kh_uisdk_spacing_small"
         android:text="@string/kh_uisdk_allocating_trip_one"
         android:textColor="@color/text_white"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/kh_uisdk_text_size_medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/findingYourTripLabel" />
@@ -61,7 +61,7 @@
         android:paddingRight="@dimen/kh_uisdk_spacing_small"
         android:text="@string/kh_uisdk_allocating_trip_two"
         android:textColor="@color/text_white"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/kh_uisdk_text_size_medium"
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

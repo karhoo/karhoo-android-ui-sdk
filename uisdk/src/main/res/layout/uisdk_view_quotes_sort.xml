@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_nearest"
             android:textColor="@color/off_white"
-            android:textSize="@dimen/text_size_small_medium" />
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
     </LinearLayout>
 
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_cheapest"
             android:textColor="@color/primary"
-            android:textSize="@dimen/text_size_small_medium" />
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

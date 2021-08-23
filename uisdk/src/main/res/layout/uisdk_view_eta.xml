@@ -24,7 +24,7 @@
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:elevation="@dimen/kh_uisdk_spacing_xsmall"
         android:textColor="@color/off_black"
-        android:textSize="@dimen/text_size_xxlarge"
+        android:textSize="@dimen/kh_uisdk_text_size_xxlarge"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -38,7 +38,7 @@
         android:elevation="@dimen/kh_uisdk_spacing_xsmall"
         android:text="@string/kh_uisdk_mins"
         android:textColor="@color/med_grey"
-        android:textSize="@dimen/text_size_small"
+        android:textSize="@dimen/kh_uisdk_text_size_small"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/minsText" />

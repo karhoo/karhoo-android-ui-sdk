@@ -19,7 +19,7 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
             android:text="@string/kh_uisdk_feedback_title"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/kh_uisdk_text_size_large" />
 
         <com.karhoo.uisdk.screen.rides.feedback.RatedQuestionView
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:text="@string/kh_uisdk_trip_id_label"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="@dimen/kh_uisdk_text_size_small" />
 
         <EditText
             android:id="@+id/tripIdEditText"
