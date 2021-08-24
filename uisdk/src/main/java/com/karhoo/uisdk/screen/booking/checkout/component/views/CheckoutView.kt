@@ -112,7 +112,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun fillInPassengerDetails(details: PassengerDetails?) {
-        if (details == null) {
+        if (details == null && !isGuest) {
             bindPassenger(passengersDetailLayout.retrievePassenger())
         } else {
             bindPassenger(details)
