@@ -382,6 +382,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         if (arePassengerDetailsValid()) {
             passengersListener.onPassengerSelected(passengersDetailLayout.getPassengerDetails())
             bindPassenger(passengersDetailLayout.getPassengerDetails())
+        } else {
+            loadingButtonCallback.enableButton(false)
         }
     }
 
