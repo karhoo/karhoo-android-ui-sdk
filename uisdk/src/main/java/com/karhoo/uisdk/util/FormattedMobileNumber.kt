@@ -24,6 +24,10 @@ fun getMobileNumberWithoutCode(number: String, res: Resources): String {
 
 fun isValidNumber(number: String): Boolean {
     val util = PhoneNumberUtil.getInstance()
-    val phoneNumber = util.parse(number, null)
-    return util.isValidNumber(phoneNumber)
+    return try {
+        val phoneNumber = util.parse(number, null)
+        util.isValidNumber(phoneNumber)
+    } catch (e: Exception) {
+        false
+    }
 }
