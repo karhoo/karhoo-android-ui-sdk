@@ -12,13 +12,10 @@ class LettersOnlyFilter : InputFilter {
         dstart: Int,
         dend: Int
                        ): CharSequence {
-        if (source?.equals("") == true) { // for backspace
+        if (source == null) return ""
+        if (source == "") { // for backspace
             return source
         }
-        return if (source?.toString()?.matches(Regex("[a-zA-Z ]+")) == true) {
-            source
-        } else {
-            source?.dropLast(1).toString()
-        }
+        return Regex("[^A-Za-z ]").replace(source, "")
     }
 }
