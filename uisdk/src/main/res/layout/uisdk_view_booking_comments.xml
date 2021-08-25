@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/kh_uisdk_additional_comments"
+        app:hintTextAppearance="@style/KhTextInputEditTextHint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +25,6 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar

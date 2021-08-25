@@ -39,6 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/kh_uisdk_spacing_xxsmall"
+        android:gravity="center"
         android:text="@string/kh_uisdk_booking_checkout_add_payment_method_title"
         tools:visibility="visible" />
 
@@ -52,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
         android:visibility="gone"
         tools:visibility="visible"/>
 
