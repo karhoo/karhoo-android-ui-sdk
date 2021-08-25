@@ -53,7 +53,7 @@ class PassengerDetailsView @JvmOverloads constructor(
     }
 
     private fun addFilters() {
-        //        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
+        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
         lastNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
     }
 
