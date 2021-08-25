@@ -373,18 +373,26 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 //        }
     }
 
+    /**
+     * The user clicked to save the current passenger details
+     */
+    override fun clickedPassengerSaveButton() {
+        showPassengerDetails(false)
+        passengersDetailLayout.clickOnSaveButton()
+        passengersListener.onPassengerSelected(passengersDetailLayout.retrievePassenger())
+        bindPassenger(passengersDetailLayout.retrievePassenger())
+    }
+
+    /**
+     * Display the passenger details page and disable the save button if the details are not valid
+     */
     override fun showPassengerDetails(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         passengersListener.onPassengerPageVisibilityChanged(show)
 
-        if (arePassengerDetailsValid()) {
-            passengersListener.onPassengerSelected(passengersDetailLayout.getPassengerDetails())
-            bindPassenger(passengersDetailLayout.getPassengerDetails())
-        } else {
-            loadingButtonCallback.enableButton(false)
-        }
+        loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
     }
 
     override fun arePassengerDetailsValid(): Boolean {

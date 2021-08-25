@@ -72,6 +72,8 @@ interface CheckoutViewContract {
         fun showPassengerDetails(show: Boolean)
 
         fun arePassengerDetailsValid(): Boolean
+
+        fun clickedPassengerSaveButton()
     }
 
     interface Presenter {

@@ -22,6 +22,8 @@ interface PassengerDetailsMVP {
         fun storePassenger(passengerDetails: PassengerDetails)
 
         fun retrievePassenger(): PassengerDetails?
+
+        fun clickOnSaveButton()
     }
 
     interface Presenter {

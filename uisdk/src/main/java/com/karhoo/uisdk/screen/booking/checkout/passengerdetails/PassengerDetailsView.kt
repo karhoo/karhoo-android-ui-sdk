@@ -30,17 +30,19 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
 class PassengerDetailsView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+                                                    ) :
+    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
 
     private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
     var validationCallback: PassengerDetailsMVP.Validator? = null
 
     private val phoneNumber: String
         get() = presenter.validateMobileNumber(
-                code = countryCodeSpinner.selectedItem.toString(),
-                number = mobileNumberInput.text.toString()
+            code = countryCodeSpinner.selectedItem.toString(),
+            number = mobileNumberInput.text.toString()
                                               )
 
     init {
@@ -51,7 +53,7 @@ class PassengerDetailsView @JvmOverloads constructor(
     }
 
     private fun addFilters() {
-        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
+        //        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
         lastNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
     }
 
@@ -95,7 +97,7 @@ class PassengerDetailsView @JvmOverloads constructor(
             if (!arePhoneFieldsValid()) {
                 mobileNumberLayout.isErrorEnabled = true
                 mobileNumberLayout.error =
-                        resources.getString(R.string.kh_uisdk_invalid_phone_number)
+                    resources.getString(R.string.kh_uisdk_invalid_phone_number)
             } else {
                 mobileNumberLayout.isErrorEnabled = false
                 mobileNumberLayout.error = null
@@ -108,7 +110,7 @@ class PassengerDetailsView @JvmOverloads constructor(
             if (!hasFocus) {
                 if (!arePhoneFieldsValid()) {
                     mobileNumberLayout.error =
-                            resources.getString(R.string.kh_uisdk_invalid_phone_number)
+                        resources.getString(R.string.kh_uisdk_invalid_phone_number)
                 } else {
                     mobileNumberLayout.error = null
                 }
@@ -129,8 +131,8 @@ class PassengerDetailsView @JvmOverloads constructor(
      */
     private fun hideKeyboardIfNothingFocus(view: View) {
         if (!nameHasFocus()
-                && !emailInput.hasFocus()
-                && !mobileNumberInput.hasFocus()
+            && !emailInput.hasFocus()
+            && !mobileNumberInput.hasFocus()
         ) {
             view.hideSoftKeyboard()
         }
@@ -138,8 +140,9 @@ class PassengerDetailsView @JvmOverloads constructor(
 
     private fun arePhoneFieldsValid(): Boolean {
         return PhoneNumberValidator().validate(
-                mobileNumberInput.text.toString(),
-                countryCodeSpinner.selectedItem.toString())
+            mobileNumberInput.text.toString(),
+            countryCodeSpinner.selectedItem.toString()
+                                              )
     }
 
     private fun nameHasFocus(): Boolean {
@@ -155,10 +158,11 @@ class PassengerDetailsView @JvmOverloads constructor(
                 v.clearFocus()
                 hideKeyboardIfNothingFocus(v)
                 presenter.updatePassengerDetails(
-                        firstName = firstNameInput.text.toString(),
-                        lastName = lastNameInput.text.toString(),
-                        email = emailInput.text.toString(),
-                        mobilePhoneNumber = phoneNumber)
+                    firstName = firstNameInput.text.toString(),
+                    lastName = lastNameInput.text.toString(),
+                    email = emailInput.text.toString(),
+                    mobilePhoneNumber = phoneNumber
+                                                )
             }
         }
 
@@ -173,8 +177,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         } else if (!EmailValidator().validate(emailInput.text.toString())) {
             isValid = false
         } else if (!PhoneNumberValidator().validate(
-                        mobileNumberInput.text.toString(),
-                        countryCodeSpinner.selectedItem.toString()
+                mobileNumberInput.text.toString(),
+                countryCodeSpinner.selectedItem.toString()
                                                    )
         ) {
             isValid = false
@@ -208,16 +212,16 @@ class PassengerDetailsView @JvmOverloads constructor(
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
         countryCodeSpinner.setCountryCode(
-                presenter.getCountryCodeFromPhoneNumber(
-                        passengerDetails.phoneNumber,
-                        resources
-                                                       )
+            presenter.getCountryCodeFromPhoneNumber(
+                passengerDetails.phoneNumber,
+                resources
+                                                   )
                                          )
         mobileNumberInput.setText(
-                presenter.removeCountryCodeFromPhoneNumber(
-                        passengerDetails.phoneNumber,
-                        resources
-                                                          )
+            presenter.removeCountryCodeFromPhoneNumber(
+                passengerDetails.phoneNumber,
+                resources
+                                                      )
                                  )
     }
 
@@ -241,8 +245,14 @@ class PassengerDetailsView @JvmOverloads constructor(
                 && lastNameLayout.error != null
     }
 
-    override fun storePassenger(passengerDetails: PassengerDetails) {
-        val pd = Gson().toJson(passengerDetails)
+    override fun clickOnSaveButton() {
+        getPassengerDetails()?.let {
+            storePassenger(it)
+        }
+    }
+
+    override fun storePassenger(passenger: PassengerDetails) {
+        val pd = Gson().toJson(passenger)
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPrefs.edit().putString(PASSENGER_DETAILS_SHARED_PREFS, pd).apply()
     }

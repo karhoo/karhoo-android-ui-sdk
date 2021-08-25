@@ -77,6 +77,7 @@ internal class CheckoutFragment : Fragment() {
             override fun onLoadingButtonClick() {
                 if (isShowingPassengerDetails) {
                     if (checkoutView.arePassengerDetailsValid()) {
+                        checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetails(false)
                         checkoutActionButton.onLoadingComplete()
                     }

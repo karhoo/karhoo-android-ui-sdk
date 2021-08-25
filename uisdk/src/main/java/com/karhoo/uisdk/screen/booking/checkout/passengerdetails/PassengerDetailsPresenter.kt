@@ -53,7 +53,5 @@ class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<
         }
         passengerDetails = passengerDetails?.copy(firstName = firstName, lastName = lastName,
                                                   email = email, phoneNumber = mobilePhoneNumber)
-
-        passengerDetails?.let { view?.storePassenger(it) }
     }
 }
