@@ -46,7 +46,13 @@ class PassengerDetailsView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
         initialiseFieldListeners()
+        addFilters()
         retrievePassenger()
+    }
+
+    private fun addFilters() {
+        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
+        lastNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
     }
 
     private fun initialiseFieldListeners() {
@@ -61,7 +67,6 @@ class PassengerDetailsView @JvmOverloads constructor(
 
             validationCallback?.onFieldsValidated(areFieldsValid())
         }
-        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
         lastNameInput.addTextChangedListener {
             if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
                 lastNameLayout.isErrorEnabled = true
@@ -73,7 +78,6 @@ class PassengerDetailsView @JvmOverloads constructor(
 
             validationCallback?.onFieldsValidated(areFieldsValid())
         }
-        lastNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
 
         emailInput.addTextChangedListener {
             if (!EmailValidator().validate(emailInput.text.toString())) {
