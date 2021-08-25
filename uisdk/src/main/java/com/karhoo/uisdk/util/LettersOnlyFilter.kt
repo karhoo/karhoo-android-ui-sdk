@@ -16,6 +16,6 @@ class LettersOnlyFilter : InputFilter {
         if (source == "") { // for backspace
             return source
         }
-        return Regex("[^A-Za-z ]").replace(source, "")
+        return source.filter { it.isLetter() || it.isWhitespace() }
     }
 }
