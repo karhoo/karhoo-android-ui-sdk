@@ -94,7 +94,7 @@ internal class CheckoutFragment : Fragment() {
     }
 
     fun onBackPressed() {
-        if(isShowingPassengerDetails) {
+        if (isShowingPassengerDetails) {
             checkoutView.showPassengerDetails(false)
         } else {
             activity?.finish()
