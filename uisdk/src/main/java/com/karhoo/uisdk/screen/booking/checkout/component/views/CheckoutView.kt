@@ -35,6 +35,7 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
+import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewIcon
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
@@ -309,6 +310,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
+
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
@@ -352,10 +354,11 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengerDetails?.let {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-
+            bookingCheckoutPassengerView.setDottedBackground(false)
             passengersDetailLayout.setPassengerDetails(it)
 
         } ?: run {
+            bookingCheckoutPassengerView.setDottedBackground(true)
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
         }

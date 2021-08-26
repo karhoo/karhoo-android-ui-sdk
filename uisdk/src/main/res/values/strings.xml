@@ -293,6 +293,7 @@
     <string name="kh_uisdk_car_description">Car: %1$s</string>
     <string name="kh_uisdk_track_driver">Track Driver</string>
     <string name="kh_uisdk_book_now">Book now</string>
+    <string name="kh_uisdk_next">Next</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">You have no upcoming rides</string>
     <string name="kh_uisdk_upcoming_rides_empty">Remember, you can prebook a car up to seven days in advance.</string>
     <string name="kh_uisdk_title_past_rides_empty">No past rides</string>

@@ -46,6 +46,13 @@ internal class CheckoutFragment : Fragment() {
             override fun enableButton(enable: Boolean) {
                 checkoutActionButton.enableButton(enable)
             }
+
+            override fun setState(bookButtonState: BookButtonState) {
+                when (bookButtonState) {
+                    is BookButtonState.Book ->
+                }
+                checkoutActionButton.enableButton(enable)
+            }
         }, object : CheckoutFragmentContract.WebViewListener {
             override fun showWebViewOnPress(url: String?) {
                 if (activity is WebViewActions) {
