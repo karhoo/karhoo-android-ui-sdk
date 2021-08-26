@@ -15,7 +15,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.validator.EmailValidator
 import com.karhoo.uisdk.base.validator.EmptyFieldValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
-import com.karhoo.uisdk.util.LettersOnlyFilter
+import com.karhoo.uisdk.util.PersonNameValidator
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryCodeSpinner
@@ -48,18 +48,12 @@ class PassengerDetailsView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
         initialiseFieldListeners()
-        addFilters()
         retrievePassenger()
-    }
-
-    private fun addFilters() {
-        firstNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
-        lastNameInput.editableText.filters = arrayOf<InputFilter>(LettersOnlyFilter())
     }
 
     private fun initialiseFieldListeners() {
         firstNameInput.addTextChangedListener {
-            if (!EmptyFieldValidator().validate(firstNameInput.text.toString())) {
+            if (!PersonNameValidator().validate(firstNameInput.text.toString())) {
                 firstNameLayout.isErrorEnabled = true
                 firstNameLayout.error = resources.getString(R.string.kh_uisdk_invalid_empty_field)
             } else {
@@ -70,7 +64,7 @@ class PassengerDetailsView @JvmOverloads constructor(
             validationCallback?.onFieldsValidated(areFieldsValid())
         }
         lastNameInput.addTextChangedListener {
-            if (!EmptyFieldValidator().validate(lastNameInput.text.toString())) {
+            if (!PersonNameValidator().validate(lastNameInput.text.toString())) {
                 lastNameLayout.isErrorEnabled = true
                 lastNameLayout.error = resources.getString(R.string.kh_uisdk_invalid_empty_field)
             } else {
