@@ -68,8 +68,6 @@ interface CheckoutViewContract {
 
         fun bindPassenger(passengerDetails: PassengerDetails?)
 
-        fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?)
-
         fun showPassengerDetails(show: Boolean)
 
         fun arePassengerDetailsValid(): Boolean

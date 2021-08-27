@@ -90,7 +90,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         //Default binding
         presenter.getPassengerDetails()
-        bindPaymentMethod(null)
 
         bookingCheckoutPassengerView.setOnClickListener {
             showPassengerDetails(true)
@@ -233,19 +232,19 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.kh_uisdk_payment_issue,
-                messageResId = R.string.kh_uisdk_payment_issue_message,
-                karhooError = error,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
-                                                         DialogInterface.OnClickListener { d, _ ->
-                                                             onPaymentHandle(true)
-                                                             d.dismiss()
-                                                         }),
-                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
-                                                         DialogInterface.OnClickListener { d, _ ->
-                                                             onPaymentHandle(false)
-                                                             d.dismiss()
-                                                         }))
+            titleResId = R.string.kh_uisdk_payment_issue,
+            messageResId = R.string.kh_uisdk_payment_issue_message,
+            karhooError = error,
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card
+                                                    ) { d, _ ->
+                presenter.onPaymentFailureDialogPositive()
+                d.dismiss()
+            },
+            negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel
+                                                    ) { d, _ ->
+                presenter.onPaymentFailureDialogCancelled()
+                d.dismiss()
+            })
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
@@ -292,12 +291,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun finishedBooking() {
         presenter.resetBooking()
-    }
-
-    private fun onPaymentHandle(positive: Boolean) = if (positive) {
-        presenter.onPaymentFailureDialogPositive()
-    } else {
-        presenter.onPaymentFailureDialogCancelled()
     }
 
     override fun showLoading(show: Boolean) {
@@ -362,18 +355,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
         }
-    }
-
-    override fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?) {
-//        bookingCheckoutPaymentView.setActionIcon(R.drawable.uidsk_ic_card_visa)
-//
-//        paymentInfo?.let {
-//            bookingCheckoutPaymentView.setTitle(paymentInfo.lastFour)
-//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-//        } ?: run {
-//            bookingCheckoutPaymentView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method))
-//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_mean))
-//        }
     }
 
     /**
