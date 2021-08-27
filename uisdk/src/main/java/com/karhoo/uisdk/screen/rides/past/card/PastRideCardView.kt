@@ -120,12 +120,12 @@ class PastRideCardView @JvmOverloads constructor(
     }
 
     override fun displayPricePending() {
-        priceText.setTextColor(ContextCompat.getColor(context, R.color.med_grey))
+        priceText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_med_grey))
         priceText.setText(R.string.kh_uisdk_cancelled)
     }
 
     override fun displayPrice(price: String) {
-        this.priceText.setTextColor(ContextCompat.getColor(context, R.color.off_black))
+        this.priceText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_off_black))
         this.priceText.text = price
     }
 

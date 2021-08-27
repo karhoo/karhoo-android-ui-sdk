@@ -86,7 +86,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
 
     private var pickupPinRes: Int = R.drawable.uisdk_ic_pickup_pin
     private var dropOffPinRes: Int = R.drawable.uisdk_ic_dropoff_pin
-    private var curvedLineColour: Int = R.color.primary_blue
+    private var curvedLineColour: Int = R.color.kh_uisdk_primary_blue
     private var isLocateMeEnabled = isLocateMeEnabled(context)
 
     init {
@@ -102,7 +102,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         dropOffPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapDropOffPin, R
                 .drawable.uisdk_ic_dropoff_pin)
         curvedLineColour = typedArray.getResourceId(R.styleable.BookingMapView_curvedLineColor, R
-                .color.primary_blue)
+                .color.kh_uisdk_primary_blue)
         typedArray.recycle()
     }
 
@@ -121,7 +121,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun zoomMapToOriginAndDestination(origin: Position, destination: Position?) {
         googleMap?.let {
             it.setPadding(0, 0,
-                    0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                    0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom))
             val destinationLatLng = destination?.let {
                 LatLng(destination.latitude, destination
                         .longitude)
@@ -141,7 +141,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
                 uiSettings.isMyLocationButtonEnabled = false
                 uiSettings.isMapToolbarEnabled = false
                 with(TypedValue()) {
-                    resources.getValue(R.dimen.map_zoom_max, this, true)
+                    resources.getValue(R.dimen.kh_uisdk_map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
                 }
 
@@ -172,7 +172,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun zoom(position: LatLng?) {
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
-            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null)
         } else {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                     LatLng(MAP_DEFAULT_LOCATION_LATITUDE,
@@ -185,7 +185,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     override fun moveTo(position: LatLng?) {
         position?.let {
             val cameraUpdate = CameraUpdateFactory.newLatLng(it)
-            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null)
         }
     }
 
@@ -211,7 +211,7 @@ class BookingMapView @JvmOverloads constructor(context: Context,
             destination?.let {
                 googleMap.setMaxZoomPreference(BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE)
                 addPinToMap(destination, dropOffPinRes, R.string.kh_uisdk_address_drop_off)
-                googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.transparent_black_map))
+                googleMap.showShadowedPolyLine(origin, destination, ContextCompat.getColor(context, R.color.kh_uisdk_transparent_black_map))
                 googleMap.showCurvedPolyline(origin, destination, ContextCompat.getColor(context, curvedLineColour))
 
             }
@@ -390,12 +390,12 @@ class BookingMapView @JvmOverloads constructor(context: Context,
         recentreMapIfDestinationIsNull()
         showLocationButton(true)
 
-        animateLocateMeButton(R.dimen.spacing_small, R.integer.animation_duration_slide_out_or_in_quotes)
+        animateLocateMeButton(R.dimen.kh_uisdk_spacing_small, R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes)
     }
 
     fun setDefaultPadding() {
         googleMap?.setPadding(0, 0,
-                0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom))
+                0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom))
 
         showLocationButton(false)
     }
@@ -456,11 +456,11 @@ class BookingMapView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
-        animateLocateMeButton(R.dimen.quote_list_height, R.integer.animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.kh_uisdk_quote_list_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     override fun updateMapViewForQuotesListVisibilityExpanded() {
-        animateLocateMeButton(R.dimen.collapsible_pane_expanded_height, R.integer.animation_duration_slide_out_or_in)
+        animateLocateMeButton(R.dimen.kh_uisdk_collapsible_pane_expanded_height, R.integer.kh_uisdk_animation_duration_slide_out_or_in)
     }
 
     companion object {

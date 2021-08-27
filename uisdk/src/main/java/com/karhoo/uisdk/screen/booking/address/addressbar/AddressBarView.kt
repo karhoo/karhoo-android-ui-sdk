@@ -126,7 +126,7 @@ class AddressBarView
         } else {
             dropOffLabel.apply {
                 text = displayAddress
-                setTextColor(ContextCompat.getColor(context, R.color.text_primary))
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
             }
             setDropoffAddressVisibility(false)
         }

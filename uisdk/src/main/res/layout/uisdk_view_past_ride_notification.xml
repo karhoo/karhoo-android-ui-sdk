@@ -18,16 +18,16 @@
 
             <ImageView
                 android:id="@+id/stateIcon"
-                android:layout_width="@dimen/icon_size_small"
-                android:layout_height="@dimen/icon_size_small"
-                android:layout_marginEnd="@dimen/icon_size_small"
+                android:layout_width="@dimen/kh_uisdk_icon_size_small"
+                android:layout_height="@dimen/kh_uisdk_icon_size_small"
+                android:layout_marginEnd="@dimen/kh_uisdk_icon_size_small"
                 tools:src="@drawable/uisdk_ic_trip_completed" />
 
             <TextView
                 android:id="@+id/stateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small_medium"
+                android:textSize="@dimen/kh_uisdk_text_size_small_medium"
                 tools:text="@string/kh_uisdk_ride_state_completed" />
 
         </LinearLayout>

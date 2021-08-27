@@ -2,6 +2,6 @@
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
     <changeImageTransform />
     <changeBounds
-        android:duration="@integer/animation_duration_shared_element"
+        android:duration="@integer/kh_uisdk_animation_duration_shared_element"
         android:interpolator="@android:interpolator/accelerate_decelerate" />
 </transitionSet>

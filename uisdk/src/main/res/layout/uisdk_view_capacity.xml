@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/passengerIcon"
-        android:layout_width="@dimen/capacity_image_size"
-        android:layout_height="@dimen/capacity_image_size"
+        android:layout_width="@dimen/kh_uisdk_capacity_image_size"
+        android:layout_height="@dimen/kh_uisdk_capacity_image_size"
         android:layout_margin="4dp"
         android:background="@drawable/kh_uisdk_gray_circle"
-        android:paddingTop="@dimen/spacing_xxsmall"
-        android:paddingBottom="@dimen/spacing_xxsmall"
+        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/kh_uisdk_ic_capabilities_passengers" />
@@ -33,12 +33,12 @@
 
     <ImageView
         android:id="@+id/briefcaseIcon"
-        android:layout_width="@dimen/capacity_image_size"
-        android:layout_height="@dimen/capacity_image_size"
+        android:layout_width="@dimen/kh_uisdk_capacity_image_size"
+        android:layout_height="@dimen/kh_uisdk_capacity_image_size"
         android:layout_marginTop="4dp"
         android:background="@drawable/kh_uisdk_gray_circle"
-        android:paddingTop="@dimen/spacing_xxsmall"
-        android:paddingBottom="@dimen/spacing_xxsmall"
+        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toEndOf="@+id/peopleCapacityText"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/kh_uisdk_ic_capabilities_baggage" />
@@ -61,8 +61,8 @@
     <TextView
         android:id="@+id/otherCapabilitiesText"
         style="@style/Text.Black"
-        android:layout_width="@dimen/capacity_image_size"
-        android:layout_height="@dimen/capacity_image_size"
+        android:layout_width="@dimen/kh_uisdk_capacity_image_size"
+        android:layout_height="@dimen/kh_uisdk_capacity_image_size"
         android:layout_marginTop="4dp"
         android:background="@drawable/kh_uisdk_gray_circle"
         android:ellipsize="end"

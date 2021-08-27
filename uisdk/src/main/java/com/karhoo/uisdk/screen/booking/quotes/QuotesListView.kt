@@ -144,7 +144,7 @@ class QuotesListView @JvmOverloads constructor(
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
-                            .animation_duration_slide_out_or_in_quotes).toLong())
+                            .kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isQuotesListVisible = true
@@ -159,13 +159,13 @@ class QuotesListView @JvmOverloads constructor(
         return if (isQuotesListVisible) {
 
             val translation = when (collapsiblePanelView.panelState) {
-                PanelState.COLLAPSED -> resources.getDimension(R.dimen.quote_list_height)
-                PanelState.EXPANDED -> resources.getDimension(R.dimen.collapsible_pane_expanded_height)
+                PanelState.COLLAPSED -> resources.getDimension(R.dimen.kh_uisdk_quote_list_height)
+                PanelState.EXPANDED -> resources.getDimension(R.dimen.kh_uisdk_collapsible_pane_expanded_height)
             }
 
             animate()
                     .translationY(translation)
-                    .setDuration(resources.getInteger(R.integer.animation_duration_slide_out_or_in_quotes).toLong())
+                    .setDuration(resources.getInteger(R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         bookingQuotesViewModel?.process(
@@ -183,7 +183,7 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     private fun hideListInitially() {
-        animate().translationY(resources.getDimension(R.dimen.quote_list_height)).duration = 0
+        animate().translationY(resources.getDimension(R.dimen.kh_uisdk_quote_list_height)).duration = 0
     }
 
     override fun showNoAvailability() {

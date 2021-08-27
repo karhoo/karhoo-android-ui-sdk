@@ -10,9 +10,9 @@ import com.karhoo.uisdk.R
 internal class CategoryView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val categoryName: TextView
-    private var selectedColor: Int = R.color.text_primary
-    private var unselectedColor: Int = R.color.off_black
-    private var unavailableColor: Int = R.color.text_unavailable
+    private var selectedColor: Int = R.color.kh_uisdk_text_primary
+    private var unselectedColor: Int = R.color.kh_uisdk_off_black
+    private var unavailableColor: Int = R.color.kh_uisdk_text_unavailable
 
     init {
         inflate(context, R.layout.uisdk_view_unavailable_category, this)
@@ -25,12 +25,12 @@ internal class CategoryView @JvmOverloads constructor(context: Context, attrs: A
                                                         defStyleAttr, R.style.KhVehicleClassTabs)
         selectedColor = typedArray.getResourceId(R.styleable
                                                          .CategorySelectorView_selectedTabTextColor, R.color
-                                                         .text_primary)
+                                                         .kh_uisdk_text_primary)
         unselectedColor = typedArray.getResourceId(R.styleable
-                                                           .CategorySelectorView_unselectedTabTextColor, R.color.off_black)
+                                                           .CategorySelectorView_unselectedTabTextColor, R.color.kh_uisdk_off_black)
         unavailableColor = typedArray.getResourceId(R.styleable
                                                             .CategorySelectorView_unavailableTabTextColor, R.color
-                                                            .text_unavailable)
+                                                            .kh_uisdk_text_unavailable)
         typedArray.recycle()
     }
 

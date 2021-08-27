@@ -36,7 +36,7 @@ class PastRidesView @JvmOverloads constructor(context: Context,
         View.inflate(context, R.layout.uisdk_view_past_rides, this)
 
         swipeRefreshLayout.setOnRefreshListener { presenter.getPastRides() }
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.primary))
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.kh_uisdk_primary))
         errorStateWidget.setRetryButtonClickListener(OnClickListener { refresh() })
 
         recyclerView.apply {
