@@ -333,7 +333,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="KhTextInputTextHint">
+    <style name="KhTextInputEditTextHint">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/black</item>
     </style>

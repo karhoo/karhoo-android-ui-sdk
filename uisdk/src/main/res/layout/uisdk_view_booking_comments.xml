@@ -24,7 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate" />
+            style="@style/KhTextInputEditText"
+            android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
