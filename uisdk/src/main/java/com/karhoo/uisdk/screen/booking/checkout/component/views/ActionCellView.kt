@@ -22,7 +22,7 @@ class ActionCellView @kotlin.jvm.JvmOverloads constructor(context: Context,
     override fun setDottedBackground(show: Boolean) {
         view.actionViewContainer.setBackgroundResource(if (show) R.drawable
             .uisdk_dotted_background else R.drawable
-            .uisdk_stroke_background)
+            .uisdk_border_background)
     }
 
     override fun setSubtitle(subtitle: String) {

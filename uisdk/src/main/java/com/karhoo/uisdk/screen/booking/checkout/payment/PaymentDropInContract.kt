@@ -7,7 +7,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.Quote
 
-interface PaymentDropInMVP {
+interface PaymentDropInContract {
 
     interface View {
 

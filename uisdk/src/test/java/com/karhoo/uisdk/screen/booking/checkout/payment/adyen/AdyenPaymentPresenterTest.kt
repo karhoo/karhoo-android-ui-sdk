@@ -17,7 +17,7 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
@@ -42,7 +42,7 @@ class AdyenPaymentPresenterTest {
     private var userStore: UserStore = mock()
     private var quote: Quote = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
-    private var paymentDropInActions: PaymentDropInMVP.Actions = mock()
+    private var paymentDropInActions: PaymentDropInContract.Actions = mock()
 
     private val paymentInfoCaptor = argumentCaptor<SavedPaymentInfo>()
     private val karhooErrorCaptor = argumentCaptor<KarhooError>()

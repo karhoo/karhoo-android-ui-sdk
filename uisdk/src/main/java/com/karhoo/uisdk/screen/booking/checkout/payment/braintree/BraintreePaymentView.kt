@@ -13,13 +13,13 @@ import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.util.extension.isGuest
 
-class BraintreePaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentDropInMVP.View {
+class BraintreePaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInMVP.Presenter? = BraintreePaymentPresenter(actions)
-    var actions: PaymentDropInMVP.Actions? = actions
+    var presenter: PaymentDropInContract.Presenter? = BraintreePaymentPresenter(actions)
+    var actions: PaymentDropInContract.Actions? = actions
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment.newInstance(context as AppCompatActivity, sdkToken)

@@ -34,10 +34,10 @@ class PassengerDetailsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
                                                     ) :
-    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsContract.View {
 
-    private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
-    var validationCallback: PassengerDetailsMVP.Validator? = null
+    private val presenter: PassengerDetailsContract.Presenter = PassengerDetailsPresenter(this)
+    var validationCallback: PassengerDetailsContract.Validator? = null
 
     private val phoneNumber: String
         get() = presenter.validateMobileNumber(

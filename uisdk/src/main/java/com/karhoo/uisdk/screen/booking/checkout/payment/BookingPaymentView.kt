@@ -24,17 +24,17 @@ class BookingPaymentView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
                                                   ) : LinearLayout(context, attrs, defStyleAttr),
-                                                      BookingPaymentMVP.View,
-                                                      BookingPaymentMVP.Widget,
-                                                      PaymentDropInMVP.Actions {
+                                                      BookingPaymentContract.View,
+                                                      BookingPaymentContract.Widget,
+                                                      PaymentDropInContract.Actions {
 
-    private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
+    private var presenter: BookingPaymentContract.Presenter? = BookingPaymentPresenter(this)
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
 
-    var paymentActions: BookingPaymentMVP.PaymentActions? = null
-    var cardActions: BookingPaymentMVP.PaymentViewActions? = null
-    private var dropInView: PaymentDropInMVP.View? = null
+    var paymentActions: BookingPaymentContract.PaymentActions? = null
+    var cardActions: BookingPaymentContract.PaymentViewActions? = null
+    private var dropInView: PaymentDropInContract.View? = null
 
     private var hasValidPayment = false
 
@@ -54,7 +54,7 @@ class BookingPaymentView @JvmOverloads constructor(
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 
-    override fun setPaymentView(view: PaymentDropInMVP.View?) {
+    override fun setPaymentView(view: PaymentDropInContract.View?) {
         dropInView = view
     }
 
@@ -154,7 +154,7 @@ class BookingPaymentView @JvmOverloads constructor(
             setCardType(savedPaymentInfo.cardType)
             paymentLayout.setBackgroundResource(
                 R.drawable
-                    .uisdk_stroke_background
+                    .uisdk_border_background
                                                )
         } else {
             hasValidPayment = false

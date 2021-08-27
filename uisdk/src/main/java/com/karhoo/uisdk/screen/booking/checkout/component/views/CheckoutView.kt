@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
@@ -25,8 +24,8 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsMVP
-import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
+import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -53,7 +52,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       attrs: AttributeSet? = null,
                                                       defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
                                                                                CheckoutViewContract.Actions,
-                                                                               BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+                                                                               BookingPaymentContract.PaymentViewActions, BookingPaymentContract.PaymentActions,
                                                                                CheckoutViewContract.BookingRequestViewWidget {
     private var isGuest: Boolean = false
 
@@ -95,7 +94,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             showPassengerDetails(true)
         }
 
-        passengersDetailLayout.validationCallback = object : PassengerDetailsMVP.Validator {
+        passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
                 loadingButtonCallback.enableButton(validated)
             }

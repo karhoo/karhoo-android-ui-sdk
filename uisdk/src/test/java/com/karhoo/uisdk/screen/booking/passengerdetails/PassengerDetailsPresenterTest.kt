@@ -2,7 +2,7 @@ package com.karhoo.uisdk.screen.booking.passengerdetails
 
 import android.content.res.Resources
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsMVP
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsPresenter
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 class PassengerDetailsPresenterTest {
 
     private var res: Resources = mock()
-    private var view: PassengerDetailsMVP.View = mock()
+    private var view: PassengerDetailsContract.View = mock()
     private var passengerDetails: PassengerDetails = PassengerDetails(firstName = "John",
                                                                       lastName = "Smith",
                                                                       email = "test.test@test.com",

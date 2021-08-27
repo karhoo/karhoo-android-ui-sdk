@@ -4,5 +4,5 @@
         android:width="1dp"
         android:color="@color/kh_uisdk_tag_icon_stroke"/>
     <corners android:radius="4dp" />
-    <solid android:color="@color/transparent" />
+    <solid android:color="@color/kh_uisdk_transparent" />
 </shape>
