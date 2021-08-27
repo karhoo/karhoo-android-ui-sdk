@@ -1,9 +1,12 @@
 package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
+import androidx.annotation.VisibleForTesting
 import com.karhoo.sdk.api.network.request.PassengerDetails
 
 class CheckoutPresenter : CheckoutFragmentContract.Presenter {
-    private var passengerDetails: PassengerDetails? = null
+
+    @VisibleForTesting
+    internal var passengerDetails: PassengerDetails? = null
 
     override fun savePassenger(passengerDetails: PassengerDetails?) {
         this.passengerDetails = passengerDetails
