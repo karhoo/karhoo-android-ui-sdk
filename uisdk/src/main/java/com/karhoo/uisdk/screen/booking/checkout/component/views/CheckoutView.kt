@@ -48,6 +48,7 @@ import org.joda.time.DateTime
 import java.util.Currency
 import java.util.HashMap
 
+@Suppress("TooManyFunctions")
 internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       attrs: AttributeSet? = null,
                                                       defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
