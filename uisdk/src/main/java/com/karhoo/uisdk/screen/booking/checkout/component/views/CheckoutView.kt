@@ -35,7 +35,6 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
-import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewIcon
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
@@ -251,7 +250,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun handlePaymentDetailsUpdate() {
-        // Do nothing
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid()
+                                                                       , isPaymentMethodValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -398,7 +398,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
     }
 
-    override fun arePassengerDetailsValid(): Boolean {
-        return passengersDetailLayout.areFieldsValid()
-    }
+    override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
+
+    override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
+            VISIBLE
+
+    override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
+
+    override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 }

@@ -24,6 +24,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -64,6 +65,14 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             scheduledDate = it.date
             destination = it.destination
             origin = it.pickup
+        }
+    }
+
+    override fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean): BookButtonState {
+        return if (arePassengerDetailsValid && isPaymentValid) {
+            BookButtonState.BOOK
+        } else {
+            BookButtonState.NEXT
         }
     }
 
@@ -147,6 +156,15 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             else -> {
                 view?.fillInPassengerDetails(details = parsePassengerDetails())
             }
+        }
+    }
+
+    override fun consumeBackPressed(): Boolean {
+        return if(view?.isPassengerDetailsViewVisible() == true) {
+            view?.showPassengerDetails(false)
+            true
+        } else {
+            false
         }
     }
 

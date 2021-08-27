@@ -36,6 +36,8 @@ class BookingPaymentView @JvmOverloads constructor(
     var cardActions: BookingPaymentMVP.PaymentViewActions? = null
     private var dropInView: PaymentDropInMVP.View? = null
 
+    private var hasValidPayment = false
+
     init {
         inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
@@ -138,8 +140,11 @@ class BookingPaymentView @JvmOverloads constructor(
         paymentActions?.showPaymentDialog(karhooError)
     }
 
+    override fun hasValidPaymentType(): Boolean = hasValidPayment
+
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         if (savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()) {
+            hasValidPayment = true
             bindViews(savedPaymentInfo.cardType, savedPaymentInfo.lastFour)
             changeCardProgressBar.visibility = INVISIBLE
             editCardButtonVisibility(View.VISIBLE)
@@ -152,6 +157,7 @@ class BookingPaymentView @JvmOverloads constructor(
                     .uisdk_stroke_background
                                                )
         } else {
+            hasValidPayment = false
             cardNumberText.text =
                 resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
             changeCardLabel.text =

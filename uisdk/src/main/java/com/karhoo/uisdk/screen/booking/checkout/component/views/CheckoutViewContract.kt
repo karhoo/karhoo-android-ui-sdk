@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
@@ -73,7 +74,13 @@ interface CheckoutViewContract {
 
         fun arePassengerDetailsValid(): Boolean
 
+        fun isPaymentMethodValid(): Boolean
+
         fun clickedPassengerSaveButton()
+
+        fun isPassengerDetailsViewVisible(): Boolean
+
+        fun consumeBackPressed(): Boolean
     }
 
     interface Presenter {
@@ -109,6 +116,11 @@ interface CheckoutViewContract {
         fun onPaymentFailureDialogCancelled()
 
         fun setBookingStatus(bookingStatus: BookingStatus?)
+
+        fun consumeBackPressed(): Boolean
+
+        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean):
+                BookButtonState
     }
 
     interface Actions : WebViewActions {

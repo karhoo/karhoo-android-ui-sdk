@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,11 +20,12 @@ internal class CheckoutFragment : Fragment() {
     private lateinit var checkoutActionButton: LoadingButtonView
     private lateinit var checkoutView: CheckoutView
     private lateinit var presenter: CheckoutPresenter
-    private var isShowingPassengerDetails: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+                             ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_checkout_fragment, container, false)
 
         presenter = CheckoutPresenter()
@@ -48,10 +50,7 @@ internal class CheckoutFragment : Fragment() {
             }
 
             override fun setState(bookButtonState: BookButtonState) {
-                when (bookButtonState) {
-                    is BookButtonState.Book ->
-                }
-                checkoutActionButton.enableButton(enable)
+                checkoutActionButton.setText(bookButtonState.resId)
             }
         }, object : CheckoutFragmentContract.WebViewListener {
             override fun showWebViewOnPress(url: String?) {
@@ -61,13 +60,12 @@ internal class CheckoutFragment : Fragment() {
             }
         }, object : CheckoutFragmentContract.PassengersListener {
             override fun onPassengerPageVisibilityChanged(visible: Boolean) {
-                if (visible) {
-                    checkoutActionButton.setText(R.string.kh_uisdk_save)
-                } else {
-                    checkoutActionButton.setText(R.string.kh_uisdk_book_now)
-                }
-
-                isShowingPassengerDetails = visible
+                checkoutActionButton.setText(
+                    presenter.getBookButtonState(
+                        visible, checkoutView
+                            .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid()
+                                                ).resId
+                                            )
             }
 
             override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
@@ -75,14 +73,16 @@ internal class CheckoutFragment : Fragment() {
             }
         })
 
-        checkoutView.showBookingRequest(quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                                        bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
-                                        outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-                                        bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?)
+        checkoutView.showBookingRequest(
+            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+            bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+            bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
+                                       )
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
-                if (isShowingPassengerDetails) {
+                if (checkoutView.isPassengerDetailsViewVisible()) {
                     if (checkoutView.arePassengerDetailsValid()) {
                         checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetails(false)
@@ -98,15 +98,25 @@ internal class CheckoutFragment : Fragment() {
             }
         }
 
+        checkoutActionButton.setText(
+            presenter.getBookButtonState(
+                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                isPaymentValid = checkoutView.isPaymentMethodValid()
+                                        )
+                .resId
+                                    )
+
         return view
     }
 
     fun onBackPressed() {
-        if(isShowingPassengerDetails) {
-            checkoutView.showPassengerDetails(false)
-        } else {
+        if (!checkoutView.consumeBackPressed()) {
             activity?.finish()
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        checkoutView.onActivityResult(requestCode, resultCode, data)
     }
 
     companion object {

@@ -27,6 +27,8 @@ interface BookingPaymentMVP {
         fun setViewVisibility(visibility: Int)
 
         fun updatePaymentViewVisbility(visibility: Int)
+
+        fun hasValidPaymentType(): Boolean
     }
 
     interface Presenter {
@@ -36,6 +38,7 @@ interface BookingPaymentMVP {
         fun getPaymentProvider()
 
         fun getPaymentViewVisibility()
+
     }
 
     interface PaymentViewActions {

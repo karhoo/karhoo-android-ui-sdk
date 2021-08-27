@@ -21,5 +21,10 @@ interface CheckoutFragmentContract {
 
     interface Presenter {
         fun savePassenger(passengerDetails: PassengerDetails?)
+        fun getBookButtonState(
+            isPassengerDetailsVisible: Boolean = false,
+            arePassengerDetailsValid: Boolean,
+            isPaymentValid: Boolean
+                              ): BookButtonState
     }
 }
