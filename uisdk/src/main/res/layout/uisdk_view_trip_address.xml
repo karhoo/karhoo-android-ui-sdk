@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/spacing_xsmall"
-    android:layout_marginRight="@dimen/spacing_xsmall"
+    android:layout_marginLeft="@dimen/kh_uisdk_spacing_xsmall"
+    android:layout_marginRight="@dimen/kh_uisdk_spacing_xsmall"
     android:clickable="true"
     tools:ignore="MissingPrefix">
 
@@ -27,32 +27,32 @@
                 android:layout_height="match_parent"
                 android:gravity="top|center_horizontal"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/spacing_xsmall"
-                android:paddingTop="@dimen/margin_small"
-                android:paddingRight="@dimen/spacing_xsmall"
-                android:paddingBottom="@dimen/margin_small">
+                android:paddingLeft="@dimen/kh_uisdk_spacing_xsmall"
+                android:paddingTop="@dimen/kh_uisdk_margin_small"
+                android:paddingRight="@dimen/kh_uisdk_spacing_xsmall"
+                android:paddingBottom="@dimen/kh_uisdk_margin_small">
 
                 <com.karhoo.uisdk.screen.booking.address.PickUpFullView
                     android:id="@+id/pickupFullIcon"
-                    android:layout_width="@dimen/ic_left_width"
-                    android:layout_height="@dimen/spacing_none"
-                    android:layout_marginTop="@dimen/spacing_xxxsmall"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
+                    android:layout_height="@dimen/kh_uisdk_spacing_none"
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:layout_weight="1"
                     android:gravity="center" />
 
                 <com.karhoo.uisdk.screen.booking.address.DropOffFullView
                     android:id="@+id/dropOffFullIcon"
-                    android:layout_width="@dimen/ic_left_width"
-                    android:layout_height="@dimen/spacing_none"
-                    android:layout_marginBottom="@dimen/spacing_xxxsmall"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
+                    android:layout_height="@dimen/kh_uisdk_spacing_none"
+                    android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/dropOffOnlyIcon"
-                    android:layout_width="@dimen/ic_left_width"
-                    android:layout_height="@dimen/spacing_none"
+                    android:layout_width="@dimen/kh_uisdk_ic_left_width"
+                    android:layout_height="@dimen/kh_uisdk_spacing_none"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:scaleType="centerInside"
@@ -62,7 +62,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="@dimen/spacing_none"
+                android:layout_width="@dimen/kh_uisdk_spacing_none"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -70,16 +70,16 @@
                 <FrameLayout
                     android:id="@+id/pickupLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/trip_address_height">
+                    android:layout_height="@dimen/kh_uisdk_trip_address_height">
 
                     <TextView
                         android:id="@+id/subtitlePickupLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
-                        android:paddingBottom="@dimen/spacing_small"
+                        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
                         android:text="@string/kh_uisdk_address_pick_up"
-                        android:textSize="@dimen/text_size_xsmall" />
+                        android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
 
                     <TextView
                         android:id="@+id/pickupLabel"
@@ -87,10 +87,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center|start"
-                        android:layout_marginEnd="@dimen/spacing_small"
-                        android:layout_marginRight="@dimen/spacing_small"
+                        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+                        android:layout_marginRight="@dimen/kh_uisdk_spacing_small"
                         android:maxLines="1"
-                        android:paddingTop="@dimen/spacing_small"
+                        android:paddingTop="@dimen/kh_uisdk_spacing_small"
                         android:text="@string/kh_uisdk_retrieving_pickup" />
 
                 </FrameLayout>
@@ -98,8 +98,8 @@
                 <View
                     android:id="@+id/addressDivider"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:background="@color/light_grey" />
+                    android:layout_height="@dimen/kh_uisdk_divider_height"
+                    android:background="@color/kh_uisdk_light_grey" />
 
                 <LinearLayout
                     android:id="@+id/dropoffLayout"
@@ -109,8 +109,8 @@
 
                     <FrameLayout
                         android:id="@+id/dropoffFrameContainer"
-                        android:layout_width="@dimen/spacing_none"
-                        android:layout_height="@dimen/trip_address_height"
+                        android:layout_width="@dimen/kh_uisdk_spacing_none"
+                        android:layout_height="@dimen/kh_uisdk_trip_address_height"
                         android:layout_weight="1">
 
                         <TextView
@@ -118,9 +118,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|start"
-                            android:paddingBottom="@dimen/spacing_small"
+                            android:paddingBottom="@dimen/kh_uisdk_spacing_small"
                             android:text="@string/kh_uisdk_address_drop_off"
-                            android:textSize="@dimen/text_size_xsmall" />
+                            android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
 
                         <TextView
                             android:id="@+id/dropOffLabel"
@@ -129,7 +129,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|start"
                             android:maxLines="1"
-                            android:paddingTop="@dimen/spacing_small"
+                            android:paddingTop="@dimen/kh_uisdk_spacing_small"
                             android:text="@string/kh_uisdk_retrieving_dropoff" />
 
                     </FrameLayout>

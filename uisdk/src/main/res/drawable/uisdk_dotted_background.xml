@@ -11,5 +11,5 @@
         android:right="7dp"
         android:top="7dp" />
     <corners android:radius="4dp" />
-    <solid android:color="@color/transparent" />
+    <solid android:color="@color/kh_uisdk_transparent" />
 </shape>

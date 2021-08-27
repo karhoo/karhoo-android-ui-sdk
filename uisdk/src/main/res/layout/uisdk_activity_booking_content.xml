@@ -36,7 +36,7 @@
     <com.karhoo.uisdk.screen.booking.quotes.QuotesListView
         android:id="@+id/quotesListWidget"
         android:layout_width="0dp"
-        android:layout_height="@dimen/collapsible_pane_expanded_height"
+        android:layout_height="@dimen/kh_uisdk_collapsible_pane_expanded_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>

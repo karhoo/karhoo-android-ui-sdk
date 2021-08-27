@@ -3,7 +3,7 @@
     android:fillAfter="true"
     android:ordering="together">
     <translate
-        android:duration="@integer/animation_duration_slide_out_or_in_categories"
+        android:duration="@integer/kh_uisdk_animation_duration_slide_out_or_in_categories"
         android:fromYDelta="300%"
         android:toYDelta="0%" />
 </set>

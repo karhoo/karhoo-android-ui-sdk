@@ -9,8 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintGuide_percent="0.5"
-        android:layout_marginStart="@dimen/spacing_xxsmall"
-        android:layout_marginEnd="@dimen/spacing_xxsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xxsmall"
         android:orientation="vertical"/>
     
     <Button
@@ -18,7 +18,7 @@
         style="@style/Text.Action"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:text="@string/kh_uisdk_cancel_ride"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"

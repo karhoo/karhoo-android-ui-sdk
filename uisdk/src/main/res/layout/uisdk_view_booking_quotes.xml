@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="@dimen/kh_quotes_logo_size"
-        android:layout_height="@dimen/kh_quotes_logo_size"
+        android:layout_width="@dimen/kh_uisdk_quotes_logo_size"
+        android:layout_height="@dimen/kh_uisdk_quotes_logo_size"
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,8 +20,8 @@
         style="@style/KhBookingQuotesViewFleetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_spacing_semi_small"
-        android:layout_marginEnd="@dimen/spacing_xxsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xxsmall"
         android:ellipsize="end"
         android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@id/capacityWidget"
@@ -35,7 +35,7 @@
         style="@style/KhBookingQuotesViewFleetType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xxxsmall"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="@id/quoteNameText"
         app:layout_constraintTop_toBottomOf="@id/quoteNameText"
@@ -46,7 +46,7 @@
         style="@style/KhBookingQuotesViewFleetType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xxxsmall"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/categoryText"
         app:layout_constraintTop_toBottomOf="@id/categoryText"
@@ -91,8 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/spacing_xxxsmall"
-            android:paddingTop="@dimen/spacing_xxxsmall" />
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

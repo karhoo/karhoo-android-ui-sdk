@@ -79,8 +79,8 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 logoImage,
                 url,
                 R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.logo_size,
-                R.integer.logo_radius,
+                R.dimen.kh_uisdk_logo_size,
+                R.integer.kh_uisdk_logo_radius,
                 object : Callback {
                     override fun onSuccess() {
                         stopLoading()
@@ -121,15 +121,15 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun getFareType(quoteType: QuoteType?): String {
         return when (quoteType ?: QuoteType.ESTIMATED) {
             QuoteType.FIXED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_fixed_fare)
             }
             QuoteType.METERED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_metered)
             }
             QuoteType.ESTIMATED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_estimated_fare)
             }
             else -> context.getString(R.string.kh_uisdk_estimated_fare)

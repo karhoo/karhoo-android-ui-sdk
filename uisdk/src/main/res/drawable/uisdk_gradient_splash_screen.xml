@@ -2,8 +2,8 @@
     android:shape="rectangle">
     <gradient
         android:angle="45"
-        android:endColor="@color/sort_grad_end_pink"
-        android:startColor="@color/sort_grad_start_primary"
+        android:endColor="@color/kh_uisdk_sort_grad_end_pink"
+        android:startColor="@color/kh_uisdk_sort_grad_start_primary"
         android:type="linear" />
     <corners android:radius="2dp" />
 </shape>

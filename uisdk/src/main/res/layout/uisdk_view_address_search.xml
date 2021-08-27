@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/searchInput"
-        android:layout_width="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="?attr/actionBarSize"
         android:layout_weight="1"
         android:background="@android:color/transparent"
@@ -17,8 +17,8 @@
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:maxLines="1"
-        android:paddingLeft="@dimen/spacing_xxxsmall"
-        android:textColor="@color/off_white"
+        android:paddingLeft="@dimen/kh_uisdk_spacing_xxxsmall"
+        android:textColor="@color/kh_uisdk_off_white"
         android:textColorHint="#B3ffffff"
         android:textCursorDrawable="@null">
 
@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:clickable="true"
         android:indeterminate="true"
-        android:paddingLeft="@dimen/spacing_small"
+        android:paddingLeft="@dimen/kh_uisdk_spacing_small"
         android:theme="@style/AppTheme.OffWhiteProgressBar"
         android:visibility="invisible" />
 
@@ -42,8 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingLeft="@dimen/spacing_small"
-        android:paddingRight="@dimen/spacing_xsmall"
+        android:paddingLeft="@dimen/kh_uisdk_spacing_small"
+        android:paddingRight="@dimen/kh_uisdk_spacing_xsmall"
         app:srcCompat="@drawable/uisdk_ic_clear" />
 
 </LinearLayout>

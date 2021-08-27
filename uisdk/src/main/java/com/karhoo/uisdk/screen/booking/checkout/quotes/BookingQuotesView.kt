@@ -99,8 +99,8 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
                                 logoImage,
                                 url,
                                 R.drawable.uisdk_ic_quotes_logo_empty,
-                                R.dimen.logo_size,
-                                R.integer.logo_radius)
+                                R.dimen.kh_uisdk_logo_size,
+                                R.integer.kh_uisdk_logo_radius)
     }
 
     private fun expandLearnMoreSection() {

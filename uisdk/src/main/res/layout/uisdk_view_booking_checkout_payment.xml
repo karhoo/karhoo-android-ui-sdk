@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/uisdk_dotted_background"
-    android:padding="@dimen/spacing_small">
+    android:padding="@dimen/kh_uisdk_spacing_small">
 
     <ImageView
         android:id="@+id/cardLogoImage"
@@ -22,8 +22,8 @@
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +38,8 @@
         app:layout_constraintTop_toBottomOf="@+id/cardLogoImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/kh_uisdk_spacing_xxsmall"
         android:gravity="center"
-        android:layout_margin="@dimen/spacing_xxsmall"
         android:text="@string/kh_uisdk_booking_checkout_add_payment_method_title"
         tools:visibility="visible" />
 
