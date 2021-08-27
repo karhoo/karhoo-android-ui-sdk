@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:paddingLeft="@dimen/kh_uisdk_activity_horizontal_margin"
+        android:paddingRight="@dimen/kh_uisdk_activity_horizontal_margin">
 
         <TextView
             android:id="@+id/passengerViewTitle"
