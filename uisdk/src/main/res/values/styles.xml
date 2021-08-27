@@ -324,12 +324,22 @@
     </style>
 
     <style name="KhActionCellTitle">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="KhTextInputEditText">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="KhTextInputTextHint">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="KhActionCellSubtitle">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
         <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
     </style>
 
