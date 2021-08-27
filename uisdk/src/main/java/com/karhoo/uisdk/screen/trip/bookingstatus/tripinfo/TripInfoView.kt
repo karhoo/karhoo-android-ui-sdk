@@ -99,7 +99,7 @@ class TripInfoView @JvmOverloads constructor(context: Context,
             driverPhotoImage.setOnClickListener { }
             driverPhotoImage.setImageResource(R.drawable.uisdk_ic_driver_photo)
         } else {
-            val logoSize = resources.getDimension(R.dimen.logo_size).convertDpToPixels()
+            val logoSize = resources.getDimension(R.dimen.kh_uisdk_logo_size).convertDpToPixels()
 
             Picasso.get()
                     .load(url)

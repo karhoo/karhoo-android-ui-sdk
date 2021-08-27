@@ -21,8 +21,8 @@ class QuotesSortView @JvmOverloads constructor(
         @AttrRes defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr) {
 
-    private var unselectedColor: Int = R.color.off_black
-    private var selectedColor: Int = R.color.off_white
+    private var unselectedColor: Int = R.color.kh_uisdk_off_black
+    private var selectedColor: Int = R.color.kh_uisdk_off_white
     private var leftBackground: Int = R.drawable.uisdk_sort_left_background
 
     private var listener: Listener? = null
@@ -74,8 +74,8 @@ class QuotesSortView @JvmOverloads constructor(
         leftBackground = typedArray.getResourceId(R.styleable.QuotesSortView_leftBackground, R
                 .drawable
                 .uisdk_sort_left_background)
-        selectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_selectedTextColor, R.color.off_white)
-        unselectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_unselectedTextColor, R.color.off_black)
+        selectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_selectedTextColor, R.color.kh_uisdk_off_white)
+        unselectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_unselectedTextColor, R.color.kh_uisdk_off_black)
         typedArray.recycle()
 
         etaLayout.background = ContextCompat.getDrawable(context, leftBackground)

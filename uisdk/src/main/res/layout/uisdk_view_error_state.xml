@@ -5,18 +5,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large">
+        android:paddingLeft="@dimen/kh_uisdk_spacing_large"
+        android:paddingRight="@dimen/kh_uisdk_spacing_large">
 
         <TextView
             style="@style/Text.Faded.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_medium_small"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_medium_small"
             android:text="@string/kh_uisdk_something_went_wrong"
             android:textStyle="bold" />
 

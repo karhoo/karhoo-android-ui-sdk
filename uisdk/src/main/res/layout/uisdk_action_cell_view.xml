@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/uisdk_dotted_background"
-    android:padding="@dimen/spacing_small">
+    android:padding="@dimen/kh_uisdk_spacing_small">
 
     <ImageView
         android:id="@+id/actionViewIcon"
-        android:layout_width="@dimen/kh_quote_action_view_size"
-        android:layout_height="@dimen/kh_quote_action_view_size"
+        android:layout_width="@dimen/kh_uisdk_quote_action_view_size"
+        android:layout_height="@dimen/kh_uisdk_quote_action_view_size"
         android:background="@drawable/kh_uisdk_ic_passenger"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         style="@style/KhActionCellTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_xxsmall"
+        android:layout_margin="@dimen/kh_uisdk_spacing_xxsmall"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

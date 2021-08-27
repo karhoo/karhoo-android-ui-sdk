@@ -54,7 +54,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
         presenter.formatPickUpType(quote)
 
         etaTypeText.text = typeEta
-        setContainerVisibility(R.dimen.spacing_medium, VISIBLE)
+        setContainerVisibility(R.dimen.kh_uisdk_spacing_medium, VISIBLE)
         pricingTypeTextLayout.setOnClickListener {
             priceInfoLayout.visibility = if (priceInfoLayout.visibility == VISIBLE) GONE else VISIBLE
         }
@@ -63,7 +63,7 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
     fun bindETAOnly(time: Int?, typeEta: String, typePrice: QuoteType) {
         etaText.text = String.format("%s %s", time ?: "~", context.getString(R.string.kh_uisdk_min))
         etaTypeText.text = typeEta
-        setContainerVisibility(R.dimen.spacing_none, GONE)
+        setContainerVisibility(R.dimen.kh_uisdk_spacing_none, GONE)
     }
 
     private fun setContainerVisibility(dimenSize: Int, visibility: Int) {

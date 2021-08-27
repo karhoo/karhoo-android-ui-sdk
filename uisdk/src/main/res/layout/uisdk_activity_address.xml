@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/off_white">
+    android:background="@color/kh_uisdk_off_white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,11 +13,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:contentInsetStart="@dimen/spacing_xxlarge"
-        android:contentInsetLeft="@dimen/spacing_xxlarge"
+        android:contentInsetStart="@dimen/kh_uisdk_spacing_xxlarge"
+        android:contentInsetLeft="@dimen/kh_uisdk_spacing_xxlarge"
         android:minHeight="?attr/actionBarSize"
-        app:contentInsetLeft="@dimen/spacing_xlarge"
-        app:contentInsetStart="@dimen/spacing_xlarge"
+        app:contentInsetLeft="@dimen/kh_uisdk_spacing_xlarge"
+        app:contentInsetStart="@dimen/kh_uisdk_spacing_xlarge"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat"
         app:theme="@style/AppTheme.Toolbar">
@@ -57,9 +57,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/off_white"
-        android:paddingTop="@dimen/spacing_xsmall"
-        android:paddingBottom="@dimen/spacing_small"
+        android:background="@color/kh_uisdk_off_white"
+        android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
         android:src="@drawable/uisdk_powered_by_google_on_white" />
 
     <include layout="@layout/uisdk_activity_base" />

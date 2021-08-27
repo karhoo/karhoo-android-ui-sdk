@@ -9,8 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:paddingLeft="@dimen/kh_uisdk_activity_horizontal_margin"
+        android:paddingRight="@dimen/kh_uisdk_activity_horizontal_margin">
 
         <TextView
             android:id="@+id/passengerViewTitle"
@@ -24,9 +24,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/firstNameLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_grid_first_column"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_grid_first_column"
             android:hint="@string/kh_uisdk_first_name_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +43,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastNameLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:hint="@string/kh_uisdk_last_name_hint"
-            android:paddingTop="@dimen/spacing_xsmall"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstNameLayout">
@@ -62,10 +62,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:hint="@string/kh_uisdk_email_hint"
-            android:paddingTop="@dimen/spacing_xsmall"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
@@ -87,35 +87,35 @@
             app:layout_constraintTop_toBottomOf="@id/emailLayout">
 
             <FrameLayout
-                android:layout_width="@dimen/spacing_none"
+                android:layout_width="@dimen/kh_uisdk_spacing_none"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/spacing_xxxsmall"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:layout_weight="0.3"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_xxxsmall"
-                    android:layout_marginTop="@dimen/passenger_margin_top"
+                    android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
+                    android:layout_marginTop="@dimen/kh_uisdk_passenger_margin_top"
                     android:text="@string/kh_uisdk_code"
-                    android:textColor="@color/med_grey" />
+                    android:textColor="@color/kh_uisdk_med_grey" />
 
                 <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
                     android:id="@+id/countryCodeSpinner"
                     style="@style/Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/spacing_large"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/margin_medium"
-                    android:backgroundTint="@color/med_grey"
-                    android:paddingTop="@dimen/spacing_xsmall"
+                    android:layout_height="@dimen/kh_uisdk_spacing_large"
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:layout_marginBottom="@dimen/kh_uisdk_margin_medium"
+                    android:backgroundTint="@color/kh_uisdk_med_grey"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
                     android:spinnerMode="dropdown" />
 
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="@dimen/spacing_none"
+                android:layout_width="@dimen/kh_uisdk_spacing_none"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_weight="0.7">
@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:paddingStart="@dimen/spacing_xxsmall"
+                    android:paddingStart="@dimen/kh_uisdk_spacing_xxsmall"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -147,8 +147,8 @@
             style="@android:style/Widget.ProgressBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xsmall"
-            android:layout_marginEnd="@dimen/spacing_xsmall"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,8 +157,8 @@
 
         <View
             android:id="@+id/updatePassengerDetailsMask"
-            android:layout_width="@dimen/spacing_none"
-            android:layout_height="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
+            android:layout_height="@dimen/kh_uisdk_spacing_none"
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"

@@ -1,6 +1,6 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/icon_size"
-    android:height="@dimen/icon_size"
+    android:width="@dimen/kh_uisdk_icon_size"
+    android:height="@dimen/kh_uisdk_icon_size"
     android:viewportHeight="24.0"
     android:viewportWidth="24.0">
 
@@ -12,7 +12,7 @@
             android:rotation="45">
             <path
                 android:pathData="M0,0 L14,0"
-                android:strokeColor="@color/off_black"
+                android:strokeColor="@color/kh_uisdk_off_black"
                 android:strokeLineCap="round"
                 android:strokeWidth="3" />
         </group>
@@ -23,7 +23,7 @@
             android:translateY="1">
             <path
                 android:pathData="M0,0 L14,0"
-                android:strokeColor="@color/off_black"
+                android:strokeColor="@color/kh_uisdk_off_black"
                 android:strokeLineCap="round"
                 android:strokeWidth="3" />
         </group>
