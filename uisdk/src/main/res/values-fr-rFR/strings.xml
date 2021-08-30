@@ -84,7 +84,8 @@
     <string name="kh_uisdk_by_continuing_you_agree_to">En créant un compte Karhoo, vous acceptez nos</string>
     <string name="kh_uisdk_terms_conditions">Conditions générales d\'utilisation</string>
     <string name="kh_uisdk_privacy_policy_small">Règles de confidentialité".</string>
-    <string name="kh_uisdk_invalid_email">Erreur: email non valide</string>
+    <string name="kh_uisdk_invalid_input_value">valeur invalide</string>
+    <string name="kh_uisdk_invalid_email">email non valide</string>
     <string name="kh_uisdk_invalid_phone_number">Numéro de portable non valide</string>
     <string name="kh_uisdk_invalid_password">(Min. 8 caractères, 1 majuscule, 1 chiffre)</string>
     <string name="kh_uisdk_invalid_empty_field">Erreur: Champ de formulaire ne peut être vide.</string>

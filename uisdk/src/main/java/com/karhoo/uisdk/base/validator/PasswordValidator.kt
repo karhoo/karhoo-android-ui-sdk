@@ -1,10 +1,13 @@
 package com.karhoo.uisdk.base.validator
 
 import android.annotation.SuppressLint
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
 
 @Suppress("ComplexCondition")
 class PasswordValidator : SelfValidatingTextLayout.Validator {
+
+    override val errorTextResId = R.string.kh_uisdk_error_invalid_password
 
     @SuppressLint("DefaultLocale")
     override fun validate(field: String): Boolean {

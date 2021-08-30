@@ -75,6 +75,7 @@ class SelfValidatingTextLayout @JvmOverloads constructor(context: Context,
 
     interface Validator {
 
+        val errorTextResId: Int
         fun validate(field: String): Boolean
 
     }
