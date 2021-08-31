@@ -16,6 +16,7 @@ import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setGuestAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setKarhooAuthentication
 import com.karhoo.uisdk.UnitTestUISDKConfig.Companion.setTokenAuthentication
 import com.karhoo.uisdk.analytics.Analytics
+import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
@@ -36,6 +37,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.joda.time.DateTime
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -200,6 +202,81 @@ class CheckoutViewPresenterTests {
         verify(userStore).savedPaymentInfo
         verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
         verify(view).bindPriceAndEta(quote, "")
+    }
+
+    /**
+     * Given:   The passenger details view is visible
+     * When:    The user clicks back button
+     * Then:    The view should be dismissed and the click consumed
+     */
+    @Test
+    fun `back pressed consumed if passenger details visible`() {
+        whenever(view.isPassengerDetailsViewVisible()).thenReturn(true)
+
+        val returnValue = checkoutPresenter.consumeBackPressed()
+
+        verify(view).showPassengerDetails(false)
+        assertTrue(returnValue)
+    }
+
+    /**
+     * Given:   The passenger details view is not visible
+     * When:    The user clicks back button
+     * Then:    The clicked should not be consumed and return false
+     */
+    @Test
+    fun `back pressed not consumed if passenger details not visible`() {
+        whenever(view.isPassengerDetailsViewVisible()).thenReturn(false)
+
+        val returnValue = checkoutPresenter.consumeBackPressed()
+
+        verify(view, never()).showPassengerDetails(false)
+        assertFalse(returnValue)
+    }
+
+    /**
+     * Given:   The checkout is visible
+     * When:    The passenger details are valid but payment is not
+     * Then:    The button should be next state
+     */
+    @Test
+    fun `passenger details visible and valid but payment is not`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = false
+                                                                 )
+
+        assertEquals(returnValue, BookButtonState.NEXT)
+    }
+
+    /**
+     * Given:   The checkout is visible
+     * When:    The passenger details are invalid but payment is valid
+     * Then:    The button should be in next state
+     */
+    @Test
+    fun `passenger details are invalid but payment is valid`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = false,
+            isPaymentValid = true
+                                                                 )
+
+        assertEquals(returnValue, BookButtonState.NEXT)
+    }
+
+    /**
+     * Given:   The checkout is visible
+     * When:    The passenger details and payment is valid
+     * Then:    The button should be in book state
+     */
+    @Test
+    fun `passenger details and payment valid`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = true
+                                                                 )
+
+        assertEquals(returnValue, BookButtonState.BOOK)
     }
 
     /**

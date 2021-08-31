@@ -168,6 +168,7 @@
     <string name="kh_uisdk_car_description">Coche: %1$s</string>
     <string name="kh_uisdk_track_driver">Localizar conductor</string>
     <string name="kh_uisdk_book_now">Reservar</string>
+    <string name="kh_uisdk_next">Siguiente</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">No tienes reservas</string>
     <string name="kh_uisdk_upcoming_rides_empty">Recuerda que puedes reservar hasta con 7 días de antelación</string>
     <string name="kh_uisdk_permission_required">Para utilizar la app de Karhoo, activa el permiso de localización</string>

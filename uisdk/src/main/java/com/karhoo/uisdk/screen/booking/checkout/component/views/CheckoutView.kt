@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
@@ -25,8 +24,8 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsMVP
-import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentMVP
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
+import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -49,11 +48,12 @@ import org.joda.time.DateTime
 import java.util.Currency
 import java.util.HashMap
 
+@Suppress("TooManyFunctions")
 internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       attrs: AttributeSet? = null,
                                                       defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
                                                                                CheckoutViewContract.Actions,
-                                                                               BookingPaymentMVP.PaymentViewActions, BookingPaymentMVP.PaymentActions,
+                                                                               BookingPaymentContract.PaymentViewActions, BookingPaymentContract.PaymentActions,
                                                                                CheckoutViewContract.BookingRequestViewWidget {
     private var isGuest: Boolean = false
 
@@ -90,13 +90,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         //Default binding
         presenter.getPassengerDetails()
-        bindPaymentMethod(null)
 
         bookingCheckoutPassengerView.setOnClickListener {
             showPassengerDetails(true)
         }
 
-        passengersDetailLayout.validationCallback = object : PassengerDetailsMVP.Validator {
+        passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
                 loadingButtonCallback.enableButton(validated)
             }
@@ -233,24 +232,25 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-                titleResId = R.string.kh_uisdk_payment_issue,
-                messageResId = R.string.kh_uisdk_payment_issue_message,
-                karhooError = error,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card,
-                                                         DialogInterface.OnClickListener { d, _ ->
-                                                             onPaymentHandle(true)
-                                                             d.dismiss()
-                                                         }),
-                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel,
-                                                         DialogInterface.OnClickListener { d, _ ->
-                                                             onPaymentHandle(false)
-                                                             d.dismiss()
-                                                         }))
+            titleResId = R.string.kh_uisdk_payment_issue,
+            messageResId = R.string.kh_uisdk_payment_issue_message,
+            karhooError = error,
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card
+                                                    ) { d, _ ->
+                presenter.onPaymentFailureDialogPositive()
+                d.dismiss()
+            },
+            negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel
+                                                    ) { d, _ ->
+                presenter.onPaymentFailureDialogCancelled()
+                d.dismiss()
+            })
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {
-        // Do nothing
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid()
+                                                                       , isPaymentMethodValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -293,12 +293,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         presenter.resetBooking()
     }
 
-    private fun onPaymentHandle(positive: Boolean) = if (positive) {
-        presenter.onPaymentFailureDialogPositive()
-    } else {
-        presenter.onPaymentFailureDialogCancelled()
-    }
-
     override fun showLoading(show: Boolean) {
         if (show) {
             loadingButtonCallback.showLoading()
@@ -309,6 +303,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
+
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
@@ -352,42 +347,44 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengerDetails?.let {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-
+            bookingCheckoutPassengerView.setDottedBackground(false)
             passengersDetailLayout.setPassengerDetails(it)
 
         } ?: run {
+            bookingCheckoutPassengerView.setDottedBackground(true)
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
         }
     }
 
-    override fun bindPaymentMethod(paymentInfo: SavedPaymentInfo?) {
-//        bookingCheckoutPaymentView.setActionIcon(R.drawable.uidsk_ic_card_visa)
-//
-//        paymentInfo?.let {
-//            bookingCheckoutPaymentView.setTitle(paymentInfo.lastFour)
-//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-//        } ?: run {
-//            bookingCheckoutPaymentView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method))
-//            bookingCheckoutPaymentView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_mean))
-//        }
+    /**
+     * The user clicked to save the current passenger details
+     */
+    override fun clickedPassengerSaveButton() {
+        showPassengerDetails(false)
+        passengersDetailLayout.clickOnSaveButton()
+        passengersListener.onPassengerSelected(passengersDetailLayout.retrievePassenger())
+        bindPassenger(passengersDetailLayout.retrievePassenger())
     }
 
+    /**
+     * Display the passenger details page and disable the save button if the details are not valid
+     */
     override fun showPassengerDetails(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         passengersListener.onPassengerPageVisibilityChanged(show)
 
-        if (arePassengerDetailsValid()) {
-            passengersListener.onPassengerSelected(passengersDetailLayout.getPassengerDetails())
-            bindPassenger(passengersDetailLayout.getPassengerDetails())
-        } else {
-            loadingButtonCallback.enableButton(false)
-        }
+        loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
     }
 
-    override fun arePassengerDetailsValid(): Boolean {
-        return passengersDetailLayout.areFieldsValid()
-    }
+    override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
+
+    override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
+            VISIBLE
+
+    override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
+
+    override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 }

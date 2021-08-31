@@ -19,19 +19,24 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCard
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
 
-class BookingPaymentView @JvmOverloads constructor(context: Context,
-                                                   attrs: AttributeSet? = null,
-                                                   defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr), BookingPaymentMVP.View,
-        BookingPaymentMVP.Widget, PaymentDropInMVP.Actions {
+class BookingPaymentView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+                                                  ) : LinearLayout(context, attrs, defStyleAttr),
+                                                      BookingPaymentContract.View,
+                                                      BookingPaymentContract.Widget,
+                                                      PaymentDropInContract.Actions {
 
-    private var presenter: BookingPaymentMVP.Presenter? = BookingPaymentPresenter(this)
+    private var presenter: BookingPaymentContract.Presenter? = BookingPaymentPresenter(this)
 
     private var addCardIcon: Int = R.drawable.uisdk_ic_plus
 
-    var paymentActions: BookingPaymentMVP.PaymentActions? = null
-    var cardActions: BookingPaymentMVP.PaymentViewActions? = null
-    private var dropInView: PaymentDropInMVP.View? = null
+    var paymentActions: BookingPaymentContract.PaymentActions? = null
+    var cardActions: BookingPaymentContract.PaymentViewActions? = null
+    private var dropInView: PaymentDropInContract.View? = null
+
+    private var hasValidPayment = false
 
     init {
         inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
@@ -49,7 +54,7 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 
-    override fun setPaymentView(view: PaymentDropInMVP.View?) {
+    override fun setPaymentView(view: PaymentDropInContract.View?) {
         dropInView = view
     }
 
@@ -61,12 +66,20 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         presenter?.getPaymentViewVisibility()
     }
 
-    private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.BookingPaymentView,
-                defStyleAttr, R.style.KhPaymentView)
-        addCardIcon = typedArray.getResourceId(R.styleable.BookingPaymentView_addCardIcon, R
+    private fun getCustomisationParameters(
+        context: Context,
+        attr: AttributeSet?,
+        defStyleAttr: Int
+                                          ) {
+        val typedArray = context.obtainStyledAttributes(
+            attr, R.styleable.BookingPaymentView,
+            defStyleAttr, R.style.KhPaymentView
+                                                       )
+        addCardIcon = typedArray.getResourceId(
+            R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
-                .uisdk_ic_plus)
+                .uisdk_ic_plus
+                                              )
     }
 
     private fun changeCard() {
@@ -102,11 +115,16 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
 
     private fun setCardType(cardType: CardType?) {
         when (cardType) {
-            CardType.VISA -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable
-                    .uidsk_ic_card_visa)
-            CardType.MASTERCARD -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
-            CardType.AMEX -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
-            else -> cardLogoImage.background = ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
+            CardType.VISA -> cardLogoImage.background = ContextCompat.getDrawable(
+                context, R.drawable
+                    .uidsk_ic_card_visa
+                                                                                 )
+            CardType.MASTERCARD -> cardLogoImage.background =
+                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
+            CardType.AMEX -> cardLogoImage.background =
+                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
+            else -> cardLogoImage.background =
+                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
     }
 
@@ -122,26 +140,43 @@ class BookingPaymentView @JvmOverloads constructor(context: Context,
         paymentActions?.showPaymentDialog(karhooError)
     }
 
+    override fun hasValidPaymentType(): Boolean = hasValidPayment
+
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         if (savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()) {
+            hasValidPayment = true
             bindViews(savedPaymentInfo.cardType, savedPaymentInfo.lastFour)
             changeCardProgressBar.visibility = INVISIBLE
             editCardButtonVisibility(View.VISIBLE)
             changeCardLabel.visibility = VISIBLE
-            changeCardLabel.text = resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
+            changeCardLabel.text =
+                resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
             setCardType(savedPaymentInfo.cardType)
+            paymentLayout.setBackgroundResource(
+                R.drawable
+                    .uisdk_border_background
+                                               )
         } else {
-            cardNumberText.text = resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
-            changeCardLabel.text = resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
+            hasValidPayment = false
+            cardNumberText.text =
+                resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
+            changeCardLabel.text =
+                resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
             changeCardLabel.visibility = VISIBLE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
+            paymentLayout.setBackgroundResource(
+                R.drawable
+                    .uisdk_dotted_background
+                                               )
         }
         paymentActions?.handlePaymentDetailsUpdate()
     }
 
     override fun showPaymentUI(sdkToken: String, paymentData: String?, quote: Quote?) {
-        dropInView?.showPaymentDropInUI(context = context, sdkToken = sdkToken, paymentData =
-        paymentData, quote = quote)
+        dropInView?.showPaymentDropInUI(
+            context = context, sdkToken = sdkToken, paymentData =
+            paymentData, quote = quote
+                                       )
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {

@@ -20,7 +20,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
@@ -28,10 +28,10 @@ import com.karhoo.uisdk.util.intToPriceNoSymbol
 import java.util.Currency
 import java.util.Locale
 
-class BraintreePaymentPresenter(view: PaymentDropInMVP.Actions,
+class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
                                 private val userStore: UserStore = KarhooApi.userStore,
                                 private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String? = null
     private var nonce: String? = null

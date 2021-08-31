@@ -7,7 +7,7 @@ import com.karhoo.uisdk.util.formatMobileNumber
 import com.karhoo.uisdk.util.getCodeFromMobileNumber
 import com.karhoo.uisdk.util.getMobileNumberWithoutCode
 
-class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<PassengerDetailsMVP.View>(), PassengerDetailsMVP.Presenter {
+class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePresenter<PassengerDetailsContract.View>(), PassengerDetailsContract.Presenter {
     var passengerDetails: PassengerDetails? = null
 
     override var isEditingMode = true
@@ -53,7 +53,5 @@ class PassengerDetailsPresenter(view: PassengerDetailsMVP.View) : BasePresenter<
         }
         passengerDetails = passengerDetails?.copy(firstName = firstName, lastName = lastName,
                                                   email = email, phoneNumber = mobilePhoneNumber)
-
-        passengerDetails?.let { view?.storePassenger(it) }
     }
 }

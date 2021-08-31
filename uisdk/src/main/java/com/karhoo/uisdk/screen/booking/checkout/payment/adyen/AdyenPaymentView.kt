@@ -6,13 +6,13 @@ import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 
-class AdyenPaymentView constructor(actions: PaymentDropInMVP.Actions) : PaymentDropInMVP.View {
+class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInMVP.Presenter? = AdyenPaymentPresenter(actions)
-    var actions: PaymentDropInMVP.Actions? = null
+    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions)
+    var actions: PaymentDropInContract.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         presenter?.handleActivityResult(requestCode, resultCode, data)

@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewContainer
 import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewIcon
 import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewSubtitle
 import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewTitle
@@ -16,6 +17,12 @@ class ActionCellView @kotlin.jvm.JvmOverloads constructor(context: Context,
 
     override fun setActionIcon(iconId: Int) {
         view.actionViewIcon.setBackgroundResource(iconId)
+    }
+
+    override fun setDottedBackground(show: Boolean) {
+        view.actionViewContainer.setBackgroundResource(if (show) R.drawable
+            .uisdk_dotted_background else R.drawable
+            .uisdk_border_background)
     }
 
     override fun setSubtitle(subtitle: String) {

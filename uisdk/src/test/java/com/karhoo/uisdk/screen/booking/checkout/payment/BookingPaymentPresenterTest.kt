@@ -28,7 +28,7 @@ class BookingPaymentPresenterTest {
 
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
-    private var view: BookingPaymentMVP.View = mock()
+    private var view: BookingPaymentContract.View = mock()
     private val paymentProviderCall: Call<PaymentProvider> = mock()
     private val paymentProviderCaptor = argumentCaptor<(Resource<PaymentProvider>) -> Unit>()
 

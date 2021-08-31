@@ -296,6 +296,7 @@
     <string name="kh_uisdk_car_description">Véhicule: %1$s</string>
     <string name="kh_uisdk_track_driver">Suivre chauffeur</string>
     <string name="kh_uisdk_book_now">Réserver</string>
+    <string name="kh_uisdk_next">Suivant</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">Aucune course à venir</string>
     <string name="kh_uisdk_upcoming_rides_empty">Vous pouvez réserver jusqu\'à 7 jours à l\'avance.</string>
     <string name="kh_uisdk_title_past_rides_empty">Aucune course terminée</string>

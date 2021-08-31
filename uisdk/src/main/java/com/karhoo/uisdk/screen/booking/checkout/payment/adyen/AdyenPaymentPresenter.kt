@@ -22,7 +22,7 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInMVP
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
@@ -32,10 +32,10 @@ import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
 
-class AdyenPaymentPresenter(view: PaymentDropInMVP.Actions,
+class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                             private val userStore: UserStore = KarhooApi.userStore,
                             private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentDropInMVP.Actions>(), PaymentDropInMVP.Presenter, UserManager.OnUserPaymentChangedListener {
+    : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter, UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
     var quote: Quote? = null

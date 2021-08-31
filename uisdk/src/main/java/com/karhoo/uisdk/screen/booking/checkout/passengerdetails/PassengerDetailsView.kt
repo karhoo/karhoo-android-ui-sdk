@@ -34,10 +34,10 @@ class PassengerDetailsView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
                                                     ) :
-    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsMVP.View {
+    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsContract.View {
 
-    private val presenter: PassengerDetailsMVP.Presenter = PassengerDetailsPresenter(this)
-    var validationCallback: PassengerDetailsMVP.Validator? = null
+    private val presenter: PassengerDetailsContract.Presenter = PassengerDetailsPresenter(this)
+    var validationCallback: PassengerDetailsContract.Validator? = null
 
     private val phoneNumber: String
         get() = presenter.validateMobileNumber(
@@ -241,8 +241,14 @@ class PassengerDetailsView @JvmOverloads constructor(
                 && lastNameLayout.error != null
     }
 
-    override fun storePassenger(passengerDetails: PassengerDetails) {
-        val pd = Gson().toJson(passengerDetails)
+    override fun clickOnSaveButton() {
+        getPassengerDetails()?.let {
+            storePassenger(it)
+        }
+    }
+
+    override fun storePassenger(passenger: PassengerDetails) {
+        val pd = Gson().toJson(passenger)
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPrefs.edit().putString(PASSENGER_DETAILS_SHARED_PREFS, pd).apply()
     }

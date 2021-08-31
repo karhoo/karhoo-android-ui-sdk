@@ -3,7 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 import android.content.res.Resources
 import com.karhoo.sdk.api.network.request.PassengerDetails
 
-interface PassengerDetailsMVP {
+interface PassengerDetailsContract {
     interface View {
         fun setPassengerDetails(passengerDetails: PassengerDetails)
 
@@ -22,6 +22,8 @@ interface PassengerDetailsMVP {
         fun storePassenger(passengerDetails: PassengerDetails)
 
         fun retrievePassenger(): PassengerDetails?
+
+        fun clickOnSaveButton()
     }
 
     interface Presenter {

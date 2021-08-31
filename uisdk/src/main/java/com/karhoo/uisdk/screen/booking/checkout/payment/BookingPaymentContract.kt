@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 
-interface BookingPaymentMVP {
+interface BookingPaymentContract {
 
     interface Widget {
 
@@ -22,20 +22,23 @@ interface BookingPaymentMVP {
 
         fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
-        fun setPaymentView(view: PaymentDropInMVP.View?)
+        fun setPaymentView(view: PaymentDropInContract.View?)
 
         fun setViewVisibility(visibility: Int)
 
         fun updatePaymentViewVisbility(visibility: Int)
+
+        fun hasValidPaymentType(): Boolean
     }
 
     interface Presenter {
 
-        fun createPaymentView(actions: PaymentDropInMVP.Actions)
+        fun createPaymentView(actions: PaymentDropInContract.Actions)
 
         fun getPaymentProvider()
 
         fun getPaymentViewVisibility()
+
     }
 
     interface PaymentViewActions {
