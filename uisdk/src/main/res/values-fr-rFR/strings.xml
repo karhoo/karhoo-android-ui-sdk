@@ -225,9 +225,9 @@
     <string name="kh_uisdk_fleet_recommendation_subject">Recommandation de flotte</string>
 
     <!-- Categories -->
-    <string name="kh_uisdk_saloon">Eco</string>
+    <string name="kh_uisdk_saloon">Berline</string>
     <string name="kh_uisdk_mpv">Van</string>
-    <string name="kh_uisdk_exec">Berline</string>
+    <string name="kh_uisdk_exec">Business</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_electric">Electrique</string>
     <string name="kh_uisdk_moto">Moto</string>

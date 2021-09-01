@@ -113,8 +113,8 @@
     <string name="kh_uisdk_support_report_issue">Reportar problema</string>
     <string name="kh_uisdk_title_activity_intent_chooser_send_email">Enviar Email</string>
     <string name="kh_uisdk_all_category">Todo</string>
-    <string name="kh_uisdk_saloon">Salón</string>
-    <string name="kh_uisdk_mpv">MPV</string>
+    <string name="kh_uisdk_saloon">Sedan</string>
+    <string name="kh_uisdk_mpv">Monovolumen</string>
     <string name="kh_uisdk_exec">Ejecutivo</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_electric">Eléctrico</string>
