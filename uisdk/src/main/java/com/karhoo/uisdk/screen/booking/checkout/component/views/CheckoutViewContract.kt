@@ -40,7 +40,7 @@ interface CheckoutViewContract {
 
         fun initialisePaymentProvider(quote: Quote?)
 
-        fun onError()
+        fun onError(error: KarhooError?)
 
         fun onTripBookedSuccessfully(tripInfo: TripInfo)
 
@@ -64,7 +64,8 @@ interface CheckoutViewContract {
 
         fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
                          webViewListener: CheckoutFragmentContract.WebViewListener,
-                         passengersListener: CheckoutFragmentContract.PassengersListener)
+                         passengersListener: CheckoutFragmentContract.PassengersListener,
+                         bookingListener: CheckoutFragmentContract.BookingListener)
 
         fun bindPassenger(passengerDetails: PassengerDetails?)
 
