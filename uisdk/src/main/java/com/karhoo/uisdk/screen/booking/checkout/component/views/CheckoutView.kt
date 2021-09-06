@@ -328,6 +328,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     // fragment should pass on the activity result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+
+        loadingButtonCallback.onLoadingComplete()
     }
 
     override fun startBooking() {
