@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
@@ -22,9 +20,9 @@ internal class CheckoutFragment : Fragment() {
     private lateinit var presenter: CheckoutPresenter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
                              ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_checkout_fragment, container, false)
 
@@ -61,10 +59,10 @@ internal class CheckoutFragment : Fragment() {
         }, object : CheckoutFragmentContract.PassengersListener {
             override fun onPassengerPageVisibilityChanged(visible: Boolean) {
                 checkoutActionButton.setText(
-                    presenter.getBookButtonState(
-                        visible, checkoutView
-                            .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid()
-                                                ).resId
+                        presenter.getBookButtonState(
+                                visible, checkoutView
+                                .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid()
+                                                    ).resId
                                             )
             }
 
@@ -74,10 +72,10 @@ internal class CheckoutFragment : Fragment() {
         })
 
         checkoutView.showBookingRequest(
-            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-            bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
-            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-            bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
+                quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+                bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+                bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
                                        )
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
@@ -89,7 +87,8 @@ internal class CheckoutFragment : Fragment() {
                         checkoutActionButton.onLoadingComplete()
                     }
                 } else {
-                    if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() !is AuthenticationMethod.KarhooUser) {
+                    if (!checkoutView.arePassengerDetailsValid()) {
+                        checkoutView.showPassengerDetails(true)
                         checkoutActionButton.onLoadingComplete()
                     } else {
                         checkoutView.startBooking()
@@ -99,11 +98,11 @@ internal class CheckoutFragment : Fragment() {
         }
 
         checkoutActionButton.setText(
-            presenter.getBookButtonState(
-                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
-                isPaymentValid = checkoutView.isPaymentMethodValid()
-                                        )
-                .resId
+                presenter.getBookButtonState(
+                        arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                        isPaymentValid = checkoutView.isPaymentMethodValid()
+                                            )
+                        .resId
                                     )
 
         return view
