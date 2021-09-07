@@ -147,6 +147,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_METADATA_KEY = "BOOKING_CHECKOUT_METADATA_KEY"
         const val BOOKING_CHECKOUT_STATUS_KEY = "BOOKING_STATUS_KEY"
         const val BOOKING_CHECKOUT_TRIP_INFO_KEY = "TRIP_INFO_KEY"
+        const val BOOKING_CHECKOUT_ERROR_DATA = "BOOKING_CHECKOUT_ERROR_DATA"
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
 
         /** Errors outputted by the Booking Request Activity**/

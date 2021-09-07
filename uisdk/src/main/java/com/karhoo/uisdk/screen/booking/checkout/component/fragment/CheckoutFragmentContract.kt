@@ -1,5 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
+import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface CheckoutFragmentContract {
@@ -17,6 +19,11 @@ interface CheckoutFragmentContract {
     interface PassengersListener {
         fun onPassengerSelected(passengerDetails: PassengerDetails?)
         fun onPassengerPageVisibilityChanged(visible: Boolean)
+    }
+
+    interface BookingListener {
+        fun onTripBooked(tripInfo: TripInfo?)
+        fun onBookingFailed(error: KarhooError?)
     }
 
     interface Presenter {

@@ -63,6 +63,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private lateinit var loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener
     private lateinit var webViewListener: CheckoutFragmentContract.WebViewListener
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
+    private lateinit var bookingListener: CheckoutFragmentContract.BookingListener
 
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
@@ -104,10 +105,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
                               webViewListener: CheckoutFragmentContract.WebViewListener,
-                              passengersListener: CheckoutFragmentContract.PassengersListener) {
+                              passengersListener: CheckoutFragmentContract.PassengersListener,
+                              bookingListener: CheckoutFragmentContract.BookingListener) {
         this.loadingButtonCallback = loadingButtonCallback
         this.webViewListener = webViewListener
         this.passengersListener = passengersListener
+        this.bookingListener = bookingListener
     }
 
     override fun fillInPassengerDetails(details: PassengerDetails?) {
@@ -194,17 +197,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun onTripBookedSuccessfully(tripInfo: TripInfo) {
         loadingButtonCallback.onLoadingComplete()
 
-        // TODO pass info to the fragment
-
-        //        val data = Intent()
-        //        data.putExtra(BookingCheckoutActivity.BOOKING_REQUEST_TRIP_INFO_KEY, tripInfo)
-        //
-        //        setResult(AppCompatActivity.RESULT_OK, data)
-        //        finish()
+        bookingListener.onTripBooked(tripInfo)
     }
 
-    override fun onError() {
+    override fun onError(error: KarhooError?) {
         loadingButtonCallback.onLoadingComplete()
+
+        bookingListener.onBookingFailed(error)
     }
 
     override fun displayFlightDetailsField(poiType: PoiType?) {
@@ -232,25 +231,24 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-            titleResId = R.string.kh_uisdk_payment_issue,
-            messageResId = R.string.kh_uisdk_payment_issue_message,
-            karhooError = error,
-            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card
-                                                    ) { d, _ ->
-                presenter.onPaymentFailureDialogPositive()
-                d.dismiss()
-            },
-            negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel
-                                                    ) { d, _ ->
-                presenter.onPaymentFailureDialogCancelled()
-                d.dismiss()
-            })
+                titleResId = R.string.kh_uisdk_payment_issue,
+                messageResId = R.string.kh_uisdk_payment_issue_message,
+                karhooError = error,
+                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card
+                                                        ) { d, _ ->
+                    presenter.onPaymentFailureDialogPositive()
+                    d.dismiss()
+                },
+                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_cancel
+                                                        ) { d, _ ->
+                    presenter.onPaymentFailureDialogCancelled()
+                    d.dismiss()
+                })
         KarhooAlertDialogHelper(context).showAlertDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid()
-                                                                       , isPaymentMethodValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -308,7 +306,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading(true)
-        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, null, bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengersDetailLayout.retrievePassenger(), bookingComments)
     }
 
     override fun initialisePaymentProvider(quote: Quote?) {
@@ -330,6 +328,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     // fragment should pass on the activity result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+
+        loadingButtonCallback.onLoadingComplete()
     }
 
     override fun startBooking() {

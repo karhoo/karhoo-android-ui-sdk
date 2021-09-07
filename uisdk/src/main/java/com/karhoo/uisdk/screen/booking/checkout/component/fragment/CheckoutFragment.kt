@@ -1,15 +1,21 @@
 package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.karhoo.sdk.api.KarhooError
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import java.util.HashMap
@@ -68,6 +74,25 @@ internal class CheckoutFragment : Fragment() {
 
             override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
                 presenter.savePassenger(passengerDetails)
+            }
+        }, object : CheckoutFragmentContract.BookingListener {
+            override fun onBookingFailed(error: KarhooError?) {
+                val intent = Intent()
+                intent.putExtra(BOOKING_CHECKOUT_ERROR_DATA, error)
+
+                activity?.setResult(RESULT_CANCELED, intent)
+                activity?.finish()
+            }
+
+            override fun onTripBooked(tripInfo: TripInfo?) {
+                val intent = Intent()
+                val data = Bundle()
+                data.putParcelable(BOOKING_CHECKOUT_TRIP_INFO_KEY, tripInfo)
+
+                intent.putExtras(data)
+
+                activity?.setResult(RESULT_OK, intent)
+                activity?.finish()
             }
         })
 

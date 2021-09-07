@@ -243,7 +243,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
-        view?.onError()
+        view?.onError(karhooError)
         bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingError(stringId, karhooError))
     }
 

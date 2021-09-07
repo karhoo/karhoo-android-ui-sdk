@@ -151,7 +151,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
         verify(view, never()).bindPriceAndEta(quote, "")
-        verify(view).onError()
+        verify(view).onError(null)
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
                 .Event
                 .BookingError(R.string
@@ -173,7 +173,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
         verify(view, never()).bindPriceAndEta(quote, "")
-        verify(view).onError()
+        verify(view).onError(null)
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
                 .Event
                 .BookingError(R.string
@@ -474,7 +474,7 @@ class CheckoutViewPresenterTests {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(view).onError()
+        verify(view).onError(any())
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
                 .Event
                 .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
@@ -498,7 +498,7 @@ class CheckoutViewPresenterTests {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
-        verify(view).onError()
+        verify(view).onError(any())
         verify(bookingRequestStateViewModel).process(CheckoutViewContract
                 .Event
                 .BookingError(R.string
