@@ -1,6 +1,8 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -9,16 +11,20 @@ import androidx.core.widget.addTextChangedListener
 import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.heetch.countrypicker.Utils
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.validator.EmailValidator
-import com.karhoo.uisdk.base.validator.EmptyFieldValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
-import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
 import com.karhoo.uisdk.base.validator.PersonNameValidator
+import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
+import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity.Companion.COUNTRY_CODE_KEY
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryCodeSpinner
+import com.karhoo.uisdk.util.parsePhoneNumber
+import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryFlagImageView
+import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryFlagLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryPrefixCodeText
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailInput
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.firstNameInput
@@ -30,20 +36,14 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
 class PassengerDetailsView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
                                                     ) :
-    ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsContract.View {
+        ConstraintLayout(context, attrs, defStyleAttr), PassengerDetailsContract.View {
 
     private val presenter: PassengerDetailsContract.Presenter = PassengerDetailsPresenter(this)
     var validationCallback: PassengerDetailsContract.Validator? = null
-
-    private val phoneNumber: String
-        get() = presenter.validateMobileNumber(
-            code = countryCodeSpinner.selectedItem.toString(),
-            number = mobileNumberInput.text.toString()
-                                              )
 
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
@@ -60,43 +60,19 @@ class PassengerDetailsView @JvmOverloads constructor(
     }
 
     private fun validateFirstNameField(showError: Boolean) {
-        validateField(firstNameLayout, showError, PersonNameValidator())
+        presenter.validateField(firstNameLayout, showError, PersonNameValidator())
     }
 
     private fun validateLastNameField(showError: Boolean) {
-        validateField(lastNameLayout, showError, PersonNameValidator())
+        presenter.validateField(lastNameLayout, showError, PersonNameValidator())
     }
 
     private fun validateEmailField(showError: Boolean) {
-        validateField(emailLayout, showError, EmailValidator())
+        presenter.validateField(emailLayout, showError, EmailValidator())
     }
 
     private fun validateMobileNumberField(showError: Boolean) {
-        validateField(mobileNumberLayout, showError, PhoneNumberValidator())
-    }
-
-    private fun validateField(
-        layout: TextInputLayout,
-        showError: Boolean,
-        validator: SelfValidatingTextLayout.Validator
-                             ) {
-        if (!EmptyFieldValidator().validate(layout.editText?.text.toString())) {
-            layout.isErrorEnabled = true
-            if (showError) {
-                layout.error =
-                    resources.getString(EmptyFieldValidator().errorTextResId)
-            }
-        } else if ((validator is PhoneNumberValidator && !arePhoneFieldsValid(validator))
-            || !validator.validate(layout.editText?.text.toString())){
-            layout.isErrorEnabled = true
-            if (showError) {
-                layout.error =
-                    resources.getString(validator.errorTextResId)
-            }
-        } else {
-            layout.isErrorEnabled = false
-            layout.error = null
-        }
+        presenter.validateField(mobileNumberLayout, showError, PhoneNumberValidator())
     }
 
     private fun initialiseFieldListeners() {
@@ -119,17 +95,11 @@ class PassengerDetailsView @JvmOverloads constructor(
             validationCallback?.onFieldsValidated(areFieldsValid())
         }
 
-        countryCodeSpinner.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                if (!arePhoneFieldsValid(PhoneNumberValidator())) {
-                    mobileNumberLayout.error =
-                        resources.getString(R.string.kh_uisdk_invalid_phone_number)
-                } else {
-                    mobileNumberLayout.error = null
-                }
-            }
-
-            validationCallback?.onFieldsValidated(areFieldsValid())
+        countryFlagLayout.setOnClickListener { _ ->
+            val intent = Intent(context, CountryPickerActivity::class.java)
+            intent.putExtra(COUNTRY_CODE_KEY, presenter.getCountryCode())
+            (context as Activity).startActivityForResult(intent, CountryPickerActivity
+                    .COUNTRY_PICKER_ACTIVITY_CODE)
         }
 
         firstNameInput.onFocusChangeListener = createFocusChangeListener()
@@ -138,24 +108,35 @@ class PassengerDetailsView @JvmOverloads constructor(
         mobileNumberInput.onFocusChangeListener = createFocusChangeListener()
     }
 
+    override fun setErrorOnField(field: TextInputLayout, errorId: Int) {
+        field.error = resources.getString(errorId)
+    }
+
+    override fun setCountryFlag(countryCode: String, dialingCode: String) {
+        val countryFlag = Utils.getMipmapResId(context, countryCode.toLowerCase() + "_flag")
+
+        countryFlagImageView.setImageResource(countryFlag)
+        countryPrefixCodeText.text = "+" + dialingCode
+
+        presenter.setCountryCode(countryCode)
+        presenter.setDialingCode(dialingCode)
+
+        presenter.validateField(mobileNumberLayout, true, PhoneNumberValidator())
+
+        validationCallback?.onFieldsValidated(areFieldsValid())
+    }
+
     /**
      *  Method used to check if any input text has focus, if not then we close the keyboard
      *  @param view The view that last had the focus and can close the keyboard
      */
     private fun hideKeyboardIfNothingFocus(view: View) {
         if (!nameHasFocus()
-            && !emailInput.hasFocus()
-            && !mobileNumberInput.hasFocus()
+                && !emailInput.hasFocus()
+                && !mobileNumberInput.hasFocus()
         ) {
             view.hideSoftKeyboard()
         }
-    }
-
-    private fun arePhoneFieldsValid(validator: PhoneNumberValidator): Boolean {
-        return validator.validate(
-            mobileNumberInput.text.toString(),
-            countryCodeSpinner.selectedItem.toString()
-        )
     }
 
     private fun nameHasFocus(): Boolean {
@@ -170,12 +151,6 @@ class PassengerDetailsView @JvmOverloads constructor(
             } else {
                 v.clearFocus()
                 hideKeyboardIfNothingFocus(v)
-                presenter.updatePassengerDetails(
-                    firstName = firstNameInput.text.toString(),
-                    lastName = lastNameInput.text.toString(),
-                    email = emailInput.text.toString(),
-                    mobilePhoneNumber = phoneNumber
-                                                )
             }
         }
 
@@ -213,12 +188,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         firstNameInput.setText(passengerDetails.firstName)
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
-        countryCodeSpinner.setCountryCode(
-            presenter.getCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources)
-                                         )
-        mobileNumberInput.setText(
-            presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources)
-                                 )
+        mobileNumberInput.setText(presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
+        setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context))
     }
 
     override fun bindEditMode(isEditing: Boolean) {
@@ -242,6 +213,13 @@ class PassengerDetailsView @JvmOverloads constructor(
     }
 
     override fun clickOnSaveButton() {
+        presenter.updatePassengerDetails(
+                firstName = firstNameInput.text.toString(),
+                lastName = lastNameInput.text.toString(),
+                email = emailInput.text.toString(),
+                mobilePhoneNumber = parsePhoneNumber(mobileNumberInput.text.toString(), presenter
+                        .getCountryCode()))
+
         getPassengerDetails()?.let {
             storePassenger(it)
         }

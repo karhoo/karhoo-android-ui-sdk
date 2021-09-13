@@ -1,7 +1,10 @@
 package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
+import android.content.Context
 import android.content.res.Resources
+import com.google.android.material.textfield.TextInputLayout
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
 
 interface PassengerDetailsContract {
     interface View {
@@ -24,6 +27,11 @@ interface PassengerDetailsContract {
         fun retrievePassenger(): PassengerDetails?
 
         fun clickOnSaveButton()
+
+        fun setCountryFlag(countryCode: String, dialingCode: String)
+
+        fun setErrorOnField(field: TextInputLayout, errorId: Int)
+
     }
 
     interface Presenter {
@@ -31,7 +39,7 @@ interface PassengerDetailsContract {
 
         fun bindViews(passengerDetails: PassengerDetails)
 
-        fun getCountryCodeFromPhoneNumber(number: String?, resources: Resources): String
+        fun getCountryDialingCodeFromNumber(number: String?, resources: Resources): String
 
         fun passengerDetailsValue(): PassengerDetails?
 
@@ -43,6 +51,23 @@ interface PassengerDetailsContract {
                                    mobilePhoneNumber: String)
 
         fun validateMobileNumber(code: String, number: String): String
+
+        fun getCountryCode(context: Context): String
+
+        fun getDialingCode(context: Context): String
+
+        fun validateField(
+                layout: TextInputLayout,
+                showError: Boolean,
+                validator: SelfValidatingTextLayout.Validator)
+
+        fun formatPhoneNumber(phoneNumber: String, countryCode: String): String
+
+        fun setCountryCode(countryCode: String)
+
+        fun setDialingCode(dialingCode: String)
+
+        fun getCountryCode(): String
     }
 
     interface Validator {

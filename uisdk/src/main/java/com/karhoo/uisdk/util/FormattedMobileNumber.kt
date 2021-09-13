@@ -22,12 +22,26 @@ fun getMobileNumberWithoutCode(number: String, res: Resources): String {
     return number.removePrefix(code)
 }
 
-fun isValidNumber(number: String): Boolean {
+fun isValidNumber(number: String, countryCode: String): Boolean {
     val util = PhoneNumberUtil.getInstance()
     return try {
-        val phoneNumber = util.parse(number, null)
+        val phoneNumber = util.parse(number, countryCode)
         util.isValidNumber(phoneNumber)
     } catch (e: Exception) {
         false
+    }
+}
+
+fun parsePhoneNumber(number: String, countryCode: String): String {
+    val util = PhoneNumberUtil.getInstance()
+    try {
+        val phoneNumber = util.parse(number, countryCode)
+        if(util.isValidNumber(phoneNumber)) {
+            return "+" + phoneNumber.countryCode + phoneNumber.nationalNumber
+        }
+
+        return ""
+    } catch (e: Exception) {
+        return ""
     }
 }
