@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.address.addresslist
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -34,7 +35,9 @@ class AddressResultListView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.uisdk_view_simple_recycler, this)
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            forceHasOverlappingRendering(false)
+        }
         addressAdapter = AddressAdapter(context, KarhooUISDK.analytics).apply {
             setItemClickListener { _, position, item -> handleSelectedAddress(item, position) }
         }
