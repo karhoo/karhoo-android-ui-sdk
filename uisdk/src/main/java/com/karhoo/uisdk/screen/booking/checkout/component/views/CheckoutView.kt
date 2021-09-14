@@ -358,17 +358,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengerDetails?.let {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-            bookingCheckoutPassengerView.setDottedBackground(false)
             passengersDetailLayout.setPassengerDetails(it)
 
         } ?: run {
-            bookingCheckoutPassengerView.setDottedBackground(true)
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
 
             val countryCode = getDefaultCountryCode(context)
             passengersDetailLayout.setCountryFlag(countryCode, getDefaultCountryDialingCode(countryCode))
         }
+
+        bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
     }
 
     /**
@@ -391,6 +391,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengersListener.onPassengerPageVisibilityChanged(show)
 
         loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
+
+        if (!show) {
+            bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
+        }
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
