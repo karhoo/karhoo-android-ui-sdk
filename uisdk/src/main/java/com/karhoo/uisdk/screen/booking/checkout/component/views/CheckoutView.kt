@@ -388,6 +388,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
+        fillInPassengerDetails(passengersDetailLayout.getPassengerDetails())
+
         passengersListener.onPassengerPageVisibilityChanged(show)
 
         loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)

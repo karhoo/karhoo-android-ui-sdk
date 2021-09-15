@@ -3,6 +3,7 @@ package com.karhoo.uisdk.base.view.countrycodes
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.heetch.countrypicker.Country
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_activity_address.toolbar
+import kotlinx.android.synthetic.main.uisdk_activity_country_picker.search_view_layout
 import java.text.Collator
 import java.util.Locale
 
@@ -27,6 +30,19 @@ internal class CountryPickerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.uisdk_activity_country_picker)
+
+        search_view_layout.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+                .setHintTextColor(resources.getColor(R.color.kh_uisdk_search_hint_color))
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+        }
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         selectedCountryCode = intent.getStringExtra(COUNTRY_CODE_KEY) ?: ""
 
@@ -104,7 +120,7 @@ internal class CountryPickerActivity : AppCompatActivity() {
         /**
          * If a country code is set, it will
          */
-        fun countryCode(countryCode: String) : Builder {
+        fun countryCode(countryCode: String): Builder {
             extrasBundle.putString(COUNTRY_CODE_KEY, countryCode)
             return this
         }

@@ -7,21 +7,32 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search_view_layout"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        app:iconifiedByDefault="false" />
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:theme="@style/AppTheme.Toolbar">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            style="@style/KhCountryPickerSearchStyle"
+            app:iconifiedByDefault="false"
+            app:searchIcon="@null"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/country_picker_list"
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_view_layout"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="8dp"
         android:scrollbarSize="4dp" />
 </RelativeLayout>

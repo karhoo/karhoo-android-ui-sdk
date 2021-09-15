@@ -464,4 +464,9 @@
         <item name="fontWeight">400</item>
         <item name="lineHeight">15dp</item>
     </style>
+
+    <style name="KhCountryPickerSearchStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
+        <item name="android:textColor">@color/kh_uisdk_search_hint_color</item>
+    </style>
 </resources>

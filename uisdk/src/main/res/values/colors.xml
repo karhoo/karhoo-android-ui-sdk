@@ -22,6 +22,7 @@
     <color name="kh_uisdk_passenger_icon_stroke">@color/black</color>
     <color name="kh_uisdk_chevron_arrow_icon">@color/black</color>
     <color name="kh_uisdk_light_gray">#F5F5F5</color>
+    <color name="kh_uisdk_search_hint_color">#B3ffffff</color>
     <color name="kh_uisdkic_chevron_left">@color/black</color>
 
     <!-- Gradients -->
