@@ -70,7 +70,7 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
         var countryDialingCode = getCountryDialingCodeFromNumber(passengerDetails?.phoneNumber,
                                                                  context.resources)
 
-        if (countryDialingCode.isNotEmpty() && countryDialingCode.subSequence(0, 1).equals("+")) {
+        if (countryDialingCode.isNotEmpty() && countryDialingCode.subSequence(0, 1).equals(PLUS_SIGN)) {
             countryDialingCode = countryDialingCode.drop(1)
         }
         val countryMappings = CountryUtils.parseCountries(
@@ -113,7 +113,7 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
                 view?.setErrorOnField(layout, EmptyFieldValidator().errorTextResId)
             }
         } else if (validator is PhoneNumberValidator && !validator.validatePhoneNumber(
-                        "+" + selectedDialingCode + layout.editText?.text.toString(),
+                        PLUS_SIGN + selectedDialingCode + layout.editText?.text.toString(),
                         selectedCountryCode)) {
             layout.isErrorEnabled = true
             if (showError) {
@@ -135,5 +135,9 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
 
     override fun getCountryCode(): String {
         return selectedCountryCode
+    }
+
+    companion object {
+        const val PLUS_SIGN = "+"
     }
 }

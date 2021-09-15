@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.base.view.countrycodes
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.heetch.countrypicker.Country
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import java.text.Collator
 import java.util.Locale
@@ -51,7 +53,7 @@ internal class CountryPickerActivity : AppCompatActivity() {
         listView?.layoutManager = LinearLayoutManager(this)
         listView?.adapter = adapter
 
-        searchView?.queryHint = "Search"
+        searchView?.queryHint = getString(R.string.kh_uisdk_country_search)
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (searchView?.query.toString().isEmpty()) {
@@ -93,6 +95,26 @@ internal class CountryPickerActivity : AppCompatActivity() {
                     Locale(locale?.language, country1.isoCode).displayCountry,
                     Locale(locale?.language, country2.isoCode).displayCountry
                             )
+        }
+    }
+
+    class Builder {
+        private val extrasBundle: Bundle = Bundle()
+
+        /**
+         * If a country code is set, it will
+         */
+        fun countryCode(countryCode: String) : Builder {
+            extrasBundle.putString(COUNTRY_CODE_KEY, countryCode)
+            return this
+        }
+
+        /**
+         * Returns a launchable Intent to the configured booking activity with the given
+         * builder parameters in the extras bundle
+         */
+        fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.countryPicker).apply {
+            putExtras(extrasBundle)
         }
     }
 

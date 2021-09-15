@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -18,7 +17,7 @@ import com.karhoo.uisdk.base.validator.EmailValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
 import com.karhoo.uisdk.base.validator.PersonNameValidator
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
-import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity.Companion.COUNTRY_CODE_KEY
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsPresenter.Companion.PLUS_SIGN
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
 import com.karhoo.uisdk.util.parsePhoneNumber
@@ -96,9 +95,9 @@ class PassengerDetailsView @JvmOverloads constructor(
         }
 
         countryFlagLayout.setOnClickListener { _ ->
-            val intent = Intent(context, CountryPickerActivity::class.java)
-            intent.putExtra(COUNTRY_CODE_KEY, presenter.getCountryCode())
-            (context as Activity).startActivityForResult(intent, CountryPickerActivity
+            val builder = CountryPickerActivity.Builder().countryCode(presenter.getCountryCode())
+            (context as Activity).startActivityForResult(builder.build(context),
+                                                         CountryPickerActivity
                     .COUNTRY_PICKER_ACTIVITY_CODE)
         }
 
@@ -116,7 +115,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         val countryFlag = Utils.getMipmapResId(context, countryCode.toLowerCase() + "_flag")
 
         countryFlagImageView.setImageResource(countryFlag)
-        countryPrefixCodeText.text = "+" + dialingCode
+        countryPrefixCodeText.text = PLUS_SIGN + dialingCode
 
         presenter.setCountryCode(countryCode)
         presenter.setDialingCode(dialingCode)
