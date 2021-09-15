@@ -28,8 +28,10 @@ class LoadingButtonView @JvmOverloads constructor(context: Context,
     }
 
     override fun onClick(v: View) {
-        showLoading()
-        actions?.onLoadingButtonClick()
+        if(bookingButtonLayout.isEnabled) {
+            showLoading()
+            actions?.onLoadingButtonClick()
+        }
     }
 
     fun onLoadingComplete() {

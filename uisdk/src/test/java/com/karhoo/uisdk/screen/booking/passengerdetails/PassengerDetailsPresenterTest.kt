@@ -99,7 +99,7 @@ class PassengerDetailsPresenterTest {
         val codes = arrayOf("22", "33", "44")
         whenever(res.getStringArray(any())).thenReturn(codes)
 
-        val formattedNumber = presenter.getCountryCodeFromPhoneNumber("447777", res)
+        val formattedNumber = presenter.getCountryDialingCodeFromNumber("447777", res)
         assertEquals("44", formattedNumber)
     }
 

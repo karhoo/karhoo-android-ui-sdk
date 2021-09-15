@@ -23,6 +23,9 @@ import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
+import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryCode
+import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDialingCode
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
@@ -325,11 +328,19 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         webViewListener.showWebViewOnPress(url)
     }
 
-    // fragment should pass on the activity result
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CountryPickerActivity.COUNTRY_PICKER_ACTIVITY_CODE && resultCode ==
+                CountryPickerActivity.COUNTRY_PICKER_ACTIVITY_RESULT_CODE) {
 
-        loadingButtonCallback.onLoadingComplete()
+            val countryCode = data?.getStringExtra(CountryPickerActivity.COUNTRY_CODE_KEY) ?: ""
+            val dialingCode = data?.getStringExtra(CountryPickerActivity
+                                                           .COUNTRY_DIALING_CODE_KEY) ?: ""
+
+            passengersDetailLayout.setCountryFlag(countryCode, dialingCode)
+        } else {
+            bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+            loadingButtonCallback.onLoadingComplete()
+        }
     }
 
     override fun startBooking() {
@@ -347,22 +358,25 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengerDetails?.let {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
-            bookingCheckoutPassengerView.setDottedBackground(false)
             passengersDetailLayout.setPassengerDetails(it)
 
         } ?: run {
-            bookingCheckoutPassengerView.setDottedBackground(true)
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
+
+            val countryCode = getDefaultCountryCode(context)
+            passengersDetailLayout.setCountryFlag(countryCode, getDefaultCountryDialingCode(countryCode))
         }
+
+        bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
     }
 
     /**
      * The user clicked to save the current passenger details
      */
     override fun clickedPassengerSaveButton() {
-        showPassengerDetails(false)
         passengersDetailLayout.clickOnSaveButton()
+        showPassengerDetails(false)
         passengersListener.onPassengerSelected(passengersDetailLayout.retrievePassenger())
         bindPassenger(passengersDetailLayout.retrievePassenger())
     }
@@ -377,6 +391,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengersListener.onPassengerPageVisibilityChanged(show)
 
         loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
+
+        if (!show) {
+            bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
+        }
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()

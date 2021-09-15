@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
@@ -66,6 +67,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/kh_uisdk_email_hint"
             android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+            android:paddingBottom="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
@@ -86,59 +88,51 @@
             android:weightSum="1"
             app:layout_constraintTop_toBottomOf="@id/emailLayout">
 
-            <FrameLayout
-                android:layout_width="@dimen/kh_uisdk_spacing_none"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:id="@+id/countryFlagLayout"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
+                android:layout_marginTop="5dp"
                 android:layout_weight="0.3"
-                android:orientation="vertical">
+                android:background="@drawable/uisdk_country_picker_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/countryFlagImageView"
+                    android:layout_width="48dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/bt_ic_visa" />
 
                 <TextView
+                    android:id="@+id/countryPrefixCodeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
-                    android:layout_marginTop="@dimen/kh_uisdk_passenger_margin_top"
-                    android:text="@string/kh_uisdk_code"
-                    android:textColor="@color/kh_uisdk_med_grey" />
+                    android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+                    tools:text="+30" />
+            </LinearLayout>
 
-                <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
-                    android:id="@+id/countryCodeSpinner"
-                    style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/kh_uisdk_spacing_large"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                    android:layout_marginBottom="@dimen/kh_uisdk_margin_medium"
-                    android:backgroundTint="@color/kh_uisdk_med_grey"
-                    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
-                    android:spinnerMode="dropdown" />
 
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="@dimen/kh_uisdk_spacing_none"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobileNumberLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_weight="0.7">
+                android:layout_gravity="bottom"
+                android:layout_weight="0.7"
+                android:paddingStart="@dimen/kh_uisdk_spacing_xxsmall"
+                app:errorEnabled="true">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/mobileNumberLayout"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobileNumberInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:paddingStart="@dimen/kh_uisdk_spacing_xxsmall"
-                    app:errorEnabled="true">
+                    android:layout_height="wrap_content"
+                    android:hint="@string/kh_uisdk_mobile_phone_number_hint"
+                    android:inputType="numberDecimal" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/mobileNumberInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/kh_uisdk_mobile_phone_number_hint"
-                        android:inputType="numberDecimal" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </FrameLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

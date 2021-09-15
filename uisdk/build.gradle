@@ -74,6 +74,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.2'
     implementation 'com.adyen.checkout:drop-in:3.8.3'
+    implementation 'com.github.heetch:Android-country-picker:1.0.6'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
