@@ -409,7 +409,7 @@
 
     <!--  Quote View Learn More  -->
     <string name="kh_uisdk_quote_learn_more">Leer más</string>
-    <string name="kh_uisdk_country_search">Buscar</string>
+    <string name="kh_uisdk_country_search">Buscar país/región</string>
 
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Enviar</string>
