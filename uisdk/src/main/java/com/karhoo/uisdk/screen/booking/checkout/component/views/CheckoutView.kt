@@ -19,17 +19,18 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.base.booking.BookingCodes
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryCode
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDialingCode
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
-import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
+import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
@@ -55,9 +56,8 @@ import java.util.HashMap
 internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       attrs: AttributeSet? = null,
                                                       defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
-                                                                               CheckoutViewContract.Actions,
                                                                                BookingPaymentContract.PaymentViewActions, BookingPaymentContract.PaymentActions,
-                                                                               CheckoutViewContract.BookingRequestViewWidget {
+                                                                               CheckoutViewContract.BookingRequestViewWidget, WebViewActions{
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
@@ -271,27 +271,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
+        hideSoftKeyboard()
+
         val activity = context as Activity
-        val activityWasStartedForResult = activity.callingActivity != null
-
-        if (activityWasStartedForResult) {
-            val data = Intent().apply {
-                putExtra(BookingCodes.BOOKED_TRIP, tripInfo)
-            }
-            activity.setResult(Activity.RESULT_OK, data)
-            activity.finish()
-        } else {
-            loadingButtonCallback.onLoadingComplete()
-
-            val prebookConfirmationView = PrebookConfirmationView(context).apply {
-                bind(quoteType, tripInfo)
-            }
-            prebookConfirmationView.actions = this
+        val data = Intent().apply {
+            putExtra(BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY, tripInfo)
+            putExtra(BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY, quoteType)
         }
-    }
-
-    override fun finishedBooking() {
-        presenter.resetBooking()
+        activity.setResult(Activity.RESULT_OK, data)
+        activity.finish()
     }
 
     override fun showLoading(show: Boolean) {

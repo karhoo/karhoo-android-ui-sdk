@@ -41,7 +41,7 @@ class PrebookConfirmationView @JvmOverloads constructor(
         defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr), ScheduledDateView {
     private val scheduledDateViewBinder = ScheduledDateViewBinder()
-    var actions: CheckoutViewContract.Actions? = null
+    var actions: CheckoutViewContract.PrebookViewActions? = null
 
     init {
         View.inflate(context, R.layout.uisdk_alert_prebook_confirmation, this)
