@@ -14,6 +14,7 @@ import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
@@ -59,7 +60,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
-        categoryText.text = vehicleDetails.vehicle.vehicleClass?.capitalize()
+        categoryText.text = vehicleDetails.vehicle.categoryToLocalisedString(context.applicationContext)?.capitalize()
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
