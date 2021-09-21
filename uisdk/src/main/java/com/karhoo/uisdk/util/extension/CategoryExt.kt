@@ -1,23 +1,18 @@
 package com.karhoo.uisdk.util.extension
 
 import android.content.Context
-import com.karhoo.sdk.api.model.Vehicle
+import com.karhoo.sdk.api.model.Categories
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.quotes.category.Category
 
-fun Vehicle.classToLocalisedString() = if (vehicleClass.isNullOrEmpty()) {
-    "Vehicle: "
-} else {
-    "${vehicleClass.toCharArray().first().toUpperCase()}${vehicleClass.subSequence(1, vehicleClass.length).toString().toLowerCase()}: "
-}
-
-fun Vehicle.categoryToLocalisedString(context: Context): String {
-    return when (this.vehicleClass) {
+fun Category.toLocalizedString(context: Context): String {
+    return when (this.categoryName) {
         "MPV" -> context.getString(R.string.kh_uisdk_mpv)
         "Saloon" -> context.getString(R.string.kh_uisdk_saloon)
         "Exec" -> context.getString(R.string.kh_uisdk_exec)
         "Taxi" -> context.getString(R.string.kh_uisdk_taxi)
         "Moto" -> context.getString(R.string.kh_uisdk_moto)
         "Electric" -> context.getString(R.string.kh_uisdk_electric)
-        else -> vehicleClass
+        else -> categoryName
     }
 }
