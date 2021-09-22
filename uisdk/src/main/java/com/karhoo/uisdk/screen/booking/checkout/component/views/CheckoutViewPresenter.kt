@@ -129,7 +129,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     private fun onTripBookFailure(error: KarhooError) {
         when (error) {
-            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(error)
+            KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(null, error)
             KarhooError.InvalidRequestPayload -> handleError(R.string.kh_uisdk_booking_details_error, error)
             else -> handleError(returnErrorStringOrLogoutIfRequired(error), error)
         }
@@ -160,7 +160,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun consumeBackPressed(): Boolean {
-        return if(view?.isPassengerDetailsViewVisible() == true) {
+        return if (view?.isPassengerDetailsViewVisible() == true) {
             view?.showPassengerDetails(false)
             true
         } else {
