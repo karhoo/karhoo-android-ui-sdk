@@ -246,9 +246,9 @@
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_cancel">CANCEL</string>
     <string name="kh_uisdk_dismiss">DISMISS</string>
-    <string name="kh_uisdk_alternative">ALTERNATIVE</string>
+    <string name="kh_uisdk_alternative">ALTERNATIV</string>
     <string name="kh_uisdk_continue_journey">CONTINUE</string>
-    <string name="kh_uisdk_add_card">ADD CARD</string>
+    <string name="kh_uisdk_add_card">Karte hinzufügen</string>
     <string name="kh_uisdk_add_payment">Add Payment</string>
     <string name="kh_uisdk_update">UPDATE</string>
     <string name="kh_uisdk_got_it">GOT IT</string>
