@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.util.extension
 
 import android.content.Context
-import com.karhoo.sdk.api.model.Categories
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 
