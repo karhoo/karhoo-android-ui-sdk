@@ -232,10 +232,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestQuotesWidget.setCapabilities(capabilities)
     }
 
-    override fun showPaymentFailureDialog(error: KarhooError?) {
+    override fun showPaymentFailureDialog(stringId: Int?, error: KarhooError?) {
         val config = KarhooAlertDialogConfig(
                 titleResId = R.string.kh_uisdk_payment_issue,
-                messageResId = R.string.kh_uisdk_payment_issue_message,
+                messageResId = stringId ?: R.string.kh_uisdk_payment_issue_message,
                 karhooError = error,
                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_add_card
                                                         ) { d, _ ->
@@ -255,7 +255,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
-        presenter.handleError(stringId, karhooError)
+        showPaymentFailureDialog(stringId, karhooError)
     }
 
     override fun handleChangeCard() {
@@ -309,7 +309,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showPaymentDialog(error: KarhooError?) {
-        showPaymentFailureDialog(error)
+        showPaymentFailureDialog(null, error)
     }
 
     override fun showWebView(url: String?) {

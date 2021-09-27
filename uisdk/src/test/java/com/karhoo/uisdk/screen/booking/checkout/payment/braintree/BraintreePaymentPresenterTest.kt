@@ -293,7 +293,7 @@ class BraintreePaymentPresenterTest {
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
         getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
-        verify(paymentView).showPaymentDialog(KarhooError.GeneralRequestError)
+        verify(paymentView).showPaymentFailureDialog(KarhooError.GeneralRequestError)
     }
 
     /**
