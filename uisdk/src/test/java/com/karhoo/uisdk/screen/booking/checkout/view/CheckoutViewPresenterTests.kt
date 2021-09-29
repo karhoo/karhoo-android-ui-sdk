@@ -518,7 +518,7 @@ class CheckoutViewPresenterTests {
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
-        verify(view).showPaymentFailureDialog(KarhooError.CouldNotBookPaymentPreAuthFailed)
+        verify(view).showPaymentFailureDialog(null, KarhooError.CouldNotBookPaymentPreAuthFailed)
     }
 
     /**

@@ -54,7 +54,7 @@ interface BookingPaymentContract {
 
         fun handleChangeCard()
 
-        fun showPaymentFailureDialog(error: KarhooError?)
+        fun showPaymentFailureDialog(stringId: Int?, error: KarhooError?)
 
         fun handlePaymentDetailsUpdate()
 

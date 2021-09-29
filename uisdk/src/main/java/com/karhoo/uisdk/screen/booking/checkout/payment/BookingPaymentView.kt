@@ -133,11 +133,11 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun showError(error: Int, karhooError: KarhooError?) {
-        cardActions?.showErrorDialog(error, karhooError)
+        paymentActions?.showPaymentFailureDialog(null, karhooError)
     }
 
     override fun showPaymentDialog(karhooError: KarhooError?) {
-        paymentActions?.showPaymentDialog(karhooError)
+        paymentActions?.showPaymentFailureDialog(null, karhooError)
     }
 
     override fun hasValidPaymentType(): Boolean = hasValidPayment
@@ -181,7 +181,7 @@ class BookingPaymentView @JvmOverloads constructor(
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
         refresh()
-        paymentActions?.showPaymentFailureDialog(error)
+        paymentActions?.showPaymentFailureDialog(null, error)
     }
 
     override fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {

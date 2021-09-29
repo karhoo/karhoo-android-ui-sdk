@@ -13,7 +13,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -50,7 +49,7 @@ interface CheckoutViewContract {
 
         fun fillInPassengerDetails(details: PassengerDetails?)
 
-        fun showPaymentFailureDialog(error: KarhooError?)
+        fun showPaymentFailureDialog(stringId: Int?, error: KarhooError?)
 
         fun showPaymentUI()
 
@@ -122,7 +121,7 @@ interface CheckoutViewContract {
                 BookButtonState
     }
 
-    interface Actions : WebViewActions {
+    interface PrebookViewActions {
         fun finishedBooking()
     }
 

@@ -64,7 +64,7 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
-                is Resource.Failure -> view?.showPaymentDialog(result.error)
+                is Resource.Failure -> view?.showPaymentFailureDialog(result.error)
             }
         }
     }
