@@ -35,6 +35,7 @@ import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
@@ -187,7 +188,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
         bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl,
                                              vehicle.fleet.name.orEmpty(),
-                                             vehicle.vehicle.vehicleClass.orEmpty(),
+                                             vehicle.vehicle.categoryToLocalisedString(this.context).orEmpty(),
                                              vehicle.serviceAgreements?.freeCancellation,
                                              vehicle.vehicle.vehicleTags.map {
                                                  return@map VehicleTags(it)
