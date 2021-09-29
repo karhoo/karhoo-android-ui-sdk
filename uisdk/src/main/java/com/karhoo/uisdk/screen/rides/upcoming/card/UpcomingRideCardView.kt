@@ -14,7 +14,7 @@ import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
-import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.*
@@ -97,7 +97,7 @@ class UpcomingRideCardView @JvmOverloads constructor(
             carText.visibility = View.INVISIBLE
         } else {
             carText.visibility = View.VISIBLE
-            carText.text = "${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}"
+            carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}${trip.vehicle?.vehicleLicencePlate}"
         }
     }
 
