@@ -114,7 +114,6 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     fun onPause() {
         if (holdOpenForPaymentFlow) {
             resetBookingButton()
-            holdOpenForPaymentFlow = false
         } else {
             presenter.hideBookingRequest()
         }
@@ -234,6 +233,8 @@ class BookingRequestView @JvmOverloads constructor(context: Context,
     }
 
     override fun onLoadingButtonClick() {
+        holdOpenForPaymentFlow = false;
+
         if (!isKarhooUser() && bookingRequestPassengerDetailsWidget.findAndfocusFirstInvalid()) {
             bookingRequestButton.onLoadingComplete()
         } else if (!presenter.isPaymentSet()) {

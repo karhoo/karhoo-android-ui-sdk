@@ -99,6 +99,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onResume() {
         super.onResume()
+        if(bookingRequestWidget.visibility == View.VISIBLE){
+            return;
+        }
+
         if (tripAllocationWidget.visibility != View.VISIBLE) {
             quotesListWidget.initAvailability(this)
         }
