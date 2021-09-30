@@ -139,6 +139,10 @@ class RideDetailView @JvmOverloads constructor(
         carText.text = licensePlate
     }
 
+    override fun handleCategories(category: String) {
+
+    }
+
     override fun displayState(@DrawableRes icon: Int, @StringRes state: Int, @ColorRes color: Int) {
         stateIcon.setImageResource(icon)
         this.stateText.apply {

@@ -57,6 +57,8 @@ interface RideDetailMVP {
 
         fun displayVehicle(licensePlate: String)
 
+        fun handleCategories(category: String)
+
         fun displayFlightDetails(flightNumber: String, meetingPoint: String)
 
         fun hideFlightDetails()

@@ -167,7 +167,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     override fun bindVehicle() {
         if (!trip.vehicle?.vehicleLicencePlate.isNullOrBlank()) {
-            view?.displayVehicle("${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}")
+            view?.displayVehicle("${view?.handleCategories()}${trip.vehicle?.vehicleLicencePlate}")
         }
     }
 
