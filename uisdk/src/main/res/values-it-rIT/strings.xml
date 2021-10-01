@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="kh_uisdk_app_name">Karhoo Traveller</string>
-    <string name="kh_uisdk_location_permission_denied">The location permission has been denied, please allow it so we can locate you</string>
-    <string name="kh_uisdk_permission_required">In order to use the karhoo app please allow location permissions</string>
-    <string name="kh_uisdk_permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
-    <string name="kh_uisdk_settings">Settings</string>
+    <string name="kh_uisdk_location_permission_denied">L\'autorizzazione alla posizione è stata negata, per favore consentila così possiamo localizzarti</string>
+    <string name="kh_uisdk_permission_required">Per utilizzare l\'app karhoo, consenti i permessi di localizzazione</string>
+    <string name="kh_uisdk_permission_rationale_location">Per localizzarti sulla mappa dobbiamo utilizzare la posizione del tuo dispositivo. Si prega di consentire le autorizzazioni di posizione</string>
+    <string name="kh_uisdk_settings">Impostazioni</string>
 
     <!-- Quotes List -->
-    <string name="kh_uisdk_sorter_nearest">ETA</string>
-    <string name="kh_uisdk_sorter_cheapest">PRICE</string>
-    <string name="kh_uisdk_address_pick_up">Pick up</string>
-    <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
-    <string name="kh_uisdk_address_picker_pickup">Finding address</string>
-    <string name="kh_uisdk_address_drop_off">Drop off</string>
-    <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
+    <string name="kh_uisdk_sorter_nearest">Ora di arrivo stimata</string>
+    <string name="kh_uisdk_sorter_cheapest">Prezzo</string>
+    <string name="kh_uisdk_address_pick_up">Raccogliere</string>
+    <string name="kh_uisdk_address_picker_add_pickup">Aggiungi ritiro</string>
+    <string name="kh_uisdk_address_picker_pickup">Trovare l'indirizzo</string>
+    <string name="kh_uisdk_address_drop_off">Ritiro</string>
+    <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
     <string name="kh_uisdk_loading_min">~ min</string>
-    <string name="kh_uisdk_no_destination">No Destination</string>
-    <string name="kh_uisdk_retrieving_quotes">Retrieving Quotes</string>
-    <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
-    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
+    <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
+    <string name="kh_uisdk_retrieving_quotes">Recupero Citazioni</string>
+    <string name="kh_uisdk_enter_destination_for_vehicles">Inserisci una posizione di destinazione per visualizzare\nveicoli disponibili</string>
+    <string name="kh_uisdk_no_availability">Non siamo ancora qui! Contattaci se hai suggerimenti per le flotte locali.</string>
     <string name="kh_uisdk_capacity">%s</string>
-    <string name="kh_uisdk_gps_tracking">GPS tracking</string>
-    <string name="kh_uisdk_train_tracking">Train tracking</string>
-    <string name="kh_uisdk_flight_tracking">Flight tracking</string>
-    <string name="kh_uisdk_passengers_max">%d passengers max</string>
-    <string name="kh_uisdk_baggage_max">%d luggages max</string>
+    <string name="kh_uisdk_gps_tracking">Tracciamento GPS</string>
+    <string name="kh_uisdk_train_tracking">Monitoraggio del treno</string>
+    <string name="kh_uisdk_flight_tracking">Monitoraggio del volo</string>
+    <string name="kh_uisdk_passengers_max">%d passeggeri max</string>
+    <string name="kh_uisdk_baggage_max">%d bagagli max</string>
     <string name="kh_uisdk_extra_capabilities">+%d</string>
-    <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancellazione gratuita fino a</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
@@ -35,12 +35,12 @@
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
     </plurals>
-    <string name="kh_uisdk_quote_cancellation_after_booking_ending">after booking</string>
-    <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
-    <string name="kh_uisdk_quote_cancellation_and_keyword">and</string>
-    <string name="kh_uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>
-    <string name="kh_uisdk_no_results_label">No results</string>
-    <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
+    <string name="kh_uisdk_quote_cancellation_after_booking_ending">dopo la prenotazione</string>
+    <string name="kh_uisdk_quote_cancellation_before_pickup_ending">prima del ritiro</string>
+    <string name="kh_uisdk_quote_cancellation_and_keyword">e</string>
+    <string name="kh_uisdk_quote_cancellation_before_driver_departure">Cancellazione gratuita fino a quando l\'autista non è in viaggio</string>
+    <string name="kh_uisdk_no_results_label">Nessun risultato</string>
+    <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
 
     <!-- Activity Titles -->
     <string name="kh_uisdk_title_activity_address">Address</string>
