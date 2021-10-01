@@ -20,6 +20,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -32,6 +33,7 @@ import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
@@ -134,13 +136,13 @@ class RideDetailView @JvmOverloads constructor(
         rideDetailActions?.externalDateTime = resources.getString(R.string.kh_uisdk_pending)
     }
 
-    override fun displayVehicle(licensePlate: String) {
+    override fun displayVehicle(vehicle: Vehicle?) {
         carText.visibility = View.VISIBLE
-        carText.text = licensePlate
-    }
-
-    override fun handleCategories(category: String) {
-
+        vehicle?.let {
+            carText.text = "${it.categoryToLocalisedString(this.context)}${it.vehicleLicencePlate}"
+        } ?: run {
+            carText.text = ""
+        }
     }
 
     override fun displayState(@DrawableRes icon: Int, @StringRes state: Int, @ColorRes color: Int) {
