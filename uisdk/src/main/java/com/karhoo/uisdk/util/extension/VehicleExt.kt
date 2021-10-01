@@ -12,7 +12,7 @@ fun Vehicle.categoryToLocalisedString(context: Context): String {
         return when (this.vehicleClass.uppercase()) {
             "MPV" -> context.getString(R.string.kh_uisdk_mpv)
             "SALOON" -> context.getString(R.string.kh_uisdk_saloon)
-            "EXEC" -> context.getString(R.string.kh_uisdk_exec)
+            "EXECUTIVE" -> context.getString(R.string.kh_uisdk_exec)
             "TAXI" -> context.getString(R.string.kh_uisdk_taxi)
             "MOTO" -> context.getString(R.string.kh_uisdk_moto)
             "ELECTRIC" -> context.getString(R.string.kh_uisdk_electric)
