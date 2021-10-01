@@ -5,13 +5,13 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.uisdk.R
 
 fun QuoteVehicle.categoryToLocalisedString(context: Context): String? {
-    return when (this.vehicleClass) {
+    return when (this.vehicleClass?.uppercase()) {
         "MPV" -> context.getString(R.string.kh_uisdk_mpv)
-        "Saloon" -> context.getString(R.string.kh_uisdk_saloon)
-        "Exec" -> context.getString(R.string.kh_uisdk_exec)
-        "Taxi" -> context.getString(R.string.kh_uisdk_taxi)
-        "Moto" -> context.getString(R.string.kh_uisdk_moto)
-        "Electric" -> context.getString(R.string.kh_uisdk_electric)
+        "SALOON" -> context.getString(R.string.kh_uisdk_saloon)
+        "EXEC" -> context.getString(R.string.kh_uisdk_exec)
+        "TAXI" -> context.getString(R.string.kh_uisdk_taxi)
+        "MOTO" -> context.getString(R.string.kh_uisdk_moto)
+        "ELECTRIC" -> context.getString(R.string.kh_uisdk_electric)
         else -> vehicleClass
     }
 }

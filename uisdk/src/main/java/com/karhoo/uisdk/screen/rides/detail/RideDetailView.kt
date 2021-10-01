@@ -139,7 +139,7 @@ class RideDetailView @JvmOverloads constructor(
     override fun displayVehicle(vehicle: Vehicle?) {
         carText.visibility = View.VISIBLE
         vehicle?.let {
-            carText.text = "${it.categoryToLocalisedString(this.context)}${it.vehicleLicencePlate}"
+            carText.text = "${it.categoryToLocalisedString(this.context)}: ${it.vehicleLicencePlate}"
         } ?: run {
             carText.text = ""
         }

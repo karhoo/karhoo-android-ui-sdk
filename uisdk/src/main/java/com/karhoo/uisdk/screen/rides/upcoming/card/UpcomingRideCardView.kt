@@ -97,7 +97,7 @@ class UpcomingRideCardView @JvmOverloads constructor(
             carText.visibility = View.INVISIBLE
         } else {
             carText.visibility = View.VISIBLE
-            carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}${trip.vehicle?.vehicleLicencePlate}"
+            carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}: ${trip.vehicle?.vehicleLicencePlate}"
         }
     }
 

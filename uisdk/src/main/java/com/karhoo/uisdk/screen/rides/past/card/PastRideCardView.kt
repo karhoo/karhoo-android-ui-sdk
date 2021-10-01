@@ -95,7 +95,7 @@ class PastRideCardView @JvmOverloads constructor(
                 carText.visibility = View.GONE
             } else {
                 carText.visibility = View.VISIBLE
-                carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}${trip.vehicle?.vehicleLicencePlate}"
+                carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}: ${trip.vehicle?.vehicleLicencePlate}"
             }
 
     override fun goToDetails(trip: TripInfo) {
