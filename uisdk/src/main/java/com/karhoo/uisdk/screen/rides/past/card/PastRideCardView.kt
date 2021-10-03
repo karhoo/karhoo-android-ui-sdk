@@ -15,7 +15,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.DateUtil
-import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.bookingTermsText
@@ -95,7 +95,7 @@ class PastRideCardView @JvmOverloads constructor(
                 carText.visibility = View.GONE
             } else {
                 carText.visibility = View.VISIBLE
-                carText.text = "${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}"
+                carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}: ${trip.vehicle?.vehicleLicencePlate}"
             }
 
     override fun goToDetails(trip: TripInfo) {

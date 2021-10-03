@@ -13,6 +13,7 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.listener.SimpleTabListener
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
+import com.karhoo.uisdk.util.extension.toLocalizedString
 import kotlinx.android.synthetic.main.uisdk_view_category_selector.view.vehicleCategoryTabLayout
 
 class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
@@ -64,7 +65,7 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
                     .map {
                         vehicleCategoryTabLayout.newTab().apply {
                             customView = CategoryView(context).apply {
-                                setCategoryName(it.categoryName)
+                                setCategoryName(it.toLocalizedString(context.applicationContext))
                                 setCategoryAvailable(it.isAvailable)
                             }
                             tag = it

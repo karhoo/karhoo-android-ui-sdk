@@ -17,7 +17,7 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.notification.KarhooNotificationContract
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
-import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -121,7 +121,7 @@ class RideNotificationView : RideNotificationContract.View {
                 contentView.setViewVisibility(R.id.carText, View.GONE)
             } else {
                 contentView.setViewVisibility(R.id.carText, View.VISIBLE)
-                contentView.setTextViewText(R.id.carText, "${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}")
+                contentView.setTextViewText(R.id.carText, "${trip.vehicle?.categoryToLocalisedString(this.context)}${trip.vehicle?.vehicleLicencePlate}")
             }
 
     private fun bindPickupType(contentView: RemoteViews, pickupType: PickupType?) {
