@@ -69,36 +69,36 @@
     <string name="kh_uisdk_about">Circa</string>
 
     <!-- Register -->
-    <string name="kh_uisdk_register">REQUEST INVITE</string>
-    <string name="kh_uisdk_sign_in">Sign in</string>
-    <string name="kh_uisdk_first_name_hint">First name</string>
-    <string name="kh_uisdk_last_name_hint">Last name</string>
-    <string name="kh_uisdk_email_hint">Email</string>
-    <string name="kh_uisdk_mobile_phone_number_hint">Mobile phone number</string>
-    <string name="kh_uisdk_code">Code</string>
+    <string name="kh_uisdk_register">Richiedi invito</string>
+    <string name="kh_uisdk_sign_in">Registrati</string>
+    <string name="kh_uisdk_first_name_hint">Nome</string>
+    <string name="kh_uisdk_last_name_hint">Cognome</string>
+    <string name="kh_uisdk_email_hint">E-mail</string>
+    <string name="kh_uisdk_mobile_phone_number_hint">Numero di cellulare</string>
+    <string name="kh_uisdk_code">Codice</string>
     <string name="kh_uisdk_password_hint">Password</string>
-    <string name="kh_uisdk_pass_length">At least 8 characters</string>
-    <string name="kh_uisdk_register_check_box">I do not want to receive free rides, promos or offers.</string>
-    <string name="kh_uisdk_continue_registration">CONTINUE</string>
-    <string name="kh_uisdk_by_continuing_you_agree_to">By creating your Karhoo account, you’re agreeing to Karhoo’s</string>
-    <string name="kh_uisdk_terms_conditions"> Terms and Conditions</string>
-    <string name="kh_uisdk_privacy_policy_small"> Privacy Policy.</string>
-    <string name="kh_uisdk_invalid_input_value">Invalid value</string>
-    <string name="kh_uisdk_invalid_email">Invalid email</string>
-    <string name="kh_uisdk_invalid_phone_number">Invalid phone number</string>
-    <string name="kh_uisdk_invalid_password">(min 8 chars, 1 uppercase, 1 number)</string>
-    <string name="kh_uisdk_invalid_empty_field">Empty field not allowed</string>
-    <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
+    <string name="kh_uisdk_pass_length">Almeno 8 caratteri</string>
+    <string name="kh_uisdk_register_check_box">Non voglio ricevere corse gratuite, promozioni o offerte.</string>
+    <string name="kh_uisdk_continue_registration">Continuare</string>
+    <string name="kh_uisdk_by_continuing_you_agree_to">Creando il tuo account Karhoo, accetti Karhoo\'s</string>
+    <string name="kh_uisdk_terms_conditions">Termini e Condizioni</string>
+    <string name="kh_uisdk_privacy_policy_small">Politica sulla riservatezza.</string>
+    <string name="kh_uisdk_invalid_input_value">Valore non valido</string>
+    <string name="kh_uisdk_invalid_email">Mail non valido</string>
+    <string name="kh_uisdk_invalid_phone_number">Numero di telefono invalido</string>
+    <string name="kh_uisdk_invalid_password">(minimo 8 caratteri, 1 maiuscolo, 1 numero)</string>
+    <string name="kh_uisdk_invalid_empty_field">Campo vuoto non consentito</string>
+    <string name="kh_uisdk_error_cannot_create_user">Sembra che ci sia un problema durante la registrazione del tuo account. Per favore riprova.</string>
 
     <!-- Login -->
-    <string name="kh_uisdk_sign_in_but">SIGN IN</string>
+    <string name="kh_uisdk_sign_in_but">Registrati</string>
 
     <!-- Profile -->
-    <string name="kh_uisdk_phone_number_hint">Phone number</string>
-    <string name="kh_uisdk_name_hint">Name</string>
-    <string name="kh_uisdk_sign_out">Sign out</string>
-    <string name="kh_uisdk_save">Save</string>
-    <string name="kh_uisdk_discard">Discard</string>
+    <string name="kh_uisdk_phone_number_hint">Numero di telefono</string>
+    <string name="kh_uisdk_name_hint">Nome</string>
+    <string name="kh_uisdk_sign_out">Esci</string>
+    <string name="kh_uisdk_save">Salvare</string>
+    <string name="kh_uisdk_discard">Scartare</string>
 
     <!-- Central Lat Lng Charring X -->
     <string name="kh_uisdk_central_lat">51.5073</string>
@@ -108,86 +108,86 @@
     <string name="kh_uisdk_mins">mins</string>
 
     <!-- Errors-->
-    <string name="kh_uisdk_destination_price_error">A destination must be selected before price can be shown</string>
-    <string name="kh_uisdk_origin_book_error">You must select an origin before booking a ride</string>
-    <string name="kh_uisdk_destination_book_error">You must select a destination before booking a ride</string>
-    <string name="kh_uisdk_booking_error">There seems to be an issue booking your trip. Please try again</string>
-    <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
-    <string name="kh_uisdk_invalid_prebook_time_error">Prebook time must be at least one hour away from current time.</string>
-    <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
-    <string name="kh_uisdk_app_invalid">The current version of the app is out of date, please update.</string>
-    <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
-    <string name="kh_uisdk_requested_invite">Thanks for your interest! We will email you when your account is activated.</string>
-    <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
-    <string name="kh_uisdk_location_disabled">Please enable Location Services on your device to enjoy the full experience</string>
-    <string name="kh_uisdk_retry">Retry</string>
+    <string name="kh_uisdk_destination_price_error">È necessario selezionare una destinazione prima di poter mostrare il prezzo</string>
+    <string name="kh_uisdk_origin_book_error">Devi selezionare un\'origine prima di prenotare una corsa</string>
+    <string name="kh_uisdk_destination_book_error">Devi selezionare una destinazione prima di prenotare una corsa</string>
+    <string name="kh_uisdk_booking_error">Sembra che ci sia un problema durante la prenotazione del viaggio. Per favore riprova</string>
+    <string name="kh_uisdk_booking_details_error">Dettagli della prenotazione non validi</string>
+    <string name="kh_uisdk_invalid_prebook_time_error">L\'orario della prenotazione deve essere distante almeno un\'ora dall\'ora corrente.</string>
+    <string name="kh_uisdk_error_invalid_password">L\'e-mail o la password che hai inserito non sono corrette</string>
+    <string name="kh_uisdk_app_invalid">La versione corrente dell\'app non è aggiornata, aggiornala.</string>
+    <string name="kh_uisdk_network_error">Sembra che ci siano problemi di connessione alla rete</string>
+    <string name="kh_uisdk_requested_invite">Grazie per il tuo interesse! Ti invieremo un\'email quando il tuo account sarà attivato.</string>
+    <string name="kh_uisdk_something_went_wrong">Si è verificato un errore</string>
+    <string name="kh_uisdk_location_disabled">Abilita i servizi di localizzazione sul tuo dispositivo per goderti l\'esperienza completa</string>
+    <string name="kh_uisdk_retry">Riprova</string>
 
     <!--General errors, K0xxx-->
-    <string name="kh_uisdk_K0001">General request error.</string>
-    <string name="kh_uisdk_K0002">Invalid request payload</string>
-    <string name="kh_uisdk_K0003">Could not read authorisation token</string>
-    <string name="kh_uisdk_K0004">Authentication is required for this path</string>
-    <string name="kh_uisdk_K0005">Missing required role for this request</string>
-    <string name="kh_uisdk_K0006">Rate limit exceeded</string>
-    <string name="kh_uisdk_K0007">Circuit breaker has triggered for this route</string>
+    <string name="kh_uisdk_K0001">Errore di richiesta generale.</string>
+    <string name="kh_uisdk_K0002">Payload della richiesta non valido</string>
+    <string name="kh_uisdk_K0003">Impossibile leggere il token di autorizzazione</string>
+    <string name="kh_uisdk_K0004">L\'autenticazione è richiesta per questo percorso</string>
+    <string name="kh_uisdk_K0005">Ruolo richiesto mancante per questa richiesta</string>
+    <string name="kh_uisdk_K0006">Limite di velocità superato</string>
+    <string name="kh_uisdk_K0007">L\'interruttore automatico è scattato per questo percorso</string>
 
     <!--User errors, K1xxx-->
-    <string name="kh_uisdk_K1001">Could not register user</string>
-    <string name="kh_uisdk_K1002">Could not register user (user already exists)</string>
-    <string name="kh_uisdk_K1003">Could not register user (invalid request)</string>
-    <string name="kh_uisdk_K1004">Could not register user (invalid phone number)</string>
-    <string name="kh_uisdk_K1005">Could not get user details (invalid token)</string>
-    <string name="kh_uisdk_K1006">Could not get user details (user does not exist)</string>
-    <string name="kh_uisdk_K1999">User has been created but not been authorized yet, we will get in touch once enabled.</string>
+    <string name="kh_uisdk_K1001">Impossibile registrare l\'utente</string>
+    <string name="kh_uisdk_K1002">Impossibile registrare l\'utente (l\'utente esiste già)</string>
+    <string name="kh_uisdk_K1003">Impossibile registrare l\'utente (richiesta non valida)</string>
+    <string name="kh_uisdk_K1004">Impossibile registrare l\'utente (numero di telefono non valido)</string>
+    <string name="kh_uisdk_K1005">Impossibile ottenere i dettagli dell\'utente (token non valido)</string>
+    <string name="kh_uisdk_K1006">Impossibile ottenere i dettagli dell\'utente (l\'utente non esiste)</string>
+    <string name="kh_uisdk_K1999">L\'utente è stato creato ma non è stato ancora autorizzato, ci metteremo in contatto una volta abilitato.</string>
 
 
     <!--Locations errors, K2xxx-->
-    <string name="kh_uisdk_K2001">Could not get address</string>
+    <string name="kh_uisdk_K2001">Impossibile ottenere l\'indirizzo</string>
 
     <!--Quotes errors, K3xxx-->
-    <string name="kh_uisdk_K3001">Could not get estimates</string>
-    <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
-    <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
+    <string name="kh_uisdk_K3001">Impossibile ottenere stime</string>
+    <string name="kh_uisdk_K3002">Impossibile ottenere preventivi (nessuna disponibilità trovata nell\'area richiesta)</string>
+    <string name="kh_uisdk_K3003">Impossibile ottenere le stime (impossibile trovare il preventivo specificato)</string>
 
     <!--Bookings errors, K4xxx-->
-    <string name="kh_uisdk_K4001">Could not book trip</string>
-    <string name="kh_uisdk_K4002">Could not book trip - invalid request payload (require at least 1 set of passenger-details)</string>
-    <string name="kh_uisdk_K4003">Could not book trip (could not find specified quote)</string>
-    <string name="kh_uisdk_K4004">Could not book trip (attempt to book expired quote)</string>
-    <string name="kh_uisdk_K4005">Could not book trip (permission denied)</string>
-    <string name="kh_uisdk_K4006">Could not book trip (payment pre-authorisation failed)</string>
-    <string name="kh_uisdk_K4007">Could not cancel trip</string>
-    <string name="kh_uisdk_K4008">Could not cancel trip (could not find specified trip)</string>
-    <string name="kh_uisdk_K4009">Could not cancel trip (permission  denied)</string>
-    <string name="kh_uisdk_K4010">Could not cancel trip (already cancelled)</string>
-    <string name="kh_uisdk_K4011">Could not get trip</string>
-    <string name="kh_uisdk_K4012">Could not get trip (could not find specified trip)</string>
-    <string name="kh_uisdk_K4013">Could not get trip (permission denied)</string>
-    <string name="kh_uisdk_K4014">Could not book trip as agent</string>
-    <string name="kh_uisdk_K4015">Could not book trip as traveller</string>
-    <string name="kh_uisdk_K4018">Could not book as quote is no longer available</string>
+    <string name="kh_uisdk_K4001">Impossibile prenotare il viaggio</string>
+    <string name="kh_uisdk_K4002">Impossibile prenotare il viaggio - payload della richiesta non valido (richiede almeno 1 set di dettagli del passeggero)</string>
+    <string name="kh_uisdk_K4003">Impossibile prenotare il viaggio (impossibile trovare il preventivo specificato)</string>
+    <string name="kh_uisdk_K4004">Impossibile prenotare il viaggio (tentativo di prenotazione del preventivo scaduto)</string>
+    <string name="kh_uisdk_K4005">Impossibile prenotare il viaggio (autorizzazione negata)</string>
+    <string name="kh_uisdk_K4006">Impossibile prenotare il viaggio (pre-autorizzazione al pagamento non riuscita)</string>
+    <string name="kh_uisdk_K4007">Impossibile annullare il viaggio</string>
+    <string name="kh_uisdk_K4008">Impossibile annullare il viaggio (impossibile trovare il viaggio specificato)</string>
+    <string name="kh_uisdk_K4009">Impossibile annullare il viaggio (autorizzazione negata)</string>
+    <string name="kh_uisdk_K4010">Impossibile annullare il viaggio (già annullato)</string>
+    <string name="kh_uisdk_K4011">Impossibile ottenere il viaggio</string>
+    <string name="kh_uisdk_K4012">Impossibile ottenere il viaggio (impossibile trovare il viaggio specificato)</string>
+    <string name="kh_uisdk_K4013">Impossibile ottenere il viaggio (autorizzazione negata)</string>
+    <string name="kh_uisdk_K4014">Impossibile prenotare il viaggio come agente</string>
+    <string name="kh_uisdk_K4015">Impossibile prenotare il viaggio come viaggiatore?</string>
+    <string name="kh_uisdk_K4018">Impossibile prenotare perché il preventivo non è più disponibile</string>
 
     <!--Availability errors, K5xxx-->
-    <string name="kh_uisdk_K5001">Could not get estimates</string>
-    <string name="kh_uisdk_K5002">Could not get availability (no availability found within requested area)</string>
-    <string name="kh_uisdk_K5003">Could not get availability (no categories found within requested area)</string>
+    <string name="kh_uisdk_K5001">Impossibile ottenere stime</string>
+    <string name="kh_uisdk_K5002">Impossibile ottenere la disponibilità (nessuna disponibilità trovata nell\'area richiesta)</string>
+    <string name="kh_uisdk_K5003">Impossibile ottenere la disponibilità (nessuna categoria trovata nell\'area richiesta)</string>
 
     <!--Authentication errors K6xxx-->
-    <string name="kh_uisdk_K6001">Could not authenticate</string>
+    <string name="kh_uisdk_K6001">Impossibile eseguire l\'autenticazione</string>
 
     <!-- Qxxxx errors -->
-    <string name="kh_uisdk_Q0001">Pick up and destination cannot be the same</string>
-    <string name="kh_uisdk_P0001">Failed to retrieve UserID from token</string>
+    <string name="kh_uisdk_Q0001">Ritiro e destinazione non possono essere gli stessi</string>
+    <string name="kh_uisdk_P0001">Impossibile recuperare l\'ID utente dal token</string>
 
-    <string name="kh_uisdk_temporary_message_error_codes_unknown">We seem to be having technical issues at the moment.</string>
+    <string name="kh_uisdk_temporary_message_error_codes_unknown">Sembra che ci siano problemi tecnici in questo momento.</string>
 
     <!-- Payment Errors -->
-    <string name="kh_uisdk_KP001">Failed to find customer in braintree</string>
-    <string name="kh_uisdk_KP002">Failed to initialise client for organisation</string>
-    <string name="kh_uisdk_KP003">Failed to find default payment method</string>
-    <string name="kh_uisdk_KP004">Failed to find default credit card</string>
-    <string name="kh_uisdk_KP005">Failed to generate nonce</string>
-    <string name="kh_uisdk_P0002">Failed calling payment service</string>
+    <string name="kh_uisdk_KP001">Impossibile trovare il cliente in braintree</string>
+    <string name="kh_uisdk_KP002">Impossibile inizializzare il client per l\'organizzazione</string>
+    <string name="kh_uisdk_KP003">Impossibile trovare il metodo di pagamento predefinito</string>
+    <string name="kh_uisdk_KP004">Impossibile trovare la carta di credito predefinita</string>
+    <string name="kh_uisdk_KP005">Impossibile generare nonce</string>
+    <string name="kh_uisdk_P0002">Impossibile chiamare il servizio di pagamento</string>
 
     <!-- Terms and Conditions -->
     <string name="kh_uisdk_booking_terms">By making a booking you are agreeing to %1$s\</string>
