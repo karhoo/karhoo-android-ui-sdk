@@ -11,7 +11,7 @@
     <string name="kh_uisdk_sorter_cheapest">Prezzo</string>
     <string name="kh_uisdk_address_pick_up">Raccogliere</string>
     <string name="kh_uisdk_address_picker_add_pickup">Aggiungi ritiro</string>
-    <string name="kh_uisdk_address_picker_pickup">Trovare l'indirizzo</string>
+    <string name="kh_uisdk_address_picker_pickup">Trovare l\'indirizzo</string>
     <string name="kh_uisdk_address_drop_off">Ritiro</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
     <string name="kh_uisdk_loading_min">~ min</string>
@@ -43,30 +43,30 @@
     <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
 
     <!-- Activity Titles -->
-    <string name="kh_uisdk_title_activity_address">Address</string>
-    <string name="kh_uisdk_title_activity_trip">Trip</string>
-    <string name="kh_uisdk_title_activity_rides">Rides</string>
-    <string name="kh_uisdk_title_activity_airport">Airport Pickup</string>
-    <string name="kh_uisdk_title_activity_threedsecure">3D Secure</string>
+    <string name="kh_uisdk_title_activity_address">Indirizzo</string>
+    <string name="kh_uisdk_title_activity_trip">Viaggio</string>
+    <string name="kh_uisdk_title_activity_rides">Cavalcate</string>
+    <string name="kh_uisdk_title_activity_airport">Prelievo dall\'aeroporto</string>
+    <string name="kh_uisdk_title_activity_threedsecure">3D sicuro</string>
 
     <!-- Address Picker -->
-    <string name="kh_uisdk_enter_pickup">Enter pickup</string>
-    <string name="kh_uisdk_enter_destination">Enter destination</string>
+    <string name="kh_uisdk_enter_pickup">Inserisci il ritiro</string>
+    <string name="kh_uisdk_enter_destination">Inserisci la destinazione</string>
 
     <!-- Address -->
-    <string name="kh_uisdk_recents_empty">No recent results</string>
-    <string name="kh_uisdk_results_empty">No results found</string>
-    <string name="kh_uisdk_map_selector">Set pin location on map</string>
-    <string name="kh_uisdk_current_location">Get current location</string>
+    <string name="kh_uisdk_recents_empty">Nessun risultato recente</string>
+    <string name="kh_uisdk_results_empty">Nessun risultato recente</string>
+    <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
+    <string name="kh_uisdk_current_location">Ottieni la posizione attuale</string>
 
     <!-- Navigation Drawer -->
-    <string name="kh_uisdk_login">Sign In</string>
-    <string name="kh_uisdk_drawer_closed">Drawer closed</string>
-    <string name="kh_uisdk_drawer_open">Drawer open</string>
-    <string name="kh_uisdk_profile">Profile</string>
-    <string name="kh_uisdk_help">Help</string>
-    <string name="kh_uisdk_rides">Rides</string>
-    <string name="kh_uisdk_about">About</string>
+    <string name="kh_uisdk_login">Registrati</string>
+    <string name="kh_uisdk_drawer_closed">Cassetto chiuso</string>
+    <string name="kh_uisdk_drawer_open">Cassetto aperto</string>
+    <string name="kh_uisdk_profile">Profilo</string>
+    <string name="kh_uisdk_help">Aiuto</string>
+    <string name="kh_uisdk_rides">Cavalcate</string>
+    <string name="kh_uisdk_about">Circa</string>
 
     <!-- Register -->
     <string name="kh_uisdk_register">REQUEST INVITE</string>
