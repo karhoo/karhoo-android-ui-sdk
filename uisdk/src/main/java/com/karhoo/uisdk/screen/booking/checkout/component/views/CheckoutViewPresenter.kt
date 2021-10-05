@@ -168,7 +168,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String) {
+    override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String, flightInfo: String) {
         val passenger = if (KarhooUISDKConfigurationProvider.configuration
                         .authenticationMethod() is AuthenticationMethod.KarhooUser) parsePassengerDetails() else passengerDetails
 
@@ -176,7 +176,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             val metadata = getBookingMetadataMap(identifier, tripId)
 
             tripsService.book(TripBooking(comments = comments,
-                                          flightNumber = flightDetails?.flightNumber,
+                                          flightNumber = flightInfo,
                                           meta = metadata,
                                           nonce = identifier,
                                           quoteId = quote?.id.orEmpty(),
