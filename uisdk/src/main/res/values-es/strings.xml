@@ -201,7 +201,7 @@
     <!-- Trip states -->
     <string name="kh_uisdk_confirmed">Tu viaje ha sido confirmado con %s</string>
     <string name="kh_uisdk_requested">Tu viaje ha sido solicitado con %s</string>
-    <string name="kh_uisdk_driver_en_route">Tu conductor está de camino</string>
+    <string name="kh_uisdk_driver_en_route">El conductor está en camino</string>
     <string name="kh_uisdk_allocated">Conductor asignado</string>
     <string name="kh_uisdk_approaching">Tu vehículo llegará pronto</string>
     <string name="kh_uisdk_arrived">Tu conductor ha llegado</string>
