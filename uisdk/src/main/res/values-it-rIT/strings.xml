@@ -337,83 +337,83 @@
     <string name="kh_uisdk_cancelled_by_user">Hai cancellato la tua corsa con %s</string>
     <string name="kh_uisdk_cancelled_by_dispatch">Il fornitore %s ha cancellato il tuo viaggio</string>
     <string name="kh_uisdk_cancelled_by_karhoo">Karhoo have cancelled your journey</string>
-    <string name="kh_uisdk_failed_trip">We have failed to book your trip</string>
-    <string name="kh_uisdk_getting_trip_status">Retrieving the status of your ride…</string>
+    <string name="kh_uisdk_failed_trip">Non siamo riusciti a prenotare il tuo viaggio</string>
+    <string name="kh_uisdk_getting_trip_status">Recupero dello stato della tua corsa...</string>
 
     <!-- Fare type -->
-    <string name="kh_uisdk_fixed_fare">Fixed</string>
-    <string name="kh_uisdk_estimated_fare">Estimated</string>
-    <string name="kh_uisdk_metered">Metered</string>
+    <string name="kh_uisdk_fixed_fare">Fisso</string>
+    <string name="kh_uisdk_estimated_fare">Stimato</string>
+    <string name="kh_uisdk_metered">Misurato</string>
 
     <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">Your final fare might be affected\n by tips, tolls, taxes and other charges.</string>
-    <string name="kh_uisdk_prebook_timezone_title">Booking will be made in local time</string>
+    <string name="kh_uisdk_prebook_timezone_title">La prenotazione sarà effettuata in ora locale</string>
 
     <!-- Airports -->
-    <string name="kh_uisdk_flight_number">Flight Number</string>
-    <string name="kh_uisdk_meeting_point">Meeting Point</string>
-    <string name="kh_uisdk_info">Info</string>
-    <string name="kh_uisdk_add_flight_details">Add flight details (Optional)</string>
-    <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
-    <string name="kh_uisdk_pickup_type_curbside">Curbside</string>
-    <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and Greet</string>
-    <string name="kh_uisdk_pickup_type_standby">Standby</string>
+    <string name="kh_uisdk_flight_number">Numero del volo</string>
+    <string name="kh_uisdk_meeting_point">Punto d\'incontro</string>
+    <string name="kh_uisdk_info">Informazioni</string>
+    <string name="kh_uisdk_add_flight_details">Aggiungi i dettagli del volo (facoltativo)</string>
+    <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
+    <string name="kh_uisdk_pickup_type_curbside">bordo marciapiede</string>
+    <string name="kh_uisdk_pickup_type_meet_and_greet">Incontra e saluta</string>
+    <string name="kh_uisdk_pickup_type_standby">Pausa</string>
 
     <!-- Completed trip -->
-    <string name="kh_uisdk_ride_summary">RIDE SUMMARY</string>
-    <string name="kh_uisdk_payment_summary">PAYMENT SUMMARY</string>
-    <string name="kh_uisdk_card_charged">Card Charged</string>
-    <string name="kh_uisdk_vehicle">Vehicle</string>
-    <string name="kh_uisdk_fleet">Fleet</string>
-    <string name="kh_uisdk_quoted_fare">Estimated Fare</string>
-    <string name="kh_uisdk_tip_10">Tip (10%)</string>
-    <string name="kh_uisdk_total_fare">Total Fare</string>
-    <string name="kh_uisdk_date">Date</string>
-    <string name="kh_uisdk_done">DONE</string>
-    <string name="kh_uisdk_rate_trip_label">How would you rate your trip?</string>
-    <string name="kh_uisdk_star_poor">Poor</string>
-    <string name="kh_uisdk_star_fair">Fair</string>
-    <string name="kh_uisdk_star_good">Good</string>
-    <string name="kh_uisdk_star_great">Great</string>
-    <string name="kh_uisdk_star_excellent">Excellent</string>
-    <string name="kh_uisdk_rating_submitted">Thank you for submitting your rating.</string>
-    <string name="kh_uisdk_submit_button_text">Tell us why you rated this way?</string>
-    <string name="kh_uisdk_tell_us_more">Please, Tell us more about your Trip</string>
+    <string name="kh_uisdk_ride_summary">Riepilogo della corsa</string>
+    <string name="kh_uisdk_payment_summary">Sommario Pagamento</string>
+    <string name="kh_uisdk_card_charged">Carta addebitata</string>
+    <string name="kh_uisdk_vehicle">Veicolo</string>
+    <string name="kh_uisdk_fleet">Compagnia</string>
+    <string name="kh_uisdk_quoted_fare">Tariffa stimata</string>
+    <string name="kh_uisdk_tip_10">Mancia (10%)</string>
+    <string name="kh_uisdk_total_fare">Tariffa totale</string>
+    <string name="kh_uisdk_date">Data</string>
+    <string name="kh_uisdk_done">Fatto</string>
+    <string name="kh_uisdk_rate_trip_label">Come valuteresti il tuo viaggio?</string>
+    <string name="kh_uisdk_star_poor">Povero</string>
+    <string name="kh_uisdk_star_fair">Giusto</string>
+    <string name="kh_uisdk_star_good">Buono</string>
+    <string name="kh_uisdk_star_great">Grande</string>
+    <string name="kh_uisdk_star_excellent">Eccellente</string>
+    <string name="kh_uisdk_rating_submitted">Grazie per aver inviato la tua valutazione.</string>
+    <string name="kh_uisdk_submit_button_text">Dicci perché hai valutato in questo modo?</string>
+    <string name="kh_uisdk_tell_us_more">Per favore, dicci di più sul tuo viaggio</string>
 
     <!-- FEEDBACK -->
-    <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
-    <string name="kh_uisdk_trip_id_label">Trip ID</string>
-    <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
-    <string name="kh_uisdk_question_one">How happy were you with the selection of quotes for your trip (e.g. Fleets, Prices and ETAs)?</string>
-    <string name="kh_uisdk_question_two">How was your experience with finding the pick-up location and meeting your driver?</string>
-    <string name="kh_uisdk_question_three">How was your experience whilst in the taxi (e.g. taxi cleanliness, routing and driver)?</string>
-    <string name="kh_uisdk_question_four">How easy did you find using the app?</string>
-    <string name="kh_uisdk_submit">SUBMIT</string>
-    <string name="kh_uisdk_feedback_submitted">Thank you for submitting your feedback</string>
+    <string name="kh_uisdk_feedback_title">Per favore, dicci di più sul tuo viaggio</string>
+    <string name="kh_uisdk_trip_id_label">ID viaggio</string>
+    <string name="kh_uisdk_additional_comments">Commenti aggiuntivi (facoltativo)</string>
+    <string name="kh_uisdk_question_one">Quanto sei soddisfatto della selezione dei preventivi per il tuo viaggio (ad es. Flotte, Prezzi ed ETA)?</string>
+    <string name="kh_uisdk_question_two">Com\'è stata la tua esperienza con la ricerca del luogo di ritiro e l\'incontro con il tuo autista?</string>
+    <string name="kh_uisdk_question_three">Com\'è stata la tua esperienza mentre sei in taxi (ad es. pulizia del taxi, percorso e autista)?</string>
+    <string name="kh_uisdk_question_four">Quanto è stato facile usare l\'app?</string>
+    <string name="kh_uisdk_submit">INVIA</string>
+    <string name="kh_uisdk_feedback_submitted">Grazie per aver inviato il tuo feedback</string>
 
     <!-- Guest Checkout -->
-    <string name="kh_uisdk_passenger_details">Passenger Details</string>
-    <string name="kh_uisdk_payment_details">Payment Details</string>
-    <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
+    <string name="kh_uisdk_passenger_details">Dettagli del passeggero</string>
+    <string name="kh_uisdk_payment_details">Dettagli di pagamento</string>
+    <string name="kh_uisdk_checkout_as_guest">Prenota giro</string>
 
     <!-- Booking Checkout Component -->
-    <string name="kh_uisdk_booking_checkout_back_button">Back</string>
-    <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>
-    <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger</string>
-    <string name="kh_uisdk_booking_checkout_add_payment_method">Add payment method</string>
-    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Payment method</string>
+    <string name="kh_uisdk_booking_checkout_back_button">Indietro</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Modifica</string>
+    <string name="kh_uisdk_booking_checkout_passenger">Passeggeri</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi passeggero</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungere il metodo di pagamento</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Metodo di pagamento</string>
     <!-- Booking Price View -->
-    <string name="kh_uisdk_price_info_text_estimated">This fleet is a non-regulated taxi. The quote is an estimate based on the trip factors (distance, time, etc). Please refer to the fleet\'s Terms and Conditions for more information.</string>
-    <string name="kh_uisdk_price_info_text_metered">This fleet is a regulated metered taxi. The quote is an estimate based on the trip factors (distance, time, etc).</string>
-    <string name="kh_uisdk_price_info_text_fixed">This fleet charges a flat fare. The final fare may be affected by extras (tolls, delay, etc), please check the fleet\'s Terms and Conditions.</string>
-    <string name="kh_uisdk_price_meet_and_greet">Meet and greet</string>
+    <string name="kh_uisdk_price_info_text_estimated">Questa flotta è un taxi non regolamentato. Il preventivo è una stima basata sui fattori di viaggio (distanza, tempo, ecc.). Per ulteriori informazioni, fare riferimento ai Termini e condizioni della flotta.</string>
+    <string name="kh_uisdk_price_info_text_metered">Questa flotta è un taxi con tassametro regolamentato. Il preventivo è una stima basata sui fattori di viaggio (distanza, tempo, ecc.).</string>
+    <string name="kh_uisdk_price_info_text_fixed">Questa flotta addebita una tariffa fissa. La tariffa finale può essere influenzata da extra (pedaggi, ritardi, ecc.), controlla i Termini e condizioni della flotta.</string>
+    <string name="kh_uisdk_price_meet_and_greet">Incontra e saluta</string>
     <!--  Quote View Learn More  -->
-    <string name="kh_uisdk_quote_learn_more">Learn more</string>
-    <string name="kh_uisdk_country_search">Search country/region</string>
+    <string name="kh_uisdk_quote_learn_more">Per saperne di più</string>
+    <string name="kh_uisdk_country_search">Cerca paese/regione</string>
 
     <!-- Adyen -->
-    <string name="kh_uisdk_pay_button">Submit</string>
-    <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
+    <string name="kh_uisdk_pay_button">Presentare</string>
+    <string name="kh_uisdk_pay_button_with_value">Preautorizza %s</string>
 
 </resources>
