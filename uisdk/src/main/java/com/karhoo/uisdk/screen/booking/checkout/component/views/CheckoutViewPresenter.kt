@@ -172,11 +172,17 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         val passenger = if (KarhooUISDKConfigurationProvider.configuration
                         .authenticationMethod() is AuthenticationMethod.KarhooUser) parsePassengerDetails() else passengerDetails
 
+        val flight = if (flightInfo.isNotEmpty()) {
+            flightInfo
+        } else {
+            null
+        }
+
         passenger?.let {
             val metadata = getBookingMetadataMap(identifier, tripId)
 
             tripsService.book(TripBooking(comments = comments,
-                                          flightNumber = flightInfo,
+                                          flightNumber = flight,
                                           meta = metadata,
                                           nonce = identifier,
                                           quoteId = quote?.id.orEmpty(),
