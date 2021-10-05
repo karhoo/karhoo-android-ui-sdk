@@ -329,7 +329,7 @@
     <string name="kh_uisdk_confirmed">Votre course avec %s est confirmée</string>
     <string name="kh_uisdk_requested">Votre course avec %s a été demandée</string>
     <string name="kh_uisdk_initialised">Karhoo initialise votre course</string>
-    <string name="kh_uisdk_driver_en_route">Votre chauffeur est en route</string>
+    <string name="kh_uisdk_driver_en_route">Le chauffeur est en route</string>
     <string name="kh_uisdk_allocated">Votre chauffeur vient d\'être attribué</string>
     <string name="kh_uisdk_approaching">Votre véhicule va bientôt arriver</string>
     <string name="kh_uisdk_arrived">Votre chauffeur est arrivé</string>
