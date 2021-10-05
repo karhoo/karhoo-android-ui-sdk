@@ -338,7 +338,7 @@
     <string name="kh_uisdk_cancelled_by_dispatch">Il fornitore %s ha cancellato il tuo viaggio</string>
     <string name="kh_uisdk_cancelled_by_karhoo">Karhoo have cancelled your journey</string>
     <string name="kh_uisdk_failed_trip">Non siamo riusciti a prenotare il tuo viaggio</string>
-    <string name="kh_uisdk_getting_trip_status">Recupero dello stato della tua corsa...</string>
+    <string name="kh_uisdk_getting_trip_status">Recupero dello stato della tua corsa…</string>
 
     <!-- Fare type -->
     <string name="kh_uisdk_fixed_fare">Fisso</string>
