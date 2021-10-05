@@ -71,6 +71,7 @@ class CheckoutViewPresenterTests {
             phoneNumber = "+441234 56789",
             locale = "en-GB")
     private val bookingComment = "Booking Comments"
+    private val flightInfo = "AA123"
 
     private val analytics: Analytics = mock()
     private val braintreePaymentNonce: PaymentMethodNonce = mock()
@@ -470,7 +471,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails,
-                bookingComment)
+                bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
@@ -494,7 +495,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails =
-        passengerDetails, comments = bookingComment)
+        passengerDetails, comments = bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
@@ -514,7 +515,7 @@ class CheckoutViewPresenterTests {
     fun `book trip CouldNotBookPaymentPreAuthFailed failure shows payment dialog`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment)
+        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
@@ -558,7 +559,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                bookingComment)
+                bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -584,7 +585,7 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                bookingComment)
+                bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -609,7 +610,7 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment)
+        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -632,7 +633,7 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment)
+        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 

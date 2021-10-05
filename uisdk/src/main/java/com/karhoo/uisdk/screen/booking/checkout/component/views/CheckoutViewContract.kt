@@ -95,7 +95,8 @@ interface CheckoutViewContract {
 
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
                                        passengerDetails: PassengerDetails? = null,
-                                       comments: String)
+                                       comments: String,
+                                        flightInfo: String)
 
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null)

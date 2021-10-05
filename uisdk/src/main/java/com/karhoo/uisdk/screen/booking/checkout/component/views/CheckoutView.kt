@@ -72,6 +72,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private val bookingComments: String
         get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
 
+    private val flightInfo: String
+        get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
+
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
@@ -298,7 +301,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
         showLoading(true)
-        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengersDetailLayout.retrievePassenger(), bookingComments)
+        presenter.passBackPaymentIdentifiers(threeDSNonce, tripId, passengersDetailLayout.retrievePassenger(), bookingComments, flightInfo)
     }
 
     override fun initialisePaymentProvider(quote: Quote?) {
