@@ -216,7 +216,13 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun refreshPaymentDetails() {
-        view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
+        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
+                        AuthenticationMethod.TokenExchange ||
+                KarhooUISDKConfigurationProvider.isGuest()) {
+            view?.showUpdatedPaymentDetails(null)
+        } else {
+            view?.showUpdatedPaymentDetails(userStore.savedPaymentInfo)
+        }
     }
 
     override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
