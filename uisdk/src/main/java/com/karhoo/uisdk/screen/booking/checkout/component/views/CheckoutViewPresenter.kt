@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
-import com.karhoo.sdk.api.model.FlightDetails
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
@@ -49,7 +48,6 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
-    private var flightDetails: FlightDetails? = null
     private var origin: LocationInfo? = null
     private var outboundTripId: String? = null
     private var quote: Quote? = null
