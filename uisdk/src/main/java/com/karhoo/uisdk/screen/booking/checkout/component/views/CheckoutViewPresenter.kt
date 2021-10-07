@@ -24,6 +24,7 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
+import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -137,8 +138,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.removeCurrentUser()
         }
-        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
-                        AuthenticationMethod.TokenExchange ||
+        if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
+                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) ||
                 KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.clearSavedPaymentInfo()
         }
