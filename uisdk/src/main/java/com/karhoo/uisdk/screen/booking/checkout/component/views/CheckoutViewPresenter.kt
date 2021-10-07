@@ -216,8 +216,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun refreshPaymentDetails() {
-        if (KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is
-                        AuthenticationMethod.TokenExchange ||
+        if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
+                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) ||
                 KarhooUISDKConfigurationProvider.isGuest()) {
             view?.showUpdatedPaymentDetails(null)
         } else {
