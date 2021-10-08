@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -76,7 +77,11 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     }
 
     override fun onBackPressed() {
-        fragment.onBackPressed()
+        if(khWebView.visibility == View.VISIBLE) {
+            khWebView.hide()
+        } else {
+            fragment.onBackPressed()
+        }
     }
 
     /**
