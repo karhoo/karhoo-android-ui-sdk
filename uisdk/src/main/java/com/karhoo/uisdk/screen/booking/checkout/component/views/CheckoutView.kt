@@ -296,7 +296,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
-
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
