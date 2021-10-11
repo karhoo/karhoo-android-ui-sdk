@@ -123,6 +123,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingSuccess(tripInfo))
         }
+        clearData()
     }
 
     private fun onTripBookFailure(error: KarhooError) {
@@ -137,7 +138,9 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         if (KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.removeCurrentUser()
         }
-        if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) {
+        if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
+                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) ||
+                KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.clearSavedPaymentInfo()
         }
     }
@@ -255,6 +258,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError(karhooError)
         bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingError(stringId, karhooError))
+        clearData()
     }
 
     private fun handleBookingType(quote: Quote) {
