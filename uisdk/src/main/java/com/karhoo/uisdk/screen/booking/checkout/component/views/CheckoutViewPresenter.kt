@@ -258,6 +258,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     override fun handleError(@StringRes stringId: Int, karhooError: KarhooError?) {
         view?.onError(karhooError)
         bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingError(stringId, karhooError))
+        clearData()
     }
 
     private fun handleBookingType(quote: Quote) {

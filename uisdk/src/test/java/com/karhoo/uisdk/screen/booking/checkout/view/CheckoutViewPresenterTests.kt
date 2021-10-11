@@ -699,6 +699,33 @@ class CheckoutViewPresenterTests {
     }
 
     /**
+     * Given:   Authenticated with TOKEN Exchange
+     * When:    We clear the data as a result of an unrecoverable error
+     * Then:    The payment method data is cleared
+     */
+    @Test
+    fun `Clear data removes the saved payment info for a TOKEN Exchange authenticated user in case of an unrecoverable err`() {
+        setTokenUser()
+        whenever(userStore.paymentProvider).thenReturn( Provider(id = ADYEN))
+        checkoutPresenter.handleError(0, KarhooError.InternalSDKError)
+
+        verify(userStore, atLeastOnce()).clearSavedPaymentInfo()
+    }
+
+    /**
+     * Given:   Authenticated with Guest Account
+     * When:    We clear the data
+     * Then:    The payment method data is cleared
+     */
+    @Test
+    fun `Clear data removes the saved payment info for a Guest user in case of an unrecoverable err`() {
+        setGuestUser()
+        checkoutPresenter.handleError(0, KarhooError.InternalSDKError)
+
+        verify(userStore, atLeastOnce()).clearSavedPaymentInfo()
+    }
+
+    /**
      * Given:   The user leaves the booking screen
      * When:    The user is not a guest
      * Then:    The user data is removed
