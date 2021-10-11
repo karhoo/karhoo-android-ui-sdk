@@ -61,7 +61,9 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     private fun setAvailableCategories(availableCategories: Map<String, Boolean>) {
-        categoryViewModels.forEach { it.isAvailable = availableCategories.containsKey(it.categoryName) }
+        for (item in categoryViewModels) {
+            item.isAvailable = availableCategories.containsKey(item.categoryName)
+        }
         categoriesViewModel.categories.value = categoryViewModels
     }
 
@@ -111,7 +113,9 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private fun getFilteredVehiclesForCategory(currentFilter: String) {
         if (currentFilter == allCategory?.categoryName) {
             filteredList = mutableListOf()
-            availableVehicles.values.forEach { filteredList?.addAll(it) }
+            for (item in availableVehicles.values) {
+                filteredList?.addAll(item)
+            }
         } else {
             filteredList = availableVehicles[this.currentFilter.orEmpty()]?.toMutableList()
         }
@@ -197,9 +201,9 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
         handleVehiclePolling(vehicles)
 
         var hasQuotes = false
-        vehicles.categories.forEach {
-            if (it.value.isNotEmpty()) {
-               hasQuotes = true
+        for (item in vehicles.categories) {
+            if (item.value.isNotEmpty()) {
+                hasQuotes = true
             }
         }
 
