@@ -61,8 +61,8 @@
 
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Anmelden</string>
-    <string name="kh_uisdk_drawer_closed">Schublade geschlossen</string>
-    <string name="kh_uisdk_drawer_open">Schublade offen</string>
+    <string name="kh_uisdk_drawer_closed">Navigation geschlossen</string>
+    <string name="kh_uisdk_drawer_open">Navigation offen</string>
     <string name="kh_uisdk_profile">Profil</string>
     <string name="kh_uisdk_help">Hilfe</string>
     <string name="kh_uisdk_rides">Fahrten</string>
@@ -201,7 +201,7 @@
     <string name="kh_uisdk_time_label">Zeit:</string>
     <string name="kh_uisdk_payment_issue">Zahlungsproblem</string>
     <string name="kh_uisdk_title_dispatch_cancelled">Versendung abgebrochen</string>
-    <string name="kh_uisdk_dispatch_cancelled" formatted="false">Bitte entschuldigen Sie, %s hat im Moment keine verfügbaren Treiber.</string>
+    <string name="kh_uisdk_dispatch_cancelled" formatted="false">Bitte entschuldigen Sie, %s hat im Moment keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_change">CHANGE</string>
 
     <!-- Support -->
@@ -280,7 +280,7 @@
 
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Buchung fehlgeschlagen</string>
-    <string name="kh_uisdk_booking_failed_body">Leider ist die Nachfrage hoch. %1$s hat keine verfügbaren Treiber.</string>
+    <string name="kh_uisdk_booking_failed_body">Leider ist die Nachfrage hoch. %1$s hat keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Entschuldigung, die Nachfrage ist hoch. Die ausgewählte Flotte hat keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden…</string>
     <string name="kh_uisdk_allocating_trip_one">Bitte warten Sie, bis Ihnen ein Fahrer zugewiesen wird.</string>
@@ -331,7 +331,7 @@
     <string name="kh_uisdk_driver_en_route">Ihr %s Fahrer ist auf dem Weg</string>
     <string name="kh_uisdk_allocated">Your trip has now been allocated to a driver</string>
     <string name="kh_uisdk_approaching">Ihre Fahrt ist nun einem Fahrer zugewiesen worden</string>
-    <string name="kh_uisdk_arrived">Ihr %s Treiber ist angekommen</string>
+    <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_pass_on_board">Sie sind auf dem Weg. Wir wünschen Ihnen eine gute Fahrt!</string>
     <string name="kh_uisdk_completed">Wir hoffen, Sie haben Ihre Reise genossen</string>
     <string name="kh_uisdk_cancelled_by_user">Sie haben Ihre Fahrt storniert mit %s</string>
@@ -378,12 +378,12 @@
     <string name="kh_uisdk_star_excellent">Ausgezeichnet</string>
     <string name="kh_uisdk_rating_submitted">Vielen Dank für die Abgabe Ihrer Bewertung.</string>
     <string name="kh_uisdk_submit_button_text">Sagen Sie uns, warum Sie so bewertet haben?</string>
-    <string name="kh_uisdk_tell_us_more">Bitte, erzählen Sie uns mehr über Ihre Reise</string>
+    <string name="kh_uisdk_tell_us_more">Bitte erzählen Sie uns mehr über Ihre Reise</string>
 
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
     <string name="kh_uisdk_trip_id_label">Reise-ID</string>
-    <string name="kh_uisdk_additional_comments">Zusätzliche Bemerkungen (fakultativ)</string>
+    <string name="kh_uisdk_additional_comments">Zusätzliche Bemerkungen (optional)</string>
     <string name="kh_uisdk_question_one">Wie zufrieden waren Sie mit der Auswahl der Angebote für Ihre Reise (z. B. Flotten, Preise und ETAs)?</string>
     <string name="kh_uisdk_question_two">Wie war Ihre Erfahrung mit der Suche nach dem Abholort und dem Treffen mit dem Fahrer?</string>
     <string name="kh_uisdk_question_three">Wie war Ihre Erfahrung im Taxi (z.B. Sauberkeit, Streckenführung und Fahrer)?</string>
