@@ -58,7 +58,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                       attrs: AttributeSet? = null,
                                                       defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr), CheckoutViewContract.View,
                                                                                BookingPaymentContract.PaymentViewActions, BookingPaymentContract.PaymentActions,
-                                                                               CheckoutViewContract.BookingRequestViewWidget, WebViewActions{
+                                                                               CheckoutViewContract.BookingRequestViewWidget, WebViewActions {
     private var isGuest: Boolean = false
 
     private var holdOpenForPaymentFlow = false
@@ -327,7 +327,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             val dialingCode = data?.getStringExtra(CountryPickerActivity
                                                            .COUNTRY_DIALING_CODE_KEY) ?: ""
 
-            passengersDetailLayout.setCountryFlag(countryCode, dialingCode)
+            passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true)
         } else {
             bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
             loadingButtonCallback.onLoadingComplete()
@@ -356,7 +356,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
 
             val countryCode = getDefaultCountryCode(context)
-            passengersDetailLayout.setCountryFlag(countryCode, getDefaultCountryDialingCode(countryCode))
+            passengersDetailLayout.setCountryFlag(countryCode,
+                                                  getDefaultCountryDialingCode(countryCode),
+                                                  false)
         }
 
         bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
