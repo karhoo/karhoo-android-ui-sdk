@@ -414,7 +414,6 @@
     <!--  Quote View Learn More  -->
     <string name="kh_uisdk_quote_learn_more">Plus</string>
     <string name="kh_uisdk_country_search">Recherche pays/région</string>
-    <string name="kh_uisdk_vehicle_label">Véhicule: </string>
 
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Envoyer</string>

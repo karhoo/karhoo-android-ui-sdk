@@ -7,7 +7,7 @@ import com.karhoo.uisdk.R
 fun Vehicle.categoryToLocalisedString(context: Context): String {
 
     if (vehicleClass.isNullOrEmpty()) {
-        R.string.kh_uisdk_vehicle_label
+        R.string.kh_uisdk_vehicle
     } else {
         return when (this.vehicleClass.uppercase()) {
             "MPV" -> context.getString(R.string.kh_uisdk_mpv)
