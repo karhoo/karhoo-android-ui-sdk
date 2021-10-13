@@ -410,7 +410,6 @@
     <!--  Quote View Learn More  -->
     <string name="kh_uisdk_quote_learn_more">Leer más</string>
     <string name="kh_uisdk_country_search">Buscar país/región</string>
-    <string name="kh_uisdk_vehicle_label">Vehículo: </string>
 
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Enviar</string>

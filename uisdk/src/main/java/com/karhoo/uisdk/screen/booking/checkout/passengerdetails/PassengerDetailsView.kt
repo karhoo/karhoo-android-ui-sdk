@@ -111,7 +111,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         field.error = resources.getString(errorId)
     }
 
-    override fun setCountryFlag(countryCode: String, dialingCode: String) {
+    override fun setCountryFlag(countryCode: String, dialingCode: String, validateField: Boolean) {
         val countryFlag = Utils.getMipmapResId(context, countryCode.toLowerCase() + "_flag")
 
         countryFlagImageView.setImageResource(countryFlag)
@@ -120,9 +120,10 @@ class PassengerDetailsView @JvmOverloads constructor(
         presenter.setCountryCode(countryCode)
         presenter.setDialingCode(dialingCode)
 
-        presenter.validateField(mobileNumberLayout, true, PhoneNumberValidator())
-
-        validationCallback?.onFieldsValidated(areFieldsValid())
+        if(validateField) {
+            presenter.validateField(mobileNumberLayout, true, PhoneNumberValidator())
+            validationCallback?.onFieldsValidated(areFieldsValid())
+        }
     }
 
     /**
@@ -188,7 +189,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
         mobileNumberInput.setText(presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
-        setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context))
+        setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), false)
     }
 
     override fun bindEditMode(isEditing: Boolean) {
