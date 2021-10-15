@@ -47,8 +47,6 @@ class PassengerDetailsView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
         initialiseFieldListeners()
-        retrievePassenger()
-        validateAll()
     }
 
     private fun validateAll() {
@@ -190,6 +188,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         emailInput.setText(passengerDetails.email)
         mobileNumberInput.setText(presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
         setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), false)
+
+        validateAll()
     }
 
     override fun bindEditMode(isEditing: Boolean) {
@@ -232,6 +232,9 @@ class PassengerDetailsView @JvmOverloads constructor(
     }
 
     override fun retrievePassenger(): PassengerDetails? {
+        if(getPassengerDetails() != null) {
+            return getPassengerDetails()
+        }
         return try {
             val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
             val json = sharedPrefs.getString(PASSENGER_DETAILS_SHARED_PREFS, null)
