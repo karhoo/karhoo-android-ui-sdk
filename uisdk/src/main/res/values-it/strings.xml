@@ -5,10 +5,7 @@
     <string name="kh_uisdk_add_flight_details">Aggiungi i dettagli del volo (facoltativo)</string>
     <string name="kh_uisdk_add_payment">Aggiungi pagamento</string>
     <string name="kh_uisdk_additional_comments">Commenti aggiuntivi (facoltativo)</string>
-    <!-- Feature Flag Tags -->
-    <string name="kh_uisdk_additional_feedback">Visualizza feedback aggiuntivo</string>
     <string name="kh_uisdk_address_drop_off">Ritiro</string>
-    <string name="kh_uisdk_address_map_options">addressMapOptions</string>
     <string name="kh_uisdk_address_pick_up">Raccogliere</string>
     <string name="kh_uisdk_address_picker_add_pickup">Aggiungi ritiro</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
@@ -69,8 +66,6 @@
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0,1276</string>
     <string name="kh_uisdk_change">MODIFICARE</string>
-    <string name="kh_uisdk_channel_description">Canale di notifica di viaggio</string>
-    <string name="kh_uisdk_channel_name">Notifica di viaggio</string>
     <string name="kh_uisdk_checkout_as_guest">Prenota giro</string>
     <string name="kh_uisdk_code">Codice</string>
     <string name="kh_uisdk_completed">Speriamo che ti sia piaciuto il tuo viaggio</string>
@@ -138,9 +133,6 @@
     <string name="kh_uisdk_getting_trip_status">Recupero dello stato della tua corsa...</string>
     <string name="kh_uisdk_got_it">FATTO</string>
     <string name="kh_uisdk_gps_tracking">Tracciamento GPS</string>
-    <string name="kh_uisdk_guest_trip_tracking_custom">https://follow.stg.karhoo.com/ %s</string>
-    <string name="kh_uisdk_guest_trip_tracking_production">https://follow.karhoo.com/ %s</string>
-    <string name="kh_uisdk_guest_trip_tracking_sandbox">https://follow.sandbox.karhoo.com/ %s</string>
     <string name="kh_uisdk_help">Aiuto</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d ora</item>
@@ -200,7 +192,6 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Impossibile eseguire l\'autenticazione</string>
     <string name="kh_uisdk_karhoo_id">Karhoo ID</string>
-    <string name="kh_uisdk_karhoo_labs">Karhoo Labs</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Impossibile trovare il cliente in braintree</string>
     <string name="kh_uisdk_KP002">Impossibile inizializzare il client per l\'organizzazione</string>
@@ -219,8 +210,6 @@
     <string name="kh_uisdk_location_permission_denied">L\'autorizzazione alla posizione è stata negata, per favore consentila così possiamo localizzarti</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
-    <!-- Logger -->
-    <string name="kh_uisdk_logger_sdk_not_configured">UISDK non configurato. Configura la configurazione di KarhooUISDK o visita https://developer.karhoo.com/docs/using-the-ui-sdk per maggiori informazioni</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Registrati</string>
     <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
@@ -284,13 +273,9 @@
     <!-- Qxxxx errors -->
     <string name="kh_uisdk_Q0001">Ritiro e destinazione non possono essere gli stessi</string>
     <string name="kh_uisdk_question_four">Quanto è stato facile usare l\'app?</string>
-    <string name="kh_uisdk_question_four_id">app_esperienza</string>
     <string name="kh_uisdk_question_one">Quanto sei soddisfatto della selezione dei preventivi per il tuo viaggio (ad es. Flotte, Prezzi ed ETA)?</string>
-    <string name="kh_uisdk_question_one_id">citazione_selezione</string>
     <string name="kh_uisdk_question_three">Com\'è stata la tua esperienza mentre sei in taxi (ad es. pulizia del taxi, percorso e autista)?</string>
-    <string name="kh_uisdk_question_three_id">pob_experience</string>
     <string name="kh_uisdk_question_two">Com\'è stata la tua esperienza con la ricerca del luogo di ritiro e l\'incontro con il tuo autista?</string>
-    <string name="kh_uisdk_question_two_id">pre_pobexperience</string>
     <string name="kh_uisdk_quote">Il fornitore</string>
     <string name="kh_uisdk_quote_cancellation_after_booking_ending">dopo la prenotazione</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">e</string>

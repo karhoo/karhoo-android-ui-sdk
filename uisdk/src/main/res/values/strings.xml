@@ -5,10 +5,7 @@
     <string name="kh_uisdk_add_flight_details">Add flight details (Optional)</string>
     <string name="kh_uisdk_add_payment">Add Payment</string>
     <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
-    <!-- Feature Flag Tags -->
-    <string name="kh_uisdk_additional_feedback">additionalFeedbackView</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
-    <string name="kh_uisdk_address_map_options">addressMapOptions</string>
     <string name="kh_uisdk_address_pick_up">Pick up</string>
     <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
@@ -69,8 +66,6 @@
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0.1276</string>
     <string name="kh_uisdk_change">CHANGE</string>
-    <string name="kh_uisdk_channel_description">Trip Notification Channel</string>
-    <string name="kh_uisdk_channel_name">Trip Notification</string>
     <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
     <string name="kh_uisdk_code">Code</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your journey</string>
@@ -138,9 +133,6 @@
     <string name="kh_uisdk_getting_trip_status">Retrieving the status of your ride…</string>
     <string name="kh_uisdk_got_it">GOT IT</string>
     <string name="kh_uisdk_gps_tracking">GPS tracking</string>
-    <string name="kh_uisdk_guest_trip_tracking_custom">https://follow.stg.karhoo.com/%s</string>
-    <string name="kh_uisdk_guest_trip_tracking_production">https://follow.karhoo.com/%s</string>
-    <string name="kh_uisdk_guest_trip_tracking_sandbox">https://follow.sandbox.karhoo.com/%s</string>
     <string name="kh_uisdk_help">Help</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hour</item>
@@ -200,7 +192,6 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Could not authenticate</string>
     <string name="kh_uisdk_karhoo_id">Karhoo ID</string>
-    <string name="kh_uisdk_karhoo_labs">Karhoo Labs</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Failed to find customer in braintree</string>
     <string name="kh_uisdk_KP002">Failed to initialise client for organisation</string>
@@ -219,8 +210,6 @@
     <string name="kh_uisdk_location_permission_denied">The location permission has been denied, please allow it so we can locate you</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
-    <!-- Logger -->
-    <string name="kh_uisdk_logger_sdk_not_configured">UISDK not configured. Please configure the KarhooUISDKConfiguration or visit https://developer.karhoo.com/docs/using-the-ui-sdk for more info</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Sign In</string>
     <string name="kh_uisdk_map_selector">Set pin location on map</string>
@@ -284,13 +273,9 @@
     <!-- Qxxxx errors -->
     <string name="kh_uisdk_Q0001">Pick up and destination cannot be the same</string>
     <string name="kh_uisdk_question_four">How easy did you find using the app?</string>
-    <string name="kh_uisdk_question_four_id">app_experience</string>
     <string name="kh_uisdk_question_one">How happy were you with the selection of quotes for your trip (e.g. Fleets, Prices and ETAs)?</string>
-    <string name="kh_uisdk_question_one_id">quote_selection</string>
     <string name="kh_uisdk_question_three">How was your experience whilst in the taxi (e.g. taxi cleanliness, routing and driver)?</string>
-    <string name="kh_uisdk_question_three_id">pob_experience</string>
     <string name="kh_uisdk_question_two">How was your experience with finding the pick-up location and meeting your driver?</string>
-    <string name="kh_uisdk_question_two_id">pre_pobexperience</string>
     <string name="kh_uisdk_quote">The supplier</string>
     <string name="kh_uisdk_quote_cancellation_after_booking_ending">after booking</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">and</string>
