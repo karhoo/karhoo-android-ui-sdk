@@ -47,7 +47,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
         app:layout_constraintStart_toStartOf="@id/categoryText"
         app:layout_constraintTop_toBottomOf="@id/categoryText"
         tools:text="Electric Child Seat +3" />
@@ -70,10 +70,12 @@
         android:id="@+id/quoteLearnMoreContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_16"
+        android:paddingBottom="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoImage">
+        app:layout_constraintTop_toBottomOf="@id/categoryText">
 
         <TextView
             android:id="@+id/quoteLearnMore"
@@ -99,9 +101,10 @@
         android:id="@+id/expandedCapacityList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
         android:layout_gravity="center"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/quoteLearnMoreContainer"
+        app:layout_constraintTop_toBottomOf="@+id/bookingQuoteCancellationText"
         tools:visibility="visible" />
 
     <TextView
