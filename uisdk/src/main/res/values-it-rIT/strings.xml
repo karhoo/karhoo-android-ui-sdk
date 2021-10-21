@@ -110,7 +110,6 @@
     <string name="kh_uisdk_exec">Esecutivo</string>
     <string name="kh_uisdk_extra_capabilities">+ %d</string>
     <string name="kh_uisdk_failed_trip">Non siamo riusciti a prenotare il tuo viaggio</string>
-    <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/it</string>
     <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">La tua tariffa finale potrebbe essere influenzata\n da mance, pedaggi, tasse e altri addebiti.</string>
     <!-- Support -->
@@ -200,10 +199,8 @@
     <string name="kh_uisdk_KP004">Impossibile trovare la carta di credito predefinita</string>
     <string name="kh_uisdk_KP005">Impossibile generare nonce</string>
     <string name="kh_uisdk_label_and">e</string>
-    <string name="kh_uisdk_label_cancellation_policy">Criteri di cancellazione</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Criteri di cancellazione</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Termini e condizioni</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Termini e condizioni</string>
     <string name="kh_uisdk_last_name_hint">Cognome</string>
     <string name="kh_uisdk_last_trip_id">ID ultimo viaggio: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">ID ultimo viaggio: non ancora impostato</string>

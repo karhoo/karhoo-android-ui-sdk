@@ -110,7 +110,6 @@
     <string name="kh_uisdk_exec">Exec</string>
     <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_failed_trip">Wir haben es versäumt, Ihre Reise zu buchen</string>
-    <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/de</string>
     <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">Ihr Endpreis kann durch Trinkgelder, Mautgebühren, Steuern und andere Abgaben beeinflusst werden.</string>
     <!-- Support -->

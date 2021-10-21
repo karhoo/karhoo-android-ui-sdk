@@ -110,7 +110,6 @@
     <string name="kh_uisdk_exec">directeur</string>
     <string name="kh_uisdk_extra_capabilities">+ %d</string>
     <string name="kh_uisdk_failed_trip">We hebben uw reis niet kunnen boeken</string>
-    <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/nl</string>
     <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">Uw uiteindelijke tarief kan worden beïnvloed\n door fooien, tolgelden, belastingen en andere heffingen.</string>
     <!-- Support -->
