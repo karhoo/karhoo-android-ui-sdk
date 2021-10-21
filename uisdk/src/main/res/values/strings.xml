@@ -189,10 +189,15 @@
     <string name="kh_uisdk_P0002">Failed calling payment service</string>
 
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">By making a booking you are agreeing to %1$s\</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Terms and Conditions</string>
-    <string name="kh_uisdk_label_cancellation_policy">Cancellation Policy</string>
-    <string name="kh_uisdk_label_and">&#160;and&#160;</string>
+    <string name="kh_uisdk_karhoo_privacy_policy_url" translatable="false">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
+    <string name="kh_uisdk_karhoo_general_terms_url" translatable="false">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
+    <string name="kh_uisdk_booking_terms">By making a booking you agree to the %1$s | %2$s and %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Terms of Use</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Privacy Policy</string>
+    <string name="kh_uisdk_label_and">&#160;and to the &#160;</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Terms and Conditions</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Cancellation Policy</string>
+    <string name="kh_uisdk_label_karhoo" translatable="false">Karhoo</string>
 
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>

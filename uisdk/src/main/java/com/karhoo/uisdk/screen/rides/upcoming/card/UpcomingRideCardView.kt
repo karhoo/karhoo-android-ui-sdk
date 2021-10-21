@@ -42,7 +42,7 @@ class UpcomingRideCardView @JvmOverloads constructor(
 
         loadFleetLogo(trip)
 
-        bookingTermsText.text = trip.fleetInfo?.name.orEmpty()
+        khTermsAndConditionsText.text = trip.fleetInfo?.name.orEmpty()
         pickupLabel.text = trip.origin?.displayAddress
         dropOffLabel.text = trip.destination?.displayAddress
 

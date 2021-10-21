@@ -35,7 +35,7 @@ class RideNotificationView : RideNotificationContract.View {
     override fun normalContentView(): RemoteViews {
         val contentView = RemoteViews(context.packageName, R.layout.uisdk_view_past_ride_notification)
 
-        contentView.setTextViewText(R.id.bookingTermsText, trip.fleetInfo?.name)
+        contentView.setTextViewText(R.id.khTermsAndConditionsText, trip.fleetInfo?.name)
 
         bindState(contentView)
         loadFleetLogo(contentView)
@@ -49,7 +49,7 @@ class RideNotificationView : RideNotificationContract.View {
         contentView.apply {
             setImageViewResource(R.id.pickupBallIcon, R.drawable.uisdk_ic_pickup)
             setImageViewResource(R.id.dropoffBallIcon, R.drawable.uisdk_ic_destination)
-            setTextViewText(R.id.bookingTermsText, trip.fleetInfo?.name)
+            setTextViewText(R.id.khTermsAndConditionsText, trip.fleetInfo?.name)
             setTextViewText(R.id.pickupLabel, trip.origin?.displayAddress)
             setTextViewText(R.id.dropOffLabel, trip.destination?.displayAddress)
 

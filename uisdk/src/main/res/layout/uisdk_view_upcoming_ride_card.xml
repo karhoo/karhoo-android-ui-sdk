@@ -30,7 +30,7 @@
                 tools:src="@drawable/uisdk_base_fare_artwork" />
 
             <TextView
-                android:id="@+id/bookingTermsText"
+                android:id="@+id/khTermsAndConditionsText"
                 style="@style/Text.Primary.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 style="@style/Text.Faded.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/bookingTermsText"
+                android:layout_below="@id/khTermsAndConditionsText"
                 android:layout_alignParentStart="true"
                 tools:text="1 Jan 1970" />
 
