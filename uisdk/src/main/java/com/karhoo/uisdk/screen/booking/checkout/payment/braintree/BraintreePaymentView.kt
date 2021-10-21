@@ -13,6 +13,7 @@ import com.braintreepayments.api.models.PaymentMethodNonce
 import com.braintreepayments.api.models.ThreeDSecureRequest
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.util.extension.isGuest
 
@@ -68,6 +69,10 @@ class BraintreePaymentView constructor(actions: PaymentDropInContract.Actions) :
                 DropInRequest
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
         (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
+    }
+
+    override fun setPassenger(passengerDetails: PassengerDetails?) {
+        presenter?.setPassenger(passengerDetails)
     }
 
     companion object {

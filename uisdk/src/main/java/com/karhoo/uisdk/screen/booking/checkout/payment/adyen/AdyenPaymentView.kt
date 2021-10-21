@@ -6,6 +6,7 @@ import com.adyen.checkout.base.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 
@@ -50,6 +51,10 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : Pay
     private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {
         val repository = AdyenDropInServiceRepository(context)
         repository.supplyPartnerId = quote?.fleet?.id ?: ""
+    }
+
+    override fun setPassenger(passengerDetails: PassengerDetails?) {
+        presenter?.setPassenger(passengerDetails)
     }
 
     companion object {

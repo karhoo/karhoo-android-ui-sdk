@@ -149,20 +149,24 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         view?.initialiseChangeCard(quote)
     }
 
-    override fun getPassengerDetails() {
-        when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
-            is AuthenticationMethod.Guest -> {
-                view?.fillInPassengerDetails(null)
-            }
-            else -> {
-                view?.fillInPassengerDetails(details = parsePassengerDetails())
+    override fun getPassengerDetails(passengerDetails: PassengerDetails?) {
+        passengerDetails?.let {
+            view?.fillInPassengerDetails(details = passengerDetails)
+        } ?: run {
+            when (KarhooUISDKConfigurationProvider.configuration.authenticationMethod()) {
+                is AuthenticationMethod.Guest -> {
+                    view?.fillInPassengerDetails(null)
+                }
+                else -> {
+                    view?.fillInPassengerDetails(details = getPassengerDetailsFromUserStore())
+                }
             }
         }
     }
 
     override fun consumeBackPressed(): Boolean {
         return if (view?.isPassengerDetailsViewVisible() == true) {
-            view?.showPassengerDetails(false)
+            view?.showPassengerDetailsLayout(false)
             true
         } else {
             false
@@ -170,8 +174,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String, flightInfo: String) {
-        val passenger = if (KarhooUISDKConfigurationProvider.configuration
-                        .authenticationMethod() is AuthenticationMethod.KarhooUser) parsePassengerDetails() else passengerDetails
+        val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
         val flight = if (flightInfo.isNotEmpty()) {
             flightInfo
@@ -179,24 +182,22 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             null
         }
 
-        passenger?.let {
-            val metadata = getBookingMetadataMap(identifier, tripId)
+        val metadata = getBookingMetadataMap(identifier, tripId)
 
-            tripsService.book(TripBooking(comments = comments,
-                                          flightNumber = flight,
-                                          meta = metadata,
-                                          nonce = identifier,
-                                          quoteId = quote?.id.orEmpty(),
-                                          passengers = Passengers(additionalPassengers = 0,
-                                                                  passengerDetails = listOf(passenger),
-                                                                  luggage = Luggage(total = 0))))
-                    .execute { result ->
-                        when (result) {
-                            is Resource.Success -> onTripBookSuccess(result.data)
-                            is Resource.Failure -> onTripBookFailure(result.error)
-                        }
+        tripsService.book(TripBooking(comments = comments,
+                                      flightNumber = flight,
+                                      meta = metadata,
+                                      nonce = identifier,
+                                      quoteId = quote?.id.orEmpty(),
+                                      passengers = Passengers(additionalPassengers = 0,
+                                                              passengerDetails = listOf(passenger),
+                                                              luggage = Luggage(total = 0))))
+                .execute { result ->
+                    when (result) {
+                        is Resource.Success -> onTripBookSuccess(result.data)
+                        is Resource.Failure -> onTripBookFailure(result.error)
                     }
-        }
+                }
     }
 
     private fun getBookingMetadataMap(identifier: String, tripId: String?): HashMap<String, String>? {
@@ -208,7 +209,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    private fun parsePassengerDetails(): PassengerDetails {
+    private fun getPassengerDetailsFromUserStore(): PassengerDetails {
         val user = userStore.currentUser
         return PassengerDetails(
                 firstName = user.firstName,
@@ -233,7 +234,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
-    HashMap<String, String>?) {
+    HashMap<String, String>?, passengerDetails: PassengerDetails?) {
+        getPassengerDetails(passengerDetails)
         setBookingStatus(bookingStatus)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata

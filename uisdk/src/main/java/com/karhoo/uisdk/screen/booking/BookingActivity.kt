@@ -325,11 +325,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun showPrebookConfirmationDialog(data: Intent?) {
         val quoteType = data?.getSerializableExtra(CheckoutActivity
-                                                          .BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY) as QuoteType
+                                                           .BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY) as QuoteType
         val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
-        if(tripInfo != null) {
+        if (tripInfo != null) {
             bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
 
             val prebookConfirmationView = PrebookConfirmationView(this).apply {

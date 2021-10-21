@@ -68,7 +68,7 @@ interface CheckoutViewContract {
 
         fun bindPassenger(passengerDetails: PassengerDetails?)
 
-        fun showPassengerDetails(show: Boolean)
+        fun showPassengerDetailsLayout(show: Boolean)
 
         fun arePassengerDetailsValid(): Boolean
 
@@ -99,11 +99,11 @@ interface CheckoutViewContract {
                                         flightInfo: String)
 
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
-        HashMap<String, String>? = null)
+        HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)
 
         fun resetBooking()
 
-        fun getPassengerDetails()
+        fun getPassengerDetails(passengerDetails: PassengerDetails? = null)
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 
@@ -129,7 +129,7 @@ interface CheckoutViewContract {
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
-        HashMap<String, String>?)
+        HashMap<String, String>?, passengerDetails: PassengerDetails? = null)
     }
 
     sealed class Event {

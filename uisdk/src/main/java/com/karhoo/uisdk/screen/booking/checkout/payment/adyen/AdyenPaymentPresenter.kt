@@ -17,6 +17,7 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.adyen.AdyenAmount
 import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
+import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
@@ -40,6 +41,7 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
     private var adyenKey: String = ""
     var quote: Quote? = null
     private var tripId: String = ""
+    private var passengerDetails: PassengerDetails? = null
 
     init {
         attachView(view)
@@ -123,6 +125,10 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
+    }
+
+    override fun setPassenger(passengerDetails: PassengerDetails?) {
+        this.passengerDetails = passengerDetails
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
