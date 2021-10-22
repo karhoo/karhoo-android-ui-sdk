@@ -33,7 +33,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/bookingTermsText"
+            android:id="@+id/khTermsAndConditionsText"
             style="@style/Text.Primary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

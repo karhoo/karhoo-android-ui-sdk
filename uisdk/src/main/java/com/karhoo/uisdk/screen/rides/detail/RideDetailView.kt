@@ -37,7 +37,7 @@ import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.bookingTermsText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.khTermsAndConditionsText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
@@ -119,7 +119,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     private fun displayText(trip: TripInfo) {
-        trip.fleetInfo?.let { bookingTermsText.text = it.name }
+        trip.fleetInfo?.let { khTermsAndConditionsText.text = it.name }
         trip.origin?.let { pickupLabel.text = it.displayAddress }
         trip.destination?.let { dropOffLabel.text = it.displayAddress }
         karhooId.text = trip.displayTripId

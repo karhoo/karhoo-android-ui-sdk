@@ -105,7 +105,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun pastRideFleetNameVisible(expectedText: String) {
-        stringIsVisibleIsDescendant(expectedText, R.id.bookingTermsText)
+        stringIsVisibleIsDescendant(expectedText, R.id.khTermsAndConditionsText)
     }
 
     fun pastRideFleetLogoVisible() {
@@ -247,7 +247,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     private fun upcomingTripFleetNameVisible(fleet: String) {
-        stringIsVisibleIsDescendant(fleet, R.id.bookingTermsText)
+        stringIsVisibleIsDescendant(fleet, R.id.khTermsAndConditionsText)
     }
 
     private fun upcomingRideFleetLogoVisible() {
