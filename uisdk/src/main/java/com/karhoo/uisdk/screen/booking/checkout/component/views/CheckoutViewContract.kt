@@ -103,7 +103,7 @@ interface CheckoutViewContract {
 
         fun resetBooking()
 
-        fun getPassengerDetails(passengerDetails: PassengerDetails? = null)
+        fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails? = null)
 
         fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
 

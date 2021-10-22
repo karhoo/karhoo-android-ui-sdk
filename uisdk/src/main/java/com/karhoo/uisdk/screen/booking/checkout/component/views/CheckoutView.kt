@@ -96,7 +96,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
-        presenter.getPassengerDetails()
+        presenter.retrievePassengerDetailsForShowing()
 
         bookingCheckoutPassengerView.setOnClickListener {
             showPassengerDetailsLayout(true)

@@ -149,7 +149,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         view?.initialiseChangeCard(quote)
     }
 
-    override fun getPassengerDetails(passengerDetails: PassengerDetails?) {
+    override fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails?) {
         passengerDetails?.let {
             view?.fillInPassengerDetails(details = passengerDetails)
         } ?: run {
@@ -235,7 +235,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?, passengerDetails: PassengerDetails?) {
-        getPassengerDetails(passengerDetails)
+        retrievePassengerDetailsForShowing(passengerDetails)
         setBookingStatus(bookingStatus)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
