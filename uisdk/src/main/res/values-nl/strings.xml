@@ -43,7 +43,8 @@
     <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s heeft geen beschikbare stuurprogramma\'s.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. De geselecteerde vloot heeft geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een boeking te maken, gaat u akkoord met %1$s \</string>
+    <string name="kh_uisdk_booking_terms">Door een boeking te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
     <string name="kh_uisdk_cancel">ANNULEREN</string>
@@ -192,6 +193,7 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Kan niet authenticeren</string>
     <string name="kh_uisdk_karhoo_id">Karhoo-ID</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Privacybeleid</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Kan klant niet vinden in braintree</string>
     <string name="kh_uisdk_KP002">Kan client niet initialiseren voor organisatie</string>
@@ -199,8 +201,8 @@
     <string name="kh_uisdk_KP004">Kan standaardcreditcard niet vinden</string>
     <string name="kh_uisdk_KP005">Kan nonce niet genereren</string>
     <string name="kh_uisdk_label_and">en</string>
-    <string name="kh_uisdk_label_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
     <string name="kh_uisdk_last_name_hint">Achternaam</string>
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>

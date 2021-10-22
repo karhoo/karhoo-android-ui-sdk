@@ -43,7 +43,8 @@
     <string name="kh_uisdk_booking_failed_body">Leider ist die Nachfrage hoch. %1$s hat keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Entschuldigung, die Nachfrage ist hoch. Die ausgewählte Flotte hat keine verfügbaren Fahrer.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Mit der Buchung erklären Sie sich mit %1$s\ einverstanden.</string>
+    <string name="kh_uisdk_booking_terms">Mit der Buchung erklären Sie sich mit den %1$s | %2$s und %3$s %4$s | %3$s %5$s einverstanden.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Nutzungsbedingungen</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Mit der Erstellung Ihres Karhoo-Kontos erklären Sie sich mit Karhoo\'s</string>
     <string name="kh_uisdk_call">ANRUFEN</string>
     <string name="kh_uisdk_cancel">Abbrechen</string>
@@ -192,6 +193,7 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Authentifizierung nicht möglich</string>
     <string name="kh_uisdk_karhoo_id">Karhoo ID</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Datenschutzrichtlinie</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Kunde in Braintree nicht gefunden</string>
     <string name="kh_uisdk_KP002">Client für Organisation konnte nicht initialisiert werden</string>
@@ -199,8 +201,8 @@
     <string name="kh_uisdk_KP004">Nicht gefundene Standard-Kreditkarte</string>
     <string name="kh_uisdk_KP005">Nonce-Erzeugung fehlgeschlagen</string>
     <string name="kh_uisdk_label_and">und</string>
-    <string name="kh_uisdk_label_cancellation_policy">Stornierungsbedingungen</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Nutzungsbedingungen</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Stornierungsbedingungen</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Nutzungsbedingungen</string>
     <string name="kh_uisdk_last_name_hint">Nachname</string>
     <string name="kh_uisdk_last_trip_id">Letzte Reise-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Letzte Reise-ID: Noch nicht festgelegt</string>

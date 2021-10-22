@@ -43,7 +43,8 @@
     <string name="kh_uisdk_booking_failed_body">La demanda es alta. %1 no tiene conductores disponibles en este momento</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">La demanda es alta en estos momentos. La flota seleccionada no tiene conductores disponibles.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Al reservar con %1$s</string>
+    <string name="kh_uisdk_booking_terms">Al hacer una reserva, usted  acepta las %1$s | %2$s así como los %4$s de %3$s | %5$s de %3$s.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Condiciones de Uso</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Al crear una cuenta de Karhoo estás aceptando sus</string>
     <string name="kh_uisdk_call">LLAMAR</string>
     <string name="kh_uisdk_cancel">CANCELAR</string>
@@ -192,6 +193,7 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">No se puede autenticar</string>
     <string name="kh_uisdk_karhoo_id">ID Karhoo</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">política de privacidad</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">No se pudo encontrar al cliente en Braintree</string>
     <string name="kh_uisdk_KP002">No se pudo inicializar el cliente para la organización</string>
@@ -199,15 +201,15 @@
     <string name="kh_uisdk_KP004">No se pudo encontrar la tarjeta de crédito predeterminada</string>
     <string name="kh_uisdk_KP005">Error al generar nonce</string>
     <string name="kh_uisdk_label_and"> y </string>
-    <string name="kh_uisdk_label_cancellation_policy">su Política de Cancelación</string>
-    <string name="kh_uisdk_label_terms_and_conditions">" estás aceptando sus Condiciones Generales"</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">política de cancelación</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">condiciones generales</string>
     <string name="kh_uisdk_last_name_hint">Apellidos</string>
     <string name="kh_uisdk_last_trip_id">№ de última reserva: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">№ de última reserva: no establecido</string>
     <string name="kh_uisdk_licence">Licencia:%1$s</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_location_disabled">Activa los servicios de localización para utilizar la aplicación</string>
-    <string name="kh_uisdk_location_permission_denied">El permiso de localización ha sido denegado, actívalo para que podamos ubicarte</string>
+    <string name="kh_uisdk_location_permission_denied">El permiso de ubicación ha sido denegado, permítelo para que podamos ubicarlo.</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->

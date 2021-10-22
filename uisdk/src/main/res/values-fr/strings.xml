@@ -43,7 +43,8 @@
     <string name="kh_uisdk_booking_failed_body">Désolé, %1$s n\'a aucun chauffeur disponible en ce moment.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Désolé, la flotte choisie n\'a aucun chauffeur disponible en ce moment</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">"En effectuant une réservation avec %1$s\, vous acceptez leurs "</string>
+    <string name="kh_uisdk_booking_terms">En effectuant une réservation, vous acceptez les %1$s | %2$s ainsi que les %4$s de %3$s | %5$s de %3$s.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Conditions d\'Utilisation</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">En créant un compte Karhoo, vous acceptez nos</string>
     <string name="kh_uisdk_call">Appeler</string>
     <string name="kh_uisdk_cancel">Annuler</string>
@@ -73,7 +74,7 @@
     <string name="kh_uisdk_confirmed">Votre course avec %s est confirmée</string>
     <string name="kh_uisdk_contact">CONTACT</string>
     <string name="kh_uisdk_contact_driver">Appeler chauffeur</string>
-    <string name="kh_uisdk_contact_fleet">Contacter le fournisseur</string>
+    <string name="kh_uisdk_contact_fleet">Contacter la flotte</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/fr/requests/new</string>
     <string name="kh_uisdk_continue_journey">CONTINUER</string>
     <string name="kh_uisdk_continue_registration">Continuer</string>
@@ -192,6 +193,7 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Impossible de confirmer l\'authentification</string>
     <string name="kh_uisdk_karhoo_id">Ref. Karhoo</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Règles de confidentialité</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Impossible de trouver un client dans braintree</string>
     <string name="kh_uisdk_KP002">Échec de l\'initialisation du client pour l\'organisation</string>
@@ -199,15 +201,15 @@
     <string name="kh_uisdk_KP004">Impossible de trouver la carte de crédit par défaut</string>
     <string name="kh_uisdk_KP005">Impossible de générer un nonce</string>
     <string name="kh_uisdk_label_and"> ainsi que leurs </string>
-    <string name="kh_uisdk_label_cancellation_policy">Conditions d\'annulation</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Conditions générales d\'utilisation</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Conditions d\'annulation</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Conditions générales d\'utilisation</string>
     <string name="kh_uisdk_last_name_hint">Nom de famille</string>
     <string name="kh_uisdk_last_trip_id">Référence derniere course: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Aucune référence pour dernière course</string>
     <string name="kh_uisdk_licence">Numéro de licence: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Veuillez activer les services de localisation pour utiliser l\'application</string>
-    <string name="kh_uisdk_location_permission_denied">Les services de localisation sont désactivés, veuillez les activer afin que l\'on puisse vous localiser.</string>
+    <string name="kh_uisdk_location_permission_denied">L’autorisation de localisation a été refusée, veuillez l’autoriser afin que nous puissions vous localiser</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">EXPLICATION_LOCATION_REQUETE</string>
     <!-- Navigation Drawer -->
