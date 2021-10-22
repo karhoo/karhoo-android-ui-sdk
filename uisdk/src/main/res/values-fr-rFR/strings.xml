@@ -191,10 +191,12 @@
     <string name="kh_uisdk_P0002">Échec de l\'appel du service de paiement</string>
 
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">En effectuant une réservation avec %1$s\, vous acceptez leurs </string>
-    <string name="kh_uisdk_label_terms_and_conditions">Conditions générales d\'utilisation</string>
-    <string name="kh_uisdk_label_cancellation_policy">Conditions d\'annulation</string>
-    <string name="kh_uisdk_label_and">&#160;ainsi que leurs&#160;</string>
+    <string name="kh_uisdk_booking_terms">En effectuant une réservation, vous acceptez les</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Conditions Générales d\'utilisation</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">politique de confidentialité</string>
+    <string name="kh_uisdk_label_and">ainsi que les</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Conditions Générales de %1$s</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">politique d\'annulation de %1$s</string>
 
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>

@@ -5,10 +5,7 @@
     <string name="kh_uisdk_add_flight_details">Voeg vluchtgegevens toe (Optioneel)</string>
     <string name="kh_uisdk_add_payment">Betaling toevoegen</string>
     <string name="kh_uisdk_additional_comments">Aanvullende opmerkingen (optioneel)</string>
-    <!-- Feature Flag Tags -->
-    <string name="kh_uisdk_additional_feedback">extraFeedbackBekijken</string>
     <string name="kh_uisdk_address_drop_off">Afzetten</string>
-    <string name="kh_uisdk_address_map_options">adresKaartOpties</string>
     <string name="kh_uisdk_address_pick_up">Oppakken</string>
     <string name="kh_uisdk_address_picker_add_pickup">Ophalen toevoegen</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Bestemming toevoegen</string>
@@ -46,7 +43,8 @@
     <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s heeft geen beschikbare stuurprogramma\'s.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. De geselecteerde vloot heeft geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een boeking te maken, gaat u akkoord met %1$s \</string>
+    <string name="kh_uisdk_booking_terms">Door een boeking te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
     <string name="kh_uisdk_cancel">ANNULEREN</string>
@@ -69,8 +67,6 @@
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0,1276</string>
     <string name="kh_uisdk_change">VERANDERING</string>
-    <string name="kh_uisdk_channel_description">Reismeldingskanaal</string>
-    <string name="kh_uisdk_channel_name">Reismelding</string>
     <string name="kh_uisdk_checkout_as_guest">Boek rit</string>
     <string name="kh_uisdk_code">Code</string>
     <string name="kh_uisdk_completed">We hopen dat je genoten hebt van je reis</string>
@@ -136,9 +132,6 @@
     <string name="kh_uisdk_getting_trip_status">De status van uw rit ophalen...</string>
     <string name="kh_uisdk_got_it">BEGREPEN</string>
     <string name="kh_uisdk_gps_tracking">GPS-tracking</string>
-    <string name="kh_uisdk_guest_trip_tracking_custom">https://follow.stg.karhoo.com/ %s</string>
-    <string name="kh_uisdk_guest_trip_tracking_production">https://follow.karhoo.com/ %s</string>
-    <string name="kh_uisdk_guest_trip_tracking_sandbox">https://follow.sandbox.karhoo.com/ %s</string>
     <string name="kh_uisdk_help">Help</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d uur</item>
@@ -198,7 +191,7 @@
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Kan niet authenticeren</string>
     <string name="kh_uisdk_karhoo_id">Karhoo-ID</string>
-    <string name="kh_uisdk_karhoo_labs">Karhoo Labs</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Privacybeleid</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Kan klant niet vinden in braintree</string>
     <string name="kh_uisdk_KP002">Kan client niet initialiseren voor organisatie</string>
@@ -206,8 +199,8 @@
     <string name="kh_uisdk_KP004">Kan standaardcreditcard niet vinden</string>
     <string name="kh_uisdk_KP005">Kan nonce niet genereren</string>
     <string name="kh_uisdk_label_and">en</string>
-    <string name="kh_uisdk_label_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
-    <string name="kh_uisdk_label_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
     <string name="kh_uisdk_last_name_hint">Achternaam</string>
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>
@@ -217,8 +210,6 @@
     <string name="kh_uisdk_location_permission_denied">De locatietoestemming is geweigerd, geef deze toestemming zodat we u kunnen lokaliseren</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
-    <!-- Logger -->
-    <string name="kh_uisdk_logger_sdk_not_configured">UISDK niet geconfigureerd. Configureer de KarhooUISDK-configuratie of bezoek https://developer.karhoo.com/docs/using-the-ui-sdk voor meer info</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Log in</string>
     <string name="kh_uisdk_map_selector">Pinlocatie op kaart instellen</string>
@@ -282,13 +273,9 @@
     <!-- Qxxxx errors -->
     <string name="kh_uisdk_Q0001">Ophalen en bestemming kunnen niet hetzelfde zijn</string>
     <string name="kh_uisdk_question_four">Hoe gemakkelijk vond je het gebruik van de app?</string>
-    <string name="kh_uisdk_question_four_id">app_ervaring</string>
     <string name="kh_uisdk_question_one">Hoe tevreden was u met de selectie van offertes voor uw reis (bijv. Vloten, Prijzen en ETA\'s)?</string>
-    <string name="kh_uisdk_question_one_id">quote_selection</string>
     <string name="kh_uisdk_question_three">Hoe was uw ervaring in de taxi (bijv. netheid van de taxi, route en chauffeur)?</string>
-    <string name="kh_uisdk_question_three_id">pob_experience</string>
     <string name="kh_uisdk_question_two">Hoe was je ervaring met het vinden van de ophaallocatie en het ontmoeten van je chauffeur?</string>
-    <string name="kh_uisdk_question_two_id">pre_pobervaring</string>
     <string name="kh_uisdk_quote">De leverancier</string>
     <string name="kh_uisdk_quote_cancellation_after_booking_ending">na boeking</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">en</string>

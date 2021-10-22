@@ -18,7 +18,7 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.bookingTermsText
+import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.khTermsAndConditionsText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.carText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dateTimeText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dropOffLabel
@@ -47,7 +47,7 @@ class PastRideCardView @JvmOverloads constructor(
 
         loadFleetLogo(trip)
 
-        bookingTermsText.text = trip.fleetInfo?.name
+        khTermsAndConditionsText.text = trip.fleetInfo?.name
         pickupLabel.text = trip.origin?.displayAddress
         dropOffLabel.text = trip.destination?.displayAddress
 

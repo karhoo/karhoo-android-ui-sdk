@@ -86,10 +86,12 @@
     <string name="kh_uisdk_destination_price_error">Selecciona un destino para ver las tarifas</string>
 
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Al reservar con %1$s</string>
-    <string name="kh_uisdk_label_terms_and_conditions"> estás aceptando sus Condiciones Generales</string>
-    <string name="kh_uisdk_label_cancellation_policy">su Política de Cancelación</string>
-    <string name="kh_uisdk_label_and">&#160;y&#160;</string>
+    <string name="kh_uisdk_booking_terms">Al hacer una reserva, usted acepta las</string>
+    <string name="kh_uisdk_booking_terms_and_conditions">Condiciones Generales de Uso</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Política de Privacidad</string>
+    <string name="kh_uisdk_label_and">así como los</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Términos y Condiciones de %1$s</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Política de Cancelación de %1$s</string>
 
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Confirmar viaje</string>

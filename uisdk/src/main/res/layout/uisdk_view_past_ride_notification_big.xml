@@ -19,7 +19,7 @@
             tools:src="@drawable/uisdk_ic_trip_completed" />
 
         <TextView
-            android:id="@+id/bookingTermsText"
+            android:id="@+id/khTermsAndConditionsText"
             style="@style/Text.Primary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:id="@+id/pickupTypeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bookingTermsText"
+            android:layout_below="@id/khTermsAndConditionsText"
             android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
             android:background="@drawable/uisdk_background_off_black_rounded"
