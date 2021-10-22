@@ -192,8 +192,10 @@
     <string name="kh_uisdk_K5003">Sin disponibilidad (no se encontraron categorías en el área solicitada)</string>
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">No se puede autenticar</string>
+    <string name="kh_uisdk_karhoo_general_terms_url">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
     <string name="kh_uisdk_karhoo_id">ID Karhoo</string>
     <string name="kh_uisdk_karhoo_privacy_policy">política de privacidad</string>
+    <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">No se pudo encontrar al cliente en Braintree</string>
     <string name="kh_uisdk_KP002">No se pudo inicializar el cliente para la organización</string>

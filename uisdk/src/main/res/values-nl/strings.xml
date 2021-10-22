@@ -192,8 +192,10 @@
     <string name="kh_uisdk_K5003">Kon geen beschikbaarheid krijgen (geen categorieën gevonden binnen het gevraagde gebied)</string>
     <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Kan niet authenticeren</string>
+    <string name="kh_uisdk_karhoo_general_terms_url">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
     <string name="kh_uisdk_karhoo_id">Karhoo-ID</string>
     <string name="kh_uisdk_karhoo_privacy_policy">Privacybeleid</string>
+    <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Kan klant niet vinden in braintree</string>
     <string name="kh_uisdk_KP002">Kan client niet initialiseren voor organisatie</string>
