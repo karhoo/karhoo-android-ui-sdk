@@ -96,11 +96,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
-        //Default binding
-        presenter.getPassengerDetails()
+        presenter.retrievePassengerDetailsForShowing()
 
         bookingCheckoutPassengerView.setOnClickListener {
-            showPassengerDetails(true)
+            showPassengerDetailsLayout(true)
         }
 
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
@@ -153,14 +152,16 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?,
                                     outboundTripId: String?,
-                                    bookingMetadata: HashMap<String, String>?) {
+                                    bookingMetadata: HashMap<String, String>?,
+                                    passengerDetails: PassengerDetails?) {
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         presenter.showBookingRequest(
                 quote = quote,
                 bookingStatus = bookingStatus,
                 outboundTripId = outboundTripId,
-                bookingMetadata = bookingMetadata
+                bookingMetadata = bookingMetadata,
+                passengerDetails = passengerDetails
                                     )
     }
 
@@ -329,6 +330,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
             passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true)
         } else {
+            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
             loadingButtonCallback.onLoadingComplete()
         }
@@ -336,6 +338,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun startBooking() {
         if (!presenter.isPaymentSet()) {
+            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.callOnClick()
         } else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
@@ -369,7 +372,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
      */
     override fun clickedPassengerSaveButton() {
         passengersDetailLayout.clickOnSaveButton()
-        showPassengerDetails(false)
+        showPassengerDetailsLayout(false)
         passengersListener.onPassengerSelected(passengersDetailLayout.retrievePassenger())
         bindPassenger(passengersDetailLayout.retrievePassenger())
     }
@@ -377,7 +380,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     /**
      * Display the passenger details page and disable the save button if the details are not valid
      */
-    override fun showPassengerDetails(show: Boolean) {
+    override fun showPassengerDetailsLayout(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
 
@@ -27,6 +28,8 @@ interface BookingPaymentContract {
         fun setViewVisibility(visibility: Int)
 
         fun updatePaymentViewVisbility(visibility: Int)
+
+        fun setPassengerDetails(passengerDetails: PassengerDetails?)
 
         fun hasValidPaymentType(): Boolean
     }

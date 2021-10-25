@@ -100,7 +100,9 @@ internal class CheckoutFragment : Fragment() {
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
                 bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-                bookingMetadata = bundle.getSerializable(CheckoutActivity.BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?
+                bookingMetadata = bundle.getSerializable(CheckoutActivity
+                                                                 .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
+                passengerDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_PASSENGER_KEY)
                                        )
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
@@ -108,12 +110,12 @@ internal class CheckoutFragment : Fragment() {
                 if (checkoutView.isPassengerDetailsViewVisible()) {
                     if (checkoutView.arePassengerDetailsValid()) {
                         checkoutView.clickedPassengerSaveButton()
-                        checkoutView.showPassengerDetails(false)
+                        checkoutView.showPassengerDetailsLayout(false)
                         checkoutActionButton.onLoadingComplete()
                     }
                 } else {
                     if (!checkoutView.arePassengerDetailsValid()) {
-                        checkoutView.showPassengerDetails(true)
+                        checkoutView.showPassengerDetailsLayout(true)
                         checkoutActionButton.onLoadingComplete()
                     } else {
                         checkoutView.startBooking()

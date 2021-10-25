@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface PaymentDropInContract {
 
@@ -21,6 +22,8 @@ interface PaymentDropInContract {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
+        fun setPassenger(passengerDetails: PassengerDetails?)
+
         fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?)
     }
 
@@ -31,6 +34,8 @@ interface PaymentDropInContract {
         fun getPaymentNonce(quote: Quote?)
 
         fun initialiseGuestPayment(quote: Quote?)
+
+        fun setPassenger(passengerDetails: PassengerDetails?)
 
         fun sdkInit(quote: Quote?)
 

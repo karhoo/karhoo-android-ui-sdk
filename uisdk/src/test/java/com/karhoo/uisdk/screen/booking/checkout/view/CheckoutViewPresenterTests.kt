@@ -217,7 +217,7 @@ class CheckoutViewPresenterTests {
 
         val returnValue = checkoutPresenter.consumeBackPressed()
 
-        verify(view).showPassengerDetails(false)
+        verify(view).showPassengerDetailsLayout(false)
         assertTrue(returnValue)
     }
 
@@ -232,7 +232,7 @@ class CheckoutViewPresenterTests {
 
         val returnValue = checkoutPresenter.consumeBackPressed()
 
-        verify(view, never()).showPassengerDetails(false)
+        verify(view, never()).showPassengerDetailsLayout(false)
         assertFalse(returnValue)
     }
 

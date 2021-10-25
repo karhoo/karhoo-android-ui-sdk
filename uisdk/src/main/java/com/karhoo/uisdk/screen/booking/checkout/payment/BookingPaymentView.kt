@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
@@ -47,6 +48,10 @@ class BookingPaymentView @JvmOverloads constructor(
                 changeCard()
             }
         }
+    }
+
+    override fun setPassengerDetails(passengerDetails: PassengerDetails?) {
+        dropInView?.setPassenger(passengerDetails)
     }
 
     override fun bindDropInView() {
