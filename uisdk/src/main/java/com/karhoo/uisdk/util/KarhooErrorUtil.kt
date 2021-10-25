@@ -52,6 +52,7 @@ fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
         KarhooError.CouldNotBookTripAsAgent -> R.string.kh_uisdk_K4014
         KarhooError.CouldNotBookTripAsTraveller -> R.string.kh_uisdk_K4015
         KarhooError.CouldNotBookTripQuoteNoLongerAvailable -> R.string.kh_uisdk_K4018
+        // TODO: Add new API errors (2020 & 2025) here
 
         KarhooError.CouldNotGetEstimatesInternalError -> R.string.kh_uisdk_K5001
         KarhooError.CouldNotGetAvailabilityNoneFound -> R.string.kh_uisdk_K5002

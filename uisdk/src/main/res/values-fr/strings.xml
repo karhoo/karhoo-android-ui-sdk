@@ -186,6 +186,8 @@
     <string name="kh_uisdk_K4014">Impossible de compléter la commande en tant qu’Agent</string>
     <string name="kh_uisdk_K4015">Impossible de compléter la commande en tant que Traveller</string>
     <string name="kh_uisdk_K4018">Impossible de compléter la réservation car le devis n\'est plus disponible</string>
+    <string name="kh_uisdk_K2020">Could not book trip with the selected DMS</string>
+    <string name="kh_uisdk_K2025">Quote price increased whilst booking.</string>
     <!-- Availability errors, K5xxx -->
     <string name="kh_uisdk_K5001">Impossible de trouver un devis</string>
     <string name="kh_uisdk_K5002">Impossible de trouver un devis (aucune flotte trouvée dans la zone demandée)</string>

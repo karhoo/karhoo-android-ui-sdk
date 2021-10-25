@@ -186,6 +186,8 @@
     <string name="kh_uisdk_K4014">Impossibile prenotare il viaggio come agente</string>
     <string name="kh_uisdk_K4015">Impossibile prenotare il viaggio come viaggiatore?</string>
     <string name="kh_uisdk_K4018">Impossibile prenotare perché il preventivo non è più disponibile</string>
+    <string name="kh_uisdk_K2020">Could not book trip with the selected DMS</string>
+    <string name="kh_uisdk_K2025">Quote price increased whilst booking.</string>
     <!-- Availability errors, K5xxx -->
     <string name="kh_uisdk_K5001">Impossibile ottenere stime</string>
     <string name="kh_uisdk_K5002">Impossibile ottenere la disponibilità (nessuna disponibilità trovata nell\'area richiesta)</string>
