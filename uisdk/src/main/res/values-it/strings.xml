@@ -194,7 +194,7 @@
     <string name="kh_uisdk_K6001">Impossibile eseguire l\'autenticazione</string>
     <string name="kh_uisdk_karhoo_general_terms_url">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
     <string name="kh_uisdk_karhoo_id">Karhoo ID</string>
-    <string name="kh_uisdk_karhoo_privacy_policy">Informativa sulla privacy</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Politica sulla Riservatezza</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Impossibile trovare il cliente in braintree</string>
@@ -203,8 +203,8 @@
     <string name="kh_uisdk_KP004">Impossibile trovare la carta di credito predefinita</string>
     <string name="kh_uisdk_KP005">Impossibile generare nonce</string>
     <string name="kh_uisdk_label_and">e</string>
-    <string name="kh_uisdk_label_fleet_cancellation_policy">Criteri di cancellazione</string>
-    <string name="kh_uisdk_label_fleet_terms_and_conditions">Termini e condizioni</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Criteri di Cancellazione</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Termini e Condizioni</string>
     <string name="kh_uisdk_last_name_hint">Cognome</string>
     <string name="kh_uisdk_last_trip_id">ID ultimo viaggio: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">ID ultimo viaggio: non ancora impostato</string>

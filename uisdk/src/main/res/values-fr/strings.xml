@@ -194,7 +194,7 @@
     <string name="kh_uisdk_K6001">Impossible de confirmer l\'authentification</string>
     <string name="kh_uisdk_karhoo_general_terms_url">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
     <string name="kh_uisdk_karhoo_id">Ref. Karhoo</string>
-    <string name="kh_uisdk_karhoo_privacy_policy">Règles de confidentialité</string>
+    <string name="kh_uisdk_karhoo_privacy_policy">Règles de Confidentialité</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Impossible de trouver un client dans braintree</string>
@@ -203,8 +203,8 @@
     <string name="kh_uisdk_KP004">Impossible de trouver la carte de crédit par défaut</string>
     <string name="kh_uisdk_KP005">Impossible de générer un nonce</string>
     <string name="kh_uisdk_label_and"> ainsi que leurs </string>
-    <string name="kh_uisdk_label_fleet_cancellation_policy">Conditions d\'annulation</string>
-    <string name="kh_uisdk_label_fleet_terms_and_conditions">Conditions générales d\'utilisation</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Conditions d\'Annulation</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Conditions Générales d\'Utilisation</string>
     <string name="kh_uisdk_last_name_hint">Nom de famille</string>
     <string name="kh_uisdk_last_trip_id">Référence derniere course: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Aucune référence pour dernière course</string>
