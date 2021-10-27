@@ -50,8 +50,8 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
                                 simpleText.indexOf(bookingPrivacyPolicyText) + bookingPrivacyPolicyText.length,
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(createClickableSpan(vehicle.fleet.termsConditionsUrl),
-                                simpleText.indexOf(fleetTermsAndConditionsText),
-                                simpleText.indexOf(fleetTermsAndConditionsText) + fleetTermsAndConditionsText.length,
+                                simpleText.lastIndexOf(fleetTermsAndConditionsText),
+                                simpleText.lastIndexOf(fleetTermsAndConditionsText) + fleetTermsAndConditionsText.length,
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannableString.setSpan(createClickableSpan(vehicle.fleet.termsConditionsUrl),
                                 simpleText.indexOf(fleetCancellationText),
