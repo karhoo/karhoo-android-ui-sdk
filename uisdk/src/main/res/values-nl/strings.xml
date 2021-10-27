@@ -203,8 +203,8 @@
     <string name="kh_uisdk_KP004">Kan standaardcreditcard niet vinden</string>
     <string name="kh_uisdk_KP005">Kan nonce niet genereren</string>
     <string name="kh_uisdk_label_and">en</string>
-    <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
-    <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden Taxibedrijf</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene Gebruiksvoorwaarden Taxibedrijf</string>
     <string name="kh_uisdk_last_name_hint">Achternaam</string>
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>

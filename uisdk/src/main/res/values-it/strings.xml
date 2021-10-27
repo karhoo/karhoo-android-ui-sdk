@@ -203,8 +203,8 @@
     <string name="kh_uisdk_KP004">Impossibile trovare la carta di credito predefinita</string>
     <string name="kh_uisdk_KP005">Impossibile generare nonce</string>
     <string name="kh_uisdk_label_and">e</string>
-    <string name="kh_uisdk_label_fleet_cancellation_policy">Criteri di cancellazione</string>
-    <string name="kh_uisdk_label_fleet_terms_and_conditions">Termini e condizioni</string>
+    <string name="kh_uisdk_label_fleet_cancellation_policy">Criteri di Cancellazione</string>
+    <string name="kh_uisdk_label_fleet_terms_and_conditions">Termini e Condizioni</string>
     <string name="kh_uisdk_last_name_hint">Cognome</string>
     <string name="kh_uisdk_last_trip_id">ID ultimo viaggio: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">ID ultimo viaggio: non ancora impostato</string>
