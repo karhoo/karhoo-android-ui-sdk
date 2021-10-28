@@ -32,6 +32,9 @@ interface PassengerDetailsContract {
 
         fun setErrorOnField(field: TextInputLayout, errorId: Int)
 
+        fun retrievePassengerFromSharedPrefs(): PassengerDetails?
+
+        fun retrieveCountryCodeFromSharedPrefs(): String?
     }
 
     interface Presenter {
