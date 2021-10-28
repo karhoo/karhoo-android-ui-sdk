@@ -67,6 +67,14 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
     }
 
     override fun getCountryCode(context: Context): String {
+        val phoneNumberWithoutCountryCode = removeCountryCodeFromPhoneNumber(passengerDetails?.phoneNumber, context.resources)
+        val storedPhoneNumber = removeCountryCodeFromPhoneNumber(view?.retrievePassengerFromSharedPrefs()?.phoneNumber, context.resources)
+        val storedCountryCode = view?.retrieveCountryCodeFromSharedPrefs()
+
+        if (storedPhoneNumber == phoneNumberWithoutCountryCode && storedCountryCode != null) {
+            return storedCountryCode
+        }
+
         var countryDialingCode = getCountryDialingCodeFromNumber(passengerDetails?.phoneNumber,
                                                                  context.resources)
 

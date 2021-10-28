@@ -96,7 +96,7 @@ class PassengerDetailsView @JvmOverloads constructor(
             val builder = CountryPickerActivity.Builder().countryCode(presenter.getCountryCode())
             (context as Activity).startActivityForResult(builder.build(context),
                                                          CountryPickerActivity
-                    .COUNTRY_PICKER_ACTIVITY_CODE)
+                                                                 .COUNTRY_PICKER_ACTIVITY_CODE)
         }
 
         firstNameInput.onFocusChangeListener = createFocusChangeListener()
@@ -118,7 +118,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         presenter.setCountryCode(countryCode)
         presenter.setDialingCode(dialingCode)
 
-        if(validateField) {
+        if (validateField) {
             presenter.validateField(mobileNumberLayout, true, PhoneNumberValidator())
             validationCallback?.onFieldsValidated(areFieldsValid())
         }
@@ -227,18 +227,42 @@ class PassengerDetailsView @JvmOverloads constructor(
 
     override fun storePassenger(passenger: PassengerDetails) {
         val pd = Gson().toJson(passenger)
+        val countryCode = presenter.getCountryCode()
         val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPrefs.edit().putString(PASSENGER_DETAILS_SHARED_PREFS, pd).apply()
+        sharedPrefs.edit().putString(COUNTRY_CODE_SHARED_PREFS, countryCode).apply()
     }
 
     override fun retrievePassenger(): PassengerDetails? {
-        if(getPassengerDetails() != null) {
+        if (getPassengerDetails() != null) {
             return getPassengerDetails()
         }
         return try {
+            val storedCountryCode = retrieveCountryCodeFromSharedPrefs()
+            if (storedCountryCode != null) {
+                presenter.setCountryCode(storedCountryCode)
+            }
+
+            retrievePassengerFromSharedPrefs()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override fun retrievePassengerFromSharedPrefs(): PassengerDetails? {
+        return try {
             val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
             val json = sharedPrefs.getString(PASSENGER_DETAILS_SHARED_PREFS, null)
-            Gson().fromJson(json, PassengerDetails::class.java)
+            return Gson().fromJson(json, PassengerDetails::class.java)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override fun retrieveCountryCodeFromSharedPrefs(): String? {
+        return try {
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPrefs.getString(COUNTRY_CODE_SHARED_PREFS, null)
         } catch (e: Exception) {
             null
         }
@@ -246,5 +270,6 @@ class PassengerDetailsView @JvmOverloads constructor(
 
     companion object {
         private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
+        private const val COUNTRY_CODE_SHARED_PREFS = "COUNTRY_CODE_SHARED_PREFS"
     }
 }
