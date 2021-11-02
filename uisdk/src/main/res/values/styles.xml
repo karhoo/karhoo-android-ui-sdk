@@ -117,6 +117,15 @@
         <item name="colorControlHighlight">@color/kh_uisdk_primary</item>
     </style>
 
+    <style name="AdyenCheckout.PrimaryFlatButton" parent="AdyenCheckout">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
+        <item name="colorAccent">@color/kh_uisdk_secondary</item>
+    </style>
+
+    <style name="AdyenCheckout.SecondaryFlatButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/kh_uisdk_secondary</item>
+    </style>
+
     <style name="HelperEditText" parent="AppTheme.EditText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="android:textColor">@color/edit_text_default_color</item>
