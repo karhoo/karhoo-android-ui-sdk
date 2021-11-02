@@ -429,31 +429,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end|center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingStart="@dimen/kh_uisdk_spacing_xsmall"
                 android:paddingEnd="@dimen/kh_uisdk_spacing_xsmall">
 
                 <Button
                     android:id="@+id/reportIssueButton"
                     style="@style/Text.Action"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
-                    android:layout_weight="1"
                     android:text="@string/kh_uisdk_report_issue" />
 
                 <Button
                     android:id="@+id/rebookRideButton"
                     style="@style/Text.Action"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
-                    android:layout_marginLeft="@dimen/kh_uisdk_spacing_xsmall"
-                    android:layout_weight="1"
                     android:text="@string/kh_uisdk_rebook_ride"
                     android:visibility="visible" />
 
                 <com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
                     android:id="@+id/contactOptionsWidget"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2" />
 
