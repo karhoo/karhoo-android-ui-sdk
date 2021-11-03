@@ -6,8 +6,8 @@
     <string name="kh_uisdk_add_payment">Aggiungi pagamento</string>
     <string name="kh_uisdk_additional_comments">Commenti aggiuntivi (facoltativo)</string>
     <string name="kh_uisdk_address_drop_off">Ritiro</string>
-    <string name="kh_uisdk_address_pick_up">Raccogliere</string>
-    <string name="kh_uisdk_address_picker_add_pickup">Aggiungi ritiro</string>
+    <string name="kh_uisdk_address_pick_up">Partenza</string>
+    <string name="kh_uisdk_address_picker_add_pickup">Aggiungi partenza</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
     <string name="kh_uisdk_address_picker_pickup">Trovare l\'indirizzo</string>
     <!-- Categories -->
@@ -27,7 +27,7 @@
     <string name="kh_uisdk_base">Tariffa base</string>
     <string name="kh_uisdk_book_now">Prenota ora</string>
     <!-- Booking Confirmation -->
-    <string name="kh_uisdk_booking_car">Prenota giro</string>
+    <string name="kh_uisdk_booking_car">Prenota corsa</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi passeggero</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungere il metodo di pagamento</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Metodo di pagamento</string>
@@ -67,7 +67,7 @@
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0,1276</string>
     <string name="kh_uisdk_change">MODIFICARE</string>
-    <string name="kh_uisdk_checkout_as_guest">Prenota giro</string>
+    <string name="kh_uisdk_checkout_as_guest">Prenota corsa</string>
     <string name="kh_uisdk_code">Codice</string>
     <string name="kh_uisdk_completed">Speriamo che ti sia piaciuto il tuo viaggio</string>
     <!-- Trip states -->
@@ -88,7 +88,7 @@
     <string name="kh_uisdk_difficulties_cancelling_message">Stiamo riscontrando problemi durante l\'annullamento della corsa. Si prega di contattare la flotta.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Difficoltà nell\'annullamento</string>
     <string name="kh_uisdk_discard">Scartare</string>
-    <string name="kh_uisdk_dismiss">CONGEDARE</string>
+    <string name="kh_uisdk_dismiss">CHIUDI</string>
     <string name="kh_uisdk_dispatch_cancelled" formatted="false">Ci scusiamo, %s non ha driver disponibili al momento.</string>
     <string name="kh_uisdk_done">Fatto</string>
     <string name="kh_uisdk_drawer_closed">Cassetto chiuso</string>
@@ -113,7 +113,7 @@
     <string name="kh_uisdk_failed_trip">Non siamo riusciti a prenotare il tuo viaggio</string>
     <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/it</string>
     <!-- Alerts -->
-    <string name="kh_uisdk_faretype_info_base">La tua tariffa finale potrebbe essere influenzata\n da mance, pedaggi, tasse e altri addebiti.</string>
+    <string name="kh_uisdk_faretype_info_base">La tua tariffa finale può essere influenzata da mancia, pedaggi, tasse e costi extra.</string>
     <!-- Support -->
     <string name="kh_uisdk_feedback">Feedback</string>
     <string name="kh_uisdk_feedback_email">support@karhoo.com</string>
@@ -218,7 +218,7 @@
     <string name="kh_uisdk_login">Registrati</string>
     <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
     <string name="kh_uisdk_meeting_point">Punto d\'incontro</string>
-    <string name="kh_uisdk_metered">Misurato</string>
+    <string name="kh_uisdk_metered">Tassametro</string>
     <string name="kh_uisdk_min">min</string>
     <string name="kh_uisdk_minibus">Minibus</string>
     <string name="kh_uisdk_mins">min</string>
@@ -248,7 +248,7 @@
     <string name="kh_uisdk_passenger_details">Dettagli del passeggero</string>
     <string name="kh_uisdk_passengers_max">%d passeggeri max</string>
     <string name="kh_uisdk_password_hint">Password</string>
-    <string name="kh_uisdk_past_rides_empty">Non hai ancora fatto alcun giro. Possiamo aiutarti ad andare da A a B.</string>
+    <string name="kh_uisdk_past_rides_empty">Non hai ancora fatto alcun corsa. Possiamo aiutarti ad andare da A a B.</string>
     <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Presentare</string>
     <string name="kh_uisdk_pay_button_with_value">Preautorizza %s</string>
@@ -291,7 +291,7 @@
     <string name="kh_uisdk_quoted_fare">Tariffa stimata</string>
     <string name="kh_uisdk_rate_trip_label">Come valuteresti il tuo viaggio?</string>
     <string name="kh_uisdk_rating_submitted">Grazie per aver inviato la tua valutazione.</string>
-    <string name="kh_uisdk_rebook_ride">Riprenota giro</string>
+    <string name="kh_uisdk_rebook_ride">Riprenota corsa</string>
     <!-- Address -->
     <string name="kh_uisdk_recents_empty">Nessun risultato recente</string>
     <!-- Register -->
@@ -304,9 +304,9 @@
     <string name="kh_uisdk_retrieving_dropoff">Ottenere il luogo di riconsegna</string>
     <!-- Current Trip -->
     <string name="kh_uisdk_retrieving_pickup">Ottenere il luogo di ritiro</string>
-    <string name="kh_uisdk_retrieving_quotes">Recupero Citazioni</string>
+    <string name="kh_uisdk_retrieving_quotes">Ricerca di un preventivo</string>
     <string name="kh_uisdk_retry">Riprova</string>
-    <string name="kh_uisdk_ride_confirmed">Giro confermato</string>
+    <string name="kh_uisdk_ride_confirmed">Corsa confermata</string>
     <string name="kh_uisdk_ride_contact_details">Dettagli</string>
     <string name="kh_uisdk_ride_details">Dettagli della corsa</string>
     <!-- trip info -->
@@ -324,7 +324,7 @@
     <string name="kh_uisdk_ride_state_requested">Richiesto</string>
     <!-- Completed trip -->
     <string name="kh_uisdk_ride_summary">Riepilogo della corsa</string>
-    <string name="kh_uisdk_rides">Cavalcate</string>
+    <string name="kh_uisdk_rides">Le tue corse</string>
     <string name="kh_uisdk_saloon">Standard</string>
     <string name="kh_uisdk_save">Salvare</string>
     <string name="kh_uisdk_settings">Impostazioni</string>
@@ -357,17 +357,17 @@
     <string name="kh_uisdk_title_activity_address">Indirizzo</string>
     <string name="kh_uisdk_title_activity_airport">Prelievo dall\'aeroporto</string>
     <string name="kh_uisdk_title_activity_intent_chooser_send_email">Invia una email</string>
-    <string name="kh_uisdk_title_activity_rides">Cavalcate</string>
+    <string name="kh_uisdk_title_activity_rides">Le tue corse</string>
     <string name="kh_uisdk_title_activity_threedsecure">3D sicuro</string>
     <string name="kh_uisdk_title_activity_trip">Viaggio</string>
     <string name="kh_uisdk_title_dispatch_cancelled">Spedizione annullata</string>
-    <string name="kh_uisdk_title_page_past">Passato</string>
+    <string name="kh_uisdk_title_page_past">Precedenti</string>
     <!-- Rides -->
-    <string name="kh_uisdk_title_page_upcoming">Prossimi</string>
+    <string name="kh_uisdk_title_page_upcoming">Prossime</string>
     <string name="kh_uisdk_title_past_rides_empty">Nessuna corsa passata</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">Non hai corse imminenti</string>
     <string name="kh_uisdk_total_fare">Tariffa totale</string>
-    <string name="kh_uisdk_track_driver">Pilota di pista</string>
+    <string name="kh_uisdk_track_driver">SEGUI L\'AUTISTA</string>
     <string name="kh_uisdk_train_tracking">Monitoraggio del treno</string>
     <string name="kh_uisdk_trip_id">ID viaggio: %1$s</string>
     <string name="kh_uisdk_trip_id_label">ID viaggio</string>
