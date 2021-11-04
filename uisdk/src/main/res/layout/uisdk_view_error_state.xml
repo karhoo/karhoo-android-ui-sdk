@@ -38,6 +38,7 @@
 
     <com.karhoo.uisdk.base.view.LoadingButtonView
         android:id="@+id/retryButton"
+        android:layout_margin="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
