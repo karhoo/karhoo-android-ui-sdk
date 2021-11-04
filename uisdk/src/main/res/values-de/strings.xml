@@ -186,6 +186,8 @@
     <string name="kh_uisdk_K4014">Konnte als Agent keine Reise buchen</string>
     <string name="kh_uisdk_K4015">Konnte als Reisender keine Reise buchen</string>
     <string name="kh_uisdk_K4018">Konnte nicht buchen, da das Angebot nicht mehr verfügbar ist</string>
+    <string name="kh_uisdk_K4020">Konnte keine Reise mit dem ausgewählten DMS buchen</string>
+    <string name="kh_uisdk_K4025">Der Angebotspreis wurde bei der Buchung erhöht.</string>
     <!-- Availability errors, K5xxx -->
     <string name="kh_uisdk_K5001">Konnte keine Schätzungen erhalten</string>
     <string name="kh_uisdk_K5002">Keine Verfügbarkeit (keine Verfügbarkeit im gewünschten Bereich gefunden)</string>
