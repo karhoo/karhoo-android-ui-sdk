@@ -20,7 +20,6 @@
     <string name="kh_uisdk_alternative">Otras Opciones</string>
     <string name="kh_uisdk_app_invalid">Esta versión de la app no está actualizada. Actualízala.</string>
     <string name="kh_uisdk_app_name">KarhooTraveller</string>
-    <string name="kh_uisdk_approaching">Tu vehículo llegará pronto</string>
     <string name="kh_uisdk_arrival">Llegada</string>
     <string name="kh_uisdk_arrived">Tu conductor ha llegado</string>
     <string name="kh_uisdk_baggage_max">Máximo %d piezas de equipaje</string>
@@ -311,15 +310,12 @@
     <string name="kh_uisdk_ride_details">Detalles del viaje</string>
     <!-- trip info -->
     <string name="kh_uisdk_ride_options">Opciones del viaje</string>
-    <string name="kh_uisdk_ride_state_allocated">Asignado</string>
-    <string name="kh_uisdk_ride_state_approaching">Aproximándose</string>
     <string name="kh_uisdk_ride_state_arrived">Completado</string>
     <string name="kh_uisdk_ride_state_cancelled">Cancelado</string>
     <string name="kh_uisdk_ride_state_completed">Completado</string>
     <string name="kh_uisdk_ride_state_confirmed">Confirmado</string>
     <string name="kh_uisdk_ride_state_der">Conductor de camino</string>
     <string name="kh_uisdk_ride_state_failed">Error</string>
-    <string name="kh_uisdk_ride_state_initialised">Iniciado</string>
     <string name="kh_uisdk_ride_state_pob">Pasajero a bordo</string>
     <string name="kh_uisdk_ride_state_requested">Solicitado</string>
     <!-- Completed trip -->
