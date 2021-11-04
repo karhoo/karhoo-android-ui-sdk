@@ -20,7 +20,6 @@
     <string name="kh_uisdk_alternative">ALTERNATIV</string>
     <string name="kh_uisdk_app_invalid">Die aktuelle Version der App ist veraltet, bitte aktualisieren Sie sie.</string>
     <string name="kh_uisdk_app_name">Karhoo-Reisender</string>
-    <string name="kh_uisdk_approaching">Ihr Fahrzeug wird in Kürze eintreffen</string>
     <string name="kh_uisdk_arrival">Anreise</string>
     <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_baggage_max">%d Gepäckstücke max.</string>
