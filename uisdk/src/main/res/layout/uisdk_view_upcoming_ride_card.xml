@@ -148,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/kh_uisdk_spacing_xsmall"
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
                 android:text="@string/kh_uisdk_contact_fleet" />
 
             <Button
@@ -157,7 +157,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_spacing_large"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/kh_uisdk_spacing_xsmall"
                 android:text="@string/kh_uisdk_track_driver" />
 
         </LinearLayout>

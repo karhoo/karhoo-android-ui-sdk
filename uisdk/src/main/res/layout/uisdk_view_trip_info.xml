@@ -156,10 +156,11 @@
             android:id="@+id/contactOptionsWidget"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:paddingStart="@dimen/kh_uisdk_spacing_xsmall"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rideOptionsLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/licenceNumberText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
