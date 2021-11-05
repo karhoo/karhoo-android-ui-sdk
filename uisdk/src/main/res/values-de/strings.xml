@@ -20,7 +20,6 @@
     <string name="kh_uisdk_alternative">ALTERNATIV</string>
     <string name="kh_uisdk_app_invalid">Die aktuelle Version der App ist veraltet, bitte aktualisieren Sie sie.</string>
     <string name="kh_uisdk_app_name">Karhoo-Reisender</string>
-    <string name="kh_uisdk_approaching">Ihr Fahrzeug wird in Kürze eintreffen</string>
     <string name="kh_uisdk_arrival">Anreise</string>
     <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_baggage_max">%d Gepäckstücke max.</string>
@@ -186,6 +185,8 @@
     <string name="kh_uisdk_K4014">Konnte als Agent keine Reise buchen</string>
     <string name="kh_uisdk_K4015">Konnte als Reisender keine Reise buchen</string>
     <string name="kh_uisdk_K4018">Konnte nicht buchen, da das Angebot nicht mehr verfügbar ist</string>
+    <string name="kh_uisdk_K4020">Konnte keine Reise mit dem ausgewählten DMS buchen</string>
+    <string name="kh_uisdk_K4025">Der Angebotspreis wurde bei der Buchung erhöht.</string>
     <!-- Availability errors, K5xxx -->
     <string name="kh_uisdk_K5001">Konnte keine Schätzungen erhalten</string>
     <string name="kh_uisdk_K5002">Keine Verfügbarkeit (keine Verfügbarkeit im gewünschten Bereich gefunden)</string>
@@ -311,15 +312,12 @@
     <string name="kh_uisdk_ride_details">Details zur Fahrt</string>
     <!-- trip info -->
     <string name="kh_uisdk_ride_options">Fahrten-Optionen</string>
-    <string name="kh_uisdk_ride_state_allocated">Zuteilung</string>
-    <string name="kh_uisdk_ride_state_approaching">Annäherung an</string>
     <string name="kh_uisdk_ride_state_arrived">Angekommen</string>
     <string name="kh_uisdk_ride_state_cancelled">Abgebrochen</string>
     <string name="kh_uisdk_ride_state_completed">Abgeschlossen</string>
     <string name="kh_uisdk_ride_state_confirmed">Bestätigt</string>
     <string name="kh_uisdk_ride_state_der">Fahrer unterwegs</string>
     <string name="kh_uisdk_ride_state_failed">Fehlgeschlagen</string>
-    <string name="kh_uisdk_ride_state_initialised">Initialisiert</string>
     <string name="kh_uisdk_ride_state_pob">Fahrgast an Bord</string>
     <string name="kh_uisdk_ride_state_requested">Erwünscht</string>
     <!-- Completed trip -->

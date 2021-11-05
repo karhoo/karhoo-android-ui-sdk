@@ -438,6 +438,7 @@
                     style="@style/Text.Action"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
+                    android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
                     android:text="@string/kh_uisdk_report_issue" />
 
                 <Button
@@ -446,6 +447,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
                     android:text="@string/kh_uisdk_rebook_ride"
+                    android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
                     android:visibility="visible" />
 
                 <com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView

@@ -127,6 +127,11 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
             if (showError) {
                 view?.setErrorOnField(layout, validator.errorTextResId)
             }
+        } else if (!validator.validate(layout.editText?.text.toString())) {
+            layout.isErrorEnabled = true
+            if(showError) {
+                view?.setErrorOnField(layout, validator.errorTextResId)
+            }
         } else {
             layout.isErrorEnabled = false
             layout.error = null
