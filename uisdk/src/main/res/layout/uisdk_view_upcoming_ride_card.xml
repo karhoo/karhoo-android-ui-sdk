@@ -140,6 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end|center_vertical"
+            android:padding="@dimen/kh_uisdk_spacing_xxsmall"
             android:orientation="vertical">
 
             <Button
