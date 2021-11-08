@@ -39,7 +39,8 @@
         android:layout_height="@dimen/kh_uisdk_collapsible_pane_expanded_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:expandedListPercentageOfScreen="70"/>
 
     <com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
         android:id="@+id/tripAllocationWidget"

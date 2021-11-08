@@ -38,6 +38,7 @@
 
     <declare-styleable name="QuotesListView">
         <attr name="listBackground" format="reference" />
+        <attr name="expandedListPercentageOfScreen" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="CategorySelectorView">

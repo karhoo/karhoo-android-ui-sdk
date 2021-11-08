@@ -1,9 +1,11 @@
 package com.karhoo.uisdk.base;
 
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.widget.RelativeLayout;
 
 import com.karhoo.uisdk.R;
@@ -31,7 +33,11 @@ public class CollapsiblePanelView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         final Resources resources = context.getResources();
         collapsedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_panel_collapsed_height);
-        expandedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_pane_expanded_height);
+//        expandedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_pane_expanded_height);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        expandedHeight = displayMetrics.heightPixels;
     }
 
     public PanelState getPanelState() {
