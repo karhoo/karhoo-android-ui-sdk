@@ -40,11 +40,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesRecycler
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesSortWidget
 import android.util.DisplayMetrics
 import android.view.WindowInsets
-
-import android.view.WindowMetrics
-
 import android.os.Build
-import kotlinx.android.synthetic.main.uisdk_view_booking_quotes.view.*
 
 class QuotesListView @JvmOverloads constructor(
         context: Context,
@@ -62,7 +58,7 @@ class QuotesListView @JvmOverloads constructor(
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
 
     private var isQuotesListVisible = false
-    private var expandedListHeightPercentage = 70
+    private var expandedListHeightPercentage = resources.getInteger(R.integer.kh_uisdk_query_list_view_default_screen_percentage)
 
     init {
         inflate(context, R.layout.uisdk_view_quotes, this)
@@ -79,7 +75,7 @@ class QuotesListView @JvmOverloads constructor(
             0, 0).apply {
 
             try {
-                expandedListHeightPercentage = getInteger(R.styleable.QuotesListView_expandedListPercentageOfScreen, 70)
+                expandedListHeightPercentage = getInteger(R.styleable.QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_screen_percentage))
             } finally {
                 recycle()
             }
@@ -91,11 +87,11 @@ class QuotesListView @JvmOverloads constructor(
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets: Insets = windowMetrics.windowInsets
                 .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat()/100)).toInt()
+            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat()/ resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
         } else {
             val displayMetrics = DisplayMetrics()
             activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            (displayMetrics.heightPixels * (percentage.toFloat()/100)).toInt()
+            (displayMetrics.heightPixels * (percentage.toFloat()/resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
         }
     }
 
