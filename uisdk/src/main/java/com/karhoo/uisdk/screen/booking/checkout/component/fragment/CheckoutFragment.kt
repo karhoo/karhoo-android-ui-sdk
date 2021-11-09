@@ -102,7 +102,10 @@ internal class CheckoutFragment : Fragment() {
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
                 bookingMetadata = bundle.getSerializable(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
-                passengerDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_PASSENGER_KEY)
+                passengerDetails = bundle.getParcelable(CheckoutActivity
+                                                                .BOOKING_CHECKOUT_PASSENGER_KEY),
+                comments = bundle.getString(CheckoutActivity
+                                                       .BOOKING_CHECKOUT_COMMENTS_KEY)
                                        )
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
