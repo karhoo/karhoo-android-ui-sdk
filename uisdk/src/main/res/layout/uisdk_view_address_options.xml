@@ -3,29 +3,29 @@
     android:id="@+id/addressOptions"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/off_white"
+    android:background="@color/kh_uisdk_off_white"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/setOnMap"
-        android:layout_width="@dimen/address_options_default"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_address_options_default"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/spacing_small"
-        android:paddingRight="@dimen/spacing_small">
+        android:paddingLeft="@dimen/kh_uisdk_spacing_small"
+        android:paddingRight="@dimen/kh_uisdk_spacing_small">
 
         <ImageView
-            android:layout_width="@dimen/address_icon_size_default"
-            android:layout_height="@dimen/address_icon_size_default"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_width="@dimen/kh_uisdk_address_icon_size_default"
+            android:layout_height="@dimen/kh_uisdk_address_icon_size_default"
+            android:layout_marginRight="@dimen/kh_uisdk_spacing_small"
             style="@style/KhBookingMapSelectorIcon" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_large"
+            android:layout_height="@dimen/kh_uisdk_spacing_large"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -33,8 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kh_uisdk_map_selector"
-                android:textColor="@color/off_black"
-                android:textSize="@dimen/text_size_medium" />
+                android:textColor="@color/kh_uisdk_off_black"
+                android:textSize="@dimen/kh_uisdk_text_size_medium" />
 
         </LinearLayout>
 
@@ -42,24 +42,24 @@
 
     <LinearLayout
         android:id="@+id/currentLocation"
-        android:layout_width="@dimen/address_options_default"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_address_options_default"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:layout_weight="1"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/spacing_small"
-        android:paddingRight="@dimen/spacing_small">
+        android:paddingLeft="@dimen/kh_uisdk_spacing_small"
+        android:paddingRight="@dimen/kh_uisdk_spacing_small">
 
         <ImageView
-            android:layout_width="@dimen/address_icon_size_default"
-            android:layout_height="@dimen/address_icon_size_default"
-            android:layout_marginRight="@dimen/spacing_small"
+            android:layout_width="@dimen/kh_uisdk_address_icon_size_default"
+            android:layout_height="@dimen/kh_uisdk_address_icon_size_default"
+            android:layout_marginRight="@dimen/kh_uisdk_spacing_small"
             style="@style/KhBookingMapLocationIcon" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_large"
+            android:layout_height="@dimen/kh_uisdk_spacing_large"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -67,8 +67,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kh_uisdk_current_location"
-                android:textColor="@color/off_black"
-                android:textSize="@dimen/text_size_medium" />
+                android:textColor="@color/kh_uisdk_off_black"
+                android:textSize="@dimen/kh_uisdk_text_size_medium" />
 
         </LinearLayout>
 

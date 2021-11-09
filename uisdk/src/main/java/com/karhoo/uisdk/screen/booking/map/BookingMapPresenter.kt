@@ -130,6 +130,6 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     }
 
     override fun checkLocateUser() {
-        view?.showLocateUserButton()
+        view?.showLocationButton(true)
     }
 }

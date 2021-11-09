@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:focusableInTouchMode="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/passengerDetailsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:paddingLeft="@dimen/kh_uisdk_activity_horizontal_margin"
+        android:paddingRight="@dimen/kh_uisdk_activity_horizontal_margin">
 
-        <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
-            android:id="@+id/firstNameLayout"
-            style="@style/AppTheme.EditTextWithHint"
-            android:layout_width="@dimen/spacing_none"
+        <TextView
+            android:id="@+id/passengerViewTitle"
+            style="@style/KhPassengerViewTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.EditText"
+            android:text="@string/kh_uisdk_passenger_details"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_grid_first_column"
+            android:hint="@string/kh_uisdk_first_name_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/passengerViewTitle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstNameInput"
-                style="@style/AppTheme.EditTextWithHint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/kh_uisdk_first_name_hint"
-                android:inputType="textPersonName"
-                android:theme="@style/AppTheme.EditText" />
+                android:inputType="textPersonName|textCapWords" />
 
-        </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastNameLayout"
-            style="@style/AppTheme.EditTextWithHint"
-            android:layout_width="@dimen/spacing_none"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/spacing_xsmall"
-            android:theme="@style/AppTheme.EditText"
+            android:hint="@string/kh_uisdk_last_name_hint"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstNameLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastNameInput"
-                style="@style/AppTheme.EditTextWithHint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/kh_uisdk_last_name_hint"
-                android:inputType="textPersonName"
-                android:theme="@style/AppTheme.EditText" />
+                android:inputType="textPersonName|textCapWords" />
 
-        </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
-            style="@style/AppTheme.EditTextWithHint"
-            android:layout_width="@dimen/spacing_none"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/spacing_xsmall"
-            android:theme="@style/AppTheme.EditText"
+            android:hint="@string/kh_uisdk_email_hint"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+            android:paddingBottom="@dimen/kh_uisdk_spacing_xsmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
-                style="@style/AppTheme.EditTextWithHint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/kh_uisdk_email_hint"
-                android:inputType="textEmailAddress"
-                android:theme="@style/AppTheme.EditText"
-                tools:text="john@doe.com" />
+                android:inputType="textEmailAddress" />
 
-        </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/mobileNumberParentLayout"
@@ -88,63 +88,51 @@
             android:weightSum="1"
             app:layout_constraintTop_toBottomOf="@id/emailLayout">
 
-            <FrameLayout
-                android:layout_width="@dimen/spacing_none"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/spacing_xxxsmall"
-                android:layout_weight="0.35"
-                android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/countryFlagLayout"
+                android:layout_width="0dp"
+                android:layout_height="54dp"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.3"
+                android:background="@drawable/uisdk_country_picker_background"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/countryFlagImageView"
+                    android:layout_width="48dp"
+                    android:layout_height="30dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/bt_ic_visa" />
 
                 <TextView
-                    style="@style/AppTheme.HelperEditText"
+                    android:id="@+id/countryPrefixCodeText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_xxxsmall"
-                    android:layout_marginTop="@dimen/passenger_margin_top"
-                    android:text="@string/kh_uisdk_code"
-                    android:textColor="@color/med_grey" />
+                    android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+                    tools:text="+30" />
+            </LinearLayout>
 
-                <com.karhoo.uisdk.base.view.countrycodes.CountryCodeSpinner
-                    android:id="@+id/countryCodeSpinner"
-                    style="@style/Widget.AppCompat.Spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/spacing_large"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:layout_marginBottom="@dimen/margin_medium"
-                    android:backgroundTint="@color/med_grey"
-                    android:paddingTop="@dimen/spacing_xsmall"
-                    android:spinnerMode="dropdown" />
 
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="@dimen/spacing_none"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobileNumberLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_weight="0.7">
+                android:layout_gravity="bottom"
+                android:layout_weight="0.7"
+                android:paddingStart="@dimen/kh_uisdk_spacing_xxsmall"
+                app:errorEnabled="true">
 
-                <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
-                    android:id="@+id/mobileNumberLayout"
-                    style="@style/AppTheme.EditText"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobileNumberInput"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:paddingStart="@dimen/spacing_xxsmall"
-                    android:theme="@style/AppTheme.EditText"
-                    app:errorEnabled="true">
+                    android:layout_height="wrap_content"
+                    android:hint="@string/kh_uisdk_mobile_phone_number_hint"
+                    android:inputType="numberDecimal" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/mobileNumberInput"
-                        style="@style/AppTheme.EditTextWithHint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/kh_uisdk_mobile_phone_number_hint"
-                        android:inputType="numberDecimal"
-                        android:theme="@style/AppTheme.EditText" />
-
-                </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
-
-            </FrameLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -153,8 +141,8 @@
             style="@android:style/Widget.ProgressBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_xsmall"
-            android:layout_marginEnd="@dimen/spacing_xsmall"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -163,8 +151,8 @@
 
         <View
             android:id="@+id/updatePassengerDetailsMask"
-            android:layout_width="@dimen/spacing_none"
-            android:layout_height="@dimen/spacing_none"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
+            android:layout_height="@dimen/kh_uisdk_spacing_none"
             android:clickable="true"
             android:focusable="true"
             android:visibility="gone"
@@ -172,6 +160,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</ScrollView>

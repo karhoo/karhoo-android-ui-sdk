@@ -3,9 +3,11 @@ package com.karhoo.uisdk
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.MenuHandler
+import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
@@ -21,6 +23,8 @@ object KarhooUISDK {
 
         var booking: Class<*> = BookingActivity::class.java
 
+        var checkout: Class<*> = CheckoutActivity::class.java
+
         var address: Class<*> = AddressActivity::class.java
 
         var trip: Class<*> = TripActivity::class.java
@@ -30,6 +34,8 @@ object KarhooUISDK {
         var rideDetail: Class<*> = RideDetailActivity::class.java
 
         var feedback: Class<*> = FeedbackActivity::class.java
+
+        internal var countryPicker: Class<*> = CountryPickerActivity::class.java
     }
 
     var menuHandler: MenuHandler? = null

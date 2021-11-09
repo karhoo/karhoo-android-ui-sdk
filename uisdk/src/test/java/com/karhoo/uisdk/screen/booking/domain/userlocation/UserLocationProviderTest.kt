@@ -2,7 +2,6 @@ package com.karhoo.uisdk.screen.booking.domain.userlocation
 
 import android.content.Context
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.location.SettingsClient

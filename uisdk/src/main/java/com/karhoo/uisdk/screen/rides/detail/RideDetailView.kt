@@ -20,6 +20,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -27,15 +28,16 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.booking.basefare.BaseFareView
+import com.karhoo.uisdk.screen.booking.checkout.basefare.BaseFareView
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.bookingTermsText
+import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.khTermsAndConditionsText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
@@ -117,7 +119,7 @@ class RideDetailView @JvmOverloads constructor(
     }
 
     private fun displayText(trip: TripInfo) {
-        trip.fleetInfo?.let { bookingTermsText.text = it.name }
+        trip.fleetInfo?.let { khTermsAndConditionsText.text = it.name }
         trip.origin?.let { pickupLabel.text = it.displayAddress }
         trip.destination?.let { dropOffLabel.text = it.displayAddress }
         karhooId.text = trip.displayTripId
@@ -134,9 +136,13 @@ class RideDetailView @JvmOverloads constructor(
         rideDetailActions?.externalDateTime = resources.getString(R.string.kh_uisdk_pending)
     }
 
-    override fun displayVehicle(licensePlate: String) {
+    override fun displayVehicle(vehicle: Vehicle?) {
         carText.visibility = View.VISIBLE
-        carText.text = licensePlate
+        vehicle?.let {
+            carText.text = "${it.categoryToLocalisedString(this.context)}: ${it.vehicleLicencePlate}"
+        } ?: run {
+            carText.text = ""
+        }
     }
 
     override fun displayState(@DrawableRes icon: Int, @StringRes state: Int, @ColorRes color: Int) {

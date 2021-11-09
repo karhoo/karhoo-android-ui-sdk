@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesErrorSubtitle

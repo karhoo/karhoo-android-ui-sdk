@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid
+        android:color="@color/kh_uisdk_capabilities_number_background"/>
+
+    <size
+        android:width="@dimen/kh_uisdk_spacing_xxsmall"
+        android:height="@dimen/kh_uisdk_spacing_xxsmall"/>
+</shape>

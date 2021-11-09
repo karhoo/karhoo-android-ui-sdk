@@ -72,7 +72,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressBookRideButton() {
-        clickButton(R.id.bookingRequestButton)
+        clickButton(R.id.checkoutActionButton)
     }
 
     fun clickOnLocateMeButton() {
@@ -300,9 +300,9 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun capacityChecksGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.briefcaseIcon, R.id.bookingRequestQuotesWidget)
         viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestQuotesWidget)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestQuotesWidget)
+        viewIsVisibleIsDescendant(R.id.passengerIcon, R.id.bookingRequestQuotesWidget)
         viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestQuotesWidget)
     }
 
@@ -494,21 +494,21 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun paymentEmptyDetailsCheckGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_add_payment, R.id.cardNumberText)
     }
 
     fun paymentCardDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingRequestWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingCheckoutView)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
     fun termsGuestDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingRequestWidget)
+        viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingCheckoutView)
         textIsVisibleIsDescendant(R.string.kh_uisdk_booking_terms, R.id.bookingRequestTermsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_label_terms_and_conditions, R.id.bookingRequestTermsWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_label_cancellation_policy, R.id.bookingRequestTermsWidget)
@@ -516,11 +516,11 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkoutAsGuestButtonIsDisabled() {
         bookButtonTextIsCheckoutGuest()
-        buttonIsDisabled(R.id.bookingRequestButton)
+        buttonIsDisabled(R.id.checkoutActionButton)
     }
 
     fun bookButtonTextIsCheckoutGuest() {
-        textIsVisibleIsDescendant(R.string.kh_uisdk_checkout_as_guest, R.id.bookingRequestButton)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_checkout_as_guest, R.id.checkoutActionButton)
     }
 
     fun fullCheckFilledGuestDetailsPage() {
@@ -529,7 +529,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkoutAsGuestButtonIsEnabled() {
         bookButtonTextIsCheckoutGuest()
-        buttonIsEnabled(R.id.bookingRequestButton)
+        buttonIsEnabled(R.id.checkoutActionButton)
     }
 
     fun bookARideScreenIsVisible() {
@@ -562,9 +562,9 @@ class ResultRobot : BaseTestRobot() {
         if (vehicle != null) {
             textStringIsVisibleIsDescendant(vehicle, R.id.categoryText)
         }
-        viewIsVisibleIsDescendant(R.id.luggageImage, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.briefcaseIcon, R.id.bookingRequestLayout)
         viewIsVisibleIsDescendant(R.id.luggageCapacityText, R.id.bookingRequestLayout)
-        viewIsVisibleIsDescendant(R.id.peopleImage, R.id.bookingRequestLayout)
+        viewIsVisibleIsDescendant(R.id.passengerIcon, R.id.bookingRequestLayout)
         viewIsVisibleIsDescendant(R.id.peopleCapacityText, R.id.bookingRequestLayout)
     }
 
@@ -596,7 +596,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun bookButtonIsEnabled() {
-        buttonIsEnabled(R.id.bookingRequestButton)
+        buttonIsEnabled(R.id.checkoutActionButton)
     }
 
     fun quotesListIsExpanded(fleetName: String) {

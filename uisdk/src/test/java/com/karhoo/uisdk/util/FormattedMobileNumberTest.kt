@@ -100,7 +100,7 @@ class FormattedMobileNumberTest {
      */
     @Test
     fun `correct validity returned for invalid phone number`() {
-        assertFalse(isValidNumber("+447777111"))
+        assertFalse(isValidNumber("+447777111", "en"))
     }
 
     /**
@@ -110,7 +110,7 @@ class FormattedMobileNumberTest {
      */
     @Test
     fun `correct validity returned for valid phone number`() {
-        assertTrue(isValidNumber("+447777111111"))
+        assertTrue(isValidNumber("+447777111111", "en"))
     }
 
     companion object {

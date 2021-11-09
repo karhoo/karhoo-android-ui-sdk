@@ -28,15 +28,18 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
     }
 
     override fun pickUpAddressClicked() {
-        val latLong: Position? = bookingStatusStateViewModel?.currentState?.pickup?.position
+        val latLong: Position? =  bookingStatusStateViewModel?.currentState?.pickup?.position
         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .AddressClickedEvent(AddressType.PICKUP, latLong))
     }
 
     override fun dropOffAddressClicked() {
         analytics?.destinationPressed()
-        val latLong: Position? = bookingStatusStateViewModel?.currentState?.destination?.position
 
+        // If the GPS is enabled and if the user hasn't selected a destination, then use the
+        // pickup initial geolocation
+        val latLong: Position? = bookingStatusStateViewModel?.currentState?.destination?.position
+                ?: bookingStatusStateViewModel?.currentState?.pickup?.position
         bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .AddressClickedEvent(AddressType.DESTINATION, latLong))
     }
@@ -73,9 +76,7 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
             view?.setDropoffAddress(tripInfo.destination?.displayAddress.orEmpty())
             view?.showFlipButton()
             bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
-                                                         .PrebookBookingEvent(trip.origin?.toSimpleLocationInfo()
-                                                                              , trip.destination?.toSimpleLocationInfo()
-                                                                              , bookingStatusStateViewModel?.currentState?.date))
+                                                         .PrebookBookingEvent(trip.origin?.toSimpleLocationInfo(), trip.destination?.toSimpleLocationInfo(), bookingStatusStateViewModel?.currentState?.date))
         }
     }
 

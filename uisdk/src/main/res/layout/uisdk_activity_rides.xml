@@ -24,11 +24,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginRight="@dimen/spacing_small"
-            android:indeterminateTint="@color/off_white"
+            android:layout_marginRight="@dimen/kh_uisdk_spacing_small"
+            android:indeterminateTint="@color/kh_uisdk_off_white"
             android:indeterminateTintMode="src_in"
-            android:paddingTop="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_small"
+            android:paddingTop="@dimen/kh_uisdk_spacing_small"
+            android:paddingBottom="@dimen/kh_uisdk_spacing_small"
             android:visibility="invisible" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -46,12 +46,12 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/off_white"
-            android:elevation="@dimen/elevation_default"
+            android:background="@color/kh_uisdk_off_white"
+            android:elevation="@dimen/kh_uisdk_elevation_default"
             android:scrollbars="none"
-            app:tabIndicatorColor="@color/primary"
-            app:tabSelectedTextColor="@color/off_black"
-            app:tabTextColor="@color/off_black" />
+            app:tabIndicatorColor="@color/kh_uisdk_primary"
+            app:tabSelectedTextColor="@color/kh_uisdk_off_black"
+            app:tabTextColor="@color/kh_uisdk_off_black" />
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -59,7 +59,8 @@
         android:id="@+id/bookRideButton"
         style="@style/KhRidesBookButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/full_width_button_height"
+        android:layout_height="@dimen/kh_uisdk_full_width_button_height"
+        android:layout_margin="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true" />

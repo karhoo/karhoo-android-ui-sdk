@@ -6,38 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:orientation="vertical">
 
-    <com.karhoo.uisdk.base.view.SelfValidatingTextLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/bookingCommentsLayout"
-        style="@style/AppTheme.EditTextWithHint"
-        android:layout_width="@dimen/spacing_none"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.EditText"
+        android:hint="@string/kh_uisdk_additional_comments"
+        app:hintTextAppearance="@style/KhTextInputEditTextHint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/bookingCommentsInput"
-            style="@style/AppTheme.EditTextWithHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:theme="@style/AppTheme.EditText"
-            tools:text="Additional Comment" />
-
-    </com.karhoo.uisdk.base.view.SelfValidatingTextLayout>
+            style="@style/KhTextInputEditText"
+            android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/updateUserDetailsProgressBar"
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,8 +44,8 @@
 
     <View
         android:id="@+id/updateBookingCommentsMask"
-        android:layout_width="@dimen/spacing_none"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"

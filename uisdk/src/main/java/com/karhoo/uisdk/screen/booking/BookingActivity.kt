@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -25,11 +27,13 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestViewContract
-import com.karhoo.uisdk.screen.booking.booking.payment.adyen.AdyenPaymentView.Companion.REQ_CODE_ADYEN
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewContract
-import com.karhoo.uisdk.screen.booking.booking.quotes.BookingQuotesViewModel
-import com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationMVP
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -40,19 +44,17 @@ import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.addressBarWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingMapWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingRequestWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_request.bookingRequestPassengerDetailsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
-                        TripAllocationMVP.Actions {
+                        TripAllocationContract.Actions {
 
     private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
@@ -99,10 +101,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onResume() {
         super.onResume()
-        if(bookingRequestWidget.visibility == View.VISIBLE){
-            return;
-        }
-
         if (tripAllocationWidget.visibility != View.VISIBLE) {
             quotesListWidget.initAvailability(this)
         }
@@ -169,10 +167,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         quotesListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
-        bookingRequestWidget.apply {
-            bindViewToBookingStatus(this@BookingActivity, bookingStatusStateViewModel)
-            bindViewToBookingRequest(this@BookingActivity, bookingRequestStateViewModel)
-        }
         addressBarWidget.setJourneyInfo(journeyInfo)
 
         locateMeButton.setOnClickListener {
@@ -187,7 +181,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         passengerDetails?.let {
-            bookingRequestPassengerDetailsWidget.setPassengerDetails(it)
+
         }
 
         bookingComments?.let {
@@ -196,7 +190,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         lifecycle.apply {
             addObserver(bookingMapWidget)
-            addObserver(bookingRequestWidget)
         }
     }
 
@@ -237,14 +230,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingRequestOutputs(): Observer<in BookingRequestViewContract.BookingRequestAction> {
+    private fun bindToBookingRequestOutputs(): Observer<in CheckoutViewContract.Action> {
         return Observer { actions ->
             when (actions) {
-                is BookingRequestViewContract.BookingRequestAction.ShowTermsAndConditions ->
+                is CheckoutViewContract.Action.ShowTermsAndConditions ->
                     showWebView(actions.url)
-                is BookingRequestViewContract.BookingRequestAction.WaitForTripAllocation ->
+                is CheckoutViewContract.Action.WaitForTripAllocation ->
                     waitForTripAllocation()
-                is BookingRequestViewContract.BookingRequestAction.HandleBookingError ->
+                is CheckoutViewContract.Action.HandleBookingError ->
                     showErrorDialog(actions.stringId, actions.karhooError)
             }
         }
@@ -264,7 +257,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
                 is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
                     this.quote = actions.quote
-                    bookingRequestWidget.showBookingRequest(actions.quote, outboundTripId, bookingMetadata)
+
+                    val builder = CheckoutActivity.Builder()
+                            .quote(actions.quote)
+                            .outboundTripId(outboundTripId)
+                            .bookingMetadata(bookingMetadata)
+                            .bookingStatus(BookingStatus(bookingStatusStateViewModel.currentState.pickup,
+                                                         bookingStatusStateViewModel.currentState.destination,
+                                                         bookingStatusStateViewModel.currentState.date))
+
+                    startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
                 }
             }
         }
@@ -275,9 +277,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQ_CODE_BRAINTREE || requestCode == REQ_CODE_BRAINTREE_GUEST ||
-                requestCode == REQ_CODE_ADYEN) {
-            bookingRequestWidget.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
+            if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
+                showPrebookConfirmationDialog(data)
+            } else {
+                waitForTripAllocation()
+                tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
+            }
         } else if (resultCode == RESULT_OK && data != null) {
             when (requestCode) {
                 AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
@@ -293,15 +299,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             khWebView?.hide()
             return
         }
-        // if BookingRequestView is opened we close it and return
-        if (bookingRequestWidget.onBackPressed()) {
-            onResume()
-            return
-        }
         // if destination set we clear it, close the quotes list and return
         if (bookingStatusStateViewModel.currentState.destination != null) {
             bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
-                    .DestinationAddressEvent(null))
+                                                        .DestinationAddressEvent(null))
             return
         }
         if (navigationDrawerWidget.closeIfOpen()) {
@@ -316,11 +317,30 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun waitForTripAllocation() {
         quotesListWidget.hideList()
         addressBarWidget.visibility = View.INVISIBLE
-        bookingRequestWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         bookingMapWidget.centreMapToPickupPin()
+    }
+
+    private fun showPrebookConfirmationDialog(data: Intent?) {
+        val quoteType = data?.getSerializableExtra(CheckoutActivity
+                                                           .BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY) as QuoteType
+        val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity
+                                                                 .BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
+
+        if (tripInfo != null) {
+            bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+
+            val prebookConfirmationView = PrebookConfirmationView(this).apply {
+                bind(quoteType, tripInfo)
+            }
+            prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
+                override fun finishedBooking() {
+                    bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -477,6 +497,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     companion object {
         private const val REQ_CODE_BRAINTREE = 301
+        private const val REQ_CODE_BOOKING_REQUEST_ACTIVITY = 304
         private const val REQ_CODE_BRAINTREE_GUEST = 302
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001
         private const val NAVIGATION_ICON_DELAY = 100L

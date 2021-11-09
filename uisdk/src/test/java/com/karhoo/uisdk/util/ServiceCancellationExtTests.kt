@@ -3,7 +3,6 @@ package com.karhoo.uisdk.util
 import android.content.Context
 import android.content.res.Resources
 import com.karhoo.sdk.api.model.ServiceCancellation
-import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest

@@ -24,11 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/spacing_small"
+            android:padding="@dimen/kh_uisdk_spacing_small"
             android:text="@string/kh_uisdk_booking_car"
             android:textAllCaps="true"
-            android:textColor="@color/off_white"
-            android:textSize="@dimen/text_size_large" />
+            android:textColor="@color/kh_uisdk_off_white"
+            android:textSize="@dimen/kh_uisdk_text_size_large" />
 
     </LinearLayout>
 
@@ -40,8 +40,8 @@
         android:layout_gravity="center"
         android:clickable="false"
         android:indeterminate="true"
-        android:indeterminateTint="@color/off_white"
-        android:progressTint="@color/off_white"
+        android:indeterminateTint="@color/kh_uisdk_off_white"
+        android:progressTint="@color/kh_uisdk_off_white"
         android:visibility="invisible" />
 
 </FrameLayout>

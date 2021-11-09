@@ -36,27 +36,17 @@
     <com.karhoo.uisdk.screen.booking.quotes.QuotesListView
         android:id="@+id/quotesListWidget"
         android:layout_width="0dp"
-        android:layout_height="@dimen/collapsible_pane_expanded_height"
+        android:layout_height="@dimen/kh_uisdk_collapsible_pane_expanded_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <com.karhoo.uisdk.screen.booking.booking.tripallocation.TripAllocationView
+    <com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
         android:id="@+id/tripAllocationWidget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="false"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestView
-        android:id="@+id/bookingRequestWidget"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

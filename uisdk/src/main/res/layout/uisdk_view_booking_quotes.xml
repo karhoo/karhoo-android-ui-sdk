@@ -4,67 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
     android:clickable="false">
 
     <ImageView
         android:id="@+id/logoImage"
-        android:layout_width="@dimen/quotes_logo_size"
-        android:layout_height="@dimen/quotes_logo_size"
-        android:layout_gravity="center_vertical|left"
+        android:layout_width="@dimen/kh_uisdk_quotes_logo_size"
+        android:layout_height="@dimen/kh_uisdk_quotes_logo_size"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineCentre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/uisdk_ic_profile" />
 
     <TextView
         android:id="@+id/quoteNameText"
-        style="@style/KhBookingQuotesView"
+        style="@style/KhBookingQuotesViewFleetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:layout_marginEnd="@dimen/spacing_xxsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xxsmall"
         android:ellipsize="end"
-        android:maxLines="1"
-        app:layout_constraintBottom_toTopOf="@id/guidelineCentre"
+        android:maxLines="2"
         app:layout_constraintEnd_toStartOf="@id/capacityWidget"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/logoImage"
-        tools:text="Addison Lee" />
+        app:layout_constraintTop_toTopOf="@+id/logoImage"
+        tools:text="Karhoo" />
 
     <TextView
         android:id="@+id/categoryText"
-        style="@style/KhBookingQuotesView"
+        style="@style/KhBookingQuotesViewFleetType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="@id/quoteNameText"
-        app:layout_constraintTop_toBottomOf="@id/guidelineCentre"
-        tools:text="Car" />
+        app:layout_constraintTop_toBottomOf="@id/quoteNameText"
+        tools:text="Berline" />
+
+    <TextView
+        android:id="@+id/vehicleTags"
+        style="@style/KhBookingQuotesViewFleetType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
+        app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
+        app:layout_constraintStart_toStartOf="@id/categoryText"
+        app:layout_constraintTop_toBottomOf="@id/categoryText"
+        tools:text="Electric Child Seat +3" />
 
     <TextView
         android:id="@+id/bookingQuoteCancellationText"
-        style="@style/Text.Primary.Small.Green"
+        style="@style/KhBookingQuotesViewFleetCancellation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImage"
+        tools:text="Free cancellation up to 21 minutes before pickup " />
+
+    <LinearLayout
+        android:id="@+id/quoteLearnMoreContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="2"
-        app:layout_constraintStart_toStartOf="@id/quoteNameText"
-        app:layout_constraintTop_toBottomOf="@id/categoryText"
-        tools:text="Free cancellation up to 21 minutes before pickup" />
+        android:paddingBottom="@dimen/margin_16"
+        android:paddingStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryText">
+
+        <TextView
+            android:id="@+id/quoteLearnMore"
+            style="@style/KhQuoteLearnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/kh_uisdk_quote_learn_more" />
+
+        <ImageView
+            android:id="@+id/quoteLearnMoreIcon"
+            style="@style/KhQuoteLearnMoreIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
+            android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expandedCapacityList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/bookingQuoteCancellationText"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/fleetDescription"
+        style="@style/KhBookingQuotesViewFleetDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/margin_16"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/expandedCapacityList"
+        tools:text="This is a fleet description and it's purpose is to show the description of a fleet. This is part of the Karhoo UI SDK "
+        tools:visibility="visible" />
 
     <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
         android:id="@+id/capacityWidget"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5" />
