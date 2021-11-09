@@ -49,7 +49,7 @@ afterEvaluate {
 
                 groupId = 'com.karhoo'
                 artifactId = 'uisdk'
-                version = '1.4.4'
+                version = '1.5.0-rc1'
             }
         }
     }
