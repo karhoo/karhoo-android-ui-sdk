@@ -30,8 +30,8 @@ public class CollapsiblePanelView extends RelativeLayout {
     public CollapsiblePanelView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         final Resources resources = context.getResources();
-        collapsedHeight = resources.getDimension(R.dimen.collapsible_panel_collapsed_height);
-        expandedHeight = resources.getDimension(R.dimen.collapsible_pane_expanded_height);
+        collapsedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_panel_collapsed_height);
+        expandedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_pane_expanded_height);
     }
 
     public PanelState getPanelState() {
@@ -88,7 +88,7 @@ public class CollapsiblePanelView extends RelativeLayout {
                 }
             }
         });
-        anim.setDuration(getResources().getInteger(R.integer.animation_duration_slide_out_or_in));
+        anim.setDuration(getResources().getInteger(R.integer.kh_uisdk_animation_duration_slide_out_or_in));
         anim.start();
     }
 

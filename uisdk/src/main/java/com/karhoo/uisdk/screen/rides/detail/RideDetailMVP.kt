@@ -7,6 +7,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.Vehicle
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 
@@ -55,7 +56,7 @@ interface RideDetailMVP {
 
         fun displayCard(@DrawableRes logo: Int, number: String)
 
-        fun displayVehicle(licensePlate: String)
+        fun displayVehicle(vehicle: Vehicle?)
 
         fun displayFlightDetails(flightNumber: String, meetingPoint: String)
 

@@ -68,7 +68,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
     private var driverCar: Marker? = null
     private var pickupPinRes: Int = R.drawable.uisdk_ic_pickup_pin
     private var dropOffPinRes: Int = R.drawable.uisdk_ic_dropoff_pin
-    private var curvedLineColour: Int = R.color.primary_blue
+    private var curvedLineColour: Int = R.color.kh_uisdk_primary_blue
     private var hasLocationPermission: Boolean = false
 
     override var userLocationVisible: Boolean
@@ -94,7 +94,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
         dropOffPinRes = typedArray.getResourceId(R.styleable.BookingMapView_mapDropOffPin, R
                 .drawable.uisdk_ic_dropoff_pin)
         curvedLineColour = typedArray.getResourceId(R.styleable.BookingMapView_curvedLineColor, R
-                .color.primary_blue)
+                .color.kh_uisdk_primary_blue)
         typedArray.recycle()
     }
 
@@ -162,11 +162,11 @@ class TripMapView @JvmOverloads constructor(context: Context,
             uiSettings.isMapToolbarEnabled = false
             isIndoorEnabled = false
             with(TypedValue()) {
-                resources.getValue(R.dimen.map_zoom_max, this, true)
+                resources.getValue(R.dimen.kh_uisdk_map_zoom_max, this, true)
                 setMaxZoomPreference(this.float)
             }
             setPadding(0, 0,
-                       0, resources.getDimensionPixelSize(R.dimen.map_padding_bottom_trip))
+                       0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom_trip))
 
             presenter.mapIsReady()
             AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)

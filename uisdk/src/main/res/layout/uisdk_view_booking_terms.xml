@@ -14,37 +14,13 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/bookingTermsText"
+        android:id="@+id/khTermsAndConditionsText"
         style="@style/KhBookingTermsTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/spacing_xsmall"
         android:text="@string/kh_uisdk_booking_terms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/termsConditionsText"
-        style="@style/KhBookingTermsText"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/icon_size_large"
-        android:gravity="center|center_vertical"
-        android:text="@string/kh_uisdk_label_terms_and_conditions"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineCentre"
-        app:layout_constraintStart_toStartOf="@+id/bookingTermsText"
-        app:layout_constraintTop_toBottomOf="@id/bookingTermsText" />
-
-    <TextView
-        android:id="@+id/cancellationText"
-        style="@style/KhBookingTermsText"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/icon_size_large"
-        android:gravity="center|center_vertical"
-        android:text="@string/kh_uisdk_label_cancellation_policy"
-        app:layout_constraintEnd_toEndOf="@+id/bookingTermsText"
-        app:layout_constraintStart_toEndOf="@id/guidelineCentre"
-        app:layout_constraintTop_toBottomOf="@id/bookingTermsText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

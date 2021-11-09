@@ -3,6 +3,7 @@ package com.karhoo.uisdk.util
 import android.content.res.Resources
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsPresenter.Companion.PLUS_SIGN
 
 fun formatMobileNumber(code: String, number: String): String {
     return if (number.startsWith("0")) code + number.substring(1) else code + number
@@ -22,8 +23,26 @@ fun getMobileNumberWithoutCode(number: String, res: Resources): String {
     return number.removePrefix(code)
 }
 
-fun isValidNumber(number: String): Boolean {
+fun isValidNumber(number: String, countryCode: String): Boolean {
     val util = PhoneNumberUtil.getInstance()
-    val phoneNumber = util.parse(number, null)
-    return util.isValidNumber(phoneNumber)
+    return try {
+        val phoneNumber = util.parse(number, countryCode)
+        util.isValidNumber(phoneNumber)
+    } catch (e: Exception) {
+        false
+    }
+}
+
+fun parsePhoneNumber(number: String, countryCode: String): String {
+    val util = PhoneNumberUtil.getInstance()
+    try {
+        val phoneNumber = util.parse(number, countryCode)
+        if(util.isValidNumber(phoneNumber)) {
+            return PLUS_SIGN + phoneNumber.countryCode + phoneNumber.nationalNumber
+        }
+
+        return ""
+    } catch (e: Exception) {
+        return ""
+    }
 }

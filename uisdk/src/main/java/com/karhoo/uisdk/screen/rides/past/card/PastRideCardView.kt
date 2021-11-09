@@ -15,10 +15,10 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.DateUtil
-import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.bookingTermsText
+import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.khTermsAndConditionsText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.carText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dateTimeText
 import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dropOffLabel
@@ -47,7 +47,7 @@ class PastRideCardView @JvmOverloads constructor(
 
         loadFleetLogo(trip)
 
-        bookingTermsText.text = trip.fleetInfo?.name
+        khTermsAndConditionsText.text = trip.fleetInfo?.name
         pickupLabel.text = trip.origin?.displayAddress
         dropOffLabel.text = trip.destination?.displayAddress
 
@@ -95,7 +95,7 @@ class PastRideCardView @JvmOverloads constructor(
                 carText.visibility = View.GONE
             } else {
                 carText.visibility = View.VISIBLE
-                carText.text = "${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}"
+                carText.text = "${trip.vehicle?.categoryToLocalisedString(this.context)}: ${trip.vehicle?.vehicleLicencePlate}"
             }
 
     override fun goToDetails(trip: TripInfo) {
@@ -120,12 +120,12 @@ class PastRideCardView @JvmOverloads constructor(
     }
 
     override fun displayPricePending() {
-        priceText.setTextColor(ContextCompat.getColor(context, R.color.med_grey))
+        priceText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_med_grey))
         priceText.setText(R.string.kh_uisdk_cancelled)
     }
 
     override fun displayPrice(price: String) {
-        this.priceText.setTextColor(ContextCompat.getColor(context, R.color.off_black))
+        this.priceText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_off_black))
         this.priceText.text = price
     }
 

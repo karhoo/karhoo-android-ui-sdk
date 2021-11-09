@@ -14,6 +14,7 @@ import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
@@ -59,7 +60,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
-        categoryText.text = vehicleDetails.vehicle.vehicleClass?.capitalize()
+        categoryText.text = vehicleDetails.vehicle.categoryToLocalisedString(context.applicationContext)?.capitalize()
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
@@ -79,8 +80,8 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 logoImage,
                 url,
                 R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.logo_size,
-                R.integer.logo_radius,
+                R.dimen.kh_uisdk_logo_size,
+                R.integer.kh_uisdk_logo_radius,
                 object : Callback {
                     override fun onSuccess() {
                         stopLoading()
@@ -121,15 +122,15 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun getFareType(quoteType: QuoteType?): String {
         return when (quoteType ?: QuoteType.ESTIMATED) {
             QuoteType.FIXED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_fixed_fare)
             }
             QuoteType.METERED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_metered)
             }
             QuoteType.ESTIMATED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.text_alternative))
+                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_estimated_fare)
             }
             else -> context.getString(R.string.kh_uisdk_estimated_fare)
@@ -159,11 +160,12 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun setCapacity(vehicle: QuoteVehicle) {
         capacityWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
-                people = vehicle.passengerCapacity)
+                people = vehicle.passengerCapacity,
+                otherCapabilities = null)
     }
 
     private fun setCancellationSLA(serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
-        val text = serviceCancellation?.getCancellationText(context , isPrebook)
+        val text = serviceCancellation?.getCancellationText(context, isPrebook)
 
         if (text.isNullOrEmpty()) {
             quoteCancellationText.visibility = View.GONE

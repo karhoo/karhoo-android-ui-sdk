@@ -35,7 +35,7 @@ class UpcomingRidesView @JvmOverloads constructor(
 
         errorStateWidget.setRetryButtonClickListener(OnClickListener { refresh() })
         swipeRefreshLayout.setOnRefreshListener { presenter.getUpcomingRides() }
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.primary))
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(context, R.color.kh_uisdk_primary))
 
         recyclerView.apply {
             setHasFixedSize(true)

@@ -11,3 +11,11 @@ fun QuoteType.toLocalisedString(context: Context): String {
         QuoteType.METERED -> context.getString(R.string.kh_uisdk_metered)
     }
 }
+
+fun QuoteType.toLocalisedInfoString(context: Context): String {
+    return when (this) {
+        QuoteType.ESTIMATED -> context.getString(R.string.kh_uisdk_price_info_text_estimated)
+        QuoteType.FIXED -> context.getString(R.string.kh_uisdk_price_info_text_fixed)
+        QuoteType.METERED -> context.getString(R.string.kh_uisdk_price_info_text_metered)
+    }
+}

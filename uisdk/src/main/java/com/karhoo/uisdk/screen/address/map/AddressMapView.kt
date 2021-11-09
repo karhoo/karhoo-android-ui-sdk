@@ -127,7 +127,7 @@ class AddressMapView @JvmOverloads constructor(context: Context,
                 uiSettings.isMapToolbarEnabled = false
                 setOnCameraMoveStartedListener(this@AddressMapView)
                 with(TypedValue()) {
-                    resources.getValue(R.dimen.map_zoom_max, this, true)
+                    resources.getValue(R.dimen.kh_uisdk_map_zoom_max, this, true)
                     setMaxZoomPreference(this.float)
                 }
                 presenter.getLastLocation()
@@ -143,7 +143,7 @@ class AddressMapView @JvmOverloads constructor(context: Context,
     override fun zoom(position: LatLng?) {
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
-            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.map_anim_duration), null)
+            googleMap?.animateCamera(cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null)
         } else {
             val cameraUpdate = CameraUpdateFactory.zoomTo(MAP_DEFAULT_ZOOM)
             googleMap?.moveCamera(cameraUpdate)

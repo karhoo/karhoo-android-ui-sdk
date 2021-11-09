@@ -348,11 +348,11 @@ class TripMapPresenterTest {
 
     companion object {
 
-        private val TRIP_ID = "1234"
-        private val LAT = 0.534
-        private val LNG = 1.432
-        private val KPH = 10
-        private val HEADING = 180
+        private const val TRIP_ID = "1234"
+        private const val LAT = 0.534
+        private const val LNG = 1.432
+        private const val KPH = 10
+        private const val HEADING = 180
         private val DRIVER_POSITION = DriverTrackingInfo(position = Position(LAT, LNG), direction
         = Direction(kph = KPH, heading = HEADING))
         private val ORIGIN = Position(0.111, 0.222)

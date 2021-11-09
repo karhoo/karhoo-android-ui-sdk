@@ -20,6 +20,8 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        buildConfigField 'int', 'VERSION_CODE', "${versionCode}" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
+        buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\"" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -47,7 +49,7 @@ afterEvaluate {
 
                 groupId = 'com.karhoo'
                 artifactId = 'uisdk'
-                version = '1.4.5'
+                version = '1.4.6'
             }
         }
     }
@@ -55,7 +57,7 @@ afterEvaluate {
 
 dependencies {
 
-    api 'com.github.karhoo:karhoo-android-sdk:1.4.2'
+    api 'com.github.karhoo:karhoo-android-sdk:1.4.3'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
@@ -72,6 +74,8 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.2'
     implementation 'com.adyen.checkout:drop-in:3.8.3'
+    implementation 'com.github.heetch:Android-country-picker:1.0.6'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'

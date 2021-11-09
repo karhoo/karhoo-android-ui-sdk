@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <style name="Text"></style>
 
     <style name="Text.Fare">
-        <item name="android:textColor">@color/off_black</item>
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Primary">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
 
     <style name="Text.Primary.XXLarge">
-        <item name="android:textSize">@dimen/text_size_xxlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
     </style>
 
     <style name="Text.Primary.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
     </style>
 
     <style name="Text.Primary.Large">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
     </style>
 
     <style name="Text.Primary.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Primary.SmallMedium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Primary.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Primary.XSmall">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
     </style>
 
     <style name="Text.Primary.XXSmall">
-        <item name="android:textSize">@dimen/text_size_xxsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxsmall</item>
     </style>
 
     <style name="Text.Primary.ETA">
-        <item name="android:textSize">@dimen/text_eta_bubble</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_eta_bubble</item>
     </style>
 
     <style name="Text.White">
-        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textColor">@color/kh_uisdk_text_white</item>
     </style>
 
     <style name="Text.White.XXLarge">
-        <item name="android:textSize">@dimen/text_size_xxlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
     </style>
 
     <style name="Text.White.XXLarge.Bold">
@@ -61,59 +61,59 @@
     </style>
 
     <style name="Text.White.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
     </style>
 
     <style name="Text.White.Large">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
     </style>
 
     <style name="Text.White.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.White.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.White.XSmall">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
     </style>
 
     <style name="Text.White.XXSmall">
-        <item name="android:textSize">@dimen/text_size_xxsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxsmall</item>
     </style>
 
     <style name="Text.Alternative">
-        <item name="android:textColor">@color/text_alternative</item>
+        <item name="android:textColor">@color/kh_uisdk_text_alternative</item>
     </style>
 
     <style name="Text.Alternative.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
     </style>
 
     <style name="Text.Alternative.Large">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
     </style>
 
     <style name="Text.Alternative.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Alternative.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Alternative.SmallMedium">
-        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
     </style>
 
     <style name="Text.Alternative.XSmall">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
     </style>
 
     <style name="Text.Slider" parent="Text.Alternative">
-        <item name="android:textSize">@dimen/text_size_slider</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_slider</item>
     </style>
 
     <style name="Text.Action">
@@ -123,15 +123,15 @@
     </style>
 
     <style name="Text.Action.XSmall">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
     </style>
 
     <style name="Text.Action.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Action.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Action.Medium.Bold">
@@ -139,39 +139,39 @@
     </style>
 
     <style name="Text.Action.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
     </style>
 
     <style name="Text.Faded">
-        <item name="android:textColor">@color/med_grey</item>
+        <item name="android:textColor">@color/kh_uisdk_med_grey</item>
     </style>
 
     <style name="Text.Faded.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Faded.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Red">
-        <item name="android:textColor">@color/primary_red</item>
+        <item name="android:textColor">@color/kh_uisdk_primary_red</item>
     </style>
 
     <style name="Text.Action.Primary">
-        <item name="android:textColor">@color/primary</item>
+        <item name="android:textColor">@color/kh_uisdk_primary</item>
     </style>
 
     <style name="Text.Action.Primary.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Red.SmallMedium">
-        <item name="android:textSize">@dimen/text_size_small_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
     </style>
 
     <style name="Text.Red.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
     <style name="Text.Black">
@@ -179,7 +179,12 @@
     </style>
 
     <style name="Text.Black.Medium">
-        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+    </style>
+
+    <style name="Text.Primary.Small.Green">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/kh_uisdk_cancellation_green</item>
     </style>
 
     <style name="Text.Primary.Small.Green">
@@ -192,7 +197,7 @@
     </style>
 
     <style name="Text.Black.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
     </style>
 
     <style name="autoscroll" parent="Text.Primary.Medium">

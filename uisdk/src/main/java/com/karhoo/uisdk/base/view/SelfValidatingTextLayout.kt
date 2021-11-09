@@ -48,7 +48,7 @@ class SelfValidatingTextLayout @JvmOverloads constructor(context: Context,
             if (!isValid) {
                 setHelperTextColor(ColorStateList.valueOf(Color.RED))
             } else {
-                setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.med_grey)))
+                setHelperTextColor(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.kh_uisdk_med_grey)))
             }
         }
     }
@@ -75,6 +75,7 @@ class SelfValidatingTextLayout @JvmOverloads constructor(context: Context,
 
     interface Validator {
 
+        val errorTextResId: Int
         fun validate(field: String): Boolean
 
     }

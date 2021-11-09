@@ -162,6 +162,4 @@ class KarhooAddressProviderTest {
         private val placeList = mutableListOf(place, place)
         private val places = Places(placeList)
     }
-
-
 }

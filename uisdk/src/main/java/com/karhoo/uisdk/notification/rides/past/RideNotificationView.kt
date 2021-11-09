@@ -17,7 +17,7 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.notification.KarhooNotificationContract
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
-import com.karhoo.uisdk.util.extension.classToLocalisedString
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -35,7 +35,7 @@ class RideNotificationView : RideNotificationContract.View {
     override fun normalContentView(): RemoteViews {
         val contentView = RemoteViews(context.packageName, R.layout.uisdk_view_past_ride_notification)
 
-        contentView.setTextViewText(R.id.bookingTermsText, trip.fleetInfo?.name)
+        contentView.setTextViewText(R.id.khTermsAndConditionsText, trip.fleetInfo?.name)
 
         bindState(contentView)
         loadFleetLogo(contentView)
@@ -49,7 +49,7 @@ class RideNotificationView : RideNotificationContract.View {
         contentView.apply {
             setImageViewResource(R.id.pickupBallIcon, R.drawable.uisdk_ic_pickup)
             setImageViewResource(R.id.dropoffBallIcon, R.drawable.uisdk_ic_destination)
-            setTextViewText(R.id.bookingTermsText, trip.fleetInfo?.name)
+            setTextViewText(R.id.khTermsAndConditionsText, trip.fleetInfo?.name)
             setTextViewText(R.id.pickupLabel, trip.origin?.displayAddress)
             setTextViewText(R.id.dropOffLabel, trip.destination?.displayAddress)
 
@@ -101,12 +101,12 @@ class RideNotificationView : RideNotificationContract.View {
     fun bindState(contentView: RemoteViews) {
         when (trip.tripState) {
             TripStatus.COMPLETED ->
-                displayState(contentView, R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.off_black)
+                displayState(contentView, R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_off_black)
             TripStatus.CANCELLED_BY_USER,
             TripStatus.CANCELLED_BY_DISPATCH,
             TripStatus.NO_DRIVERS,
             TripStatus.CANCELLED_BY_KARHOO ->
-                displayState(contentView, R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
+                displayState(contentView, R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
         }
     }
 
@@ -121,7 +121,7 @@ class RideNotificationView : RideNotificationContract.View {
                 contentView.setViewVisibility(R.id.carText, View.GONE)
             } else {
                 contentView.setViewVisibility(R.id.carText, View.VISIBLE)
-                contentView.setTextViewText(R.id.carText, "${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}")
+                contentView.setTextViewText(R.id.carText, "${trip.vehicle?.categoryToLocalisedString(this.context)}${trip.vehicle?.vehicleLicencePlate}")
             }
 
     private fun bindPickupType(contentView: RemoteViews, pickupType: PickupType?) {

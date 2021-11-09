@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingRight="@dimen/spacing_small">
+    android:paddingRight="@dimen/kh_uisdk_spacing_small">
 
     <TextView
         android:id="@+id/countryDiallingCodeText"
@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/spacing_xsmall"
-        android:paddingTop="@dimen/padding_default"
-        android:paddingBottom="@dimen/padding_default" />
+        android:paddingLeft="@dimen/kh_uisdk_spacing_xsmall"
+        android:paddingTop="@dimen/kh_uisdk_padding_default"
+        android:paddingBottom="@dimen/kh_uisdk_padding_default" />
 
 </LinearLayout>

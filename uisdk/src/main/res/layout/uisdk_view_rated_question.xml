@@ -10,8 +10,8 @@
         android:id="@+id/questionText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_xxsmall"
-        android:textSize="@dimen/text_size_medium" />
+        android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
+        android:textSize="@dimen/kh_uisdk_text_size_medium" />
 
     <RatingBar
         android:id="@+id/ratingWidget"
