@@ -7,9 +7,9 @@
     <string name="kh_uisdk_additional_comments">Opmerkingen (optioneel)</string>
     <string name="kh_uisdk_address_drop_off">Afzetten</string>
     <string name="kh_uisdk_address_pick_up">Oppakken</string>
-    <string name="kh_uisdk_address_picker_add_pickup">Ophalen toevoegen</string>
+    <string name="kh_uisdk_address_picker_add_pickup">Ophaallocatie toevoegen</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Bestemming toevoegen</string>
-    <string name="kh_uisdk_address_picker_pickup">Adres zoeken</string>
+    <string name="kh_uisdk_address_picker_pickup">Ophaallocatie</string>
     <!-- Categories -->
     <string name="kh_uisdk_all_category">Alle</string>
     <string name="kh_uisdk_allocated">Uw rit is nu toegewezen aan een chauffeur</string>
@@ -22,9 +22,9 @@
     <string name="kh_uisdk_app_name">Karhoo-reiziger</string>
     <string name="kh_uisdk_arrival">Aankomst</string>
     <string name="kh_uisdk_arrived">Uw %s chauffeur is gearriveerd</string>
-    <string name="kh_uisdk_baggage_max">%d koffers max</string>
+    <string name="kh_uisdk_baggage_max">%d maximum aantal bagage</string>
     <string name="kh_uisdk_base">Basistarief</string>
-    <string name="kh_uisdk_book_now">Boek nu</string>
+    <string name="kh_uisdk_book_now">Reserveer</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier toevoegen</string>
@@ -65,7 +65,7 @@
     <!-- Central Lat Lng Charring X -->
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0,1276</string>
-    <string name="kh_uisdk_change">VERANDERING</string>
+    <string name="kh_uisdk_change">WIIJZIGEN</string>
     <string name="kh_uisdk_checkout_as_guest">Boek rit</string>
     <string name="kh_uisdk_code">Code</string>
     <string name="kh_uisdk_completed">We hopen dat je genoten hebt van je reis</string>
@@ -75,8 +75,8 @@
     <string name="kh_uisdk_contact_driver">Neem contact op met de chauffeur</string>
     <string name="kh_uisdk_contact_fleet">Neem contact op met Vloot</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/nl/requests/new</string>
-    <string name="kh_uisdk_continue_journey">Voortzetten</string>
-    <string name="kh_uisdk_continue_registration">Voortzetten</string>
+    <string name="kh_uisdk_continue_journey">VERDER GAAN</string>
+    <string name="kh_uisdk_continue_registration">VERDER GAAN</string>
     <string name="kh_uisdk_country_search">Land/regio zoeken</string>
     <string name="kh_uisdk_current_location">Huidige locatie ophalen</string>
     <string name="kh_uisdk_date">Datum</string>
@@ -87,9 +87,9 @@
     <string name="kh_uisdk_difficulties_cancelling_message">We ondervinden problemen bij het annuleren van uw rit. Neem alstublieft contact op met het taxibedrijf.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Moeilijkheden bij annuleren</string>
     <string name="kh_uisdk_discard">afleggen</string>
-    <string name="kh_uisdk_dismiss">AFWIJZEN</string>
+    <string name="kh_uisdk_dismiss">STOPPEN</string>
     <string name="kh_uisdk_dispatch_cancelled" formatted="false">Excuses, %s heeft momenteel geen beschikbare stuurprogramma\'s.</string>
-    <string name="kh_uisdk_done">Gedaan</string>
+    <string name="kh_uisdk_done">Klaar</string>
     <string name="kh_uisdk_drawer_closed">Lade gesloten</string>
     <string name="kh_uisdk_drawer_open">Lade open</string>
     <string name="kh_uisdk_driver_en_route">Uw %s chauffeur is onderweg</string>
@@ -98,16 +98,16 @@
     <string name="kh_uisdk_email_info">Verwijder alstublieft deze informatie niet, omdat dit ons helpt de app te verbeteren.</string>
     <string name="kh_uisdk_email_report_issue_message">Gebruik alstublieft de ruimte hieronder om een specifiek probleem van uw rit te melden.</string>
     <string name="kh_uisdk_enter_destination">Voer bestemming in om een rit te reserveren</string>
-    <string name="kh_uisdk_enter_destination_for_vehicles">Voer een bestemmingslocatie in om\nbeschikbare voertuigen te bekijken</string>
+    <string name="kh_uisdk_enter_destination_for_vehicles">Voer bestemming in om beschikbare taxibedrijven te zien</string>
     <!-- Address Picker -->
-    <string name="kh_uisdk_enter_pickup">Ophalen invoeren</string>
+    <string name="kh_uisdk_enter_pickup">Ophaallocatie</string>
     <string name="kh_uisdk_error_cannot_create_user">Er lijkt een probleem te zijn met het registreren van uw account. Probeer het opnieuw.</string>
     <string name="kh_uisdk_error_invalid_password">Het e-mailadres of wachtwoord dat je hebt ingevoerd is onjuist</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschatte aankomsttijd</string>
     <string name="kh_uisdk_estimated_fare">Geschatte prijs</string>
     <string name="kh_uisdk_estimated_price">Geschatte prijs</string>
     <string name="kh_uisdk_eta">Geschatte aankomsttijd</string>
-    <string name="kh_uisdk_exec">directeur</string>
+    <string name="kh_uisdk_exec">Executive</string>
     <string name="kh_uisdk_extra_capabilities">+ %d</string>
     <string name="kh_uisdk_failed_trip">We hebben uw reis niet kunnen boeken</string>
     <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/nl</string>
@@ -131,7 +131,7 @@
     <string name="kh_uisdk_flight_number">Vluchtnummer</string>
     <string name="kh_uisdk_flight_tracking">Vlucht volgen</string>
     <string name="kh_uisdk_getting_trip_status">De status van uw rit ophalen...</string>
-    <string name="kh_uisdk_got_it">BEGREPEN</string>
+    <string name="kh_uisdk_got_it">Ik begrijp het</string>
     <string name="kh_uisdk_gps_tracking">GPS-tracking</string>
     <string name="kh_uisdk_help">Help</string>
     <plurals name="kh_uisdk_hours_plural">
@@ -147,21 +147,21 @@
     <string name="kh_uisdk_invalid_phone_number">Ongeldig telefoonnummer</string>
     <string name="kh_uisdk_invalid_prebook_time_error">Prebook kan niet binnen het huidige uur worden gereserveerd.</string>
     <!-- General errors, K0xxx -->
-    <string name="kh_uisdk_K0001">Algemene aanvraagfout.</string>
-    <string name="kh_uisdk_K0002">Ongeldige payload van verzoek</string>
-    <string name="kh_uisdk_K0003">Kan autorisatietoken niet lezen</string>
-    <string name="kh_uisdk_K0004">Verificatie is vereist voor dit pad</string>
-    <string name="kh_uisdk_K0005">Vereiste rol ontbreekt voor dit verzoek</string>
-    <string name="kh_uisdk_K0006">Snelheidslimiet overschreden</string>
-    <string name="kh_uisdk_K0007">Stroomonderbreker is geactiveerd voor deze route</string>
+    <string name="kh_uisdk_K0001">General request error.</string>
+    <string name="kh_uisdk_K0002">Invalid request payload</string>
+    <string name="kh_uisdk_K0003">Could not read authorisation token</string>
+    <string name="kh_uisdk_K0004">Authentication is required for this path</string>
+    <string name="kh_uisdk_K0005">Missing required role for this request</string>
+    <string name="kh_uisdk_K0006">Prijslimiet overschreden</string>
+    <string name="kh_uisdk_K0007">Circuit breaker has triggered for this route</string>
     <!-- User errors, K1xxx -->
     <string name="kh_uisdk_K1001">Kan gebruiker niet registreren</string>
-    <string name="kh_uisdk_K1002">Kan gebruiker niet registreren (gebruiker bestaat al)</string>
+    <string name="kh_uisdk_K1002">Could not register user (user already exists)</string>
     <string name="kh_uisdk_K1003">Kon de gebruiker niet registreren (incorrecte aanvraag)</string>
     <string name="kh_uisdk_K1004">Kan gebruiker niet registreren (ongeldig telefoonnummer)</string>
     <string name="kh_uisdk_K1005">Kan gebruikersgegevens niet ophalen (ongeldige token)</string>
-    <string name="kh_uisdk_K1006">Kan gebruikersgegevens niet ophalen (gebruiker bestaat niet)</string>
-    <string name="kh_uisdk_K1999">Gebruiker is aangemaakt maar nog niet geautoriseerd. We nemen contact met je op zodra deze is ingeschakeld.</string>
+    <string name="kh_uisdk_K1006">Could not get user details (user does not exist)</string>
+    <string name="kh_uisdk_K1999">User has been created but not been authorized yet, we will get in touch once enabled.</string>
     <!-- Locations errors, K2xxx -->
     <string name="kh_uisdk_K2001">Kon adres niet krijgen</string>
     <!-- Quotes errors, K3xxx -->
@@ -217,7 +217,7 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Inloggen</string>
-    <string name="kh_uisdk_map_selector">Pinlocatie op kaart instellen</string>
+    <string name="kh_uisdk_map_selector">Op de kaart zetten</string>
     <string name="kh_uisdk_meeting_point">Ontmoetingspunt</string>
     <string name="kh_uisdk_metered">meterprijs</string>
     <string name="kh_uisdk_min">min</string>
@@ -227,9 +227,9 @@
         <item quantity="one">%d minuut</item>
         <item quantity="other">%d minuten</item>
     </plurals>
-    <string name="kh_uisdk_mobile_phone_number_hint">Mobiele telefoonnummer</string>
+    <string name="kh_uisdk_mobile_phone_number_hint">Mobiel telefoonnummer</string>
     <string name="kh_uisdk_moto">Moto</string>
-    <string name="kh_uisdk_mpv">Bus</string>
+    <string name="kh_uisdk_mpv">Minibus</string>
     <string name="kh_uisdk_name_hint">Naam</string>
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_next">Volgende</string>
@@ -246,8 +246,8 @@
     <string name="kh_uisdk_pass_length">Ten minste 8 tekens</string>
     <string name="kh_uisdk_pass_on_board">U bent onderweg. Veilige rit!</string>
     <!-- Guest Checkout -->
-    <string name="kh_uisdk_passenger_details">passagier details</string>
-    <string name="kh_uisdk_passengers_max">%d passagiers max</string>
+    <string name="kh_uisdk_passenger_details">Passagiersgegevens</string>
+    <string name="kh_uisdk_passengers_max">%d maximum aantal passagiers</string>
     <string name="kh_uisdk_password_hint">Wachtwoord</string>
     <string name="kh_uisdk_past_rides_empty">U heeft nog geen ritten gemaakt. Wij kunnen u helpen om van A naar B te komen.</string>
     <!-- Adyen -->
@@ -264,15 +264,15 @@
     <!-- Profile -->
     <string name="kh_uisdk_phone_number_hint">Telefoonnummer</string>
     <string name="kh_uisdk_pickup_type_curbside">Curbside</string>
-    <string name="kh_uisdk_pickup_type_meet_and_greet">Ontmoet en Groet</string>
+    <string name="kh_uisdk_pickup_type_meet_and_greet">Meet &amp; Greet</string>
     <string name="kh_uisdk_pickup_type_standby">Stand-by</string>
     <string name="kh_uisdk_prebook_timezone_title">De reservering wordt gemaakt in de lokale tijd van ophalen</string>
     <string name="kh_uisdk_price">Prijs</string>
     <!-- Booking Price View -->
-    <string name="kh_uisdk_price_info_text_estimated">Deze vloot is een niet-gereguleerde taxi. De offerte is een schatting op basis van de reisfactoren (afstand, tijd, etc). Raadpleeg de algemene voorwaarden van de vloot voor meer informatie.</string>
-    <string name="kh_uisdk_price_info_text_fixed">Deze vloot rekent een vast tarief. Het uiteindelijke tarief kan worden beïnvloed door extra\'s (tolgeld, vertraging, enz.). Raadpleeg de algemene voorwaarden van de vloot.</string>
-    <string name="kh_uisdk_price_info_text_metered">Deze vloot is een gereguleerde taxi met meter. De offerte is een schatting op basis van de reisfactoren (afstand, tijd, etc).</string>
-    <string name="kh_uisdk_price_meet_and_greet">Ontmoet en Groet</string>
+    <string name="kh_uisdk_price_info_text_estimated">Dit taxibedrijf is een niet-gereguleerde taxi. De offerte is een schatting op basis van de reisfactoren (afstand, tijd, etc). Raadpleeg de algemene voorwaarden van het taxibedrijf voor meer informatie.</string>
+    <string name="kh_uisdk_price_info_text_fixed">"Dit taxibedrijft rekent een vast tarief. Het uiteindelijke tarief kan worden beïnvloed door extra\'s (tolgeld, vertraging, enz.). Raadpleeg de algemene voorwaarden van het taxibedrijf.	"</string>
+    <string name="kh_uisdk_price_info_text_metered">Dit taxibedrijf werkt met een gereguleerde taximeter. De offerte is een schatting op basis van de reisfactoren (afstand, tijd, etc).</string>
+    <string name="kh_uisdk_price_meet_and_greet">Meet &amp; Greet</string>
     <string name="kh_uisdk_privacy_policy_small">Privacybeleid.</string>
     <string name="kh_uisdk_profile">Profiel</string>
     <!-- Qxxxx errors -->
@@ -282,13 +282,13 @@
     <string name="kh_uisdk_question_three">Hoe was uw ervaring in de taxi (bijv. netheid van de taxi, route en chauffeur)?</string>
     <string name="kh_uisdk_question_two">Hoe was je ervaring met het vinden van de ophaallocatie en het ontmoeten van je chauffeur?</string>
     <string name="kh_uisdk_quote">De leverancier</string>
-    <string name="kh_uisdk_quote_cancellation_after_booking_ending">na boeking</string>
+    <string name="kh_uisdk_quote_cancellation_after_booking_ending">na reserveren</string>
     <string name="kh_uisdk_quote_cancellation_and_keyword">en</string>
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Gratis annuleren tot chauffeur onderweg is</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">voor ophalen</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Gratis annuleren tot</string>
     <!-- Quote View Learn More -->
-    <string name="kh_uisdk_quote_learn_more">Leer meer</string>
+    <string name="kh_uisdk_quote_learn_more">Meer informatie</string>
     <string name="kh_uisdk_quoted_fare">Geschat tarief</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>
     <string name="kh_uisdk_rating_submitted">Bedankt voor het doorgeven van uw beoordeling.</string>
@@ -304,18 +304,18 @@
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
-    <string name="kh_uisdk_retrieving_pickup">Ophaallocatie ophalen</string>
+    <string name="kh_uisdk_retrieving_pickup">Ophaallocatie</string>
     <string name="kh_uisdk_retrieving_quotes">Citaten ophalen</string>
     <string name="kh_uisdk_retry">opnieuw proberen</string>
     <string name="kh_uisdk_ride_confirmed">Rit bevestigd</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
-    <string name="kh_uisdk_ride_details">Ritdetails</string>
+    <string name="kh_uisdk_ride_details">Ritgegevens</string>
     <!-- trip info -->
     <string name="kh_uisdk_ride_options">Ritopties</string>
     <string name="kh_uisdk_ride_state_arrived">De chauffeur is aangekomen</string>
     <string name="kh_uisdk_ride_state_cancelled">Geannuleerd</string>
     <string name="kh_uisdk_ride_state_completed">Voltooid</string>
-    <string name="kh_uisdk_ride_state_confirmed">bevestigd</string>
+    <string name="kh_uisdk_ride_state_confirmed">Bevestigd</string>
     <string name="kh_uisdk_ride_state_der">De chauffeur is onderweg</string>
     <string name="kh_uisdk_ride_state_failed">Mislukt</string>
     <string name="kh_uisdk_ride_state_pob">In de auto</string>
@@ -323,8 +323,8 @@
     <!-- Completed trip -->
     <string name="kh_uisdk_ride_summary">Ritoverzicht</string>
     <string name="kh_uisdk_rides">Ritten</string>
-    <string name="kh_uisdk_saloon">Personenwagen</string>
-    <string name="kh_uisdk_save">Bewaar</string>
+    <string name="kh_uisdk_saloon">Standaard voertuig</string>
+    <string name="kh_uisdk_save">BEWAREN</string>
     <string name="kh_uisdk_settings">Instellingen</string>
     <string name="kh_uisdk_sign_in">Inloggen</string>
     <!-- Login -->
@@ -353,7 +353,7 @@
     <string name="kh_uisdk_tip_10">Fooi (10%)</string>
     <!-- Activity Titles -->
     <string name="kh_uisdk_title_activity_address">Adres</string>
-    <string name="kh_uisdk_title_activity_airport">Luchthaven pick-up</string>
+    <string name="kh_uisdk_title_activity_airport">Ophalen op de luchthaven</string>
     <string name="kh_uisdk_title_activity_intent_chooser_send_email">E-mail verzenden</string>
     <string name="kh_uisdk_title_activity_rides">Ritten</string>
     <string name="kh_uisdk_title_activity_threedsecure">3D Veilig</string>
@@ -365,7 +365,7 @@
     <string name="kh_uisdk_title_past_rides_empty">Geen eerdere ritten</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">Je hebt geen aankomende ritten</string>
     <string name="kh_uisdk_total_fare">Totale kosten</string>
-    <string name="kh_uisdk_track_driver">Baanrijder</string>
+    <string name="kh_uisdk_track_driver">Track de bestuurder</string>
     <string name="kh_uisdk_train_tracking">Trein volgen</string>
     <string name="kh_uisdk_trip_id">Reis-ID: %1$s</string>
     <string name="kh_uisdk_trip_id_label">Reis-ID</string>
