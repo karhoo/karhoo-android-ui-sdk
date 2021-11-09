@@ -153,9 +153,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
-                                    passengerDetails: PassengerDetails?) {
+                                    passengerDetails: PassengerDetails?,
+                                    comments: String?) {
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
+        comments?.let {
+            bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
+        }
         presenter.showBookingRequest(
                 quote = quote,
                 bookingStatus = bookingStatus,

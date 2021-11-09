@@ -129,7 +129,7 @@ interface CheckoutViewContract {
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
-        HashMap<String, String>?, passengerDetails: PassengerDetails? = null)
+        HashMap<String, String>?, passengerDetails: PassengerDetails? = null, comments: String? = null)
     }
 
     sealed class Event {

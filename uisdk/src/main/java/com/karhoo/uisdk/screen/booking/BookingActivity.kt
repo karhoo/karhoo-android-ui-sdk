@@ -180,14 +180,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             }
         }
 
-        passengerDetails?.let {
-
-        }
-
-        bookingComments?.let {
-            bookingRequestCommentsWidget.setBookingOptionalInfo(it)
-        }
-
         lifecycle.apply {
             addObserver(bookingMapWidget)
         }
@@ -268,6 +260,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
                     passengerDetails?.let {
                         builder.passengerDetails(it)
+                    }
+
+                    bookingComments?.let {
+                        builder.comments(it)
                     }
 
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
