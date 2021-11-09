@@ -266,6 +266,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                                          bookingStatusStateViewModel.currentState.destination,
                                                          bookingStatusStateViewModel.currentState.date))
 
+                    passengerDetails?.let {
+                        builder.passengerDetails(it)
+                    }
+
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
                 }
             }
