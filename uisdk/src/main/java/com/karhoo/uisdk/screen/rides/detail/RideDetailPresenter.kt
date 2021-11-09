@@ -17,7 +17,6 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
-import com.karhoo.uisdk.util.extension.classToLocalisedString
 import com.karhoo.uisdk.util.extension.getCancellationText
 import com.karhoo.uisdk.util.extension.hasValidCancellationDependingOnTripStatus
 import com.karhoo.uisdk.util.formatted
@@ -78,15 +77,15 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     override fun bindState() {
         when (trip.tripState) {
-            TripStatus.REQUESTED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_requested, R.color.off_black)
-            TripStatus.CONFIRMED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_confirmed, R.color.off_black)
-            TripStatus.DRIVER_EN_ROUTE -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_der, R.color.off_black)
-            TripStatus.ARRIVED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_arrived, R.color.off_black)
-            TripStatus.PASSENGER_ON_BOARD -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_pob, R.color.off_black)
-            TripStatus.COMPLETED -> view?.displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.off_black)
-            TripStatus.INCOMPLETE -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_pending, R.color.off_black)
+            TripStatus.REQUESTED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_requested, R.color.kh_uisdk_off_black)
+            TripStatus.CONFIRMED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_confirmed, R.color.kh_uisdk_off_black)
+            TripStatus.DRIVER_EN_ROUTE -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_der, R.color.kh_uisdk_off_black)
+            TripStatus.ARRIVED -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_arrived, R.color.kh_uisdk_off_black)
+            TripStatus.PASSENGER_ON_BOARD -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_ride_state_pob, R.color.kh_uisdk_off_black)
+            TripStatus.COMPLETED -> view?.displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_off_black)
+            TripStatus.INCOMPLETE -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_pending, R.color.kh_uisdk_off_black)
             TripStatus.CANCELLED_BY_USER, TripStatus.CANCELLED_BY_DISPATCH, TripStatus.NO_DRIVERS, TripStatus.CANCELLED_BY_KARHOO ->
-                view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
+                view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
         }
     }
 
@@ -166,7 +165,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     override fun bindVehicle() {
         if (!trip.vehicle?.vehicleLicencePlate.isNullOrBlank()) {
-            view?.displayVehicle("${trip.vehicle?.classToLocalisedString()}${trip.vehicle?.vehicleLicencePlate}")
+            view?.displayVehicle(trip.vehicle)
         }
     }
 

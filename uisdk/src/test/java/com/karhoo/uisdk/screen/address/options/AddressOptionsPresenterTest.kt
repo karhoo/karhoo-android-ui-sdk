@@ -89,6 +89,4 @@ class AddressOptionsPresenterTest {
         verify(view).resolveLocationApiException(any())
 
     }
-
-
 }

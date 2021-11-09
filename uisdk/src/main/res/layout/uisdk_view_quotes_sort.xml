@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/etaLayout"
-        android:layout_width="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -29,14 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_nearest"
-            android:textColor="@color/off_white"
-            android:textSize="@dimen/text_size_small_medium" />
+            android:textColor="@color/kh_uisdk_off_white"
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/priceLayout"
-        android:layout_width="@dimen/spacing_none"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
@@ -50,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kh_uisdk_sorter_cheapest"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/text_size_small_medium" />
+            android:textColor="@color/kh_uisdk_primary"
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout

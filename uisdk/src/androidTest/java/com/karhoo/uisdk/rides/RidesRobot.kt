@@ -120,7 +120,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fleetNameIsVisible(fleet: String) {
-        stringIsVisibleIsDescendant(fleet, R.id.bookingTermsText)
+        stringIsVisibleIsDescendant(fleet, R.id.khTermsAndConditionsText)
     }
 
     fun fleetLogoIsVisible() {

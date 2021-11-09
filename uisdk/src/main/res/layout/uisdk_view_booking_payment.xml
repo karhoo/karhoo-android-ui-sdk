@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:padding="@dimen/spacing_small"
+    android:padding="@dimen/kh_uisdk_spacing_small"
     style="@style/KhPaymentView">
 
     <ImageView
@@ -23,8 +23,8 @@
         style="@android:style/Widget.ProgressBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginEnd="@dimen/spacing_xsmall"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/cardNumberText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toStartOf="@id/changeCardLabel"
         app:layout_constraintStart_toEndOf="@id/cardLogoImage"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
         tools:text="···· 6699"
         tools:visibility="visible" />
 

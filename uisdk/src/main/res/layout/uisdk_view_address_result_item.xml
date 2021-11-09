@@ -8,14 +8,14 @@
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/spacing_small"
-    android:paddingRight="@dimen/spacing_small">
+    android:paddingLeft="@dimen/kh_uisdk_spacing_small"
+    android:paddingRight="@dimen/kh_uisdk_spacing_small">
 
     <ImageView
         android:id="@+id/itemIcon"
-        android:layout_width="@dimen/address_icon_size_default"
-        android:layout_height="@dimen/address_icon_size_default"
-        android:layout_marginEnd="@dimen/spacing_small"
+        android:layout_width="@dimen/kh_uisdk_address_icon_size_default"
+        android:layout_height="@dimen/kh_uisdk_address_icon_size_default"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
         app:srcCompat="@drawable/uisdk_ic_location_pin" />
 
     <TextView
@@ -24,11 +24,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:paddingTop="@dimen/spacing_small"
-        android:paddingBottom="@dimen/spacing_small"
+        android:paddingTop="@dimen/kh_uisdk_spacing_small"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
         android:singleLine="false"
         android:maxLines="2"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/kh_uisdk_text_size_medium"
         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
 
 </LinearLayout>

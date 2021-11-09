@@ -1,81 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Colours -->
-    <color name="primary">@color/pink</color>
-    <color name="secondary">@color/dark_blue</color>
-    <color name="primary_red">#FA0046</color>
-    <color name="primary_green">#00CC66</color>
-    <color name="secondary_green">#00994D</color>
-    <color name="primary_blue">#43BCFF</color>
-    <color name="secondary_blue">#0093BF</color>
-    <color name="primary_yellow">#FFBC43</color>
-    <color name="secondary_yellow">#E09323</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="textColorError">@color/primary_red</color>
+    <color name="kh_uisdk_primary">@color/kh_uisdk_pink</color>
+    <color name="kh_uisdk_secondary">@color/kh_uisdk_dark_blue</color>
+    <color name="kh_uisdk_primary_red">#FA0046</color>
+    <color name="kh_uisdk_primary_green">#00CC66</color>
+    <color name="kh_uisdk_secondary_green">#00994D</color>
+    <color name="kh_uisdk_primary_blue">#43BCFF</color>
+    <color name="kh_uisdk_secondary_blue">#0093BF</color>
+    <color name="kh_uisdk_primary_yellow">#FFBC43</color>
+    <color name="kh_uisdk_secondary_yellow">#E09323</color>
+    <color name="kh_uisdk_colorAccent">#FF4081</color>
+    <color name="kh_uisdk_textColorError">@color/kh_uisdk_primary_red</color>
+    <color name="kh_uisdk_secondary_text">#8C8C8C</color>
+    <color name="kh_uisdk_tag_icon_fill">#00000000</color>
+    <color name="kh_uisdk_tag_icon_stroke">@color/kh_uisdk_secondary_text</color>
+    <color name="kh_uisdk_capabilities_icon_fill">#00000000</color>
+    <color name="kh_uisdk_capabilities_icon_stroke">@color/black</color>
+    <color name="kh_uisdk_capabilities_number_background">@color/white</color>
+    <color name="kh_uisdk_passenger_icon_fill">#00000000</color>
+    <color name="kh_uisdk_passenger_icon_stroke">@color/black</color>
+    <color name="kh_uisdk_chevron_arrow_icon">@color/black</color>
+    <color name="kh_uisdk_light_gray">#F5F5F5</color>
+    <color name="kh_uisdk_search_hint_color">#B3ffffff</color>
+    <color name="kh_uisdkic_chevron_left">@color/black</color>
 
     <!-- Gradients -->
-    <color name="sort_grad_start_red">#FA0046</color>
-    <color name="sort_grad_end_pink">#FD00A3</color>
-    <color name="sort_grad_end_primary">@color/primary</color>
-    <color name="sort_grad_start_primary">@color/primary</color>
-    <color name="sort_grad_end_secondary">@color/secondary</color>
-    <color name="sort_grad_start_secondary">@color/secondary</color>
-    <color name="light_green_grad">#00E5E5</color>
-    <color name="dark_green_grad">#00E500</color>
-    <color name="cancellation_green">#33AC2E</color>
+    <color name="kh_uisdk_sort_grad_start_red">#FA0046</color>
+    <color name="kh_uisdk_sort_grad_end_pink">#FD00A3</color>
+    <color name="kh_uisdk_sort_grad_end_primary">@color/kh_uisdk_primary</color>
+    <color name="kh_uisdk_sort_grad_start_primary">@color/kh_uisdk_primary</color>
+    <color name="kh_uisdk_sort_grad_end_secondary">@color/kh_uisdk_secondary</color>
+    <color name="kh_uisdk_sort_grad_start_secondary">@color/kh_uisdk_secondary</color>
+    <color name="kh_uisdk_light_green_grad">#00E5E5</color>
+    <color name="kh_uisdk_dark_green_grad">#00E500</color>
+    <color name="kh_uisdk_cancellation_green">#33AC2E</color>
 
     <!-- Greys -->
-    <color name="off_black">#333333</color>
-    <color name="pink">#E40D72</color>
-    <color name="dark_blue">#181447</color>
-    <color name="dark_grey">#666666</color>
-    <color name="med_grey">#999999</color>
-    <color name="silver">#8798AD</color>
-    <color name="light_grey">#CCCCCC</color>
-    <color name="lightish_grey">#888888</color>
-    <color name="lighter_grey">#EEEEEE</color>
-    <color name="off_white">#F7F7F7</color>
-    <color name="greyish_white">#f3f3f4</color>
-    <color name="opacity_off_white">#F2F7F7F7</color>
-    <color name="opacity_off_white_time_picker">#B3FFFFFF</color>
-    <color name="transparent">#00000000</color>
-    <color name="transparent_black_map">#22000000</color>
-    <color name="transparent_black">#66000000</color>
-    <color name="transparent_black_notification">#AD000000</color>
-    <color name="background_light_grey">#F4F4F5</color>
+    <color name="kh_uisdk_off_black">#333333</color>
+    <color name="kh_uisdk_pink">#E40D72</color>
+    <color name="kh_uisdk_dark_blue">#181447</color>
+    <color name="kh_uisdk_dark_grey">#666666</color>
+    <color name="kh_uisdk_med_grey">#999999</color>
+    <color name="kh_uisdk_silver">#8798AD</color>
+    <color name="kh_uisdk_light_grey">#CCCCCC</color>
+    <color name="kh_uisdk_lightish_grey">#F5F5F5</color>
+    <color name="kh_uisdk_lighter_grey">#EEEEEE</color>
+    <color name="kh_uisdk_off_white">#F7F7F7</color>
+    <color name="kh_uisdk_greyish_white">#f3f3f4</color>
+    <color name="kh_uisdk_opacity_off_white">#F2F7F7F7</color>
+    <color name="kh_uisdk_opacity_off_white_time_picker">#B3FFFFFF</color>
+    <color name="kh_uisdk_transparent">#00000000</color>
+    <color name="kh_uisdk_transparent_black_map">#22000000</color>
+    <color name="kh_uisdk_transparent_black">#66000000</color>
+    <color name="kh_uisdk_transparent_black_notification">#AD000000</color>
+    <color name="kh_uisdk_background_light_grey">#F4F4F5</color>
 
     <!-- Text -->
-    <color name="text_white">@android:color/white</color>
-    <color name="text_primary">#404040</color>
-    <color name="text_action_up">@color/dark_grey</color>
-    <color name="text_action_pressed">#450815</color>
-    <color name="text_alternative">#888888</color>
-    <color name="text_unavailable">#CCCCCC</color>
-    <color name="text_green">#119F5C</color>
+    <color name="kh_uisdk_text_white">@android:color/white</color>
+    <color name="kh_uisdk_text_primary">#404040</color>
+    <color name="kh_uisdk_text_action_up">@color/kh_uisdk_dark_grey</color>
+    <color name="kh_uisdk_text_action_pressed">#450815</color>
+    <color name="kh_uisdk_text_alternative">#888888</color>
+    <color name="kh_uisdk_text_unavailable">#CCCCCC</color>
+    <color name="kh_uisdk_text_green">#119F5C</color>
 
     <!-- Category Selector Divider -->
-    <color name="divider">#E2E2E2</color>
+    <color name="kh_uisdk_divider">#E2E2E2</color>
 
     <!-- Tab Color Selector -->
-    <color name="tab_indicator">@color/colorAccent</color>
+    <color name="kh_uisdk_tab_indicator">@color/kh_uisdk_colorAccent</color>
 
     <!-- CANCEL BUTTON -->
-    <color name="transluscent_white">#CCFFFFFF</color>
-    <color name="transluscent_black">#CC000000</color>
+    <color name="kh_uisdk_transluscent_white">#CCFFFFFF</color>
+    <color name="kh_uisdk_transluscent_black">#CC000000</color>
 
     <!-- RatingBar -->
-    <color name="duskYellow">#edd413</color>
-    <color name="lightGrey">#bab9b5</color>
+    <color name="kh_uisdk_duskYellow">#edd413</color>
+    <color name="kh_uisdk_lightGrey">#bab9b5</color>
 
-    <color name="KhButtonDisabledColor">#66181447</color>
-    <color name="KhButtonEnabledColor">@color/secondary</color>
-    <color name="khTimePickerTitleBackgroundColor">@color/primary</color>
-    <color name="khTimePickerTitleTextColor">@color/opacity_off_white_time_picker</color>
+    <color name="kh_uisdk_ButtonDisabledColor">#66181447</color>
+    <color name="kh_uisdk_ButtonEnabledColor">@color/kh_uisdk_secondary</color>
+    <color name="kh_uisdk_TimePickerTitleBackgroundColor">@color/kh_uisdk_primary</color>
+    <color name="kh_uisdk_TimePickerTitleTextColor">@color/kh_uisdk_opacity_off_white_time_picker</color>
 
     <!-- Icon -->
-    <color name="icon_blue">#181A47</color>
+    <color name="kh_uisdk_icon_blue">#181A47</color>
 
     <!-- Adyen -->
-    <color name="primaryColor">@color/primary</color>
+    <color name="kh_uisdk_primaryColor">@color/kh_uisdk_primary</color>
 
 </resources>

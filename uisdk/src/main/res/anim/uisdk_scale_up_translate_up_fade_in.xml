@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/animation_duration_shared_element"
+    android:duration="@integer/kh_uisdk_animation_duration_shared_element"
     android:fillAfter="true"
     android:fillBefore="true"
     android:interpolator="@android:anim/linear_interpolator"

@@ -106,7 +106,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
     }
 
     /**
@@ -121,7 +121,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
     }
 
     /**
@@ -136,7 +136,7 @@ class RideDetailPresenterTest {
 
         presenter.bindState()
 
-        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.off_black)
+        verify(view).displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_off_black)
     }
 
     /**

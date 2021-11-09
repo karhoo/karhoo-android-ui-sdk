@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/greyish_white"
+    android:background="@color/kh_uisdk_greyish_white"
     android:orientation="vertical">
 
     <Toolbar
         android:id="@+id/khWebViewToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/secondary"
+        android:background="@color/kh_uisdk_secondary"
         android:minHeight="?attr/actionBarSize"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:popupTheme="@style/ThemeOverlay.AppCompat"
@@ -18,7 +18,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/spacing_none"
+        android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:layout_weight="1">
 
         <WebView

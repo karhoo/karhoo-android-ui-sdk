@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Feature Flag Tags  -->
+    <string name="kh_uisdk_additional_feedback" translatable="false">additionalFeedbackView</string>
+    <string name="kh_uisdk_address_map_options" translatable="false">addressMapOptions</string>
+    <string name="kh_uisdk_channel_name" translatable="false">Trip Notification</string>
+    <string name="kh_uisdk_channel_description" translatable="false">Trip Notification Channel</string>
+    <string name="kh_uisdk_karhoo_labs" translatable="false">Karhoo Labs</string>
+
+    <!-- FEEDBACK -->
+    <string name="kh_uisdk_question_one_id" translatable="false">quote_selection</string>
+    <string name="kh_uisdk_question_two_id" translatable="false">pre_pobexperience</string>
+    <string name="kh_uisdk_question_three_id" translatable="false">pob_experience</string>
+    <string name="kh_uisdk_question_four_id" translatable="false">app_experience</string>
+
+    <string name="kh_uisdk_guest_trip_tracking_production" translatable="false">https://follow.karhoo.com/%s</string>
+    <string name="kh_uisdk_guest_trip_tracking_sandbox" translatable="false">https://follow.sandbox.karhoo.com/%s</string>
+    <string name="kh_uisdk_guest_trip_tracking_custom" translatable="false">https://follow.stg.karhoo.com/%s</string>
+    <!--  Logger  -->
+    <string name="kh_uisdk_logger_sdk_not_configured" translatable="false">UISDK not configured. Please configure the KarhooUISDKConfiguration or visit https://developer.karhoo.com/docs/using-the-ui-sdk for more info</string>
+</resources>

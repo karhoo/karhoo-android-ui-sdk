@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/driverPhotoImage"
-        android:layout_width="@dimen/photo_width"
-        android:layout_height="@dimen/photo_height"
+        android:layout_width="@dimen/kh_uisdk_photo_width"
+        android:layout_height="@dimen/kh_uisdk_photo_height"
         android:layout_centerInParent="true"
         android:transitionName="driverPhoto" />
 

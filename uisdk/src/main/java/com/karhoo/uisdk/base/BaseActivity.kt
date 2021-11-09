@@ -97,7 +97,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
             if (snackbarConfig.action != null) {
                 snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_INDEFINITE)
                         .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
-                        .setActionTextColor(ContextCompat.getColor(this, R.color.text_white))
+                        .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_white))
                 val snackText = snackbar?.view?.findViewById(R.id.snackbar_text) as TextView
                 snackText.maxLines = 3
 
@@ -195,7 +195,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     }
 
     private fun enableErrorLock() {
-        backgroundFade?.startTransition(resources.getInteger(R.integer.snackbar_background_fade))
+        backgroundFade?.startTransition(resources.getInteger(R.integer.kh_uisdk_snackbar_background_fade))
         snackBarContainer?.isClickable = true
     }
 

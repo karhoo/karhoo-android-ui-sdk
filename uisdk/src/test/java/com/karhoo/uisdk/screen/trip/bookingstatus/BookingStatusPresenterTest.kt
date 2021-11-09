@@ -361,8 +361,8 @@ class BookingStatusPresenterTest {
 
     companion object {
 
-        private val TRIP_ID = "1234"
-        private val FLEET_NAME = "Some Fleet Name"
+        private const val TRIP_ID = "1234"
+        private const val FLEET_NAME = "Some Fleet Name"
 
         private fun tripDetailsWithState(state: TripStatus): TripInfo {
             return TripInfo(
