@@ -187,11 +187,6 @@
         <item name="android:textColor">@color/kh_uisdk_cancellation_green</item>
     </style>
 
-    <style name="Text.Primary.Small.Green">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textColor">@color/cancellation_green</item>
-    </style>
-
     <style name="Text.Black.Medium.Bold">
         <item name="android:textStyle">bold</item>
     </style>
