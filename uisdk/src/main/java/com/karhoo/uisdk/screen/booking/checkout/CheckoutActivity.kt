@@ -138,6 +138,15 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * By passing comments into the Checkout Component it will automatically prefill the
+         * comments of the desired trip.
+         */
+        fun comments(comments: String): Builder {
+            extrasBundle.putString(BOOKING_CHECKOUT_COMMENTS_KEY, comments)
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
@@ -156,6 +165,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY = "PREBOOK_QUOTE_TYPE_KEY"
         const val BOOKING_CHECKOUT_ERROR_DATA = "BOOKING_CHECKOUT_ERROR_DATA"
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
+        const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10
