@@ -45,7 +45,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
                                 simpleText.indexOf(bookingTermsAndConditionsText),
                                 simpleText.indexOf(bookingTermsAndConditionsText) + bookingTermsAndConditionsText.length,
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannableString.setSpan(createClickableSpan(resources.getString(R.string.kh_uisdk_karhoo_general_terms_url)),
+        spannableString.setSpan(createClickableSpan(resources.getString(R.string.kh_uisdk_karhoo_privacy_policy_url)),
                                 simpleText.indexOf(bookingPrivacyPolicyText),
                                 simpleText.indexOf(bookingPrivacyPolicyText) + bookingPrivacyPolicyText.length,
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
