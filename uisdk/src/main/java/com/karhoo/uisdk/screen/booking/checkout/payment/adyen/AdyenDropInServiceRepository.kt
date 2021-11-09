@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.booking.payment.adyen
+package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
 import android.content.Context
 import androidx.core.app.JobIntentService
