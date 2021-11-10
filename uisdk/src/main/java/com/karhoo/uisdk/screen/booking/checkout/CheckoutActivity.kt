@@ -12,9 +12,9 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
-import java.util.HashMap
+import kotlinx.android.synthetic.main.uisdk_activity_base.*
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
+import java.util.*
 
 class CheckoutActivity : BaseActivity(), WebViewActions {
     override val layout: Int
@@ -36,12 +36,17 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
             val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
             quote?.let {
+                for(item in supportFragmentManager.fragments){
+                    if(item is CheckoutFragment){
+                        supportFragmentManager.beginTransaction().remove(item).commit();
+                    }
+                }
                 val ft = supportFragmentManager.beginTransaction()
 
                 fragment = CheckoutFragment.newInstance(extras)
 
                 ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                        .commit()
+                    .commit()
             } ?: run {
                 finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
@@ -53,7 +58,6 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     override fun handleExtras() {
         // do nothing
     }
-
     /**
      * Method used for finishing up the booking request activity with an error
      * The activity which launches the BookingRequestActivity should handle the error result
