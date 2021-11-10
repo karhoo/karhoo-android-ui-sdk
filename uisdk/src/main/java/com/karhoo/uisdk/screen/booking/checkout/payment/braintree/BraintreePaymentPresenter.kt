@@ -57,22 +57,12 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
     private fun getNonce(braintreeSDKToken: String, amount: String) {
         this.braintreeSDKToken = braintreeSDKToken
         val user = userStore.currentUser
-        val nonceRequest =
-                passengerDetails?.let {
-                    NonceRequest(payer = Payer(id = "",
-                                               email = it.email ?: "",
-                                               firstName = it.firstName ?: "",
-                                               lastName = it.lastName ?: ""),
-                                 organisationId = user.organisations.first().id
-                                )
-                } ?: run {
-                    NonceRequest(payer = Payer(id = user.userId,
+        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
                                                email = user.email,
                                                firstName = user.firstName,
                                                lastName = user.lastName),
                                  organisationId = user.organisations.first().id
                                 )
-                }
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
