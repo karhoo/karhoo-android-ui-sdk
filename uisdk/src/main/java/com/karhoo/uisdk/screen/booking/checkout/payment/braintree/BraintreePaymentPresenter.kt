@@ -143,23 +143,13 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
 
     private fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
-        val addPaymentRequest = passengerDetails?.let {
-            AddPaymentRequest(payer =
-                              Payer(id = "",
-                                    email = it.email ?: "",
-                                    firstName = it.firstName ?: "",
-                                    lastName = it.lastName ?: ""),
-                              organisationId = user.organisations.first().id,
-                              nonce = braintreeSDKNonce)
-        } ?: run {
-            AddPaymentRequest(payer =
+        val addPaymentRequest = AddPaymentRequest(payer =
                               Payer(id = user.userId,
                                     email = user.email,
                                     firstName = user.firstName,
                                     lastName = user.lastName),
                               organisationId = user.organisations.first().id,
                               nonce = braintreeSDKNonce)
-        }
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
