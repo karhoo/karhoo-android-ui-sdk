@@ -5,7 +5,7 @@
     <string name="kh_uisdk_add_flight_details">Aggiungi i dettagli del volo (facoltativo)</string>
     <string name="kh_uisdk_add_payment">Aggiungi pagamento</string>
     <string name="kh_uisdk_additional_comments">Commenti aggiuntivi (facoltativo)</string>
-    <string name="kh_uisdk_address_drop_off">Ritiro</string>
+    <string name="kh_uisdk_address_drop_off">Partenza</string>
     <string name="kh_uisdk_address_pick_up">Partenza</string>
     <string name="kh_uisdk_address_picker_add_pickup">Aggiungi partenza</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
@@ -27,8 +27,8 @@
     <string name="kh_uisdk_book_now">Prenota ora</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Prenota corsa</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi passeggero</string>
-    <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungere il metodo di pagamento</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungere</string>
+    <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungere</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Metodo di pagamento</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Indietro</string>
