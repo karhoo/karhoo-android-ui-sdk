@@ -36,11 +36,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
             val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
             quote?.let {
-                for(item in supportFragmentManager.fragments){
-                    if(item is CheckoutFragment){
-                        supportFragmentManager.beginTransaction().remove(item).commit();
-                    }
-                }
+                removeIfCheckoutFragmentExists()
                 val ft = supportFragmentManager.beginTransaction()
 
                 fragment = CheckoutFragment.newInstance(extras)
@@ -52,6 +48,14 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
             }
         } ?: run {
             finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
+        }
+    }
+
+    fun removeIfCheckoutFragmentExists(){
+        for(item in supportFragmentManager.fragments){
+            if(item is CheckoutFragment){
+                supportFragmentManager.beginTransaction().remove(item).commit();
+            }
         }
     }
 
