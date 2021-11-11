@@ -87,7 +87,7 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
 
             val unavailableCategoryView = tab?.customView as CategoryView?
             unavailableCategoryView?.apply {
-                setCategoryName(categories[i].categoryName)
+                setCategoryName(categories[i].toLocalizedString(context.applicationContext))
                 setCategoryAvailable(categories[i].isAvailable)
             }
 
