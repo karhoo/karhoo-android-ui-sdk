@@ -33,7 +33,6 @@ public class CollapsiblePanelView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         final Resources resources = context.getResources();
         collapsedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_panel_collapsed_height);
-//        expandedHeight = resources.getDimension(R.dimen.kh_uisdk_collapsible_pane_expanded_height);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity)getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);

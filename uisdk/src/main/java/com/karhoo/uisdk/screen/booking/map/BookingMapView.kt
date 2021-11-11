@@ -54,7 +54,10 @@ import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
 import com.karhoo.uisdk.util.extension.showShadowedPolyLine
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.bookingMapLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 @Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(
