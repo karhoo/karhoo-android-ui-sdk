@@ -58,7 +58,10 @@ class QuotesListView @JvmOverloads constructor(
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
 
     private var isQuotesListVisible = false
-    private var expandedListHeightPercentage = resources.getInteger(R.integer.kh_uisdk_query_list_view_default_screen_percentage)
+    private var expandedListHeightPercentage = resources.getInteger(R.integer
+                                                                        .kh_uisdk_query_list_view_default_expanded_screen_percentage)
+    private var collapsedListHeightPercentage = resources.getInteger(R.integer
+                                                                         .kh_uisdk_query_list_view_default_collapsed_screen_percentage)
 
     init {
         inflate(context, R.layout.uisdk_view_quotes, this)
@@ -75,7 +78,11 @@ class QuotesListView @JvmOverloads constructor(
             0, 0).apply {
 
             try {
-                expandedListHeightPercentage = getInteger(R.styleable.QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_screen_percentage))
+                expandedListHeightPercentage = getInteger(R.styleable
+                                                              .QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_expanded_screen_percentage))
+                collapsedListHeightPercentage = getInteger(R.styleable
+                                                               .QuotesListView_collapsedListPercentageOfScreen,
+                               resources.getInteger(R.integer.kh_uisdk_query_list_view_default_collapsed_screen_percentage))
             } finally {
                 recycle()
             }
@@ -114,6 +121,8 @@ class QuotesListView @JvmOverloads constructor(
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                     .QuotesListCollapsed)
+            val desiredHeight = getScreenHeight(context as Activity, collapsedListHeightPercentage)
+            layoutParams.height = desiredHeight
         }
     }
 
@@ -173,6 +182,8 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun showList() {
         if (!isQuotesListVisible) {
+            val desiredHeight = getScreenHeight(context as Activity, collapsedListHeightPercentage)
+            layoutParams.height = desiredHeight
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer

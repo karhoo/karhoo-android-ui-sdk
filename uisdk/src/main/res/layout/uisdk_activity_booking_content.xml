@@ -40,7 +40,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:expandedListPercentageOfScreen="@integer/kh_uisdk_query_list_view_default_screen_percentage"/>
+        app:expandedListPercentageOfScreen="@integer/kh_uisdk_query_list_view_default_expanded_screen_percentage"
+        app:collapsedListPercentageOfScreen="@integer/kh_uisdk_query_list_view_default_collapsed_screen_percentage"/>
 
     <com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
         android:id="@+id/tripAllocationWidget"
