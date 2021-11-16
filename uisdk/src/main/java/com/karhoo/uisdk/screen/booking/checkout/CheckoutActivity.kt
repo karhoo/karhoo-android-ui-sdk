@@ -36,12 +36,13 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
             val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
             quote?.let {
+                removeIfCheckoutFragmentExists()
                 val ft = supportFragmentManager.beginTransaction()
 
                 fragment = CheckoutFragment.newInstance(extras)
 
                 ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                        .commit()
+                    .commit()
             } ?: run {
                 finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
@@ -50,10 +51,17 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
     }
 
+    fun removeIfCheckoutFragmentExists(){
+        for(item in supportFragmentManager.fragments){
+            if(item is CheckoutFragment){
+                supportFragmentManager.beginTransaction().remove(item).commit();
+            }
+        }
+    }
+
     override fun handleExtras() {
         // do nothing
     }
-
     /**
      * Method used for finishing up the booking request activity with an error
      * The activity which launches the BookingRequestActivity should handle the error result
