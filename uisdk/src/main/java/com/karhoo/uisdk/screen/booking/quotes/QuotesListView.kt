@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.quotes
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Insets
 import android.util.AttributeSet
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.AttrRes
@@ -37,6 +38,9 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.categorySelect
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.chevronIcon
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesRecyclerView
 import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesSortWidget
+import android.util.DisplayMetrics
+import android.view.WindowInsets
+import android.os.Build
 
 class QuotesListView @JvmOverloads constructor(
         context: Context,
@@ -54,6 +58,10 @@ class QuotesListView @JvmOverloads constructor(
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
 
     private var isQuotesListVisible = false
+    private var expandedListHeightPercentage = resources.getInteger(R.integer
+                                                                        .kh_uisdk_query_list_view_default_expanded_screen_percentage)
+    private var collapsedListHeightPercentage = resources.getInteger(R.integer
+                                                                         .kh_uisdk_query_list_view_default_collapsed_screen_percentage)
 
     init {
         inflate(context, R.layout.uisdk_view_quotes, this)
@@ -62,7 +70,36 @@ class QuotesListView @JvmOverloads constructor(
         hideListInitially()
 
         quotesSortWidget.setListener(this)
-        chevronIcon.setOnClickListener { presenter.showMore() }
+        chevronIcon.setOnClickListener{ presenter.showMore() }
+
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.QuotesListView,
+            0, 0).apply {
+
+            try {
+                expandedListHeightPercentage = getInteger(R.styleable
+                                                              .QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_expanded_screen_percentage))
+                collapsedListHeightPercentage = getInteger(R.styleable
+                                                               .QuotesListView_collapsedListPercentageOfScreen,
+                               resources.getInteger(R.integer.kh_uisdk_query_list_view_default_collapsed_screen_percentage))
+            } finally {
+                recycle()
+            }
+        }
+    }
+
+    fun getScreenHeight(activity: Activity, percentage: Int): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = activity.windowManager.currentWindowMetrics
+            val insets: Insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat()/ resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
+        } else {
+            val displayMetrics = DisplayMetrics()
+            activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+            (displayMetrics.heightPixels * (percentage.toFloat()/resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -78,10 +115,14 @@ class QuotesListView @JvmOverloads constructor(
     override fun togglePanelState() {
         collapsiblePanelView.togglePanelState()
         if (collapsiblePanelView.panelState == PanelState.EXPANDED) {
+            val desiredHeight = getScreenHeight(context as Activity, expandedListHeightPercentage)
+            layoutParams.height = desiredHeight
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
                     .QuotesListCollapsed)
+            val desiredHeight = getScreenHeight(context as Activity, collapsedListHeightPercentage)
+            layoutParams.height = desiredHeight
         }
     }
 
@@ -141,6 +182,8 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun showList() {
         if (!isQuotesListVisible) {
+            val desiredHeight = getScreenHeight(context as Activity, collapsedListHeightPercentage)
+            layoutParams.height = desiredHeight
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
