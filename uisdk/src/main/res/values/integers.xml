@@ -21,7 +21,7 @@
     <item name="kh_uisdk_map_zoom_max" format="float" type="dimen">20.0</item>
 
     <!-- Query List View-->
-    <integer name="kh_uisdk_query_list_view_default_collapsed_screen_percentage">30</integer>
-    <integer name="kh_uisdk_query_list_view_default_expanded_screen_percentage">70</integer>
+    <integer name="kh_uisdk_query_list_view_default_collapsed_screen_percentage">40</integer>
+    <integer name="kh_uisdk_query_list_view_default_expanded_screen_percentage">75</integer>
     <integer name="kh_uisdk_query_list_view_max_screen_percentage">100</integer>
 </resources>
