@@ -114,7 +114,10 @@ class BookingPaymentView @JvmOverloads constructor(
         KarhooApi.userStore.savedPaymentInfo?.let {
             changeCardLabel.visibility = visibility
         } ?: run {
-            changeCardLabel.visibility = GONE
+            if(hasValidPayment)
+                changeCardLabel.visibility = GONE
+            else
+                changeCardLabel.visibility = visibility
         }
     }
 
