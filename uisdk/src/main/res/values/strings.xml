@@ -375,4 +375,12 @@
     <string name="kh_uisdk_wheelchair">Wheelchair</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>
+
+    <!-- Loyalty -->
+    <string name="kh_uisdk_loyalty_title">Loyalty points</string>
+    <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">The currency is not supported yet</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">This ride earns you %1$s points</string>
 </resources>

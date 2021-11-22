@@ -217,6 +217,12 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Acceder</string>
+    <string name="kh_uisdk_loyalty_info">Su tarjeta es necesaria para autorizar esta transacción en caso de que el precio final del viaje exceda su saldo de puntos. No se le cobrará a su cuenta si sus puntos de fidelidad cubren el precio total.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Tu saldo de puntos es insuficiente</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Estás usando %1$s puntos</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Este viaje le otorga %1$s puntos</string>
+    <string name="kh_uisdk_loyalty_title">Puntos de lealtad</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">La moneda aún no es compatible</string>
     <string name="kh_uisdk_map_selector">Seleccione la ubicación en el mapa</string>
     <string name="kh_uisdk_meeting_point">Punto de encuentro</string>
     <string name="kh_uisdk_metered">Precio taxímetro</string>

@@ -217,6 +217,12 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Registrati</string>
+    <string name="kh_uisdk_loyalty_info">La tua carta è necessaria per autorizzare questa transazione nel caso in cui il prezzo finale della corsa superi il tuo saldo punti. Il tuo account non verrà addebitato se i tuoi punti fedeltà coprono l\'intero prezzo.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Il tuo saldo punti è insufficiente</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Stai utilizzando %1$s punti</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Questa corsa ti fa guadagnare %1$s punti</string>
+    <string name="kh_uisdk_loyalty_title">Punti fedeltà</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">La valuta non è ancora supportata</string>
     <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
     <string name="kh_uisdk_meeting_point">Punto d\'incontro</string>
     <string name="kh_uisdk_metered">Tassametro</string>

@@ -217,6 +217,12 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Inloggen</string>
+    <string name="kh_uisdk_loyalty_info">Uw kaart is nodig om deze transactie te autoriseren in het geval dat de uiteindelijke prijs van de rit uw puntensaldo overschrijdt. Er worden geen kosten in rekening gebracht op uw account als uw loyaliteitspunten de volledige prijs dekken.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Je gebruikt %1$s punten</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Met deze rit verdien je %1$s punten</string>
+    <string name="kh_uisdk_loyalty_title">Loyaliteitspunten</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">De valuta wordt nog niet ondersteund</string>
     <string name="kh_uisdk_map_selector">Op de kaart zetten</string>
     <string name="kh_uisdk_meeting_point">Ontmoetingspunt</string>
     <string name="kh_uisdk_metered">meterprijs</string>
