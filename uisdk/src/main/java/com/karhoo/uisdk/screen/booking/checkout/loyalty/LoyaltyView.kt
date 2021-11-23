@@ -100,13 +100,19 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean) {
-        if(!showEarnRelatedUI) {
+        if (!showEarnRelatedUI) {
             loyaltyViewSubtitle.visibility = GONE
         } else {
             loyaltyViewSubtitle.visibility = VISIBLE
         }
 
         if (!showBurnRelatedUI) {
+            loyaltySwitch.visibility = GONE
+        } else {
+            loyaltySwitch.visibility = VISIBLE
+        }
+
+        if (!showEarnRelatedUI && !showBurnRelatedUI) {
             loyaltyViewLayout.visibility = GONE
         } else {
             loyaltyViewLayout.visibility = VISIBLE
