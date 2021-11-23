@@ -45,7 +45,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
                 }
                 4 -> {
                     Toast.makeText(context, "Can Burn == false", Toast.LENGTH_LONG).show()
-                    presenter.set(LoyaltyViewModel("", "GBP", 0.0, canEarn = true, canBurn = false))
+                    presenter.set(LoyaltyViewModel("", "GBP", 0.0, canEarn = false, canBurn =
+                    false))
                 }
                 else -> {
                     i = 0
@@ -99,10 +100,16 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     }
 
     override fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean) {
-        if (!showBurnRelatedUI) {
-            loyaltySwitch.visibility = GONE
+        if(!showEarnRelatedUI) {
+            loyaltyViewSubtitle.visibility = GONE
         } else {
-            loyaltySwitch.visibility = VISIBLE
+            loyaltyViewSubtitle.visibility = VISIBLE
+        }
+
+        if (!showBurnRelatedUI) {
+            loyaltyViewLayout.visibility = GONE
+        } else {
+            loyaltyViewLayout.visibility = VISIBLE
         }
     }
 }
