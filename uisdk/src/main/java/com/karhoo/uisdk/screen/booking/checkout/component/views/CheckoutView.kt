@@ -28,6 +28,8 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -48,6 +50,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
 import org.joda.time.DateTime
 import java.util.Currency
@@ -154,11 +157,27 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
-                                    comments: String?) {
+                                    comments: String?,
+                                    loyaltyInfo: LoyaltyInfo?) {
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         comments?.let {
             bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
+        }
+        loyaltyInfo?.let {
+            if (!loyaltyInfo.loyaltyEnabled) {
+                loyaltyView.visibility = GONE
+            }
+
+            loyaltyView.set(LoyaltyViewModel(
+                    loyaltyId = "",
+                    tripAmount = quote.price.highPrice.toDouble(),
+                    currency = quote.price.currencyCode ?: "",
+                    canEarn = loyaltyInfo.loyaltyCanEarn,
+                    canBurn = loyaltyInfo.loyaltyCanBurn)
+                           )
+        } ?: run {
+            loyaltyView.visibility = GONE
         }
         presenter.showBookingRequest(
                 quote = quote,

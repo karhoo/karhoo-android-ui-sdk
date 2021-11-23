@@ -20,6 +20,7 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -112,8 +113,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     BraintreeTokenExchangeConfig(
                             applicationContext
-                    )
-            )
+                                                )
+                            )
         }
     }
 
@@ -122,8 +123,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     BraintreeGuestConfig(
                             applicationContext
-                    )
-            )
+                                        )
+                            )
         }
     }
 
@@ -132,8 +133,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     AdyenTokenExchangeConfig(
                             applicationContext
-                    )
-            )
+                                            )
+                            )
         }
     }
 
@@ -142,8 +143,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     AdyenGuestConfig(
                             applicationContext
-                    )
-            )
+                                    )
+                            )
         }
     }
 
@@ -159,17 +160,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToBooking() {
         val builder = BookingActivity.Builder.builder
-            .initialLocation(null)
+                .initialLocation(null).loyaltyInfo(
+                        LoyaltyInfo(
+                                loyaltyEnabled = BuildConfig.LOYALTY_ENABLED == "true",
+                                loyaltyCanBurn = BuildConfig.LOYALTY_CAN_BURN == "true",
+                                loyaltyCanEarn = BuildConfig.LOYALTY_CAN_EARN == "true"
+                                   )
+                                                  )
         startActivity(builder.build(this))
         hideLoading()
     }
 
     private fun toastErrorMessage(error: KarhooError) {
         Toast.makeText(
-            this,
-            error.userFriendlyMessage,
-            Toast.LENGTH_LONG
-        ).show()
+                this,
+                error.userFriendlyMessage,
+                Toast.LENGTH_LONG
+                      ).show()
         hideLoading()
     }
 

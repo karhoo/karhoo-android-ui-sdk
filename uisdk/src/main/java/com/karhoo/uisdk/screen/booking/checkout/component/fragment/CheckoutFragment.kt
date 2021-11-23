@@ -105,8 +105,9 @@ internal class CheckoutFragment : Fragment() {
                 passengerDetails = bundle.getParcelable(CheckoutActivity
                                                                 .BOOKING_CHECKOUT_PASSENGER_KEY),
                 comments = bundle.getString(CheckoutActivity
-                                                       .BOOKING_CHECKOUT_COMMENTS_KEY)
-                                       )
+                                                    .BOOKING_CHECKOUT_COMMENTS_KEY),
+                loyaltyInfo = bundle.getParcelable(CheckoutActivity
+                                                           .BOOKING_CHECKOUT_LOYALTY_KEY))
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
