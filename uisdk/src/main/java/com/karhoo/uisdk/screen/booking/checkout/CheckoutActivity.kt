@@ -10,6 +10,7 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -155,6 +156,15 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * By passing the loyalty info, the Checkout Component will adjust the behaviour of the
+         * loyalty sub-component
+         */
+        fun loyaltyInfo(loyaltyInfo: LoyaltyInfo): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_LOYALTY_KEY, loyaltyInfo)
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
@@ -174,6 +184,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_ERROR_DATA = "BOOKING_CHECKOUT_ERROR_DATA"
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
+        const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10

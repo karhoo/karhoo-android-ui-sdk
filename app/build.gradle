@@ -32,6 +32,9 @@ android {
         buildConfigField("String", "ADYEN_CLIENT_ID", (secureProps.getProperty("ADYEN_CLIENT_ID") ?: '""'))
         buildConfigField("String", "ADYEN_CLIENT_SCOPE", (secureProps.getProperty("ADYEN_CLIENT_SCOPE") ?: '""'))
         buildConfigField("String", "ADYEN_AUTH_TOKEN", (secureProps.getProperty("ADYEN_AUTH_TOKEN") ?: '""'))
+        buildConfigField("String", "LOYALTY_CAN_EARN", (secureProps.getProperty("LOYALTY_CAN_EARN") ?: '""'))
+        buildConfigField("String", "LOYALTY_CAN_BURN", (secureProps.getProperty("LOYALTY_CAN_BURN") ?: '""'))
+        buildConfigField("String", "LOYALTY_ENABLED", (secureProps.getProperty("LOYALTY_ENABLED") ?: '""'))
 
         buildConfigField("String", "STAGING_HOST", (secureProps.getProperty("STAGING_HOST") ?: '""'))
         buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: '""'))

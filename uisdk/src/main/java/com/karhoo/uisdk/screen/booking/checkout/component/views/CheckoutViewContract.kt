@@ -13,6 +13,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -129,7 +130,8 @@ interface CheckoutViewContract {
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
-        HashMap<String, String>?, passengerDetails: PassengerDetails? = null, comments: String? = null)
+        HashMap<String, String>?, passengerDetails: PassengerDetails? = null, comments: String? =
+                null, loyaltyInfo: LoyaltyInfo?)
     }
 
     sealed class Event {
