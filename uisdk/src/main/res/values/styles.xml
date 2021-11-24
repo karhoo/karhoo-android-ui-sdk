@@ -509,7 +509,6 @@
     <style name="KhLoyaltyInfoText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">italic</item>
         <item name="fontWeight">400</item>
         <item name="lineHeight">15dp</item>
     </style>
