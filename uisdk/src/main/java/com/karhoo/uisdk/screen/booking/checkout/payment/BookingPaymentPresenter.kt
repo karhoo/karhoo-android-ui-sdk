@@ -10,6 +10,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
+import java.util.Locale
 
 class BookingPaymentPresenter(view: BookingPaymentContract.View,
                               private val userStore: UserStore = KarhooApi.userStore,
@@ -22,7 +23,7 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
 
     override fun createPaymentView(actions: PaymentDropInContract.Actions) {
         val paymentView = userStore.paymentProvider?.let {
-            when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
+            when (enumValueOf<ProviderType>(it.id.uppercase(Locale.US))) {
                 ProviderType.ADYEN -> {
                     val view = AdyenPaymentView(actions)
                     view.actions = actions
