@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
-import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import org.junit.Assert
