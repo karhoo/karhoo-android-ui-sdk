@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:paddingTop="@dimen/kh_uisdk_spacing_small_intermediate"
+        android:paddingTop="@dimen/kh_uisdk_padding_default"
         android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:paddingBottom="@dimen/kh_uisdk_spacing_small_intermediate">
+        android:paddingBottom="@dimen/kh_uisdk_padding_default">
 
 
         <LinearLayout
