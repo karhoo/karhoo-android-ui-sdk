@@ -2,15 +2,16 @@ package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
 import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.uisdk.R
 
-class LoyaltyPresenter : LoyaltyContract.Presenter {
+class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore) : LoyaltyContract.Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
 
     private lateinit var view: LoyaltyContract.View
     private var loyaltyRequest: LoyaltyViewRequest? = null
-    private var loyaltyStatus: LoyaltyStatus? = KarhooApi.userStore.loyaltyStatus
+    private var loyaltyStatus: LoyaltyStatus? = userStore.loyaltyStatus
 
     override fun attachView(view: LoyaltyContract.View) {
         this.view = view
