@@ -14,7 +14,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewModel
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -82,7 +82,8 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
-        fun showLoyaltyView(show: Boolean, loyaltyViewModel: LoyaltyViewModel? = null)
+        fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest? = null,
+                            loyaltyStatus: LoyaltyStatus? = null)
     }
 
     interface Presenter {

@@ -29,7 +29,8 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewModel
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -81,6 +82,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingRequestTermsWidget.actions = this
+
         presenter = CheckoutViewPresenter(this,
                                           KarhooUISDK.analytics,
                                           KarhooPreferenceStore.getInstance(context),
@@ -92,10 +97,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestLinearLayout.setOnClickListener {
             it.hideSoftKeyboard()
         }
-
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
-        bookingRequestTermsWidget.actions = this
 
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
@@ -407,11 +408,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         presenter.createLoyaltyViewModel(loyaltyStatus)
     }
 
-    override fun showLoyaltyView(show: Boolean, loyaltyViewModel: LoyaltyViewModel?) {
+    override fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest?, loyaltyStatus: LoyaltyStatus?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
-        loyaltyViewModel?.let {
+        loyaltyViewRequest?.let {
             loyaltyView.set(it)
         }
+        loyaltyStatus?.let {
+            loyaltyView.set(it)
+        }
+        loyaltyView.set(LoyaltyMode.NONE)
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
