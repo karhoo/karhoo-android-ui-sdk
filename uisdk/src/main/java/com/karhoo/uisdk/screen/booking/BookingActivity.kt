@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -66,6 +67,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var outboundTripId: String? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
     private var journeyInfo: JourneyInfo? = null
     private var passengerDetails: PassengerDetails? = null
+    private var loyaltyStatus: LoyaltyStatus? = null
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
 

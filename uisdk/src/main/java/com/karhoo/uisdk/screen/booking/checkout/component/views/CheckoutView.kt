@@ -11,6 +11,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
@@ -28,6 +29,7 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -48,6 +50,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
 import org.joda.time.DateTime
 import java.util.Currency
@@ -160,6 +163,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         comments?.let {
             bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
         }
+
         presenter.showBookingRequest(
                 quote = quote,
                 bookingStatus = bookingStatus,
@@ -396,6 +400,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         if (!show) {
             bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
+        }
+    }
+
+    override fun onLoyaltyStatusRetrieved(loyaltyStatus: LoyaltyStatus?) {
+        presenter.createLoyaltyViewModel(loyaltyStatus)
+    }
+
+    override fun showLoyaltyView(show: Boolean, loyaltyViewModel: LoyaltyViewModel?) {
+        loyaltyView.visibility = if (show) VISIBLE else GONE
+        loyaltyViewModel?.let {
+            loyaltyView.set(it)
         }
     }
 

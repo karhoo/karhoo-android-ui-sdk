@@ -44,7 +44,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
                     showError(resources.getString(R.string.kh_uisdk_loyalty_unsupported_currency))
                 }
                 4 -> {
-                    Toast.makeText(context, "Can Burn == false", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Can Burn == false && Can earn == false", Toast
+                            .LENGTH_LONG).show()
                     presenter.set(LoyaltyViewModel("", "GBP", 0.0, canEarn = false, canBurn =
                     false))
                 }

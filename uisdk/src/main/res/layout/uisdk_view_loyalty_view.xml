@@ -18,7 +18,7 @@
             android:id="@+id/titleLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="start|center_vertical"
             android:layout_weight="2"
             android:gravity="center"
             android:orientation="vertical">
@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/kh_uisdk_margin_small"
             android:layout_weight="1"
             android:gravity="end"

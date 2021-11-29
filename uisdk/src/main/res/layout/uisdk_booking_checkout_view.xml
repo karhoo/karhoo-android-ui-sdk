@@ -39,6 +39,7 @@
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall" />
 
             <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
+                android:id="@+id/loyaltyView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_grid_first_column"
