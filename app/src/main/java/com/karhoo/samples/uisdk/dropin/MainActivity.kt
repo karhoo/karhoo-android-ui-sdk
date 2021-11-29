@@ -112,8 +112,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     BraintreeTokenExchangeConfig(
                             applicationContext
-                                                )
-                            )
+                    )
+            )
         }
     }
 
@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     BraintreeGuestConfig(
                             applicationContext
-                                        )
-                            )
+                    )
+            )
         }
     }
 
@@ -132,8 +132,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     AdyenTokenExchangeConfig(
                             applicationContext
-                                            )
-                            )
+                    )
+            )
         }
     }
 
@@ -142,8 +142,8 @@ class MainActivity : AppCompatActivity() {
             setConfiguration(
                     AdyenGuestConfig(
                             applicationContext
-                                    )
-                            )
+                    )
+            )
         }
     }
 
@@ -166,10 +166,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun toastErrorMessage(error: KarhooError) {
         Toast.makeText(
-                this,
-                error.userFriendlyMessage,
-                Toast.LENGTH_LONG
-                      ).show()
+            this,
+            error.userFriendlyMessage,
+            Toast.LENGTH_LONG
+        ).show()
         hideLoading()
     }
 
