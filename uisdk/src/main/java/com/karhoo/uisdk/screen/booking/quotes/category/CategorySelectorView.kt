@@ -59,7 +59,18 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     override fun setCategories(categories: List<Category>) {
-        if (vehicleCategoryTabLayout.tabCount <= 0 || vehicleCategoryTabLayout.tabCount != categories.size) {
+        var differentTab : Boolean = false
+        for (i in categories.indices){
+            val tab = vehicleCategoryTabLayout.getTabAt(i)
+            val tag = tab?.tag
+            if(categories[i] != tag){
+                differentTab = true
+                break
+            }
+        }
+
+        if (vehicleCategoryTabLayout.tabCount <= 0 || vehicleCategoryTabLayout.tabCount !=
+            categories.size || differentTab) {
             vehicleCategoryTabLayout.removeAllTabs()
             categories
                     .map {
