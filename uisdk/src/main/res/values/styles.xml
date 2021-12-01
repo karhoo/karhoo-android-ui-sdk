@@ -496,8 +496,8 @@
     </style>
 
     <style name="KhLoyaltySubtitleText">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/lightGrey</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:color">@color/kh_uisdk_secondary_text</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxsmall</item>
         <item name="fontWeight">600</item>
         <item name="lineHeight">20dp</item>

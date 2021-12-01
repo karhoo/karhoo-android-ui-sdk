@@ -49,11 +49,15 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
         if (userStore.paymentProvider == null) {
             paymentsService.getPaymentProvider().execute { result ->
                 when (result) {
-                    is Resource.Success -> view?.bindDropInView()
+                    is Resource.Success -> {
+                        view?.retrieveLoyaltyStatus()
+                        view?.bindDropInView()
+                    }
                     is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
             }
         } else {
+            view?.retrieveLoyaltyStatus()
             view?.bindDropInView()
         }
     }

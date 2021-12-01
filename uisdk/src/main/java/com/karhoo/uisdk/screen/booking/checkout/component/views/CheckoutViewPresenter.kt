@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
@@ -24,6 +25,7 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
 import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
@@ -306,6 +308,19 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
 
         return capabilitiesList
+    }
+
+    override fun createLoyaltyViewResponse() {
+        val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.loyaltyID
+        if (loyaltyId != null) {
+            view?.showLoyaltyView(show = true,
+                                  LoyaltyViewRequest(
+                                          loyaltyId = loyaltyId,
+                                          tripAmount = quote?.price?.highPrice?.toDouble() ?: 0.0,
+                                          currency = quote?.price?.currencyCode ?: ""))
+        } else {
+            view?.showLoyaltyView(show = false)
+        }
     }
 
     companion object {

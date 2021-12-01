@@ -28,8 +28,8 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewModel
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -81,6 +81,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingRequestTermsWidget.actions = this
+
         presenter = CheckoutViewPresenter(this,
                                           KarhooUISDK.analytics,
                                           KarhooPreferenceStore.getInstance(context),
@@ -92,10 +96,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestLinearLayout.setOnClickListener {
             it.hideSoftKeyboard()
         }
-
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
-        bookingRequestTermsWidget.actions = this
 
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
@@ -157,28 +157,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
-                                    comments: String?,
-                                    loyaltyInfo: LoyaltyInfo?) {
+                                    comments: String?) {
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         comments?.let {
             bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
         }
-        loyaltyInfo?.let {
-            if (!loyaltyInfo.loyaltyEnabled) {
-                loyaltyView.visibility = GONE
-            }
 
-            loyaltyView.set(LoyaltyViewModel(
-                    loyaltyId = "",
-                    tripAmount = quote.price.highPrice.toDouble(),
-                    currency = quote.price.currencyCode ?: "",
-                    canEarn = loyaltyInfo.loyaltyCanEarn,
-                    canBurn = loyaltyInfo.loyaltyCanBurn)
-                           )
-        } ?: run {
-            loyaltyView.visibility = GONE
-        }
         presenter.showBookingRequest(
                 quote = quote,
                 bookingStatus = bookingStatus,
@@ -186,6 +171,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails
                                     )
+
+        bookingRequestPaymentDetailsWidget.getPaymentProvider()
+
     }
 
     override fun bindEta(quote: Quote, card: String) {
@@ -416,6 +404,19 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         if (!show) {
             bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
         }
+    }
+
+    override fun retrieveLoyaltyStatus() {
+        presenter.createLoyaltyViewResponse()
+        loyaltyView.getLoyaltyStatus()
+    }
+
+    override fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest?) {
+        loyaltyView.visibility = if (show) VISIBLE else GONE
+        loyaltyViewRequest?.let {
+            loyaltyView.set(it)
+        }
+        loyaltyView.set(LoyaltyMode.NONE)
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()

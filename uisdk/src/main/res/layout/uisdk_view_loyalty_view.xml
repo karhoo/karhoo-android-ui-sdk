@@ -11,16 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/kh_uisdk_spacing_small">
+        android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
+        android:paddingTop="@dimen/kh_uisdk_padding_default"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"
+        android:paddingBottom="@dimen/kh_uisdk_padding_default">
 
 
         <LinearLayout
             android:id="@+id/titleLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_weight="2"
-            android:gravity="center"
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight="2.5"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
@@ -28,8 +31,6 @@
                 style="@style/KhLoyaltyTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:gravity="start"
                 android:text="@string/kh_uisdk_loyalty_title"
                 tools:text="@string/kh_uisdk_loyalty_title" />
 
@@ -38,7 +39,6 @@
                 style="@style/KhLoyaltySubtitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:text="@string/kh_uisdk_loyalty_points_earned_for_trip"
                 tools:text="@string/kh_uisdk_loyalty_points_earned_for_trip" />
 
@@ -46,7 +46,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/kh_uisdk_margin_small"
             android:layout_weight="1"
             android:gravity="end"

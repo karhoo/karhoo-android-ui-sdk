@@ -13,7 +13,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -80,6 +80,8 @@ interface CheckoutViewContract {
         fun isPassengerDetailsViewVisible(): Boolean
 
         fun consumeBackPressed(): Boolean
+
+        fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest? = null)
     }
 
     interface Presenter {
@@ -97,7 +99,7 @@ interface CheckoutViewContract {
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
                                        passengerDetails: PassengerDetails? = null,
                                        comments: String,
-                                        flightInfo: String)
+                                       flightInfo: String)
 
         fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)
@@ -121,6 +123,8 @@ interface CheckoutViewContract {
 
         fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean):
                 BookButtonState
+
+        fun createLoyaltyViewResponse()
     }
 
     interface PrebookViewActions {
@@ -129,9 +133,13 @@ interface CheckoutViewContract {
 
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
-        fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
-        HashMap<String, String>?, passengerDetails: PassengerDetails? = null, comments: String? =
-                null, loyaltyInfo: LoyaltyInfo?)
+        fun showBookingRequest(
+                quote: Quote,
+                bookingStatus: BookingStatus?,
+                outboundTripId: String? = null,
+                bookingMetadata: HashMap<String, String>?,
+                passengerDetails: PassengerDetails? = null,
+                comments: String? = null)
     }
 
     sealed class Event {

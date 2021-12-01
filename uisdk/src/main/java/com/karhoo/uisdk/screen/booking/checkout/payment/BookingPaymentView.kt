@@ -42,12 +42,15 @@ class BookingPaymentView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
-        presenter?.getPaymentProvider()
         if (!isInEditMode) {
             this.setOnClickListener {
                 changeCard()
             }
         }
+    }
+
+    override fun getPaymentProvider() {
+        presenter?.getPaymentProvider()
     }
 
     override fun setPassengerDetails(passengerDetails: PassengerDetails?) {
@@ -214,5 +217,9 @@ class BookingPaymentView @JvmOverloads constructor(
 
     override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
         dropInView?.handleThreeDSecure(context, sdkToken, nonce, amount)
+    }
+
+    override fun retrieveLoyaltyStatus() {
+        paymentActions?.retrieveLoyaltyStatus()
     }
 }
