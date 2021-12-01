@@ -45,8 +45,8 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting up a BURN mode, if the user can burn, then the view has the mode set`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false,
-                                          burnable = true)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
+                                          canBurn = true)
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         presenter.updateLoyaltyMode(LoyaltyMode.BURN)
         presenter.getLoyaltyStatus()
@@ -57,7 +57,7 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting up a BURN mode, if the user cannot burn, then the mode isn't set`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false, burnable = false)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = false)
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
@@ -68,7 +68,7 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting up a BURN mode, if the user cannot burn, then the mode is set to NONE`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false, burnable = false)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = false)
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.getLoyaltyStatus()
@@ -82,7 +82,8 @@ class LoyaltyViewPresenterTest {
     @Test
     fun `When setting up a EARN mode, if the user can earn, then the view has the mode set`() {
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
-        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, earnable = true, burnable = true))
+        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, canEarn = true,
+                                                                   canBurn = true))
         presenter.updateLoyaltyMode(LoyaltyMode.EARN)
 
         verify(view).set(LoyaltyMode.EARN)
@@ -90,7 +91,7 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting up a EARN mode, if the user cannot earn, then the view has the mode set`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false, burnable = true)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = true)
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
@@ -101,7 +102,7 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting up a EARN mode, if the user cannot earn, then the mode is set to NONE`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false, burnable = true)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = true)
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.getLoyaltyStatus()
@@ -115,7 +116,8 @@ class LoyaltyViewPresenterTest {
     @Test
     fun `When setting a mode which is already set, then the component does nothing`() {
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
-        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, earnable = false, burnable = true))
+        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
+                                                                   canBurn = true))
         presenter.updateLoyaltyMode(LoyaltyMode.BURN)
         presenter.updateLoyaltyMode(LoyaltyMode.BURN)
 
@@ -125,8 +127,8 @@ class LoyaltyViewPresenterTest {
 
     @Test
     fun `When setting a view model with canBurn, then the view hides the switch`() {
-        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, earnable = false,
-                                          burnable = false)
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
+                                          canBurn = false)
 
         presenter.set(LoyaltyViewRequest(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)

@@ -10,7 +10,7 @@ import com.karhoo.uisdk.R
 
 class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                        private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
-                                                                                        .Presenter {
+                                                                                                .Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
 
     private lateinit var view: LoyaltyContract.View
@@ -26,16 +26,16 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
             return
         }
 
-        currentMode = if (mode == LoyaltyMode.BURN && loyaltyStatus?.burnable == false) {
+        currentMode = if (mode == LoyaltyMode.BURN && loyaltyStatus?.canBurn == false) {
             return
-        } else if (mode == LoyaltyMode.EARN && loyaltyStatus?.earnable == false) {
+        } else if (mode == LoyaltyMode.EARN && loyaltyStatus?.canEarn == false) {
             LoyaltyMode.NONE
         } else {
             mode
         }
 
-        val canEarn = loyaltyStatus?.earnable ?: false
-        val canBurn = loyaltyStatus?.burnable ?: false
+        val canEarn = loyaltyStatus?.canEarn ?: false
+        val canBurn = loyaltyStatus?.canBurn ?: false
 
         view.updateLoyaltyFeatures(canEarn, canBurn)
         view.set(currentMode)
@@ -96,8 +96,8 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
     private fun set(loyaltyStatus: LoyaltyStatus) {
         this.loyaltyStatus = loyaltyStatus
 
-        val canEarn = loyaltyStatus.earnable ?: false
-        val canBurn = loyaltyStatus.burnable ?: false
+        val canEarn = loyaltyStatus.canEarn ?: false
+        val canBurn = loyaltyStatus.canBurn ?: false
 
         view.updateLoyaltyFeatures(canEarn, canBurn)
     }
