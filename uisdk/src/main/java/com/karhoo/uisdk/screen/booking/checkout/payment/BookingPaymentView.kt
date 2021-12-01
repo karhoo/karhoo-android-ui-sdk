@@ -10,7 +10,6 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
@@ -43,12 +42,15 @@ class BookingPaymentView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
-        presenter?.getPaymentProvider()
         if (!isInEditMode) {
             this.setOnClickListener {
                 changeCard()
             }
         }
+    }
+
+    override fun getPaymentProvider() {
+        presenter?.getPaymentProvider()
     }
 
     override fun setPassengerDetails(passengerDetails: PassengerDetails?) {
@@ -217,7 +219,7 @@ class BookingPaymentView @JvmOverloads constructor(
         dropInView?.handleThreeDSecure(context, sdkToken, nonce, amount)
     }
 
-    override fun onLoyaltyStatusRetrieved(loyaltyStatus: LoyaltyStatus?) {
-        paymentActions?.onLoyaltyStatusRetrieved(loyaltyStatus)
+    override fun retrieveLoyaltyStatus() {
+        paymentActions?.retrieveLoyaltyStatus()
     }
 }

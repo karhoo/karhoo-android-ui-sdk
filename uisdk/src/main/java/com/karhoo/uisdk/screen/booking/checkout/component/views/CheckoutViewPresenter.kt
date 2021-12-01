@@ -8,7 +8,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
@@ -311,15 +310,14 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         return capabilitiesList
     }
 
-    override fun createLoyaltyViewModel(loyaltyStatus: LoyaltyStatus?) {
+    override fun createLoyaltyViewResponse() {
         val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.loyaltyID
         if (loyaltyId != null) {
             view?.showLoyaltyView(show = true,
                                   LoyaltyViewRequest(
                                           loyaltyId = loyaltyId,
                                           tripAmount = quote?.price?.highPrice?.toDouble() ?: 0.0,
-                                          currency = quote?.price?.currencyCode ?: ""),
-                                  loyaltyStatus)
+                                          currency = quote?.price?.currencyCode ?: ""))
         } else {
             view?.showLoyaltyView(show = false)
         }

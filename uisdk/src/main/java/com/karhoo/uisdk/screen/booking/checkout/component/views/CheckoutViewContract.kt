@@ -5,7 +5,6 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
@@ -82,8 +81,7 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
-        fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest? = null,
-                            loyaltyStatus: LoyaltyStatus? = null)
+        fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest? = null)
     }
 
     interface Presenter {
@@ -126,7 +124,7 @@ interface CheckoutViewContract {
         fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean):
                 BookButtonState
 
-        fun createLoyaltyViewModel(loyaltyStatus: LoyaltyStatus?)
+        fun createLoyaltyViewResponse()
     }
 
     interface PrebookViewActions {

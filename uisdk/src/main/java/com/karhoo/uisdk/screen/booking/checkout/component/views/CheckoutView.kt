@@ -11,7 +11,6 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
@@ -172,6 +171,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails
                                     )
+
+        bookingRequestPaymentDetailsWidget.getPaymentProvider()
+
     }
 
     override fun bindEta(quote: Quote, card: String) {
@@ -404,16 +406,14 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun onLoyaltyStatusRetrieved(loyaltyStatus: LoyaltyStatus?) {
-        presenter.createLoyaltyViewModel(loyaltyStatus)
+    override fun retrieveLoyaltyStatus() {
+        presenter.createLoyaltyViewResponse()
+        loyaltyView.getLoyaltyStatus()
     }
 
-    override fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest?, loyaltyStatus: LoyaltyStatus?) {
+    override fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewRequest?.let {
-            loyaltyView.set(it)
-        }
-        loyaltyStatus?.let {
             loyaltyView.set(it)
         }
         loyaltyView.set(LoyaltyMode.NONE)

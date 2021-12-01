@@ -4,9 +4,13 @@ import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.LoyaltyStatus
+import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.uisdk.R
 
-class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore) : LoyaltyContract.Presenter {
+class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
+                       private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
+                                                                                        .Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
 
     private lateinit var view: LoyaltyContract.View
@@ -35,15 +39,6 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore) : Loyalty
 
         view.updateLoyaltyFeatures(canEarn, canBurn)
         view.set(currentMode)
-    }
-
-    override fun set(loyaltyStatus: LoyaltyStatus) {
-        this.loyaltyStatus = loyaltyStatus
-
-        val canEarn = loyaltyStatus.earnable ?: false
-        val canBurn = loyaltyStatus.burnable ?: false
-
-        view.updateLoyaltyFeatures(canEarn, canBurn)
     }
 
     override fun set(loyaltyRequest: LoyaltyViewRequest) {
@@ -82,4 +77,28 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore) : Loyalty
         return currentMode
     }
 
+    override fun getLoyaltyStatus() {
+        val loyaltyId = userStore.paymentProvider?.loyalty?.loyaltyID
+        loyaltyId?.let {
+            loyaltyService.getLoyaltyStatus(loyaltyId).execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        userStore.loyaltyStatus = result.data
+                        set(result.data)
+                    }
+                    is Resource.Failure ->
+                        view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                }
+            }
+        }
+    }
+
+    private fun set(loyaltyStatus: LoyaltyStatus) {
+        this.loyaltyStatus = loyaltyStatus
+
+        val canEarn = loyaltyStatus.earnable ?: false
+        val canBurn = loyaltyStatus.burnable ?: false
+
+        view.updateLoyaltyFeatures(canEarn, canBurn)
+    }
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyInfoLayout
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltySwitch
@@ -54,10 +53,6 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
         loyaltyInfoLayout.visibility = GONE
     }
 
-    override fun set(loyaltyStatus: LoyaltyStatus) {
-        presenter.set(loyaltyStatus)
-    }
-
     override fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean) {
         if (!showEarnRelatedUI && presenter.getCurrentMode() != LoyaltyMode.BURN) {
             loyaltyViewSubtitle.visibility = GONE
@@ -80,5 +75,9 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
 
     override fun set(loyaltyRequest: LoyaltyViewRequest) {
         presenter.set(loyaltyRequest)
+    }
+
+    override fun getLoyaltyStatus() {
+        presenter.getLoyaltyStatus()
     }
 }

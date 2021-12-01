@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
@@ -34,7 +33,9 @@ interface BookingPaymentContract {
 
         fun hasValidPaymentType(): Boolean
 
-        fun onLoyaltyStatusRetrieved(loyaltyStatus: LoyaltyStatus?)
+        fun retrieveLoyaltyStatus()
+
+        fun getPaymentProvider()
     }
 
     interface Presenter {
@@ -68,6 +69,6 @@ interface BookingPaymentContract {
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
 
-        fun onLoyaltyStatusRetrieved(loyaltyStatus: LoyaltyStatus?)
+        fun retrieveLoyaltyStatus()
     }
 }

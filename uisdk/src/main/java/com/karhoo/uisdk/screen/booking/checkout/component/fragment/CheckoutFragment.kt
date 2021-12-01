@@ -38,8 +38,6 @@ internal class CheckoutFragment : Fragment() {
         checkoutActionButton.onLoadingComplete()
 
         checkoutView = view.findViewById(R.id.bookingCheckoutView)
-
-        val bundle = arguments as Bundle
         checkoutView.setListeners(object : CheckoutFragmentContract.LoadingButtonListener {
             override fun onLoadingComplete() {
                 checkoutActionButton.onLoadingComplete()
@@ -96,6 +94,7 @@ internal class CheckoutFragment : Fragment() {
             }
         })
 
+        val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
                 bookingStatus = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
