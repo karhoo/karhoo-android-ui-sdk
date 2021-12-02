@@ -24,7 +24,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/firstNameLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/KhTextInputLayoutStyle"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/kh_uisdk_spacing_grid_first_column"
@@ -43,7 +43,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lastNameLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/KhTextInputLayoutStyle"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:hint="@string/kh_uisdk_last_name_hint"
@@ -62,7 +62,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/KhTextInputLayoutStyle"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
             android:hint="@string/kh_uisdk_email_hint"
@@ -117,7 +117,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mobileNumberLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/KhTextInputLayoutStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
