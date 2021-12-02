@@ -41,6 +41,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_list.view.quotesSortWidg
 import android.util.DisplayMetrics
 import android.view.WindowInsets
 import android.os.Build
+import java.util.Locale
 
 class QuotesListView @JvmOverloads constructor(
         context: Context,
@@ -269,10 +270,11 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun initAvailability(lifecycleOwner: LifecycleOwner) {
         availabilityProvider?.cleanup()
+        val locale: Locale? = resources.configuration.locale
         bookingStatusStateViewModel?.let {
             availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
                     KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
-                    it, lifecycleOwner).apply {
+                    it, lifecycleOwner, locale).apply {
                 setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)

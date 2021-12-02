@@ -26,12 +26,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 private const val MAX_ACCEPTABLE_QTA = 20
 
 class KarhooAvailability(private val quotesService: QuotesService, private val analytics: Analytics?,
                          private val categoriesViewModel: CategoriesViewModel, private val liveFleetsViewModel: LiveFleetsViewModel,
-                         private val bookingStatusStateViewModel: BookingStatusStateViewModel, lifecycleOwner: LifecycleOwner)
+                         private val bookingStatusStateViewModel: BookingStatusStateViewModel,
+                         lifecycleOwner: LifecycleOwner, private val locale: Locale? = null)
     : AvailabilityProvider {
 
     private var filteredList: MutableList<Quote>? = liveFleetsViewModel.liveFleets.value?.toMutableList()
@@ -76,7 +78,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                             .quotes(QuotesSearch(
                                     origin = bookingStatusPickup,
                                     destination = bookingStatusDestination,
-                                    dateScheduled = bookingStatus.date?.toDate()))
+                                    dateScheduled = bookingStatus.date?.toDate()),
+                                    locale.toString().replace('_', '-'))
                             .observable().apply { subscribe(observer) }
                 }
             }
