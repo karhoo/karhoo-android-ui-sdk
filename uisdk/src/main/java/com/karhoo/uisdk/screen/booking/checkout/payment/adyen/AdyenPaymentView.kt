@@ -19,8 +19,8 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : Pay
         presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
-    override fun initialiseChangeCard(quote: Quote?) {
-        presenter?.sdkInit(quote)
+    override fun initialiseChangeCard(quote: Quote?, context: Context) {
+        presenter?.sdkInit(quote, context)
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {

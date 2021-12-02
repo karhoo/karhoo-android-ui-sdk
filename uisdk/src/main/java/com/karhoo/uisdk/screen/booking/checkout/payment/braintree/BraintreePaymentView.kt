@@ -48,8 +48,8 @@ class BraintreePaymentView constructor(actions: PaymentDropInContract.Actions) :
         }
     }
 
-    override fun initialiseChangeCard(quote: Quote?) {
-        presenter?.sdkInit(quote)
+    override fun initialiseChangeCard(quote: Quote?, context: Context) {
+        presenter?.sdkInit(quote, null)
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {

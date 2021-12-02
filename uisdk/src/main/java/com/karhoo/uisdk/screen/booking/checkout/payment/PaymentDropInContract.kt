@@ -14,7 +14,7 @@ interface PaymentDropInContract {
 
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
-        fun initialiseChangeCard(quote: Quote?)
+        fun initialiseChangeCard(quote: Quote?, context: Context)
 
         fun initialiseGuestPayment(quote: Quote?)
 
@@ -37,7 +37,7 @@ interface PaymentDropInContract {
 
         fun setPassenger(passengerDetails: PassengerDetails?)
 
-        fun sdkInit(quote: Quote?)
+        fun sdkInit(quote: Quote?, context: Context? = null)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
     }

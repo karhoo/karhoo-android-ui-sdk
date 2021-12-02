@@ -42,6 +42,7 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
     var quote: Quote? = null
     private var tripId: String = ""
     private var passengerDetails: PassengerDetails? = null
+    private var _context: Context? = null
 
     init {
         attachView(view)
@@ -111,14 +112,14 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    override fun sdkInit(quote: Quote?) {
+    override fun sdkInit(quote: Quote?, context: Context?) {
         this.quote = quote
         paymentsService.getAdyenPublicKey().execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
                         adyenKey = it.publicKey
-                        getPaymentMethods()
+                        getPaymentMethods(context!!)
                     }
                 }
                 is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
@@ -140,14 +141,15 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                 .build()
     }
 
-    private fun getPaymentMethods() {
+    private fun getPaymentMethods(context: Context) {
         val amount = AdyenAmount(quote?.price?.currencyCode ?: DEFAULT_CURRENCY
                                  , quote?.price?.highPrice.orZero())
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
         } else {
             let {
-                val request = AdyenPaymentMethodsRequest(amount = amount)
+                val locale = context.resources?.configuration?.locale.toString().replace("_", "-")
+                val request = AdyenPaymentMethodsRequest(amount = amount, shopperLocale = locale)
                 paymentsService.getAdyenPaymentMethods(request).execute { result ->
                     when (result) {
                         is Resource.Success -> {
