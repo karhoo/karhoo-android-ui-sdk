@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
 import android.content.Context
+import android.content.res.Resources
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -33,8 +34,6 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     }
 
     override fun set(mode: LoyaltyMode) {
-        loyaltyViewSubtitle.text = presenter.getSubtitleBasedOnMode(resources)
-        loyaltyViewSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
         loyaltyViewLayout.background =
                 ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_background)
 
@@ -79,5 +78,14 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
 
     override fun getLoyaltyStatus() {
         presenter.getLoyaltyStatus()
+    }
+
+    override fun setSubtitle(subtitle: String) {
+        loyaltyViewSubtitle.text = subtitle
+        loyaltyViewSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+    }
+
+    override fun provideResources(): Resources {
+        return resources
     }
 }
