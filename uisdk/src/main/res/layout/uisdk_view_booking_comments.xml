@@ -10,7 +10,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/bookingCommentsLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/KhTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/kh_uisdk_additional_comments"
