@@ -42,6 +42,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
         } else {
             loyaltyInfoLayout.visibility = GONE
         }
+
+        presenter.getSubtitleBasedOnMode(resources)
     }
 
     override fun showError(message: String) {
