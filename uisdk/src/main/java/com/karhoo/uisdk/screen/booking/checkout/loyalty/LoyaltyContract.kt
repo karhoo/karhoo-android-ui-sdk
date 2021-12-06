@@ -7,6 +7,8 @@ interface LoyaltyContract {
         fun getCurrentMode(): LoyaltyMode
         fun set(mode: LoyaltyMode)
         fun set(loyaltyRequest: LoyaltyViewRequest)
+        fun setSubtitle(subtitle: String)
+        fun provideResources(): Resources
         fun showError(message: String)
         fun getLoyaltyStatus()
         fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean)
@@ -20,6 +22,6 @@ interface LoyaltyContract {
         fun updateLoyaltyMode(mode: LoyaltyMode)
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus()
-        fun getSubtitleBasedOnMode(resources: Resources): String
+        fun getSubtitleBasedOnMode(resources: Resources)
     }
 }
