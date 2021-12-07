@@ -40,9 +40,9 @@ android {
         buildConfigField("String", "STAGING_AUTH_HOST", (secureProps.getProperty("STAGING_AUTH_HOST") ?: '""'))
         buildConfigField("String", "STAGING_GUEST_HOST", (secureProps.getProperty("STAGING_GUEST_HOST") ?: '""'))
 
-        buildConfigField("String", "ACCOR_CLIENT_ID", (secureProps.getProperty("ACCOR_CLIENT_ID") ?: '""'))
-        buildConfigField("String", "ACCOR_CLIENT_SCOPE", (secureProps.getProperty("ACCOR_CLIENT_SCOPE") ?: '""'))
-        buildConfigField("String", "ACCOR_AUTH_TOKEN", (secureProps.getProperty("ACCOR_AUTH_TOKEN") ?: '""'))
+        buildConfigField("String", "LOYALTY_CLIENT_ID", (secureProps.getProperty("LOYALTY_CLIENT_ID") ?: '""'))
+        buildConfigField("String", "LOYALTY_CLIENT_SCOPE", (secureProps.getProperty("LOYALTY_CLIENT_SCOPE") ?: '""'))
+        buildConfigField("String", "LOYALTY_AUTH_TOKEN", (secureProps.getProperty("LOYALTY_AUTH_TOKEN") ?: '""'))
 
     }
 

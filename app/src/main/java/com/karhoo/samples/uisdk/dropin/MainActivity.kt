@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
-import com.karhoo.samples.uisdk.dropin.config.AccorTokenConfig
+import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenConfig
 import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenGuestConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
@@ -74,12 +74,12 @@ class MainActivity : AppCompatActivity() {
             loginTokenExchange(BuildConfig.ADYEN_AUTH_TOKEN)
         }
 
-        findViewById<Button>(R.id.bookTripButtonAccorTokenExchange).setOnClickListener {
+        findViewById<Button>(R.id.bookTripButtonLoyaltyTokenExchange).setOnClickListener {
             showLoading()
 
-            applyAccorTokenExchangeConfig()
+            applyLoyaltyTokenExchangeConfig()
 
-            loginTokenExchange(BuildConfig.ACCOR_AUTH_TOKEN)
+            loginTokenExchange(BuildConfig.LOYALTY_AUTH_TOKEN)
         }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
@@ -146,9 +146,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun applyAccorTokenExchangeConfig() {
+    private fun applyLoyaltyTokenExchangeConfig() {
         KarhooUISDK.apply {
-            setConfiguration(AccorTokenConfig(applicationContext))
+            setConfiguration(LoyaltyTokenConfig(applicationContext))
         }
     }
 

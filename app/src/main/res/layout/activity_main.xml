@@ -62,10 +62,10 @@
         app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenGuest" />
 
     <Button
-        android:id="@+id/bookTripButtonAccorTokenExchange"
+        android:id="@+id/bookTripButtonLoyaltyTokenExchange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/book_a_trip_accor_token_exchange"
+        android:text="@string/book_a_trip_loyalty_token_exchange"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange" />
@@ -78,6 +78,6 @@
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange" />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLoyaltyTokenExchange" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

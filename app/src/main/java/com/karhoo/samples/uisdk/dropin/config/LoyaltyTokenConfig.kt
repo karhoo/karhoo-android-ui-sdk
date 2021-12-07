@@ -10,7 +10,7 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
 
-public class AccorTokenConfig(private val context: Context) : KarhooUISDKConfiguration {
+class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguration {
 
     override fun context(): Context {
         return context
@@ -25,8 +25,8 @@ public class AccorTokenConfig(private val context: Context) : KarhooUISDKConfigu
     }
 
     override fun authenticationMethod(): AuthenticationMethod {
-        return AuthenticationMethod.TokenExchange(clientId = BuildConfig.ACCOR_CLIENT_ID,
-                                                  scope = BuildConfig.ACCOR_CLIENT_SCOPE)
+        return AuthenticationMethod.TokenExchange(clientId = BuildConfig.LOYALTY_CLIENT_ID,
+                                                  scope = BuildConfig.LOYALTY_CLIENT_SCOPE)
     }
 
     override fun logo(): Drawable? {
