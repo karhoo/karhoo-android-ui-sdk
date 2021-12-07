@@ -20,51 +20,55 @@
         android:id="@+id/bookTripButtonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/welcome_message"
+        android:text="@string/book_a_trip_login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_login"
-        />
+        app:layout_constraintTop_toBottomOf="@id/welcome_message" />
 
     <Button
         android:id="@+id/bookTripButtonBraintreeGuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLogin"
+        android:text="@string/book_a_trip_braintree_guest"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_braintree_guest"
-        />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLogin" />
 
     <Button
         android:id="@+id/bookTripButtonBraintreeTokenExchange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeGuest"
+        android:text="@string/book_a_trip_braintree_token_exchange"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_braintree_token_exchange"
-        />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeGuest" />
 
     <Button
         android:id="@+id/bookTripButtonAdyenGuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeTokenExchange"
+        android:text="@string/book_a_trip_adyen_guest"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_adyen_guest"
-        />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeTokenExchange" />
 
     <Button
         android:id="@+id/bookTripButtonAdyenTokenExchange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenGuest"
+        android:text="@string/book_a_trip_adyen_token_exchange"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="@string/book_a_trip_adyen_token_exchange"
-        />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenGuest" />
+
+    <Button
+        android:id="@+id/bookTripButtonAccorTokenExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/book_a_trip_accor_token_exchange"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange" />
 
     <ProgressBar
         android:id="@+id/loadingSpinner"
@@ -72,8 +76,8 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
