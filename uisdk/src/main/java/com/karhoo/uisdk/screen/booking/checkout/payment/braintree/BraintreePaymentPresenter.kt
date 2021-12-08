@@ -166,7 +166,7 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         return currency.intToPriceNoSymbol(quote?.price?.highPrice.orZero())
     }
 
-    override fun sdkInit(quote: Quote?, context: Context?) {
+    override fun sdkInit(quote: Quote?, locale: Locale?) {
         val currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         val sdkInitRequest = getSDKInitRequest(currency)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->

@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import java.util.Locale
 
 interface PaymentDropInContract {
 
@@ -14,7 +15,7 @@ interface PaymentDropInContract {
 
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
-        fun initialiseChangeCard(quote: Quote?, context: Context)
+        fun initialiseChangeCard(quote: Quote?, locale: Locale?)
 
         fun initialiseGuestPayment(quote: Quote?)
 
@@ -37,7 +38,7 @@ interface PaymentDropInContract {
 
         fun setPassenger(passengerDetails: PassengerDetails?)
 
-        fun sdkInit(quote: Quote?, context: Context? = null)
+        fun sdkInit(quote: Quote?, locale: Locale? = null)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
     }

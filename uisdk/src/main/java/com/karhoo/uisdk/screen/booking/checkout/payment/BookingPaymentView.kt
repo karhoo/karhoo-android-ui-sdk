@@ -208,7 +208,7 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
-        dropInView?.initialiseChangeCard(quote, context)
+        dropInView?.initialiseChangeCard(quote, context?.resources?.configuration?.locale)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {

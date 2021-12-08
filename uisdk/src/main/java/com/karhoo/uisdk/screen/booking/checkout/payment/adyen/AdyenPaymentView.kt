@@ -9,6 +9,7 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
+import java.util.Locale
 
 class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
 
@@ -19,8 +20,8 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : Pay
         presenter?.handleActivityResult(requestCode, resultCode, data)
     }
 
-    override fun initialiseChangeCard(quote: Quote?, context: Context) {
-        presenter?.sdkInit(quote, context)
+    override fun initialiseChangeCard(quote: Quote?, locale: Locale?) {
+        presenter?.sdkInit(quote, locale)
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {
