@@ -28,6 +28,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInService
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
+import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
@@ -148,7 +149,7 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
             view?.threeDSecureNonce(tripId, tripId)
         } else {
             let {
-                val localizedString: String? = locale?.toString()?.replace("_", "-")//TODO add normalizeLocale
+                val localizedString: String? = locale?.toNormalizedLocale()
                 val request = AdyenPaymentMethodsRequest(amount = amount, shopperLocale = localizedString)
                 paymentsService.getAdyenPaymentMethods(request).execute { result ->
                     when (result) {
