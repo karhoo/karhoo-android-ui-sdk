@@ -43,7 +43,7 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
             loyaltyInfoLayout.visibility = GONE
         }
 
-        presenter.getSubtitleBasedOnMode(resources)
+        presenter.getSubtitleBasedOnMode()
     }
 
     override fun showError(message: String) {
@@ -74,8 +74,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun set(loyaltyRequest: LoyaltyViewRequest) {
-        presenter.set(loyaltyRequest)
+    override fun set(loyaltyDataModel: LoyaltyViewDataModel) {
+        presenter.set(loyaltyDataModel)
     }
 
     override fun getLoyaltyStatus() {

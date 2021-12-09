@@ -6,7 +6,7 @@ interface LoyaltyContract {
     interface View {
         fun getCurrentMode(): LoyaltyMode
         fun set(mode: LoyaltyMode)
-        fun set(loyaltyRequest: LoyaltyViewRequest)
+        fun set(loyaltyDataModel: LoyaltyViewDataModel)
         fun setSubtitle(subtitle: String)
         fun provideResources(): Resources
         fun showError(message: String)
@@ -16,12 +16,12 @@ interface LoyaltyContract {
 
     interface Presenter {
         fun attachView(view: View)
-        fun set(loyaltyRequest: LoyaltyViewRequest)
+        fun set(loyaltyDataModel: LoyaltyViewDataModel)
         fun updateEarnedPoints()
         fun updateBurnedPoints()
         fun updateLoyaltyMode(mode: LoyaltyMode)
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus()
-        fun getSubtitleBasedOnMode(resources: Resources)
+        fun getSubtitleBasedOnMode()
     }
 }

@@ -29,7 +29,7 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewRequest
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -411,9 +411,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loyaltyView.getLoyaltyStatus()
     }
 
-    override fun showLoyaltyView(show: Boolean, loyaltyViewRequest: LoyaltyViewRequest?) {
+    override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
-        loyaltyViewRequest?.let {
+        loyaltyViewDataModel?.let {
             loyaltyView.set(it)
         }
         loyaltyView.set(LoyaltyMode.NONE)
