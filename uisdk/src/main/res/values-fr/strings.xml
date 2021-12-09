@@ -30,6 +30,8 @@
     <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Mode de paiement</string>
+    <string name="pay_button">Pré-autoriser</string>
+    <string name="pay_button_with_value">Pré-autoriser %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifier</string>
