@@ -66,11 +66,11 @@ class KarhooAvailabilityTest {
         availability = KarhooAvailability(
                 quotesService = quotesService,
                 bookingStatusStateViewModel = bookingStatusStateViewModel,
-                analytics = analytics,
                 liveFleetsViewModel = liveFleetsViewModel,
                 lifecycleOwner = lifecycleOwner,
                 categoriesViewModel = categoriesViewModel
         )
+        (availability as KarhooAvailability).setAnalytics(analytics)
 
         availabilityHandler = object : AvailabilityHandler {
             override var hasAvailability: Boolean = false
