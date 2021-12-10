@@ -16,6 +16,8 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
     private lateinit var view: LoyaltyContract.View
     private var loyaltyRequest: LoyaltyViewRequest? = null
     private var loyaltyStatus: LoyaltyStatus? = userStore.loyaltyStatus
+    private var burnedPoints: Int? = null
+    private var earnedPoints: Int? = null
 
     override fun attachView(view: LoyaltyContract.View) {
         this.view = view
@@ -46,31 +48,69 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
     }
 
     override fun updateEarnedPoints() {
-        //nothing
+        val loyaltyId = userStore.paymentProvider?.loyalty?.id
+        val currency = loyaltyRequest?.currency
+        val tripAmount = loyaltyRequest?.tripAmount?.toInt()
+
+        if (loyaltyId != null && currency != null && tripAmount != null) {
+            loyaltyService.getLoyaltyEarn(loyaltyId, currency, tripAmount, 0)
+                    .execute { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                earnedPoints = result.data.points
+
+                                getSubtitleBasedOnMode(view.provideResources())
+                            }
+                            is Resource.Failure -> {
+                                view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                            }
+                        }
+                    }
+        }
     }
 
     override fun updateBurnedPoints() {
-        //nothing
+        val loyaltyId = userStore.paymentProvider?.loyalty?.id
+        val currency = loyaltyRequest?.currency
+        val tripAmount = loyaltyRequest?.tripAmount?.toInt()
+
+        if (loyaltyId != null && currency != null && tripAmount != null) {
+            loyaltyService.getLoyaltyBurn(loyaltyId, currency, tripAmount)
+                    .execute { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                burnedPoints = result.data.points
+
+                                getSubtitleBasedOnMode(view.provideResources())
+                            }
+                            is Resource.Failure -> {
+                                view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                            }
+                        }
+                    }
+        }
     }
 
-    override fun getSubtitleBasedOnMode(resources: Resources): String {
-        return when (currentMode) {
+    override fun getSubtitleBasedOnMode(resources: Resources) {
+        val subtitle = when (currentMode) {
             LoyaltyMode.BURN -> {
                 String.format(
                         resources.getString(R.string.kh_uisdk_loyalty_points_burned_for_trip),
-                        loyaltyRequest?.tripAmount?.toInt())
+                        burnedPoints)
             }
             LoyaltyMode.EARN -> {
                 String.format(
                         resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
-                        loyaltyRequest?.tripAmount?.toInt())
+                        earnedPoints)
             }
             else -> {
                 String.format(
                         resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
-                        loyaltyRequest?.tripAmount?.toInt())
+                        earnedPoints)
             }
         }
+
+        view.setSubtitle(subtitle)
     }
 
     override fun getCurrentMode(): LoyaltyMode {
@@ -78,13 +118,16 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
     }
 
     override fun getLoyaltyStatus() {
-        val loyaltyId = userStore.paymentProvider?.loyalty?.loyaltyID
+        val loyaltyId = userStore.paymentProvider?.loyalty?.id
         loyaltyId?.let {
             loyaltyService.getLoyaltyStatus(loyaltyId).execute { result ->
                 when (result) {
                     is Resource.Success -> {
                         userStore.loyaltyStatus = result.data
                         set(result.data)
+
+                        updateEarnedPoints()
+                        updateBurnedPoints()
                     }
                     is Resource.Failure ->
                         view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)

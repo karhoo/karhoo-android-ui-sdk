@@ -23,7 +23,7 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
 
     override fun createPaymentView(actions: PaymentDropInContract.Actions) {
         val paymentView = userStore.paymentProvider?.let {
-            when (enumValueOf<ProviderType>(it.id.uppercase(Locale.US))) {
+            when (enumValueOf<ProviderType>(it.provider.id.uppercase(Locale.US))) {
                 ProviderType.ADYEN -> {
                     val view = AdyenPaymentView(actions)
                     view.actions = actions
@@ -40,8 +40,11 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
     }
 
     override fun getPaymentViewVisibility() {
-        val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true))
-            GONE else VISIBLE
+        val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.provider?.id,
+                                                            ignoreCase = true))
+            GONE
+        else
+            VISIBLE
         view?.setViewVisibility(visibility)
     }
 

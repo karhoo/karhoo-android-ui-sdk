@@ -190,6 +190,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), false)
 
         validateAll()
+        if(!areFieldsValid())
+            validationCallback?.onFieldsValidated(!areFieldsValid())
     }
 
     override fun bindEditMode(isEditing: Boolean) {

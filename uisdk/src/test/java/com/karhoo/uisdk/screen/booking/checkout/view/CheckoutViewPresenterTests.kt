@@ -607,7 +607,7 @@ class CheckoutViewPresenterTests {
     @Test
     fun `Braintree booking request has null meta`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
-        whenever(userStore.paymentProvider).thenReturn(Provider(BRAINTREE))
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(Provider(BRAINTREE)))
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
@@ -666,7 +666,7 @@ class CheckoutViewPresenterTests {
     @Test
     fun `Clear data removes the saved payment info for a TOKEN Exchange authenticated user`() {
         setTokenUser()
-        whenever(userStore.paymentProvider).thenReturn( Provider(id = ADYEN))
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(Provider(id = ADYEN)))
         checkoutPresenter.clearData()
 
         verify(userStore, atLeastOnce()).clearSavedPaymentInfo()
@@ -706,7 +706,7 @@ class CheckoutViewPresenterTests {
     @Test
     fun `Clear data removes the saved payment info for a TOKEN Exchange authenticated user in case of an unrecoverable err`() {
         setTokenUser()
-        whenever(userStore.paymentProvider).thenReturn( Provider(id = ADYEN))
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(Provider(id = ADYEN), null))
         checkoutPresenter.handleError(0, KarhooError.InternalSDKError)
 
         verify(userStore, atLeastOnce()).clearSavedPaymentInfo()
@@ -748,7 +748,7 @@ class CheckoutViewPresenterTests {
     @Test
     fun `clear data does not remove saved payment info for Braintree users`() {
         setAuthenticatedUser()
-        userStore.paymentProvider = Provider(id = BRAINTREE)
+        userStore.paymentProvider = PaymentProvider(Provider(id = BRAINTREE))
 
         checkoutPresenter.clearData()
 
@@ -763,7 +763,7 @@ class CheckoutViewPresenterTests {
     @Test
     fun `clear data removes saved payment info for Adyen users`() {
         setAuthenticatedUser()
-        userStore.paymentProvider = Provider(id = ADYEN)
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
 
         checkoutPresenter.clearData()
 

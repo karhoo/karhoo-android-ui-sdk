@@ -141,7 +141,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
             userStore.removeCurrentUser()
         }
         if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
-                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) ||
+                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.provider?.id,
+                                                       ignoreCase = true)) ||
                 KarhooUISDKConfigurationProvider.isGuest()) {
             userStore.clearSavedPaymentInfo()
         }
@@ -227,7 +228,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     private fun refreshPaymentDetails() {
         if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
-                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true)) ||
+                        ProviderType.ADYEN.name.equals(userStore.paymentProvider?.provider?.id, ignoreCase = true)) ||
                 KarhooUISDKConfigurationProvider.isGuest()) {
             view?.showUpdatedPaymentDetails(null)
         } else {
@@ -311,7 +312,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun createLoyaltyViewResponse() {
-        val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.loyaltyID
+        val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.id
         if (loyaltyId != null) {
             view?.showLoyaltyView(show = true,
                                   LoyaltyViewRequest(
