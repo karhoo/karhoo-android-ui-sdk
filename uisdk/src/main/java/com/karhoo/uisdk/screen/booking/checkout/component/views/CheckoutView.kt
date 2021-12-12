@@ -426,7 +426,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 }
             })
         }
-//        loyaltyView.set(LoyaltyMode.NONE)
+        loyaltyView.set(LoyaltyMode.NONE)
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
