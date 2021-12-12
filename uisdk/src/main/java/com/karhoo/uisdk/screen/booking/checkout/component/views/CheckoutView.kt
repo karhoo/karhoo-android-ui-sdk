@@ -28,6 +28,7 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
@@ -415,8 +416,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewDataModel?.let {
             loyaltyView.set(it)
+            loyaltyView.setLoyaltyModeCallback(object : LoyaltyContract.LoyaltyModeCallback {
+                override fun onModeChanged(mode: LoyaltyMode) {
+                    if(mode == LoyaltyMode.ERROR) {
+                        loadingButtonCallback.enableButton(false)
+                    } else {
+                        loadingButtonCallback.enableButton(true)
+                    }
+                }
+            })
         }
-        loyaltyView.set(LoyaltyMode.NONE)
+//        loyaltyView.set(LoyaltyMode.NONE)
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()

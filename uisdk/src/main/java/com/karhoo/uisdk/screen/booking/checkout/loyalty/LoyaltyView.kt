@@ -90,4 +90,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     override fun provideResources(): Resources {
         return resources
     }
+
+    override fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyContract.LoyaltyModeCallback) {
+        presenter.setLoyaltyModeCallback(loyaltyModeCallback)
+    }
 }

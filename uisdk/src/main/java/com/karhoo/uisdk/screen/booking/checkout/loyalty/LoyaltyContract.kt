@@ -12,6 +12,7 @@ interface LoyaltyContract {
         fun showError(message: String)
         fun getLoyaltyStatus()
         fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean)
+        fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
     }
 
     interface Presenter {
@@ -23,5 +24,10 @@ interface LoyaltyContract {
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus()
         fun getSubtitleBasedOnMode()
+        fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
+    }
+
+    interface LoyaltyModeCallback {
+        fun onModeChanged(mode: LoyaltyMode)
     }
 }
