@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
-import android.content.res.Resources
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.LoyaltyStatus
@@ -12,12 +11,17 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                        private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
                                                                                                 .Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
+    set(value) {
+        field = value
+        loyaltyModeCallback?.onModeChanged(currentMode)
+    }
 
     private lateinit var view: LoyaltyContract.View
-    private var loyaltyRequest: LoyaltyViewRequest? = null
+    private var loyaltyDataModel: LoyaltyViewDataModel? = null
     private var loyaltyStatus: LoyaltyStatus? = userStore.loyaltyStatus
     private var burnedPoints: Int? = null
     private var earnedPoints: Int? = null
+    private var loyaltyModeCallback: LoyaltyContract.LoyaltyModeCallback? = null
 
     override fun attachView(view: LoyaltyContract.View) {
         this.view = view
@@ -39,18 +43,27 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
         val canEarn = loyaltyStatus?.canEarn ?: false
         val canBurn = loyaltyStatus?.canBurn ?: false
 
+        val hasInsufficientPoints: Boolean = loyaltyStatus?.points?.compareTo(burnedPoints ?: 0)
+                ?: 0 < 0
+
+        if (canBurn && hasInsufficientPoints && currentMode == LoyaltyMode.BURN) {
+            view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn))
+            currentMode = LoyaltyMode.ERROR
+            return
+        }
+
         view.updateLoyaltyFeatures(canEarn, canBurn)
         view.set(currentMode)
     }
 
-    override fun set(loyaltyRequest: LoyaltyViewRequest) {
-        this.loyaltyRequest = loyaltyRequest
+    override fun set(loyaltyDataModel: LoyaltyViewDataModel) {
+        this.loyaltyDataModel = loyaltyDataModel
     }
 
     override fun updateEarnedPoints() {
         val loyaltyId = userStore.paymentProvider?.loyalty?.id
-        val currency = loyaltyRequest?.currency
-        val tripAmount = loyaltyRequest?.tripAmount?.toInt()
+        val currency = loyaltyDataModel?.currency
+        val tripAmount = loyaltyDataModel?.tripAmount?.toInt()
 
         if (loyaltyId != null && currency != null && tripAmount != null) {
             loyaltyService.getLoyaltyEarn(loyaltyId, currency, tripAmount, 0)
@@ -59,10 +72,11 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                             is Resource.Success -> {
                                 earnedPoints = result.data.points
 
-                                getSubtitleBasedOnMode(view.provideResources())
+                                getSubtitleBasedOnMode()
                             }
                             is Resource.Failure -> {
-                                view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                                view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_unsupported_currency))
+                                currentMode = LoyaltyMode.ERROR
                             }
                         }
                     }
@@ -71,8 +85,8 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
 
     override fun updateBurnedPoints() {
         val loyaltyId = userStore.paymentProvider?.loyalty?.id
-        val currency = loyaltyRequest?.currency
-        val tripAmount = loyaltyRequest?.tripAmount?.toInt()
+        val currency = loyaltyDataModel?.currency
+        val tripAmount = loyaltyDataModel?.tripAmount?.toInt()
 
         if (loyaltyId != null && currency != null && tripAmount != null) {
             loyaltyService.getLoyaltyBurn(loyaltyId, currency, tripAmount)
@@ -81,17 +95,19 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                             is Resource.Success -> {
                                 burnedPoints = result.data.points
 
-                                getSubtitleBasedOnMode(view.provideResources())
+                                getSubtitleBasedOnMode()
                             }
                             is Resource.Failure -> {
-                                view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                                view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_unsupported_currency))
+                                currentMode = LoyaltyMode.ERROR
                             }
                         }
                     }
         }
     }
 
-    override fun getSubtitleBasedOnMode(resources: Resources) {
+    override fun getSubtitleBasedOnMode() {
+        val resources = view.provideResources()
         val subtitle = when (currentMode) {
             LoyaltyMode.BURN -> {
                 String.format(
@@ -129,8 +145,9 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                         updateEarnedPoints()
                         updateBurnedPoints()
                     }
-                    is Resource.Failure ->
+                    is Resource.Failure -> {
                         view.updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+                    }
                 }
             }
         }
@@ -143,5 +160,9 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
         val canBurn = loyaltyStatus.canBurn ?: false
 
         view.updateLoyaltyFeatures(canEarn, canBurn)
+    }
+
+    override fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyContract.LoyaltyModeCallback) {
+        this.loyaltyModeCallback = loyaltyModeCallback
     }
 }
