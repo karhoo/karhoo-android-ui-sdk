@@ -13,6 +13,7 @@ interface LoyaltyContract {
         fun getLoyaltyStatus()
         fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean)
         fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
+        fun preAuthorize()
     }
 
     interface Presenter {
@@ -25,9 +26,12 @@ interface LoyaltyContract {
         fun getLoyaltyStatus()
         fun getSubtitleBasedOnMode()
         fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
+        fun preAuthorize()
     }
 
     interface LoyaltyModeCallback {
         fun onModeChanged(mode: LoyaltyMode)
+        fun onPreAuthorized(nonce: String)
+        fun onPreAuthorizationError(reasonId: Int)
     }
 }

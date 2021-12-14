@@ -418,11 +418,29 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             loyaltyView.set(it)
             loyaltyView.setLoyaltyModeCallback(object : LoyaltyContract.LoyaltyModeCallback {
                 override fun onModeChanged(mode: LoyaltyMode) {
-                    if(mode == LoyaltyMode.ERROR) {
+                    if (mode == LoyaltyMode.ERROR) {
                         loadingButtonCallback.enableButton(false)
                     } else {
                         loadingButtonCallback.enableButton(true)
                     }
+                }
+
+                override fun onPreAuthorizationError(reasonId: Int) {
+                    val config = KarhooAlertDialogConfig(
+                            titleResId = R.string.error_dialog_title,
+                            messageResId = reasonId,
+                            karhooError = null,
+                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok
+                                                                    ) { d, _ ->
+                                d.dismiss()
+                            },
+                            negativeButton = null)
+                    KarhooAlertDialogHelper(context).showAlertDialog(config)
+                }
+
+                override fun onPreAuthorized(nonce: String) {
+                    presenter.setLoyaltyNonce(nonce)
+                    startBooking()
                 }
             })
         }
@@ -437,4 +455,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
+
+    override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
+        return if (loyaltyView.visibility == VISIBLE && loyaltyView.getCurrentMode() != LoyaltyMode.ERROR) {
+            loyaltyView.preAuthorize()
+            false
+        } else {
+            true
+        }
+    }
 }

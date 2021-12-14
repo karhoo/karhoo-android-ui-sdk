@@ -54,6 +54,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     private var outboundTripId: String? = null
     private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
+    private var loyaltyNonce: String? = null
     private var bookingMetadata: HashMap<String, String>? = null
 
     init {
@@ -192,6 +193,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                                       meta = metadata,
                                       nonce = identifier,
                                       quoteId = quote?.id.orEmpty(),
+                                      loyaltyNonce = loyaltyNonce,
                                       passengers = Passengers(additionalPassengers = 0,
                                                               passengerDetails = listOf(passenger),
                                                               luggage = Luggage(total = 0))))
@@ -322,6 +324,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         } else {
             view?.showLoyaltyView(show = false)
         }
+    }
+
+    override fun setLoyaltyNonce(nonce: String) {
+        this.loyaltyNonce = nonce
     }
 
     companion object {

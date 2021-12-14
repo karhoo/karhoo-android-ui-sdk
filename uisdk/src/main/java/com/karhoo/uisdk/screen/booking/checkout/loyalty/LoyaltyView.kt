@@ -94,4 +94,8 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     override fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyContract.LoyaltyModeCallback) {
         presenter.setLoyaltyModeCallback(loyaltyModeCallback)
     }
+
+    override fun preAuthorize() {
+        presenter.preAuthorize()
+    }
 }

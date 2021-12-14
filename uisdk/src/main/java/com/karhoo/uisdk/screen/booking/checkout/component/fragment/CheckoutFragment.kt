@@ -118,7 +118,10 @@ internal class CheckoutFragment : Fragment() {
                         checkoutView.showPassengerDetailsLayout(true)
                         checkoutActionButton.onLoadingComplete()
                     } else {
-                        checkoutView.startBooking()
+                        if(!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
+                            //Skip the loyalty flow, start the booking one directly
+                            checkoutView.startBooking()
+                        }
                     }
                 }
             }
