@@ -459,9 +459,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE && loyaltyView.getCurrentMode() != LoyaltyMode.ERROR) {
             loyaltyView.preAuthorize()
-            false
-        } else {
             true
+        } else {
+            false
         }
     }
 }
