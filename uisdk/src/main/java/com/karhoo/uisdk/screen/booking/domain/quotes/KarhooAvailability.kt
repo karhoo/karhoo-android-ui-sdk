@@ -20,18 +20,21 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
+import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import java.util.Locale
 
 private const val MAX_ACCEPTABLE_QTA = 20
 
-class KarhooAvailability(private val quotesService: QuotesService, private val analytics: Analytics?,
+class KarhooAvailability(private val quotesService: QuotesService,
                          private val categoriesViewModel: CategoriesViewModel, private val liveFleetsViewModel: LiveFleetsViewModel,
-                         private val bookingStatusStateViewModel: BookingStatusStateViewModel, lifecycleOwner: LifecycleOwner)
+                         private val bookingStatusStateViewModel: BookingStatusStateViewModel,
+                         lifecycleOwner: LifecycleOwner, private val locale: Locale? = null)
     : AvailabilityProvider {
 
     private var filteredList: MutableList<Quote>? = liveFleetsViewModel.liveFleets.value?.toMutableList()
@@ -42,6 +45,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     private var vehiclesObservable: Observable<QuoteList>? = null
     private var currentFilter: String? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
+    private var analytics: Analytics? = null
 
     private val observer = createObservable()
     private var vehiclesJob: Job? = null
@@ -76,7 +80,8 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
                             .quotes(QuotesSearch(
                                     origin = bookingStatusPickup,
                                     destination = bookingStatusDestination,
-                                    dateScheduled = bookingStatus.date?.toDate()))
+                                    dateScheduled = bookingStatus.date?.toDate()),
+                                   locale.toNormalizedLocale())
                             .observable().apply { subscribe(observer) }
                 }
             }
@@ -126,6 +131,10 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     override fun setAllCategory(category: String) {
         allCategory = Category(category, false)
+    }
+
+    fun setAnalytics(analytics: Analytics?) {
+        this.analytics = analytics
     }
 
     private fun createObservable() = androidx.lifecycle.Observer<BookingStatus> { bookingStatus ->
