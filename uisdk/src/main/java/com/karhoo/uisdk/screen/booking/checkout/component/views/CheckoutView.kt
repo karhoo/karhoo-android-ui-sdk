@@ -340,8 +340,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             val dialingCode = data?.getStringExtra(CountryPickerActivity
                                                            .COUNTRY_DIALING_CODE_KEY) ?: ""
 
-            passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true)
-            passengersDetailLayout.setFocusOnPhoneNumber()
+            passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true,
+                                                  focusPhoneNumber = true
+                                                 )
         } else {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
