@@ -270,6 +270,10 @@ class PassengerDetailsView @JvmOverloads constructor(
         }
     }
 
+    override fun setFocusOnPhoneNumber() {
+        mobileNumberInput.requestFocus()
+    }
+
     companion object {
         private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
         private const val COUNTRY_CODE_SHARED_PREFS = "COUNTRY_CODE_SHARED_PREFS"

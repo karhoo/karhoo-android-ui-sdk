@@ -35,6 +35,8 @@ interface PassengerDetailsContract {
         fun retrievePassengerFromSharedPrefs(): PassengerDetails?
 
         fun retrieveCountryCodeFromSharedPrefs(): String?
+
+        fun setFocusOnPhoneNumber()
     }
 
     interface Presenter {

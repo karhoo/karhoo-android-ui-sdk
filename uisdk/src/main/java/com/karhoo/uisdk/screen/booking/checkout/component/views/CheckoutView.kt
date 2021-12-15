@@ -341,6 +341,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                            .COUNTRY_DIALING_CODE_KEY) ?: ""
 
             passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true)
+            passengersDetailLayout.setFocusOnPhoneNumber()
         } else {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
