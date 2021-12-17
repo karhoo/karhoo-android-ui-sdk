@@ -383,4 +383,8 @@
     <string name="kh_uisdk_wheelchair">Fauteuil roulant</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Souhaitez-vous continuer?</string>
     <string name="kh_uisdk_you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>
+
+    <!--  Validity  -->
+    <string name="kh_uisdk_offer_expired">Offre expirée</string>
+    <string name="kh_uisdk_offer_expired_text">Veuillez choisir une autre offre pour continuer la réservation.</string>
 </resources>

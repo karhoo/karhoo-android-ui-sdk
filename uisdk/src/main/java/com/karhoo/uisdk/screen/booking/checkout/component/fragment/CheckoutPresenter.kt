@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.checkout.component.fragment
 
 import androidx.annotation.VisibleForTesting
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import java.util.Date
 
 class CheckoutPresenter : CheckoutFragmentContract.Presenter {
 
@@ -24,5 +25,9 @@ class CheckoutPresenter : CheckoutFragmentContract.Presenter {
         } else {
             BookButtonState.NEXT
         }
+    }
+
+    override fun getValidMilisSPeriod(validityTimestamp: Long): Long {
+        return validityTimestamp - Date().time
     }
 }

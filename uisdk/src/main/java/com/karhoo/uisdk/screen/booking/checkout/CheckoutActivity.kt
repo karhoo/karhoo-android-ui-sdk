@@ -165,12 +165,22 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * Sets the validity timestamp of the quote
+         * When validity of the quote is expired, a popup will be shown to the user to notify him
+         */
+        fun setValidityDeadlineTimestamp(timestamp: Long): Builder {
+            extrasBundle.putLong(BOOKING_CHECKOUT_VALIDITY_KEY, timestamp)
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
         fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.checkout).apply {
             putExtras(extrasBundle)
         }
+
     }
 
     companion object {
@@ -185,6 +195,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
         const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
+        const val BOOKING_CHECKOUT_VALIDITY_KEY = "BOOKING_CHECKOUT_VALIDITY_KEY"
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10

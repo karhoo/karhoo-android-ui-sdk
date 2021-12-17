@@ -70,6 +70,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var loyaltyInfo: LoyaltyInfo? = null
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
+    private var currentValidityDeadlineTimestamp: Long? = null
 
     private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
@@ -273,7 +274,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                         builder.loyaltyInfo(it)
                     }
 
+                    currentValidityDeadlineTimestamp?.let {
+                        builder.setValidityDeadlineTimestamp(it)
+                    }
+
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
+                }
+                is BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp -> {
+                    this.currentValidityDeadlineTimestamp = actions.timestamp
                 }
             }
         }
