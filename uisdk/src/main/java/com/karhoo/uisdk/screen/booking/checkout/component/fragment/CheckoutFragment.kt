@@ -4,7 +4,6 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +21,17 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.HashMap
 
 internal class CheckoutFragment : Fragment() {
     private lateinit var checkoutActionButton: LoadingButtonView
     private lateinit var checkoutView: CheckoutView
     private lateinit var presenter: CheckoutPresenter
+    private var expirationJob: Job? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -114,18 +118,23 @@ internal class CheckoutFragment : Fragment() {
         if (validityTimestamp > 0) {
             val milisUntilInvalid = presenter.getValidMilisSPeriod(validityTimestamp)
 
-            Handler().postDelayed({
-                                      if (isAdded) {
-                                          val config = KarhooAlertDialogConfig(
-                                                  titleResId = R.string.kh_uisdk_offer_expired,
-                                                  messageResId = R.string.kh_uisdk_offer_expired_text,
-                                                  positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
-                                                      this@CheckoutFragment.activity?.finish()
-                                                  })
+            expirationJob = GlobalScope.launch {
+                delay(milisUntilInvalid)
 
-                                          context?.let { KarhooAlertDialogHelper(it).showAlertDialog(config) }
-                                      }
-                                  }, milisUntilInvalid)
+                activity?.runOnUiThread {
+                    if (isAdded) {
+                        val config = KarhooAlertDialogConfig(
+                                titleResId = R.string.kh_uisdk_offer_expired,
+                                messageResId = R.string.kh_uisdk_offer_expired_text,
+                                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                    this@CheckoutFragment.activity?.finish()
+                                })
+
+                        context?.let { KarhooAlertDialogHelper(it).showAlertDialog(config) }
+                    }
+                }
+            }
+
         }
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
@@ -164,6 +173,14 @@ internal class CheckoutFragment : Fragment() {
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
             activity?.finish()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (expirationJob?.isActive == true) {
+            expirationJob?.cancel()
         }
     }
 

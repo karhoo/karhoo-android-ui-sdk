@@ -24,14 +24,12 @@
     <string name="kh_uisdk_arrived">Uw %s chauffeur is gearriveerd</string>
     <string name="kh_uisdk_baggage_max">%d maximum aantal bagage</string>
     <string name="kh_uisdk_base">Basistarief</string>
-    <string name="kh_uisdk_book_now">Reserveer</string>
+    <string name="kh_uisdk_book_now">BETALEN EN BOEKEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier toevoegen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Betaalmethode toevoegen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Betalingswijze</string>
-    <string name="pay_button">Pre-autoriseren</string>
-    <string name="pay_button_with_value">Pre-autoriseren %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Terug</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Wijzigen</string>
@@ -223,6 +221,8 @@
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Je gebruikt %1$s punten</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Met deze rit verdien je %1$s punten</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Je mag geen punten verbranden</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Uw saldo is onvoldoende</string>
     <string name="kh_uisdk_loyalty_title">Loyaliteitspunten</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">De valuta wordt nog niet ondersteund</string>
     <string name="kh_uisdk_map_selector">Op de kaart zetten</string>
@@ -246,6 +246,8 @@
     <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
+    <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
+    <string name="kh_uisdk_offer_expired_text">Selecteer een nieuwe offerte om door te gaan met uw boeking</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">U moet een vertrekpunt selecteren voordat u een rit boekt</string>
@@ -383,4 +385,8 @@
     <string name="kh_uisdk_wheelchair">Rolstoel</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Wilt u doorgaan?</string>
     <string name="kh_uisdk_you_may_be_charged">Er worden annuleringskosten in rekening gebracht die geschat worden op %s .\n\nWilt u doorgaan?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Pre-autoriseren</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Pre-autoriseren %s</string>
 </resources>

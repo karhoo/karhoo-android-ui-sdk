@@ -24,14 +24,12 @@
     <string name="kh_uisdk_arrived">Votre chauffeur est arrivé</string>
     <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
     <string name="kh_uisdk_base">Prix de base</string>
-    <string name="kh_uisdk_book_now">Réserver</string>
+    <string name="kh_uisdk_book_now">PAYER ET RÉSERVER</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Mode de paiement</string>
-    <string name="pay_button">Pré-autoriser</string>
-    <string name="pay_button_with_value">Pré-autoriser %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifier</string>
@@ -223,6 +221,8 @@
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Vous utilisez %1$s aiguillage</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Ce trajet vous rapporte %1$s aiguillage</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Vous n’êtes pas autorisé à brûler des points</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Votre solde est insuffisant</string>
     <string name="kh_uisdk_loyalty_title">Points de fidélité</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">La devise n’est pas encore prise en charge</string>
     <string name="kh_uisdk_map_selector">Sélectionner l\'adresse sur la carte</string>
@@ -246,6 +246,8 @@
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
+    <string name="kh_uisdk_offer_expired">Devis expiré</string>
+    <string name="kh_uisdk_offer_expired_text">Veuillez sélectionner un nouveau devis pour poursuivre votre réservation</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">Ajoutez une origine pour effectuer une réservation.</string>
@@ -383,8 +385,8 @@
     <string name="kh_uisdk_wheelchair">Fauteuil roulant</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Souhaitez-vous continuer?</string>
     <string name="kh_uisdk_you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>
-
-    <!--  Validity  -->
-    <string name="kh_uisdk_offer_expired">Offre expirée</string>
-    <string name="kh_uisdk_offer_expired_text">Veuillez choisir une autre offre pour continuer la réservation.</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Pré-autoriser</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Pré-autoriser %s</string>
 </resources>
