@@ -1,9 +1,11 @@
 package com.karhoo.uisdk.notification.rides.past
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.ColorRes
@@ -64,7 +66,11 @@ class RideNotificationView : RideNotificationContract.View {
 
     override fun notificationIntent(): PendingIntent {
         val intent = RideDetailActivity.Builder.newBuilder().trip(trip).build(context)
-        return PendingIntent.getActivity(context, 0, intent, 0)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, 0, intent, 0)
+        }
     }
 
     @DrawableRes
