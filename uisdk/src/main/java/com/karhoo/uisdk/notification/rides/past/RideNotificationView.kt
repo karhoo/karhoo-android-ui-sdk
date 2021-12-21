@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.notification.rides.past
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -64,6 +64,7 @@ class RideNotificationView : RideNotificationContract.View {
         return contentView
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     override fun notificationIntent(): PendingIntent {
         val intent = RideDetailActivity.Builder.newBuilder().trip(trip).build(context)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
