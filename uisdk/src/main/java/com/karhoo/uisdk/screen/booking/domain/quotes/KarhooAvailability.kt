@@ -179,12 +179,6 @@ class KarhooAvailability(private val quotesService: QuotesService,
     }
 
     private fun handleVehicleValidity(vehicles: QuoteList) {
-        val calendar: Calendar = Calendar.getInstance() // gets a calendar using the default time zone and locale.
-
-        calendar.add(Calendar.SECOND, vehicles.validity)
-
-        quoteListValidityListener?.isValidUntil(calendar.time.time)
-
         val refreshDelay = when {
             vehicles.validity == -1 -> 0
             vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
@@ -202,6 +196,10 @@ class KarhooAvailability(private val quotesService: QuotesService,
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.add(Calendar.SECOND, vehicles.validity)
+        quoteListValidityListener?.isValidUntil(calendar.time.time)
     }
 
     private fun updateVehicles(vehicles: QuoteList) {
