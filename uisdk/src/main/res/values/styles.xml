@@ -312,7 +312,7 @@
 
     <style name="KhBookingQuotesViewFleetTitle">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
     </style>
 
@@ -323,7 +323,7 @@
 
     <style name="KhBookingQuotesViewFleetCancellation">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetDescription">
@@ -333,7 +333,7 @@
 
     <style name="KhActionCellTitle">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
     </style>
 
     <style name="KhTextInputEditText">
@@ -420,7 +420,7 @@
     <!-- Booking Price View -->
     <style name="KhBookingPriceMeteredText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newPrimaryColor</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_xxxsmall</item>
         <item name="fontWeight">400</item>
@@ -429,7 +429,7 @@
 
     <style name="KhBookingPriceValueText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newPrimaryColor</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
         <item name="fontWeight">600</item>
@@ -438,7 +438,7 @@
 
     <style name="KhBookingPriceLabelText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newPrimaryColor</item>
         <item name="android:gravity">center</item>
         <item name="fontWeight">600</item>
         <item name="lineHeight">20dp</item>
@@ -447,7 +447,7 @@
     <style name="KhBookingPickUpText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newPrimaryColor</item>
         <item name="android:gravity">center</item>
         <item name="fontWeight">400</item>
         <item name="lineHeight">15dp</item>
