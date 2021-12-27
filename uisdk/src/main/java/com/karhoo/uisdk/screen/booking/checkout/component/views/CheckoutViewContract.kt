@@ -81,6 +81,8 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
+        fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean
+
         fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel? = null)
     }
 
@@ -125,6 +127,8 @@ interface CheckoutViewContract {
                 BookButtonState
 
         fun createLoyaltyViewResponse()
+
+        fun setLoyaltyNonce(nonce: String)
     }
 
     interface PrebookViewActions {

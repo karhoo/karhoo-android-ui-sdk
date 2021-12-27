@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout.loyalty
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.LoyaltyStatus
+import com.karhoo.sdk.api.network.request.LoyaltyPreAuthPayload
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.uisdk.R
@@ -11,10 +12,10 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                        private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
                                                                                                 .Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
-    set(value) {
-        field = value
-        loyaltyModeCallback?.onModeChanged(currentMode)
-    }
+        set(value) {
+            field = value
+            loyaltyModeCallback?.onModeChanged(currentMode)
+        }
 
     private lateinit var view: LoyaltyContract.View
     private var loyaltyDataModel: LoyaltyViewDataModel? = null
@@ -164,5 +165,31 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
 
     override fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyContract.LoyaltyModeCallback) {
         this.loyaltyModeCallback = loyaltyModeCallback
+    }
+
+    override fun preAuthorize() {
+        loyaltyDataModel?.let {
+            loyaltyService.getLoyaltyPreAuth(it.loyaltyId, LoyaltyPreAuthPayload(
+                    it.currency,
+                    if (currentMode == LoyaltyMode.BURN) burnedPoints else 0,
+                    flexpay = false,
+                    membership = null)).execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        loyaltyModeCallback?.onPreAuthorized(result.data.nonce)
+                    }
+                    is Resource.Failure -> {
+                        val internalMessage = result.error.internalMessage
+                        val reasonId = if(internalMessage == "customer-not-allowed-to-burn-points") {
+                            R.string.kh_uisdk_loyalty_pre_auth_not_allowed_to_burn
+                        } else {
+                            R.string.kh_uisdk_loyalty_pre_auth_not_enough_points
+                        }
+
+                        loyaltyModeCallback?.onPreAuthorizationError(reasonId)
+                    }
+                }
+            }
+        }
     }
 }
