@@ -37,24 +37,24 @@
     <color name="kh_uisdk_cancellation_green">@color/kh_uisdk_newSuccessColor</color>
 
     <!-- Greys -->
-    <color name="kh_uisdk_off_black">#333333</color>
+    <color name="kh_uisdk_off_black">@color/kh_uisdk_newTextColor</color>
     <color name="kh_uisdk_pink">@color/kh_uisdk_newSecondaryColor</color>
 <!--    <color name="kh_uisdk_dark_blue">#181447</color>-->
-    <color name="kh_uisdk_dark_grey">#666666</color>
-    <color name="kh_uisdk_med_grey">#999999</color>
-    <color name="kh_uisdk_silver">#8798AD</color>
-    <color name="kh_uisdk_light_grey">#CCCCCC</color>
+    <color name="kh_uisdk_dark_grey">@color/kh_uisdk_newTextColor</color>
+    <color name="kh_uisdk_med_grey">@color/kh_uisdk_newLabelColor</color>
+    <color name="kh_uisdk_silver">@color/kh_uisdk_newLabelColor</color>
+    <color name="kh_uisdk_light_grey">@color/kh_uisdk_newBackgroundColor5</color>
     <color name="kh_uisdk_lightish_grey">@color/kh_uisdk_newBackgroundColor2</color>
-    <color name="kh_uisdk_lighter_grey">#EEEEEE</color>
-    <color name="kh_uisdk_off_white">#F7F7F7</color>
-    <color name="kh_uisdk_greyish_white">#f3f3f4</color>
-    <color name="kh_uisdk_opacity_off_white">#F2F7F7F7</color>
-    <color name="kh_uisdk_opacity_off_white_time_picker">#B3FFFFFF</color>
+    <color name="kh_uisdk_lighter_grey">@color/kh_uisdk_newBackgroundColor3</color>
+    <color name="kh_uisdk_off_white">@color/kh_uisdk_newBackgroundColor1</color>
+    <color name="kh_uisdk_greyish_white">@color/kh_uisdk_newBackgroundColor2</color>
+    <color name="kh_uisdk_opacity_off_white">@color/kh_uisdk_newBackgroundColor2</color>
+    <color name="kh_uisdk_opacity_off_white_time_picker">@color/kh_uisdk_newDisabledColor</color>
     <color name="kh_uisdk_transparent">#00000000</color>
     <color name="kh_uisdk_transparent_black_map">#22000000</color>
     <color name="kh_uisdk_transparent_black">#66000000</color>
     <color name="kh_uisdk_transparent_black_notification">#AD000000</color>
-    <color name="kh_uisdk_background_light_grey">#F4F4F5</color>
+    <color name="kh_uisdk_background_light_grey">@color/kh_uisdk_newBackgroundColor2</color>
 
     <!-- Text -->
     <color name="kh_uisdk_text_white">@android:color/white</color>
@@ -93,7 +93,7 @@
     <!-- New Colors -->
     <color name="kh_uisdk_newPrimaryColor">#18183F</color>
     <color name="kh_uisdk_newSecondaryColor">#FF0082</color>
-    <color name="kh_uisdk_newAccentColor">#2F3BCD</color>
+    <color name="kh_uisdk_newAccentColor">#2485C2</color>
     <color name="kh_uisdk_newBorderColor">#EBEBEB</color>
     <color name="kh_uisdk_newErrorColor">#ED3A3A</color>
     <color name="kh_uisdk_newSuccessColor">#12BE76</color>

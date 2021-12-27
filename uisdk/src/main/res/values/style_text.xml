@@ -175,7 +175,7 @@
     </style>
 
     <style name="Text.Black">
-        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
     </style>
 
     <style name="Text.Black.Medium">
