@@ -16,6 +16,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
@@ -26,12 +27,16 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import java.util.Calendar
 
 private const val MAX_ACCEPTABLE_QTA = 20
 
-class KarhooAvailability(private val quotesService: QuotesService, private val analytics: Analytics?,
-                         private val categoriesViewModel: CategoriesViewModel, private val liveFleetsViewModel: LiveFleetsViewModel,
-                         private val bookingStatusStateViewModel: BookingStatusStateViewModel, lifecycleOwner: LifecycleOwner)
+class KarhooAvailability(private val quotesService: QuotesService,
+                         private val analytics: Analytics?,
+                         private val categoriesViewModel: CategoriesViewModel,
+                         private val liveFleetsViewModel: LiveFleetsViewModel,
+                         private val bookingStatusStateViewModel: BookingStatusStateViewModel,
+                         lifecycleOwner: LifecycleOwner)
     : AvailabilityProvider {
 
     private var filteredList: MutableList<Quote>? = liveFleetsViewModel.liveFleets.value?.toMutableList()
@@ -45,6 +50,7 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
 
     private val observer = createObservable()
     private var vehiclesJob: Job? = null
+    var quoteListValidityListener: QuotesListMVP.QuoteValidityListener? = null
 
     init {
         bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, observer)
@@ -173,7 +179,6 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
     }
 
     private fun handleVehicleValidity(vehicles: QuoteList) {
-
         val refreshDelay = when {
             vehicles.validity == -1 -> 0
             vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
@@ -191,6 +196,10 @@ class KarhooAvailability(private val quotesService: QuotesService, private val a
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
+
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.add(Calendar.SECOND, vehicles.validity)
+        quoteListValidityListener?.isValidUntil(calendar.time.time)
     }
 
     private fun updateVehicles(vehicles: QuoteList) {

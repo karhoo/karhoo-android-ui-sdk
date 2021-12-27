@@ -47,7 +47,7 @@ class QuotesListView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : CollapsiblePanelView(context, attrs, defStyleAttr), QuotesSortView.Listener,
-        QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
+      QuotesListMVP.View, BookingQuotesViewContract.BookingQuotesWidget, LifecycleObserver {
 
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
@@ -59,9 +59,9 @@ class QuotesListView @JvmOverloads constructor(
 
     private var isQuotesListVisible = false
     private var expandedListHeightPercentage = resources.getInteger(R.integer
-                                                                        .kh_uisdk_query_list_view_default_expanded_screen_percentage)
+                                                                            .kh_uisdk_query_list_view_default_expanded_screen_percentage)
     private var collapsedListHeightPercentage = resources.getInteger(R.integer
-                                                                         .kh_uisdk_query_list_view_default_collapsed_screen_percentage)
+                                                                             .kh_uisdk_query_list_view_default_collapsed_screen_percentage)
 
     init {
         inflate(context, R.layout.uisdk_view_quotes, this)
@@ -70,19 +70,19 @@ class QuotesListView @JvmOverloads constructor(
         hideListInitially()
 
         quotesSortWidget.setListener(this)
-        chevronIcon.setOnClickListener{ presenter.showMore() }
+        chevronIcon.setOnClickListener { presenter.showMore() }
 
         context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.QuotesListView,
-            0, 0).apply {
+                attrs,
+                R.styleable.QuotesListView,
+                0, 0).apply {
 
             try {
                 expandedListHeightPercentage = getInteger(R.styleable
-                                                              .QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_expanded_screen_percentage))
+                                                                  .QuotesListView_expandedListPercentageOfScreen, resources.getInteger(R.integer.kh_uisdk_query_list_view_default_expanded_screen_percentage))
                 collapsedListHeightPercentage = getInteger(R.styleable
-                                                               .QuotesListView_collapsedListPercentageOfScreen,
-                               resources.getInteger(R.integer.kh_uisdk_query_list_view_default_collapsed_screen_percentage))
+                                                                   .QuotesListView_collapsedListPercentageOfScreen,
+                                                           resources.getInteger(R.integer.kh_uisdk_query_list_view_default_collapsed_screen_percentage))
             } finally {
                 recycle()
             }
@@ -93,12 +93,12 @@ class QuotesListView @JvmOverloads constructor(
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets: Insets = windowMetrics.windowInsets
-                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat()/ resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
+                    .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat() / resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
         } else {
             val displayMetrics = DisplayMetrics()
             activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-            (displayMetrics.heightPixels * (percentage.toFloat()/resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
+            (displayMetrics.heightPixels * (percentage.toFloat() / resources.getInteger(R.integer.kh_uisdk_query_list_view_max_screen_percentage))).toInt()
         }
     }
 
@@ -120,7 +120,7 @@ class QuotesListView @JvmOverloads constructor(
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesListExpanded)
         } else {
             bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                    .QuotesListCollapsed)
+                                                    .QuotesListCollapsed)
             val desiredHeight = getScreenHeight(context as Activity, collapsedListHeightPercentage)
             layoutParams.height = desiredHeight
         }
@@ -137,9 +137,9 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun sortChoiceRequiresDestination() {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                .Error(SnackbarConfig(text = resources
-                        .getString(R.string
-                                .kh_uisdk_destination_price_error))))
+                                                .Error(SnackbarConfig(text = resources
+                                                        .getString(R.string
+                                                                           .kh_uisdk_destination_price_error))))
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
@@ -187,7 +187,7 @@ class QuotesListView @JvmOverloads constructor(
             animate()
                     .translationY(0F)
                     .setDuration(resources.getInteger(R.integer
-                            .kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
+                                                              .kh_uisdk_animation_duration_slide_out_or_in_quotes).toLong())
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .withStartAction {
                         isQuotesListVisible = true
@@ -234,16 +234,16 @@ class QuotesListView @JvmOverloads constructor(
         val emailComposer = KarhooFeedbackEmailComposer(context)
 
         val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING_DISMISSIBLE,
-                priority = SnackbarPriority.NORMAL,
-                action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
-                    val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
-                    showNoCoverageEmail?.let { intent ->
-                        activity.startActivity(intent)
-                    }
-                },
-                text = resources.getString(R.string.kh_uisdk_no_availability))
+                                            priority = SnackbarPriority.NORMAL,
+                                            action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
+                                                val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
+                                                showNoCoverageEmail?.let { intent ->
+                                                    activity.startActivity(intent)
+                                                }
+                                            },
+                                            text = resources.getString(R.string.kh_uisdk_no_availability))
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                .Error(snackbarConfig))
+                                                .Error(snackbarConfig))
 
     }
 
@@ -253,12 +253,12 @@ class QuotesListView @JvmOverloads constructor(
 
     override fun hideNoAvailability() {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
+                                                .QuotesListVisibilityChanged(false, panelState = collapsiblePanelView.panelState))
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
         bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent
-                .Error(snackbarConfig))
+                                                .Error(snackbarConfig))
     }
 
     override fun setQuotesListVisibility() {
@@ -270,12 +270,23 @@ class QuotesListView @JvmOverloads constructor(
     override fun initAvailability(lifecycleOwner: LifecycleOwner) {
         availabilityProvider?.cleanup()
         bookingStatusStateViewModel?.let {
-            availabilityProvider = KarhooAvailability(KarhooApi.quotesService,
+            availabilityProvider = KarhooAvailability(
+                    KarhooApi.quotesService,
                     KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
-                    it, lifecycleOwner).apply {
+                    it, lifecycleOwner,
+                                                     ).apply {
                 setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 categorySelectorWidget.bindAvailability(this)
+            }
+            (availabilityProvider as KarhooAvailability).quoteListValidityListener = object : QuotesListMVP
+                                                                      .QuoteValidityListener {
+                override fun isValidUntil(timestamp: Long) {
+                    bookingQuotesViewModel?.process(
+                            BookingQuotesViewContract
+                                    .BookingQuotesEvent
+                                    .QuoteListValidity(timestamp))
+                }
             }
         }
     }

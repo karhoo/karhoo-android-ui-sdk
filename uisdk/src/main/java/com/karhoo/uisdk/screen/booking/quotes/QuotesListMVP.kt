@@ -55,4 +55,8 @@ interface QuotesListMVP {
     }
 
     interface Actions : ErrorView
+
+    interface QuoteValidityListener {
+        fun isValidUntil(timestamp: Long)
+    }
 }

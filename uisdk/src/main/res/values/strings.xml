@@ -387,4 +387,8 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">This ride earns you %1$s points</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
+
+    <!--  Validity  -->
+    <string name="kh_uisdk_offer_expired">Quote expired</string>
+    <string name="kh_uisdk_offer_expired_text">Please select a new quote to continue with your booking</string>
 </resources>

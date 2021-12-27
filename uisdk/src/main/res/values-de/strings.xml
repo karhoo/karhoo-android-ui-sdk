@@ -24,14 +24,12 @@
     <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_baggage_max">%d Gepäckstücke max.</string>
     <string name="kh_uisdk_base">Grundtarif</string>
-    <string name="kh_uisdk_book_now">Jetzt buchen</string>
+    <string name="kh_uisdk_book_now">BEZAHLEN UND BUCHEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Fahrt buchen</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier hinzufügen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Zahlungsmethode hinzufügen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Zahlungsweise</string>
-    <string name="pay_button">Vorautorisierung</string>
-    <string name="pay_button_with_value">Vorautorisieren %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Zurück</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Bearbeiten</string>
@@ -223,6 +221,8 @@
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Ihr Punktesaldo ist unzureichend</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Sie verwenden %1$s Punkte</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Diese Fahrt bringt Ihnen %1$s Punkte ein.</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Sie dürfen keine Punkte verbrauchen</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Ihr Guthaben ist unzureichend</string>
     <string name="kh_uisdk_loyalty_title">Treuepunkte</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Die Währung wird noch nicht unterstützt</string>
     <string name="kh_uisdk_map_selector">Position der Stecknadel auf der Karte festlegen</string>
@@ -246,6 +246,8 @@
     <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
+    <string name="kh_uisdk_offer_expired">Zitat erloschen</string>
+    <string name="kh_uisdk_offer_expired_text">Bitte wählen Sie ein neues Angebot, um mit Ihrer Buchung fortzufahren</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">Sie müssen eine Herkunft auswählen, bevor Sie eine Fahrt buchen</string>
@@ -383,4 +385,8 @@
     <string name="kh_uisdk_wheelchair">Rollstuhl</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Möchten Sie fortfahren?</string>
     <string name="kh_uisdk_you_may_be_charged">Ihnen wird eine Stornierungsgebühr in Rechnung gestellt, die auf %s veranschlagt wird.\n\nMöchten Sie fortfahren?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Vorautorisierung</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Vorautorisieren %s</string>
 </resources>
