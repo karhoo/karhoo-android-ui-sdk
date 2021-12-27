@@ -274,7 +274,7 @@ class QuotesListView @JvmOverloads constructor(
         bookingStatusStateViewModel?.let {
             availabilityProvider = KarhooAvailability(
                     KarhooApi.quotesService,
-                    KarhooUISDK.analytics, categoriesViewModel, liveFleetsViewModel,
+                    categoriesViewModel, liveFleetsViewModel,
                     it, lifecycleOwner, locale).apply {
                 setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)

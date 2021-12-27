@@ -34,7 +34,6 @@ import java.util.Locale
 private const val MAX_ACCEPTABLE_QTA = 20
 
 class KarhooAvailability(private val quotesService: QuotesService,
-                         private val analytics: Analytics?,
                          private val categoriesViewModel: CategoriesViewModel,
                          private val liveFleetsViewModel: LiveFleetsViewModel,
                          private val bookingStatusStateViewModel: BookingStatusStateViewModel,
