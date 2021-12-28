@@ -46,6 +46,8 @@ interface BookingPaymentContract {
 
         fun getPaymentViewVisibility()
 
+        fun getPaymentProviderType(): ProviderType
+
     }
 
     interface PaymentViewActions {

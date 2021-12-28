@@ -64,4 +64,12 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
             view?.bindDropInView()
         }
     }
+
+    override fun getPaymentProviderType(): ProviderType {
+        return if (ProviderType.ADYEN.name == userStore.paymentProvider?.provider?.id) {
+            ProviderType.ADYEN
+        } else {
+            ProviderType.BRAINTREE
+        }
+    }
 }
