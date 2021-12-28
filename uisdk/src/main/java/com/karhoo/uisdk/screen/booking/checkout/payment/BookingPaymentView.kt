@@ -92,12 +92,14 @@ class BookingPaymentView @JvmOverloads constructor(
 
     private fun changeCard() {
         changeCardProgressBar.visibility = VISIBLE
+        cardLogoImage.visibility = INVISIBLE
         cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
         editCardButtonVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = GONE
+        cardLogoImage.visibility = VISIBLE
     }
 
     override fun initialisePaymentFlow(quote: Quote?) {
@@ -109,7 +111,8 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        cardNumberText.text = if (isGuest()) number else "•••• $number"
+        cardNumberText.text = if (isGuest() && presenter?.getPaymentProviderType() ==
+                ProviderType.BRAINTREE) number else "•••• $number"
         setCardType(cardType)
     }
 
@@ -160,6 +163,7 @@ class BookingPaymentView @JvmOverloads constructor(
             changeCardProgressBar.visibility = INVISIBLE
             editCardButtonVisibility(View.VISIBLE)
             changeCardLabel.visibility = VISIBLE
+            cardLogoImage.visibility = VISIBLE
             changeCardLabel.text =
                 resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
             setCardType(savedPaymentInfo.cardType)
@@ -174,6 +178,7 @@ class BookingPaymentView @JvmOverloads constructor(
             changeCardLabel.text =
                 resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
             changeCardLabel.visibility = VISIBLE
+            cardLogoImage.visibility = VISIBLE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
             paymentLayout.setBackgroundResource(
                 R.drawable

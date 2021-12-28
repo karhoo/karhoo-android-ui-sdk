@@ -24,14 +24,12 @@
     <string name="kh_uisdk_arrived">Il tuo %s è arrivato</string>
     <string name="kh_uisdk_baggage_max">%d bagagli max</string>
     <string name="kh_uisdk_base">Tariffa base</string>
-    <string name="kh_uisdk_book_now">Prenota ora</string>
+    <string name="kh_uisdk_book_now">PAGA E PRENOTA</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Prenota corsa</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungere</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungere</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Metodo di pagamento</string>
-    <string name="pay_button">Pre-autorizzare</string>
-    <string name="pay_button_with_value">Pre-autorizzare %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Indietro</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifica</string>
@@ -223,6 +221,8 @@
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Il tuo saldo punti è insufficiente</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Stai utilizzando %1$s punti</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Questa corsa ti fa guadagnare %1$s punti</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Non ti è permesso bruciare punti</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Il tuo saldo è insufficiente</string>
     <string name="kh_uisdk_loyalty_title">Punti fedeltà</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">La valuta non è ancora supportata</string>
     <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
@@ -246,6 +246,8 @@
     <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
     <string name="kh_uisdk_no_results_label">Nessun risultato</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
+    <string name="kh_uisdk_offer_expired">Preventivo scaduto</string>
+    <string name="kh_uisdk_offer_expired_text">Si prega di selezionare un nuovo preventivo per continuare con la prenotazione</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">Devi selezionare un\'origine prima di prenotare una corsa</string>
@@ -383,4 +385,8 @@
     <string name="kh_uisdk_wheelchair">sedia a rotelle</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Vuoi continuare?</string>
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Pre-autorizzare</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Pre-autorizzare %s</string>
 </resources>

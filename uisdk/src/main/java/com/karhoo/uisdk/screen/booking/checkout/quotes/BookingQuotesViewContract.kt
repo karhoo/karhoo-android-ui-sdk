@@ -21,6 +21,7 @@ interface BookingQuotesViewContract {
         data class QuotesItemClicked(val quote: Quote) : BookingQuotesEvent()
         object Availability : BookingQuotesEvent()
         data class Error(val snackbarConfig: SnackbarConfig) : BookingQuotesEvent()
+        data class QuoteListValidity(val timestamp: Long) : BookingQuotesEvent()
     }
 
     sealed class BookingQuotesAction {
@@ -30,5 +31,6 @@ interface BookingQuotesViewContract {
         object UpdateViewForQuotesListCollapsed : BookingQuotesAction()
         object UpdateViewForQuotesListExpanded : BookingQuotesAction()
         data class ShowBookingRequest(val quote: Quote) : BookingQuotesAction()
+        data class SetValidityDeadlineTimestamp(val timestamp: Long) : BookingQuotesAction()
     }
 }
