@@ -315,7 +315,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     override fun createLoyaltyViewResponse() {
         val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.id
-        if (loyaltyId != null) {
+        if (!loyaltyId.isNullOrEmpty()) {
             view?.showLoyaltyView(show = true,
                                   LoyaltyViewDataModel(
                                           loyaltyId = loyaltyId,
