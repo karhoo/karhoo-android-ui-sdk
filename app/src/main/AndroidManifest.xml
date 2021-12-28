@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SampleApp"
-        android:name="com.karhoo.samples.uisdk.dropin.KarhooApplication">
+        android:name="com.karhoo.samples.uisdk.dropin.KarhooApplication"
+        >
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -26,7 +27,7 @@
             android:value="@string/google_maps_api_key"
             tools:replace="android:value"/>
 
-        <activity android:name="com.karhoo.samples.uisdk.dropin.MainActivity">
+        <activity android:name="com.karhoo.samples.uisdk.dropin.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
