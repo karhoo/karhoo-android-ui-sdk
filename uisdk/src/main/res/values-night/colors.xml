@@ -21,4 +21,6 @@
     <color name="kh_uisdk_newBackgroundColor5">#333333</color>
     <color name="kh_uisdk_newBackgroundColor6">#363636</color>
     <color name="kh_uisdk_newBackgroundColor7">#383838</color>
+
+    <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_newBackgroundColor3</color>
 </resources>

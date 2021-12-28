@@ -89,6 +89,7 @@
 
     <!-- Adyen -->
 <!--    <color name="kh_uisdk_primaryColor">@color/kh_uisdk_primary</color>-->
+    <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_newWhiteColor</color>
     
     <!-- New Colors -->
     <color name="kh_uisdk_newPrimaryColor">#18183F</color>
