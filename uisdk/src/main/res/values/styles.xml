@@ -338,12 +338,12 @@
 
     <style name="KhTextInputEditText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
     </style>
 
     <style name="KhTextInputEditTextHint">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
     </style>
 
     <style name="KhActionCellSubtitle">
