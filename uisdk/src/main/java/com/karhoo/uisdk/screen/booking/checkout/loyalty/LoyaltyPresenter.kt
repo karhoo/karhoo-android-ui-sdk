@@ -172,7 +172,7 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
             loyaltyService.getLoyaltyPreAuth(it.loyaltyId, LoyaltyPreAuthPayload(
                     it.currency,
                     if (currentMode == LoyaltyMode.BURN) burnedPoints else 0,
-                    flexpay = false,
+                    flexpay = currentMode != LoyaltyMode.BURN,
                     membership = null)).execute { result ->
                 when (result) {
                     is Resource.Success -> {
