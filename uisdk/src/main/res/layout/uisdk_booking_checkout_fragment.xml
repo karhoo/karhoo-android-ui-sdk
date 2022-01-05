@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/kh_uisdk_newBackgroundColor1">
+    android:background="@color/kh_uisdk_newWhiteColor">
 
     <com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
         android:id="@+id/bookingCheckoutView"

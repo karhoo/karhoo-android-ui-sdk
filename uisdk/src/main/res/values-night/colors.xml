@@ -22,5 +22,12 @@
     <color name="kh_uisdk_newBackgroundColor6">#363636</color>
     <color name="kh_uisdk_newBackgroundColor7">#383838</color>
 
+    <!-- Adyen -->
+    <color name="white">@color/kh_uisdk_newBackgroundColor2</color>
+    <color name="textColor">@color/kh_uisdk_newBlackColor</color>
+    <color name="label_color">@color/kh_uisdk_newTextColor</color>
+    <color name="black">@color/kh_uisdk_newBlackColor</color>
+    <color name="primaryColor">@color/kh_uisdk_newPrimaryColor</color>
+
     <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_newBackgroundColor3</color>
 </resources>

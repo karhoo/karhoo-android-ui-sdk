@@ -18,6 +18,10 @@
             @transition/uisdk_change_image_transform
         </item>
         <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
+        <item name="hintTextColor">@color/kh_uisdk_search_hint_color</item>
+
     </style>
 
     <style name="AppTheme.Transparent" parent="AppTheme">
@@ -71,7 +75,7 @@
     <style name="AppTheme.Toolbar">
         <item name="colorControlNormal">@color/kh_uisdk_off_white</item>
         <item name="android:textColorSecondary">@color/kh_uisdk_off_white</item>
-        <item name="android:textColorPrimary">@color/kh_uisdk_off_white</item>
+        <item name="android:textColorPrimary">@color/kh_uisdk_newTextColor</item>
         <item name="android:background">@color/kh_uisdk_primary</item>
     </style>
 
@@ -521,4 +525,36 @@
     <style name="KhTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/kh_uisdk_newLabelColor</item>
     </style>
+
+    <style name="bt_add_card_activity_theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/kh_uisdk_newWhiteColor</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="colorPrimary">@color/kh_uisdk_newPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/kh_uisdk_newPrimaryColor_dark</item>
+        <item name="colorAccent">@color/kh_uisdk_newAccentColor</item>
+        <item name="titleTextColor">@color/kh_uisdk_newWhiteColor</item>
+        <item name="colorError">@color/kh_uisdk_newErrorColor</item>
+    </style>
+
+    <style name="bt_drop_in_activity_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/kh_uisdk_transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>
+        <item name="colorPrimary">@color/kh_uisdk_newPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/kh_uisdk_newPrimaryColor_dark</item>
+        <item name="colorAccent">@color/kh_uisdk_newAccentColor</item>
+    </style>
+
+    <style name="bt_base_textview">
+        <item name="android:textSize">@dimen/bt_input_text_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/kh_uisdk_newBlackColor</item>
+    </style>
+
 </resources>
