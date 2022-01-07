@@ -336,6 +336,7 @@
     <string name="kh_uisdk_saloon">Standard</string>
     <string name="kh_uisdk_save">Speichern</string>
     <string name="kh_uisdk_settings">Einstellungen</string>
+    <string name="kh_uisdk_schedule_ride">Planen Sie die Fahrt</string>
     <string name="kh_uisdk_sign_in">Anmelden</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Anmelden</string>

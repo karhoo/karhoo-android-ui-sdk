@@ -101,7 +101,7 @@
         <ImageView
             android:id="@+id/scheduledIcon"
             style="@style/KhAddressPickerPrebookIcon"
-            android:layout_width="@dimen/kh_uisdk_icon_size_medium"
+            android:layout_width="@dimen/kh_uisdk_icon_size"
             android:layout_height="@dimen/kh_uisdk_icon_size_medium"
             android:layout_marginLeft="@dimen/kh_uisdk_margin_small"
             android:layout_marginRight="@dimen/kh_uisdk_margin_small"
@@ -109,7 +109,8 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/kh_uisdk_schedule_ride"/>
 
         <ImageView
             android:id="@+id/clearDateTimeButtonIcon"

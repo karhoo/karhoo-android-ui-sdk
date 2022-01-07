@@ -336,6 +336,7 @@
     <string name="kh_uisdk_saloon">Sedan</string>
     <string name="kh_uisdk_save">Guardar</string>
     <string name="kh_uisdk_settings">Ajustes</string>
+    <string name="kh_uisdk_schedule_ride">Programe el viaje</string>
     <string name="kh_uisdk_sign_in">Acceder</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">ACCEDER</string>
