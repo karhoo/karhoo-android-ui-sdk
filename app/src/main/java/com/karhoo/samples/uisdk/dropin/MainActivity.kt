@@ -8,7 +8,6 @@ import android.view.Window
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.textfield.TextInputEditText
 import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenConfig
 import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
@@ -89,12 +88,6 @@ class MainActivity : AppCompatActivity() {
             }
             showLoginInputDialog()
         }
-
-        AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-//                AppCompatDelegate.MODE_NIGHT_YES
-//                AppCompatDelegate.MODE_NIGHT_NO
-        )
     }
 
     private fun showLoginInputDialog() {
