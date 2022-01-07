@@ -258,11 +258,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)
-                            .passengerDetails(passengerDetails)
-                            .comments(bookingComments)
-                            .loyaltyInfo(loyaltyInfo)
-                            .bookingInfo(BookingInfo(pickup, destination, date))
-                            .currentValidityDeadlineTimestamp(ts)
+                            .bookingInfo(BookingInfo(bookingStatusStateViewModel.currentState.pickup,
+                                                     bookingStatusStateViewModel.currentState.destination,
+                                                     bookingStatusStateViewModel.currentState.date))
 
                     passengerDetails?.let {
                         builder.passengerDetails(it)
@@ -277,7 +275,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     }
 
                     currentValidityDeadlineTimestamp?.let {
-                        builder.setValidityDeadlineTimestamp(it)
+                        builder.validityDeadlineTimestamp(it)
                     }
 
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
