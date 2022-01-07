@@ -14,7 +14,7 @@ import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
@@ -65,7 +65,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
         bookingStatusStateViewModel.viewStates().removeObserver(observer)
     }
 
-    override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingStatus> {
+    override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingInfo> {
         return observer
     }
 
@@ -75,17 +75,17 @@ class KarhooAvailability(private val quotesService: QuotesService,
     }
 
     @Suppress("NestedBlockDepth")
-    private fun requestVehicleAvailability(bookingStatus: BookingStatus?) {
+    private fun requestVehicleAvailability(bookingInfo: BookingInfo?) {
         cancelVehicleCallback()
-        bookingStatus?.pickup?.let { bookingStatusPickup ->
-            bookingStatus.destination?.let { bookingStatusDestination ->
+        bookingInfo?.pickup?.let { bookingStatusPickup ->
+            bookingInfo.destination?.let { bookingStatusDestination ->
                 vehiclesObserver = quotesCallback()
                 vehiclesObserver?.let { observer ->
                     vehiclesObservable = quotesService
                             .quotes(QuotesSearch(
                                     origin = bookingStatusPickup,
                                     destination = bookingStatusDestination,
-                                    dateScheduled = bookingStatus.date?.toDate()),
+                                    dateScheduled = bookingInfo.date?.toDate()),
                                     locale.toNormalizedLocale())
                             .observable().apply { subscribe(observer) }
                 }
@@ -142,7 +142,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
         this.analytics = analytics
     }
 
-    private fun createObservable() = androidx.lifecycle.Observer<BookingStatus> { bookingStatus ->
+    private fun createObservable() = androidx.lifecycle.Observer<BookingInfo> { bookingStatus ->
         cancelVehicleCallback()
         if (bookingStatus != null && bookingStatus.destination == null
                 && categoryViewModels.isNotEmpty()) {

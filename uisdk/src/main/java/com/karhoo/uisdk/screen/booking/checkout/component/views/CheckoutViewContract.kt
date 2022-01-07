@@ -14,7 +14,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
@@ -103,14 +103,14 @@ interface CheckoutViewContract {
                                        comments: String,
                                        flightInfo: String)
 
-        fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
+        fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)
 
         fun resetBooking()
 
         fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails? = null)
 
-        fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
+        fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingInfo>
 
         fun watchBookingRequest(bookingRequestStateViewModel: BookingRequestStateViewModel)
                 : Observer<BookingRequestStatus>
@@ -119,7 +119,7 @@ interface CheckoutViewContract {
 
         fun onPaymentFailureDialogCancelled()
 
-        fun setBookingStatus(bookingStatus: BookingStatus?)
+        fun setBookingStatus(bookingInfo: BookingInfo?)
 
         fun consumeBackPressed(): Boolean
 
@@ -139,7 +139,7 @@ interface CheckoutViewContract {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(
                 quote: Quote,
-                bookingStatus: BookingStatus?,
+                bookingInfo: BookingInfo?,
                 outboundTripId: String? = null,
                 bookingMetadata: HashMap<String, String>?,
                 passengerDetails: PassengerDetails? = null,

@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
@@ -119,7 +119,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         return DateTime(setYear, setMonth, setDay, setHour, setMinute, timezone)
     }
 
-    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingStatus> {
+    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingInfo> {
         setCurrentBookingStatus(bookingStatusStateViewModel)
         return Observer {
             it?.let { bookingStatus ->

@@ -11,7 +11,7 @@ import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.nhaarman.mockitokotlin2.any
@@ -92,7 +92,7 @@ class KarhooAvailabilityTest {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
@@ -114,7 +114,7 @@ class KarhooAvailabilityTest {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
@@ -142,7 +142,7 @@ class KarhooAvailabilityTest {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
@@ -191,7 +191,7 @@ class KarhooAvailabilityTest {
 
     private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAvailabilityHandler(availabilityHandler)
         availability.setAllCategory(ALL)

@@ -36,7 +36,7 @@
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_grid_first_column"
                 android:layout_marginTop="@dimen/margin_16"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_grid_first_column"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall" />
+                android:layout_marginBottom="@dimen/margin_16" />
 
             <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
                 android:id="@+id/loyaltyView"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_grid_first_column"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_grid_first_column"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall" />
+                android:layout_marginBottom="@dimen/margin_16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
