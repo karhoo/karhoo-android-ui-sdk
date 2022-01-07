@@ -220,8 +220,8 @@
 
     <style name="KhAddressPickerPrebookIcon">
         <item name="srcCompat">@drawable/kh_uisdk_ic_calendar</item>
-        <item name="android:layout_width">25dp</item>
-        <item name="android:layout_height">25dp</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
         <item name="android:layout_marginLeft">12dp</item>
         <item name="android:layout_marginRight">12dp</item>
     </style>
