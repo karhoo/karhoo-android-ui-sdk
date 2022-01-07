@@ -25,7 +25,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarType
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.quotes.QuoteListStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
@@ -164,8 +164,8 @@ class QuotesListView @JvmOverloads constructor(
         }
     }
 
-    override fun destinationChanged(bookingStatus: BookingStatus) {
-        quotesSortWidget.destinationChanged(bookingStatus)
+    override fun destinationChanged(bookingInfo: BookingInfo) {
+        quotesSortWidget.destinationChanged(bookingInfo)
     }
 
     override fun updateList(quoteList: List<Quote>) {

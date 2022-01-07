@@ -34,7 +34,7 @@ import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfi
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -258,9 +258,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)
-                            .bookingStatus(BookingStatus(bookingStatusStateViewModel.currentState.pickup,
-                                                         bookingStatusStateViewModel.currentState.destination,
-                                                         bookingStatusStateViewModel.currentState.date))
+                            .bookingInfo(BookingInfo(bookingStatusStateViewModel.currentState.pickup,
+                                                     bookingStatusStateViewModel.currentState.destination,
+                                                     bookingStatusStateViewModel.currentState.date))
 
                     passengerDetails?.let {
                         builder.passengerDetails(it)
@@ -275,7 +275,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     }
 
                     currentValidityDeadlineTimestamp?.let {
-                        builder.setValidityDeadlineTimestamp(it)
+                        builder.validityDeadlineTimestamp(it)
                     }
 
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)

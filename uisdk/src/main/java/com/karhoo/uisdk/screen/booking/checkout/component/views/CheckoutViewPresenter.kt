@@ -27,7 +27,7 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
@@ -61,8 +61,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         attachView(view)
     }
 
-    override fun setBookingStatus(bookingStatus: BookingStatus?) {
-        bookingStatus?.let {
+    override fun setBookingStatus(bookingInfo: BookingInfo?) {
+        bookingInfo?.let {
             scheduledDate = it.date
             destination = it.destination
             origin = it.pickup
@@ -77,7 +77,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus> {
+    override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingInfo> {
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
         return Observer { currentStatus ->
             currentStatus?.let {
@@ -238,10 +238,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
+    override fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?, passengerDetails: PassengerDetails?) {
         retrievePassengerDetailsForShowing(passengerDetails)
-        setBookingStatus(bookingStatus)
+        setBookingStatus(bookingInfo)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
