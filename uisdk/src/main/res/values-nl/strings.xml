@@ -336,6 +336,7 @@
     <string name="kh_uisdk_saloon">Standaard voertuig</string>
     <string name="kh_uisdk_save">BEWAREN</string>
     <string name="kh_uisdk_settings">Instellingen</string>
+    <string name="kh_uisdk_schedule_ride">Plan de rit</string>
     <string name="kh_uisdk_sign_in">Inloggen</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>

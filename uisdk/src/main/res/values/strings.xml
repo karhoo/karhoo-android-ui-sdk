@@ -328,6 +328,7 @@
     <string name="kh_uisdk_saloon">Saloon</string>
     <string name="kh_uisdk_save">Save</string>
     <string name="kh_uisdk_settings">Settings</string>
+    <string name="kh_uisdk_schedule_ride">Schedule the ride</string>
     <string name="kh_uisdk_sign_in">Sign in</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">SIGN IN</string>

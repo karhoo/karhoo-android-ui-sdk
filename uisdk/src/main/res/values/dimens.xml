@@ -80,7 +80,7 @@
     <dimen name="kh_uisdk_full_width_button_height">48dp</dimen>
     <dimen name="kh_uisdk_icon_size_small">12dp</dimen>
     <dimen name="kh_uisdk_icon_size">24dp</dimen>
-    <dimen name="kh_uisdk_icon_size_medium">20dp</dimen>
+    <dimen name="kh_uisdk_icon_size_medium">25dp</dimen>
     <dimen name="kh_uisdk_icon_size_large">32dp</dimen>
     <dimen name="kh_uisdk_address_icon_size_default">17dp</dimen>
 

@@ -109,7 +109,8 @@
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/kh_uisdk_schedule_ride"/>
 
         <ImageView
             android:id="@+id/clearDateTimeButtonIcon"
