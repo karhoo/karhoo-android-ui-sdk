@@ -4,12 +4,12 @@
     <style name="Text"></style>
 
     <style name="Text.Fare">
-        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Primary">
-        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
     <style name="Text.Primary.XXLarge">
@@ -85,7 +85,7 @@
     </style>
 
     <style name="Text.Alternative">
-        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
     <style name="Text.Alternative.XLarge">
@@ -143,7 +143,7 @@
     </style>
 
     <style name="Text.Faded">
-        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
     <style name="Text.Faded.Medium">
@@ -175,7 +175,7 @@
     </style>
 
     <style name="Text.Black">
-        <item name="android:textColor">@color/kh_uisdk_newTextColor</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
     <style name="Text.Black.Medium">

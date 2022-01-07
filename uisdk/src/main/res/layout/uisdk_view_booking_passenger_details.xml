@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:focusableInTouchMode="true"
-    android:background="@color/kh_uisdk_newWhiteColor">
+    android:background="@color/kh_uisdk_background_primary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

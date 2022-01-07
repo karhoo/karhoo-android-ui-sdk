@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="kh_uisdk_newPrimaryColor">#6F769A</color>
-    <color name="kh_uisdk_newSecondaryColor">#FF66B4</color>
-    <color name="kh_uisdk_newAccentColor">#5BC0EB</color>
-    <color name="kh_uisdk_newBorderColor">#2A2A2A</color>
-    <color name="kh_uisdk_newErrorColor">#FF6666</color>
-    <color name="kh_uisdk_newSuccessColor">#92E9C5</color>
-    <color name="kh_uisdk_newDisabledColor">#464646</color>
-    <color name="kh_uisdk_newWarningColor">#FFC672</color>
+    <color name="kh_uisdk_primary">#6F769A</color>
+    <color name="kh_uisdk_secondary">#FF66B4</color>
+    <color name="kh_uisdk_accent">#5BC0EB</color>
+    <color name="kh_uisdk_border">#2A2A2A</color>
+    <color name="kh_uisdk_error">#FF6666</color>
+    <color name="kh_uisdk_success">#92E9C5</color>
+    <color name="kh_uisdk_disabled">#464646</color>
+    <color name="kh_uisdk_warning">#FFC672</color>
 
-    <color name="kh_uisdk_newWhiteColor">#121212</color>
-    <color name="kh_uisdk_newTextColor">#CECECE</color>
-    <color name="kh_uisdk_newLabelColor">#9E9E9E</color>
-    <color name="kh_uisdk_newBlackColor">#E0E0E0</color>
+    <color name="kh_uisdk_background_primary">#121212</color>
+    <color name="kh_uisdk_text_secondary">#CECECE</color>
+    <color name="kh_uisdk_label">#9E9E9E</color>
+    <color name="kh_uisdk_text_primary">#E0E0E0</color>
 
-    <color name="kh_uisdk_newBackgroundColor1">#232323</color>
-    <color name="kh_uisdk_newBackgroundColor2">#252525</color>
-    <color name="kh_uisdk_newBackgroundColor3">#2C2C2C</color>
-    <color name="kh_uisdk_newBackgroundColor4">#2E2E2E</color>
-    <color name="kh_uisdk_newBackgroundColor5">#333333</color>
-    <color name="kh_uisdk_newBackgroundColor6">#363636</color>
-    <color name="kh_uisdk_newBackgroundColor7">#383838</color>
+    <color name="kh_uisdk_background1">#232323</color>
+    <color name="kh_uisdk_background2">#252525</color>
+    <color name="kh_uisdk_background3">#2C2C2C</color>
+    <color name="kh_uisdk_background4">#2E2E2E</color>
+    <color name="kh_uisdk_background5">#333333</color>
+    <color name="kh_uisdk_background6">#363636</color>
+    <color name="kh_uisdk_background7">#383838</color>
 
     <!-- Adyen -->
-    <color name="white">@color/kh_uisdk_newBackgroundColor2</color>
-    <color name="textColor">@color/kh_uisdk_newBlackColor</color>
-    <color name="label_color">@color/kh_uisdk_newTextColor</color>
-    <color name="black">@color/kh_uisdk_newBlackColor</color>
-    <color name="primaryColor">@color/kh_uisdk_newPrimaryColor</color>
+    <color name="white">@color/kh_uisdk_background2</color>
+    <color name="textColor">@color/kh_uisdk_text_primary</color>
+    <color name="label_color">@color/kh_uisdk_text_secondary</color>
+    <color name="black">@color/kh_uisdk_text_primary</color>
+    <color name="primaryColor">@color/kh_uisdk_primary</color>
 
-    <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_newBackgroundColor3</color>
+    <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_background3</color>
 </resources>
