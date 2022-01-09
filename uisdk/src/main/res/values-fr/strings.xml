@@ -119,6 +119,7 @@
     <string name="kh_uisdk_feedback_submitted">Merci d\'avoir envoyé vos commentaires</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Merci de nous en dire un peu plus sur votre course.</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Taxes et frais inclus</string>
     <string name="kh_uisdk_finding_your_ride">Création de votre course</string>
     <string name="kh_uisdk_first_name_hint">Prénom</string>
     <!-- Fare type -->
@@ -219,9 +220,9 @@
     <string name="kh_uisdk_login">Connexion</string>
     <string name="kh_uisdk_loyalty_info">Votre carte est nécessaire pour autoriser cette transaction dans le cas où le prix final du trajet dépasse votre solde de points. Votre compte ne sera pas débité si vos points de fidélité couvrent la totalité du prix.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
-    <string name="kh_uisdk_loyalty_points_burned_for_trip">Vous utilisez %1$s aiguillage</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Ce trajet vous rapporte %1$s aiguillage</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Vous n’êtes pas autorisé à brûler des points</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Vous utilisez %1$s points</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Ce trajet vous rapporte %1$s points</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Vous n’êtes pas autorisé à utiliser des points de fidélité</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Votre solde est insuffisant</string>
     <string name="kh_uisdk_loyalty_title">Points de fidélité</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">La devise n’est pas encore prise en charge</string>
@@ -246,7 +247,7 @@
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
-    <string name="kh_uisdk_offer_expired">Devis expiré</string>
+    <string name="kh_uisdk_offer_expired">Offre expirée</string>
     <string name="kh_uisdk_offer_expired_text">Veuillez sélectionner un nouveau devis pour poursuivre votre réservation</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
@@ -335,8 +336,8 @@
     <string name="kh_uisdk_rides">Courses</string>
     <string name="kh_uisdk_saloon">Berline</string>
     <string name="kh_uisdk_save">Enregistrer</string>
-    <string name="kh_uisdk_settings">Paramètres</string>
     <string name="kh_uisdk_schedule_ride">Planifier le trajet</string>
+    <string name="kh_uisdk_settings">Paramètres</string>
     <string name="kh_uisdk_sign_in">Connexion</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Connexion</string>

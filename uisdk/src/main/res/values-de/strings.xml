@@ -119,6 +119,7 @@
     <string name="kh_uisdk_feedback_submitted">Vielen Dank für Ihr Feedback</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Inklusive Steuern und Gebühren</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden...</string>
     <string name="kh_uisdk_first_name_hint">Vorname</string>
     <!-- Fare type -->
@@ -335,8 +336,8 @@
     <string name="kh_uisdk_rides">Fahrten</string>
     <string name="kh_uisdk_saloon">Standard</string>
     <string name="kh_uisdk_save">Speichern</string>
-    <string name="kh_uisdk_settings">Einstellungen</string>
     <string name="kh_uisdk_schedule_ride">Planen Sie die Fahrt</string>
+    <string name="kh_uisdk_settings">Einstellungen</string>
     <string name="kh_uisdk_sign_in">Anmelden</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Anmelden</string>

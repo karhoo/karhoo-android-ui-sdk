@@ -119,6 +119,7 @@
     <string name="kh_uisdk_feedback_submitted">Grazie per aver inviato il tuo feedback</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Per favore, dicci di più sul tuo viaggio</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Tasse e commissioni incluse</string>
     <string name="kh_uisdk_finding_your_ride">Trovare la tua corsa...</string>
     <string name="kh_uisdk_first_name_hint">Nome</string>
     <!-- Fare type -->
@@ -335,8 +336,8 @@
     <string name="kh_uisdk_rides">Le tue corse</string>
     <string name="kh_uisdk_saloon">Standard</string>
     <string name="kh_uisdk_save">Salvare</string>
-    <string name="kh_uisdk_settings">Impostazioni</string>
     <string name="kh_uisdk_schedule_ride">Pianifica la corsa</string>
+    <string name="kh_uisdk_settings">Impostazioni</string>
     <string name="kh_uisdk_sign_in">Registrati</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Registrati</string>

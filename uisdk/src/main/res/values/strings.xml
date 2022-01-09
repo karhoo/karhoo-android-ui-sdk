@@ -337,6 +337,7 @@
     <string name="kh_uisdk_sorter_cheapest">PRICE</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">ETA</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
     <string name="kh_uisdk_star_excellent">Excellent</string>
     <string name="kh_uisdk_star_fair">Fair</string>
     <string name="kh_uisdk_star_good">Good</string>
