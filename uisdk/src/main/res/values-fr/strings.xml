@@ -240,6 +240,7 @@
     <string name="kh_uisdk_mpv">Van</string>
     <string name="kh_uisdk_name_hint">Nom</string>
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
+    <string name="kh_uisdk_new_ride">NOUVEAU MANÈGE</string>
     <string name="kh_uisdk_next">Suivant</string>
     <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>

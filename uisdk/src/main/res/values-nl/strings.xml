@@ -240,6 +240,7 @@
     <string name="kh_uisdk_mpv">Minibus</string>
     <string name="kh_uisdk_name_hint">Naam</string>
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
+    <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
     <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
