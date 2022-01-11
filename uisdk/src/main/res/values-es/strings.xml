@@ -100,6 +100,8 @@
     <string name="kh_uisdk_enter_destination">¿Dónde vas?</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Introduce un destino para ver los vehículos disponibles</string>
     <!--  Address Picker  -->
+    <string name="kh_uisdk_erase_address">Borrar dirección</string>
+    <string name="kh_uisdk_switch_departure_destination">Cambiar dirección de salida y destino</string>
     <string name="kh_uisdk_enter_pickup">¿Dónde estás?</string>
     <string name="kh_uisdk_error_cannot_create_user">Parece que hubo un problema al registrar tu cuenta. Vuelve a intentarlo.</string>
     <string name="kh_uisdk_error_invalid_password">Error: la contraseña es incorrecta</string>

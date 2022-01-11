@@ -100,6 +100,8 @@
     <string name="kh_uisdk_enter_destination">Ajouter une destination</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Ajoutez une destination pour voir les véhicules disponibles.</string>
     <!--  Address Picker  -->
+    <string name="kh_uisdk_erase_address">Effacer l’adresse</string>
+    <string name="kh_uisdk_switch_departure_destination">Changer d’adresse de départ et de destination</string>
     <string name="kh_uisdk_enter_pickup">Adresse de départ</string>
     <string name="kh_uisdk_error_cannot_create_user">Une erreur est survenue pendant la création de votre compte. Veuillez réessayer.</string>
     <string name="kh_uisdk_error_invalid_password">Erreur: Mot de passe ou Email incorrect</string>
