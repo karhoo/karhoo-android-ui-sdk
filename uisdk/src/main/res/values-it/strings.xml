@@ -119,6 +119,7 @@
     <string name="kh_uisdk_feedback_submitted">Grazie per aver inviato il tuo feedback</string>
     <!--  FEEDBACK  -->
     <string name="kh_uisdk_feedback_title">Per favore, dicci di più sul tuo viaggio</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Tasse e commissioni incluse</string>
     <string name="kh_uisdk_finding_your_ride">Trovare la tua corsa...</string>
     <string name="kh_uisdk_first_name_hint">Nome</string>
     <!--  Fare type  -->
