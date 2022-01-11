@@ -240,6 +240,7 @@
     <string name="kh_uisdk_mpv">MPV</string>
     <string name="kh_uisdk_name_hint">Name</string>
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
+    <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
