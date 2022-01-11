@@ -6,5 +6,5 @@
         android:dashWidth="10px"
         android:dashGap="10px" />
     <corners android:radius="4dp" />
-    <solid android:color="@color/kh_uisdk_transparent" />
+    <solid android:color="@color/kh_uisdk_background1" />
 </shape>
