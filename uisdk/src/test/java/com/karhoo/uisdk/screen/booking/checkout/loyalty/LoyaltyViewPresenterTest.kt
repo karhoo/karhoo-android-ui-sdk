@@ -204,7 +204,7 @@ class LoyaltyViewPresenterTest {
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
         presenter.updateBurnedPoints()
-        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
+        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
         verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 
@@ -233,7 +233,7 @@ class LoyaltyViewPresenterTest {
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
         presenter.updateBurnedPoints()
-        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
+        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
         verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 

@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.network.request.LoyaltyPreAuthPayload
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 
 class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                        private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
@@ -76,7 +77,9 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                                 getSubtitleBasedOnMode()
                             }
                             is Resource.Failure -> {
-                                view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_unsupported_currency))
+                                val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
+
+                                view.showError(view.provideResources().getString(reasonId))
                                 currentMode = LoyaltyMode.ERROR
                             }
                         }
@@ -99,7 +102,9 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                                 getSubtitleBasedOnMode()
                             }
                             is Resource.Failure -> {
-                                view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_unsupported_currency))
+                                val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
+
+                                view.showError(view.provideResources().getString(reasonId))
                                 currentMode = LoyaltyMode.ERROR
                             }
                         }
@@ -179,12 +184,7 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                         loyaltyModeCallback?.onPreAuthorized(result.data.nonce)
                     }
                     is Resource.Failure -> {
-                        val internalMessage = result.error.internalMessage
-                        val reasonId = if(internalMessage == "customer-not-allowed-to-burn-points") {
-                            R.string.kh_uisdk_loyalty_pre_auth_not_allowed_to_burn
-                        } else {
-                            R.string.kh_uisdk_loyalty_pre_auth_not_enough_points
-                        }
+                        val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
 
                         loyaltyModeCallback?.onPreAuthorizationError(reasonId)
                     }
