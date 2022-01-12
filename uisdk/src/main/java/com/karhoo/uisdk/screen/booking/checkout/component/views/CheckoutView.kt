@@ -434,6 +434,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             karhooError = null,
                             positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok
                                                                     ) { d, _ ->
+                                loadingButtonCallback.onLoadingComplete()
                                 d.dismiss()
                             },
                             negativeButton = null)
