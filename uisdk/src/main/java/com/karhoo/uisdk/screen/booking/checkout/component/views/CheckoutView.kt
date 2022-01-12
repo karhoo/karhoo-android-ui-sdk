@@ -111,6 +111,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 loadingButtonCallback.enableButton(validated)
             }
         }
+
+        showLoyaltyView(false)
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
