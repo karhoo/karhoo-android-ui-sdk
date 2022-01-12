@@ -100,6 +100,8 @@
     <string name="kh_uisdk_enter_destination">Enter destination</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
     <!--  Address Picker  -->
+    <string name="kh_uisdk_erase_address">Erase address</string>
+    <string name="kh_uisdk_switch_departure_destination">Switch departure and destination address</string>
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
