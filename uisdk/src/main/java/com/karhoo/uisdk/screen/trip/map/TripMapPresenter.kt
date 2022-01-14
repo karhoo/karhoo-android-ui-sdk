@@ -128,6 +128,8 @@ class TripMapPresenter(view: TripMapMVP.View,
                     TripStatus.PASSENGER_ON_BOARD -> view?.zoomMapToIncludeLatLngs(CAR_ANIM_DURATION, driverLatLng, destination)
                     else -> view?.zoomMapToIncludeLatLngs(CAR_ANIM_DURATION, origin, destination)
                 }
+            } else if(tripState == null && driverLatLng != null){
+                view?.zoomMapToIncludeLatLngs(CAR_ANIM_DURATION, driverLatLng, origin)
             } else {
                 view?.zoomMapToIncludeLatLngs(CAR_ANIM_DURATION, origin, destination)
             }

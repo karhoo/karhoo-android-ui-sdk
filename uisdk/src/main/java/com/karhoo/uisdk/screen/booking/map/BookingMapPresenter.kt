@@ -10,7 +10,7 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PICKUP_GEOCODE_DELAY
 import java.util.Timer
@@ -22,7 +22,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     : BasePresenter<BookingMapMVP.View>(), BookingMapMVP.Presenter, BookingMapStategy.Owner {
 
     private var mainPresenter: BookingMapStategy.Presenter? = null
-    private var currentBookingStatus: BookingStatus? = null
+    private var currentBookingInfo: BookingInfo? = null
     private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
     private var mapMoving: Boolean = false
     private var timer: Timer? = null
@@ -35,22 +35,22 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
 
     override fun watchBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
         this.bookingStatusStateViewModel = bookingStatusStateViewModel
-        val observer = Observer<BookingStatus> { currentStatus ->
-            currentBookingStatus = currentStatus
+        val observer = Observer<BookingInfo> { currentStatus ->
+            currentBookingInfo = currentStatus
 
-            if (currentBookingStatus?.pickup != null && currentBookingStatus?.destination != null) {
+            if (currentBookingInfo?.pickup != null && currentBookingInfo?.destination != null) {
                 if (mainPresenter !== pickupDropoffPresenter) {
                     mainPresenter = pickupDropoffPresenter
                 }
                 addMarkers()
-                moveToMarker(currentBookingStatus?.pickup, currentBookingStatus?.destination)
-            } else if (currentBookingStatus?.pickup != null && currentBookingStatus?.destination == null) {
+                moveToMarker(currentBookingInfo?.pickup, currentBookingInfo?.destination)
+            } else if (currentBookingInfo?.pickup != null && currentBookingInfo?.destination == null) {
                 if (mainPresenter !== pickupOnlyPresenter) {
                     mainPresenter = pickupOnlyPresenter
-                    setPickupLocation(currentBookingStatus?.pickup)
+                    setPickupLocation(currentBookingInfo?.pickup)
                 }
-                moveToMarker(currentBookingStatus?.pickup, currentBookingStatus?.destination)
-            } else if (!mapMoving && currentBookingStatus?.pickup == null) {
+                moveToMarker(currentBookingInfo?.pickup, currentBookingInfo?.destination)
+            } else if (!mapMoving && currentBookingInfo?.pickup == null) {
                 view?.doReverseGeolocate()
             }
         }
@@ -58,8 +58,8 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     }
 
     private fun addMarkers() {
-        val pickup = currentBookingStatus?.pickup?.position
-        val dropOff = currentBookingStatus?.destination?.position
+        val pickup = currentBookingInfo?.pickup?.position
+        val dropOff = currentBookingInfo?.destination?.position
 
         if (pickup != null) {
             view?.addMarkers(pickup, dropOff)

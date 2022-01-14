@@ -10,7 +10,7 @@ import com.karhoo.sdk.api.service.address.AddressService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.address.AddressType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
@@ -136,7 +136,7 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         }
     }
 
-    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingStatus> {
+    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingInfo> {
         setCurrentBookingStatus(bookingStatusStateViewModel)
         return Observer { bookingStatus ->
             bookingStatus?.let {

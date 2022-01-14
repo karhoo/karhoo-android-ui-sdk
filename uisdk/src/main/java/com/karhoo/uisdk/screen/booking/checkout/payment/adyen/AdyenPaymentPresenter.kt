@@ -28,6 +28,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInService
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
+import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
@@ -42,6 +43,7 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
     var quote: Quote? = null
     private var tripId: String = ""
     private var passengerDetails: PassengerDetails? = null
+    private var _context: Context? = null
 
     init {
         attachView(view)
@@ -111,14 +113,14 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
         view?.handlePaymentDetailsUpdate()
     }
 
-    override fun sdkInit(quote: Quote?) {
+    override fun sdkInit(quote: Quote?, locale: Locale?) {
         this.quote = quote
         paymentsService.getAdyenPublicKey().execute { result ->
             when (result) {
                 is Resource.Success -> {
                     result.data.let {
                         adyenKey = it.publicKey
-                        getPaymentMethods()
+                        getPaymentMethods(locale)
                     }
                 }
                 is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
@@ -140,14 +142,15 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                 .build()
     }
 
-    private fun getPaymentMethods() {
+    private fun getPaymentMethods(locale: Locale?) {
         val amount = AdyenAmount(quote?.price?.currencyCode ?: DEFAULT_CURRENCY
                                  , quote?.price?.highPrice.orZero())
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
         } else {
             let {
-                val request = AdyenPaymentMethodsRequest(amount = amount)
+                val localizedString: String? = locale?.toNormalizedLocale()
+                val request = AdyenPaymentMethodsRequest(amount = amount, shopperLocale = localizedString)
                 paymentsService.getAdyenPaymentMethods(request).execute { result ->
                     when (result) {
                         is Resource.Success -> {

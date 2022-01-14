@@ -16,7 +16,8 @@
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:label="@string/kh_uisdk_title_activity_threedsecure"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -11,7 +11,7 @@ import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.nhaarman.mockitokotlin2.any
@@ -66,11 +66,11 @@ class KarhooAvailabilityTest {
         availability = KarhooAvailability(
                 quotesService = quotesService,
                 bookingStatusStateViewModel = bookingStatusStateViewModel,
-                analytics = analytics,
                 liveFleetsViewModel = liveFleetsViewModel,
                 lifecycleOwner = lifecycleOwner,
                 categoriesViewModel = categoriesViewModel
         )
+        (availability as KarhooAvailability).setAnalytics(analytics)
 
         availabilityHandler = object : AvailabilityHandler {
             override var hasAvailability: Boolean = false
@@ -89,10 +89,10 @@ class KarhooAvailabilityTest {
      **/
     @Test
     fun `all category gets populated with a full list of quotes`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
@@ -111,10 +111,10 @@ class KarhooAvailabilityTest {
      **/
     @Test
     fun `selecting a category filter only returns vehicles of that category`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
@@ -139,10 +139,10 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `selecting a vehicle category triggers an event if there is a filtered list`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
@@ -155,7 +155,7 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `When getting some quotes categories with empty quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         setCategories(CATEGORIES_WITH_EMPTY_QUOTES, QuoteStatus.PROGRESSING)
 
@@ -164,7 +164,7 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `When getting some quotes categories with empty quotes and a complete status, the availability handler will be set to no result`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         setCategories(CATEGORIES_WITH_EMPTY_QUOTES, QuoteStatus.COMPLETED)
 
@@ -173,7 +173,7 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `When getting some quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         setCategories(CATEGORIES, QuoteStatus.PROGRESSING)
 
@@ -182,7 +182,7 @@ class KarhooAvailabilityTest {
 
     @Test
     fun `When getting some quotes and a complete status, the availability handler will have hasAvailability set to true`() {
-        whenever(quotesService.quotes(any())).thenReturn(quotesCall)
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         setCategories(CATEGORIES, QuoteStatus.COMPLETED)
 
@@ -191,7 +191,7 @@ class KarhooAvailabilityTest {
 
     private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingStatus(locationInfo, locationInfo, null))
+        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
 
         availability.setAvailabilityHandler(availabilityHandler)
         availability.setAllCategory(ALL)

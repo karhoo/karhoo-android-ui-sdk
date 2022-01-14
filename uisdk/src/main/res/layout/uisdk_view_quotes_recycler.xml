@@ -8,7 +8,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quotesListRecycler"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/kh_uisdk_quotes_height"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"

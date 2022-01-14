@@ -109,7 +109,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         field.error = resources.getString(errorId)
     }
 
-    override fun setCountryFlag(countryCode: String, dialingCode: String, validateField: Boolean) {
+    override fun setCountryFlag(countryCode: String, dialingCode: String, validateField: Boolean,
+                                focusPhoneNumber: Boolean) {
         val countryFlag = Utils.getMipmapResId(context, countryCode.toLowerCase() + "_flag")
 
         countryFlagImageView.setImageResource(countryFlag)
@@ -121,6 +122,10 @@ class PassengerDetailsView @JvmOverloads constructor(
         if (validateField) {
             presenter.validateField(mobileNumberLayout, true, PhoneNumberValidator())
             validationCallback?.onFieldsValidated(areFieldsValid())
+        }
+
+        if(focusPhoneNumber){
+            mobileNumberInput.requestFocus()
         }
     }
 
@@ -190,6 +195,8 @@ class PassengerDetailsView @JvmOverloads constructor(
         setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), false)
 
         validateAll()
+        if(!areFieldsValid())
+            validationCallback?.onFieldsValidated(!areFieldsValid())
     }
 
     override fun bindEditMode(isEditing: Boolean) {
@@ -267,6 +274,7 @@ class PassengerDetailsView @JvmOverloads constructor(
             null
         }
     }
+
 
     companion object {
         private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
