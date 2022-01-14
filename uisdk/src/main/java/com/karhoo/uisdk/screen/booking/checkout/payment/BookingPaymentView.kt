@@ -42,12 +42,15 @@ class BookingPaymentView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
         getCustomisationParameters(context, attrs, defStyleAttr)
-        presenter?.getPaymentProvider()
         if (!isInEditMode) {
             this.setOnClickListener {
                 changeCard()
             }
         }
+    }
+
+    override fun getPaymentProvider() {
+        presenter?.getPaymentProvider()
     }
 
     override fun setPassengerDetails(passengerDetails: PassengerDetails?) {
@@ -89,12 +92,14 @@ class BookingPaymentView @JvmOverloads constructor(
 
     private fun changeCard() {
         changeCardProgressBar.visibility = VISIBLE
+        cardLogoImage.visibility = INVISIBLE
         cardActions?.handleChangeCard()
     }
 
     override fun refresh() {
         editCardButtonVisibility(View.VISIBLE)
         changeCardProgressBar.visibility = GONE
+        cardLogoImage.visibility = VISIBLE
     }
 
     override fun initialisePaymentFlow(quote: Quote?) {
@@ -106,7 +111,8 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        cardNumberText.text = if (isGuest()) number else "•••• $number"
+        cardNumberText.text = if (isGuest() && presenter?.getPaymentProviderType() ==
+                ProviderType.BRAINTREE) number else "•••• $number"
         setCardType(cardType)
     }
 
@@ -114,7 +120,10 @@ class BookingPaymentView @JvmOverloads constructor(
         KarhooApi.userStore.savedPaymentInfo?.let {
             changeCardLabel.visibility = visibility
         } ?: run {
-            changeCardLabel.visibility = GONE
+            if(hasValidPayment)
+                changeCardLabel.visibility = GONE
+            else
+                changeCardLabel.visibility = visibility
         }
     }
 
@@ -154,6 +163,7 @@ class BookingPaymentView @JvmOverloads constructor(
             changeCardProgressBar.visibility = INVISIBLE
             editCardButtonVisibility(View.VISIBLE)
             changeCardLabel.visibility = VISIBLE
+            cardLogoImage.visibility = VISIBLE
             changeCardLabel.text =
                 resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
             setCardType(savedPaymentInfo.cardType)
@@ -168,6 +178,7 @@ class BookingPaymentView @JvmOverloads constructor(
             changeCardLabel.text =
                 resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
             changeCardLabel.visibility = VISIBLE
+            cardLogoImage.visibility = VISIBLE
             cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
             paymentLayout.setBackgroundResource(
                 R.drawable
@@ -202,7 +213,7 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
-        dropInView?.initialiseChangeCard(quote)
+        dropInView?.initialiseChangeCard(quote, context?.resources?.configuration?.locale)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
@@ -211,5 +222,9 @@ class BookingPaymentView @JvmOverloads constructor(
 
     override fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String) {
         dropInView?.handleThreeDSecure(context, sdkToken, nonce, amount)
+    }
+
+    override fun retrieveLoyaltyStatus() {
+        paymentActions?.retrieveLoyaltyStatus()
     }
 }

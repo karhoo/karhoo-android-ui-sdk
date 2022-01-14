@@ -10,6 +10,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
+import java.util.Locale
 
 class BookingPaymentPresenter(view: BookingPaymentContract.View,
                               private val userStore: UserStore = KarhooApi.userStore,
@@ -22,7 +23,7 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
 
     override fun createPaymentView(actions: PaymentDropInContract.Actions) {
         val paymentView = userStore.paymentProvider?.let {
-            when (enumValueOf<ProviderType>(it.id.toUpperCase())) {
+            when (enumValueOf<ProviderType>(it.provider.id.uppercase(Locale.US))) {
                 ProviderType.ADYEN -> {
                     val view = AdyenPaymentView(actions)
                     view.actions = actions
@@ -39,8 +40,11 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
     }
 
     override fun getPaymentViewVisibility() {
-        val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.id, ignoreCase = true))
-            GONE else VISIBLE
+        val visibility = if (ProviderType.ADYEN.name.equals(userStore.paymentProvider?.provider?.id,
+                                                            ignoreCase = true))
+            GONE
+        else
+            VISIBLE
         view?.setViewVisibility(visibility)
     }
 
@@ -48,12 +52,24 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
         if (userStore.paymentProvider == null) {
             paymentsService.getPaymentProvider().execute { result ->
                 when (result) {
-                    is Resource.Success -> view?.bindDropInView()
+                    is Resource.Success -> {
+                        view?.retrieveLoyaltyStatus()
+                        view?.bindDropInView()
+                    }
                     is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
             }
         } else {
+            view?.retrieveLoyaltyStatus()
             view?.bindDropInView()
+        }
+    }
+
+    override fun getPaymentProviderType(): ProviderType {
+        return if (ProviderType.ADYEN.name == userStore.paymentProvider?.provider?.id) {
+            ProviderType.ADYEN
+        } else {
+            ProviderType.BRAINTREE
         }
     }
 }

@@ -28,6 +28,8 @@ class BookingQuotesViewModel(application: Application) :
             is BookingQuotesViewContract.BookingQuotesEvent.Availability -> setHideNoAvailability()
             is BookingQuotesViewContract.BookingQuotesEvent.Error ->
                 setShowNoAvailability(viewEvent.snackbarConfig)
+            is BookingQuotesViewContract.BookingQuotesEvent.QuoteListValidity ->
+                setQuoteListValidityDeadlineTimestamp(viewEvent.timestamp)
         }
     }
 
@@ -55,5 +57,9 @@ class BookingQuotesViewModel(application: Application) :
     private fun showBookingRequest(selectedQuote: Quote) {
         viewState = QuoteListStatus(selectedQuote)
         viewAction = BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest(selectedQuote)
+    }
+
+    private fun setQuoteListValidityDeadlineTimestamp(timestamp: Long) {
+        viewAction = BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp(timestamp)
     }
 }

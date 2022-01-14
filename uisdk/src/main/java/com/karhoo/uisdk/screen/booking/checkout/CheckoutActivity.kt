@@ -10,8 +10,9 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
@@ -36,12 +37,13 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
             val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
             quote?.let {
+                removeIfCheckoutFragmentExists()
                 val ft = supportFragmentManager.beginTransaction()
 
                 fragment = CheckoutFragment.newInstance(extras)
 
                 ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                        .commit()
+                    .commit()
             } ?: run {
                 finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
@@ -50,10 +52,17 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
     }
 
+    fun removeIfCheckoutFragmentExists(){
+        for(item in supportFragmentManager.fragments){
+            if(item is CheckoutFragment){
+                supportFragmentManager.beginTransaction().remove(item).commit();
+            }
+        }
+    }
+
     override fun handleExtras() {
         // do nothing
     }
-
     /**
      * Method used for finishing up the booking request activity with an error
      * The activity which launches the BookingRequestActivity should handle the error result
@@ -122,10 +131,10 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         /**
          * By passing booking status into the Booking activity it will automatically prefill the origin
          * destination and date of the desired trip. This will only use the details available inside
-         * the BookingStatus object.
+         * the BookingInfo object.
          */
-        fun bookingStatus(bookingStatus: BookingStatus): Builder {
-            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingStatus)
+        fun bookingInfo(bookingInfo: BookingInfo): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingInfo)
             return this
         }
 
@@ -147,12 +156,31 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * By passing the loyalty info, the Checkout Component will adjust the behaviour of the
+         * loyalty sub-component
+         */
+        fun loyaltyInfo(loyaltyInfo: LoyaltyInfo): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_LOYALTY_KEY, loyaltyInfo)
+            return this
+        }
+
+        /**
+         * Sets the validity timestamp of the quote
+         * When validity of the quote is expired, a popup will be shown to the user to notify him
+         */
+        fun validityDeadlineTimestamp(timestamp: Long): Builder {
+            extrasBundle.putLong(BOOKING_CHECKOUT_VALIDITY_KEY, timestamp)
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
         fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.checkout).apply {
             putExtras(extrasBundle)
         }
+
     }
 
     companion object {
@@ -166,6 +194,8 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_ERROR_DATA = "BOOKING_CHECKOUT_ERROR_DATA"
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
+        const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
+        const val BOOKING_CHECKOUT_VALIDITY_KEY = "BOOKING_CHECKOUT_VALIDITY_KEY"
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10

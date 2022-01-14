@@ -33,5 +33,6 @@ interface CheckoutFragmentContract {
             arePassengerDetailsValid: Boolean,
             isPaymentValid: Boolean
                               ): BookButtonState
+        fun getValidMilisSPeriod(validityTimestamp: Long): Long
     }
 }

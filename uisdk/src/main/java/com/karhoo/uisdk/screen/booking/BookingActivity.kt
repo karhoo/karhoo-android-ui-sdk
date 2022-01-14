@@ -29,11 +29,12 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -66,8 +67,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var outboundTripId: String? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
     private var journeyInfo: JourneyInfo? = null
     private var passengerDetails: PassengerDetails? = null
+    private var loyaltyInfo: LoyaltyInfo? = null
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
+    private var currentValidityDeadlineTimestamp: Long? = null
 
     private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
@@ -146,6 +149,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             journeyInfo = extras.getParcelable(Builder.EXTRA_JOURNEY_INFO)
             passengerDetails = extras.getParcelable(Builder.EXTRA_PASSENGER_DETAILS)
             bookingComments = extras.getString(Builder.EXTRA_COMMENTS)
+            loyaltyInfo = extras.getParcelable(Builder.EXTRA_LOYALTY_INFO)
             val injectedBookingMetadata = extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
             injectedBookingMetadata?.let {
                 bookingMetadata?.putAll(it)
@@ -254,9 +258,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)
-                            .bookingStatus(BookingStatus(bookingStatusStateViewModel.currentState.pickup,
-                                                         bookingStatusStateViewModel.currentState.destination,
-                                                         bookingStatusStateViewModel.currentState.date))
+                            .bookingInfo(BookingInfo(bookingStatusStateViewModel.currentState.pickup,
+                                                     bookingStatusStateViewModel.currentState.destination,
+                                                     bookingStatusStateViewModel.currentState.date))
 
                     passengerDetails?.let {
                         builder.passengerDetails(it)
@@ -266,7 +270,18 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                         builder.comments(it)
                     }
 
+                    loyaltyInfo?.let {
+                        builder.loyaltyInfo(it)
+                    }
+
+                    currentValidityDeadlineTimestamp?.let {
+                        builder.validityDeadlineTimestamp(it)
+                    }
+
                     startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
+                }
+                is BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp -> {
+                    this.currentValidityDeadlineTimestamp = actions.timestamp
                 }
             }
         }
@@ -462,6 +477,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             return this
         }
 
+        fun loyaltyInfo(loyaltyInfo: LoyaltyInfo?): Builder {
+            loyaltyInfo?.let {
+                extrasBundle.putParcelable(EXTRA_LOYALTY_INFO, loyaltyInfo)
+            }
+
+            return this
+        }
+
         /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
@@ -489,6 +512,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             const val EXTRA_PASSENGER_DETAILS = "booking::passenger"
             const val EXTRA_COMMENTS = "booking::comments"
             const val EXTRA_META = "booking::meta"
+            const val EXTRA_LOYALTY_INFO = "extraLoyaltyInfo"
 
             val builder: Builder
                 get() = Builder()

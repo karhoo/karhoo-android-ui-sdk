@@ -5,5 +5,6 @@
     <string name="book_a_trip_braintree_token_exchange">Book a Trip Braintree [Token]</string>
     <string name="book_a_trip_adyen_guest">Book a Trip Adyen [Guest]</string>
     <string name="book_a_trip_adyen_token_exchange">Book a Trip Adeyn [Token]</string>
+    <string name="book_a_trip_loyalty_token_exchange">Book a Trip Loyalty [Token]</string>
     <string name="welcome_message">Karhoo UI SDK Sample</string>
 </resources>

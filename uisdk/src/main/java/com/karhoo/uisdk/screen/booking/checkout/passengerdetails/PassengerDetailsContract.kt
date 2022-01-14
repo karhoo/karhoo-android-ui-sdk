@@ -28,7 +28,8 @@ interface PassengerDetailsContract {
 
         fun clickOnSaveButton()
 
-        fun setCountryFlag(countryCode: String, dialingCode: String, validateField: Boolean)
+        fun setCountryFlag(countryCode: String, dialingCode: String, validateField: Boolean,
+                           focusPhoneNumber: Boolean = false)
 
         fun setErrorOnField(field: TextInputLayout, errorId: Int)
 

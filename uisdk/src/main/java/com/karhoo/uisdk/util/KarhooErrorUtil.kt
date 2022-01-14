@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.R
 
-@Suppress("ComplexMethod")
+@Suppress("ComplexMethod", "LongMethod")
 @StringRes
 fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
 
@@ -54,22 +54,23 @@ fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
         KarhooError.CouldNotBookTripQuoteNoLongerAvailable -> R.string.kh_uisdk_K4018
         KarhooError.CouldNotBookTripWithSelectedDMS -> R.string.kh_uisdk_K4020
         KarhooError.CouldNotBookTripQuotePriceIncreased -> R.string.kh_uisdk_K4025
-
         KarhooError.CouldNotGetEstimatesInternalError -> R.string.kh_uisdk_K5001
         KarhooError.CouldNotGetAvailabilityNoneFound -> R.string.kh_uisdk_K5002
         KarhooError.CouldNotGetAvailabilityNoCategories -> R.string.kh_uisdk_K5003
-
         KarhooError.CouldNotAuthenticate -> R.string.kh_uisdk_K6001
-
         KarhooError.OriginAndDestinationIdentical -> R.string.kh_uisdk_Q0001
         KarhooError.FailedToGetUserId -> R.string.kh_uisdk_P0001
-
         KarhooError.CouldNotFindCustomer -> R.string.kh_uisdk_KP001
         KarhooError.CouldNotInitailizeClient -> R.string.kh_uisdk_KP002
         KarhooError.CouldNotFindDefaultPayment -> R.string.kh_uisdk_KP003
         KarhooError.CouldNotFindDefaultCard -> R.string.kh_uisdk_KP004
         KarhooError.FailedToGenerateNonce -> R.string.kh_uisdk_KP005
         KarhooError.FailedToCallMoneyService -> R.string.kh_uisdk_P0002
+        KarhooError.LoyaltyNotAllowedToBurnPoints -> R.string.kh_uisdk_loyalty_pre_auth_not_allowed_to_burn
+        KarhooError.LoyaltyIncomingPointsExceedBalance -> R.string.kh_uisdk_loyalty_pre_auth_not_enough_points
+        KarhooError.LoyaltyEmptyCurrency -> R.string.kh_uisdk_loyalty_unsupported_currency
+        KarhooError.LoyaltyUnknownCurrency -> R.string.kh_uisdk_loyalty_unsupported_currency
+        KarhooError.LoyaltyInternalError -> R.string.kh_uisdk_temporary_message_error_codes_unknown
 
         else -> R.string.kh_uisdk_temporary_message_error_codes_unknown
     }

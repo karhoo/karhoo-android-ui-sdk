@@ -14,7 +14,7 @@ import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarPresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.nhaarman.mockitokotlin2.any
@@ -41,8 +41,8 @@ class AddressBarPresenterTest {
     var analytics: Analytics = mock()
     var address: Address = mock()
     private var bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
-    private var bookingStatusMutable: MutableLiveData<BookingStatus> = mock()
-    private var bookingStatus: BookingStatus = mock()
+    private var bookingInfoMutable: MutableLiveData<BookingInfo> = mock()
+    private var bookingInfo: BookingInfo = mock()
     private var mockedLocationOne: LocationInfo = mock()
     private var mockedLocationTwo: LocationInfo = mock()
     private var mockedTripInfo: TripInfo = mock()
@@ -86,8 +86,8 @@ class AddressBarPresenterTest {
     @Throws(Exception::class)
     fun `pick up address clicked shows address search with type pickup from booking status location`() {
         val locationInfo = LocationInfo(position = position)
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(locationInfo)
+        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingInfo)
+        whenever(bookingInfo.pickup).thenReturn(locationInfo)
         presenter.subscribeToBookingStatus(bookingStatusStateViewModel = bookingStatusStateViewModel)
 
         presenter.pickUpAddressClicked()
@@ -213,7 +213,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
         val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, mockedLocationTwo, DateTime.now()))
+        observer.onChanged(BookingInfo(mockedLocationOne, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
         verify(view, atLeastOnce()).setDropoffAddress(mockedLocationTwo.displayAddress)
@@ -237,7 +237,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
         val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(null, mockedLocationTwo, DateTime.now()))
+        observer.onChanged(BookingInfo(null, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setDefaultPickupText()
         verify(view, atLeastOnce()).setDropoffAddress(mockedLocationTwo.displayAddress)
@@ -260,7 +260,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.destination).thenReturn(null)
 
         val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, null, DateTime.now()))
+        observer.onChanged(BookingInfo(mockedLocationOne, null, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
         verify(view, atLeastOnce()).setDropoffAddress("")
@@ -303,7 +303,7 @@ class AddressBarPresenterTest {
         whenever(mockedLocationTwo.displayAddress).thenReturn("address_two")
 
         val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, mockedLocationTwo, DateTime.now()))
+        observer.onChanged(BookingInfo(mockedLocationOne, mockedLocationTwo, DateTime.now()))
 
         presenter.flipAddressesClicked()
 
@@ -511,8 +511,8 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `journey info object injected with invalid date doesn't update booking info`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.date).thenReturn(journeyInfo.date)
+        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingInfo)
+        whenever(bookingInfo.date).thenReturn(journeyInfo.date)
 
         presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
@@ -530,8 +530,8 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `journey info object injected with valid date updates date on view`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.date).thenReturn(journeyInfoValidDate.date)
+        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingInfo)
+        whenever(bookingInfo.date).thenReturn(journeyInfoValidDate.date)
 
         presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
