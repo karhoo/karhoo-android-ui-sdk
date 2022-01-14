@@ -28,10 +28,13 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDia
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
@@ -48,6 +51,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
 import org.joda.time.DateTime
 import java.util.Currency
@@ -78,6 +82,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
+        bookingRequestPaymentDetailsWidget.cardActions = this
+        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingRequestTermsWidget.actions = this
+
         presenter = CheckoutViewPresenter(this,
                                           KarhooUISDK.analytics,
                                           KarhooPreferenceStore.getInstance(context),
@@ -89,10 +97,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestLinearLayout.setOnClickListener {
             it.hideSoftKeyboard()
         }
-
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
-        bookingRequestTermsWidget.actions = this
 
         bookingRequestFlightDetailsWidget.setHintText(context.getString(R.string.kh_uisdk_add_flight_details))
 
@@ -107,6 +111,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 loadingButtonCallback.enableButton(validated)
             }
         }
+
+        showLoyaltyView(false)
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
@@ -150,7 +156,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?,
+    override fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
@@ -160,13 +166,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         comments?.let {
             bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
         }
+
         presenter.showBookingRequest(
                 quote = quote,
-                bookingStatus = bookingStatus,
+                bookingInfo = bookingInfo,
                 outboundTripId = outboundTripId,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails
                                     )
+
+        bookingRequestPaymentDetailsWidget.getPaymentProvider()
+
     }
 
     override fun bindEta(quote: Quote, card: String) {
@@ -332,7 +342,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             val dialingCode = data?.getStringExtra(CountryPickerActivity
                                                            .COUNTRY_DIALING_CODE_KEY) ?: ""
 
-            passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true)
+            passengersDetailLayout.setCountryFlag(countryCode, dialingCode, true,
+                                                  focusPhoneNumber = true
+                                                 )
         } else {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
@@ -399,6 +411,47 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
+    override fun retrieveLoyaltyStatus() {
+        presenter.createLoyaltyViewResponse()
+        loyaltyView.getLoyaltyStatus()
+    }
+
+    override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {
+        loyaltyView.visibility = if (show) VISIBLE else GONE
+        loyaltyViewDataModel?.let {
+            loyaltyView.set(it)
+            loyaltyView.setLoyaltyModeCallback(object : LoyaltyContract.LoyaltyModeCallback {
+                override fun onModeChanged(mode: LoyaltyMode) {
+                    if (mode == LoyaltyMode.ERROR) {
+                        loadingButtonCallback.enableButton(false)
+                    } else {
+                        loadingButtonCallback.enableButton(true)
+                    }
+                }
+
+                override fun onPreAuthorizationError(reasonId: Int) {
+                    val config = KarhooAlertDialogConfig(
+                            titleResId = R.string.error_dialog_title,
+                            messageResId = reasonId,
+                            karhooError = null,
+                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok
+                                                                    ) { d, _ ->
+                                loadingButtonCallback.onLoadingComplete()
+                                d.dismiss()
+                            },
+                            negativeButton = null)
+                    KarhooAlertDialogHelper(context).showAlertDialog(config)
+                }
+
+                override fun onPreAuthorized(nonce: String) {
+                    presenter.setLoyaltyNonce(nonce)
+                    startBooking()
+                }
+            })
+        }
+        loyaltyView.set(LoyaltyMode.NONE)
+    }
+
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
 
     override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
@@ -407,4 +460,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
+
+    override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
+        return if (loyaltyView.visibility == VISIBLE && loyaltyView.getCurrentMode() != LoyaltyMode.ERROR) {
+            loyaltyView.preAuthorize()
+            true
+        } else {
+            false
+        }
+    }
 }

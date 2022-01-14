@@ -2,9 +2,9 @@
 <resources>
     <string name="kh_uisdk_about">À propos</string>
     <string name="kh_uisdk_add_card">Ajouter une carte</string>
-    <string name="kh_uisdk_add_flight_details">Ajouter détails du vol</string>
+    <string name="kh_uisdk_add_flight_details">Numéro de vol (optionnel)</string>
     <string name="kh_uisdk_add_payment">Ajouter un moyen de paiement</string>
-    <string name="kh_uisdk_additional_comments">Commentaires supplémentaires</string>
+    <string name="kh_uisdk_additional_comments">Commentaires supplémentaires (optionnel)</string>
     <string name="kh_uisdk_address_drop_off">Arrivée</string>
     <string name="kh_uisdk_address_pick_up">Départ</string>
     <string name="kh_uisdk_address_picker_add_pickup">Ajouter une adresse de départ</string>
@@ -24,15 +24,15 @@
     <string name="kh_uisdk_arrived">Votre chauffeur est arrivé</string>
     <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
     <string name="kh_uisdk_base">Prix de base</string>
-    <string name="kh_uisdk_book_now">Réserver</string>
+    <string name="kh_uisdk_book_now">PAYER ET RÉSERVER</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter passager</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Mode de paiement</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
-    <string name="kh_uisdk_booking_checkout_edit_passenger">Éditer</string>
+    <string name="kh_uisdk_booking_checkout_edit_passenger">Modifier</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passager</string>
     <string name="kh_uisdk_booking_confirmation">Course confirmée</string>
     <string name="kh_uisdk_booking_details_error">Détails de course non valables</string>
@@ -101,6 +101,8 @@
     <string name="kh_uisdk_enter_destination_for_vehicles">Ajoutez une destination pour voir les véhicules disponibles.</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">Adresse de départ</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_erase_address">Effacer l’adresse</string>
     <string name="kh_uisdk_error_cannot_create_user">Une erreur est survenue pendant la création de votre compte. Veuillez réessayer.</string>
     <string name="kh_uisdk_error_invalid_password">Erreur: Mot de passe ou Email incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Heure d’arrivée estimée</string>
@@ -119,6 +121,7 @@
     <string name="kh_uisdk_feedback_submitted">Merci d\'avoir envoyé vos commentaires</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Merci de nous en dire un peu plus sur votre course.</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Taxes et frais inclus</string>
     <string name="kh_uisdk_finding_your_ride">Création de votre course</string>
     <string name="kh_uisdk_first_name_hint">Prénom</string>
     <!-- Fare type -->
@@ -141,7 +144,7 @@
     <string name="kh_uisdk_info">info</string>
     <string name="kh_uisdk_initialised">Karhoo initialise votre course</string>
     <string name="kh_uisdk_invalid_email">email non valide</string>
-    <string name="kh_uisdk_invalid_empty_field">Erreur: Champ de formulaire ne peut être vide.</string>
+    <string name="kh_uisdk_invalid_empty_field">Information manquante</string>
     <string name="kh_uisdk_invalid_input_value">valeur invalide</string>
     <string name="kh_uisdk_invalid_password">(Min. 8 caractères, 1 majuscule, 1 chiffre)</string>
     <string name="kh_uisdk_invalid_phone_number">Numéro de portable non valide</string>
@@ -216,7 +219,15 @@
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">EXPLICATION_LOCATION_REQUETE</string>
     <!-- Navigation Drawer -->
-    <string name="kh_uisdk_login">S\'identifier</string>
+    <string name="kh_uisdk_login">Connexion</string>
+    <string name="kh_uisdk_loyalty_info">Votre carte est nécessaire pour autoriser cette transaction dans le cas où le prix final du trajet dépasse votre solde de points. Votre compte ne sera pas débité si vos points de fidélité couvrent la totalité du prix.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Vous utilisez %1$s points</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Ce trajet vous rapporte %1$s points</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Vous n’êtes pas autorisé à utiliser des points de fidélité</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Votre solde est insuffisant</string>
+    <string name="kh_uisdk_loyalty_title">Points de fidélité</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">La devise n’est pas encore prise en charge</string>
     <string name="kh_uisdk_map_selector">Sélectionner l\'adresse sur la carte</string>
     <string name="kh_uisdk_meeting_point">Point de rencontre</string>
     <string name="kh_uisdk_metered">Prix compteur</string>
@@ -232,12 +243,15 @@
     <string name="kh_uisdk_mpv">Van</string>
     <string name="kh_uisdk_name_hint">Nom</string>
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
+    <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
     <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
+    <string name="kh_uisdk_offer_expired">Offre expirée</string>
+    <string name="kh_uisdk_offer_expired_text">Veuillez sélectionner un nouveau devis pour poursuivre votre réservation</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">Ajoutez une origine pour effectuer une réservation.</string>
@@ -325,10 +339,11 @@
     <string name="kh_uisdk_rides">Courses</string>
     <string name="kh_uisdk_saloon">Berline</string>
     <string name="kh_uisdk_save">Enregistrer</string>
+    <string name="kh_uisdk_schedule_ride">Planifier le trajet</string>
     <string name="kh_uisdk_settings">Paramètres</string>
-    <string name="kh_uisdk_sign_in">S\'identifier</string>
+    <string name="kh_uisdk_sign_in">Connexion</string>
     <!-- Login -->
-    <string name="kh_uisdk_sign_in_but">S\'identifier</string>
+    <string name="kh_uisdk_sign_in_but">Connexion</string>
     <string name="kh_uisdk_sign_out">Déconnexion</string>
     <string name="kh_uisdk_something_went_wrong">Une erreur est survenue.</string>
     <string name="kh_uisdk_sorter_cheapest">Prix</string>
@@ -345,6 +360,8 @@
     <string name="kh_uisdk_supplier_email">suppliers@karhoo.com</string>
     <string name="kh_uisdk_support_email">support@karhoo.com</string>
     <string name="kh_uisdk_support_report_issue">Signaler un problème</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_switch_departure_destination">Changer d’adresse de départ et de destination</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_tell_us_more">Veuillez nous en dire plus sur votre voyage</string>
     <string name="kh_uisdk_temporary_message_error_codes_unknown">Une erreur de connection s\'est produite.</string>
@@ -375,4 +392,8 @@
     <string name="kh_uisdk_wheelchair">Fauteuil roulant</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Souhaitez-vous continuer?</string>
     <string name="kh_uisdk_you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Pré-autoriser</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Pré-autoriser %s</string>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenConfig
 import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenGuestConfig
 import com.karhoo.samples.uisdk.dropin.config.AdyenTokenExchangeConfig
@@ -71,6 +72,14 @@ class MainActivity : AppCompatActivity() {
             applyAdyenTokenExchangeConfig()
 
             loginTokenExchange(BuildConfig.ADYEN_AUTH_TOKEN)
+        }
+
+        findViewById<Button>(R.id.bookTripButtonLoyaltyTokenExchange).setOnClickListener {
+            showLoading()
+
+            applyLoyaltyTokenExchangeConfig()
+
+            loginTokenExchange(BuildConfig.LOYALTY_AUTH_TOKEN)
         }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
@@ -137,6 +146,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun applyLoyaltyTokenExchangeConfig() {
+        KarhooUISDK.apply {
+            setConfiguration(LoyaltyTokenConfig(applicationContext))
+        }
+    }
+
     private fun applyAdyenGuestConfig() {
         KarhooUISDK.apply {
             setConfiguration(
@@ -159,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun goToBooking() {
         val builder = BookingActivity.Builder.builder
-            .initialLocation(null)
+                .initialLocation(null)
         startActivity(builder.build(this))
         hideLoading()
     }

@@ -50,7 +50,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `visibility set to GONE for Adyen provider`() {
-        whenever(userStore.paymentProvider).thenReturn(adyenProvider)
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(adyenProvider, null))
 
         presenter.getPaymentViewVisibility()
 
@@ -64,7 +64,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `visibility set to VISIBLE for Adyen provider`() {
-        whenever(userStore.paymentProvider).thenReturn(braintreeProvider)
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(braintreeProvider, null))
 
         presenter.getPaymentViewVisibility()
 
@@ -78,7 +78,7 @@ class BookingPaymentPresenterTest {
      */
     @Test
     fun `provider call not made if there is a stored provider`() {
-        whenever(userStore.paymentProvider).thenReturn(Provider(ADYEN))
+        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(Provider(ADYEN), null))
 
         presenter.getPaymentProvider()
 
@@ -111,7 +111,8 @@ class BookingPaymentPresenterTest {
     fun `drop in view bound when get provider call succeeds`() {
         presenter.getPaymentProvider()
 
-        paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(adyenProvider)))
+        paymentProviderCaptor.firstValue.invoke(Resource.Success(PaymentProvider(adyenProvider,
+                                                                                 null)))
 
         verify(view).bindDropInView()
     }

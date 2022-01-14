@@ -24,7 +24,7 @@
     <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_baggage_max">%d Gepäckstücke max.</string>
     <string name="kh_uisdk_base">Grundtarif</string>
-    <string name="kh_uisdk_book_now">Jetzt buchen</string>
+    <string name="kh_uisdk_book_now">BEZAHLEN UND BUCHEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Fahrt buchen</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier hinzufügen</string>
@@ -101,6 +101,8 @@
     <string name="kh_uisdk_enter_destination_for_vehicles">Geben Sie einen Zielort ein, um Fahrzeuge anzuzeigen.</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">Pickup eingeben</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_erase_address">Adresse löschen</string>
     <string name="kh_uisdk_error_cannot_create_user">Bei der Registrierung Ihres Kontos scheint ein Problem aufgetreten zu sein. Bitte versuchen Sie es erneut.</string>
     <string name="kh_uisdk_error_invalid_password">Die eingegebene E-Mail oder das Passwort sind falsch</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschätzte Ankunftszeit</string>
@@ -119,6 +121,7 @@
     <string name="kh_uisdk_feedback_submitted">Vielen Dank für Ihr Feedback</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Inklusive Steuern und Gebühren</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden...</string>
     <string name="kh_uisdk_first_name_hint">Vorname</string>
     <!-- Fare type -->
@@ -217,6 +220,14 @@
     <string name="kh_uisdk_location_rationale_shown">STANDORT_RATIONAL_ANGEZEIGT</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Anmelden</string>
+    <string name="kh_uisdk_loyalty_info">Ihre Karte wird benötigt, um diese Transaktion zu autorisieren, falls der Endpreis der Fahrt Ihren Punktestand übersteigt. Ihr Konto wird nicht belastet, wenn Ihre Treuepunkte den gesamten Preis abdecken.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Ihr Punktesaldo ist unzureichend</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">Sie verwenden %1$s Punkte</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Diese Fahrt bringt Ihnen %1$s Punkte ein.</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Sie dürfen keine Punkte verbrauchen</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Ihr Guthaben ist unzureichend</string>
+    <string name="kh_uisdk_loyalty_title">Treuepunkte</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">Die Währung wird noch nicht unterstützt</string>
     <string name="kh_uisdk_map_selector">Position der Stecknadel auf der Karte festlegen</string>
     <string name="kh_uisdk_meeting_point">Treffpunkt</string>
     <string name="kh_uisdk_metered">Taxameter</string>
@@ -232,12 +243,15 @@
     <string name="kh_uisdk_mpv">Großraum</string>
     <string name="kh_uisdk_name_hint">Name</string>
     <string name="kh_uisdk_network_error">Wir scheinen Probleme mit der Verbindung zum Netzwerk zu haben</string>
+    <string name="kh_uisdk_new_ride">NEUE FAHRT</string>
     <string name="kh_uisdk_next">Weiter</string>
     <string name="kh_uisdk_no_availability">Wir sind hier noch nicht live! Melden Sie sich, wenn Sie Vorschläge für lokale Flotten haben.</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
     <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
+    <string name="kh_uisdk_offer_expired">Zitat erloschen</string>
+    <string name="kh_uisdk_offer_expired_text">Bitte wählen Sie ein neues Angebot, um mit Ihrer Buchung fortzufahren</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">Sie müssen eine Herkunft auswählen, bevor Sie eine Fahrt buchen</string>
@@ -325,6 +339,7 @@
     <string name="kh_uisdk_rides">Fahrten</string>
     <string name="kh_uisdk_saloon">Standard</string>
     <string name="kh_uisdk_save">Speichern</string>
+    <string name="kh_uisdk_schedule_ride">Planen Sie die Fahrt</string>
     <string name="kh_uisdk_settings">Einstellungen</string>
     <string name="kh_uisdk_sign_in">Anmelden</string>
     <!-- Login -->
@@ -345,6 +360,8 @@
     <string name="kh_uisdk_supplier_email">suppliers@karhoo.com</string>
     <string name="kh_uisdk_support_email">support@karhoo.com</string>
     <string name="kh_uisdk_support_report_issue">Ausgabe melden</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_switch_departure_destination">Abfahrts- und Zieladresse wechseln</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_tell_us_more">Bitte erzählen Sie uns mehr über Ihre Reise</string>
     <string name="kh_uisdk_temporary_message_error_codes_unknown">Wir scheinen im Moment technische Probleme zu haben.</string>
@@ -375,4 +392,8 @@
     <string name="kh_uisdk_wheelchair">Rollstuhl</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Möchten Sie fortfahren?</string>
     <string name="kh_uisdk_you_may_be_charged">Ihnen wird eine Stornierungsgebühr in Rechnung gestellt, die auf %s veranschlagt wird.\n\nMöchten Sie fortfahren?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Vorautorisierung</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Vorautorisieren %s</string>
 </resources>

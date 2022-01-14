@@ -32,6 +32,10 @@ interface BookingPaymentContract {
         fun setPassengerDetails(passengerDetails: PassengerDetails?)
 
         fun hasValidPaymentType(): Boolean
+
+        fun retrieveLoyaltyStatus()
+
+        fun getPaymentProvider()
     }
 
     interface Presenter {
@@ -41,6 +45,8 @@ interface BookingPaymentContract {
         fun getPaymentProvider()
 
         fun getPaymentViewVisibility()
+
+        fun getPaymentProviderType(): ProviderType
 
     }
 
@@ -64,5 +70,7 @@ interface BookingPaymentContract {
         fun showPaymentDialog(error: KarhooError? = null)
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
+
+        fun retrieveLoyaltyStatus()
     }
 }
