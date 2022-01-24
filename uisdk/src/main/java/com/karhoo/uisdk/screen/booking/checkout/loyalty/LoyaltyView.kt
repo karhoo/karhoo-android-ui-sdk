@@ -104,6 +104,6 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
 
     override fun setBalancePoints(points: Int) {
         loyaltyViewBalance.visibility = VISIBLE
-        loyaltyViewBalance.text = String.format(resources.getString(R.string.Text_Loyalty_BalanceTitle), points)
+        loyaltyViewBalance.text = String.format(resources.getString(R.string.kh_uisdk_loyalty_balance_title), points)
     }
 }

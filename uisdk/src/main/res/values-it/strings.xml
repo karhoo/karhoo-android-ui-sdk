@@ -397,5 +397,5 @@
     <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pre-autorizzare %s</string>
     <!--  Loyalty  -->
-    <string name="Text_Loyalty_BalanceTitle">SALDO: %s PUNTI</string>
+    <string name="kh_uisdk_loyalty_balance_title">SALDO: %s PUNTI</string>
 </resources>

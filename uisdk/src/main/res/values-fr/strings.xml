@@ -397,5 +397,5 @@
     <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pré-autoriser %s</string>
     <!--  Loyalty  -->
-    <string name="Text_Loyalty_BalanceTitle">BALANCE: %s AIGUILLAGE</string>
+    <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s AIGUILLAGE</string>
 </resources>
