@@ -143,4 +143,12 @@
     <dimen name="kh_uisdk_spacing_grid_row">12dp</dimen>
     <dimen name="kh_uisdk_spacing_grid_second_column">28dp</dimen>
     <dimen name="kh_uisdk_spacing_grid_first_column">16dp</dimen>
+
+    <!--Loyalty -->
+    <dimen name="kh_uisdk_loyaltyViewBalance_paddingTop">3dp</dimen>
+    <dimen name="kh_uisdk_loyaltyViewBalance_paddingStart">20dp</dimen>
+    <dimen name="kh_uisdk_loyaltyViewBalance_translationY">10dp</dimen>
+    <dimen name="kh_uisdk_loyaltyViewBalance_translationZ">1dp</dimen>
+    <dimen name="kh_uisdk_loyaltyViewBalance_marginTop">-9dp</dimen>
+    <dimen name="kh_uisdk_loyaltyViewBalance_cornerRadius">6dp</dimen>
 </resources>

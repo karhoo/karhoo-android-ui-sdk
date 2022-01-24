@@ -485,6 +485,21 @@
         <item name="android:background">@drawable/uisdk_loyalty_background</item>
     </style>
 
+    <style name="KhLoyaltyBalanceView">
+        <item name="android:background">@drawable/uisdk_loyalty_balance_background</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/</item>
+        <item name="lineHeight">12dp</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="KhLoyaltyBalanceErrorView" parent="KhLoyaltyBalanceView">
+        <item name="android:background">@drawable/uisdk_loyalty_balance_error_background</item>
+    </style>
+
     <style name="KhLoyaltyLayoutViewError">
         <item name="android:background">@drawable/uisdk_loyalty_error_background</item>
     </style>

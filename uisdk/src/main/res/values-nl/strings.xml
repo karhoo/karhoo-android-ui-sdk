@@ -396,4 +396,6 @@
     <string name="pay_button">Pre-autoriseren</string>
     <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pre-autoriseren %s</string>
+    <!--  Loyalty  -->
+    <string name="Text_Loyalty_BalanceTitle">BALANS: %s PUNTEN</string>
 </resources>
