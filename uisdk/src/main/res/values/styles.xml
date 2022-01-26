@@ -485,6 +485,31 @@
         <item name="android:background">@drawable/uisdk_loyalty_background</item>
     </style>
 
+    <style name="KhLoyaltyBalanceView">
+        <item name="android:background">@drawable/uisdk_loyalty_balance_background</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/</item>
+        <item name="lineHeight">12dp</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:paddingTop">@dimen/kh_uisdk_loyalty_balance_padding_top</item>
+        <item name="android:paddingBottom">@dimen/kh_uisdk_loyalty_balance_padding_top</item>
+        <item name="android:paddingEnd">@dimen/kh_uisdk_loyalty_balance_padding_start</item>
+        <item name="android:paddingStart">@dimen/kh_uisdk_loyalty_balance_padding_start</item>
+        <item name="android:translationY">@dimen/kh_uisdk_loyalty_balance_translation_y</item>
+        <item name="android:translationZ">@dimen/kh_uisdk_loyalty_balance_translation_z</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="KhLoyaltyBalanceErrorView" parent="KhLoyaltyBalanceView">
+        <item name="android:background">@drawable/uisdk_loyalty_balance_error_background</item>
+    </style>
+
     <style name="KhLoyaltyLayoutViewError">
         <item name="android:background">@drawable/uisdk_loyalty_error_background</item>
     </style>

@@ -3,62 +3,79 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/kh_uisdk_background_primary"
+    >
 
     <LinearLayout
-        android:id="@+id/loyaltyViewLayout"
-        style="@style/KhLoyaltyLayoutView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:paddingTop="@dimen/kh_uisdk_padding_default"
-        android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:paddingBottom="@dimen/kh_uisdk_padding_default">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/kh_uisdk_loyalty_balance_margin_top"
+        >
 
-
-        <LinearLayout
-            android:id="@+id/titleLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_weight="2.5"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/loyaltyViewTitle"
-                style="@style/KhLoyaltyTitleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/kh_uisdk_loyalty_title"
-                tools:text="@string/kh_uisdk_loyalty_title" />
-
-            <TextView
-                android:id="@+id/loyaltyViewSubtitle"
-                style="@style/KhLoyaltySubtitleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/kh_uisdk_loyalty_points_earned_for_trip"
-                tools:text="@string/kh_uisdk_loyalty_points_earned_for_trip" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/loyaltyViewBalance"
+            style="@style/KhLoyaltyBalanceView"
+            android:visibility="invisible"
+            />
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/kh_uisdk_margin_small"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:orientation="vertical">
+            android:id="@+id/loyaltyViewLayout"
+            style="@style/KhLoyaltyLayoutView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingTop="@dimen/kh_uisdk_padding_default"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingBottom="@dimen/kh_uisdk_padding_default">
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/loyaltySwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:clickable="false" />
+            <LinearLayout
+                android:id="@+id/titleLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_weight="2.5"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/loyaltyViewTitle"
+                    style="@style/KhLoyaltyTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kh_uisdk_loyalty_title"
+                    tools:text="@string/kh_uisdk_loyalty_title" />
+
+                <TextView
+                    android:id="@+id/loyaltyViewSubtitle"
+                    style="@style/KhLoyaltySubtitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kh_uisdk_loyalty_points_earned_for_trip"
+                    tools:text="@string/kh_uisdk_loyalty_points_earned_for_trip" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/kh_uisdk_margin_small"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="vertical">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/loyaltySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:clickable="false" />
+
+            </LinearLayout>
         </LinearLayout>
+
+
 
     </LinearLayout>
 
