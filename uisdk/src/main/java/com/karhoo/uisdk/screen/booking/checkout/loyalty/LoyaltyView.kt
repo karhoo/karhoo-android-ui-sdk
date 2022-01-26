@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyInfoLa
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltySwitch
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewLayout
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewSubtitle
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewBalance
 
 class LoyaltyView @JvmOverloads constructor(context: Context,
                                             attrs: AttributeSet? = null,
@@ -36,6 +37,7 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     override fun set(mode: LoyaltyMode) {
         loyaltyViewLayout.background =
                 ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_background)
+        loyaltyViewBalance.background = ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_balance_background)
 
         if (mode == LoyaltyMode.BURN) {
             loyaltyInfoLayout.visibility = VISIBLE
@@ -52,6 +54,7 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
         loyaltyViewLayout.background = ContextCompat.getDrawable(context, R
                 .drawable.uisdk_loyalty_error_background)
         loyaltyInfoLayout.visibility = GONE
+        loyaltyViewBalance.background = ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_balance_error_background)
     }
 
     override fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean) {
@@ -97,5 +100,10 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
 
     override fun preAuthorize() {
         presenter.preAuthorize()
+    }
+
+    override fun setBalancePoints(points: Int) {
+        loyaltyViewBalance.visibility = VISIBLE
+        loyaltyViewBalance.text = String.format(resources.getString(R.string.kh_uisdk_loyalty_balance_title), points)
     }
 }

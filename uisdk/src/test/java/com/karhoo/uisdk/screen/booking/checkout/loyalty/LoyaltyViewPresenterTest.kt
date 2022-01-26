@@ -14,14 +14,14 @@ import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class LoyaltyViewPresenterTest {
     private lateinit var presenter: LoyaltyPresenter
@@ -235,6 +235,34 @@ class LoyaltyViewPresenterTest {
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
         verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
+    }
+
+    @Test
+    fun `When failing to get the points number, the loyalty balance is hidden`() {
+        val loyaltyStatus = LoyaltyStatus(null, canEarn = false,
+                                          canBurn = true)
+
+        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
+
+        presenter.getLoyaltyStatus()
+        lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
+
+        verify(view, never()).setBalancePoints(LOYALTY_POINTS)
+    }
+
+    @Test
+    fun `When having points number, the loyalty balance is shown`() {
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
+                                          canBurn = true)
+
+        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
+
+        presenter.getLoyaltyStatus()
+        lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
+
+        verify(view).setBalancePoints(LOYALTY_POINTS)
     }
 
     companion object {

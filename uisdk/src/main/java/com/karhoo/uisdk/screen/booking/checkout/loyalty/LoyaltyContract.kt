@@ -14,6 +14,7 @@ interface LoyaltyContract {
         fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean)
         fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
         fun preAuthorize()
+        fun setBalancePoints(points: Int)
     }
 
     interface Presenter {
@@ -21,6 +22,7 @@ interface LoyaltyContract {
         fun set(loyaltyDataModel: LoyaltyViewDataModel)
         fun updateEarnedPoints()
         fun updateBurnedPoints()
+        fun updateBalancePoints()
         fun updateLoyaltyMode(mode: LoyaltyMode)
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus()

@@ -87,6 +87,10 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
         }
     }
 
+    override fun updateBalancePoints() {
+        loyaltyStatus?.points?.let { view.setBalancePoints(it) }
+    }
+
     override fun updateBurnedPoints() {
         val loyaltyId = userStore.paymentProvider?.loyalty?.id
         val currency = loyaltyDataModel?.currency
@@ -148,6 +152,7 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                         userStore.loyaltyStatus = result.data
                         set(result.data)
 
+                        updateBalancePoints()
                         updateEarnedPoints()
                         updateBurnedPoints()
                     }
