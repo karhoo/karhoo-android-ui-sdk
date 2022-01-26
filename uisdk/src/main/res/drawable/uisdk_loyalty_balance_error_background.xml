@@ -2,5 +2,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/kh_uisdk_error"/>
 
-    <corners android:radius="@dimen/kh_uisdk_loyaltyViewBalance_cornerRadius" />
+    <corners android:radius="@dimen/kh_uisdk_loyalty_balance_corner_radius" />
 </shape>

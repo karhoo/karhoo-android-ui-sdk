@@ -11,21 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/kh_uisdk_loyaltyViewBalance_marginTop"
+        android:layout_marginTop="@dimen/kh_uisdk_loyalty_balance_margin_top"
         >
 
         <TextView
             android:id="@+id/loyaltyViewBalance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/KhLoyaltyBalanceView"
-            android:layout_gravity="end"
-            android:paddingTop="@dimen/kh_uisdk_loyaltyViewBalance_paddingTop"
-            android:paddingBottom="@dimen/kh_uisdk_loyaltyViewBalance_paddingTop"
-            android:paddingEnd="@dimen/kh_uisdk_loyaltyViewBalance_paddingStart"
-            android:paddingStart="@dimen/kh_uisdk_loyaltyViewBalance_paddingStart"
-            android:translationY="@dimen/kh_uisdk_loyaltyViewBalance_translationY"
-            android:translationZ="@dimen/kh_uisdk_loyaltyViewBalance_translationZ"
             android:visibility="invisible"
             />
 
