@@ -398,4 +398,5 @@
     <string name="pay_button_with_value">Pré-autoriser %s</string>
     <!--  Loyalty  -->
     <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s AIGUILLAGE</string>
+    <string name="karhoo_uisdk_locale">fr_FR</string>
 </resources>

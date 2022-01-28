@@ -84,6 +84,8 @@ interface CheckoutViewContract {
         fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean
 
         fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel? = null)
+
+        fun getDeviceLocale(): String
     }
 
     interface Presenter {
