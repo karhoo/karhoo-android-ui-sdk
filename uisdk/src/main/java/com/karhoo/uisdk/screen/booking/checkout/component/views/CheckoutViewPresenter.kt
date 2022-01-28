@@ -181,7 +181,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
         passenger.locale.let {
-            if(it.isNullOrEmpty() || !it.contains("-")){
+            if(it.isNullOrEmpty() || !it.contains("_")){
                 passenger.locale = view?.getDeviceLocale()
             }
         }
