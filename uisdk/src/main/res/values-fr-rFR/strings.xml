@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Locale  -->
+    <string name="karhoo_uisdk_locale">fr_FR</string>
     <string name="kh_uisdk_about">À propos</string>
     <string name="kh_uisdk_add_card">Ajouter une carte</string>
     <string name="kh_uisdk_add_flight_details">Numéro de vol (optionnel)</string>
