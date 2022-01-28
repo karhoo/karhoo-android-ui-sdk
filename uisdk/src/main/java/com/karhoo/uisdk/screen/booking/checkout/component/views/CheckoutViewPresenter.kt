@@ -180,6 +180,12 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String, flightInfo: String) {
         val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
+        passenger.locale.let {
+            if(it.isNullOrEmpty() || !it.contains("-")){
+                passenger.locale = view?.getDeviceLocale()
+            }
+        }
+
         val flight = if (flightInfo.isNotEmpty()) {
             flightInfo
         } else {

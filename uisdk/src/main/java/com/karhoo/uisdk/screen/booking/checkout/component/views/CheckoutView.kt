@@ -452,6 +452,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loyaltyView.set(LoyaltyMode.NONE)
     }
 
+    override fun getDeviceLocale(): String {
+        return resources.getString(R.string.karhoo_uisdk_locale)
+    }
+
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
 
     override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
