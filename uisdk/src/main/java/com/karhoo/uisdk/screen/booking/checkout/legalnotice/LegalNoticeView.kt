@@ -22,7 +22,8 @@ import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeTe
 class LegalNoticeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0) : ConstraintLayout(context, attrs, defStyleAttr),
+    defStyleAttr: Int = 0
+                                               ) : ConstraintLayout(context, attrs, defStyleAttr),
                                                    LegalNoticeContract.View {
 
     var actions: WebViewActions? = null
@@ -49,18 +50,19 @@ class LegalNoticeView @JvmOverloads constructor(
             isExpanded = !isExpanded
         }
 
-        bindView(resources.getString(R.string.kh_uisdk_legal_notice_text))
+        bindView()
     }
 
-    override fun bindView(noticeText: String) {
+    override fun bindView() {
+        val noticeText = resources.getString(R.string.kh_uisdk_legal_notice_text)
         if (noticeText.isNotEmpty()) {
             legalNoticeText.movementMethod = LinkMovementMethod.getInstance();
             legalNoticeText.text = presenter.formatLegalNoticeText(
                 resources.getString(R.string.kh_uisdk_legal_notice_title),
                 resources.getString(R.string.kh_uisdk_legal_notice_link),
-                resources.getString(R.string.kh_uisdk_legal_notice_text),
+                noticeText,
                 resources.getColor(R.color.kh_uisdk_colorAccent)
-                                                                      )
+                                                                  )
         } else {
             legalNoticeContainer.visibility = GONE
         }

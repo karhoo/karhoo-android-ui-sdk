@@ -6,7 +6,7 @@ import android.text.SpannableString
 interface LegalNoticeContract {
     interface View {
         fun expandLegalNoticeSection(expand: Boolean, view: android.view.View)
-        fun bindView(noticeText: String)
+        fun bindView()
         fun showWebView(url: String)
         fun getDrawableResource(id: Int): Drawable?
     }
