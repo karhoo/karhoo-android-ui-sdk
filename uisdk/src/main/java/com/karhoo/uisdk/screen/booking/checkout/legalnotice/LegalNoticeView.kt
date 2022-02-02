@@ -105,7 +105,16 @@ class LegalNoticeView @JvmOverloads constructor(
     }
 
     override fun showWebView(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val emailSubject = resources.getString(R.string.kh_uisdk_legal_notice_title)
+        val emailBody = resources.getString(R.string.kh_uisdk_support_report_issue)
+
+        val intent: Intent = if (url.contains("mailto")) {
+            val mailData = "$url?subject=$emailSubject&body=$emailBody"
+            Intent(Intent.ACTION_VIEW, Uri.parse(mailData))
+        } else {
+            Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        }
+
         context.startActivity(intent)
     }
 }
