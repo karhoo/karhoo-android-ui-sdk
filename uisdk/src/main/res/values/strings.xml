@@ -397,4 +397,11 @@
     <!--  Loyalty  -->
     <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
     <string name="karhoo_uisdk_locale">en_GB</string>
+
+    <!-- Legal Notice  -->
+    <string name="kh_uisdk_legal_notice_label">Legal Notices</string>
+    <string name="kh_uisdk_legal_notice_title">Karhoo</string>
+    <string name="kh_uisdk_legal_notice_link">mailto:test@karhoo.com</string>
+    <string name="kh_uisdk_legal_notice_text">The data collected is electronically processed by Karhoo sending email to %s. Your data may need to be translated</string>
+
 </resources>

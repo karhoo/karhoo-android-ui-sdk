@@ -59,7 +59,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
                                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         khTermsAndConditionsText.text = spannableString
-        khTermsAndConditionsText.movementMethod = LinkMovementMethod.getInstance();
+        khTermsAndConditionsText.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun createClickableSpan(url: String?): ClickableSpan {
