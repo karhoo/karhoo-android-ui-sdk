@@ -215,9 +215,6 @@
     <string name="kh_uisdk_last_trip_id">Référence derniere course: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Aucune référence pour dernière course</string>
     <string name="kh_uisdk_legal_notice_label">Mentions légales</string>
-    <string name="kh_uisdk_legal_notice_link">mailto:test@karhoo.com</string>
-    <string name="kh_uisdk_legal_notice_text">Les données collectées sont traitées électroniquement par Karhoo en envoyant un e-mail à %s. Vos données peuvent avoir besoin d’être traduites</string>
-    <string name="kh_uisdk_legal_notice_title">Karhoo</string>
     <string name="kh_uisdk_licence">Numéro de licence: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Veuillez activer les services de localisation pour utiliser l\'application</string>

@@ -215,9 +215,6 @@
     <string name="kh_uisdk_last_trip_id">№ de última reserva: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">№ de última reserva: no establecido</string>
     <string name="kh_uisdk_legal_notice_label">Avisos legales</string>
-    <string name="kh_uisdk_legal_notice_link">correo a: prueba@karhoo.com</string>
-    <string name="kh_uisdk_legal_notice_text">Los datos recopilados son procesados electrónicamente por Karhoo enviando un correo electrónico a %s . Es posible que sea necesario traducir sus datos</string>
-    <string name="kh_uisdk_legal_notice_title">Karhoo</string>
     <string name="kh_uisdk_licence">Licencia:%1$s</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_location_disabled">Activa los servicios de localización para utilizar la aplicación</string>

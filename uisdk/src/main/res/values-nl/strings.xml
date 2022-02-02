@@ -215,9 +215,6 @@
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>
     <string name="kh_uisdk_legal_notice_label">Juridische kennisgevingen</string>
-    <string name="kh_uisdk_legal_notice_link">mailto:test@karhoo.com</string>
-    <string name="kh_uisdk_legal_notice_text">De verzamelde gegevens worden elektronisch verwerkt door Karhoo die een e-mail stuurt naar %s . Uw gegevens moeten mogelijk worden vertaald</string>
-    <string name="kh_uisdk_legal_notice_title">Karhoo</string>
     <string name="kh_uisdk_licence">Licentie: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Schakel locatieservices in op uw apparaat om van de volledige ervaring te genieten</string>
