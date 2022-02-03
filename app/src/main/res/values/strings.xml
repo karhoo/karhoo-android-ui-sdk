@@ -7,4 +7,7 @@
     <string name="book_a_trip_adyen_token_exchange">Book a Trip Adeyn [Token]</string>
     <string name="book_a_trip_loyalty_token_exchange">Book a Trip Loyalty [Token]</string>
     <string name="welcome_message">Karhoo UI SDK Sample</string>
+    <string name="kh_uisdk_legal_notice_title">Karhoo</string>
+    <string name="kh_uisdk_legal_notice_link">mailto:test@karhoo.com</string>
+    <string name="kh_uisdk_legal_notice_text">The data collected is electronically processed by Karhoo sending email to %s. Your data may need to be translated</string>
 </resources>
