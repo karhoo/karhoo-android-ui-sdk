@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeIc
 import android.net.Uri
 import android.content.Intent
 import android.text.method.LinkMovementMethod
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeLabelContainer
 import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeText
 
@@ -29,6 +30,7 @@ class LegalNoticeView @JvmOverloads constructor(
     var actions: WebViewActions? = null
     private var presenter: LegalNoticePresenter
     private var isExpanded: Boolean = false
+    private lateinit var emailComposer: KarhooFeedbackEmailComposer
 
     init {
         inflate(context, R.layout.uisdk_view_legal_notice, this)
@@ -37,17 +39,18 @@ class LegalNoticeView @JvmOverloads constructor(
 
         presenter.attachView(this)
 
-        legalNoticeLabelContainer.setOnClickListener {
-            val arrowIcon = if (isExpanded)
-                getDrawableResource(R.drawable.kh_uisdk_ic_arrow_up_small)
-            else
-                getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
+        emailComposer = KarhooFeedbackEmailComposer(context)
 
-            legalNoticeIcon.setImageDrawable(arrowIcon)
+        isExpanded = resources.getString(R.string.kh_uisdk_legal_notice_text).isNotEmpty()
+
+        legalNoticeIcon.setImageDrawable(getArrowIcon())
+
+        legalNoticeLabelContainer.setOnClickListener {
+            isExpanded = !isExpanded
+
+            legalNoticeIcon.setImageDrawable(getArrowIcon())
 
             expandLegalNoticeSection(isExpanded, legalNoticeText)
-
-            isExpanded = !isExpanded
         }
 
         bindView()
@@ -105,16 +108,25 @@ class LegalNoticeView @JvmOverloads constructor(
     }
 
     override fun showWebView(url: String) {
-        val emailSubject = resources.getString(R.string.kh_uisdk_legal_notice_title)
-        val emailBody = resources.getString(R.string.kh_uisdk_support_report_issue)
-
-        val intent: Intent = if (url.contains("mailto")) {
-            val mailData = "$url?subject=$emailSubject&body=$emailBody"
-            Intent(Intent.ACTION_VIEW, Uri.parse(mailData))
+        val intent: Intent? = if (url.contains(MAIL_KEYWORD)) {
+            emailComposer.createLegalNoticeEmail(url)
         } else {
             Intent(Intent.ACTION_VIEW, Uri.parse(url))
         }
 
-        context.startActivity(intent)
+        intent?.let {
+            context.startActivity(it)
+        }
+    }
+
+    private fun getArrowIcon(): Drawable? {
+        return if (isExpanded)
+            getDrawableResource(R.drawable.kh_uisdk_ic_arrow_up_small)
+        else
+            getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
+    }
+
+    companion object {
+        private const val MAIL_KEYWORD = "mailto"
     }
 }
