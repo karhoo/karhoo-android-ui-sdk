@@ -400,8 +400,8 @@
 
     <!-- Legal Notice - The strings can be translated by DP -->
     <string name="kh_uisdk_legal_notice_label">Legal Notices</string>
-    <string name="kh_uisdk_legal_notice_title" translatable="false" />
-    <string name="kh_uisdk_legal_notice_link" translatable="false" />
-    <string name="kh_uisdk_legal_notice_text" translatable="false" />
+    <string name="kh_uisdk_legal_notice_title"/>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
 
 </resources>

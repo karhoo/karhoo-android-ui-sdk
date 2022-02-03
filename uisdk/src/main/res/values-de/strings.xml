@@ -142,6 +142,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d Stunde</item>
         <item quantity="other">%d Stunden</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">Info</string>
     <string name="kh_uisdk_initialised">Karhoo initiiert Ihre Reise</string>
@@ -215,6 +216,9 @@
     <string name="kh_uisdk_last_trip_id">Letzte Reise-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Letzte Reise-ID: Noch nicht festgelegt</string>
     <string name="kh_uisdk_legal_notice_label">Rechtliche Hinweise</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Führerschein: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Bitte aktivieren Sie die Standortdienste auf Ihrem Gerät, um das volle Erlebnis zu genießen.</string>
@@ -242,6 +246,7 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d Minute</item>
         <item quantity="other">%d Minuten</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Nummer des Mobiltelefons</string>
     <string name="kh_uisdk_moto">Moto</string>
