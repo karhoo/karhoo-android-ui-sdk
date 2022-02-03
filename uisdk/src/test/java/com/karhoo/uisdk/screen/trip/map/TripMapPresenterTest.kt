@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.trip.map
 
-import android.location.Location
 import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Position
@@ -15,7 +14,6 @@ import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
-import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
 import com.karhoo.uisdk.screen.trip.map.TripMapPresenter.Companion.TRIP_INFO_UPDATE_PERIOD
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
