@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeIc
 import android.net.Uri
 import android.content.Intent
 import android.text.method.LinkMovementMethod
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeLabelContainer
 import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeText
 
@@ -29,6 +30,7 @@ class LegalNoticeView @JvmOverloads constructor(
     var actions: WebViewActions? = null
     private var presenter: LegalNoticePresenter
     private var isExpanded: Boolean = false
+    private lateinit var emailComposer: KarhooFeedbackEmailComposer
 
     init {
         inflate(context, R.layout.uisdk_view_legal_notice, this)
@@ -36,6 +38,8 @@ class LegalNoticeView @JvmOverloads constructor(
         presenter = LegalNoticePresenter()
 
         presenter.attachView(this)
+
+        emailComposer = KarhooFeedbackEmailComposer(context)
 
         legalNoticeLabelContainer.setOnClickListener {
             val arrowIcon = if (isExpanded)
@@ -105,16 +109,18 @@ class LegalNoticeView @JvmOverloads constructor(
     }
 
     override fun showWebView(url: String) {
-        val emailSubject = resources.getString(R.string.kh_uisdk_legal_notice_title)
-        val emailBody = resources.getString(R.string.kh_uisdk_support_report_issue)
-
-        val intent: Intent = if (url.contains("mailto")) {
-            val mailData = "$url?subject=$emailSubject&body=$emailBody"
-            Intent(Intent.ACTION_VIEW, Uri.parse(mailData))
+        val intent: Intent? = if (url.contains(MAIL_KEYWORD)) {
+            emailComposer.createLegalNoticeEmail(url)
         } else {
             Intent(Intent.ACTION_VIEW, Uri.parse(url))
         }
 
-        context.startActivity(intent)
+        intent?.let {
+            context.startActivity(it)
+        }
+    }
+
+    companion object {
+        private const val MAIL_KEYWORD = "mailto"
     }
 }
