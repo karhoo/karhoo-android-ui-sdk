@@ -294,30 +294,6 @@ class TripMapPresenterTest {
     }
 
     /**
-     * Given:   tracking trip and tripState not null
-     * When:    user location update
-     * Then:    analytics call made for user position changed
-     */
-    @Test
-    fun `analytics call for user position changed made when location update`() {
-        val location = Location("").apply {
-            latitude = 1.0
-            longitude = 2.0
-        }
-
-        presenter.onResume()
-        presenter.trackDriverPosition(TRIP_ID)
-        observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripWithState(TripStatus.PASSENGER_ON_BOARD)))
-        argumentCaptor<PositionListener>().apply {
-            verify(locationProvider).listenForLocations(capture(), eq(null))
-            val callback = firstValue
-            callback.onPositionUpdated(location)
-        }
-
-        verify(analytics).userPositionChanged(TripStatus.PASSENGER_ON_BOARD, location)
-    }
-
-    /**
      * Given:   Tracking a trip
      * When:    The trip has not ended
      * Then:    Then the observers remain subscribed

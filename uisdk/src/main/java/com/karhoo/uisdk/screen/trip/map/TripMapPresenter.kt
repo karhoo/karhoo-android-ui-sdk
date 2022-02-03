@@ -45,7 +45,7 @@ class TripMapPresenter(view: TripMapMVP.View,
             }
 
             override fun onPositionUpdated(location: Location) {
-                tripState?.let { analytics?.userPositionChanged(it, location) }
+
             }
 
             override fun onLocationServicesDisabled() {

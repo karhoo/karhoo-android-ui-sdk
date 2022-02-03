@@ -131,29 +131,6 @@ class KarhooAvailabilityTest {
     }
 
     @Test
-    fun `selecting a vehicle category does not trigger an event if there is an empty filtered list`() {
-        availability.filterVehicleListByCategory(MPV)
-
-        verify(analytics, never()).vehicleSelected(any(), any())
-    }
-
-    @Test
-    fun `selecting a vehicle category triggers an event if there is a filtered list`() {
-        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
-
-        val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
-
-        availability.setAllCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
-                id = QuoteId(),
-                validity = 30)))
-
-        availability.filterVehicleListByCategory(MPV)
-        verify(analytics).vehicleSelected(MPV, null)
-    }
-
-    @Test
     fun `When getting some quotes categories with empty quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 

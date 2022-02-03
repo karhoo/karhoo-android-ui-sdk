@@ -35,7 +35,6 @@ class RatingView @JvmOverloads constructor(
         ratingBar.setOnRatingBarChangeListener { _: RatingBar, rating: Float, _: Boolean ->
             ratingLabel.visibility = View.VISIBLE
             ratingLabel.setText(R.string.kh_uisdk_rating_submitted)
-            KarhooUISDK.analytics?.submitRating(tripId = trip?.tripId.orEmpty(), rating = rating)
         }
 
     }

@@ -104,9 +104,6 @@ class KarhooAvailability(private val quotesService: QuotesService,
     override fun filterVehicleListByCategory(name: String) {
         this.currentFilter = name
         filterVehicles()
-        if (filteredList?.isEmpty() == false) {
-            analytics?.vehicleSelected(currentFilter.orEmpty(), filteredList?.get(0)?.id)
-        }
     }
 
     private fun filterVehicles() {
