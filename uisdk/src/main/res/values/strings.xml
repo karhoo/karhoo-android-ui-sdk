@@ -397,4 +397,11 @@
     <!--  Loyalty  -->
     <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
     <string name="karhoo_uisdk_locale">en_GB</string>
+
+    <!-- Legal Notice - The strings can be translated by DP -->
+    <string name="kh_uisdk_legal_notice_label">Legal Notices</string>
+    <string name="kh_uisdk_legal_notice_title"/>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+
 </resources>
