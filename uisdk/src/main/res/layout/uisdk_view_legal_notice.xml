@@ -17,6 +17,8 @@
             android:id="@+id/legalNoticeLabel"
             style="@style/KhLegalNoticeLabel"
             android:layout_width="wrap_content"
+            android:layout_alignBottom="@+id/legalNoticeIcon"
+            android:layout_alignTop="@+id/legalNoticeIcon"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:text="@string/kh_uisdk_legal_notice_label" />
@@ -26,7 +28,7 @@
             style="@style/KhLegalNoticeIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/legalNoticeLabel"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
             android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall" />

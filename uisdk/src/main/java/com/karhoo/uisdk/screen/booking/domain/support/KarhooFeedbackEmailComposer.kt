@@ -91,10 +91,10 @@ class KarhooFeedbackEmailComposer(
 
     fun createLegalNoticeEmail(mailToAddress: String): Intent? {
         val headline =
-            contextWeakRef.get()?.getString(R.string.kh_uisdk_legal_notice_label).orEmpty()
+            contextWeakRef.get()?.getString(R.string.kh_uisdk_email_info).orEmpty()
 
         val emailFooter = mailMetaInfo(headline)
-        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_legal_notice_title)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_legal_notice_label)
 
         val data = mailToAddress + "?subject=$emailSubject" +
                 "&body=$emailFooter"
