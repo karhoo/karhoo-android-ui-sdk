@@ -41,17 +41,16 @@ class LegalNoticeView @JvmOverloads constructor(
 
         emailComposer = KarhooFeedbackEmailComposer(context)
 
-        legalNoticeLabelContainer.setOnClickListener {
-            val arrowIcon = if (isExpanded)
-                getDrawableResource(R.drawable.kh_uisdk_ic_arrow_up_small)
-            else
-                getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
+        isExpanded = resources.getString(R.string.kh_uisdk_legal_notice_text).isNotEmpty()
 
-            legalNoticeIcon.setImageDrawable(arrowIcon)
+        legalNoticeIcon.setImageDrawable(getArrowIcon())
+
+        legalNoticeLabelContainer.setOnClickListener {
+            isExpanded = !isExpanded
+
+            legalNoticeIcon.setImageDrawable(getArrowIcon())
 
             expandLegalNoticeSection(isExpanded, legalNoticeText)
-
-            isExpanded = !isExpanded
         }
 
         bindView()
@@ -118,6 +117,13 @@ class LegalNoticeView @JvmOverloads constructor(
         intent?.let {
             context.startActivity(it)
         }
+    }
+
+    private fun getArrowIcon(): Drawable? {
+        return if (isExpanded)
+            getDrawableResource(R.drawable.kh_uisdk_ic_arrow_up_small)
+        else
+            getDrawableResource(R.drawable.kh_uisdk_ic_arrow_down_small)
     }
 
     companion object {
