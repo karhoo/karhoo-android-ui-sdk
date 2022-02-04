@@ -37,17 +37,17 @@ interface Analytics {
 
     fun trackRide()
 
-    fun bookingScreenOpened()//ok
+    fun bookingScreenOpened()
 
-    fun quoteListOpened(bookingInfo: BookingInfo?)//ok
+    fun quoteListOpened(bookingInfo: BookingInfo?)
 
-    fun checkoutOpened(quote: Quote)//ok
+    fun checkoutOpened(quote: Quote)
 
-    fun paymentSucceed()//ok
+    fun paymentSucceed()
 
-    fun paymentFailed(details: String)//ok
+    fun paymentFailed(details: String)
 
-    fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)//ok
+    fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 
     fun pastTripsOpened()
 
@@ -57,5 +57,5 @@ interface Analytics {
 
     fun contactFleetClicked(page: String, fleetInfo: FleetInfo)
 
-    fun contactDriverClicked(fleetInfo: FleetInfo)
+    fun contactDriverClicked(page: String, fleetInfo: FleetInfo)
 }

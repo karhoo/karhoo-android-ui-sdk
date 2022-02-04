@@ -115,12 +115,12 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
 
     override fun contactFleet() {
         analytics?.userCalledFleet(trip)
-        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
+        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(page = TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
         trip?.fleetInfo?.phoneNumber?.let { view?.makeCall(it) }
     }
 
     override fun contactDriver() {
-        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactDriverClicked( fleetInfo = it) }
+        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactDriverClicked( page = TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
         analytics?.userCalledDriver(trip)
         trip?.vehicle?.driver?.phoneNumber?.let { view?.makeCall(it) }
     }
