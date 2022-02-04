@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.sdk.api.network.request.TripCancellation
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
@@ -114,10 +115,12 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
 
     override fun contactFleet() {
         analytics?.userCalledFleet(trip)
+        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
         trip?.fleetInfo?.phoneNumber?.let { view?.makeCall(it) }
     }
 
     override fun contactDriver() {
+        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactDriverClicked( fleetInfo = it) }
         analytics?.userCalledDriver(trip)
         trip?.vehicle?.driver?.phoneNumber?.let { view?.makeCall(it) }
     }
@@ -143,5 +146,9 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
             }
             view?.showCancellationFee(priceString, tripId)
         } ?: view?.showCancellationFee("", tripId)
+    }
+
+    companion object {
+        const val TRIP_INFO_CONTACT_TAG = "TripInfoContact"
     }
 }

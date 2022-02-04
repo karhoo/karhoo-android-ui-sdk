@@ -4,6 +4,7 @@ import android.content.Context
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
@@ -35,10 +36,12 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
     }
 
     override fun call() {
+        trip.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(UPCOMING_RIDE_TAG, fleetInfo = it) }
         view?.callFleet(trip.fleetInfo?.phoneNumber.orEmpty())
     }
 
     override fun track() {
+        KarhooUISDK.analytics?.trackTripClicked(trip)
         analytics?.trackRide()
         view?.trackTrip(trip)
     }
@@ -74,5 +77,9 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
                 view?.showCancellationText(true)
             }
         }
+    }
+
+    companion object {
+        const val UPCOMING_RIDE_TAG = "UpcomingRide"
     }
 }
