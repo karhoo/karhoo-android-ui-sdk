@@ -420,7 +420,7 @@ class TripTests : Launch {
      * Then:    I see a message that the booking is not cancelled for cause of no drivers, alternative option is available
      **/
     @Test
-    @Ignore
+    //    @Ignore
     @AllowFlaky(attempts = 5)
     fun alternativeAfterFleetCancelledWhenDER() {
         mockTripSuccessResponse(

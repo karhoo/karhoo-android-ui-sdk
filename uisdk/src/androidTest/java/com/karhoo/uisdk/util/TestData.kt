@@ -60,9 +60,9 @@ class TestData {
 
         const val TEST_FLEET = "KarhooTestFleet"
 
-        const val PAST_DATE_TIME = "31 Jul 2019, 1:35PM"
+        const val PAST_DATE_TIME = "31 Jul 2019, 13:35"
 
-        const val VEHICLE_DETAILS = "Mpv: 123 XYZ"
+        const val VEHICLE_DETAILS = "MPV: 123 XYZ"
 
         const val CAR_DETAILS = "Saloon: ZATLOW"
 
@@ -74,7 +74,7 @@ class TestData {
 
         const val KARHOO_ID = "Karhoo ID"
 
-        const val PREBOOK_TIME_DATE = "2 Dec 2021, 8:00pm"
+        const val PREBOOK_TIME_DATE = "2 Dec 2021, 20:00"
 
         const val LATITUDE = 51.5166744
 
