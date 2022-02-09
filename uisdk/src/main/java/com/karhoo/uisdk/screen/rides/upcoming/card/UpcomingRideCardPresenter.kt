@@ -36,7 +36,7 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
     }
 
     override fun call() {
-        trip.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(UPCOMING_RIDE_TAG, fleetInfo = it) }
+        KarhooUISDK.analytics?.contactFleetClicked(UPCOMING_RIDE_TAG, tripInfo = trip)
         view?.callFleet(trip.fleetInfo?.phoneNumber.orEmpty())
     }
 

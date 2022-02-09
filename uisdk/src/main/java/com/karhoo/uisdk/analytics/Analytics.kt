@@ -55,7 +55,7 @@ interface Analytics {
 
     fun trackTripClicked(tripInfo: TripInfo)
 
-    fun contactFleetClicked(page: String, fleetInfo: FleetInfo)
+    fun contactFleetClicked(page: String, tripInfo: TripInfo)
 
-    fun contactDriverClicked(page: String, fleetInfo: FleetInfo)
+    fun contactDriverClicked(page: String, tripInfo: TripInfo)
 }

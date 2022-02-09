@@ -12,6 +12,7 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
+import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenter
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
@@ -115,12 +116,12 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
 
     override fun contactFleet() {
         analytics?.userCalledFleet(trip)
-        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactFleetClicked(page = TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
+        trip?.let { KarhooUISDK.analytics?.contactFleetClicked(UpcomingRideCardPresenter.UPCOMING_RIDE_TAG, tripInfo = it) }
         trip?.fleetInfo?.phoneNumber?.let { view?.makeCall(it) }
     }
 
     override fun contactDriver() {
-        trip?.fleetInfo?.let { KarhooUISDK.analytics?.contactDriverClicked( page = TRIP_INFO_CONTACT_TAG, fleetInfo = it) }
+        trip?.let { KarhooUISDK.analytics?.contactDriverClicked( page = TRIP_INFO_CONTACT_TAG, tripInfo = it) }
         analytics?.userCalledDriver(trip)
         trip?.vehicle?.driver?.phoneNumber?.let { view?.makeCall(it) }
     }
