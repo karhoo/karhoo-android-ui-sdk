@@ -49,10 +49,12 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                 ?: 0 < 0
 
         if (canBurn && hasInsufficientPoints && currentMode == LoyaltyMode.BURN) {
-            view.showError(view.provideResources().getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn))
+            view.setBurnSubtitle(view.provideResources().getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn))
             currentMode = LoyaltyMode.ERROR
             return
         }
+
+        setSubtitleBasedOnMode(currentMode, true)
 
         view.updateLoyaltyFeatures(canEarn, canBurn)
         view.set(currentMode)
@@ -74,7 +76,7 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                             is Resource.Success -> {
                                 earnedPoints = result.data.points
 
-                                getSubtitleBasedOnMode()
+                                setSubtitleBasedOnMode(LoyaltyMode.EARN)
                             }
                             is Resource.Failure -> {
                                 val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
@@ -103,7 +105,7 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                             is Resource.Success -> {
                                 burnedPoints = result.data.points
 
-                                getSubtitleBasedOnMode()
+                                setSubtitleBasedOnMode(LoyaltyMode.BURN)
                             }
                             is Resource.Failure -> {
                                 val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
@@ -116,27 +118,28 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
         }
     }
 
-    override fun getSubtitleBasedOnMode() {
+    override fun setSubtitleBasedOnMode(mode: LoyaltyMode, updateAll: Boolean) {
         val resources = view.provideResources()
-        val subtitle = when (currentMode) {
+
+        when (mode) {
             LoyaltyMode.BURN -> {
-                String.format(
-                        resources.getString(R.string.kh_uisdk_loyalty_points_burned_for_trip),
-                        burnedPoints)
+                view.setBurnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle), loyaltyDataModel?.tripAmount , loyaltyDataModel?.currency, burnedPoints))
+                if(updateAll) {
+                    view.setEarnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip), 0))
+                }
             }
             LoyaltyMode.EARN -> {
-                String.format(
-                        resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
-                        earnedPoints)
+                if(updateAll) {
+                    view.setBurnSubtitle(resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle))
+                }
+                view.setEarnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip), earnedPoints))
             }
             else -> {
                 String.format(
-                        resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
-                        earnedPoints)
+                    resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
+                    earnedPoints)
             }
         }
-
-        view.setSubtitle(subtitle)
     }
 
     override fun getCurrentMode(): LoyaltyMode {
