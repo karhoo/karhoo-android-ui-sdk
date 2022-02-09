@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.analytics
 
 import android.location.Location
-import com.karhoo.sdk.api.model.FleetInfo
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
