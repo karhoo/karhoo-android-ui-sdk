@@ -125,20 +125,23 @@ class ServerRobot {
     }
 
     fun quoteIdResponse(code: Int, response: Any, endpoint: String = APITemplate
-            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0) {
+            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0, local: String = "en-US") {
+        val url = "$endpoint?locale=$local"
         mockPostResponse(
                 code = code,
                 response = response,
-                endpoint = endpoint,
+                endpoint = url,
                 delayInMillis = delayInMillis
                         )
     }
 
-    fun quotesResponse(code: Int, response: Any, delayInMillis: Int = 0, quoteId: String = QUOTE_LIST_ID_ASAP.quoteId) {
+    fun quotesResponse(code: Int, response: Any, delayInMillis: Int = 0, quoteId: String =
+            QUOTE_LIST_ID_ASAP.quoteId) {
+        val url = APITemplate.QUOTES_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId)
         mockGetResponse(
                 code = code,
                 response = response,
-                endpoint = APITemplate.QUOTES_METHOD.replace("{${APITemplate.IDENTIFIER_ID}}", quoteId),
+                endpoint = url,
                 delayInMillis = delayInMillis
                        )
     }
@@ -222,7 +225,7 @@ class ServerRobot {
                 response = response,
                 endpoint = APITemplate.BOOKING_CANCEL_FEE.replace("{id}", trip),
                 delayInMillis = delayInMillis
-                        )
+                       )
     }
 
     fun sdkInitResponse(code: Int, response: Any, delayInMillis: Int = 0) {

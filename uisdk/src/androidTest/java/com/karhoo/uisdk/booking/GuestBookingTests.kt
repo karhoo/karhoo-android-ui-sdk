@@ -200,6 +200,7 @@ class GuestBookingTests : Launch {
     fun cancellationTextVisibleInTheGuestDetailsPage() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
         }
