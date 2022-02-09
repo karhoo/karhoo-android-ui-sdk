@@ -96,6 +96,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                   tripDetails?.destination == null, journeyInfo != null)
 
         bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
+
+        KarhooUISDK.analytics?.bookingScreenOpened()
     }
 
     override fun onResume() {
