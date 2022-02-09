@@ -404,4 +404,8 @@
     <string name="kh_uisdk_legal_notice_title" />
     <string name="kh_uisdk_legal_notice_link" />
     <string name="kh_uisdk_legal_notice_text" />
+    <string name="kh_uisdk_loyalty_use_points_title">Use your points</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
+    <string name="kh_uisdk_loyalty_separator">OR</string>
 </resources>

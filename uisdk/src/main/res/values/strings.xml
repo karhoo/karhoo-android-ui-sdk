@@ -219,14 +219,6 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!--  Navigation Drawer  -->
     <string name="kh_uisdk_login">Sign In</string>
-    <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
-    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
-    <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
-    <string name="kh_uisdk_loyalty_title">Loyalty points</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">The currency is not supported yet</string>
     <string name="kh_uisdk_map_selector">Set pin location on map</string>
     <string name="kh_uisdk_meeting_point">Meeting Point</string>
     <string name="kh_uisdk_metered">Metered</string>
@@ -409,5 +401,12 @@
     <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
     <string name="kh_uisdk_loyalty_separator">OR</string>
-
+    <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_title">Loyalty points</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">The currency is not supported yet</string>
 </resources>
