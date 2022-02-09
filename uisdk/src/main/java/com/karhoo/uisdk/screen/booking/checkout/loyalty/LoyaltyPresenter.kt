@@ -125,8 +125,11 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
 
         when (mode) {
             LoyaltyMode.BURN -> {
-                view.setBurnSubtitle(String.format(resources.getString(R.string
-                                                                           .kh_uisdk_loyalty_use_points_on_subtitle), Currency.getInstance(loyaltyDataModel?.currency).formatted(loyaltyDataModel?.tripAmount?.toInt() ?: 0 , includeCurrencySymbol = false), loyaltyDataModel?.currency, burnedPoints))
+                view.setBurnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle),
+                                                   Currency.getInstance(loyaltyDataModel?.currency).formatted(loyaltyDataModel?.tripAmount?.toInt() ?: 0 ,
+                                                                                                              includeCurrencySymbol = false),
+                                                   loyaltyDataModel?.currency,
+                                                   burnedPoints))
                 if(updateAll) {
                     view.setEarnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip), 0))
                 }
