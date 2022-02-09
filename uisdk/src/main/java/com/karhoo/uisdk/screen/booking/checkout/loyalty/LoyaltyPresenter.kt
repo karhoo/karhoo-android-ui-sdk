@@ -7,7 +7,9 @@ import com.karhoo.sdk.api.network.request.LoyaltyPreAuthPayload
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
+import java.util.Currency
 
 class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
                        private val loyaltyService: LoyaltyService = KarhooApi.loyaltyService) : LoyaltyContract
@@ -123,7 +125,8 @@ class LoyaltyPresenter(val userStore: UserStore = KarhooApi.userStore,
 
         when (mode) {
             LoyaltyMode.BURN -> {
-                view.setBurnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle), loyaltyDataModel?.tripAmount , loyaltyDataModel?.currency, burnedPoints))
+                view.setBurnSubtitle(String.format(resources.getString(R.string
+                                                                           .kh_uisdk_loyalty_use_points_on_subtitle), Currency.getInstance(loyaltyDataModel?.currency).formatted(loyaltyDataModel?.tripAmount?.toInt() ?: 0 , includeCurrencySymbol = false), loyaltyDataModel?.currency, burnedPoints))
                 if(updateAll) {
                     view.setEarnSubtitle(String.format(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip), 0))
                 }

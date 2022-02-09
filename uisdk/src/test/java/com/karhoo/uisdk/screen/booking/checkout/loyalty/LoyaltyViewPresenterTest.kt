@@ -178,7 +178,7 @@ class LoyaltyViewPresenterTest {
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setBurnSubtitle("Pay 10.0 GBP with 1 loyalty points")
+        verify(view).setBurnSubtitle("Pay 0.10 GBP with 1 loyalty points")
     }
 
     @Test
