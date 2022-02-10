@@ -381,7 +381,4 @@ open abstract class BaseTestRobot {
     fun scrollUp(resId: Int): ViewInteraction =
             onView(withId(resId)).perform(ViewActions.swipeUp())
 
-    fun getLocale(): String = InstrumentationRegistry.getInstrumentation()
-            .targetContext.resources.configuration.locale.toNormalizedLocale()
-
 }
