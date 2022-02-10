@@ -50,6 +50,7 @@ import androidx.test.uiautomator.UiSelector
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.matcher.RecyclerMatcher
 import com.karhoo.uisdk.common.matcher.withDrawable
+import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
