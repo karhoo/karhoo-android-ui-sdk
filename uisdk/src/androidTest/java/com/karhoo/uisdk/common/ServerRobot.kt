@@ -125,8 +125,8 @@ class ServerRobot {
     }
 
     fun quoteIdResponse(code: Int, response: Any, endpoint: String = APITemplate
-            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0, local: String = "en-US") {
-        val url = "$endpoint?locale=$local"
+            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0, locale: String = "en-GB") {
+        val url = "$endpoint?locale=$locale"
         mockPostResponse(
                 code = code,
                 response = response,
