@@ -331,6 +331,7 @@ class GuestBookingTests : Launch {
     fun addressScreenCheckFromDestinationGuestCheckout() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
         }
         booking(this) {
             clickDestinationAddressField()
@@ -486,7 +487,8 @@ class GuestBookingTests : Launch {
     fun closingTheGuestDetailsPage() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
@@ -497,7 +499,7 @@ class GuestBookingTests : Launch {
             checkGuestDetailsPageIsShown()
         }
         booking {
-            pressCloseGuestDetailsPage()
+            pressDeviceBackButton()
         } result {
             fullASAPQuotesListCheckGuest()
         }
@@ -517,7 +519,8 @@ class GuestBookingTests : Launch {
         KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
+            reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             addCardResponse(HTTP_OK, PAYMENTS_TOKEN)
@@ -532,7 +535,8 @@ class GuestBookingTests : Launch {
             pressFirstQuote()
             mediumSleep()
             fillCorrectInfoGuestDetails()
-            enterCardDetails()
+            //            pressAddPaymentField()
+            //            enterCardDetails()
             longSleep()
         } result {
             fullCheckFilledGuestDetailsPage()
