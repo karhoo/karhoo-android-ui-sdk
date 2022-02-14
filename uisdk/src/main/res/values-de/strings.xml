@@ -232,11 +232,15 @@
     <string name="kh_uisdk_loyalty_info">Ihre Karte wird benötigt, um diese Transaktion zu autorisieren, falls der Endpreis der Fahrt Ihren Punktestand übersteigt. Ihr Konto wird nicht belastet, wenn Ihre Treuepunkte den gesamten Preis abdecken.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Ihr Punktesaldo ist unzureichend</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Sie verwenden %1$s Punkte</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Diese Fahrt bringt Ihnen %1$s Punkte ein.</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s Treuepunkte werden am Ende der Fahrt Ihrem Kontostand gutgeschrieben.</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Sie dürfen keine Punkte verbrauchen</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Ihr Guthaben ist unzureichend</string>
+    <string name="kh_uisdk_loyalty_separator">ODER</string>
     <string name="kh_uisdk_loyalty_title">Treuepunkte</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Die Währung wird noch nicht unterstützt</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">Sie können Ihre Treuepunkte zur Bezahlung der Fahrt einsetzen</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Bezahlen Sie %s %s mit Treuepunkten %s</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Verwenden Sie Ihre Punkte</string>
     <string name="kh_uisdk_map_selector">Position der Stecknadel auf der Karte festlegen</string>
     <string name="kh_uisdk_meeting_point">Treffpunkt</string>
     <string name="kh_uisdk_metered">Taxameter</string>

@@ -38,10 +38,18 @@ class LoyaltyViewPresenterTest {
     @Before
     fun setUp() {
         whenever(view.provideResources()).thenReturn(resources)
-        whenever(resources.getString(R.string.kh_uisdk_loyalty_points_burned_for_trip)).thenReturn(BURN_POINTS_SUBTITLE)
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle)).thenReturn(BURN_POINTS_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip)).thenReturn(EARN_POINTS_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_unsupported_currency)).thenReturn(CURRENCY_NOT_SUPPORTED_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn)).thenReturn(INSUFFICIENT_BALANCE_SUBTITLE)
+
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip))
+            .thenReturn(EARN_POINTS_SUBTITLE)
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle))
+            .thenReturn(EARN_POINTS_SUBTITLE_OFF)
+
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle))
+            .thenReturn(BURN_POINTS_SUBTITLE)
 
         whenever(userStore.paymentProvider).thenReturn(PaymentProvider(
                 Provider("id"),
@@ -168,10 +176,9 @@ class LoyaltyViewPresenterTest {
 
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setSubtitle("You are using 1 points")
+        verify(view).setBurnSubtitle("Pay 0.10 GBP with 1 loyalty points")
     }
 
     @Test
@@ -189,7 +196,7 @@ class LoyaltyViewPresenterTest {
         lambdaCaptorLoyaltyPoints.secondValue.invoke(Resource.Success(LoyaltyPoints(LOYALTY_POINTS)))
 
         presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-        verify(view).showError(INSUFFICIENT_BALANCE_SUBTITLE)
+        verify(view).setBurnSubtitle(INSUFFICIENT_BALANCE_SUBTITLE)
     }
 
     @Test
@@ -215,10 +222,10 @@ class LoyaltyViewPresenterTest {
 
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
-        presenter.updateLoyaltyMode(LoyaltyMode.EARN)
         presenter.updateEarnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setSubtitle("This ride earns you 1 points")
+        verify(view).setEarnSubtitle("1 loyalty points will be added to your account balance at " +
+                                            "the end of the ride")
     }
 
     @Test
@@ -270,10 +277,12 @@ class LoyaltyViewPresenterTest {
         private const val LOYALTY_CURRENCY = "GBP"
         private const val LOYALTY_AMOUNT = 10.0
         private const val LOYALTY_POINTS = 10
-        private const val BURN_POINTS_SUBTITLE = "You are using %1\$s points"
-        private const val EARN_POINTS_SUBTITLE = "This ride earns you %1\$s points"
         private const val CURRENCY_NOT_SUPPORTED_SUBTITLE = "The currency is not supported yet"
         private const val INSUFFICIENT_BALANCE_SUBTITLE = "Your points balance is insufficient"
+        private const val EARN_POINTS_SUBTITLE = "%1\$s loyalty points will be added to your " +
+                "account balance at the end of the ride"
+        private const val EARN_POINTS_SUBTITLE_OFF = "You can enable your loyalty points to pay for the ride"
+        private const val BURN_POINTS_SUBTITLE = "Pay %s %s with %s loyalty points"
     }
 
 }

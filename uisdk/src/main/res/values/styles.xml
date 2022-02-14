@@ -537,8 +537,7 @@
         <item name="lineHeight">20dp</item>
     </style>
 
-    <style name="KhLoyaltySwitch" parent="Widget.MaterialComponents.CompoundButton.Switch">
-    </style>
+    <style name="KhLoyaltySwitch" parent="Widget.MaterialComponents.CompoundButton.Switch"></style>
 
     <style name="KhLoyaltyInfoText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
@@ -602,6 +601,17 @@
     <style name="KhLegalNoticeIcon">
         <item name="android:src">@drawable/kh_uisdk_ic_arrow_down_small</item>
         <item name="android:tint">@color/kh_uisdk_colorAccent</item>
+    </style>
+
+    <style name="KhLoyaltySeparator">
+        <item name="android:background">@color/kh_uisdk_border</item>
+    </style>
+
+    <style name="KhLoyaltySeparatorLabel">
+        <item name="background">@color/kh_uisdk_label</item>
+        <item name="fontWeight">600</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
 
