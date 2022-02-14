@@ -707,6 +707,7 @@ class TestData {
                 status = QuoteStatus.PROGRESSING,
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
+                validity = 2000,
                 quotes = listOf(
                         QUOTE,
                         QUOTE.copy(
@@ -807,6 +808,7 @@ class TestData {
                 status = QuoteStatus.PROGRESSING,
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
+                validity = 2000,
                 quotes = listOf(
                         QUOTE,
                         QUOTE_WITH_CANCELLATION_AGREEMENT.copy(
@@ -824,6 +826,7 @@ class TestData {
                 status = QuoteStatus.PROGRESSING,
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
+                validity = 2000,
                 quotes = listOf(
                         QUOTE,
                         QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES.copy(
@@ -841,6 +844,7 @@ class TestData {
                 status = QuoteStatus.PROGRESSING,
                 id = QUOTE_LIST_ID_ASAP.quoteId,
                 availability = AVAILABILITY,
+                validity = 2000,
                 quotes = listOf(
                         QUOTE,
                         QUOTE_WITH_CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.copy(

@@ -6,11 +6,14 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyActionsContainer
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyInfoLayout
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltySwitch
-import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewLayout
-import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewSubtitle
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewBurnLayout
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewBurnSubtitle
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewBalance
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewEarnSubtitle
+import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.loyaltyViewSeparatorLayout
 
 class LoyaltyView @JvmOverloads constructor(context: Context,
                                             attrs: AttributeSet? = null,
@@ -24,7 +27,7 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
 
         presenter.attachView(this)
 
-        loyaltyViewLayout.setOnClickListener {
+        loyaltyViewBurnLayout.setOnClickListener {
             loyaltySwitch.isChecked = !loyaltySwitch.isChecked
             presenter.updateLoyaltyMode(if (loyaltySwitch.isChecked) LoyaltyMode.BURN else LoyaltyMode.EARN)
         }
@@ -35,7 +38,7 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
     }
 
     override fun set(mode: LoyaltyMode) {
-        loyaltyViewLayout.background =
+        loyaltyActionsContainer.background =
                 ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_background)
         loyaltyViewBalance.background = ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_balance_background)
 
@@ -45,35 +48,37 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
             loyaltyInfoLayout.visibility = GONE
         }
 
-        presenter.getSubtitleBasedOnMode()
+        presenter.setSubtitleBasedOnMode(mode)
     }
 
     override fun showError(message: String) {
-        loyaltyViewSubtitle.text = message
-        loyaltyViewSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_primary_red))
-        loyaltyViewLayout.background = ContextCompat.getDrawable(context, R
+        loyaltyViewBurnSubtitle.text = message
+        loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_primary_red))
+        loyaltyActionsContainer.background = ContextCompat.getDrawable(context, R
                 .drawable.uisdk_loyalty_error_background)
         loyaltyInfoLayout.visibility = GONE
         loyaltyViewBalance.background = ContextCompat.getDrawable(context, R.drawable.uisdk_loyalty_balance_error_background)
     }
 
     override fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean) {
-        if (!showEarnRelatedUI && presenter.getCurrentMode() != LoyaltyMode.BURN) {
-            loyaltyViewSubtitle.visibility = GONE
+        if (!showEarnRelatedUI) {
+            loyaltyViewEarnSubtitle.visibility = GONE
         } else {
-            loyaltyViewSubtitle.visibility = VISIBLE
+            loyaltyViewEarnSubtitle.visibility = VISIBLE
         }
 
         if (!showBurnRelatedUI) {
-            loyaltySwitch.visibility = GONE
+            loyaltyViewBurnLayout.visibility = GONE
+            loyaltyViewSeparatorLayout.visibility = GONE
         } else {
-            loyaltySwitch.visibility = VISIBLE
+            loyaltyViewBurnLayout.visibility = VISIBLE
+            loyaltyViewSeparatorLayout.visibility = VISIBLE
         }
 
         if (!showEarnRelatedUI && !showBurnRelatedUI) {
-            loyaltyViewLayout.visibility = GONE
+            loyaltyViewBurnLayout.visibility = GONE
         } else {
-            loyaltyViewLayout.visibility = VISIBLE
+            loyaltyViewBurnLayout.visibility = VISIBLE
         }
     }
 
@@ -85,9 +90,14 @@ class LoyaltyView @JvmOverloads constructor(context: Context,
         presenter.getLoyaltyStatus()
     }
 
-    override fun setSubtitle(subtitle: String) {
-        loyaltyViewSubtitle.text = subtitle
-        loyaltyViewSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+    override fun setEarnSubtitle(subtitle: String) {
+        loyaltyViewEarnSubtitle.text = subtitle
+        loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+    }
+
+    override fun setBurnSubtitle(subtitle: String) {
+        loyaltyViewBurnSubtitle.text = subtitle
+        loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
     }
 
     override fun provideResources(): Resources {

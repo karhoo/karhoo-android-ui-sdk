@@ -15,6 +15,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.getLocale
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -39,6 +40,7 @@ import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES
 import com.karhoo.uisdk.util.TestSDKConfig
+import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
@@ -200,7 +202,8 @@ class GuestBookingTests : Launch {
     fun cancellationTextVisibleInTheGuestDetailsPage() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
         }
         booking(this, INITIAL_TRIP_INTENT) {
