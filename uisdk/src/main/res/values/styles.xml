@@ -475,8 +475,12 @@
 
     <style name="KhBookingPriceInfoImage">
         <item name="android:src">@drawable/kh_ic_error_outline</item>
-        <item name="tint">@color/white</item>
+        <item name="tint">@color/kh_uisdk_text_primary</item>
         <item name="android:paddingTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
+    </style>
+
+    <style name="KhBookingPriceInfoExpandedImage" parent="KhBookingPriceInfoImage">
+        <item name="tint">@color/white</item>
     </style>
 
     <style name="KhBookingPriceInfoText">
