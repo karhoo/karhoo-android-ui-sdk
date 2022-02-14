@@ -38,4 +38,8 @@ class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfig
     override fun logo(): Drawable? {
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
+
+    override fun useCheckboxOnTermsAndConditions(): Boolean {
+        return true
+    }
 }

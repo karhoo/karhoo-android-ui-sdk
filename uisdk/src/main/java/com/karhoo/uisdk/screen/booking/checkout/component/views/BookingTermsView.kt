@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.component.views
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.text.SpannableString
 import android.util.AttributeSet
 import android.widget.LinearLayout
@@ -9,11 +10,14 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsText
 import android.text.TextPaint
-
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBox
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsTextWithCheckBox
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBoxLayout
 import android.text.style.ClickableSpan
 import android.view.View
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 
 class BookingTermsView @JvmOverloads constructor(context: Context,
                                                  attrs: AttributeSet? = null,
@@ -25,6 +29,9 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
     init {
         inflate(context, R.layout.uisdk_view_booking_terms, this)
     }
+
+    private var initialCheckBoxColorStateList: ColorStateList? = null
+    var checkBoxChangedCallback: ((isChecked: Boolean) -> Unit?)? = null
 
     fun bindViews(vehicle: Quote) {
         val bookingTermsAndConditionsText = resources.getString(R.string.kh_uisdk_booking_terms_and_conditions)
@@ -60,6 +67,19 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
 
         khTermsAndConditionsText.text = spannableString
         khTermsAndConditionsText.movementMethod = LinkMovementMethod.getInstance()
+        initialCheckBoxColorStateList = khTermsAndConditionsCheckBox.buttonTintList
+
+        if(KarhooUISDKConfigurationProvider.configuration.useCheckboxOnTermsAndConditions()){
+            khTermsAndConditionsText.visibility = View.GONE
+
+            khTermsAndConditionsCheckBoxLayout.visibility = View.VISIBLE
+            khTermsAndConditionsTextWithCheckBox.text = spannableString
+            khTermsAndConditionsTextWithCheckBox.movementMethod = LinkMovementMethod.getInstance()
+            khTermsAndConditionsCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                khTermsAndConditionsCheckBox.buttonTintList =  initialCheckBoxColorStateList
+                checkBoxChangedCallback?.invoke(khTermsAndConditionsCheckBox.isChecked)
+            }
+        }
     }
 
     private fun createClickableSpan(url: String?): ClickableSpan {
