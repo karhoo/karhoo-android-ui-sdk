@@ -12,7 +12,6 @@ interface LoyaltyContract {
         fun set(loyaltyDataModel: LoyaltyViewDataModel)
         fun getLoyaltyStatus()
         fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit)
-        fun hasError(): Boolean
     }
 
     interface LoyaltyPresenterDelegate {

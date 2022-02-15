@@ -139,18 +139,6 @@ class LoyaltyViewPresenterTest {
     }
 
     @Test
-    fun `When setting a mode which is already set, then the component does nothing`() {
-        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
-        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
-                                                                   canBurn = true))
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-
-        //The first set to burn mode
-        verify(view, times(1)).set(LoyaltyMode.BURN)
-    }
-
-    @Test
     fun `When setting a view model with canBurn, then the view hides the switch`() {
         val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
                                           canBurn = false)
@@ -204,9 +192,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        lambdaCaptorLoyaltyPoints.allValues.forEach {
-            it.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        }
+        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
         verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 
@@ -235,9 +221,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        lambdaCaptorLoyaltyPoints.allValues.forEach {
-            it.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        }
+        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
         verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 

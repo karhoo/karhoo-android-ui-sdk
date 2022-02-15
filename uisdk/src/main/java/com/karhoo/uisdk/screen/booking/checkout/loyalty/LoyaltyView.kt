@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.model.LoyaltyNonce
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.*
 
 class LoyaltyView @JvmOverloads constructor(
@@ -20,6 +21,10 @@ class LoyaltyView @JvmOverloads constructor(
     private val presenter: LoyaltyContract.Presenter = LoyaltyPresenter()
 
     override var delegate: LoyaltyContract.LoyaltyViewDelegate? = null
+    set(value) {
+        field = value
+        presenter.loyaltyViewDelegate = delegate
+    }
 
     init {
         inflate(context, R.layout.uisdk_view_loyalty_view, this)
@@ -28,7 +33,7 @@ class LoyaltyView @JvmOverloads constructor(
         presenter.updateLoyaltyMode(LoyaltyMode.NONE)
 
         loyaltyViewBurnLayout.setOnClickListener {
-            if(loyaltySwitch.isEnabled) {
+            if (loyaltySwitch.isEnabled) {
                 loyaltySwitch.isChecked = !loyaltySwitch.isChecked
                 presenter.updateLoyaltyMode(if (loyaltySwitch.isChecked) LoyaltyMode.BURN else LoyaltyMode.EARN)
             }
@@ -36,10 +41,10 @@ class LoyaltyView @JvmOverloads constructor(
     }
 
     override fun toggleFeatures(earnOn: Boolean, burnON: Boolean) {
-        if (!earnOn) {
-            loyaltyViewEarnSubtitle.visibility = GONE
+        if (!earnOn && !burnON) {
+            loyaltyView.visibility = GONE
         } else {
-            loyaltyViewEarnSubtitle.visibility = VISIBLE
+            loyaltyView.visibility = VISIBLE
         }
 
         if (!burnON) {
@@ -50,22 +55,22 @@ class LoyaltyView @JvmOverloads constructor(
             loyaltyViewSeparatorLayout.visibility = VISIBLE
         }
 
-        if (!earnOn && !burnON) {
-            loyaltyViewBurnLayout.visibility = GONE
+        if (!earnOn) {
+            loyaltyViewEarnSubtitle.visibility = GONE
+            loyaltyViewSeparatorLayout.visibility = GONE
+            loyaltyViewFullWidthSeparator.visibility = VISIBLE
         } else {
-            loyaltyViewBurnLayout.visibility = VISIBLE
+            loyaltyViewEarnSubtitle.visibility = VISIBLE
+            loyaltyViewFullWidthSeparator.visibility = GONE
+
+            if(burnON) {
+                loyaltyViewSeparatorLayout.visibility = VISIBLE
+            }
         }
     }
 
     override fun getCurrentMode(): LoyaltyMode {
         return presenter.getCurrentMode()
-    }
-
-    override fun hasError(): Boolean {
-        val mode = getCurrentMode()
-        return mode == LoyaltyMode.ERROR_INSUFFICIENT_FUNDS ||
-                mode == LoyaltyMode.ERROR_UNKNOWN ||
-                mode == LoyaltyMode.ERROR_BAD_CURRENCY
     }
 
     override fun set(mode: LoyaltyMode) {
@@ -97,8 +102,8 @@ class LoyaltyView @JvmOverloads constructor(
                 loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
             }
             LoyaltyMode.NONE -> {
-                loyaltyViewBurnSubtitle.text = earnSubtitle
-                loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                loyaltyViewEarnSubtitle.text = earnSubtitle
+                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
             }
             LoyaltyMode.ERROR_BAD_CURRENCY,
             LoyaltyMode.ERROR_UNKNOWN -> {

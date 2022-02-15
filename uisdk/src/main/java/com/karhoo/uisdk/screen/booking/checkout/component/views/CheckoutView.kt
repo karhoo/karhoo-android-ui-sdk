@@ -114,6 +114,24 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             }
         }
 
+        loyaltyView.delegate = object : LoyaltyContract.LoyaltyViewDelegate {
+            override fun onModeChanged(mode: LoyaltyMode) {
+                if (loyaltyView.getCurrentMode() == LoyaltyMode.ERROR_BAD_CURRENCY) {
+                    loadingButtonCallback.enableButton(false)
+                } else {
+                    loadingButtonCallback.enableButton(true)
+                }
+            }
+
+            override fun onEndLoading() {
+                //Maybe will be implemented
+            }
+
+            override fun onStartLoading() {
+                //Maybe will be implemented
+            }
+        }
+
         showLoyaltyView(false)
     }
 
@@ -421,23 +439,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewDataModel?.let {
             loyaltyView.set(it)
-            loyaltyView.delegate = object : LoyaltyContract.LoyaltyViewDelegate {
-                override fun onModeChanged(mode: LoyaltyMode) {
-                    if (!loyaltyView.hasError()) {
-                        loadingButtonCallback.enableButton(false)
-                    } else {
-                        loadingButtonCallback.enableButton(true)
-                    }
-                }
-
-                override fun onEndLoading() {
-                    //Maybe will be implemented
-                }
-
-                override fun onStartLoading() {
-                    //Maybe will be implemented
-                }
-            }
         }
         loyaltyView.set(LoyaltyMode.NONE)
     }
@@ -456,7 +457,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
-        return if (loyaltyView.visibility == VISIBLE && !loyaltyView.hasError()) {
+        return if (loyaltyView.visibility == VISIBLE &&
+            loyaltyView.getCurrentMode() == LoyaltyMode.ERROR_BAD_CURRENCY) {
             loyaltyView.getLoyaltyPreAuthNonce { result ->
                 when (result) {
                     is Resource.Success -> {

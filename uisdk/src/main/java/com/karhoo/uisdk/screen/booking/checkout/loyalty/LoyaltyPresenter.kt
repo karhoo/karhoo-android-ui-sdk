@@ -19,19 +19,19 @@ class LoyaltyPresenter(
 ) : LoyaltyContract
 .Presenter {
     private var currentMode: LoyaltyMode = LoyaltyMode.NONE
+        set(value) {
+            field = value
+            loyaltyViewDelegate?.onModeChanged(value)
+        }
 
     private var loyaltyDataModel: LoyaltyViewDataModel? = null
     private var loyaltyStatus: LoyaltyStatus? = userStore.loyaltyStatus
     private var burnedPoints: Int? = null
-    private var earnedPoints: Int? = null
+    private var earnedPoints: Int? = 0
     override var loyaltyPresenterDelegate: LoyaltyContract.LoyaltyPresenterDelegate? = null
     override var loyaltyViewDelegate: LoyaltyContract.LoyaltyViewDelegate? = null
 
     override fun updateLoyaltyMode(mode: LoyaltyMode) {
-        if (currentMode == mode) {
-            return
-        }
-
         currentMode = if (mode == LoyaltyMode.BURN && loyaltyStatus?.canBurn == false) {
             return
         } else if (mode == LoyaltyMode.EARN && loyaltyStatus?.canEarn == false) {
@@ -64,13 +64,7 @@ class LoyaltyPresenter(
                             setSubtitleBasedOnMode(LoyaltyMode.EARN)
                         }
                         is Resource.Failure -> {
-                            val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
-
-                            currentMode = getErrorMode( KarhooError.LoyaltyInternalError )
-                            loyaltyPresenterDelegate?.updateWith(
-                                currentMode,
-                                errorMessage = loyaltyPresenterDelegate?.provideResources()?.getString(reasonId)
-                            )
+                            getErrorFromResponse(result.error)
                         }
                     }
                 }
@@ -99,7 +93,8 @@ class LoyaltyPresenter(
                             if (loyaltyStatus?.canBurn == true && hasInsufficientPoints) {
                                 loyaltyPresenterDelegate?.updateWith(
                                     mode = LoyaltyMode.ERROR_INSUFFICIENT_FUNDS,
-                                    errorMessage = loyaltyPresenterDelegate?.provideResources()?.getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn)
+                                    errorMessage = loyaltyPresenterDelegate?.provideResources()
+                                        ?.getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn)
                                 )
                                 currentMode = LoyaltyMode.ERROR_INSUFFICIENT_FUNDS
 
@@ -109,13 +104,7 @@ class LoyaltyPresenter(
                             setSubtitleBasedOnMode(LoyaltyMode.BURN)
                         }
                         is Resource.Failure -> {
-                            val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
-
-                            currentMode = getErrorMode(result.error)
-                            loyaltyPresenterDelegate?.updateWith(
-                                currentMode,
-                                errorMessage = loyaltyPresenterDelegate?.provideResources()?.getString(reasonId)
-                            )
+                            getErrorFromResponse(result.error)
                         }
                     }
                 }
@@ -125,7 +114,7 @@ class LoyaltyPresenter(
     private fun setSubtitleBasedOnMode(mode: LoyaltyMode, updateAll: Boolean = false) {
         val resources = loyaltyPresenterDelegate?.provideResources()
 
-        if(resources != null) {
+        if (resources != null) {
             when (mode) {
                 LoyaltyMode.BURN -> {
                     val burnSubtitle = if (currentMode == LoyaltyMode.BURN) {
@@ -171,6 +160,13 @@ class LoyaltyPresenter(
                     )
                 }
                 else -> {
+                    loyaltyPresenterDelegate?.updateWith(
+                        mode = mode,
+                        earnSubtitle = String.format(
+                            resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip),
+                            earnedPoints
+                        )
+                    )
                 }
             }
         }
@@ -196,10 +192,7 @@ class LoyaltyPresenter(
                         updateBurnedPoints()
                     }
                     is Resource.Failure -> {
-                        loyaltyPresenterDelegate?.toggleFeatures(
-                            earnOn = false,
-                            burnON = false
-                        )
+                        getErrorFromResponse(result.error)
                     }
                 }
             }
@@ -235,6 +228,16 @@ class LoyaltyPresenter(
                 }
             }
         }
+    }
+
+    private fun getErrorFromResponse(error: KarhooError) {
+        val reasonId = returnErrorStringOrLogoutIfRequired(error)
+
+        currentMode = getErrorMode(error)
+        loyaltyPresenterDelegate?.updateWith(
+            currentMode,
+            errorMessage = loyaltyPresenterDelegate?.provideResources()?.getString(reasonId)
+        )
     }
 
     private fun getErrorMode(error: KarhooError): LoyaltyMode {
