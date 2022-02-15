@@ -12,6 +12,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.getLocale
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -184,7 +185,7 @@ class BraintreeBookingTests : Launch {
     fun fullQuoteListCheckETA() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
@@ -203,7 +204,7 @@ class BraintreeBookingTests : Launch {
     fun userExpandsQuoteList() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
@@ -497,7 +498,7 @@ class BraintreeBookingTests : Launch {
     fun closingBookARideScreen() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
