@@ -142,6 +142,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hora</item>
         <item quantity="other">%d horas</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">info</string>
     <string name="kh_uisdk_initialised">Karhoo está iniciando tu viaje</string>
@@ -214,6 +215,10 @@
     <string name="kh_uisdk_last_name_hint">Apellidos</string>
     <string name="kh_uisdk_last_trip_id">№ de última reserva: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">№ de última reserva: no establecido</string>
+    <string name="kh_uisdk_legal_notice_label">Avisos legales</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Licencia:%1$s</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_location_disabled">Activa los servicios de localización para utilizar la aplicación</string>
@@ -227,11 +232,16 @@
     <string name="kh_uisdk_loyalty_info">Su tarjeta es necesaria para autorizar esta transacción en caso de que el precio final del viaje exceda su saldo de puntos. No se le cobrará a su cuenta si sus puntos de fidelidad cubren el precio total.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Tu saldo de puntos es insuficiente</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Estás usando %1$s puntos</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Este viaje le otorga %1$s puntos</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">Se añadirán %1$s puntos de fidelidad al saldo de su cuenta al final del viaje</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">No se le permite quemar puntos</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Tu saldo es insuficiente</string>
+    <string name="kh_uisdk_loyalty_separator">O</string>
     <string name="kh_uisdk_loyalty_title">Puntos de lealtad</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">La moneda aún no es compatible</string>
+    <string name="kh_uisdk_loyalty_unknown_error">Se ha producido un error. Para ganar o utilizar sus puntos de fidelidad, vuelva a intentarlo más tarde</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">Se ha producido un error. La moneda no es compatible</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">Puede habilitar sus puntos de fidelidad para pagar el viaje</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pague %s %s con %s puntos de fidelidad</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Usa tus puntos</string>
     <string name="kh_uisdk_map_selector">Seleccione la ubicación en el mapa</string>
     <string name="kh_uisdk_meeting_point">Punto de encuentro</string>
     <string name="kh_uisdk_metered">Precio taxímetro</string>
@@ -241,6 +251,7 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minutos</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Número de teléfono</string>
     <string name="kh_uisdk_moto">Moto</string>
