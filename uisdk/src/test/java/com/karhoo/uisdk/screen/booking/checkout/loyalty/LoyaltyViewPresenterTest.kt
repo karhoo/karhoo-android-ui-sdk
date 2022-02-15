@@ -12,13 +12,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
-import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.doNothing
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -55,8 +49,8 @@ class LoyaltyViewPresenterTest {
                 Provider("id"),
                 LoyaltyProgramme("1", "")))
         whenever(loyaltyService.getLoyaltyStatus(LOYALTY_ID)).thenReturn(loyaltyStatusCall)
-        whenever(loyaltyService.getLoyaltyBurn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt()))
-                .thenReturn(loyaltyBurnedPointsCall)
+        doReturn(loyaltyBurnedPointsCall).`when`(loyaltyService).getLoyaltyBurn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt())
+
         whenever(loyaltyService.getLoyaltyEarn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt
         (), 0))
                 .thenReturn(loyaltyEarnedPointsCall)
@@ -66,7 +60,7 @@ class LoyaltyViewPresenterTest {
         doNothing().whenever(loyaltyEarnedPointsCall).execute(lambdaCaptorLoyaltyPoints.capture())
 
         presenter = LoyaltyPresenter(userStore, loyaltyService)
-        presenter.attachView(view)
+        presenter.loyaltyPresenterDelegate = view
     }
 
     @Test
@@ -166,7 +160,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
         //The first set to burn mode
-        verify(view).updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+        verify(view).toggleFeatures(earnOn = false, burnON = false)
     }
 
     @Test
@@ -178,7 +172,8 @@ class LoyaltyViewPresenterTest {
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setBurnSubtitle("Pay 0.10 GBP with 1 loyalty points")
+        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
+        verify(view).updateWith(LoyaltyMode.BURN, burnSubtitle = "Pay 0.10 GBP with 1 loyalty points")
     }
 
     @Test
@@ -195,8 +190,7 @@ class LoyaltyViewPresenterTest {
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.secondValue.invoke(Resource.Success(LoyaltyPoints(LOYALTY_POINTS)))
 
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-        verify(view).setBurnSubtitle(INSUFFICIENT_BALANCE_SUBTITLE)
+        verify(view).updateWith(LoyaltyMode.ERROR_INSUFFICIENT_FUNDS, errorMessage = INSUFFICIENT_BALANCE_SUBTITLE)
     }
 
     @Test
@@ -210,9 +204,10 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        presenter.updateBurnedPoints()
-        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
+        lambdaCaptorLoyaltyPoints.allValues.forEach {
+            it.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
+        }
+        verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 
     @Test
@@ -224,7 +219,8 @@ class LoyaltyViewPresenterTest {
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.updateEarnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setEarnSubtitle("1 loyalty points will be added to your account balance at " +
+        verify(view).updateWith(
+            LoyaltyMode.EARN, earnSubtitle = "1 loyalty points will be added to your account balance at " +
                                             "the end of the ride")
     }
 
@@ -239,9 +235,10 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        presenter.updateBurnedPoints()
-        lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
+        lambdaCaptorLoyaltyPoints.allValues.forEach {
+            it.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
+        }
+        verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 
     @Test
@@ -277,7 +274,7 @@ class LoyaltyViewPresenterTest {
         private const val LOYALTY_CURRENCY = "GBP"
         private const val LOYALTY_AMOUNT = 10.0
         private const val LOYALTY_POINTS = 10
-        private const val CURRENCY_NOT_SUPPORTED_SUBTITLE = "The currency is not supported yet"
+        private const val CURRENCY_NOT_SUPPORTED_SUBTITLE = "An error has occurred. The currency is not supported"
         private const val INSUFFICIENT_BALANCE_SUBTITLE = "Your points balance is insufficient"
         private const val EARN_POINTS_SUBTITLE = "%1\$s loyalty points will be added to your " +
                 "account balance at the end of the ride"

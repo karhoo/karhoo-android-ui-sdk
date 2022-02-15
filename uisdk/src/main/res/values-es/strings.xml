@@ -237,7 +237,8 @@
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Tu saldo es insuficiente</string>
     <string name="kh_uisdk_loyalty_separator">O</string>
     <string name="kh_uisdk_loyalty_title">Puntos de lealtad</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">La moneda aún no es compatible</string>
+    <string name="kh_uisdk_loyalty_unknown_error">Se ha producido un error. Para ganar o utilizar sus puntos de fidelidad, vuelva a intentarlo más tarde</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">Se ha producido un error. La moneda no es compatible</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">Puede habilitar sus puntos de fidelidad para pagar el viaje</string>
     <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pague %s %s con %s puntos de fidelidad</string>
     <string name="kh_uisdk_loyalty_use_points_title">Usa tus puntos</string>
