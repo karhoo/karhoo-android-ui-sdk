@@ -116,11 +116,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         loyaltyView.delegate = object : LoyaltyContract.LoyaltyViewDelegate {
             override fun onModeChanged(mode: LoyaltyMode) {
-                if (loyaltyView.getCurrentMode() == LoyaltyMode.ERROR_BAD_CURRENCY) {
-                    loadingButtonCallback.enableButton(false)
-                } else {
-                    loadingButtonCallback.enableButton(true)
-                }
+                //Might be implemented at some point
             }
 
             override fun onEndLoading() {
@@ -457,8 +453,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
-        return if (loyaltyView.visibility == VISIBLE &&
-            loyaltyView.getCurrentMode() != LoyaltyMode.ERROR_BAD_CURRENCY) {
+        return if (loyaltyView.visibility == VISIBLE) {
             loyaltyView.getLoyaltyPreAuthNonce { result ->
                 when (result) {
                     is Resource.Success -> {
@@ -466,6 +461,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         startBooking()
                     }
                     is Resource.Failure -> {
+                        if(result.error.code == KarhooError.FailedToGenerateNonce.code) {
+                            //Start the booking even if the loyalty is in an error state
+                            startBooking()
+                            return@getLoyaltyPreAuthNonce
+                        }
+
                         val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
 
                         val config = KarhooAlertDialogConfig(

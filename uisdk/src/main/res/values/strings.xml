@@ -410,4 +410,5 @@
     <string name="kh_uisdk_loyalty_title">Loyalty points</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">An error has occurred. The currency is not supported</string>
     <string name="kh_uisdk_loyalty_unknown_error">An error has occurred. To earn or use you loyalty points, please try again later</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
 </resources>

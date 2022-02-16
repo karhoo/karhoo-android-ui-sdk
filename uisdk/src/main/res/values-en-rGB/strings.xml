@@ -215,7 +215,7 @@
     <string name="kh_uisdk_last_name_hint">Last name</string>
     <string name="kh_uisdk_last_trip_id">Last Trip ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Last Trip ID: Not yet set</string>
-    <string name="kh_uisdk_legal_notice_label">Legal Notices</string>
+    <string name="kh_uisdk_legal_notice_label">Legal Notice</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
     <string name="kh_uisdk_legal_notice_title"/>
@@ -231,6 +231,7 @@
     <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
     <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>

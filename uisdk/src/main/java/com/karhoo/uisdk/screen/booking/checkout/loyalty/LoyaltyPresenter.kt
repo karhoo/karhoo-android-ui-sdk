@@ -209,9 +209,22 @@ class LoyaltyPresenter(
     }
 
     override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit) {
+        if (currentMode == LoyaltyMode.ERROR_BAD_CURRENCY || currentMode == LoyaltyMode.ERROR_UNKNOWN) {
+            callback.invoke(
+                Resource.Failure(
+                    KarhooError.fromCustomError(
+                        erCode = KarhooError.FailedToGenerateNonce.code,
+                        erInternalMessage = loyaltyPresenterDelegate?.provideResources()?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: "",
+                        erUserFriendlyMessage = loyaltyPresenterDelegate?.provideResources()?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: ""
+                    )
+                )
+            )
+            return
+        }
         loyaltyDataModel?.let {
             loyaltyService.getLoyaltyPreAuth(
-                it.loyaltyId, LoyaltyPreAuthPayload(
+                it.loyaltyId,
+                LoyaltyPreAuthPayload(
                     it.currency,
                     if (currentMode == LoyaltyMode.BURN) burnedPoints else 0,
                     flexpay = currentMode != LoyaltyMode.BURN,
