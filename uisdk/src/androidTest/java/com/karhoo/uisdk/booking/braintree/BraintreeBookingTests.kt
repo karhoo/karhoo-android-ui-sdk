@@ -137,7 +137,7 @@ class BraintreeBookingTests : Launch {
     @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
-            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, TIMEOUT)
             quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
         }
         booking(this, CLEAN_TRIP_INTENT) {
@@ -230,7 +230,7 @@ class BraintreeBookingTests : Launch {
     fun userMinimisesQuoteList() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HttpURLConnection.HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
@@ -505,10 +505,10 @@ class BraintreeBookingTests : Launch {
             shortSleep()
             pressFirstQuote()
             shortSleep()
-            pressCloseBookARideScreen()
+            pressDeviceBackButton()
         } result {
             fullASAPQuotesListCheck()
-            bookARideScreenIsNotVisible()
+            fleetDetailsAreNotVisible()
         }
     }
 
@@ -547,7 +547,7 @@ class BraintreeBookingTests : Launch {
     fun asapBookARideSuccess() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_OK, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsNonceResponse(HTTP_OK, PAYMENTS_TOKEN)
@@ -561,7 +561,8 @@ class BraintreeBookingTests : Launch {
             pressFirstQuote()
             mediumSleep()
             pressBookRideButton()
-            longSleep()
+            clearThenFillGuestPhoneNumber()
+            shortSleep()
         } result {
             checkDriverDetails()
         }

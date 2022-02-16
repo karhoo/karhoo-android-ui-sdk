@@ -129,6 +129,15 @@ class BookingRobot : BaseTestRobot() {
                 )
     }
 
+    fun clearThenFillGuestPhoneNumber() {
+        clickButton(R.id.countryFlagLayout)
+        clickButtonByText("Anguilla (+1)")
+        clickButton(R.id.mobileNumberInput)
+        fillEditText(R.id.mobileNumberInput, "5005550006")
+        clickButton(R.id.checkoutActionButton)
+        clickButton(R.id.checkoutActionButton)
+    }
+
     //TODO: FIX FOR CHECKOUT
     fun fillGuestDetailsComment() {
         //        scrollUp(R.id.bookingRequestPassengerDetailsWidget)
@@ -565,6 +574,11 @@ class ResultRobot : BaseTestRobot() {
         bookButtonIsEnabled()
     }
 
+    fun fleetDetailsAreNotVisible() {
+        viewIsNotVisibleInDescendant(R.id.logoImage, R.id.bookingRequestLayout)
+        viewIsNotVisibleInDescendant(R.id.quoteNameText, R.id.bookingRequestLayout)
+    }
+
     fun fleetDetailsAreVisible(fleetName: String) {
         viewIsVisibleIsDescendant(R.id.logoImage, R.id.bookingRequestLayout)
         viewIsVisibleIsDescendant(R.id.quoteNameText, R.id.bookingRequestLayout)
@@ -619,7 +633,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun quotesListNotExpanded(fleetName: String) {
-        stringIsNotDisplayed(fleetName)
+        stringIsNotVisible(fleetName)
     }
 
     fun prebookLogoNotVisible() {
