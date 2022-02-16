@@ -21,6 +21,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
@@ -47,6 +48,7 @@ import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
+import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
@@ -116,6 +118,20 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
                 loadingButtonCallback.enableButton(validated)
+            }
+        }
+
+        loyaltyView.delegate = object : LoyaltyContract.LoyaltyViewDelegate {
+            override fun onModeChanged(mode: LoyaltyMode) {
+                //Might be implemented at some point
+            }
+
+            override fun onEndLoading() {
+                //Maybe will be implemented
+            }
+
+            override fun onStartLoading() {
+                //Maybe will be implemented
             }
         }
 
@@ -429,41 +445,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun retrieveLoyaltyStatus() {
         presenter.createLoyaltyViewResponse()
-        loyaltyView.getLoyaltyStatus()
     }
 
     override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewDataModel?.let {
             loyaltyView.set(it)
-            loyaltyView.setLoyaltyModeCallback(object : LoyaltyContract.LoyaltyModeCallback {
-                override fun onModeChanged(mode: LoyaltyMode) {
-                    if (mode == LoyaltyMode.ERROR) {
-                        loadingButtonCallback.enableButton(false)
-                    } else {
-                        loadingButtonCallback.enableButton(true)
-                    }
-                }
-
-                override fun onPreAuthorizationError(reasonId: Int) {
-                    val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.error_dialog_title,
-                            messageResId = reasonId,
-                            karhooError = null,
-                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok
-                                                                    ) { d, _ ->
-                                loadingButtonCallback.onLoadingComplete()
-                                d.dismiss()
-                            },
-                            negativeButton = null)
-                    KarhooAlertDialogHelper(context).showAlertDialog(config)
-                }
-
-                override fun onPreAuthorized(nonce: String) {
-                    presenter.setLoyaltyNonce(nonce)
-                    startBooking()
-                }
-            })
         }
         loyaltyView.set(LoyaltyMode.NONE)
     }
@@ -489,8 +476,38 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
-        return if (loyaltyView.visibility == VISIBLE && loyaltyView.getCurrentMode() != LoyaltyMode.ERROR) {
-            loyaltyView.preAuthorize()
+        return if (loyaltyView.visibility == VISIBLE) {
+            loyaltyView.getLoyaltyPreAuthNonce { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        presenter.setLoyaltyNonce(result.data.nonce)
+                        startBooking()
+                    }
+                    is Resource.Failure -> {
+                        if(result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
+                            //Start the booking even if the loyalty is in an error state
+                            startBooking()
+                            return@getLoyaltyPreAuthNonce
+                        }
+
+                        val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
+
+                        val config = KarhooAlertDialogConfig(
+                            titleResId = R.string.error_dialog_title,
+                            messageResId = reasonId,
+                            karhooError = null,
+                            positiveButton = KarhooAlertDialogAction(
+                                R.string.kh_uisdk_ok
+                                                                    ) { d, _ ->
+                                loadingButtonCallback.onLoadingComplete()
+                                d.dismiss()
+                            },
+                            negativeButton = null
+                                                            )
+                        KarhooAlertDialogHelper(context).showAlertDialog(config)
+                    }
+                }
+            }
             true
         } else {
             false
@@ -499,5 +516,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     private fun termsAndConditionsCheckBoxCheckedChanged(isChecked: Boolean){
         loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+    }
+
+    companion object {
+        private const val CUSTOM_ERROR_PREFIX = "KSDK00 "
     }
 }

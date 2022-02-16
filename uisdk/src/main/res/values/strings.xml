@@ -242,6 +242,7 @@
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
     <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
     <string name="kh_uisdk_loyalty_use_points_title">Use your points</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
     <string name="kh_uisdk_map_selector">Set pin location on map</string>
     <string name="kh_uisdk_meeting_point">Meeting Point</string>
     <string name="kh_uisdk_metered">Metered</string>

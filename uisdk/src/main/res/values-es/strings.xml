@@ -231,6 +231,7 @@
     <string name="kh_uisdk_loyalty_balance_title">SALDO: %s PUNTOS</string>
     <string name="kh_uisdk_loyalty_info">Su tarjeta es necesaria para autorizar esta transacción en caso de que el precio final del viaje exceda su saldo de puntos. No se le cobrará a su cuenta si sus puntos de fidelidad cubren el precio total.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Tu saldo de puntos es insuficiente</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">El modo de lealtad actual no es elegible para autorización previa</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Estás usando %1$s puntos</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Se añadirán %1$s puntos de fidelidad al saldo de su cuenta al final del viaje</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">No se le permite quemar puntos</string>

@@ -231,6 +231,7 @@
     <string name="kh_uisdk_loyalty_balance_title">BALANS: %s PUNTEN</string>
     <string name="kh_uisdk_loyalty_info">Uw kaart is nodig om deze transactie te autoriseren in het geval dat de uiteindelijke prijs van de rit uw puntensaldo overschrijdt. Er worden geen kosten in rekening gebracht op uw account als uw loyaliteitspunten de volledige prijs dekken.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">De huidige loyaliteitsmodus komt niet in aanmerking voor pre-autorisatie</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Je gebruikt %1$s punten</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyaliteitspunten worden aan het einde van de rit toegevoegd aan uw accountsaldo</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Je mag geen punten verbranden</string>

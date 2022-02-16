@@ -68,9 +68,9 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    style="@style/KhLoyaltySeparatorLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/KhLoyaltySeparatorLabel"
                     android:text="@string/kh_uisdk_loyalty_separator" />
 
                 <View
@@ -80,6 +80,16 @@
                     android:layout_marginStart="@dimen/kh_uisdk_margin_small"
                     android:layout_weight="1" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/loyaltyViewFullWidthSeparator"
+                style="@style/KhLoyaltySeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/kh_uisdk_margin_small"
+                android:layout_marginBottom="@dimen/kh_uisdk_margin_small"
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:id="@+id/loyaltyViewBurnLayout"
