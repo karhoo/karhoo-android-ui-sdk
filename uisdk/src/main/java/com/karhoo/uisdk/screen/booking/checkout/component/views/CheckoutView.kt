@@ -3,9 +3,13 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
@@ -18,6 +22,7 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
@@ -53,6 +58,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBox
 import org.joda.time.DateTime
 import java.util.Currency
 import java.util.HashMap
@@ -85,6 +91,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestTermsWidget.actions = this
+        bookingRequestTermsWidget.checkBoxChangedCallback = ::termsAndConditionsCheckBoxCheckedChanged
 
         presenter = CheckoutViewPresenter(this,
                                           KarhooUISDK.analytics,
@@ -270,7 +277,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun handlePaymentDetailsUpdate() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -356,7 +363,16 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         if (!presenter.isPaymentSet()) {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.callOnClick()
-        } else {
+        }
+        else if(!isTermsCheckBoxValid()){
+            loadingButtonCallback.onLoadingComplete()
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.buttonTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(context, R.color.kh_uisdk_error))
+            val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
+        }
+        else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
             presenter.makeBooking()
         }
@@ -456,6 +472,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         return resources.getString(R.string.karhoo_uisdk_locale)
     }
 
+    override fun isTermsCheckBoxValid(): Boolean {
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired())
+            return bookingRequestTermsWidget.khTermsAndConditionsCheckBox.isChecked
+
+        return true
+    }
+
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
 
     override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
@@ -472,5 +495,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         } else {
             false
         }
+    }
+
+    private fun termsAndConditionsCheckBoxCheckedChanged(isChecked: Boolean){
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
     }
 }

@@ -9,7 +9,6 @@ class FeedbackPresenter(private val view: FeedbackMVP.View,
 
     override fun submit(answers: List<FeedbackAnswer>) {
         feedbackCompletedTrips.addTrip(tripId)
-        analytics?.submitAdditionalFeedback(tripId, answers)
         view.finish()
     }
 

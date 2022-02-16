@@ -78,6 +78,7 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
         extras?.let {
             trip = it.getParcelable(Builder.EXTRA_TRIP)
             backToBooking = it.getBoolean(Builder.EXTRA_BACK_TO_BOOKING)
+            trip?.let { it1 -> KarhooUISDK.analytics?.trackTripOpened(tripInfo = it1, isGuest = KarhooUISDKConfigurationProvider.isGuest()) }
         }
     }
 

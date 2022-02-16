@@ -19,6 +19,7 @@ import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -69,8 +70,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean): BookButtonState {
-        return if (arePassengerDetailsValid && isPaymentValid) {
+    override fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean): BookButtonState {
+        return if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
             BookButtonState.BOOK
         } else {
             BookButtonState.NEXT
@@ -118,6 +119,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
+        KarhooUISDK.analytics?.paymentSucceed()
         preferenceStore.lastTrip = tripInfo
         val date = scheduledDate
         if (date != null) {
@@ -130,6 +132,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun onTripBookFailure(error: KarhooError) {
+        KarhooUISDK.analytics?.paymentFailed(error.internalMessage)
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(null, error)
             KarhooError.InvalidRequestPayload -> handleError(R.string.kh_uisdk_booking_details_error, error)
@@ -252,6 +255,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
             this.quote = quote
+            KarhooUISDK.analytics?.checkoutOpened(quote = quote)
             this.outboundTripId = outboundTripId
             handleBookingType(quote)
             when (origin?.poiType) {

@@ -18,8 +18,6 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -128,29 +126,6 @@ class KarhooAvailabilityTest {
                 assertEquals(MPV, it.vehicle.vehicleClass)
             }
         })
-    }
-
-    @Test
-    fun `selecting a vehicle category does not trigger an event if there is an empty filtered list`() {
-        availability.filterVehicleListByCategory(MPV)
-
-        verify(analytics, never()).vehicleSelected(any(), any())
-    }
-
-    @Test
-    fun `selecting a vehicle category triggers an event if there is a filtered list`() {
-        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
-
-        val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
-
-        availability.setAllCategory(ALL)
-        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
-                id = QuoteId(),
-                validity = 30)))
-
-        availability.filterVehicleListByCategory(MPV)
-        verify(analytics).vehicleSelected(MPV, null)
     }
 
     @Test

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbarProgressBar
 import kotlinx.android.synthetic.main.uisdk_activity_rides.viewPager
 
-class RidesActivity : BaseActivity(), RidesLoading {
+class RidesActivity : BaseActivity(), RidesLoading, ViewPager.OnPageChangeListener {
 
     private var adapter: LayoutArrayPagerAdapter? = null
 
@@ -52,6 +53,8 @@ class RidesActivity : BaseActivity(), RidesLoading {
                             LayoutArrayPagerAdapter.Page(getString(R.string.kh_uisdk_title_page_past), R.layout.uisdk_page_rides_past))
         adapter = LayoutArrayPagerAdapter(pages)
         viewPager.adapter = adapter
+        viewPager.addOnPageChangeListener(this)
+        sendAnalytics(viewPager.currentItem)
     }
 
     override fun showLoading() {
@@ -83,6 +86,25 @@ class RidesActivity : BaseActivity(), RidesLoading {
         companion object {
             val builder: Builder
                 get() = Builder()
+        }
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        // do nothing
+    }
+
+    override fun onPageSelected(position: Int) {
+        sendAnalytics(position)
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+        // do nothing
+    }
+
+    private fun sendAnalytics(position: Int){
+        when(position){
+            0 -> KarhooUISDK.analytics?.upcomingTripsOpened()
+            1 -> KarhooUISDK.analytics?.pastTripsOpened()
         }
     }
 
