@@ -11,7 +11,7 @@ interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConf
 
     fun bookingMetadata(): HashMap<String, String>? = null
 
-    fun useCheckboxOnTermsAndConditions(): Boolean = false
+    fun isExplicitTermsAndConditionsConsentRequired(): Boolean = false
 
 }
 

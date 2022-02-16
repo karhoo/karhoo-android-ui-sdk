@@ -473,10 +473,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun isTermsCheckBoxValid(): Boolean {
-        return when(KarhooUISDKConfigurationProvider.configuration.useCheckboxOnTermsAndConditions()){
-            true -> bookingRequestTermsWidget.khTermsAndConditionsCheckBox.isChecked
-            false -> true
-        }
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired())
+            return bookingRequestTermsWidget.khTermsAndConditionsCheckBox.isChecked
+
+        return true
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()

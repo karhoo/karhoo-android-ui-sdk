@@ -39,7 +39,7 @@ class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfig
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
 
-    override fun useCheckboxOnTermsAndConditions(): Boolean {
+    override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
         return true
     }
 }

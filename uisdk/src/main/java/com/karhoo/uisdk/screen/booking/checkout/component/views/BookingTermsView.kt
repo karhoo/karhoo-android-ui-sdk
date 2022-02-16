@@ -69,7 +69,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
         khTermsAndConditionsText.movementMethod = LinkMovementMethod.getInstance()
         initialCheckBoxColorStateList = khTermsAndConditionsCheckBox.buttonTintList
 
-        if(KarhooUISDKConfigurationProvider.configuration.useCheckboxOnTermsAndConditions()){
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired()){
             khTermsAndConditionsText.visibility = View.GONE
 
             khTermsAndConditionsCheckBoxLayout.visibility = View.VISIBLE
