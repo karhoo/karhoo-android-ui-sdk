@@ -108,12 +108,14 @@ class LoyaltyView @JvmOverloads constructor(
             LoyaltyMode.ERROR_BAD_CURRENCY,
             LoyaltyMode.ERROR_UNKNOWN -> {
                 loyaltyViewEarnSubtitle.text = errorMessage
+                loyaltyViewEarnSubtitle.visibility = VISIBLE
                 loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_primary_red))
                 loyaltyActionsContainer.background = ContextCompat.getDrawable(
                     context, R
                         .drawable.uisdk_loyalty_error_background
                 )
                 loyaltyViewSeparatorLayout.visibility = GONE
+                loyaltyViewFullWidthSeparator.visibility = GONE
                 loyaltyViewBurnLayout.visibility = GONE
                 loyaltyInfoLayout.visibility = GONE
                 loyaltyViewBalance.background = ContextCompat.getDrawable(
@@ -147,9 +149,13 @@ class LoyaltyView @JvmOverloads constructor(
         presenter.getLoyaltyPreAuthNonce(callback)
     }
 
-    override fun setBalancePoints(points: Int) {
-        loyaltyViewBalance.visibility = VISIBLE
-        loyaltyViewBalance.text =
-            String.format(resources.getString(R.string.kh_uisdk_loyalty_balance_title), points)
+    override fun showBalance(show: Boolean, points: Int) {
+        if(show) {
+            loyaltyViewBalance.visibility = VISIBLE
+            loyaltyViewBalance.text =
+                String.format(resources.getString(R.string.kh_uisdk_loyalty_balance_title), points)
+        } else {
+            loyaltyViewBalance.visibility = INVISIBLE
+        }
     }
 }

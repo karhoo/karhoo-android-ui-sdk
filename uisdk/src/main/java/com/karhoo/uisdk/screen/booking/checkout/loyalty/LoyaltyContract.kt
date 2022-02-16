@@ -24,7 +24,7 @@ interface LoyaltyContract {
 
         fun toggleFeatures(earnOn: Boolean, burnON: Boolean)
         fun provideResources(): Resources
-        fun setBalancePoints(points: Int)
+        fun showBalance(show: Boolean, points: Int = 0)
         fun set(mode: LoyaltyMode)
     }
 

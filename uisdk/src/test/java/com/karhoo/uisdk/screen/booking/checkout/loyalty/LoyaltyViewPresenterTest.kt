@@ -236,7 +236,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        verify(view, never()).setBalancePoints(LOYALTY_POINTS)
+        verify(view, never()).showBalance(true, LOYALTY_POINTS)
     }
 
     @Test
@@ -250,7 +250,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        verify(view).setBalancePoints(LOYALTY_POINTS)
+        verify(view).showBalance(true, LOYALTY_POINTS)
     }
 
     companion object {
