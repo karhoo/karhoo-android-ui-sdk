@@ -16,11 +16,12 @@ class CheckoutPresenter : CheckoutFragmentContract.Presenter {
     override fun getBookButtonState(
         isPassengerDetailsVisible: Boolean,
         arePassengerDetailsValid: Boolean,
-        isPaymentValid: Boolean
+        isPaymentValid: Boolean,
+        isTermsCheckBoxValid: Boolean
                                    ): BookButtonState {
         return if (isPassengerDetailsVisible) {
             BookButtonState.SAVE
-        } else if (arePassengerDetailsValid && isPaymentValid) {
+        } else if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
             BookButtonState.BOOK
         } else {
             BookButtonState.NEXT

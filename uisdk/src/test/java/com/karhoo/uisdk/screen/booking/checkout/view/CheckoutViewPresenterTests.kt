@@ -282,6 +282,38 @@ class CheckoutViewPresenterTests {
     }
 
     /**
+     * Given:   The checkout is visible and CheckBox Terms&Conditions Required
+     * When:    The passenger details and payment is valid but checkbox not checked
+     * Then:    The button should be in next state
+     */
+    @Test
+    fun `passenger details and payment valid but checkbox not checked`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = true,
+            isTermsCheckBoxValid = false
+        )
+
+        assertEquals(returnValue, BookButtonState.NEXT)
+    }
+
+    /**
+     * Given:   The checkout is visible and CheckBox Terms&Conditions Required
+     * When:    The passenger details and payment is valid but checkbox is checked
+     * Then:    The button should be in book state
+     */
+    @Test
+    fun `passenger details and payment valid but checkbox is checked`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = true,
+            isTermsCheckBoxValid = true
+        )
+
+        assertEquals(returnValue, BookButtonState.BOOK)
+    }
+
+    /**
      * Given:   A user has pressed a quote
      * When:    The quote is valid but there is no price
      * Then:    The view should be bound with the correct info
