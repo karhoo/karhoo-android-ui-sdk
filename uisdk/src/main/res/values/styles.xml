@@ -395,6 +395,16 @@
         <item name="android:padding">@dimen/kh_uisdk_spacing_xsmall</item>
     </style>
 
+    <style name="KhBookingTermsTitleTextWithCheckBox" parent="KhBookingTermsTitleText">
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="khTermsAndConditionsCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
     <style name="KhPaymentView">
         <item name="addPaymentBackground">@drawable/uisdk_background_light_grey_dashed_rounded
         </item>

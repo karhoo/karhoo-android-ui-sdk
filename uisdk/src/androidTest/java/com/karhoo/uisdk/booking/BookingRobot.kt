@@ -75,6 +75,10 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.checkoutActionButton)
     }
 
+    fun pressSaveButton() {
+        clickButton(R.id.checkoutActionButton)
+    }
+
     fun clickOnLocateMeButton() {
         clickButton(R.id.locateMeButton)
     }
@@ -84,11 +88,13 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun fillCorrectInfoGuestDetails() {
+        clickButton(R.id.bookingCheckoutPassengerView)
         fillGuestDetailsFirstName()
         fillGuestDetailsLastName()
         fillGuestDetailsEmail()
         fillGuestDetailsPhoneNumber()
-        fillGuestDetailsComment()
+        //        fillGuestDetailsComment()
+        pressSaveButton()
     }
 
     fun fillGuestDetailsFirstName() {
@@ -121,6 +127,15 @@ class BookingRobot : BaseTestRobot() {
                 resId = R.id.mobileNumberInput,
                 text = TestData.USER_PHONE_NUMBER
                 )
+    }
+
+    fun clearThenFillGuestPhoneNumber() {
+        clickButton(R.id.countryFlagLayout)
+        clickButtonByText("Anguilla (+1)")
+        clickButton(R.id.mobileNumberInput)
+        fillEditText(R.id.mobileNumberInput, "5005550006")
+        clickButton(R.id.checkoutActionButton)
+        clickButton(R.id.checkoutActionButton)
     }
 
     //TODO: FIX FOR CHECKOUT
@@ -357,7 +372,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun guestCheckoutEmptyFullCheck() {
-        locateMeButtonIsNotVisible()
+        //        locateMeButtonIsNotVisible()
         pickupFieldCheck()
         destinationFieldCheck()
         ridesButtonIsNotVisible()
@@ -536,7 +551,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun checkoutAsGuestButtonIsEnabled() {
-        bookButtonTextIsCheckoutGuest()
+        //        bookButtonTextIsCheckoutGuest()
         buttonIsEnabled(R.id.checkoutActionButton)
     }
 
@@ -557,6 +572,11 @@ class ResultRobot : BaseTestRobot() {
         paymentFieldIsEnabled()
         termsCheck()
         bookButtonIsEnabled()
+    }
+
+    fun fleetDetailsAreNotVisible() {
+        viewIsNotVisibleInDescendant(R.id.logoImage, R.id.bookingRequestLayout)
+        viewIsNotVisibleInDescendant(R.id.quoteNameText, R.id.bookingRequestLayout)
     }
 
     fun fleetDetailsAreVisible(fleetName: String) {
@@ -613,7 +633,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun quotesListNotExpanded(fleetName: String) {
-        stringIsNotDisplayed(fleetName)
+        stringIsNotVisible(fleetName)
     }
 
     fun prebookLogoNotVisible() {
