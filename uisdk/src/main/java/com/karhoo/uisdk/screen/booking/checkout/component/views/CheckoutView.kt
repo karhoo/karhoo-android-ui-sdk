@@ -484,7 +484,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         startBooking()
                     }
                     is Resource.Failure -> {
-                        if(result.error.code == KarhooError.FailedToGenerateNonce.code) {
+                        if(result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
                             //Start the booking even if the loyalty is in an error state
                             startBooking()
                             return@getLoyaltyPreAuthNonce
@@ -516,5 +516,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     private fun termsAndConditionsCheckBoxCheckedChanged(isChecked: Boolean){
         loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+    }
+
+    companion object {
+        private const val CUSTOM_ERROR_PREFIX = "KSDK00 "
     }
 }

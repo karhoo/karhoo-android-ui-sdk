@@ -210,6 +210,9 @@ class LoyaltyPresenter(
 
     override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit) {
         if (currentMode == LoyaltyMode.ERROR_BAD_CURRENCY || currentMode == LoyaltyMode.ERROR_UNKNOWN) {
+            // Loyalty related web-services return slug based errors, not error code based ones
+            // this error does not coincide with any error returned by the backend
+            // Although the message is not shown in the UISDK implementation it will serve DPs when integrating as a standalone component
             callback.invoke(
                 Resource.Failure(
                     KarhooError.fromCustomError(
