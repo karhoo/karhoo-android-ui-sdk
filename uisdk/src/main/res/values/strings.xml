@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--  Locale  -->
+    <string name="karhoo_uisdk_locale">en_GB</string>
     <string name="kh_uisdk_about">About</string>
     <string name="kh_uisdk_add_card">ADD CARD</string>
-    <string name="kh_uisdk_add_flight_details">Add flight details (Optional)</string>
+    <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
     <string name="kh_uisdk_add_payment">Add Payment</string>
     <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
@@ -100,9 +102,9 @@
     <string name="kh_uisdk_enter_destination">Enter destination</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
     <!--  Address Picker  -->
-    <string name="kh_uisdk_erase_address">Erase address</string>
-    <string name="kh_uisdk_switch_departure_destination">Switch departure and destination address</string>
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
+    <!--  Address Picker  -->
+    <string name="kh_uisdk_erase_address">Erase address</string>
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Estimated arrival time</string>
@@ -121,6 +123,7 @@
     <string name="kh_uisdk_feedback_submitted">Thank you for submitting your feedback</string>
     <!--  FEEDBACK  -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!--  Fare type  -->
@@ -139,6 +142,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hour</item>
         <item quantity="other">%d hours</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">Info</string>
     <string name="kh_uisdk_initialised">Karhoo are initialising your trip</string>
@@ -211,6 +215,10 @@
     <string name="kh_uisdk_last_name_hint">Last name</string>
     <string name="kh_uisdk_last_trip_id">Last Trip ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Last Trip ID: Not yet set</string>
+    <string name="kh_uisdk_legal_notice_label">Legal Notice</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Licence: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Please enable Location Services on your device to enjoy the full experience</string>
@@ -219,6 +227,22 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!--  Navigation Drawer  -->
     <string name="kh_uisdk_login">Sign In</string>
+    <!--  Loyalty  -->
+    <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
+    <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
+    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_separator">OR</string>
+    <string name="kh_uisdk_loyalty_title">Loyalty points</string>
+    <string name="kh_uisdk_loyalty_unknown_error">An error has occurred. To earn or use you loyalty points, please try again later</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">An error has occurred. The currency is not supported</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Use your points</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
     <string name="kh_uisdk_map_selector">Set pin location on map</string>
     <string name="kh_uisdk_meeting_point">Meeting Point</string>
     <string name="kh_uisdk_metered">Metered</string>
@@ -228,6 +252,7 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Mobile phone number</string>
     <string name="kh_uisdk_moto">Moto</string>
@@ -340,7 +365,6 @@
     <string name="kh_uisdk_sorter_cheapest">PRICE</string>
     <!--  Quotes List  -->
     <string name="kh_uisdk_sorter_nearest">ETA</string>
-    <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
     <string name="kh_uisdk_star_excellent">Excellent</string>
     <string name="kh_uisdk_star_fair">Fair</string>
     <string name="kh_uisdk_star_good">Good</string>
@@ -352,6 +376,8 @@
     <string name="kh_uisdk_supplier_email">suppliers@karhoo.com</string>
     <string name="kh_uisdk_support_email">support@karhoo.com</string>
     <string name="kh_uisdk_support_report_issue">Report Issue</string>
+    <!--  Address Picker  -->
+    <string name="kh_uisdk_switch_departure_destination">Switch departure and destination address</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_tell_us_more">Please, Tell us more about your Trip</string>
     <string name="kh_uisdk_temporary_message_error_codes_unknown">We seem to be having technical issues at the moment.</string>
@@ -386,27 +412,4 @@
     <string name="pay_button">Pre-Authorize</string>
     <!--  Adyen default "Pay %s" button for checkout  -->
     <string name="pay_button_with_value">Pre-authorise %s</string>
-    <!--  Loyalty  -->
-    <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
-    <string name="karhoo_uisdk_locale">en_GB</string>
-
-    <!-- Legal Notice - The strings can be translated by DP -->
-    <string name="kh_uisdk_legal_notice_label">Legal Notices</string>
-    <string name="kh_uisdk_legal_notice_title"/>
-    <string name="kh_uisdk_legal_notice_link"/>
-    <string name="kh_uisdk_legal_notice_text"/>
-
-    <!--  Loyalty Points  -->
-    <string name="kh_uisdk_loyalty_use_points_title">Use your points</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
-    <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
-    <string name="kh_uisdk_loyalty_separator">OR</string>
-    <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
-    <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
-    <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
-    <string name="kh_uisdk_loyalty_title">Loyalty points</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">The currency is not supported yet</string>
 </resources>
