@@ -235,7 +235,7 @@
     <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is not sufficient to pay for this ride</string>
     <string name="kh_uisdk_loyalty_separator">OR</string>
     <string name="kh_uisdk_loyalty_title">Loyalty points</string>
     <string name="kh_uisdk_loyalty_unknown_error">An error has occurred. To earn or use you loyalty points, please try again later</string>

@@ -61,7 +61,9 @@ class LoyaltyPresenter(
                         is Resource.Success -> {
                             earnedPoints = result.data.points
 
-                            setSubtitleBasedOnMode(LoyaltyMode.EARN)
+                            if(currentMode != LoyaltyMode.ERROR_BAD_CURRENCY && currentMode != LoyaltyMode.ERROR_UNKNOWN) {
+                                setSubtitleBasedOnMode(LoyaltyMode.EARN)
+                            }
                         }
                         is Resource.Failure -> {
                             getErrorFromResponse(result.error)
@@ -72,7 +74,7 @@ class LoyaltyPresenter(
     }
 
     override fun updateBalancePoints() {
-        loyaltyStatus?.points?.let { loyaltyPresenterDelegate?.setBalancePoints(it) }
+        loyaltyStatus?.points?.let { loyaltyPresenterDelegate?.showBalance(true, it) }
     }
 
     override fun updateBurnedPoints() {
@@ -254,6 +256,8 @@ class LoyaltyPresenter(
             currentMode,
             errorMessage = loyaltyPresenterDelegate?.provideResources()?.getString(reasonId)
         )
+
+        loyaltyPresenterDelegate?.showBalance(false)
     }
 
     private fun getErrorMode(error: KarhooError): LoyaltyMode {
