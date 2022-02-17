@@ -403,6 +403,7 @@
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">5dp</item>
+        <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
 
     <style name="KhPaymentView">
