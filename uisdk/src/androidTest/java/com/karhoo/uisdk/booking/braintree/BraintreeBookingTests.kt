@@ -134,7 +134,7 @@ class BraintreeBookingTests : Launch {
     }
 
     @Test
-    @AllowFlaky(attempts = 3)
+    //    @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, TIMEOUT)
@@ -142,11 +142,12 @@ class BraintreeBookingTests : Launch {
         }
         booking(this, CLEAN_TRIP_INTENT) {
             mediumSleep()
-            try {
-                //Send app to background
-                pressDeviceBackButton()
-            } catch (ex: NoActivityResumedException) {
-            }
+            returnToHomeScreen()
+            //            try {
+            //                //Send app to background
+            //                pressDeviceBackButton()
+            //            } catch (ex: NoActivityResumedException) {
+            //            }
         }
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
