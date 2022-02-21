@@ -19,8 +19,8 @@
         android:maxLines="1"
         android:paddingLeft="@dimen/kh_uisdk_spacing_xxxsmall"
         android:textColor="@color/kh_uisdk_off_white"
-        android:textColorHint="#B3ffffff"
-        android:textCursorDrawable="@null">
+        android:textCursorDrawable="@null"
+        style="@style/KhAddressSearchInput">
 
         <requestFocus />
     </EditText>

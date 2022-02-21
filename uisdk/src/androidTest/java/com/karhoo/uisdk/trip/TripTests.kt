@@ -13,6 +13,7 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.getLocale
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.trip.TripActivity
@@ -420,7 +421,7 @@ class TripTests : Launch {
      * Then:    I see a message that the booking is not cancelled for cause of no drivers, alternative option is available
      **/
     @Test
-    @Ignore
+    //    @Ignore
     @AllowFlaky(attempts = 5)
     fun alternativeAfterFleetCancelledWhenDER() {
         mockTripSuccessResponse(
@@ -432,7 +433,7 @@ class TripTests : Launch {
             sdkInitResponse(HTTP_OK, BRAINTREE_TOKEN)
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         trip(this) {

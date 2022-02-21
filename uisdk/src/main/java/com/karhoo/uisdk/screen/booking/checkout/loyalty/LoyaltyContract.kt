@@ -1,37 +1,50 @@
 package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
 import android.content.res.Resources
+import com.karhoo.sdk.api.model.LoyaltyNonce
+import com.karhoo.sdk.api.network.response.Resource
 
 interface LoyaltyContract {
     interface View {
+        var delegate: LoyaltyViewDelegate?
+
         fun getCurrentMode(): LoyaltyMode
-        fun set(mode: LoyaltyMode)
         fun set(loyaltyDataModel: LoyaltyViewDataModel)
-        fun setSubtitle(subtitle: String)
-        fun provideResources(): Resources
-        fun showError(message: String)
         fun getLoyaltyStatus()
-        fun updateLoyaltyFeatures(showEarnRelatedUI: Boolean, showBurnRelatedUI: Boolean)
-        fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
-        fun preAuthorize()
+        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit)
+    }
+
+    interface LoyaltyPresenterDelegate {
+        fun updateWith(
+            mode: LoyaltyMode? = null,
+            earnSubtitle: String? = null,
+            burnSubtitle: String? = null,
+            errorMessage: String? = null
+        )
+
+        fun toggleFeatures(earnOn: Boolean, burnON: Boolean)
+        fun provideResources(): Resources
+        fun showBalance(show: Boolean, points: Int = 0)
+        fun set(mode: LoyaltyMode)
     }
 
     interface Presenter {
-        fun attachView(view: View)
+        var loyaltyPresenterDelegate: LoyaltyPresenterDelegate?
+        var loyaltyViewDelegate: LoyaltyViewDelegate?
+
         fun set(loyaltyDataModel: LoyaltyViewDataModel)
         fun updateEarnedPoints()
         fun updateBurnedPoints()
+        fun updateBalancePoints()
         fun updateLoyaltyMode(mode: LoyaltyMode)
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus()
-        fun getSubtitleBasedOnMode()
-        fun setLoyaltyModeCallback(loyaltyModeCallback: LoyaltyModeCallback)
-        fun preAuthorize()
+        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit)
     }
 
-    interface LoyaltyModeCallback {
+    interface LoyaltyViewDelegate {
         fun onModeChanged(mode: LoyaltyMode)
-        fun onPreAuthorized(nonce: String)
-        fun onPreAuthorizationError(reasonId: Int)
+        fun onStartLoading()
+        fun onEndLoading()
     }
 }

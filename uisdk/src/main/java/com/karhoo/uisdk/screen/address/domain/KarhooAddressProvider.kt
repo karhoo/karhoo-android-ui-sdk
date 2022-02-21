@@ -76,7 +76,6 @@ class KarhooAddressProvider(private val analytics: Analytics?,
     }
 
     private fun updatePlaces(placeSearch: PlaceSearch, places: Places) {
-        analytics?.amountAddressesShown(places.locations.size)
         addresses = Addresses(placeSearch, places)
         notifyObservers()
     }

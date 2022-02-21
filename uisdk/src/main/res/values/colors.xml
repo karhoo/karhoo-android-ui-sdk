@@ -22,7 +22,7 @@
     <color name="kh_uisdk_passenger_icon_stroke">@color/kh_uisdk_text_primary</color>
     <color name="kh_uisdk_chevron_arrow_icon">@color/kh_uisdk_text_primary</color>
     <color name="kh_uisdk_light_gray">@color/kh_uisdk_background2</color>
-    <color name="kh_uisdk_search_hint_color">@color/kh_uisdk_label</color>
+    <color name="kh_uisdk_search_hint_color">@color/white</color>
     <color name="kh_uisdkic_chevron_left">@color/kh_uisdk_text_primary</color>
 
     <!-- Gradients -->
@@ -35,6 +35,7 @@
 <!--    <color name="kh_uisdk_light_green_grad">#00E5E5</color>-->
 <!--    <color name="kh_uisdk_dark_green_grad">#00E500</color>-->
     <color name="kh_uisdk_cancellation_green">@color/kh_uisdk_success</color>
+    <color name="kh_uisdk_light_green">#ADEFD1</color>
 
     <!-- Greys -->
     <color name="kh_uisdk_off_black">@color/kh_uisdk_text_secondary</color>
@@ -119,7 +120,7 @@
     <color name="textColor">@color/kh_uisdk_text_primary</color>
     <color name="label_color">@color/kh_uisdk_text_primary</color>
     <color name="black">@color/kh_uisdk_text_primary</color>
-    <color name="primaryColor">@color/kh_uisdk_primary</color>
+    <color name="primaryColor">@color/kh_uisdk_accent</color>
 
     <!-- Braintree -->
     <color name="bt_base_background">@color/kh_uisdk_background2</color>

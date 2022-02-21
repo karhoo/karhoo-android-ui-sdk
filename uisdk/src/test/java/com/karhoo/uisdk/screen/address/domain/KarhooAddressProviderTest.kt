@@ -75,20 +75,6 @@ class KarhooAddressProviderTest {
     }
 
     /**
-     * Given    a search query of three characters is set
-     * When     An address is to be looked up
-     * Then     A call to fire an analytic event should be made
-     */
-    @Test
-    fun `requesting an address fires analytical event`() {
-        whenever(addressService.placeSearch(any())).thenReturn(placesCall)
-        searchProvider.setSearchQuery("som")
-        lambdaCaptor.firstValue.invoke(Resource.Success(places))
-
-        verify(analytics, atLeastOnce()).amountAddressesShown(2)
-    }
-
-    /**
      * Given:   ErrorView is set
      * When:    setSearchQuery and sdk returns onServiceError
      * Then:    showTemporaryError from errorView

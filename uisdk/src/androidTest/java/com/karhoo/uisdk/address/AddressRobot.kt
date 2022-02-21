@@ -173,15 +173,15 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkAddressScreenFromPickupGuestCheckout() {
         checkAddressPickUpPageIsShown()
-        viewIsNotVisible(R.id.setOnMap)
-        viewIsNotVisible(R.id.currentLocation)
+        viewIsVisible(R.id.setOnMap)
+        viewIsVisible(R.id.currentLocation)
         viewIsVisible(R.id.poweredByGoogleIcon)
     }
 
     fun checkAddressScreenFromDestinationGuestCheckout() {
         checkAddressDestinationPageIsShown()
-        viewIsNotVisible(R.id.setOnMap)
-        viewIsNotVisible(R.id.currentLocation)
+        viewIsVisible(R.id.setOnMap)
+        viewIsVisible(R.id.currentLocation)
         viewIsVisible(R.id.poweredByGoogleIcon)
     }
 

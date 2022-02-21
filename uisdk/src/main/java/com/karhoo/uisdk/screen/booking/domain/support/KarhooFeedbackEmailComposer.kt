@@ -12,10 +12,12 @@ import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.VersionUtilContact
 import java.lang.ref.WeakReference
 
-class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserStore =
+class KarhooFeedbackEmailComposer(
+    context: Context, private val userStore: UserStore =
         KarhooApi.userStore, private val versionUtil: VersionUtilContact = VersionUtil,
-                                  private val emailClient: EmailClient = KarhooEmailClient()) :
-        FeedbackEmailComposer {
+    private val emailClient: EmailClient = KarhooEmailClient()
+                                 ) :
+    FeedbackEmailComposer {
 
     private val contextWeakRef: WeakReference<Context> = WeakReference(context)
 
@@ -63,8 +65,9 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
         emailFooter += mailMetaInfo(headline)
 
         val emailTo = contextWeakRef.get()?.getString(R.string.kh_uisdk_support_email)
-        val emailSubject = "${contextWeakRef.get()?.getString(R.string.kh_uisdk_support_report_issue)}: " +
-                "${tripInfo?.displayTripId}"
+        val emailSubject =
+            "${contextWeakRef.get()?.getString(R.string.kh_uisdk_support_report_issue)}: " +
+                    "${tripInfo?.displayTripId}"
 
         val data = "mailto:?subject=$emailSubject" +
                 "&body=$emailFooter" +
@@ -73,14 +76,28 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     private fun createSupplierEmail(): Intent? {
-        val headline = contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_body).orEmpty()
+        val headline =
+            contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_body).orEmpty()
 
         val emailTo = contextWeakRef.get()?.getString(R.string.kh_uisdk_supplier_email)
-        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_subject)
+        val emailSubject =
+            contextWeakRef.get()?.getString(R.string.kh_uisdk_fleet_recommendation_subject)
 
         val data = "mailto:?subject=$emailSubject" +
                 "&body=$headline" +
                 "&to=$emailTo"
+        return sendEmailIntent(data)
+    }
+
+    fun createLegalNoticeEmail(mailToAddress: String): Intent? {
+        val headline =
+            contextWeakRef.get()?.getString(R.string.kh_uisdk_email_info).orEmpty()
+
+        val emailFooter = mailMetaInfo(headline)
+        val emailSubject = contextWeakRef.get()?.getString(R.string.kh_uisdk_legal_notice_label)
+
+        val data = mailToAddress + "?subject=$emailSubject" +
+                "&body=$emailFooter"
         return sendEmailIntent(data)
     }
 
@@ -91,7 +108,8 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
     }
 
     private fun getTripDetails(tripInfo: TripInfo?): String {
-        var text = contextWeakRef.get()?.getString(R.string.kh_uisdk_email_report_issue_message) ?: ""
+        var text =
+            contextWeakRef.get()?.getString(R.string.kh_uisdk_email_report_issue_message) ?: ""
         val lastTripId = tripInfo?.displayTripId
 
         text += lastTripId.let {
@@ -109,10 +127,15 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
         contextWeakRef.get()?.let {
             details = "\n\n\n\n\n\n\n$headline" +
                     "\n-------------------------------------\n" +
-                    "Application: ${versionUtil.getAppNameString(it)} v ${versionUtil
-                            .createBuildVersionString(it)} \n"
+                    "Application: ${versionUtil.getAppNameString(it)} v ${
+                        versionUtil
+                            .createBuildVersionString(it)
+                    } \n"
             details += "${versionUtil.appAndDeviceInfo()}\n"
-            details += "Locale: ${user.locale}\n"
+            details += "Locale: ${
+                if (user.locale.isNotBlank()) user.locale else contextWeakRef.get()?.getString(R.string
+                                                                                          .karhoo_uisdk_locale)
+            }\n"
             details += userInfo()
         }
         return details
@@ -122,8 +145,10 @@ class KarhooFeedbackEmailComposer(context: Context, private val userStore: UserS
         val user = userStore.currentUser
 
         return if (user.firstName.isNotEmpty()) {
-            "Email: ${user.email}\nMobile phone: ${user.phoneNumber}\nFirst name: ${user
-                    .firstName}\nLast name: " +
+            "Email: ${user.email}\nMobile phone: ${user.phoneNumber}\nFirst name: ${
+                user
+                    .firstName
+            }\nLast name: " +
                     "${user.lastName}\n "
         } else {
             ""

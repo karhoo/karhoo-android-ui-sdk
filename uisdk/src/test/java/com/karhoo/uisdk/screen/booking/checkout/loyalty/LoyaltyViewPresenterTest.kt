@@ -12,16 +12,10 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.sdk.call.Call
 import com.karhoo.uisdk.R
-import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.doNothing
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 
 class LoyaltyViewPresenterTest {
     private lateinit var presenter: LoyaltyPresenter
@@ -38,17 +32,25 @@ class LoyaltyViewPresenterTest {
     @Before
     fun setUp() {
         whenever(view.provideResources()).thenReturn(resources)
-        whenever(resources.getString(R.string.kh_uisdk_loyalty_points_burned_for_trip)).thenReturn(BURN_POINTS_SUBTITLE)
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle)).thenReturn(BURN_POINTS_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip)).thenReturn(EARN_POINTS_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_unsupported_currency)).thenReturn(CURRENCY_NOT_SUPPORTED_SUBTITLE)
         whenever(resources.getString(R.string.kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn)).thenReturn(INSUFFICIENT_BALANCE_SUBTITLE)
+
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip))
+            .thenReturn(EARN_POINTS_SUBTITLE)
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle))
+            .thenReturn(EARN_POINTS_SUBTITLE_OFF)
+
+        whenever(resources.getString(R.string.kh_uisdk_loyalty_use_points_on_subtitle))
+            .thenReturn(BURN_POINTS_SUBTITLE)
 
         whenever(userStore.paymentProvider).thenReturn(PaymentProvider(
                 Provider("id"),
                 LoyaltyProgramme("1", "")))
         whenever(loyaltyService.getLoyaltyStatus(LOYALTY_ID)).thenReturn(loyaltyStatusCall)
-        whenever(loyaltyService.getLoyaltyBurn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt()))
-                .thenReturn(loyaltyBurnedPointsCall)
+        doReturn(loyaltyBurnedPointsCall).`when`(loyaltyService).getLoyaltyBurn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt())
+
         whenever(loyaltyService.getLoyaltyEarn(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT.toInt
         (), 0))
                 .thenReturn(loyaltyEarnedPointsCall)
@@ -58,7 +60,7 @@ class LoyaltyViewPresenterTest {
         doNothing().whenever(loyaltyEarnedPointsCall).execute(lambdaCaptorLoyaltyPoints.capture())
 
         presenter = LoyaltyPresenter(userStore, loyaltyService)
-        presenter.attachView(view)
+        presenter.loyaltyPresenterDelegate = view
     }
 
     @Test
@@ -137,18 +139,6 @@ class LoyaltyViewPresenterTest {
     }
 
     @Test
-    fun `When setting a mode which is already set, then the component does nothing`() {
-        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
-        whenever(userStore.loyaltyStatus).thenReturn(LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
-                                                                   canBurn = true))
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-
-        //The first set to burn mode
-        verify(view, times(1)).set(LoyaltyMode.BURN)
-    }
-
-    @Test
     fun `When setting a view model with canBurn, then the view hides the switch`() {
         val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
                                           canBurn = false)
@@ -158,7 +148,7 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
         //The first set to burn mode
-        verify(view).updateLoyaltyFeatures(showEarnRelatedUI = false, showBurnRelatedUI = false)
+        verify(view).toggleFeatures(earnOn = false, burnON = false)
     }
 
     @Test
@@ -168,10 +158,10 @@ class LoyaltyViewPresenterTest {
 
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setSubtitle("You are using 1 points")
+        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
+        verify(view).updateWith(LoyaltyMode.BURN, burnSubtitle = "Pay 0.10 GBP with 1 loyalty points")
     }
 
     @Test
@@ -188,8 +178,7 @@ class LoyaltyViewPresenterTest {
         presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.secondValue.invoke(Resource.Success(LoyaltyPoints(LOYALTY_POINTS)))
 
-        presenter.updateLoyaltyMode(LoyaltyMode.BURN)
-        verify(view).showError(INSUFFICIENT_BALANCE_SUBTITLE)
+        verify(view).updateWith(LoyaltyMode.ERROR_INSUFFICIENT_FUNDS, errorMessage = INSUFFICIENT_BALANCE_SUBTITLE)
     }
 
     @Test
@@ -203,9 +192,8 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
+        verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
     }
 
     @Test
@@ -215,10 +203,11 @@ class LoyaltyViewPresenterTest {
 
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
-        presenter.updateLoyaltyMode(LoyaltyMode.EARN)
         presenter.updateEarnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Success(LoyaltyPoints(1)))
-        verify(view).setSubtitle("This ride earns you 1 points")
+        verify(view).updateWith(
+            LoyaltyMode.EARN, earnSubtitle = "1 loyalty points will be added to your account balance at " +
+                                            "the end of the ride")
     }
 
     @Test
@@ -232,9 +221,36 @@ class LoyaltyViewPresenterTest {
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
 
-        presenter.updateBurnedPoints()
         lambdaCaptorLoyaltyPoints.firstValue.invoke(Resource.Failure(KarhooError.LoyaltyUnknownCurrency))
-        verify(view).showError(CURRENCY_NOT_SUPPORTED_SUBTITLE)
+        verify(view).updateWith(LoyaltyMode.ERROR_BAD_CURRENCY, errorMessage = CURRENCY_NOT_SUPPORTED_SUBTITLE)
+    }
+
+    @Test
+    fun `When failing to get the points number, the loyalty balance is hidden`() {
+        val loyaltyStatus = LoyaltyStatus(null, canEarn = false,
+                                          canBurn = true)
+
+        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
+
+        presenter.getLoyaltyStatus()
+        lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
+
+        verify(view, never()).showBalance(true, LOYALTY_POINTS)
+    }
+
+    @Test
+    fun `When having points number, the loyalty balance is shown`() {
+        val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false,
+                                          canBurn = true)
+
+        presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
+
+        presenter.getLoyaltyStatus()
+        lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
+
+        verify(view).showBalance(true, LOYALTY_POINTS)
     }
 
     companion object {
@@ -242,10 +258,12 @@ class LoyaltyViewPresenterTest {
         private const val LOYALTY_CURRENCY = "GBP"
         private const val LOYALTY_AMOUNT = 10.0
         private const val LOYALTY_POINTS = 10
-        private const val BURN_POINTS_SUBTITLE = "You are using %1\$s points"
-        private const val EARN_POINTS_SUBTITLE = "This ride earns you %1\$s points"
-        private const val CURRENCY_NOT_SUPPORTED_SUBTITLE = "The currency is not supported yet"
+        private const val CURRENCY_NOT_SUPPORTED_SUBTITLE = "An error has occurred. The currency is not supported"
         private const val INSUFFICIENT_BALANCE_SUBTITLE = "Your points balance is insufficient"
+        private const val EARN_POINTS_SUBTITLE = "%1\$s loyalty points will be added to your " +
+                "account balance at the end of the ride"
+        private const val EARN_POINTS_SUBTITLE_OFF = "You can enable your loyalty points to pay for the ride"
+        private const val BURN_POINTS_SUBTITLE = "Pay %s %s with %s loyalty points"
     }
 
 }
