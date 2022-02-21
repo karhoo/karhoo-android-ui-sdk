@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!-- Locale -->
+    <string name="karhoo_uisdk_locale">nl_NL</string>
     <string name="kh_uisdk_about">Over</string>
     <string name="kh_uisdk_add_card">VOEG EEN KAART TOE</string>
     <string name="kh_uisdk_add_flight_details">Voeg vluchtgegevens toe (Optioneel)</string>
@@ -140,6 +142,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d uur</item>
         <item quantity="other">%d uur</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">Info</string>
     <string name="kh_uisdk_initialised">Karhoo initialiseert uw reis</string>
@@ -212,6 +215,10 @@
     <string name="kh_uisdk_last_name_hint">Achternaam</string>
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>
+    <string name="kh_uisdk_legal_notice_label">Juridische kennisgevingen</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Licentie: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Schakel locatieservices in op uw apparaat om van de volledige ervaring te genieten</string>
@@ -220,14 +227,22 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Inloggen</string>
+    <!-- Loyalty -->
+    <string name="kh_uisdk_loyalty_balance_title">BALANS: %s PUNTEN</string>
     <string name="kh_uisdk_loyalty_info">Uw kaart is nodig om deze transactie te autoriseren in het geval dat de uiteindelijke prijs van de rit uw puntensaldo overschrijdt. Er worden geen kosten in rekening gebracht op uw account als uw loyaliteitspunten de volledige prijs dekken.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">De huidige loyaliteitsmodus komt niet in aanmerking voor pre-autorisatie</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Je gebruikt %1$s punten</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Met deze rit verdien je %1$s punten</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyaliteitspunten worden aan het einde van de rit toegevoegd aan uw accountsaldo</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Je mag geen punten verbranden</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Uw saldo is onvoldoende</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Uw puntensaldo is niet voldoende om deze rit te betalen</string>
+    <string name="kh_uisdk_loyalty_separator">OF</string>
     <string name="kh_uisdk_loyalty_title">Loyaliteitspunten</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">De valuta wordt nog niet ondersteund</string>
+    <string name="kh_uisdk_loyalty_unknown_error">Er is een fout opgetreden. Probeer het later opnieuw om loyaliteitspunten te verdienen of te gebruiken</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">Er is een fout opgetreden. De valuta wordt niet ondersteund</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">U kunt uw loyaliteitspunten inschakelen om de rit te betalen</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Betaal %s %s met %s loyaliteitspunten</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Gebruik je punten</string>
     <string name="kh_uisdk_map_selector">Op de kaart zetten</string>
     <string name="kh_uisdk_meeting_point">Ontmoetingspunt</string>
     <string name="kh_uisdk_metered">meterprijs</string>
@@ -237,6 +252,7 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minuut</item>
         <item quantity="other">%d minuten</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Mobiel telefoonnummer</string>
     <string name="kh_uisdk_moto">Moto</string>
@@ -396,7 +412,4 @@
     <string name="pay_button">Pre-autoriseren</string>
     <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pre-autoriseren %s</string>
-    <!--  Loyalty  -->
-    <string name="kh_uisdk_loyalty_balance_title">BALANS: %s PUNTEN</string>
-    <string name="karhoo_uisdk_locale">nl_NL</string>
 </resources>

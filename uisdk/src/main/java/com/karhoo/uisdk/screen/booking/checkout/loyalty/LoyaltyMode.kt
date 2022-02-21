@@ -4,5 +4,7 @@ enum class LoyaltyMode {
     BURN,
     EARN,
     NONE,
-    ERROR
+    ERROR_INSUFFICIENT_FUNDS,
+    ERROR_BAD_CURRENCY,
+    ERROR_UNKNOWN,
 }

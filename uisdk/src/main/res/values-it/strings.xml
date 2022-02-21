@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!-- Locale -->
+    <string name="karhoo_uisdk_locale">it_IT</string>
     <string name="kh_uisdk_about">Circa</string>
     <string name="kh_uisdk_add_card">AGGIUNGI CARTA</string>
     <string name="kh_uisdk_add_flight_details">Aggiungi i dettagli del volo (facoltativo)</string>
@@ -140,6 +142,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d ora</item>
         <item quantity="other">%d ore</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">Informazioni</string>
     <string name="kh_uisdk_initialised">Karhoo sta iniziando il tuo viaggio</string>
@@ -212,6 +215,10 @@
     <string name="kh_uisdk_last_name_hint">Cognome</string>
     <string name="kh_uisdk_last_trip_id">ID ultimo viaggio: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">ID ultimo viaggio: non ancora impostato</string>
+    <string name="kh_uisdk_legal_notice_label">Note legali</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Licenza: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Abilita i servizi di localizzazione sul tuo dispositivo per goderti l\'esperienza completa</string>
@@ -220,14 +227,22 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Registrati</string>
+    <!-- Loyalty -->
+    <string name="kh_uisdk_loyalty_balance_title">SALDO: %s PUNTI</string>
     <string name="kh_uisdk_loyalty_info">La tua carta è necessaria per autorizzare questa transazione nel caso in cui il prezzo finale della corsa superi il tuo saldo punti. Il tuo account non verrà addebitato se i tuoi punti fedeltà coprono l\'intero prezzo.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Il tuo saldo punti è insufficiente</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">L\'attuale modalità fedeltà non è idonea per la pre-autorizzazione</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Stai utilizzando %1$s punti</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Questa corsa ti fa guadagnare %1$s punti</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s punti fedeltà verranno aggiunti al saldo del tuo account al termine della corsa</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Non ti è permesso bruciare punti</string>
-    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Il tuo saldo è insufficiente</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Il tuo saldo punti non è sufficiente per pagare questa corsa</string>
+    <string name="kh_uisdk_loyalty_separator">O</string>
     <string name="kh_uisdk_loyalty_title">Punti fedeltà</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">La valuta non è ancora supportata</string>
+    <string name="kh_uisdk_loyalty_unknown_error">C\'è stato un errore. Per guadagnare o utilizzare i tuoi punti fedeltà, riprova più tardi</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">C\'è stato un errore. La valuta non è supportata</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">Puoi abilitare i tuoi punti fedeltà per pagare la corsa</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Paga %s %s con %s punti fedeltà</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Usa i tuoi punti</string>
     <string name="kh_uisdk_map_selector">Imposta la posizione del segnaposto sulla mappa</string>
     <string name="kh_uisdk_meeting_point">Punto d\'incontro</string>
     <string name="kh_uisdk_metered">Tassametro</string>
@@ -237,6 +252,7 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minuto</item>
         <item quantity="other">%d minuti</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Numero di cellulare</string>
     <string name="kh_uisdk_moto">Moto</string>
@@ -396,7 +412,4 @@
     <string name="pay_button">Pre-autorizzare</string>
     <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pre-autorizzare %s</string>
-    <!--  Loyalty  -->
-    <string name="kh_uisdk_loyalty_balance_title">SALDO: %s PUNTI</string>
-    <string name="karhoo_uisdk_locale">it_IT</string>
 </resources>

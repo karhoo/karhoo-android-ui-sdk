@@ -7,9 +7,9 @@
         android:name="centerColor"
         android:pathData="M12,12m-9,0a9,9 0,1 1,18 0a9,9 0,1 1,-18 0"
         android:strokeWidth="2"
-        android:fillColor="@color/kh_uisdk_primary"
+        android:fillColor="@color/kh_uisdk_secondary"
         android:fillType="nonZero"
-        android:strokeColor="@color/kh_uisdk_primary"/>
+        android:strokeColor="@color/kh_uisdk_secondary"/>
     <path
         android:pathData="M15.75,9.375l-5.625,5.25L8.25,12.75"
         android:strokeLineJoin="round"

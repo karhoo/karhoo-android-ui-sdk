@@ -39,18 +39,12 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
     }
 
     override fun showMore() {
-        analytics?.moreShown(currentVehicles, !isExpanded)
         isExpanded = !isExpanded
         view?.togglePanelState()
         view?.setChevronState(isExpanded)
     }
 
     override fun sortMethodChanged(sortMethod: SortMethod) {
-        if (currentVehicles.isNotEmpty()) {
-            analytics?.fleetsSorted(
-                    currentVehicles[0].id,
-                    sortMethod.name)
-        }
         view?.setSortMethod(sortMethod)
         updateList()
     }

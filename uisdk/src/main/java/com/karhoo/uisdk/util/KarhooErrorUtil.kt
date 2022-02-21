@@ -70,7 +70,7 @@ fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
         KarhooError.LoyaltyIncomingPointsExceedBalance -> R.string.kh_uisdk_loyalty_pre_auth_not_enough_points
         KarhooError.LoyaltyEmptyCurrency -> R.string.kh_uisdk_loyalty_unsupported_currency
         KarhooError.LoyaltyUnknownCurrency -> R.string.kh_uisdk_loyalty_unsupported_currency
-        KarhooError.LoyaltyInternalError -> R.string.kh_uisdk_temporary_message_error_codes_unknown
+        KarhooError.LoyaltyInternalError -> R.string.kh_uisdk_loyalty_unknown_error
 
         else -> R.string.kh_uisdk_temporary_message_error_codes_unknown
     }

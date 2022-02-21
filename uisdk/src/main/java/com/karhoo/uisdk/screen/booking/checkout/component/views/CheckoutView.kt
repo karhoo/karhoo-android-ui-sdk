@@ -3,9 +3,13 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
@@ -17,7 +21,9 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
@@ -42,6 +48,7 @@ import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
+import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
@@ -53,6 +60,7 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRe
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBox
 import org.joda.time.DateTime
 import java.util.Currency
 import java.util.HashMap
@@ -85,6 +93,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.cardActions = this
         bookingRequestPaymentDetailsWidget.paymentActions = this
         bookingRequestTermsWidget.actions = this
+        bookingRequestTermsWidget.checkBoxChangedCallback = ::termsAndConditionsCheckBoxCheckedChanged
 
         presenter = CheckoutViewPresenter(this,
                                           KarhooUISDK.analytics,
@@ -109,6 +118,20 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
                 loadingButtonCallback.enableButton(validated)
+            }
+        }
+
+        loyaltyView.delegate = object : LoyaltyContract.LoyaltyViewDelegate {
+            override fun onModeChanged(mode: LoyaltyMode) {
+                //Might be implemented at some point
+            }
+
+            override fun onEndLoading() {
+                //Maybe will be implemented
+            }
+
+            override fun onStartLoading() {
+                //Maybe will be implemented
             }
         }
 
@@ -270,7 +293,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun handlePaymentDetailsUpdate() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -356,7 +379,16 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         if (!presenter.isPaymentSet()) {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingRequestPaymentDetailsWidget.callOnClick()
-        } else {
+        }
+        else if(!isTermsCheckBoxValid()){
+            loadingButtonCallback.onLoadingComplete()
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.buttonTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(context, R.color.kh_uisdk_error))
+            val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
+        }
+        else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
             presenter.makeBooking()
         }
@@ -413,47 +445,25 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun retrieveLoyaltyStatus() {
         presenter.createLoyaltyViewResponse()
-        loyaltyView.getLoyaltyStatus()
     }
 
     override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewDataModel?.let {
             loyaltyView.set(it)
-            loyaltyView.setLoyaltyModeCallback(object : LoyaltyContract.LoyaltyModeCallback {
-                override fun onModeChanged(mode: LoyaltyMode) {
-                    if (mode == LoyaltyMode.ERROR) {
-                        loadingButtonCallback.enableButton(false)
-                    } else {
-                        loadingButtonCallback.enableButton(true)
-                    }
-                }
-
-                override fun onPreAuthorizationError(reasonId: Int) {
-                    val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.error_dialog_title,
-                            messageResId = reasonId,
-                            karhooError = null,
-                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok
-                                                                    ) { d, _ ->
-                                loadingButtonCallback.onLoadingComplete()
-                                d.dismiss()
-                            },
-                            negativeButton = null)
-                    KarhooAlertDialogHelper(context).showAlertDialog(config)
-                }
-
-                override fun onPreAuthorized(nonce: String) {
-                    presenter.setLoyaltyNonce(nonce)
-                    startBooking()
-                }
-            })
         }
         loyaltyView.set(LoyaltyMode.NONE)
     }
 
     override fun getDeviceLocale(): String {
         return resources.getString(R.string.karhoo_uisdk_locale)
+    }
+
+    override fun isTermsCheckBoxValid(): Boolean {
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired())
+            return bookingRequestTermsWidget.khTermsAndConditionsCheckBox.isChecked
+
+        return true
     }
 
     override fun consumeBackPressed(): Boolean = presenter.consumeBackPressed()
@@ -466,11 +476,49 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
-        return if (loyaltyView.visibility == VISIBLE && loyaltyView.getCurrentMode() != LoyaltyMode.ERROR) {
-            loyaltyView.preAuthorize()
+        return if (loyaltyView.visibility == VISIBLE) {
+            loyaltyView.getLoyaltyPreAuthNonce { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        presenter.setLoyaltyNonce(result.data.nonce)
+                        startBooking()
+                    }
+                    is Resource.Failure -> {
+                        if(result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
+                            //Start the booking even if the loyalty is in an error state
+                            startBooking()
+                            return@getLoyaltyPreAuthNonce
+                        }
+
+                        val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
+
+                        val config = KarhooAlertDialogConfig(
+                            titleResId = R.string.error_dialog_title,
+                            messageResId = reasonId,
+                            karhooError = null,
+                            positiveButton = KarhooAlertDialogAction(
+                                R.string.kh_uisdk_ok
+                                                                    ) { d, _ ->
+                                loadingButtonCallback.onLoadingComplete()
+                                d.dismiss()
+                            },
+                            negativeButton = null
+                                                            )
+                        KarhooAlertDialogHelper(context).showAlertDialog(config)
+                    }
+                }
+            }
             true
         } else {
             false
         }
+    }
+
+    private fun termsAndConditionsCheckBoxCheckedChanged(isChecked: Boolean){
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+    }
+
+    companion object {
+        private const val CUSTOM_ERROR_PREFIX = "KSDK00 "
     }
 }
