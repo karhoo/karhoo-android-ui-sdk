@@ -20,12 +20,6 @@ class FeedbackPresenterTest {
     private val feedback = listOf(FeedbackAnswer("1", 1, "yes"),
                                   FeedbackAnswer("2", 2, "no"))
 
-    @Test
-    fun `analytics submitted on submit`() {
-        presenter.submit(feedback)
-
-        verify(analytics).submitAdditionalFeedback(tripId, feedback)
-    }
 
     @Test
     fun `tripId added to FeedbackCompletedTripStore on submit`() {

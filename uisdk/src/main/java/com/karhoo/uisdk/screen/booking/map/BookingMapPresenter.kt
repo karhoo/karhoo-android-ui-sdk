@@ -119,7 +119,6 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     override fun locateUserPressed() {
         mainPresenter?.let {
             mapMoving = false
-            analytics?.reverseGeo()
             it.locateUserPressed()
         }
     }

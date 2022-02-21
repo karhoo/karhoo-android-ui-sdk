@@ -49,8 +49,8 @@
             android:background="@color/kh_uisdk_off_white"
             android:elevation="@dimen/kh_uisdk_elevation_default"
             android:scrollbars="none"
-            app:tabIndicatorColor="@color/kh_uisdk_primary"
-            app:tabSelectedTextColor="@color/kh_uisdk_off_black"
+            app:tabIndicatorColor="@color/kh_uisdk_accent"
+            app:tabSelectedTextColor="@color/kh_uisdk_accent"
             app:tabTextColor="@color/kh_uisdk_off_black" />
 
     </androidx.viewpager.widget.ViewPager>

@@ -109,7 +109,7 @@
         tools:visibility="visible">
 
         <ImageView
-            style="@style/KhBookingPriceInfoImage"
+            style="@style/KhBookingPriceInfoExpandedImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

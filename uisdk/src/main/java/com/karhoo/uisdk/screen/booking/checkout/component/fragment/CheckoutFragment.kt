@@ -73,7 +73,8 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                         presenter.getBookButtonState(
                                 visible, checkoutView
-                                .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid()
+                                .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid(),
+                                isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                                                     ).resId
                                             )
             }
@@ -162,7 +163,8 @@ internal class CheckoutFragment : Fragment() {
         checkoutActionButton.setText(
                 presenter.getBookButtonState(
                         arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
-                        isPaymentValid = checkoutView.isPaymentMethodValid()
+                        isPaymentValid = checkoutView.isPaymentMethodValid(),
+                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                                             )
                         .resId
                                     )

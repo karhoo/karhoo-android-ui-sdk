@@ -84,6 +84,10 @@ interface CheckoutViewContract {
         fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean
 
         fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel? = null)
+
+        fun getDeviceLocale(): String
+
+        fun isTermsCheckBoxValid(): Boolean
     }
 
     interface Presenter {
@@ -123,7 +127,7 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
-        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean):
+        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean = true):
                 BookButtonState
 
         fun createLoyaltyViewResponse()

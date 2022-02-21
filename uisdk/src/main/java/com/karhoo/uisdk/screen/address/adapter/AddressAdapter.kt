@@ -26,10 +26,6 @@ class AddressAdapter(private val context: Context,
         items = addresses.locations.locations
     }
 
-    fun addressSelected() {
-        analytics?.userEnteredTextSearch(query)
-    }
-
     override fun onBindViewHolder(holder: BaseRecyclerView<AddressItemView>, position: Int) {
         val view = holder.view
         val addresses = items

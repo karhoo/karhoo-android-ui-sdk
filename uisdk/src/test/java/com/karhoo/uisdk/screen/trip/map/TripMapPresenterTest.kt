@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.trip.map
 
-import android.location.Location
 import com.karhoo.sdk.api.model.Direction
 import com.karhoo.sdk.api.model.DriverTrackingInfo
 import com.karhoo.sdk.api.model.Position
@@ -15,7 +14,6 @@ import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
-import com.karhoo.uisdk.screen.booking.domain.userlocation.PositionListener
 import com.karhoo.uisdk.screen.trip.map.TripMapPresenter.Companion.TRIP_INFO_UPDATE_PERIOD
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -291,30 +289,6 @@ class TripMapPresenterTest {
     fun `stop getting location updates onPause`() {
         presenter.onPause()
         verify(locationProvider).stopListeningForLocations()
-    }
-
-    /**
-     * Given:   tracking trip and tripState not null
-     * When:    user location update
-     * Then:    analytics call made for user position changed
-     */
-    @Test
-    fun `analytics call for user position changed made when location update`() {
-        val location = Location("").apply {
-            latitude = 1.0
-            longitude = 2.0
-        }
-
-        presenter.onResume()
-        presenter.trackDriverPosition(TRIP_ID)
-        observerTripInfoCaptor.firstValue.onValueChanged(Resource.Success(tripWithState(TripStatus.PASSENGER_ON_BOARD)))
-        argumentCaptor<PositionListener>().apply {
-            verify(locationProvider).listenForLocations(capture(), eq(null))
-            val callback = firstValue
-            callback.onPositionUpdated(location)
-        }
-
-        verify(analytics).userPositionChanged(TripStatus.PASSENGER_ON_BOARD, location)
     }
 
     /**
