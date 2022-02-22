@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.uisdk.base.listener.ErrorView
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 
 interface BookingMapMVP {
 
@@ -44,7 +44,7 @@ interface BookingMapMVP {
 
     interface Presenter {
 
-        fun watchBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel)
+        fun watchBookingStatus(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
 
         fun mapMoved(position: LatLng?)
 

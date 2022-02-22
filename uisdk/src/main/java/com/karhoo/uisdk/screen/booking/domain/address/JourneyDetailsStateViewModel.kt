@@ -10,11 +10,11 @@ import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import org.joda.time.DateTime
 
-class BookingStatusStateViewModel(application: Application) : BaseStateViewModel<BookingInfo,
+class JourneyDetailsStateViewModel(application: Application) : BaseStateViewModel<JourneyDetails,
         AddressBarViewContract.AddressBarActions, AddressBarViewContract.AddressBarEvent>(application) {
 
     init {
-        viewState = BookingInfo(null, null, null)
+        viewState = JourneyDetails(null, null, null)
     }
 
     // update the state by using a set of predefined contracts. Some of the event can trigger an
@@ -34,7 +34,7 @@ class BookingStatusStateViewModel(application: Application) : BaseStateViewModel
     }
 
     private fun updatePickupDestinationDate(pickup: LocationInfo?, destination: LocationInfo?, date: DateTime?) {
-        viewState = BookingInfo(pickup, destination, date)
+        viewState = JourneyDetails(pickup, destination, date)
     }
 
     private fun showAddressActivity(addressType: AddressType, position: Position?) {
@@ -53,22 +53,22 @@ class BookingStatusStateViewModel(application: Application) : BaseStateViewModel
     }
 
     private fun updatePickup(pickup: LocationInfo?) {
-        viewState = BookingInfo(pickup, viewState.destination, viewState.date)
+        viewState = JourneyDetails(pickup, viewState.destination, viewState.date)
     }
 
     private fun updateDestination(destination: LocationInfo?) {
-        viewState = BookingInfo(viewState.pickup, destination, viewState.date)
+        viewState = JourneyDetails(viewState.pickup, destination, viewState.date)
     }
 
     private fun updateDate(date: DateTime?) {
-        viewState = BookingInfo(viewState.pickup, viewState.destination, date)
+        viewState = JourneyDetails(viewState.pickup, viewState.destination, date)
     }
 
     private fun flipAddresses() {
-        viewState = BookingInfo(viewState.destination, viewState.pickup, viewState.date)
+        viewState = JourneyDetails(viewState.destination, viewState.pickup, viewState.date)
     }
 
     private fun resetBookingStatus() {
-        viewState = BookingInfo(null, null, null)
+        viewState = JourneyDetails(null, null, null)
     }
 }

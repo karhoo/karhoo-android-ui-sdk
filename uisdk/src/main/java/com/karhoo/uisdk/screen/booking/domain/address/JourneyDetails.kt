@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 import org.joda.time.DateTime
 
 @Parcelize
-data class BookingInfo(var pickup: LocationInfo?,
-                       var destination: LocationInfo?,
-                       var date: DateTime?) : Parcelable
+data class JourneyDetails(var pickup: LocationInfo?,
+                          var destination: LocationInfo?,
+                          var date: DateTime?) : Parcelable

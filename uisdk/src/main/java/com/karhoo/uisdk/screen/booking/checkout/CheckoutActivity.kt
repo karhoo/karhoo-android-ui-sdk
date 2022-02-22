@@ -12,7 +12,7 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
@@ -133,8 +133,8 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
          * destination and date of the desired trip. This will only use the details available inside
          * the BookingInfo object.
          */
-        fun bookingInfo(bookingInfo: BookingInfo): Builder {
-            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingInfo)
+        fun bookingInfo(journeyDetails: JourneyDetails): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, journeyDetails)
             return this
         }
 

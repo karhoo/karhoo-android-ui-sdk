@@ -4,8 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.mock
@@ -24,10 +24,10 @@ class BookingMapPresenterTest {
     internal var view: BookingMapMVP.View = mock()
     internal var pickupPresenter: BookingMapStategy.Presenter = mock()
     internal var pickupDropOffPresenter: BookingMapStategy.Presenter = mock()
-    internal var bookingInfo: BookingInfo = mock()
+    internal var journeyDetails: JourneyDetails = mock()
     internal var analytics: Analytics? = mock()
     internal var lifeCycleOwner: LifecycleOwner = mock()
-    internal var bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
+    internal var journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
 
     @Before
     fun setUp() {

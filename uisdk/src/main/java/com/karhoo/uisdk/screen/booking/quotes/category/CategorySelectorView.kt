@@ -11,7 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.listener.SimpleTabListener
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.util.extension.toLocalizedString
 import kotlinx.android.synthetic.main.uisdk_view_category_selector.view.vehicleCategoryTabLayout
@@ -110,11 +110,11 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner, categoriesViewModel: CategoriesViewModel,
-                                bookingStatusStateViewModel: BookingStatusStateViewModel) {
+                                journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
         presenter = CategorySelectorPresenter(this)
         presenter?.let {
             categoriesViewModel.categories.observe(lifecycleOwner, it.subscribeToAvailableCategories())
-            bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, it.subscribeToBookingStatus())
+            journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, it.subscribeToBookingStatus())
         }
     }
 

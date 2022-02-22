@@ -1,6 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.category
 
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.capture
@@ -64,7 +64,7 @@ class CategorySelectorPresenterTest {
         doAnswer { observer.onChanged(createMockCategoryList()) }
                 .whenever(availabilityProvider).filterVehicleListByCategory("human")
 
-        observerBooking.onChanged(BookingInfo(mock(), mock(), null))
+        observerBooking.onChanged(JourneyDetails(mock(), mock(), null))
 
         presenter.setVehicleCategory("human")
 
@@ -89,7 +89,7 @@ class CategorySelectorPresenterTest {
         doAnswer { observer.onChanged(createQuoteAvailableMockList()) }
                 .whenever(availabilityProvider).filterVehicleListByCategory("MPV")
 
-        observerBooking.onChanged(BookingInfo(mock(), mock(), null))
+        observerBooking.onChanged(JourneyDetails(mock(), mock(), null))
         presenter.setVehicleCategory("MPV")
 
         verify(view, atLeastOnce()).setCategories(capture(categoryListCaptor))

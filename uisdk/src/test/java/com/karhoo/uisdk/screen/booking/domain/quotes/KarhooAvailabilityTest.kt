@@ -11,8 +11,8 @@ import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.sdk.call.PollCall
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -45,7 +45,7 @@ class KarhooAvailabilityTest {
     private lateinit var availability: AvailabilityProvider
     private var lifecycle = LifecycleRegistry(lifecycleOwner)
     private lateinit var availabilityHandler: AvailabilityHandler
-    private lateinit var bookingStatusStateViewModel: BookingStatusStateViewModel
+    private lateinit var journeyDetailsStateViewModel: JourneyDetailsStateViewModel
 
     private val lambdaCaptor = argumentCaptor<com.karhoo.sdk.api.network.observable
     .Observer<Resource<QuoteList>>>()
@@ -59,11 +59,11 @@ class KarhooAvailabilityTest {
 
         liveFleetsViewModel = LiveFleetsViewModel()
         categoriesViewModel = CategoriesViewModel()
-        bookingStatusStateViewModel = BookingStatusStateViewModel(mock())
+        journeyDetailsStateViewModel = JourneyDetailsStateViewModel(mock())
 
         availability = KarhooAvailability(
                 quotesService = quotesService,
-                bookingStatusStateViewModel = bookingStatusStateViewModel,
+                journeyDetailsStateViewModel = journeyDetailsStateViewModel,
                 liveFleetsViewModel = liveFleetsViewModel,
                 lifecycleOwner = lifecycleOwner,
                 categoriesViewModel = categoriesViewModel
@@ -90,7 +90,7 @@ class KarhooAvailabilityTest {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
+        observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(ALL)
@@ -112,7 +112,7 @@ class KarhooAvailabilityTest {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
+        observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
         availability.filterVehicleListByCategory(MPV)
@@ -166,7 +166,7 @@ class KarhooAvailabilityTest {
 
     private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {
         val observer = availability.bookingStatusObserver()
-        observer.onChanged(BookingInfo(locationInfo, locationInfo, null))
+        observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAvailabilityHandler(availabilityHandler)
         availability.setAllCategory(ALL)

@@ -10,8 +10,8 @@ import com.karhoo.sdk.api.service.address.AddressService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.address.AddressType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
 import org.joda.time.DateTime
@@ -21,15 +21,15 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
                                    private val addressService: AddressService = KarhooApi.addressService)
     : BasePresenter<AddressBarMVP.View>(), AddressBarMVP.Presenter {
 
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
 
     init {
         attachView(view)
     }
 
     override fun pickUpAddressClicked() {
-        val latLong: Position? =  bookingStatusStateViewModel?.currentState?.pickup?.position
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+        val latLong: Position? =  journeyDetailsStateViewModel?.currentState?.pickup?.position
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .AddressClickedEvent(AddressType.PICKUP, latLong))
     }
 
@@ -38,20 +38,20 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
 
         // If the GPS is enabled and if the user hasn't selected a destination, then use the
         // pickup initial geolocation
-        val latLong: Position? = bookingStatusStateViewModel?.currentState?.destination?.position
-                ?: bookingStatusStateViewModel?.currentState?.pickup?.position
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+        val latLong: Position? = journeyDetailsStateViewModel?.currentState?.destination?.position
+                ?: journeyDetailsStateViewModel?.currentState?.pickup?.position
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .AddressClickedEvent(AddressType.DESTINATION, latLong))
     }
 
     override fun flipAddressesClicked() {
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.FlipAddressesEvent)
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.FlipAddressesEvent)
     }
 
     override fun pickupSet(pickupLocationInfo: LocationInfo, addressPositionInList: Int) {
         analytics?.pickupAddressSelected(pickupLocationInfo, addressPositionInList)
         view?.setPickupAddress(pickupLocationInfo.displayAddress)
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .PickUpAddressEvent(pickupLocationInfo))
     }
 
@@ -59,12 +59,12 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         analytics?.destinationAddressSelected(destinationLocationInfo, addressPositionInList)
         view?.setDropoffAddress(destinationLocationInfo.displayAddress)
         view?.showFlipButton()
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .DestinationAddressEvent(destinationLocationInfo))
     }
 
     private fun dateSet(date: DateTime) {
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(date))
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(date))
         if (!scheduledDateInvalid()) {
             view?.displayPrebookTime(date)
         }
@@ -75,14 +75,14 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
             view?.setPickupAddress(trip.origin?.displayAddress.orEmpty())
             view?.setDropoffAddress(tripInfo.destination?.displayAddress.orEmpty())
             view?.showFlipButton()
-            bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
-                                                         .PrebookBookingEvent(trip.origin?.toSimpleLocationInfo(), trip.destination?.toSimpleLocationInfo(), bookingStatusStateViewModel?.currentState?.date))
+            journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+                                                         .PrebookBookingEvent(trip.origin?.toSimpleLocationInfo(), trip.destination?.toSimpleLocationInfo(), journeyDetailsStateViewModel?.currentState?.date))
         }
     }
 
     override fun clearDestinationClicked() {
         clearDestinationInView()
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                      .DestinationAddressEvent(null))
     }
 
@@ -95,10 +95,10 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
     }
 
     private fun scheduledDateInvalid(): Boolean {
-        bookingStatusStateViewModel?.currentState?.date?.let {
+        journeyDetailsStateViewModel?.currentState?.date?.let {
             val currentRemaining = it.millis - System.currentTimeMillis()
             return if (currentRemaining < ONE_HOUR_MILLIS) {
-                bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+                journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                              .BookingDateEvent(null))
                 true
             } else {
@@ -136,8 +136,8 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         }
     }
 
-    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingInfo> {
-        setCurrentBookingStatus(bookingStatusStateViewModel)
+    override fun subscribeToBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+        setCurrentBookingStatus(journeyDetailsStateViewModel)
         return Observer { bookingStatus ->
             bookingStatus?.let {
                 it.pickup?.let { pickup ->
@@ -156,8 +156,8 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         }
     }
 
-    private fun setCurrentBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel) {
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
+    private fun setCurrentBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 
     companion object {

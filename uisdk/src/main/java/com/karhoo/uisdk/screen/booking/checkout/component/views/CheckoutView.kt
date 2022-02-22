@@ -40,7 +40,7 @@ import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
@@ -179,7 +179,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?,
+    override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
@@ -192,7 +192,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         presenter.showBookingRequest(
                 quote = quote,
-                bookingInfo = bookingInfo,
+                journeyDetails = journeyDetails,
                 outboundTripId = outboundTripId,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails

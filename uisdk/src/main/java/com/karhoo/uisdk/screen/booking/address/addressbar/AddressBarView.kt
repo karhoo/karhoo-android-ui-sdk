@@ -21,7 +21,7 @@ import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.TimePickerTitleView
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.util.DateUtil
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.clearDateTimeButtonIcon
@@ -195,10 +195,10 @@ class AddressBarView
         }
     }
 
-    override fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
-        bookingStatusStateViewModel.viewStates().apply {
-            observe(lifecycleOwner, addressPresenter.subscribeToBookingStatus(bookingStatusStateViewModel))
-            observe(lifecycleOwner, timeDatePresenter.subscribeToBookingStatus(bookingStatusStateViewModel))
+    override fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+        journeyDetailsStateViewModel.viewStates().apply {
+            observe(lifecycleOwner, addressPresenter.subscribeToBookingStatus(journeyDetailsStateViewModel))
+            observe(lifecycleOwner, timeDatePresenter.subscribeToBookingStatus(journeyDetailsStateViewModel))
         }
     }
 
