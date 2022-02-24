@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dropOffLabe
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.flipButtonIcon
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.pickupLabel
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.scheduledIcon
+import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeDivider
 import org.joda.time.DateTime
 import java.util.Calendar
 
@@ -100,7 +101,8 @@ class AddressBarView
         dateTimeUpperText.visibility = View.GONE
         dateTimeLowerText.visibility = View.GONE
         clearDateTimeButtonIcon.visibility = View.GONE
-        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.INVISIBLE else View.VISIBLE
+        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
+        dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
@@ -112,7 +114,8 @@ class AddressBarView
     }
 
     override fun setPickupAddress(displayAddress: String) {
-        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.INVISIBLE else View.VISIBLE
+        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
+        dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
         pickupLabel.text = displayAddress
     }
 
