@@ -41,10 +41,10 @@
     <string name="kh_uisdk_booking_error">Er lijkt een probleem te zijn met het boeken van uw reis. Probeer het opnieuw</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reservering is mislukt</string>
-    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
-    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$@ | %2$@ en %3$@ %4$@ | %3$@ %5$@.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
