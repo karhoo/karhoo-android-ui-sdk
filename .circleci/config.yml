@@ -1,4 +1,6 @@
 version: 2
+orbs:
+  saucectl: saucelabs/saucectl-run@1.0.0
 config_android:
   docker:
     - image: circleci/android:api-29
@@ -69,9 +71,38 @@ jobs:
           root: .
           paths:
             - ./app/build
-  
+  test-espresso:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - restore_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Download Dependencies
+          command: |
+            bundle check || bundle install --path vendor/bundle
+      - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Decode secure.properties
+          command: |
+            echo 'export SECURE_PROPERTIES="$SECURE_PROPERTIES"' >> $BASH_ENV
+            echo $SECURE_PROPERTIES | base64 -di > app/secure.properties
+            sudo chmod +x ./gradlew
+      - run:
+          # Export base64 encoded google-services.json
+          # into local bash variables & Decode the base64 string
+          name: Export & Decode Google Services Json
+          command: |
+            echo 'export GOOGLE_SERVICES_JSON="$GOOGLE_SERVICES_JSON"' >> $BASH_ENV
+            echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
+      - saucectl/saucectl-run
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_and_setup
+#      - build_and_setup
+      - test-espresso
