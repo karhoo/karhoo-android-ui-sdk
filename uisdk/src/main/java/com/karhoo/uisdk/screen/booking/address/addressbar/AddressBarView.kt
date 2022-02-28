@@ -64,12 +64,14 @@ class AddressBarView
 
     override fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
         val calendar = Calendar.getInstance()
+        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
         val datePicker = DatePickerDialog(context,
                                           R.style.DialogTheme,
                                           this,
-                                          calendar.get(Calendar.YEAR),
-                                          calendar.get(Calendar.MONTH),
-                                          calendar.get(Calendar.DAY_OF_MONTH)).apply {
+                                     previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
+                               previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
+                               previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
+        ).apply {
             datePicker.minDate = minDate
             datePicker.maxDate = maxDate
         }
@@ -78,8 +80,13 @@ class AddressBarView
     }
 
     override fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
-        val dialog = TimePickerDialog(context, R.style.DialogTheme, this,
-                                      hour, minute, DateFormat.is24HourFormat(context))
+        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
+        val dialog = TimePickerDialog(context,
+            R.style.DialogTheme,
+            this,
+            previousSelectedDate?.hourOfDay ?: hour,
+            previousSelectedDate?.minuteOfHour ?: minute,
+            DateFormat.is24HourFormat(context))
         dialog.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
         dialog.show()
     }

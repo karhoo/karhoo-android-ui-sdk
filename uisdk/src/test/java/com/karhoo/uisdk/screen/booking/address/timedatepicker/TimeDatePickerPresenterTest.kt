@@ -310,6 +310,26 @@ class TimeDatePickerPresenterTest {
         verify(analytics).prebookSet(any(), any())
     }
 
+    /**
+     * Given:   A date has been previously selected
+     * When:    Presetting the date and time
+     * Then:    The date and time should be the last ones selected
+     **/
+    @Test
+    fun `when selecting to edit a previously selected date and time`() {
+        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingInfo)
+        whenever(bookingInfo.pickup).thenReturn(LOCATION_INFO)
+        whenever(bookingInfo.date).thenReturn(DateTime(1, 1, 1, 10, 11))
+
+        timePickerPresenter.dateSelected(1, 1, 1)
+        timePickerPresenter.timeSelected(10, 11)
+
+        val previouslySelectedDateTime = timePickerPresenter.getPreviousSelectedDateTime()
+
+        assertThat(previouslySelectedDateTime!!.hourOfDay).isEqualTo(10)
+        assertThat(previouslySelectedDateTime.minuteOfHour).isEqualTo(11)
+    }
+
     companion object {
 
         val LOCATION_INFO = LocationInfo(

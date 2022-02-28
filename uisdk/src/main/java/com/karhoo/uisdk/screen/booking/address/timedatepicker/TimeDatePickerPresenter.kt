@@ -141,6 +141,10 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         view?.hideDateViews()
     }
 
+    override fun getPreviousSelectedDateTime(): DateTime? {
+        return bookingStatusStateViewModel?.currentState?.date
+    }
+
     private companion object {
 
         var year: Int = 0
