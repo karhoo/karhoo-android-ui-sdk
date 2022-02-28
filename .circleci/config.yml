@@ -100,9 +100,10 @@ jobs:
             echo 'export GOOGLE_SERVICES_JSON="$GOOGLE_SERVICES_JSON"' >> $BASH_ENV
             echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - saucectl/saucectl-run
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_and_setup/
+#      - build_and_setup
       - test-espresso
