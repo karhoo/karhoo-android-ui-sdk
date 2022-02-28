@@ -1,22 +1,25 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
-import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.model.Quote
+import android.graphics.Insets
+import android.os.Build
+import android.util.DisplayMetrics
+import android.view.WindowInsets
+import android.view.WindowManager
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 
-internal class QuotesListPresenter(view: QuotesListMVP.View, private val analytics: Analytics?)
-    : BasePresenter<QuotesListMVP.View>(),
-        QuotesListMVP.Presenter, AvailabilityHandler {
+internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, private val analytics: Analytics?) :
+    BasePresenter<QuotesFragmentContract.View>(),
+    QuotesFragmentContract.Presenter, AvailabilityHandler {
 
-    private var currentVehicles: List<Quote> = mutableListOf()
     private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
+    private var dataModel: QuoteListViewDataModel? = null
 
     override var hasAvailability: Boolean = false
         set(value) {
@@ -31,11 +34,16 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
 
     init {
         attachView(view)
-        this.currentVehicles = mutableListOf()
     }
 
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
         view?.showSnackbarError(snackbarConfig)
+    }
+
+    override fun setData(data: QuoteListViewDataModel) {
+        this.dataModel = data
+
+        checkBookingInfo()
     }
 
     override fun showMore() {
@@ -50,28 +58,31 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
     }
 
     private fun updateList() {
-        if (isPrebook) {
-            view?.updateList(currentVehicles)
-        } else {
-            val nearVehicles = currentVehicles.filter {
-                it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA
+        dataModel?.quotes?.let { quotes ->
+            if (isPrebook) {
+                view?.updateList(quotes)
+            } else {
+                val nearVehicles = quotes.filter {
+                    it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA
+                }
+                view?.updateList(nearVehicles)
             }
-            view?.updateList(nearVehicles)
         }
+
     }
 
     override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
         analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
     }
 
-    override fun watchBookingStatus() = Observer<BookingInfo> { currentStatus ->
-        currentStatus?.let {
+    private fun checkBookingInfo() {
+        dataModel?.bookingInfo?.let {
             isPrebook = it.date != null
-            hasDestination = currentStatus.destination != null
+            hasDestination = it.destination != null
 
             view?.apply {
                 prebook(isPrebook)
-                setListVisibility(currentStatus.pickup, currentStatus.destination)
+                setListVisibility(it.pickup, it.destination)
                 destinationChanged(it)
             }
 
@@ -82,28 +93,38 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
         }
     }
 
-    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
-        vehicleList?.let {
-            currentVehicles = it
-            updateList()
-        }
-    }
-
     private fun shouldShowQuotesList() {
         when {
             !hasDestination -> view?.apply {
                 if (isExpanded) {
                     showMore()
                 }
-                hideList()
+                view?.showList(false)
             }
             hasAvailability -> view?.apply {
-                showList()
+                view?.showList(true)
             }
             else -> view?.apply {
-                hideList()
+                view?.showList(false)
                 showNoAvailability()
             }
+        }
+    }
+
+    override fun calculateListHeight(windowManager: WindowManager, percentage: Int): Int {
+        val maxHeight = view?.provideResources()?.getInteger(
+            R.integer.kh_uisdk_query_list_view_max_screen_percentage
+        ) ?: 0
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            val insets: Insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat() / maxHeight)).toInt()
+        } else {
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            (displayMetrics.heightPixels * (percentage.toFloat() / maxHeight)).toInt()
         }
     }
 

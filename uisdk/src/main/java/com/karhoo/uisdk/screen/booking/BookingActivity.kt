@@ -103,7 +103,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onResume() {
         super.onResume()
         if (tripAllocationWidget.visibility != View.VISIBLE) {
-            quotesListWidget.initAvailability(this)
+            quotesListWidget.initAvailability()
         }
         setWatchers()
         setNavHeaderImage()
@@ -168,7 +168,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        quotesListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
+//        quotesListWidget.setup(QuoteLi)
         addressBarWidget.setJourneyInfo(journeyInfo)
 
         locateMeButton.setOnClickListener {
@@ -328,7 +328,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     private fun waitForTripAllocation() {
-        quotesListWidget.hideList()
+        quotesListWidget.showList(false)
         addressBarWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -378,7 +378,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBookingCancelledOrFinished() {
-        quotesListWidget.initAvailability(this)
+        quotesListWidget.initAvailability()
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -387,7 +387,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun dismissSnackbar() {
-        quotesListWidget.setQuotesListVisibility()
+        quotesListWidget.showList(false)
         super.dismissSnackbar()
     }
 

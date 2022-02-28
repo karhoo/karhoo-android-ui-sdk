@@ -9,9 +9,9 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class QuotesListPresenterTest {
+class QuotesFragmentPresenterTest {
     private val view: QuotesListViewMock = QuotesListViewMock()
-    private val presenter: QuotesListMVP.Presenter = QuotesListPresenter(view, null)
+    private val presenter: QuotesFragmentContract.Presenter = QuotesFragmentPresenter(view, null)
 
     @Before
     fun setup() {

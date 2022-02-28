@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
-import androidx.lifecycle.Observer
+import android.content.res.Resources
+import android.view.WindowManager
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.listener.ErrorView
@@ -8,7 +9,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 
-interface QuotesListMVP {
+interface QuotesFragmentContract {
 
     interface View {
 
@@ -26,18 +27,21 @@ interface QuotesListMVP {
 
         fun prebook(isPrebook: Boolean)
 
-        fun showList()
-
-        fun hideList(): Boolean
-
         fun showNoAvailability()
 
         fun showNoResultsText(show: Boolean)
 
-        fun hideNoAvailability()
-
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
+        fun provideResources(): Resources
+
+        fun setViewDelegate(quoteListDelegate: QuoteListDelegate)
+
+        fun setup(data: QuoteListViewDataModel)
+
+        fun showList(show: Boolean)
+
+        fun initAvailability()
     }
 
     interface Presenter {
@@ -46,12 +50,19 @@ interface QuotesListMVP {
 
         fun vehiclesShown(quoteId: String, isExpanded: Boolean)
 
-        fun watchBookingStatus(): Observer<BookingInfo>
-
-        fun watchVehicles(): Observer<List<Quote>>
-
         fun sortMethodChanged(sortMethod: SortMethod)
 
+        fun calculateListHeight(windowManager: WindowManager, percentage: Int): Int
+
+        fun setData(data: QuoteListViewDataModel)
+    }
+
+    interface QuoteListDelegate {
+        fun onQuoteSelected()
+        // These will disappear once we transition to a full-screen implementation
+        fun onListExpanded()
+        fun onListCollapsed()
+        fun onError(snackBar: SnackbarConfig)
     }
 
     interface Actions : ErrorView
