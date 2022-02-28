@@ -15,7 +15,7 @@ internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
     init {
         attachView(view)
         subscribeToAvailableCategories()
-        subscribeToBookingStatus()
+        subscribeToJourneyDetails()
     }
 
     override fun setVehicleCategory(vehicleType: String) {
@@ -29,7 +29,7 @@ internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
         }
     }
 
-    override fun subscribeToBookingStatus() = Observer<JourneyDetails> { bookingStatus ->
+    override fun subscribeToJourneyDetails() = Observer<JourneyDetails> { bookingStatus ->
         hasDestination = bookingStatus?.destination != null
         setCategoriesAvailable()
     }

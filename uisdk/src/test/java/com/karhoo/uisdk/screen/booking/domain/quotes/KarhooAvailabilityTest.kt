@@ -89,7 +89,7 @@ class KarhooAvailabilityTest {
     fun `all category gets populated with a full list of quotes`() {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
-        val observer = availability.bookingStatusObserver()
+        val observer = availability.journeyDetailsObserver()
         observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
@@ -111,7 +111,7 @@ class KarhooAvailabilityTest {
     fun `selecting a category filter only returns vehicles of that category`() {
         whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
 
-        val observer = availability.bookingStatusObserver()
+        val observer = availability.journeyDetailsObserver()
         observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAllCategory(ALL)
@@ -165,7 +165,7 @@ class KarhooAvailabilityTest {
     }
 
     private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {
-        val observer = availability.bookingStatusObserver()
+        val observer = availability.journeyDetailsObserver()
         observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAvailabilityHandler(availabilityHandler)

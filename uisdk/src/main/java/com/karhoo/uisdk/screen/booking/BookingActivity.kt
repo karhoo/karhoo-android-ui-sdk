@@ -155,7 +155,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViews() {
-        addressBarWidget.watchBookingStatusState(this@BookingActivity, journeyDetailsStateViewModel)
+        addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
         tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
                                                        bookingRequestStateViewModel)
     }
@@ -342,14 +342,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                                                  .BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
         if (tripInfo != null) {
-            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
 
             val prebookConfirmationView = PrebookConfirmationView(this).apply {
                 bind(quoteType, tripInfo)
             }
             prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
                 override fun finishedBooking() {
-                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 }
             }
         }

@@ -33,7 +33,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
         pickupDropoffPresenter.setOwner(this)
     }
 
-    override fun watchBookingStatus(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+    override fun watchJourneyDetails(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
         val observer = Observer<JourneyDetails> { currentStatus ->
             currentJourneyDetails = currentStatus

@@ -327,7 +327,7 @@ class BookingMapView @JvmOverloads constructor(
                 ) {
         this.isDeepLink = isDeepLink
         this.shouldReverseGeolocate = if (isLocateMeEnabled) shouldReverseGeolocate else false
-        bindViewToBookingStatus(lifecycleOwner, journeyDetailsStateViewModel)
+        bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         mapView.onCreate(bundle)
         mapView.getMapAsync { googleMap ->
             this.googleMap = googleMap
@@ -426,11 +426,11 @@ class BookingMapView @JvmOverloads constructor(
     }
     //endregion
 
-    private fun bindViewToBookingStatus(
+    private fun bindViewToJourneyDetails(
         lifecycleOwner: LifecycleOwner,
         journeyDetailsStateViewModel: JourneyDetailsStateViewModel
                                        ) {
-        presenter.watchBookingStatus(lifecycleOwner, journeyDetailsStateViewModel)
+        presenter.watchJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 

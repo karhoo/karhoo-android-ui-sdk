@@ -28,7 +28,7 @@ interface CategorySelectorMVP {
 
         fun subscribeToAvailableCategories(): Observer<List<Category>>
 
-        fun subscribeToBookingStatus(): Observer<JourneyDetails>
+        fun subscribeToJourneyDetails(): Observer<JourneyDetails>
 
     }
 

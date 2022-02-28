@@ -31,7 +31,7 @@ interface AddressBarMVP {
 
     interface Presenter {
 
-        fun subscribeToBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
+        fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
 
         fun destinationSet(destinationLocationInfo: LocationInfo, addressPositionInList: Int)
 

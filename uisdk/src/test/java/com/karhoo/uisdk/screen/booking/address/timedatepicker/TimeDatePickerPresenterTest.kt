@@ -55,7 +55,7 @@ class TimeDatePickerPresenterTest {
     fun setUp() {
         DateTimeZone.setDefault(timezoneAmsterdam)
         timePickerPresenter = TimeDatePickerPresenter(view, analytics)
-        timePickerPresenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
     }
 
     /**
@@ -65,7 +65,7 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `subscribing to booking status returns observer`() {
-        val observer = timePickerPresenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         assertNotNull(observer)
     }
 
@@ -76,7 +76,7 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `when the date is null a call is made to hide the time date field`() {
-        val observer = timePickerPresenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(null, null, null))
         verify(view).hideDateViews()
     }

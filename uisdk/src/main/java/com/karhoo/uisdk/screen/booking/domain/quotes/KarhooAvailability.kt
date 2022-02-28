@@ -65,7 +65,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
         journeyDetailsStateViewModel.viewStates().removeObserver(observer)
     }
 
-    override fun bookingStatusObserver(): androidx.lifecycle.Observer<JourneyDetails> {
+    override fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails> {
         return observer
     }
 
@@ -139,13 +139,13 @@ class KarhooAvailability(private val quotesService: QuotesService,
         this.analytics = analytics
     }
 
-    private fun createObservable() = androidx.lifecycle.Observer<JourneyDetails> { bookingStatus ->
+    private fun createObservable() = androidx.lifecycle.Observer<JourneyDetails> { journeyDetails ->
         cancelVehicleCallback()
-        if (bookingStatus != null && bookingStatus.destination == null
+        if (journeyDetails != null && journeyDetails.destination == null
                 && categoryViewModels.isNotEmpty()) {
             updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
         } else {
-            requestVehicleAvailability(bookingStatus)
+            requestVehicleAvailability(journeyDetails)
         }
     }
 

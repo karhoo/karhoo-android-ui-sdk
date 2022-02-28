@@ -27,7 +27,7 @@ class JourneyDetailsStateViewModel(application: Application) : BaseStateViewMode
             is AddressBarViewContract.AddressBarEvent.AsapBookingEvent -> updatePickupDestinationDate(viewEvent.pickup, viewEvent.destination, null)
             is AddressBarViewContract.AddressBarEvent.PrebookBookingEvent -> updatePickupDestinationDate(viewEvent.pickup, viewEvent.destination, viewEvent.date)
             is AddressBarViewContract.AddressBarEvent.BookingDateEvent -> updateDate(viewEvent.dateTime)
-            is AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent -> resetBookingStatus()
+            is AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent -> resetJourneyDetails()
             is AddressBarViewContract.AddressBarEvent.FlipAddressesEvent -> flipAddresses()
             is AddressBarViewContract.AddressBarEvent.AddressClickedEvent -> showAddressActivity(viewEvent.type, viewEvent.position)
         }
@@ -68,7 +68,7 @@ class JourneyDetailsStateViewModel(application: Application) : BaseStateViewMode
         viewState = JourneyDetails(viewState.destination, viewState.pickup, viewState.date)
     }
 
-    private fun resetBookingStatus() {
+    private fun resetJourneyDetails() {
         viewState = JourneyDetails(null, null, null)
     }
 }

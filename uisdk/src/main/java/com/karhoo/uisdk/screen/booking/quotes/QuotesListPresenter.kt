@@ -64,7 +64,7 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
         analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
     }
 
-    override fun watchBookingStatus() = Observer<JourneyDetails> { currentStatus ->
+    override fun watchJourneyDetails() = Observer<JourneyDetails> { currentStatus ->
         currentStatus?.let {
             isPrebook = it.date != null
             hasDestination = currentStatus.destination != null

@@ -114,7 +114,7 @@ interface CheckoutViewContract {
 
         fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails? = null)
 
-        fun watchBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails>
+        fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails>
 
         fun watchBookingRequest(bookingRequestStateViewModel: BookingRequestStateViewModel)
                 : Observer<BookingRequestStatus>
@@ -123,7 +123,7 @@ interface CheckoutViewContract {
 
         fun onPaymentFailureDialogCancelled()
 
-        fun setBookingStatus(journeyDetails: JourneyDetails?)
+        fun setJourneyDetails(journeyDetails: JourneyDetails?)
 
         fun consumeBackPressed(): Boolean
 

@@ -60,7 +60,7 @@ class AddressBarPresenterTest {
                 view = view,
                 analytics = analytics,
                 addressService = addressService)
-        presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
     }
 
     /**
@@ -88,7 +88,7 @@ class AddressBarPresenterTest {
         val locationInfo = LocationInfo(position = position)
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(locationInfo)
-        presenter.subscribeToBookingStatus(journeyDetailsStateViewModel = journeyDetailsStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel = journeyDetailsStateViewModel)
 
         presenter.pickUpAddressClicked()
 
@@ -212,7 +212,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(origin)
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
-        val observer = presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(mockedLocationOne, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
@@ -236,7 +236,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(null)
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
-        val observer = presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(null, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setDefaultPickupText()
@@ -259,7 +259,7 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(origin)
         whenever(mockedTripInfo.destination).thenReturn(null)
 
-        val observer = presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(mockedLocationOne, null, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
@@ -302,7 +302,7 @@ class AddressBarPresenterTest {
         whenever(mockedLocationOne.displayAddress).thenReturn("address_one")
         whenever(mockedLocationTwo.displayAddress).thenReturn("address_two")
 
-        val observer = presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(mockedLocationOne, mockedLocationTwo, DateTime.now()))
 
         presenter.flipAddressesClicked()
@@ -342,7 +342,7 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `watching booking status returns the correct observable`() {
-        Assert.assertNotNull(presenter.subscribeToBookingStatus(journeyDetailsStateViewModel))
+        Assert.assertNotNull(presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
     }
 
     /**
@@ -514,7 +514,7 @@ class AddressBarPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.date).thenReturn(journeyInfo.date)
 
-        presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
 
         verify(view, never()).setPickupAddress(any())
@@ -533,7 +533,7 @@ class AddressBarPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.date).thenReturn(journeyInfoValidDate.date)
 
-        presenter.subscribeToBookingStatus(journeyDetailsStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
 
         verify(view, never()).setPickupAddress(any())

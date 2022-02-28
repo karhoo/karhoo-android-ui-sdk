@@ -195,10 +195,10 @@ class AddressBarView
         }
     }
 
-    override fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+    override fun watchJourneyDetailsState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
         journeyDetailsStateViewModel.viewStates().apply {
-            observe(lifecycleOwner, addressPresenter.subscribeToBookingStatus(journeyDetailsStateViewModel))
-            observe(lifecycleOwner, timeDatePresenter.subscribeToBookingStatus(journeyDetailsStateViewModel))
+            observe(lifecycleOwner, addressPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
+            observe(lifecycleOwner, timeDatePresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
         }
     }
 

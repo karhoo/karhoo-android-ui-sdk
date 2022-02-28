@@ -46,7 +46,7 @@ interface QuotesListMVP {
 
         fun vehiclesShown(quoteId: String, isExpanded: Boolean)
 
-        fun watchBookingStatus(): Observer<JourneyDetails>
+        fun watchJourneyDetails(): Observer<JourneyDetails>
 
         fun watchVehicles(): Observer<List<Quote>>
 

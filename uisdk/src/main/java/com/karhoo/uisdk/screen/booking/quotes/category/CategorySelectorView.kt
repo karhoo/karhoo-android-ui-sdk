@@ -114,7 +114,7 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
         presenter = CategorySelectorPresenter(this)
         presenter?.let {
             categoriesViewModel.categories.observe(lifecycleOwner, it.subscribeToAvailableCategories())
-            journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, it.subscribeToBookingStatus())
+            journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, it.subscribeToJourneyDetails())
         }
     }
 

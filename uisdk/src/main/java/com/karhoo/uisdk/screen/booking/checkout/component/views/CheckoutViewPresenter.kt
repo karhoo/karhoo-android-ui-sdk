@@ -62,7 +62,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         attachView(view)
     }
 
-    override fun setBookingStatus(journeyDetails: JourneyDetails?) {
+    override fun setJourneyDetails(journeyDetails: JourneyDetails?) {
         journeyDetails?.let {
             scheduledDate = it.date
             destination = it.destination
@@ -78,7 +78,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun watchBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {
+    override fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
         return Observer { currentStatus ->
             currentStatus?.let {
@@ -234,7 +234,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun resetBooking() {
-        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun refreshPaymentDetails() {
@@ -250,7 +250,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?, passengerDetails: PassengerDetails?) {
         retrievePassengerDetailsForShowing(passengerDetails)
-        setBookingStatus(journeyDetails)
+        setJourneyDetails(journeyDetails)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {

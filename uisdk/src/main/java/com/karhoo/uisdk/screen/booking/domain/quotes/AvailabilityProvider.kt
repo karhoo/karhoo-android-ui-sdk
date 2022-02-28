@@ -13,7 +13,7 @@ interface AvailabilityProvider {
 
     fun cleanup()
 
-    fun bookingStatusObserver(): androidx.lifecycle.Observer<JourneyDetails>
+    fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails>
 
 }
 

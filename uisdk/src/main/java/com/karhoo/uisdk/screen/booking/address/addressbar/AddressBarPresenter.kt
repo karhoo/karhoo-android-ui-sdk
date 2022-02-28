@@ -136,10 +136,10 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         }
     }
 
-    override fun subscribeToBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
-        setCurrentBookingStatus(journeyDetailsStateViewModel)
-        return Observer { bookingStatus ->
-            bookingStatus?.let {
+    override fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+        setCurrentJourneyDetails(journeyDetailsStateViewModel)
+        return Observer { journeyDetails ->
+            journeyDetails?.let {
                 it.pickup?.let { pickup ->
                     view?.setPickupAddress(pickup.displayAddress)
                 } ?: run {
@@ -156,7 +156,7 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
         }
     }
 
-    private fun setCurrentBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+    private fun setCurrentJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 

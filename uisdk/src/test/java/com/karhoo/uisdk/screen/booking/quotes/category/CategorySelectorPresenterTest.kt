@@ -57,7 +57,7 @@ class CategorySelectorPresenterTest {
     @Test
     fun `empty quotes list returned when requesting quotes`() {
         val observer = presenter.subscribeToAvailableCategories()
-        val observerBooking = presenter.subscribeToBookingStatus()
+        val observerBooking = presenter.subscribeToJourneyDetails()
 
         presenter.availabilityProvider = availabilityProvider
 
@@ -82,7 +82,7 @@ class CategorySelectorPresenterTest {
     @Test
     fun `available categories are returned when requesting categories`() {
         val observer = presenter.subscribeToAvailableCategories()
-        val observerBooking = presenter.subscribeToBookingStatus()
+        val observerBooking = presenter.subscribeToJourneyDetails()
 
         presenter.availabilityProvider = availabilityProvider
 

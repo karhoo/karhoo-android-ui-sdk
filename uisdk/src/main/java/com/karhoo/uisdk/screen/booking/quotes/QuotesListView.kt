@@ -149,7 +149,7 @@ class QuotesListView @JvmOverloads constructor(
         lifecycleOwner.lifecycle.addObserver(this)
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
-        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
+        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchJourneyDetails())
         categorySelectorWidget.bindViewToData(lifecycleOwner, categoriesViewModel, journeyDetailsStateViewModel)
         quotesRecyclerView.watchCategories(lifecycleOwner, categoriesViewModel)
         quotesRecyclerView.watchQuoteListStatus(lifecycleOwner, bookingQuotesViewModel)

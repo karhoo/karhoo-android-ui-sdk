@@ -44,7 +44,7 @@ interface BookingMapMVP {
 
     interface Presenter {
 
-        fun watchBookingStatus(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
+        fun watchJourneyDetails(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
 
         fun mapMoved(position: LatLng?)
 

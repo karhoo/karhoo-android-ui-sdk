@@ -119,16 +119,16 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         return DateTime(setYear, setMonth, setDay, setHour, setMinute, timezone)
     }
 
-    override fun subscribeToBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
-        setCurrentBookingStatus(journeyDetailsStateViewModel)
+    override fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+        setCurrentJourneyDetails(journeyDetailsStateViewModel)
         return Observer {
-            it?.let { bookingStatus ->
+            it?.let {
                 it.date ?: view?.hideDateViews()
             }
         }
     }
 
-    private fun setCurrentBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+    private fun setCurrentJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 

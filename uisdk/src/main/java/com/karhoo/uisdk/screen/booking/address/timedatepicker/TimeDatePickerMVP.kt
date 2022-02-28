@@ -9,7 +9,7 @@ interface TimeDatePickerMVP {
 
     interface Presenter {
 
-        fun subscribeToBookingStatus(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
+        fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
 
         fun dateSelected(selectedYear: Int, selectedMonth: Int, dayOfMonth: Int)
 

@@ -21,7 +21,7 @@ interface AddressBarViewContract {
 
         fun bindTripToView(tripDetails: TripInfo?)
 
-        fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
+        fun watchJourneyDetailsState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
@@ -43,7 +43,7 @@ interface AddressBarViewContract {
 
         data class BookingDateEvent(val dateTime: DateTime?) : AddressBarEvent()
 
-        object ResetBookingStatusEvent : AddressBarEvent()
+        object ResetJourneyDetailsEvent : AddressBarEvent()
 
         object FlipAddressesEvent : AddressBarEvent()
 
