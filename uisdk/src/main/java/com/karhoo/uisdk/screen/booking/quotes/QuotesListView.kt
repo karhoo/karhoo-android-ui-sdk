@@ -25,8 +25,8 @@ import com.karhoo.uisdk.base.snackbar.SnackbarType
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.quotes.QuoteListStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
@@ -53,7 +53,7 @@ class QuotesListView @JvmOverloads constructor(
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
     private var availabilityProvider: AvailabilityProvider? = null
 
     private var presenter = QuotesListPresenter(this, KarhooUISDK.analytics)
@@ -144,13 +144,13 @@ class QuotesListView @JvmOverloads constructor(
     }
 
     override fun bindViewToData(lifecycleOwner: LifecycleOwner,
-                                bookingStatusStateViewModel: BookingStatusStateViewModel,
+                                journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
                                 bookingQuotesViewModel: BookingQuotesViewModel) {
         lifecycleOwner.lifecycle.addObserver(this)
         liveFleetsViewModel.liveFleets.observe(lifecycleOwner, presenter.watchVehicles())
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
-        bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchBookingStatus())
-        categorySelectorWidget.bindViewToData(lifecycleOwner, categoriesViewModel, bookingStatusStateViewModel)
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
+        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, presenter.watchJourneyDetails())
+        categorySelectorWidget.bindViewToData(lifecycleOwner, categoriesViewModel, journeyDetailsStateViewModel)
         quotesRecyclerView.watchCategories(lifecycleOwner, categoriesViewModel)
         quotesRecyclerView.watchQuoteListStatus(lifecycleOwner, bookingQuotesViewModel)
 
@@ -164,8 +164,8 @@ class QuotesListView @JvmOverloads constructor(
         }
     }
 
-    override fun destinationChanged(bookingInfo: BookingInfo) {
-        quotesSortWidget.destinationChanged(bookingInfo)
+    override fun destinationChanged(journeyDetails: JourneyDetails) {
+        quotesSortWidget.destinationChanged(journeyDetails)
     }
 
     override fun updateList(quoteList: List<Quote>) {
@@ -195,7 +195,7 @@ class QuotesListView @JvmOverloads constructor(
                         bookingQuotesViewModel?.process(
                                 BookingQuotesViewContract.BookingQuotesEvent
                                         .QuotesListVisibilityChanged(isVisible = true, panelState = collapsiblePanelView.panelState))
-                        KarhooUISDK.analytics?.quoteListOpened(bookingInfo = bookingStatusStateViewModel?.currentState)
+                        KarhooUISDK.analytics?.quoteListOpened(journeyDetails = journeyDetailsStateViewModel?.currentState)
                     }
         }
     }
@@ -272,7 +272,7 @@ class QuotesListView @JvmOverloads constructor(
     override fun initAvailability(lifecycleOwner: LifecycleOwner) {
         availabilityProvider?.cleanup()
         val locale: Locale? = resources.configuration.locale
-        bookingStatusStateViewModel?.let {
+        journeyDetailsStateViewModel?.let {
             availabilityProvider = KarhooAvailability(
                     KarhooApi.quotesService,
                     categoriesViewModel, liveFleetsViewModel,

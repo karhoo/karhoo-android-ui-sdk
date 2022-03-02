@@ -14,8 +14,8 @@ import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
@@ -36,7 +36,7 @@ private const val MAX_ACCEPTABLE_QTA = 20
 class KarhooAvailability(private val quotesService: QuotesService,
                          private val categoriesViewModel: CategoriesViewModel,
                          private val liveFleetsViewModel: LiveFleetsViewModel,
-                         private val bookingStatusStateViewModel: BookingStatusStateViewModel,
+                         private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
                          lifecycleOwner: LifecycleOwner,
                          private val locale: Locale? = null)
     : AvailabilityProvider {
@@ -56,16 +56,16 @@ class KarhooAvailability(private val quotesService: QuotesService,
     var quoteListValidityListener: QuotesListMVP.QuoteValidityListener? = null
 
     init {
-        bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, observer)
+        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, observer)
     }
 
 
     override fun cleanup() {
         cancelVehicleCallback()
-        bookingStatusStateViewModel.viewStates().removeObserver(observer)
+        journeyDetailsStateViewModel.viewStates().removeObserver(observer)
     }
 
-    override fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingInfo> {
+    override fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails> {
         return observer
     }
 
@@ -75,17 +75,17 @@ class KarhooAvailability(private val quotesService: QuotesService,
     }
 
     @Suppress("NestedBlockDepth")
-    private fun requestVehicleAvailability(bookingInfo: BookingInfo?) {
+    private fun requestVehicleAvailability(journeyDetails: JourneyDetails?) {
         cancelVehicleCallback()
-        bookingInfo?.pickup?.let { bookingStatusPickup ->
-            bookingInfo.destination?.let { bookingStatusDestination ->
+        journeyDetails?.pickup?.let { bookingStatusPickup ->
+            journeyDetails.destination?.let { bookingStatusDestination ->
                 vehiclesObserver = quotesCallback()
                 vehiclesObserver?.let { observer ->
                     vehiclesObservable = quotesService
                             .quotes(QuotesSearch(
                                     origin = bookingStatusPickup,
                                     destination = bookingStatusDestination,
-                                    dateScheduled = bookingInfo.date?.toDate()),
+                                    dateScheduled = journeyDetails.date?.toDate()),
                                     locale.toNormalizedLocale())
                             .observable().apply { subscribe(observer) }
                 }
@@ -139,13 +139,13 @@ class KarhooAvailability(private val quotesService: QuotesService,
         this.analytics = analytics
     }
 
-    private fun createObservable() = androidx.lifecycle.Observer<BookingInfo> { bookingStatus ->
+    private fun createObservable() = androidx.lifecycle.Observer<JourneyDetails> { journeyDetails ->
         cancelVehicleCallback()
-        if (bookingStatus != null && bookingStatus.destination == null
+        if (journeyDetails != null && journeyDetails.destination == null
                 && categoryViewModels.isNotEmpty()) {
             updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
         } else {
-            requestVehicleAvailability(bookingStatus)
+            requestVehicleAvailability(journeyDetails)
         }
     }
 
@@ -179,7 +179,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
     }
 
     private fun clearDestination() {
-        bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
+        journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
                 .DestinationAddressEvent(null))
     }
 
@@ -240,7 +240,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
     }
 
     private fun currentAvailableQuotes() {
-        if (bookingStatusStateViewModel.currentState.date != null) {
+        if (journeyDetailsStateViewModel.currentState.date != null) {
             setAvailableCategories(handlePrebookCategories())
         } else {
             setAvailableCategories(handleAsapCategories())

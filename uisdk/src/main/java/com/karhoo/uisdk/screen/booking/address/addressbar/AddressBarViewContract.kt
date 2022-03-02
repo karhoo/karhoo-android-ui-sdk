@@ -6,7 +6,7 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.base.address.AddressType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import org.joda.time.DateTime
 
@@ -21,7 +21,7 @@ interface AddressBarViewContract {
 
         fun bindTripToView(tripDetails: TripInfo?)
 
-        fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel)
+        fun watchJourneyDetailsState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
@@ -43,7 +43,7 @@ interface AddressBarViewContract {
 
         data class BookingDateEvent(val dateTime: DateTime?) : AddressBarEvent()
 
-        object ResetBookingStatusEvent : AddressBarEvent()
+        object ResetJourneyDetailsEvent : AddressBarEvent()
 
         object FlipAddressesEvent : AddressBarEvent()
 

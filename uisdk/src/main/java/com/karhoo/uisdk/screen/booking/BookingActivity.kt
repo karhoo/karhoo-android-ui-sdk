@@ -34,8 +34,8 @@ import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfi
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
@@ -50,14 +50,13 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationContract.Actions {
 
-    private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy { ViewModelProvider(this).get(BookingStatusStateViewModel::class.java) }
+    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy { ViewModelProvider(this).get(JourneyDetailsStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
     private val bookingQuotesViewModel: BookingQuotesViewModel by lazy { ViewModelProvider(this).get(BookingQuotesViewModel::class.java) }
 
@@ -92,7 +91,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             supportActionBar?.let { navigationDrawerWidget.setToggleToolbar(toolbar, it) }
         }
 
-        bookingMapWidget.onCreate(savedInstanceState, this, bookingStatusStateViewModel,
+        bookingMapWidget.onCreate(savedInstanceState, this, journeyDetailsStateViewModel,
                                   tripDetails?.destination == null, journeyInfo != null)
 
         bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
@@ -138,7 +137,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         extras?.let { extras ->
             tripDetails = extras.get(Builder.EXTRA_TRIP_DETAILS) as TripInfo?
             tripDetails?.let {
-                bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
+                journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                             .AsapBookingEvent(it.origin?.toSimpleLocationInfo(), it.destination?.toSimpleLocationInfo()))
             }
             outboundTripId = extras.getString(Builder.EXTRA_OUTBOUND_TRIP_ID, null)
@@ -156,7 +155,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViews() {
-        addressBarWidget.watchBookingStatusState(this@BookingActivity, bookingStatusStateViewModel)
+        addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
         tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
                                                        bookingRequestStateViewModel)
     }
@@ -168,7 +167,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        quotesListWidget.bindViewToData(this@BookingActivity, bookingStatusStateViewModel, bookingQuotesViewModel)
+        quotesListWidget.bindViewToData(this@BookingActivity, journeyDetailsStateViewModel, bookingQuotesViewModel)
         addressBarWidget.setJourneyInfo(journeyInfo)
 
         locateMeButton.setOnClickListener {
@@ -210,7 +209,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         navigationWidget.setNavigationItemSelectedListener(navigationDrawerWidget)
 
-        bookingStatusStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
+        journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         bookingRequestStateViewModel.viewActions().observe(this, bindToBookingRequestOutputs())
         bookingQuotesViewModel.viewActions().observe(this, bindToBookingQuoteOutputs())
     }
@@ -256,9 +255,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)
-                            .bookingInfo(BookingInfo(bookingStatusStateViewModel.currentState.pickup,
-                                                     bookingStatusStateViewModel.currentState.destination,
-                                                     bookingStatusStateViewModel.currentState.date))
+                            .journeyDetails(JourneyDetails(journeyDetailsStateViewModel.currentState.pickup,
+                                                     journeyDetailsStateViewModel.currentState.destination,
+                                                     journeyDetailsStateViewModel.currentState.date))
 
                     passengerDetails?.let {
                         builder.passengerDetails(it)
@@ -313,8 +312,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             return
         }
         // if destination set we clear it, close the quotes list and return
-        if (bookingStatusStateViewModel.currentState.destination != null) {
-            bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent
+        if (journeyDetailsStateViewModel.currentState.destination != null) {
+            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
                                                         .DestinationAddressEvent(null))
             return
         }
@@ -343,14 +342,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                                                  .BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
         if (tripInfo != null) {
-            bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
 
             val prebookConfirmationView = PrebookConfirmationView(this).apply {
                 bind(quoteType, tripInfo)
             }
             prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
                 override fun finishedBooking() {
-                    bookingStatusStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 }
             }
         }
