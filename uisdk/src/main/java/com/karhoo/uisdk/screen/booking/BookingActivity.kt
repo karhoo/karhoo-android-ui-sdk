@@ -255,7 +255,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             .quote(actions.quote)
                             .outboundTripId(outboundTripId)
                             .bookingMetadata(bookingMetadata)
-                            .bookingInfo(JourneyDetails(journeyDetailsStateViewModel.currentState.pickup,
+                            .journeyDetails(JourneyDetails(journeyDetailsStateViewModel.currentState.pickup,
                                                      journeyDetailsStateViewModel.currentState.destination,
                                                      journeyDetailsStateViewModel.currentState.date))
 

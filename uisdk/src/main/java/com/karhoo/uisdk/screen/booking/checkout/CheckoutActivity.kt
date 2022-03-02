@@ -129,11 +129,11 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
-         * By passing booking status into the Booking activity it will automatically prefill the origin
+         * By passing journey details into the Booking activity it will automatically prefill the origin
          * destination and date of the desired trip. This will only use the details available inside
-         * the BookingInfo object.
+         * the JourneyDetails object.
          */
-        fun bookingInfo(journeyDetails: JourneyDetails): Builder {
+        fun journeyDetails(journeyDetails: JourneyDetails): Builder {
             extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, journeyDetails)
             return this
         }
