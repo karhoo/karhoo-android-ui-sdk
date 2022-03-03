@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <!--  Locale  -->
+    <!-- Locale -->
     <string name="karhoo_uisdk_locale">en_GB</string>
     <string name="kh_uisdk_about">About</string>
     <string name="kh_uisdk_add_card">ADD CARD</string>
@@ -12,7 +12,7 @@
     <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
     <string name="kh_uisdk_address_picker_pickup">Finding address</string>
-    <!--  Categories  -->
+    <!-- Categories -->
     <string name="kh_uisdk_all_category">All</string>
     <string name="kh_uisdk_allocated">Your trip has now been allocated to a driver</string>
     <string name="kh_uisdk_allocating_trip_one">Please wait whilst you\'re allocated a driver</string>
@@ -27,23 +27,23 @@
     <string name="kh_uisdk_baggage_max">%d luggages max</string>
     <string name="kh_uisdk_base">Base Fare</string>
     <string name="kh_uisdk_book_now">PAY AND BOOK</string>
-    <!--  Booking Confirmation  -->
+    <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Add</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Payment method</string>
-    <!--  Booking Checkout Component  -->
+    <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Back</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
     <string name="kh_uisdk_booking_confirmation">Booking Confirmed</string>
     <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
     <string name="kh_uisdk_booking_error">There seems to be an issue booking your trip. Please try again</string>
-    <!--  Trip Allocation  -->
+    <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Booking Failed</string>
     <string name="kh_uisdk_booking_failed_body">Sorry, demand is high. %1$s has no available drivers.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, demand is high. The selected fleet has no available drivers.</string>
-    <!--  Terms and Conditions  -->
+    <!-- Terms and Conditions -->
     <string name="kh_uisdk_booking_terms">By making a booking you agree to the %1$s | %2$s and %3$s %4$s | %3$s %5$s.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Terms of Use</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">By creating your Karhoo account, you’re agreeing to Karhoo’s</string>
@@ -64,14 +64,14 @@
     <string name="kh_uisdk_car_description">Car: %1$s</string>
     <string name="kh_uisdk_card">Card</string>
     <string name="kh_uisdk_card_charged">Card Charged</string>
-    <!--  Central Lat Lng Charring X  -->
+    <!-- Central Lat Lng Charring X -->
     <string name="kh_uisdk_central_lat">51.5073</string>
     <string name="kh_uisdk_central_long">0.1276</string>
     <string name="kh_uisdk_change">CHANGE</string>
     <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
     <string name="kh_uisdk_code">Code</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your journey</string>
-    <!--  Trip states  -->
+    <!-- Trip states -->
     <string name="kh_uisdk_confirmed">Your trip has been confirmed with %s</string>
     <string name="kh_uisdk_contact">CONTACT</string>
     <string name="kh_uisdk_contact_driver">Contact Driver</string>
@@ -84,7 +84,7 @@
     <string name="kh_uisdk_date">Date</string>
     <string name="kh_uisdk_date_label">Date:</string>
     <string name="kh_uisdk_destination_book_error">You must select a destination before booking a ride</string>
-    <!--  Errors  -->
+    <!-- Errors -->
     <string name="kh_uisdk_destination_price_error">A destination must be selected before price can be shown</string>
     <string name="kh_uisdk_difficulties_cancelling_message">We are experiencing issues cancelling your ride. Please contact the fleet.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Difficulties Cancelling</string>
@@ -101,9 +101,9 @@
     <string name="kh_uisdk_email_report_issue_message">Please use the space below to report a specific issue with your ride.</string>
     <string name="kh_uisdk_enter_destination">Enter destination</string>
     <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
-    <!--  Address Picker  -->
+    <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
-    <!--  Address Picker  -->
+    <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Erase address</string>
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
@@ -115,24 +115,24 @@
     <string name="kh_uisdk_extra_capabilities">+%d</string>
     <string name="kh_uisdk_failed_trip">We have failed to book your trip</string>
     <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/en-us</string>
-    <!--  Alerts  -->
+    <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">Your final fare might be affected\n by tips, tolls, taxes and other charges.</string>
-    <!--  Support  -->
+    <!-- Support -->
     <string name="kh_uisdk_feedback">Feedback</string>
     <string name="kh_uisdk_feedback_email">support@karhoo.com</string>
     <string name="kh_uisdk_feedback_submitted">Thank you for submitting your feedback</string>
-    <!--  FEEDBACK  -->
+    <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
-    <!--  Fare type  -->
+    <!-- Fare type -->
     <string name="kh_uisdk_fixed_fare">Fixed</string>
     <string name="kh_uisdk_fleet">Fleet</string>
-    <!--  Email  -->
-    <string name="kh_uisdk_fleet_recommendation_body">Thank you for recommending a fleet in your area. To get coverage in your area as fast as possible, please provide us with area and the name of transportation company.\n Area:\n Fleet name:</string>
+    <!-- Email -->
+    <string name="kh_uisdk_fleet_recommendation_body">Thank you for recommending a fleet in your area. To get coverage in your area as fast as possible, please provide us with area and the name of transportation company.\n                    Area:\n                    Fleet name:</string>
     <string name="kh_uisdk_fleet_recommendation_subject">Fleet recommendation in my area</string>
-    <!--  Airports  -->
+    <!-- Airports -->
     <string name="kh_uisdk_flight_number">Flight Number (Optional)</string>
     <string name="kh_uisdk_flight_tracking">Flight tracking</string>
     <string name="kh_uisdk_getting_trip_status">Retrieving the status of your ride…</string>
@@ -152,7 +152,7 @@
     <string name="kh_uisdk_invalid_password">(min 8 chars, 1 uppercase, 1 number)</string>
     <string name="kh_uisdk_invalid_phone_number">Invalid phone number</string>
     <string name="kh_uisdk_invalid_prebook_time_error">Prebook time must be at least one hour away from current time.</string>
-    <!--  General errors, K0xxx  -->
+    <!-- General errors, K0xxx -->
     <string name="kh_uisdk_K0001">General request error.</string>
     <string name="kh_uisdk_K0002">Invalid request payload</string>
     <string name="kh_uisdk_K0003">Could not read authorisation token</string>
@@ -160,7 +160,7 @@
     <string name="kh_uisdk_K0005">Missing required role for this request</string>
     <string name="kh_uisdk_K0006">Rate limit exceeded</string>
     <string name="kh_uisdk_K0007">Circuit breaker has triggered for this route</string>
-    <!--  User errors, K1xxx  -->
+    <!-- User errors, K1xxx -->
     <string name="kh_uisdk_K1001">Could not register user</string>
     <string name="kh_uisdk_K1002">Could not register user (user already exists)</string>
     <string name="kh_uisdk_K1003">Could not register user (invalid request)</string>
@@ -168,13 +168,13 @@
     <string name="kh_uisdk_K1005">Could not get user details (invalid token)</string>
     <string name="kh_uisdk_K1006">Could not get user details (user does not exist)</string>
     <string name="kh_uisdk_K1999">User has been created but not been authorized yet, we will get in touch once enabled.</string>
-    <!--  Locations errors, K2xxx  -->
+    <!-- Locations errors, K2xxx -->
     <string name="kh_uisdk_K2001">Could not get address</string>
-    <!--  Quotes errors, K3xxx  -->
+    <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Could not get estimates</string>
     <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
     <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
-    <!--  Bookings errors, K4xxx  -->
+    <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Could not book trip</string>
     <string name="kh_uisdk_K4002">Could not book trip - invalid request payload (require at least 1 set of passenger-details)</string>
     <string name="kh_uisdk_K4003">Could not book trip (could not find specified quote)</string>
@@ -183,7 +183,7 @@
     <string name="kh_uisdk_K4006">Could not book trip (payment pre-authorisation failed)</string>
     <string name="kh_uisdk_K4007">Could not cancel trip</string>
     <string name="kh_uisdk_K4008">Could not cancel trip (could not find specified trip)</string>
-    <string name="kh_uisdk_K4009">Could not cancel trip (permission denied)</string>
+    <string name="kh_uisdk_K4009">Could not cancel trip (permission  denied)</string>
     <string name="kh_uisdk_K4010">Could not cancel trip (already cancelled)</string>
     <string name="kh_uisdk_K4011">Could not get trip</string>
     <string name="kh_uisdk_K4012">Could not get trip (could not find specified trip)</string>
@@ -193,23 +193,23 @@
     <string name="kh_uisdk_K4018">Could not book as quote is no longer available</string>
     <string name="kh_uisdk_K4020">Could not book trip with the selected DMS</string>
     <string name="kh_uisdk_K4025">Quote price increased whilst booking.</string>
-    <!--  Availability errors, K5xxx  -->
+    <!-- Availability errors, K5xxx -->
     <string name="kh_uisdk_K5001">Could not get estimates</string>
     <string name="kh_uisdk_K5002">Could not get availability (no availability found within requested area)</string>
     <string name="kh_uisdk_K5003">Could not get availability (no categories found within requested area)</string>
-    <!--  Authentication errors K6xxx  -->
+    <!-- Authentication errors K6xxx -->
     <string name="kh_uisdk_K6001">Could not authenticate</string>
     <string name="kh_uisdk_karhoo_general_terms_url">https://cdn.karhoo.com/s/mobile/sdk/terms/general-terms-of-use-sdk.en-gb.html</string>
     <string name="kh_uisdk_karhoo_id">Karhoo ID</string>
     <string name="kh_uisdk_karhoo_privacy_policy">Privacy Policy</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
-    <!--  Payment Errors  -->
+    <!-- Payment Errors -->
     <string name="kh_uisdk_KP001">Failed to find customer in braintree</string>
     <string name="kh_uisdk_KP002">Failed to initialise client for organisation</string>
     <string name="kh_uisdk_KP003">Failed to find default payment method</string>
     <string name="kh_uisdk_KP004">Failed to find default credit card</string>
     <string name="kh_uisdk_KP005">Failed to generate nonce</string>
-    <string name="kh_uisdk_label_and"> and to the</string>
+    <string name="kh_uisdk_label_and"> and to the</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Cancellation Policy</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Terms and Conditions</string>
     <string name="kh_uisdk_last_name_hint">Last name</string>
@@ -223,14 +223,15 @@
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Please enable Location Services on your device to enjoy the full experience</string>
     <string name="kh_uisdk_location_permission_denied">The location permission has been denied, please allow it so we can locate you</string>
-    <!--  Shared Preferences  -->
+    <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
-    <!--  Navigation Drawer  -->
+    <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Sign In</string>
-    <!--  Loyalty  -->
+    <!-- Loyalty -->
     <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s POINTS</string>
     <string name="kh_uisdk_loyalty_info">Your card is needed to authorise this transaction in case the final price of the ride exceeds your points balance. Your account won\'t be charged if your loyalty points cover the entire price.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Your points balance is insufficient</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">You are using %1$s points</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyalty points will be added to your account balance at the end of the ride</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">You are not allowed to burn points</string>
@@ -242,7 +243,6 @@
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can enable your loyalty points to pay for the ride</string>
     <string name="kh_uisdk_loyalty_use_points_on_subtitle">Pay %s %s with %s loyalty points</string>
     <string name="kh_uisdk_loyalty_use_points_title">Use your points</string>
-    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Current loyalty mode is not eligible for pre-authorization</string>
     <string name="kh_uisdk_map_selector">Set pin location on map</string>
     <string name="kh_uisdk_meeting_point">Meeting Point</string>
     <string name="kh_uisdk_metered">Metered</string>
@@ -268,19 +268,19 @@
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>
     <string name="kh_uisdk_offer_expired_text">Please select a new quote to continue with your booking</string>
-    <!--  Dialogs  -->
+    <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">You must select an origin before booking a ride</string>
     <string name="kh_uisdk_P0001">Failed to retrieve UserID from token</string>
     <string name="kh_uisdk_P0002">Failed calling payment service</string>
     <string name="kh_uisdk_pass_length">At least 8 characters</string>
     <string name="kh_uisdk_pass_on_board">You’re on your way. Have a safe ride!</string>
-    <!--  Guest Checkout  -->
+    <!-- Guest Checkout -->
     <string name="kh_uisdk_passenger_details">Passenger Details</string>
     <string name="kh_uisdk_passengers_max">%d passengers max</string>
     <string name="kh_uisdk_password_hint">Password</string>
     <string name="kh_uisdk_past_rides_empty">You have not taken any rides yet. We can help you get from A to B.</string>
-    <!--  Adyen  -->
+    <!-- Adyen -->
     <string name="kh_uisdk_pay_button">Submit</string>
     <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
     <string name="kh_uisdk_payment_details">Payment Details</string>
@@ -291,21 +291,21 @@
     <string name="kh_uisdk_permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
     <string name="kh_uisdk_permission_required">In order to use the karhoo app please allow location permissions</string>
     <string name="kh_uisdk_permissions">PERMISSIONS</string>
-    <!--  Profile  -->
+    <!-- Profile -->
     <string name="kh_uisdk_phone_number_hint">Phone number</string>
     <string name="kh_uisdk_pickup_type_curbside">Curbside</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and Greet</string>
     <string name="kh_uisdk_pickup_type_standby">Standby</string>
     <string name="kh_uisdk_prebook_timezone_title">Booking will be made in local time</string>
     <string name="kh_uisdk_price">Price</string>
-    <!--  Booking Price View  -->
+    <!-- Booking Price View -->
     <string name="kh_uisdk_price_info_text_estimated">This fleet is a non-regulated taxi. The quote is an estimate based on the trip factors (distance, time, etc). Please refer to the fleet\'s Terms and Conditions for more information.</string>
     <string name="kh_uisdk_price_info_text_fixed">This fleet charges a flat fare. The final fare may be affected by extras (tolls, delay, etc), please check the fleet\'s Terms and Conditions.</string>
     <string name="kh_uisdk_price_info_text_metered">This fleet is a regulated metered taxi. The quote is an estimate based on the trip factors (distance, time, etc).</string>
     <string name="kh_uisdk_price_meet_and_greet">Meet and greet</string>
     <string name="kh_uisdk_privacy_policy_small">" Privacy Policy."</string>
     <string name="kh_uisdk_profile">Profile</string>
-    <!--  Qxxxx errors  -->
+    <!-- Qxxxx errors -->
     <string name="kh_uisdk_Q0001">Pick up and destination cannot be the same</string>
     <string name="kh_uisdk_question_four">How easy did you find using the app?</string>
     <string name="kh_uisdk_question_one">How happy were you with the selection of quotes for your trip (e.g. Fleets, Prices and ETAs)?</string>
@@ -317,15 +317,15 @@
     <string name="kh_uisdk_quote_cancellation_before_driver_departure">Free cancellation until driver is en route</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
-    <!--  Quote View Learn More  -->
+    <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Learn more</string>
     <string name="kh_uisdk_quoted_fare">Estimated Fare</string>
     <string name="kh_uisdk_rate_trip_label">How would you rate your trip?</string>
     <string name="kh_uisdk_rating_submitted">Thank you for submitting your rating.</string>
     <string name="kh_uisdk_rebook_ride">Rebook Ride</string>
-    <!--  Address  -->
+    <!-- Address -->
     <string name="kh_uisdk_recents_empty">No recent results</string>
-    <!--  Register  -->
+    <!-- Register -->
     <string name="kh_uisdk_register">REQUEST INVITE</string>
     <string name="kh_uisdk_register_check_box">I do not want to receive free rides, promos or offers.</string>
     <string name="kh_uisdk_report_issue">Report Issue</string>
@@ -333,14 +333,14 @@
     <string name="kh_uisdk_requested_invite">Thanks for your interest! We will email you when your account is activated.</string>
     <string name="kh_uisdk_results_empty">No results found</string>
     <string name="kh_uisdk_retrieving_dropoff">Getting dropoff location</string>
-    <!--  Current Trip  -->
+    <!-- Current Trip -->
     <string name="kh_uisdk_retrieving_pickup">Getting pickup location</string>
     <string name="kh_uisdk_retrieving_quotes">Retrieving Quotes</string>
     <string name="kh_uisdk_retry">Retry</string>
     <string name="kh_uisdk_ride_confirmed">Ride Confirmed</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
     <string name="kh_uisdk_ride_details">Ride Details</string>
-    <!--  trip info  -->
+    <!-- trip info -->
     <string name="kh_uisdk_ride_options">Ride Options</string>
     <string name="kh_uisdk_ride_state_arrived">Arrived</string>
     <string name="kh_uisdk_ride_state_cancelled">Cancelled</string>
@@ -350,7 +350,7 @@
     <string name="kh_uisdk_ride_state_failed">Failed</string>
     <string name="kh_uisdk_ride_state_pob">Passenger on board</string>
     <string name="kh_uisdk_ride_state_requested">Requested</string>
-    <!--  Completed trip  -->
+    <!-- Completed trip -->
     <string name="kh_uisdk_ride_summary">RIDE SUMMARY</string>
     <string name="kh_uisdk_rides">Rides</string>
     <string name="kh_uisdk_saloon">Saloon</string>
@@ -358,12 +358,12 @@
     <string name="kh_uisdk_schedule_ride">Schedule the ride</string>
     <string name="kh_uisdk_settings">Settings</string>
     <string name="kh_uisdk_sign_in">Sign in</string>
-    <!--  Login  -->
+    <!-- Login -->
     <string name="kh_uisdk_sign_in_but">SIGN IN</string>
     <string name="kh_uisdk_sign_out">Sign out</string>
     <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
     <string name="kh_uisdk_sorter_cheapest">PRICE</string>
-    <!--  Quotes List  -->
+    <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">ETA</string>
     <string name="kh_uisdk_star_excellent">Excellent</string>
     <string name="kh_uisdk_star_fair">Fair</string>
@@ -376,7 +376,7 @@
     <string name="kh_uisdk_supplier_email">suppliers@karhoo.com</string>
     <string name="kh_uisdk_support_email">support@karhoo.com</string>
     <string name="kh_uisdk_support_report_issue">Report Issue</string>
-    <!--  Address Picker  -->
+    <!-- Address Picker -->
     <string name="kh_uisdk_switch_departure_destination">Switch departure and destination address</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_tell_us_more">Please, Tell us more about your Trip</string>
@@ -384,7 +384,7 @@
     <string name="kh_uisdk_terms_conditions">" Terms and Conditions"</string>
     <string name="kh_uisdk_time_label">Time:</string>
     <string name="kh_uisdk_tip_10">Tip (10%)</string>
-    <!--  Activity Titles  -->
+    <!-- Activity Titles -->
     <string name="kh_uisdk_title_activity_address">Address</string>
     <string name="kh_uisdk_title_activity_airport">Airport Pickup</string>
     <string name="kh_uisdk_title_activity_intent_chooser_send_email">Send Email</string>
@@ -393,7 +393,7 @@
     <string name="kh_uisdk_title_activity_trip">Trip</string>
     <string name="kh_uisdk_title_dispatch_cancelled">Dispatch Cancelled</string>
     <string name="kh_uisdk_title_page_past">Past</string>
-    <!--  Rides  -->
+    <!-- Rides -->
     <string name="kh_uisdk_title_page_upcoming">Upcoming</string>
     <string name="kh_uisdk_title_past_rides_empty">No past rides</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">You have no upcoming rides</string>
@@ -408,8 +408,8 @@
     <string name="kh_uisdk_wheelchair">Wheelchair</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>
-    <!--  Adyen default "Pay" button  -->
+    <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pre-Authorize</string>
-    <!--  Adyen default "Pay %s" button for checkout  -->
+    <!-- Adyen default "Pay %s" button for checkout -->
     <string name="pay_button_with_value">Pre-authorise %s</string>
 </resources>
