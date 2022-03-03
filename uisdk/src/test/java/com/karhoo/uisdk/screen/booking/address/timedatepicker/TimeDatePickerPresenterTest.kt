@@ -317,9 +317,9 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `when selecting to edit a previously selected date and time`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingInfo)
-        whenever(bookingInfo.pickup).thenReturn(LOCATION_INFO)
-        whenever(bookingInfo.date).thenReturn(DateTime(1, 1, 1, 10, 11))
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetails.date).thenReturn(DateTime(1, 1, 1, 10, 11))
 
         timePickerPresenter.dateSelected(1, 1, 1)
         timePickerPresenter.timeSelected(10, 11)
