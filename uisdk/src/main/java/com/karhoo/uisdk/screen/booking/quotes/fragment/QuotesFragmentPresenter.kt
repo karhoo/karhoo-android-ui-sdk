@@ -1,16 +1,18 @@
-package com.karhoo.uisdk.screen.booking.quotes
+package com.karhoo.uisdk.screen.booking.quotes.fragment
 
 import android.graphics.Insets
 import android.os.Build
 import android.util.DisplayMetrics
 import android.view.WindowInsets
 import android.view.WindowManager
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
+import androidx.lifecycle.Observer
 
 internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, private val analytics: Analytics?) :
     BasePresenter<QuotesFragmentContract.View>(),
@@ -48,7 +50,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     override fun showMore() {
         isExpanded = !isExpanded
-        view?.togglePanelState()
         view?.setChevronState(isExpanded)
     }
 
@@ -108,6 +109,13 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
                 view?.showList(false)
                 showNoAvailability()
             }
+        }
+    }
+
+    override fun watchQuotes() = Observer<List<Quote>> { quotes ->
+        quotes?.let {
+            dataModel?.quotes = it
+            updateList()
         }
     }
 

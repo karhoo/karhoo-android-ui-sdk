@@ -1,6 +1,8 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.QuotesListViewMock
 import org.junit.Assert
 import org.junit.Before

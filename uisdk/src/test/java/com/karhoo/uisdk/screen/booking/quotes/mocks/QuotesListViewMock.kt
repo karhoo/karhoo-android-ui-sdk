@@ -6,8 +6,8 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import com.karhoo.uisdk.screen.booking.quotes.QuoteListViewDataModel
-import com.karhoo.uisdk.screen.booking.quotes.QuotesFragmentContract
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuoteListViewDataModel
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
 import com.nhaarman.mockitokotlin2.mock
 
 class QuotesListViewMock: QuotesFragmentContract.View {

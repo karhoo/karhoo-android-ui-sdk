@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes
+package com.karhoo.uisdk.screen.booking.quotes.fragment
 
 import android.content.res.Resources
 import android.view.WindowManager
@@ -8,6 +8,7 @@ import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
+import androidx.lifecycle.Observer
 
 interface QuotesFragmentContract {
 
@@ -20,8 +21,6 @@ interface QuotesFragmentContract {
         fun updateList(quoteList: List<Quote>)
 
         fun setSortMethod(sortMethod: SortMethod)
-
-        fun togglePanelState()
 
         fun setChevronState(isExpanded: Boolean)
 
@@ -55,6 +54,8 @@ interface QuotesFragmentContract {
         fun calculateListHeight(windowManager: WindowManager, percentage: Int): Int
 
         fun setData(data: QuoteListViewDataModel)
+
+        fun watchQuotes(): Observer<List<Quote>>
     }
 
     interface QuoteListDelegate {
