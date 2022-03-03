@@ -142,7 +142,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     }
 
     override fun getPreviousSelectedDateTime(): DateTime? {
-        return bookingStatusStateViewModel?.currentState?.date
+        return journeyDetailsStateViewModel?.currentState?.date
     }
 
     private companion object {
