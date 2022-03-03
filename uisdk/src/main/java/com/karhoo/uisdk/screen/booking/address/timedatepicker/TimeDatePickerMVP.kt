@@ -19,6 +19,7 @@ interface TimeDatePickerMVP {
 
         fun clearScheduledTimeClicked()
 
+        fun getPreviousSelectedDateTime(): DateTime?
     }
 
     interface View {
