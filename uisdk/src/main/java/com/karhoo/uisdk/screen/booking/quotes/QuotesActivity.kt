@@ -1,12 +1,13 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
-import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragment
@@ -23,6 +24,8 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
         setSupportActionBar(checkoutToolbar)
         checkoutToolbar.setNavigationOnClickListener {
+            setResult(QUOTES_CANCELLED)
+
             onBackPressed()
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -66,13 +69,19 @@ class QuotesActivity : BaseActivity(), WebViewActions {
          * destination and date of the desired trip. This will only use the details available inside
          * the BookingInfo object.
          */
-        fun bookingInfo(bookingInfo: BookingInfo): Builder {
-            extrasBundle.putParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY, bookingInfo)
+        fun bookingInfo(bookingInfo: BookingInfo?): Builder {
+            extrasBundle.putParcelable(QUOTES_BOOKING_INFO_KEY, bookingInfo)
             return this
         }
 
+        /**
+         * Returns a launchable Intent to the configured quotes activity with the given
+         * builder parameters in the extras bundle
+         */
+        fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.quotes).apply {
+            putExtras(extrasBundle)
+        }
     }
-
 
     override fun showWebView(url: String?) {
         //to be completed
@@ -80,7 +89,10 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
     companion object {
         const val QUOTES_BOOKING_INFO_KEY = "QUOTES_BOOKING_INFO_KEY"
-        const val QUOTES_BOOKING_INFO_REQUEST_NUMBER = 20
+        const val QUOTES_SELECTED_QUOTE_KEY = "QUOTES_SELECTED_QUOTE_KEY"
+        const val QUOTES_RESULT_OK = 21
+        const val QUOTES_INFO_REQUEST_NUMBER = 20
+        const val QUOTES_CANCELLED = 22
     }
 
 }

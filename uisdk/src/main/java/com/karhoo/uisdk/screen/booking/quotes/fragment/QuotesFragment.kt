@@ -36,6 +36,8 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RESULT_OK
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
@@ -205,7 +207,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     private fun watchBookingQuotesStatus(): Observer<in QuoteListStatus> {
         return Observer { quoteListStatus ->
-            quoteListStatus?.selectedQuote
+            quoteListStatus.selectedQuote?.let { quote ->
+                val bundle = Bundle();
+                bundle.putParcelable(QUOTES_SELECTED_QUOTE_KEY, quote)
+
+                val intent = Intent()
+                intent.putExtras(bundle)
+                activity?.setResult(QUOTES_RESULT_OK, intent)
+                activity?.finish()
+            }
         }
     }
 

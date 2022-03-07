@@ -22,8 +22,6 @@ class QuotesListViewMock: QuotesFragmentContract.View {
 
     override fun setSortMethod(sortMethod: SortMethod) { /** do nothing **/ }
 
-    override fun togglePanelState() { /** do nothing **/ }
-
     override fun setChevronState(isExpanded: Boolean) { /** do nothing **/ }
 
     override fun prebook(isPrebook: Boolean) { /** do nothing **/ }
