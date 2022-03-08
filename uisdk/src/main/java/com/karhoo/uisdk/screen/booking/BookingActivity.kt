@@ -383,7 +383,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
         journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
-        bookingMapWidget.zoomMapToOriginAndDestination()
     }
 
     override fun dismissSnackbar() {
