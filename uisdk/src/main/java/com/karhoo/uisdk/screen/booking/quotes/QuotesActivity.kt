@@ -90,6 +90,10 @@ class QuotesActivity : BaseActivity(), WebViewActions {
     companion object {
         const val QUOTES_BOOKING_INFO_KEY = "QUOTES_BOOKING_INFO_KEY"
         const val QUOTES_SELECTED_QUOTE_KEY = "QUOTES_SELECTED_QUOTE_KEY"
+        const val QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP = "QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP"
+        const val QUOTES_PICKUP_ADDRESS = "QUOTES_PICKUP_ADDRESS"
+        const val QUOTES_DROPOFF_ADDRESS = "QUOTES_DROPOFF_ADDRESS"
+        const val QUOTES_SELECTED_DATE = "QUOTES_SELECTED_DATE"
         const val QUOTES_RESULT_OK = 21
         const val QUOTES_INFO_REQUEST_NUMBER = 20
         const val QUOTES_CANCELLED = 22

@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -54,6 +55,7 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidg
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
+import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationContract.Actions {
@@ -70,7 +72,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var loyaltyInfo: LoyaltyInfo? = null
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
-    private var currentValidityDeadlineTimestamp: Long? = null
 
     private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
@@ -248,7 +249,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
                 }
                 is BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp -> {
-                    this.currentValidityDeadlineTimestamp = actions.timestamp
                 }
             }
         }
@@ -275,7 +275,18 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 }
             }
         } else if (resultCode == QuotesActivity.QUOTES_RESULT_OK && data != null) {
-            startCheckoutActivity(data.getParcelableExtra(QUOTES_SELECTED_QUOTE_KEY))
+            val pickup = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+            val destination = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+            
+            pickup?.let {
+                addressBarWidget.setPickup(pickup, -1)
+            }
+
+            destination?.let {
+                addressBarWidget.setDestination(destination, -1)
+            }
+
+            startCheckoutActivity(data)
         } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED) {
             startQuoteListActivity()
         }
@@ -369,8 +380,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun startCheckoutActivity(quote: Quote?) {
-        this.quote = quote
+    private fun startCheckoutActivity(data: Intent?) {
+        this.quote = data?.getParcelableExtra(QUOTES_SELECTED_QUOTE_KEY)
 
         this.quote?.let { quote ->
             val builder = CheckoutActivity.Builder()
@@ -379,9 +390,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 .bookingMetadata(bookingMetadata)
                 .bookingInfo(
                     BookingInfo(
-                        bookingStatusStateViewModel.currentState.pickup,
-                        bookingStatusStateViewModel.currentState.destination,
-                        bookingStatusStateViewModel.currentState.date
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: bookingStatusStateViewModel.currentState.pickup,
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: bookingStatusStateViewModel.currentState.destination,
+                        data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime ?: bookingStatusStateViewModel.currentState.date
                     )
                 )
 
@@ -397,8 +408,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 builder.loyaltyInfo(it)
             }
 
-            currentValidityDeadlineTimestamp?.let {
-                builder.validityDeadlineTimestamp(it)
+            val validityTimeStamp = data?.getLongExtra(
+                QuotesActivity.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
+            )
+
+            validityTimeStamp?.let {
+                builder.validityDeadlineTimestamp(
+                    validityTimeStamp
+                )
             }
 
             startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)

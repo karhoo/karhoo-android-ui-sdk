@@ -36,8 +36,12 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DROPOFF_ADDRESS
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RESULT_OK
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
@@ -69,6 +73,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
+    private var currentValidityDeadlineTimestamp: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -210,6 +215,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             quoteListStatus.selectedQuote?.let { quote ->
                 val bundle = Bundle();
                 bundle.putParcelable(QUOTES_SELECTED_QUOTE_KEY, quote)
+                bundle.putParcelable(QUOTES_PICKUP_ADDRESS, dataModel?.bookingInfo?.pickup)
+                bundle.putParcelable(QUOTES_DROPOFF_ADDRESS, dataModel?.bookingInfo?.destination)
+                bundle.putSerializable(QUOTES_SELECTED_DATE, bookingStatusStateViewModel.currentState.date)
+                bundle.putLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, currentValidityDeadlineTimestamp ?: 0)
 
                 val intent = Intent()
                 intent.putExtras(bundle)
@@ -237,7 +246,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 object : QuotesFragmentContract
                 .QuoteValidityListener {
                     override fun isValidUntil(timestamp: Long) {
-                        // to be filled
+                        currentValidityDeadlineTimestamp = timestamp
                     }
                 }
         }
@@ -255,8 +264,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
-                AddressCodes.PICKUP,
+                AddressCodes.PICKUP -> {
+                    dataModel?.bookingInfo?.pickup = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
+                    addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                }
                 AddressCodes.DESTINATION -> {
+                    dataModel?.bookingInfo?.destination = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
