@@ -129,6 +129,7 @@ internal class CheckoutFragment : Fragment() {
                                 titleResId = R.string.kh_uisdk_offer_expired,
                                 messageResId = R.string.kh_uisdk_offer_expired_text,
                                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
                                     this@CheckoutFragment.activity?.finish()
                                 })
 
