@@ -8,6 +8,7 @@ import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
@@ -34,6 +35,8 @@ object KarhooUISDK {
         var rideDetail: Class<*> = RideDetailActivity::class.java
 
         var feedback: Class<*> = FeedbackActivity::class.java
+
+        var quotes: Class<*> = QuotesActivity::class.java
 
         internal var countryPicker: Class<*> = CountryPickerActivity::class.java
     }

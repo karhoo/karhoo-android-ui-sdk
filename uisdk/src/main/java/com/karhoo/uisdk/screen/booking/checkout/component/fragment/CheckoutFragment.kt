@@ -17,6 +17,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_CANCELLED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
@@ -174,6 +175,7 @@ internal class CheckoutFragment : Fragment() {
 
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
+            activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
             activity?.finish()
         }
     }
