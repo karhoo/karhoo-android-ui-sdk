@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/uisdk_quote_list_item_background"
+    android:background="@drawable/kh_uisdk_quote_list_item_background"
     android:orientation="vertical"
     android:padding="@dimen/kh_uisdk_spacing_none"
     android:layout_marginBottom="@dimen/kh_uisdk_spacing_small">
@@ -91,7 +91,7 @@
                         android:id="@+id/detailsButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/uisdk_quote_list_item_details_background"
+                        android:background="@drawable/kh_uisdk_quote_list_item_details_background"
                         android:textColor="@color/white"
                         android:layout_weight="0.3"
                         android:paddingStart="@dimen/kh_uisdk_spacing_small"
@@ -176,7 +176,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@drawable/uisdk_quote_list_item_review_background"
+            android:background="@drawable/kh_uisdk_quote_list_item_review_background"
             android:padding="@dimen/kh_uisdk_spacing_xsmall"
             >
 

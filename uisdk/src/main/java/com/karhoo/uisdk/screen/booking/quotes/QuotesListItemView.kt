@@ -66,15 +66,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setCapacity(vehicleDetails.vehicle)
         setRating(vehicleDetails.fleet.rating)
-        setDetailsButton()
+        detailsButton.visibility = View.INVISIBLE
 
         tag = vehicleDetails
 
         setOnClickListener { v -> itemClickListener.onRecyclerItemClicked(v, listPosition, vehicleDetails) }
-    }
-
-    private fun setDetailsButton() {
-        detailsButton.visibility = View.INVISIBLE
     }
 
     private fun setRating(rating: FleetRating?) {
