@@ -66,7 +66,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     }
 
     private fun checkBookingInfo() {
-        dataModel?.bookingInfo?.let {
+        dataModel?.journeyDetails?.let {
             isPrebook = it.date != null
             hasDestination = it.destination != null
 

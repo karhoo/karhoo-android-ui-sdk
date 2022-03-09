@@ -387,11 +387,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 .quote(quote)
                 .outboundTripId(outboundTripId)
                 .bookingMetadata(bookingMetadata)
-                .bookingInfo(
-                    BookingInfo(
-                        data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: bookingStatusStateViewModel.currentState.pickup,
-                        data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: bookingStatusStateViewModel.currentState.destination,
-                        data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime ?: bookingStatusStateViewModel.currentState.date
+                .journeyDetails(
+                    JourneyDetails(
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: journeyDetailsStateViewModel.currentState.destination,
+                        data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime ?: journeyDetailsStateViewModel.currentState.date
                     )
                 )
 
@@ -421,7 +421,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
     private fun startQuoteListActivity() {
-        val builder = QuotesActivity.Builder().bookingInfo(bookingStatusStateViewModel.viewStates().value)
+        val builder = QuotesActivity.Builder().bookingInfo(journeyDetailsStateViewModel.viewStates().value)
         startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
     }
 

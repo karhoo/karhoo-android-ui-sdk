@@ -28,8 +28,8 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.quotes.QuoteListStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
@@ -52,9 +52,9 @@ import java.util.Locale
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
     QuotesFragmentContract.View, LifecycleObserver {
 
-    private val bookingStatusStateViewModel: BookingStatusStateViewModel by lazy {
+    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy {
         ViewModelProvider(this).get(
-            BookingStatusStateViewModel::class.java
+            JourneyDetailsStateViewModel::class.java
         )
     }
     private val bookingQuotesViewModel: BookingQuotesViewModel by lazy {
@@ -88,12 +88,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
 
         quotesSortWidget.setListener(this)
-        bookingStatusStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
-        addressBarWidget.watchBookingStatusState(this, bookingStatusStateViewModel)
+        journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
+        addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
         categorySelectorWidget.bindViewToData(
             this.viewLifecycleOwner,
             categoriesViewModel,
-            bookingStatusStateViewModel
+            journeyDetailsStateViewModel
         )
         quotesRecyclerView.watchCategories(this.viewLifecycleOwner, categoriesViewModel)
         quotesRecyclerView.watchQuoteListStatus(this.viewLifecycleOwner, bookingQuotesViewModel)
@@ -105,12 +105,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             dataModel = QuoteListViewDataModel(
                 quotes = null,
                 vehicles = null,
-                bookingInfo = bundle.getParcelable(QuotesActivity.QUOTES_BOOKING_INFO_KEY)
+                journeyDetails = bundle.getParcelable(QuotesActivity.QUOTES_BOOKING_INFO_KEY)
             )
 
             presenter.setData(dataModel!!)
 
-            dataModel?.bookingInfo?.let { bookingInfo ->
+            dataModel?.journeyDetails?.let { bookingInfo ->
                 bookingInfo.pickup?.let {
                     addressBarWidget.setPickup(it, -1)
                 }
@@ -154,8 +154,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         presenter.setData(data)
     }
 
-    override fun destinationChanged(bookingInfo: BookingInfo) {
-        quotesSortWidget.destinationChanged(bookingInfo)
+    override fun destinationChanged(journeyDetails: JourneyDetails) {
+        quotesSortWidget.destinationChanged(journeyDetails)
     }
 
     override fun updateList(quoteList: List<Quote>) {
@@ -208,9 +208,9 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             quoteListStatus.selectedQuote?.let { quote ->
                 val bundle = Bundle();
                 bundle.putParcelable(QUOTES_SELECTED_QUOTE_KEY, quote)
-                bundle.putParcelable(QUOTES_PICKUP_ADDRESS, dataModel?.bookingInfo?.pickup)
-                bundle.putParcelable(QUOTES_DROPOFF_ADDRESS, dataModel?.bookingInfo?.destination)
-                bundle.putSerializable(QUOTES_SELECTED_DATE, bookingStatusStateViewModel.currentState.date)
+                bundle.putParcelable(QUOTES_PICKUP_ADDRESS, dataModel?.journeyDetails?.pickup)
+                bundle.putParcelable(QUOTES_DROPOFF_ADDRESS, dataModel?.journeyDetails?.destination)
+                bundle.putSerializable(QUOTES_SELECTED_DATE, journeyDetailsStateViewModel.currentState.date)
                 bundle.putLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, currentValidityDeadlineTimestamp ?: 0)
 
                 val intent = Intent()
@@ -224,7 +224,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun initAvailability() {
         availabilityProvider?.cleanup()
         val locale: Locale? = resources.configuration.locale
-        bookingStatusStateViewModel?.let {
+        journeyDetailsStateViewModel?.let {
             availabilityProvider = KarhooAvailability(
                 KarhooApi.quotesService,
                 categoriesViewModel, liveFleetsViewModel,
@@ -258,11 +258,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
                 AddressCodes.PICKUP -> {
-                    dataModel?.bookingInfo?.pickup = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
+                    dataModel?.journeyDetails?.pickup = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
                 AddressCodes.DESTINATION -> {
-                    dataModel?.bookingInfo?.destination = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
+                    dataModel?.journeyDetails?.destination = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
