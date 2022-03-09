@@ -107,7 +107,7 @@ internal class CheckoutFragment : Fragment() {
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                bookingInfo = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
                 bookingMetadata = bundle.getSerializable(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,

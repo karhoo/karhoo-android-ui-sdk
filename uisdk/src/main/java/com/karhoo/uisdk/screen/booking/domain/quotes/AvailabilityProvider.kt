@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 
 interface AvailabilityProvider {
 
@@ -13,7 +13,7 @@ interface AvailabilityProvider {
 
     fun cleanup()
 
-    fun bookingStatusObserver(): androidx.lifecycle.Observer<BookingInfo>
+    fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails>
 
 }
 

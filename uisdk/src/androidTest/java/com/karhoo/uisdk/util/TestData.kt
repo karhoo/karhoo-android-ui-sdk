@@ -80,7 +80,8 @@ class TestData {
 
         const val LONGITUDE = -0.1769328
 
-        const val DER_NOTIFICATION = "Your KarhooTestFleet driver is en route"
+        const val DER_NOTIFICATION = "driver is en route"
+        //        const val DER_NOTIFICATION = "Your (.*) driver is en route"
 
         const val ARRIVED_NOTIFICATION = "Your KarhooTestFleet driver has arrived"
 
@@ -216,11 +217,11 @@ class TestData {
                                      lowPrice = 577)
 
         val QUOTE_FLEET = Fleet(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
-                                    name = "iCabbi [Sandbox]",
-                                    logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
-                                    description = "Some fleet description",
-                                    phoneNumber = "+447904839920",
-                                    termsConditionsUrl = "http://www.google.com")
+                                name = "iCabbi [Sandbox]",
+                                logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
+                                description = "Some fleet description",
+                                phoneNumber = "+447904839920",
+                                termsConditionsUrl = "http://www.google.com")
 
         val QUOTE_VEHICLE = QuoteVehicle(vehicleClass = "Electric",
                                          vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1),
@@ -287,39 +288,39 @@ class TestData {
                 position = Position(latitude = 51.5166744, longitude = LONGITUDE))
 
         val QUOTE_WITH_CANCELLATION_AGREEMENT = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                quoteType = QuoteType.ESTIMATED,
-                quoteSource = QuoteSource.FLEET,
-                price = QUOTE_PRICE,
-                fleet = QUOTE_FLEET,
-                pickupType = PickupType.CURBSIDE,
-                vehicle = QUOTE_VEHICLE,
-                serviceAgreements = CANCELLATION_AGREEMENT)
+                                                      quoteType = QuoteType.ESTIMATED,
+                                                      quoteSource = QuoteSource.FLEET,
+                                                      price = QUOTE_PRICE,
+                                                      fleet = QUOTE_FLEET,
+                                                      pickupType = PickupType.CURBSIDE,
+                                                      vehicle = QUOTE_VEHICLE,
+                                                      serviceAgreements = CANCELLATION_AGREEMENT)
 
         val QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                quoteType = QuoteType.ESTIMATED,
-                quoteSource = QuoteSource.FLEET,
-                price = QUOTE_PRICE,
-                fleet = QUOTE_FLEET,
-                pickupType = PickupType.CURBSIDE,
-                vehicle = QUOTE_VEHICLE,
-                serviceAgreements = CANCELLATION_AGREEMENT_ZERO_MINUTES)
+                                                                   quoteType = QuoteType.ESTIMATED,
+                                                                   quoteSource = QuoteSource.FLEET,
+                                                                   price = QUOTE_PRICE,
+                                                                   fleet = QUOTE_FLEET,
+                                                                   pickupType = PickupType.CURBSIDE,
+                                                                   vehicle = QUOTE_VEHICLE,
+                                                                   serviceAgreements = CANCELLATION_AGREEMENT_ZERO_MINUTES)
 
         val QUOTE_WITH_CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                quoteType = QuoteType.ESTIMATED,
-                quoteSource = QuoteSource.FLEET,
-                price = QUOTE_PRICE,
-                fleet = QUOTE_FLEET,
-                pickupType = PickupType.CURBSIDE,
-                vehicle = QUOTE_VEHICLE,
-                serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE)
+                                                                             quoteType = QuoteType.ESTIMATED,
+                                                                             quoteSource = QuoteSource.FLEET,
+                                                                             price = QUOTE_PRICE,
+                                                                             fleet = QUOTE_FLEET,
+                                                                             pickupType = PickupType.CURBSIDE,
+                                                                             vehicle = QUOTE_VEHICLE,
+                                                                             serviceAgreements = CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE)
 
         val QUOTE = Quote(id = "NTIxMjNiZDktY2M5OC00YjhkLWE5OGEtMTIyNDQ2ZDY5ZTc5O3NhbG9vbg==",
-                quoteType = QuoteType.ESTIMATED,
-                quoteSource = QuoteSource.FLEET,
-                price = QUOTE_PRICE,
-                fleet = QUOTE_FLEET,
-                pickupType = PickupType.CURBSIDE,
-                vehicle = QUOTE_VEHICLE)
+                          quoteType = QuoteType.ESTIMATED,
+                          quoteSource = QuoteSource.FLEET,
+                          price = QUOTE_PRICE,
+                          fleet = QUOTE_FLEET,
+                          pickupType = PickupType.CURBSIDE,
+                          vehicle = QUOTE_VEHICLE)
 
         /**
          * Address Payloads
@@ -685,7 +686,7 @@ class TestData {
 
         val CANCEL_WITH_BOOKING_FEE = BookingFee(cancellationFee = true,
                                                  fee = BookingFeePrice(currency = "GBP",
-                                                                  value = 1000))
+                                                                       value = 1000))
 
         /**
          *
@@ -699,7 +700,7 @@ class TestData {
                                    ),
                 destinationEta = 10,
                 originEta = 5,
-                direction = Direction(kph = 5, 
+                direction = Direction(kph = 5,
                                       heading = 10)
                                                 )
 
@@ -726,8 +727,8 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
                                                              vehicleQta = QuoteQTA(highMinutes =
                                                                                    5, lowMinutes = 5),
-                                                            luggageCapacity = 2,
-                                                            passengerCapacity = 2)),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -744,8 +745,8 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 20,
                                                                                    lowMinutes = 20),
-                                                            luggageCapacity = 2,
-                                                            passengerCapacity = 2)),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -763,8 +764,8 @@ class TestData {
                                                              vehicleQta = QuoteQTA(highMinutes = 15,
                                                                                    lowMinutes =
                                                                                    15),
-                                                            luggageCapacity = 2,
-                                                            passengerCapacity = 2)),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -782,8 +783,8 @@ class TestData {
                                                              vehicleQta = QuoteQTA(highMinutes = 18,
                                                                                    lowMinutes =
                                                                                    18),
-                                                            luggageCapacity = 2,
-                                                            passengerCapacity = 2)),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2)),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:OWI3ZTNhZTktNDhkMC00MmYyLTkxMzAtZDk5YzViZWM0MzFjO3NhbG9vbg==",
                                 quoteSource = QuoteSource.FLEET,
@@ -800,8 +801,8 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Saloon",
                                                              vehicleQta = QuoteQTA(highMinutes = 4,
                                                                                    lowMinutes = 4),
-                                                            luggageCapacity = 2,
-                                                            passengerCapacity = 2)))
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2)))
                                     )
 
         val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS = Vehicles(
@@ -814,13 +815,13 @@ class TestData {
                         QUOTE_WITH_CANCELLATION_AGREEMENT.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                        currencyCode = DEFAULT_CURRENCY),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                        vehicleQta = QuoteQTA(highMinutes =
-                                        5, lowMinutes = 5),
-                                        luggageCapacity = 2,
-                                        passengerCapacity = 2))
-                ))
+                                                             vehicleQta = QuoteQTA(highMinutes =
+                                                                                   5, lowMinutes = 5),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2))
+                               ))
 
         val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES = Vehicles(
                 status = QuoteStatus.PROGRESSING,
@@ -832,13 +833,13 @@ class TestData {
                         QUOTE_WITH_CANCELLATION_AGREEMENT_ZERO_MINUTES.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                        currencyCode = DEFAULT_CURRENCY),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                        vehicleQta = QuoteQTA(highMinutes =
-                                        5, lowMinutes = 5),
-                                        luggageCapacity = 2,
-                                        passengerCapacity = 2))
-        ))
+                                                             vehicleQta = QuoteQTA(highMinutes =
+                                                                                   5, lowMinutes = 5),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2))
+                               ))
 
         val VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE = Vehicles(
                 status = QuoteStatus.PROGRESSING,
@@ -850,13 +851,13 @@ class TestData {
                         QUOTE_WITH_CANCELLATION_AGREEMENT_BEFORE_DRIVER_EN_ROUTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NGY1OTZlM2YtYzYzOC00MjIxLTllODgtYjI0YmM3YjRkZWE1O3RheGk=",
                                 price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                        currencyCode = DEFAULT_CURRENCY),
+                                                         currencyCode = DEFAULT_CURRENCY),
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                        vehicleQta = QuoteQTA(highMinutes =
-                                        5, lowMinutes = 5),
-                                        luggageCapacity = 2,
-                                        passengerCapacity = 2))
-                ))
+                                                             vehicleQta = QuoteQTA(highMinutes =
+                                                                                   5, lowMinutes = 5),
+                                                             luggageCapacity = 2,
+                                                             passengerCapacity = 2))
+                               ))
 
         /**
          *
@@ -1030,8 +1031,8 @@ class TestData {
         val DRIVER_TRACKING_INFO = DriverTrackingInfo(position = Position(LATITUDE, LONGITUDE),
                                                       originEta = 5,
                                                       destinationEta = 10,
-                                                     direction = Direction(kph = 5,
-                                                                           heading = 10))
+                                                      direction = Direction(kph = 5,
+                                                                            heading = 10))
 
         fun getDate(dateScheduled: String): Date {
             val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {

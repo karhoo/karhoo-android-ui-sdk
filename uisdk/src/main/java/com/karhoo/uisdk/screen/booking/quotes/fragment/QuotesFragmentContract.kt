@@ -5,7 +5,7 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import androidx.lifecycle.Observer
 
@@ -15,7 +15,7 @@ interface QuotesFragmentContract {
 
         fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?)
 
-        fun destinationChanged(bookingInfo: BookingInfo)
+        fun destinationChanged(journeyDetails: JourneyDetails)
 
         fun updateList(quoteList: List<Quote>)
 
