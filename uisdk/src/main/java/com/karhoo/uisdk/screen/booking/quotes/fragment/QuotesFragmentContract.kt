@@ -45,13 +45,9 @@ interface QuotesFragmentContract {
 
     interface Presenter {
 
-        fun showMore()
-
         fun vehiclesShown(quoteId: String, isExpanded: Boolean)
 
         fun sortMethodChanged(sortMethod: SortMethod)
-
-        fun calculateListHeight(windowManager: WindowManager, percentage: Int): Int
 
         fun setData(data: QuoteListViewDataModel)
 

@@ -32,4 +32,6 @@ class QuotesFragmentPresenterTest {
         (presenter as AvailabilityHandler).hasNoResults = false
         Assert.assertFalse(view.calledShowNowResults)
     }
+
+
 }

@@ -1,12 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.fragment
 
-import android.graphics.Insets
-import android.os.Build
-import android.util.DisplayMetrics
-import android.view.WindowInsets
-import android.view.WindowManager
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -18,7 +12,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     BasePresenter<QuotesFragmentContract.View>(),
     QuotesFragmentContract.Presenter, AvailabilityHandler {
 
-    private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
     private var dataModel: QuoteListViewDataModel? = null
@@ -46,11 +39,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
         this.dataModel = data
 
         checkBookingInfo()
-    }
-
-    override fun showMore() {
-        isExpanded = !isExpanded
-        view?.setChevronState(isExpanded)
     }
 
     override fun sortMethodChanged(sortMethod: SortMethod) {
@@ -97,9 +85,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     private fun shouldShowQuotesList() {
         when {
             !hasDestination -> view?.apply {
-                if (isExpanded) {
-                    showMore()
-                }
                 view?.showList(false)
             }
             hasAvailability -> view?.apply {
@@ -116,23 +101,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
         quotes?.let {
             dataModel?.quotes = it
             updateList()
-        }
-    }
-
-    override fun calculateListHeight(windowManager: WindowManager, percentage: Int): Int {
-        val maxHeight = view?.provideResources()?.getInteger(
-            R.integer.kh_uisdk_query_list_view_max_screen_percentage
-        ) ?: 0
-
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val windowMetrics = windowManager.currentWindowMetrics
-            val insets: Insets = windowMetrics.windowInsets
-                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
-            ((windowMetrics.bounds.height() - insets.left - insets.right) * (percentage.toFloat() / maxHeight)).toInt()
-        } else {
-            val displayMetrics = DisplayMetrics()
-            windowManager.defaultDisplay.getMetrics(displayMetrics)
-            (displayMetrics.heightPixels * (percentage.toFloat() / maxHeight)).toInt()
         }
     }
 

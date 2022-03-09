@@ -87,9 +87,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
 
-
-        hideListInitially()
-
         quotesSortWidget.setListener(this)
         bookingStatusStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         addressBarWidget.watchBookingStatusState(this, bookingStatusStateViewModel)
@@ -172,10 +169,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
         quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
-    }
-
-    private fun hideListInitially() {
-//        animate().translationY(resources.getDimension(R.dimen.kh_uisdk_quote_list_height)).duration = 0
     }
 
     override fun showNoAvailability() {
