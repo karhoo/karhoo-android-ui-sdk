@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.fragment
 
 import android.content.res.Resources
-import android.view.WindowManager
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.listener.ErrorView
