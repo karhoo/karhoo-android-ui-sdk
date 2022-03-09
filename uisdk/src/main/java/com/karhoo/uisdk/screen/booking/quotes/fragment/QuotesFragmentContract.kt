@@ -1,14 +1,15 @@
-package com.karhoo.uisdk.screen.booking.quotes
+package com.karhoo.uisdk.screen.booking.quotes.fragment
 
-import androidx.lifecycle.Observer
+import android.content.res.Resources
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
+import androidx.lifecycle.Observer
 
-interface QuotesListMVP {
+interface QuotesFragmentContract {
 
     interface View {
 
@@ -20,38 +21,44 @@ interface QuotesListMVP {
 
         fun setSortMethod(sortMethod: SortMethod)
 
-        fun togglePanelState()
-
         fun setChevronState(isExpanded: Boolean)
 
         fun prebook(isPrebook: Boolean)
-
-        fun showList()
-
-        fun hideList(): Boolean
 
         fun showNoAvailability()
 
         fun showNoResultsText(show: Boolean)
 
-        fun hideNoAvailability()
-
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
+        fun provideResources(): Resources
+
+        fun setViewDelegate(quoteListDelegate: QuoteListDelegate)
+
+        fun setup(data: QuoteListViewDataModel)
+
+        fun showList(show: Boolean)
+
+        fun initAvailability()
     }
 
     interface Presenter {
 
-        fun showMore()
-
         fun vehiclesShown(quoteId: String, isExpanded: Boolean)
-
-        fun watchJourneyDetails(): Observer<JourneyDetails>
-
-        fun watchVehicles(): Observer<List<Quote>>
 
         fun sortMethodChanged(sortMethod: SortMethod)
 
+        fun setData(data: QuoteListViewDataModel)
+
+        fun watchQuotes(): Observer<List<Quote>>
+    }
+
+    interface QuoteListDelegate {
+        fun onQuoteSelected()
+        // These will disappear once we transition to a full-screen implementation
+        fun onListExpanded()
+        fun onListCollapsed()
+        fun onError(snackBar: SnackbarConfig)
     }
 
     interface Actions : ErrorView

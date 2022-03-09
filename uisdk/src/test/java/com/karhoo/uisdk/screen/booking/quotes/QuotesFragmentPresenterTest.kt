@@ -1,6 +1,8 @@
 package com.karhoo.uisdk.screen.booking.quotes
 
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
+import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.QuotesListViewMock
 import org.junit.Assert
 import org.junit.Before
@@ -9,9 +11,9 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class QuotesListPresenterTest {
+class QuotesFragmentPresenterTest {
     private val view: QuotesListViewMock = QuotesListViewMock()
-    private val presenter: QuotesListMVP.Presenter = QuotesListPresenter(view, null)
+    private val presenter: QuotesFragmentContract.Presenter = QuotesFragmentPresenter(view, null)
 
     @Before
     fun setup() {
@@ -30,4 +32,6 @@ class QuotesListPresenterTest {
         (presenter as AvailabilityHandler).hasNoResults = false
         Assert.assertFalse(view.calledShowNowResults)
     }
+
+
 }

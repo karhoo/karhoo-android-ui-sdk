@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes;
+package com.karhoo.uisdk.screen.booking.quotes.list;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import com.karhoo.uisdk.base.BaseRecyclerView;
 import com.karhoo.uisdk.screen.booking.domain.quotes.PriceSort;
 import com.karhoo.uisdk.screen.booking.domain.quotes.QtaSort;
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod;
+import com.karhoo.uisdk.screen.booking.quotes.list.QuotesListItemView;
 
 import java.util.Collections;
 import java.util.List;
