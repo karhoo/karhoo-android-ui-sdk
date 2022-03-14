@@ -228,7 +228,7 @@
     <!--  Navigation Drawer  -->
     <string name="kh_uisdk_login">Connexion</string>
     <!--  Loyalty  -->
-    <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s AIGUILLAGE</string>
+    <string name="kh_uisdk_loyalty_balance_title">SOLDE: %s POINTS</string>
     <string name="kh_uisdk_loyalty_info">Votre carte est nécessaire pour autoriser cette transaction dans le cas où le prix final du trajet dépasse votre solde de points. Votre compte ne sera pas débité si vos points de fidélité couvrent la totalité du prix.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Vous utilisez %1$s points</string>
