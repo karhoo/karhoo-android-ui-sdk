@@ -315,9 +315,7 @@
         <item name="unselectedTextColor">@color/kh_uisdk_off_black</item>
     </style>
 
-    <style name="KhSQuotesListView">
-        <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
-    </style>
+    <style name="KhSQuotesListView"></style>
 
     <style name="KhBookingQuotesViewFleetTitle">
         <item name="android:textStyle">bold</item>
@@ -627,6 +625,21 @@
         <item name="fontWeight">600</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/kh_uisdk_label</item>
+    </style>
+
+    <style name="KhQuotesErrorTitle">
+        <item name="fontWeight">600</item>
+        <item name="lineHeight">22dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+    </style>
+
+    <style name="KhQuotesErrorSubtitle">
+        <item name="fontWeight">400</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">18dp</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
 

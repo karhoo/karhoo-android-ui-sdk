@@ -22,18 +22,12 @@ class QuotesListViewMock: QuotesFragmentContract.View {
 
     override fun setSortMethod(sortMethod: SortMethod) { /** do nothing **/ }
 
-    override fun setChevronState(isExpanded: Boolean) { /** do nothing **/ }
-
     override fun prebook(isPrebook: Boolean) { /** do nothing **/ }
 
-    override fun showNoAvailability() { /** do nothing **/ }
+    override fun showNoCoverageError() { /** do nothing **/ }
 
-    override fun showNoResultsText(show: Boolean) {
+    override fun showNoFleetsError(show: Boolean) {
         calledShowNowResults = show
-    }
-
-    override fun initAvailability() {
-        /** do nothing **/
     }
 
     override fun provideResources(): Resources {

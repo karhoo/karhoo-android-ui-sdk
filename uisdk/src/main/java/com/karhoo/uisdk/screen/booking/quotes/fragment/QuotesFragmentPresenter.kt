@@ -24,7 +24,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     override var hasNoResults: Boolean = false
         set(value) {
             field = value
-            view?.showNoResultsText(hasNoResults)
+            view?.showNoFleetsError(hasNoResults)
         }
 
     init {
@@ -85,6 +85,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     private fun shouldShowQuotesList() {
         when {
             !hasDestination -> view?.apply {
+                //TODO add destination missing error
                 view?.showList(false)
             }
             hasAvailability -> view?.apply {
@@ -92,7 +93,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
             }
             else -> view?.apply {
                 view?.showList(false)
-                showNoAvailability()
+                showNoCoverageError()
             }
         }
     }

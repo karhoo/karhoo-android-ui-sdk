@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.quotes.fragment
 
-import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -20,10 +19,7 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
-import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.base.snackbar.SnackbarPriority
-import com.karhoo.uisdk.base.snackbar.SnackbarType
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
@@ -34,7 +30,6 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DROPOFF_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
@@ -46,7 +41,6 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.*
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
@@ -97,7 +91,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         )
         quotesRecyclerView.watchCategories(this.viewLifecycleOwner, categoriesViewModel)
         quotesRecyclerView.watchQuoteListStatus(this.viewLifecycleOwner, bookingQuotesViewModel)
-        bookingQuotesViewModel.viewStates().observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
+        bookingQuotesViewModel.viewStates()
+            .observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
         liveFleetsViewModel.liveFleets.observe(this.viewLifecycleOwner, presenter.watchQuotes())
         val bundle = arguments
 
@@ -130,11 +125,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun provideResources(): Resources {
         return resources
-    }
-
-    override fun setChevronState(isExpanded: Boolean) {
-        val stateSet = intArrayOf(android.R.attr.state_checked * if (isExpanded) 1 else -1)
-        chevronIcon.setImageState(stateSet, true)
     }
 
     override fun setSortMethod(sortMethod: SortMethod) {
@@ -171,29 +161,13 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
     }
 
-    override fun showNoAvailability() {
-        val activity = context as Activity
-        val emailComposer = KarhooFeedbackEmailComposer(activity)
-
-        val snackbarConfig = SnackbarConfig(
-            type = SnackbarType.BLOCKING_DISMISSIBLE,
-            priority = SnackbarPriority.NORMAL,
-            action = SnackbarAction(resources.getString(R.string.kh_uisdk_contact)) {
-                val showNoCoverageEmail = emailComposer.showNoCoverageEmail()
-                showNoCoverageEmail?.let { intent ->
-                    activity.startActivity(intent)
-                }
-            },
-            text = resources.getString(R.string.kh_uisdk_no_availability)
-        )
-
-        quoteListViewDelegate?.onError(snackbarConfig)
+    override fun showNoCoverageError() {
+        quotesRecyclerView.showNoCoverageError(true)
     }
 
-    override fun showNoResultsText(show: Boolean) {
-        quotesRecyclerView.showNoResultsText(show)
+    override fun showNoFleetsError(show: Boolean) {
+        quotesRecyclerView.showNoFleetsError(show)
     }
-
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
         quoteListViewDelegate?.onError(snackbarConfig)
@@ -210,8 +184,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 bundle.putParcelable(QUOTES_SELECTED_QUOTE_KEY, quote)
                 bundle.putParcelable(QUOTES_PICKUP_ADDRESS, dataModel?.journeyDetails?.pickup)
                 bundle.putParcelable(QUOTES_DROPOFF_ADDRESS, dataModel?.journeyDetails?.destination)
-                bundle.putSerializable(QUOTES_SELECTED_DATE, journeyDetailsStateViewModel.currentState.date)
-                bundle.putLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, currentValidityDeadlineTimestamp ?: 0)
+                bundle.putSerializable(
+                    QUOTES_SELECTED_DATE,
+                    journeyDetailsStateViewModel.currentState.date
+                )
+                bundle.putLong(
+                    QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
+                    currentValidityDeadlineTimestamp ?: 0
+                )
 
                 val intent = Intent()
                 intent.putExtras(bundle)
@@ -221,7 +201,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
     }
 
-    override fun initAvailability() {
+    private fun initAvailability() {
         availabilityProvider?.cleanup()
         val locale: Locale? = resources.configuration.locale
         journeyDetailsStateViewModel?.let {
@@ -258,11 +238,13 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
                 AddressCodes.PICKUP -> {
-                    dataModel?.journeyDetails?.pickup = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
+                    dataModel?.journeyDetails?.pickup =
+                        data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
                 AddressCodes.DESTINATION -> {
-                    dataModel?.journeyDetails?.destination = data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
+                    dataModel?.journeyDetails?.destination =
+                        data.getParcelableExtra(AddressCodes.DATA_ADDRESS)
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
