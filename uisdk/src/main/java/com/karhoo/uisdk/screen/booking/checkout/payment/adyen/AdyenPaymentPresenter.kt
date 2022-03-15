@@ -134,11 +134,10 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
-        val saveCard = !KarhooUISDKConfigurationProvider.isGuest()
         return CardConfiguration.Builder(context, publicKey)
                 .setShopperLocale(Locale.getDefault())
                 .setHolderNameRequire(true)
-                .setShowStorePaymentField(saveCard)
+                .setShowStorePaymentField(false)
                 .build()
     }
 
