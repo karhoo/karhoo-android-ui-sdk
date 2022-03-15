@@ -261,7 +261,8 @@
     <string name="kh_uisdk_network_error">Wir scheinen Probleme mit der Verbindung zum Netzwerk zu haben</string>
     <string name="kh_uisdk_new_ride">NEUE FAHRT</string>
     <string name="kh_uisdk_next">Weiter</string>
-    <string name="kh_uisdk_no_availability">Wir sind hier noch nicht live! Melden Sie sich, wenn Sie Vorschläge für lokale Flotten haben.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
+    <string name="kh_uisdk_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
     <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
