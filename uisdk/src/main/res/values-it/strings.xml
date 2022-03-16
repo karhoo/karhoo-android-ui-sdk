@@ -407,6 +407,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Ricorda, puoi prenotare un\'auto fino a sette giorni in anticipo.</string>
     <string name="kh_uisdk_update">AGGIORNARE</string>
     <string name="kh_uisdk_vehicle">Veicolo</string>
+    <string name="kh_uisdk_vehicle_bus">Autobus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Multiposto</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">sedia a rotelle</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Vuoi continuare?</string>
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>
