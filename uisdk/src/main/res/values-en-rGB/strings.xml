@@ -39,11 +39,6 @@
     <string name="kh_uisdk_booking_confirmation">Booking Confirmed</string>
     <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
     <string name="kh_uisdk_booking_error">There seems to be an issue booking your trip. Please try again</string>
-    <!-- Vehicle Type -->
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
-    <string name="kh_uisdk_vehicle_mpv">MPV</string>
-    <string name="kh_uisdk_vehicle_moto">Moto</string>
-    <string name="kh_uisdk_vehicle_bus">Bus</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Booking Failed</string>
     <string name="kh_uisdk_booking_failed_body">Sorry, demand is high. %1$s has no available drivers.</string>
