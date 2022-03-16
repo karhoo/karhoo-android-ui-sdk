@@ -261,7 +261,8 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
-    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
+    <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -406,6 +407,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Remember, you can prebook a car up to seven days in advance.</string>
     <string name="kh_uisdk_update">UPDATE</string>
     <string name="kh_uisdk_vehicle">Vehicle</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">MPV</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">Wheelchair</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>

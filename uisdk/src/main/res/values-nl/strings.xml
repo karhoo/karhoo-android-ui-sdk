@@ -261,7 +261,8 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
-    <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
     <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
@@ -336,7 +337,7 @@
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
     <string name="kh_uisdk_retrieving_pickup">Ophaallocatie</string>
-    <string name="kh_uisdk_retrieving_quotes">Citaten ophalen</string>
+    <string name="kh_uisdk_retrieving_quotes">Offertes ophalen</string>
     <string name="kh_uisdk_retry">opnieuw proberen</string>
     <string name="kh_uisdk_ride_confirmed">Rit bevestigd</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
@@ -406,6 +407,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Vergeet niet dat u een auto tot zeven dagen van tevoren kunt reserveren.</string>
     <string name="kh_uisdk_update">BIJWERKEN</string>
     <string name="kh_uisdk_vehicle">Voertuig</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Minibus</string>
+    <string name="kh_uisdk_vehicle_standard">Standaard</string>
     <string name="kh_uisdk_wheelchair">Rolstoel</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Wilt u doorgaan?</string>
     <string name="kh_uisdk_you_may_be_charged">Er worden annuleringskosten in rekening gebracht die geschat worden op %s .\n\nWilt u doorgaan?</string>
