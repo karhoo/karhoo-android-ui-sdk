@@ -261,6 +261,7 @@
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
+    <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="kh_uisdk_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
     <string name="kh_uisdk_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
