@@ -1,22 +1,18 @@
-package com.karhoo.uisdk.screen.booking.quotes
+package com.karhoo.uisdk.screen.booking.quotes.list
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
-import com.karhoo.sdk.api.model.ServiceCancellation
+import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
-import com.karhoo.uisdk.util.extension.getCancellationText
-import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
@@ -26,11 +22,13 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.etaText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.fareTypeText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.loadingIcon
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.pickupTypeText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.priceText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteNameText
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteProgressBar
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteCancellationText
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.detailsButton
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRating
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRatingLayout
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImageSmall
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
@@ -60,19 +58,28 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
-        categoryText.text = vehicleDetails.vehicle.categoryToLocalisedString(context.applicationContext)?.capitalize()
 
         loadImage(vehicleDetails.fleet.logoUrl)
 
+        setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
-        setPickupType(vehicleDetails.pickupType)
         setCapacity(vehicleDetails.vehicle)
-        setCancellationSLA(vehicleDetails.serviceAgreements?.freeCancellation, isPrebook)
+        setRating(vehicleDetails.fleet.rating)
+        detailsButton.visibility = View.INVISIBLE
 
         tag = vehicleDetails
 
         setOnClickListener { v -> itemClickListener.onRecyclerItemClicked(v, listPosition, vehicleDetails) }
+    }
+
+    private fun setRating(rating: FleetRating?) {
+        quoteFleetRating.text = " ${rating?.score}/5(${rating?.count})"
+        quoteFleetRatingLayout.visibility = View.GONE
+    }
+
+    private fun setCategoryText(vehicle: QuoteVehicle) {
+        categoryText.text = " ${vehicle.vehicleType?.replaceFirstChar { it.uppercase() }} ( ${vehicle.categoryToLocalisedString(context.applicationContext)?.replaceFirstChar { it.uppercase() } } )"
     }
 
     private fun loadImage(url: String?) {
@@ -80,7 +87,23 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                 logoImage,
                 url,
                 R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.kh_uisdk_logo_size,
+                R.dimen.kh_uisdk_driver_photo_size,
+                R.integer.kh_uisdk_logo_radius,
+                object : Callback {
+                    override fun onSuccess() {
+                        stopLoading()
+                    }
+
+                    override fun onError(e: java.lang.Exception?) {
+                        //Do Nothing
+                    }
+                })
+
+        PicassoLoader.loadImage(context,
+                logoImageSmall,
+                url,
+                R.drawable.uisdk_ic_quotes_logo_empty,
+                R.dimen.kh_uisdk_spacing_small,
                 R.integer.kh_uisdk_logo_radius,
                 object : Callback {
                     override fun onSuccess() {
@@ -122,15 +145,12 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun getFareType(quoteType: QuoteType?): String {
         return when (quoteType ?: QuoteType.ESTIMATED) {
             QuoteType.FIXED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_fixed_fare)
             }
             QuoteType.METERED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_metered)
             }
             QuoteType.ESTIMATED -> {
-                fareTypeText.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_alternative))
                 context.getString(R.string.kh_uisdk_estimated_fare)
             }
             else -> context.getString(R.string.kh_uisdk_estimated_fare)
@@ -143,36 +163,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
     }
 
-    private fun setPickupType(pickupType: PickupType?) {
-        when (pickupType) {
-            PickupType.DEFAULT,
-            PickupType.NOT_SET,
-            null -> {
-                pickupTypeText.visibility = View.GONE
-            }
-            else -> {
-                pickupTypeText.visibility = View.VISIBLE
-                pickupTypeText.text = pickupType.toLocalisedString(context.applicationContext)
-            }
-        }
-    }
-
     private fun setCapacity(vehicle: QuoteVehicle) {
         capacityWidget.setCapacity(
                 luggage = vehicle.luggageCapacity,
                 people = vehicle.passengerCapacity,
                 otherCapabilities = null)
-    }
-
-    private fun setCancellationSLA(serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
-        val text = serviceCancellation?.getCancellationText(context, isPrebook)
-
-        if (text.isNullOrEmpty()) {
-            quoteCancellationText.visibility = View.GONE
-        } else {
-            quoteCancellationText.text = text
-            quoteCancellationText.visibility = View.VISIBLE
-        }
     }
 
     private fun startLoading() {

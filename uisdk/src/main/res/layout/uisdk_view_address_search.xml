@@ -44,6 +44,7 @@
         android:layout_gravity="center"
         android:paddingLeft="@dimen/kh_uisdk_spacing_small"
         android:paddingRight="@dimen/kh_uisdk_spacing_xsmall"
-        app:srcCompat="@drawable/uisdk_ic_clear" />
+        app:srcCompat="@drawable/uisdk_ic_clear"
+        android:contentDescription="@string/kh_uisdk_erase_address"/>
 
 </LinearLayout>

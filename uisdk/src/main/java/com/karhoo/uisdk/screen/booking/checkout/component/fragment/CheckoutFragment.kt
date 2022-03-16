@@ -17,6 +17,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_CANCELLED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
@@ -106,7 +107,7 @@ internal class CheckoutFragment : Fragment() {
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                bookingInfo = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
                 bookingMetadata = bundle.getSerializable(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
@@ -128,6 +129,7 @@ internal class CheckoutFragment : Fragment() {
                                 titleResId = R.string.kh_uisdk_offer_expired,
                                 messageResId = R.string.kh_uisdk_offer_expired_text,
                                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
                                     this@CheckoutFragment.activity?.finish()
                                 })
 
@@ -174,6 +176,7 @@ internal class CheckoutFragment : Fragment() {
 
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
+            activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
             activity?.finish()
         }
     }

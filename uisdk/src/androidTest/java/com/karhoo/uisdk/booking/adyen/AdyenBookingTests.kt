@@ -12,6 +12,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.getLocale
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity

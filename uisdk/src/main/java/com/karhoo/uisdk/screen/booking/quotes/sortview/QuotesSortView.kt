@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes
+package com.karhoo.uisdk.screen.booking.quotes.sortview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,7 @@ import androidx.annotation.AttrRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLayout
@@ -124,9 +124,9 @@ class QuotesSortView @JvmOverloads constructor(
         priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
     }
 
-    fun destinationChanged(bookingInfo: BookingInfo?) {
-        hasDestination = bookingInfo?.destination != null
-        isPrebook = bookingInfo?.date != null
+    fun destinationChanged(journeyDetails: JourneyDetails?) {
+        hasDestination = journeyDetails?.destination != null
+        isPrebook = journeyDetails?.date != null
         val sortMethod = if (hasDestination && isPrebook) SortMethod.PRICE else SortMethod.ETA
         setSelectedSortMethod(sortMethod)
     }

@@ -28,8 +28,8 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -48,7 +48,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                                      private val userStore: UserStore)
     : BasePresenter<CheckoutViewContract.View>(), CheckoutViewContract.Presenter, LifecycleObserver {
 
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
     private var origin: LocationInfo? = null
@@ -62,8 +62,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         attachView(view)
     }
 
-    override fun setBookingStatus(bookingInfo: BookingInfo?) {
-        bookingInfo?.let {
+    override fun setJourneyDetails(journeyDetails: JourneyDetails?) {
+        journeyDetails?.let {
             scheduledDate = it.date
             destination = it.destination
             origin = it.pickup
@@ -78,8 +78,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingInfo> {
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
+    override fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
         return Observer { currentStatus ->
             currentStatus?.let {
                 scheduledDate = it.date
@@ -234,7 +234,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun resetBooking() {
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun refreshPaymentDetails() {
@@ -247,10 +247,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?, outboundTripId: String?, bookingMetadata:
+    override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?, passengerDetails: PassengerDetails?) {
         retrievePassengerDetailsForShowing(passengerDetails)
-        setBookingStatus(bookingInfo)
+        setJourneyDetails(journeyDetails)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {

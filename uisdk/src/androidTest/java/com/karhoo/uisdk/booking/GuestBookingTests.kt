@@ -388,7 +388,7 @@ class GuestBookingTests : Launch {
      * Given:   I am on the guest checkout mode
      * When:    I search for pick up and destination addresses
      * And:     I select them
-     * Then:    The booking screen populates the quotes as expecte
+     * Then:    The booking screen populates the quotes as expected
      **/
     @Test
     @AllowFlaky(attempts = 10)
