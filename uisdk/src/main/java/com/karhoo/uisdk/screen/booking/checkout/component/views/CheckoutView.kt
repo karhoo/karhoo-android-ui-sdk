@@ -45,7 +45,6 @@ import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
-import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.typeToLocalisedString
