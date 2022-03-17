@@ -32,7 +32,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     }
 
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
-        view?.showSnackbarError(snackbarConfig)
+        view?.showSameAddressesError(true)
     }
 
     override fun setData(data: QuoteListViewDataModel) {
@@ -93,7 +93,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
             }
             else -> view?.apply {
                 view?.showList(false)
-                showNoCoverageError()
+                showNoCoverageError(true)
             }
         }
     }

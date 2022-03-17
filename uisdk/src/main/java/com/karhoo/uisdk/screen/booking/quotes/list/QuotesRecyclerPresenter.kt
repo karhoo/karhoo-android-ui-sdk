@@ -5,8 +5,8 @@ import androidx.lifecycle.Observer
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 
-class QuotesRecyclerPresenter constructor(view: QuotesRecyclerMVP.View)
-    : BasePresenter<QuotesRecyclerMVP.View>(), QuotesRecyclerMVP.Presenter {
+class QuotesRecyclerPresenter constructor(view: QuotesRecyclerContract.View)
+    : BasePresenter<QuotesRecyclerContract.View>(), QuotesRecyclerContract.Presenter {
 
     init {
         attachView(view)

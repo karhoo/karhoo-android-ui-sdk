@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+        android:gravity="center"
         tools:text="No availability for the requested time" />
 
     <TextView
@@ -29,5 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+        android:gravity="center"
         tools:text="Please choose a different time" />
 </LinearLayout>

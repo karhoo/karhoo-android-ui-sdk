@@ -41,6 +41,7 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
+import kotlinx.android.synthetic.main.uisdk_view_quotes_list.*
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
@@ -161,12 +162,28 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
     }
 
-    override fun showNoCoverageError() {
-        quotesRecyclerView.showNoCoverageError(true)
+    override fun showNoCoverageError(show: Boolean) {
+        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
+        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
+
+        quotesRecyclerView.showNoCoverageError(show)
     }
 
     override fun showNoFleetsError(show: Boolean) {
+        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
+        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
+
         quotesRecyclerView.showNoFleetsError(show)
+    }
+
+    override fun showSameAddressesError(show: Boolean) {
+        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
+        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
+
+        quotesRecyclerView.showSameAddressesError(show)
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
@@ -174,6 +191,9 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showList(show: Boolean) {
+        quotesSortWidget.visibility = if (show) VISIBLE else GONE
+        categorySelectorWidget.visibility = if (show) VISIBLE else GONE
+        quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
     }
 

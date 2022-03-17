@@ -22,11 +22,11 @@ class QuotesRecyclerView @JvmOverloads constructor(
     context: Context,
     attr: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerMVP.View {
+) : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerContract.View {
 
     private val quotesAdapter =
         QuotesAdapter(context)
-    private val presenter: QuotesRecyclerMVP.Presenter = QuotesRecyclerPresenter(this)
+    private val presenter: QuotesRecyclerContract.Presenter = QuotesRecyclerPresenter(this)
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
 
@@ -35,7 +35,11 @@ class QuotesRecyclerView @JvmOverloads constructor(
 
         if (!isInEditMode) {
             quotesAdapter.setItemClickListener { _, _, item ->
-                bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked(item))
+                bookingQuotesViewModel?.process(
+                    BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked(
+                        item
+                    )
+                )
             }
             quotesListRecycler.apply {
                 setHasFixedSize(true)
@@ -81,14 +85,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
         setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)
     }
 
-    override fun showNoFleetsError(show: Boolean) {
+    private fun showErrorView(show: Boolean, reason: ErrorViewGenericReason) {
         if (show) {
             quotesErrorView.setup(
-                ErrorViewGenericReason(
-                    context.resources.getString(R.string.kh_uisdk_no_availability_title),
-                    context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
-                    R.drawable.kh_uisdk_ic_no_available_quotes
-                ),
+                reason,
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
                     override fun onClicked() {
                         //do nothing
@@ -103,6 +103,22 @@ class QuotesRecyclerView @JvmOverloads constructor(
         setListVisibility(!show)
         setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)
         quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
+    override fun showSameAddressesError(show: Boolean) {
+        showErrorView(show, ErrorViewGenericReason(
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_title),
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_subtitle),
+            R.drawable.kh_uisdk_similar_pickup_dropoff
+        ))
+    }
+
+    override fun showNoFleetsError(show: Boolean) {
+        showErrorView(show, ErrorViewGenericReason(
+            context.resources.getString(R.string.kh_uisdk_no_availability_title),
+            context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
+            R.drawable.kh_uisdk_ic_no_available_quotes
+        ))
     }
 
     override fun showNoCoverageError(show: Boolean) {

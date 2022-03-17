@@ -23,9 +23,11 @@ interface QuotesFragmentContract {
 
         fun prebook(isPrebook: Boolean)
 
-        fun showNoCoverageError()
+        fun showNoCoverageError(show: Boolean)
 
         fun showNoFleetsError(show: Boolean)
+
+        fun showSameAddressesError(show: Boolean)
 
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
