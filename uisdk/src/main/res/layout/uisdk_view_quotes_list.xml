@@ -16,23 +16,6 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/quotesTaxesAndFeesLabel"
-            style="@style/Text.Alternative.XSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
-            android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/kh_uisdk_fees_and_taxes_included"
-            android:textSize="@dimen/kh_uisdk_text_size_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
             android:id="@+id/quotesSortWidget"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
@@ -44,7 +27,7 @@
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quotesTaxesAndFeesLabel" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
             android:id="@+id/categorySelectorWidget"
@@ -56,6 +39,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quotesSortWidget" />
 
+        <TextView
+            android:id="@+id/quotesTaxesAndFeesLabel"
+            style="@style/Text.Alternative.XSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:maxLines="1"
+            android:text="@string/kh_uisdk_fees_and_taxes_included"
+            android:textSize="@dimen/kh_uisdk_text_size_small"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@+id/categorySelectorWidget" />
+
         <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
@@ -63,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categorySelectorWidget" />
+            app:layout_constraintTop_toBottomOf="@+id/quotesTaxesAndFeesLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
