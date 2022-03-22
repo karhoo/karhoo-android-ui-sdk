@@ -32,7 +32,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/quotesSortByButton"
                 style="@style/KhQuoteListSortByButton"
-                android:text="Sort by"/>
+                android:text="@string/kh_uisdk_sort_by"/>
         </LinearLayout>
 
         <com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView

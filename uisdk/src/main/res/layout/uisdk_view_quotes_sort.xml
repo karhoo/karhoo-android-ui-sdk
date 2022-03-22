@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/KhQuoteListSortTitle"
-            android:text="Sort By"
+            android:text="@string/kh_uisdk_sort_by"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +45,7 @@
         <RadioButton
             android:id="@+id/quotesSortByDriverArrival"
             style="@style/KhQuoteListSortRadioButton"
-            android:text="Driver arrival" />
+            android:text="@string/kh_uisdk_driver_arrival" />
 
     </RadioGroup>
 
