@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.button.MaterialButton
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
@@ -69,6 +70,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
     private var currentValidityDeadlineTimestamp: Long? = null
+    private lateinit var quotesSortByButton: MaterialButton
+    private var isPrebook = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,14 +80,18 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_quotes_fragment, container, false)
 
-        quotesSortWidget = view.findViewById(R.id.quotesSortWidget)
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
 
+        quotesSortWidget = QuotesSortView()
         quotesSortWidget.setListener(this)
         journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
+
+        journeyDetailsStateViewModel.viewStates().apply {
+            observe(viewLifecycleOwner, subscribeToJourneyDetails(journeyDetailsStateViewModel))
+        }
         categorySelectorWidget.bindViewToData(
             this.viewLifecycleOwner,
             categoriesViewModel,
@@ -113,11 +120,42 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 bookingInfo.destination?.let {
                     addressBarWidget.setDestination(it, -1)
                 }
+                bookingInfo.date?.let {
+                    addressBarWidget.setPrebookTime(it)
+                }
             }
+        }
+
+        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
+        quotesSortByButton.apply {
+            visibility = if (isPrebook) GONE else VISIBLE
+            setOnClickListener { showSortBy() }
         }
 
         initAvailability();
         return view
+    }
+
+    fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+        return Observer {
+            it?.let {
+                val sortMethod = SortMethod.PRICE
+                quotesSortWidget.selectedSortMethod.postValue(sortMethod)
+
+                dataModel = QuoteListViewDataModel(
+                    quotes = null,
+                    vehicles = null,
+                    journeyDetails = it
+                )
+                presenter.setData(dataModel!!)
+            }
+        }
+    }
+
+    private fun showSortBy(){
+        activity?.supportFragmentManager?.let {
+            quotesSortWidget.show(it, QuotesSortView.TAG)
+        }
     }
 
     override fun setViewDelegate(quoteListDelegate: QuotesFragmentContract.QuoteListDelegate) {
@@ -137,16 +175,22 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     }
 
-    override fun sortChoiceRequiresDestination() {
-        quoteListViewDelegate?.onError(SnackbarConfig(text = resources.getString(R.string.kh_uisdk_destination_price_error)))
-    }
-
     override fun setup(data: QuoteListViewDataModel) {
         presenter.setData(data)
     }
 
     override fun destinationChanged(journeyDetails: JourneyDetails) {
-        quotesSortWidget.destinationChanged(journeyDetails)
+        val sortMethod = SortMethod.PRICE
+        quotesSortWidget.selectedSortMethod.postValue(sortMethod)
+        presenter.sortMethodChanged(sortMethod)
+        changeVisibilityOfQuotesSortByButton(journeyDetails.destination == null)
+    }
+
+    private fun changeVisibilityOfQuotesSortByButton(gone: Boolean){
+        this::quotesSortByButton.isInitialized.let {
+            if(it)
+                quotesSortByButton.visibility = if (gone || isPrebook) GONE else VISIBLE
+        }
     }
 
     override fun updateList(quoteList: List<Quote>) {
@@ -161,11 +205,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
-        quotesSortWidget.visibility = if (isPrebook) GONE else VISIBLE
+        this.isPrebook = isPrebook
+        changeVisibilityOfQuotesSortByButton(isPrebook)
     }
 
     override fun showNoCoverageError(show: Boolean) {
-        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        changeVisibilityOfQuotesSortByButton(show)
         categorySelectorWidget.visibility = if (show) GONE else VISIBLE
         quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
 
@@ -173,7 +218,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showNoFleetsError(show: Boolean) {
-        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        changeVisibilityOfQuotesSortByButton(show)
         categorySelectorWidget.visibility = if (show) GONE else VISIBLE
         quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
 
@@ -181,7 +226,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showSameAddressesError(show: Boolean) {
-        quotesSortWidget.visibility = if (show) GONE else VISIBLE
+        changeVisibilityOfQuotesSortByButton(show)
         categorySelectorWidget.visibility = if (show) GONE else VISIBLE
         quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
 
@@ -193,7 +238,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showList(show: Boolean) {
-        quotesSortWidget.visibility = if (show) VISIBLE else GONE
+        changeVisibilityOfQuotesSortByButton(!show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
