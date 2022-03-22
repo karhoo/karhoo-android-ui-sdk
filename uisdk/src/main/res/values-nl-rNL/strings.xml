@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">Klaar</string>
     <string name="kh_uisdk_drawer_closed">Lade gesloten</string>
     <string name="kh_uisdk_drawer_open">Lade open</string>
+    <string name="kh_uisdk_driver_arrival">Aankomst chauffeur</string>
     <string name="kh_uisdk_driver_en_route">Uw %s chauffeur is onderweg</string>
     <string name="kh_uisdk_electric">Elektrisch</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
@@ -261,7 +262,6 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
-    <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
     <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
     <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
@@ -364,7 +364,10 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
+    <string name="kh_uisdk_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
+    <string name="kh_uisdk_sort_by">Sorteer op</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschatte aankomsttijd</string>
