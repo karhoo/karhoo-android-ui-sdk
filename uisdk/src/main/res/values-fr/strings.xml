@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">FERMER</string>
     <string name="kh_uisdk_drawer_closed">Ouverture du menu</string>
     <string name="kh_uisdk_drawer_open">Fermeture du menu</string>
+    <string name="kh_uisdk_driver_arrival">Arrivée du chauffeur</string>
     <string name="kh_uisdk_driver_en_route">Le chauffeur est en route</string>
     <string name="kh_uisdk_electric">Electrique</string>
     <string name="kh_uisdk_email_hint">Adresse email</string>
@@ -366,6 +367,7 @@
     <string name="kh_uisdk_similar_addresses_subtitle">Veuillez modifier l’une des adresses pour accéder aux devis</string>
     <string name="kh_uisdk_similar_addresses_title">Les adresses de départ et de destination sont similaires</string>
     <string name="kh_uisdk_something_went_wrong">Une erreur est survenue.</string>
+    <string name="kh_uisdk_sort_by">Trier par</string>
     <string name="kh_uisdk_sorter_cheapest">Prix</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Proximité</string>

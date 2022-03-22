@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">OK</string>
     <string name="kh_uisdk_drawer_closed">Drawer closed</string>
     <string name="kh_uisdk_drawer_open">Drawer open</string>
+    <string name="kh_uisdk_driver_arrival">Llegada del conductor</string>
     <string name="kh_uisdk_driver_en_route">El conductor está en camino</string>
     <string name="kh_uisdk_electric">Eléctrico</string>
     <string name="kh_uisdk_email_hint">Email</string>
@@ -366,6 +367,7 @@
     <string name="kh_uisdk_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
     <string name="kh_uisdk_similar_addresses_title">Las direcciones de salida y destino son similares</string>
     <string name="kh_uisdk_something_went_wrong">Hubo un problema</string>
+    <string name="kh_uisdk_sort_by">Ordenar por</string>
     <string name="kh_uisdk_sorter_cheapest">Tarifa</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Proximidad</string>

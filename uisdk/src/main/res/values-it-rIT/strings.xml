@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">Fatto</string>
     <string name="kh_uisdk_drawer_closed">Cassetto chiuso</string>
     <string name="kh_uisdk_drawer_open">Cassetto aperto</string>
+    <string name="kh_uisdk_driver_arrival">Arrivo dell\'autista</string>
     <string name="kh_uisdk_driver_en_route">Il tuo %s è in viaggio</string>
     <string name="kh_uisdk_electric">Elettrico</string>
     <string name="kh_uisdk_email_hint">E-mail</string>
@@ -363,7 +364,10 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Registrati</string>
     <string name="kh_uisdk_sign_out">Esci</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Si prega di modificare uno degli indirizzi per accedere ai preventivi</string>
+    <string name="kh_uisdk_similar_addresses_title">Gli indirizzi di partenza e di destinazione sono simili</string>
     <string name="kh_uisdk_something_went_wrong">Si è verificato un errore</string>
+    <string name="kh_uisdk_sort_by">Ordina per</string>
     <string name="kh_uisdk_sorter_cheapest">Prezzo</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Ora di arrivo stimata</string>
@@ -407,6 +411,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Ricorda, puoi prenotare un\'auto fino a sette giorni in anticipo.</string>
     <string name="kh_uisdk_update">AGGIORNARE</string>
     <string name="kh_uisdk_vehicle">Veicolo</string>
+    <string name="kh_uisdk_vehicle_bus">Autobus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Multiposto</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">sedia a rotelle</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Vuoi continuare?</string>
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>

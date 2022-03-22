@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">OK</string>
     <string name="kh_uisdk_drawer_closed">Drawer closed</string>
     <string name="kh_uisdk_drawer_open">Drawer open</string>
+    <string name="kh_uisdk_driver_arrival">Llegada del conductor</string>
     <string name="kh_uisdk_driver_en_route">El conductor está en camino</string>
     <string name="kh_uisdk_electric">Eléctrico</string>
     <string name="kh_uisdk_email_hint">Email</string>
@@ -363,7 +364,10 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">ACCEDER</string>
     <string name="kh_uisdk_sign_out">Salir</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
+    <string name="kh_uisdk_similar_addresses_title">Las direcciones de salida y destino son similares</string>
     <string name="kh_uisdk_something_went_wrong">Hubo un problema</string>
+    <string name="kh_uisdk_sort_by">Ordenar por</string>
     <string name="kh_uisdk_sorter_cheapest">Tarifa</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Proximidad</string>
@@ -407,6 +411,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Recuerda que puedes reservar hasta con 7 días de antelación</string>
     <string name="kh_uisdk_update">ACTUALIZAR</string>
     <string name="kh_uisdk_vehicle">Vehículo</string>
+    <string name="kh_uisdk_vehicle_bus">Autobús</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Monovolumen</string>
+    <string name="kh_uisdk_vehicle_standard">Estándar</string>
     <string name="kh_uisdk_wheelchair">Silla de ruedas</string>
     <string name="kh_uisdk_would_you_like_to_proceed">¿Quiere continuar?</string>
     <string name="kh_uisdk_you_may_be_charged">Se le cargará una tasa de cancelación estimada en %s.\n\n¿Quiere continuar?</string>
