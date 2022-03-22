@@ -261,7 +261,6 @@
     <string name="kh_uisdk_network_error">Sembra che ci siano problemi di connessione alla rete</string>
     <string name="kh_uisdk_new_ride">NUOVA CORSA</string>
     <string name="kh_uisdk_next">Successivo</string>
-    <string name="kh_uisdk_no_availability">Non siamo ancora qui! Contattaci se hai suggerimenti per le flotte locali.</string>
     <string name="kh_uisdk_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
     <string name="kh_uisdk_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
     <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
@@ -364,6 +363,8 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Registrati</string>
     <string name="kh_uisdk_sign_out">Esci</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Si prega di modificare uno degli indirizzi per accedere ai preventivi</string>
+    <string name="kh_uisdk_similar_addresses_title">Gli indirizzi di partenza e di destinazione sono simili</string>
     <string name="kh_uisdk_something_went_wrong">Si è verificato un errore</string>
     <string name="kh_uisdk_sorter_cheapest">Prezzo</string>
     <!-- Quotes List -->

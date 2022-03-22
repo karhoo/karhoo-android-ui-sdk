@@ -14,18 +14,19 @@ import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesErrorSubtitle
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesErrorTitle
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesListRecycler
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingLabel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoadingProgressBar
+import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewGenericReason
+import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorViewContract
+import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.*
 
-class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: AttributeSet? = null, defStyleAttr: Int = 0)
-    : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerMVP.View {
+class QuotesRecyclerView @JvmOverloads constructor(
+    context: Context,
+    attr: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerContract.View {
 
     private val quotesAdapter =
         QuotesAdapter(context)
-    private val presenter: QuotesRecyclerMVP.Presenter = QuotesRecyclerPresenter(this)
+    private val presenter: QuotesRecyclerContract.Presenter = QuotesRecyclerPresenter(this)
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
 
@@ -34,7 +35,11 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
 
         if (!isInEditMode) {
             quotesAdapter.setItemClickListener { _, _, item ->
-                bookingQuotesViewModel?.process(BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked(item))
+                bookingQuotesViewModel?.process(
+                    BookingQuotesViewContract.BookingQuotesEvent.QuotesItemClicked(
+                        item
+                    )
+                )
             }
             quotesListRecycler.apply {
                 setHasFixedSize(true)
@@ -57,7 +62,7 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     }
 
     override fun setQuotesLoaderVisibility(visible: Int) {
-        if (quotesErrorTitle.visibility == View.VISIBLE) {
+        if (quotesErrorView.visibility == View.VISIBLE) {
             quotesLoadingProgressBar.visibility = View.GONE
             quotesLoadingLabel.visibility = View.GONE
         } else {
@@ -73,42 +78,84 @@ class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: Attri
     override fun setListVisibility(visible: Boolean) {
         if (visible) {
             quotesListRecycler.visibility = View.VISIBLE
-            quotesErrorTitle.visibility = View.GONE
-            quotesErrorSubtitle?.visibility = View.GONE
+            quotesErrorView.visibility = View.GONE
         } else {
             quotesListRecycler.visibility = View.GONE
-
-            quotesErrorTitle.visibility = View.VISIBLE
-            quotesErrorTitle?.text = context.resources.getString(R.string.kh_uisdk_no_availability)
-
-            quotesErrorSubtitle?.text = context.resources.getString(R.string.kh_uisdk_enter_destination_for_vehicles)
-            quotesErrorSubtitle?.visibility = View.VISIBLE
-
         }
         setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)
     }
 
-    override fun showNoResultsText(show: Boolean) {
+    private fun showErrorView(show: Boolean, reason: ErrorViewGenericReason) {
         if (show) {
-            quotesErrorSubtitle?.text = context.resources.getString(R.string.kh_uisdk_no_results_found)
-            quotesErrorTitle?.text = context.resources.getString(R.string.kh_uisdk_no_results_label)
+            quotesErrorView.setup(
+                reason,
+                object : QuotesErrorViewContract.QuotesErrorViewDelegate {
+                    override fun onClicked() {
+                        //do nothing
+                    }
 
-            quotesErrorSubtitle?.visibility = View.VISIBLE
-            quotesErrorTitle?.visibility = View.VISIBLE
-        } else {
-            quotesErrorSubtitle?.visibility = View.GONE
-            quotesErrorTitle?.visibility = View.GONE
+                    override fun onSubtitleClicked() {
+                        //do nothing
+                    }
+                })
         }
 
+        setListVisibility(!show)
         setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)
+        quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
     }
 
-    override fun watchCategories(lifecycleOwner: LifecycleOwner, categoriesViewModel: CategoriesViewModel) {
+    override fun showSameAddressesError(show: Boolean) {
+        showErrorView(show, ErrorViewGenericReason(
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_title),
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_subtitle),
+            R.drawable.kh_uisdk_similar_pickup_dropoff
+        ))
+    }
+
+    override fun showNoFleetsError(show: Boolean) {
+        showErrorView(show, ErrorViewGenericReason(
+            context.resources.getString(R.string.kh_uisdk_no_availability_title),
+            context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
+            R.drawable.kh_uisdk_ic_no_available_quotes
+        ))
+    }
+
+    override fun showNoCoverageError(show: Boolean) {
+        //TODO will be changed when the proper error is implemented
+        if (show) {
+            quotesErrorView.visibility = View.VISIBLE
+            quotesErrorView.setup(
+                ErrorViewGenericReason(
+                    context.resources.getString(R.string.kh_uisdk_no_availability_title),
+                    context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
+                    R.drawable.kh_uisdk_ic_no_available_quotes
+                ),
+                object : QuotesErrorViewContract.QuotesErrorViewDelegate {
+                    override fun onClicked() {
+                        //do nothing
+                    }
+
+                    override fun onSubtitleClicked() {
+                        //do nothing
+                    }
+                })
+        } else {
+            quotesErrorView.visibility = View.GONE
+        }
+    }
+
+    override fun watchCategories(
+        lifecycleOwner: LifecycleOwner,
+        categoriesViewModel: CategoriesViewModel
+    ) {
         categoriesViewModel.categories.observe(lifecycleOwner, presenter.watchCategories())
     }
 
-    override fun watchQuoteListStatus(lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
-    BookingQuotesViewModel) {
+    override fun watchQuoteListStatus(
+        lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
+        BookingQuotesViewModel
+    ) {
         this.bookingQuotesViewModel = bookingQuotesViewModel
         bookingQuotesViewModel.viewStates().observe(lifecycleOwner, Observer { quoteListStatus ->
             quoteListStatus?.let {

@@ -261,7 +261,6 @@
     <string name="kh_uisdk_network_error">Parece que tenemos problemas para conectarnos a la red</string>
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
-    <string name="kh_uisdk_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
     <string name="kh_uisdk_no_availability_subtitle">Por favor selecciona otra hora</string>
     <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
     <string name="kh_uisdk_no_destination">Sin Destino</string>
@@ -364,6 +363,8 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">ACCEDER</string>
     <string name="kh_uisdk_sign_out">Salir</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
+    <string name="kh_uisdk_similar_addresses_title">Las direcciones de salida y destino son similares</string>
     <string name="kh_uisdk_something_went_wrong">Hubo un problema</string>
     <string name="kh_uisdk_sorter_cheapest">Tarifa</string>
     <!-- Quotes List -->
