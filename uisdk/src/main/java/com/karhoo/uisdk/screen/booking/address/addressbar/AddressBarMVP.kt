@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import org.joda.time.DateTime
 
@@ -31,7 +31,7 @@ interface AddressBarMVP {
 
     interface Presenter {
 
-        fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingInfo>
+        fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
 
         fun destinationSet(destinationLocationInfo: LocationInfo, addressPositionInList: Int)
 

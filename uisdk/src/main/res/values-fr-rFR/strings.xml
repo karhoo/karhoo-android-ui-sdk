@@ -94,6 +94,7 @@
     <string name="kh_uisdk_done">FERMER</string>
     <string name="kh_uisdk_drawer_closed">Ouverture du menu</string>
     <string name="kh_uisdk_drawer_open">Fermeture du menu</string>
+    <string name="kh_uisdk_driver_arrival">Arrivée du chauffeur</string>
     <string name="kh_uisdk_driver_en_route">Le chauffeur est en route</string>
     <string name="kh_uisdk_electric">Electrique</string>
     <string name="kh_uisdk_email_hint">Adresse email</string>
@@ -228,7 +229,7 @@
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Connexion</string>
     <!-- Loyalty -->
-    <string name="kh_uisdk_loyalty_balance_title">BALANCE: %s AIGUILLAGE</string>
+    <string name="kh_uisdk_loyalty_balance_title">SOLDE: %s POINTS</string>
     <string name="kh_uisdk_loyalty_info">Votre carte est nécessaire pour autoriser cette transaction dans le cas où le prix final du trajet dépasse votre solde de points. Votre compte ne sera pas débité si vos points de fidélité couvrent la totalité du prix.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Le mode de fidélité actuel n’est pas éligible à la pré-autorisation</string>
@@ -261,7 +262,8 @@
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
-    <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
+    <string name="kh_uisdk_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -320,6 +322,7 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Plus</string>
     <string name="kh_uisdk_quoted_fare">Prix indiqué</string>
+    <string name="kh_uisdk_quotes_activity_title">Citations</string>
     <string name="kh_uisdk_rate_trip_label">Veuillez donner une évaluation à votre voyage.</string>
     <string name="kh_uisdk_rating_submitted">Merci pour votre évaluation.</string>
     <string name="kh_uisdk_rebook_ride">Re-commander</string>
@@ -361,7 +364,10 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Connexion</string>
     <string name="kh_uisdk_sign_out">Déconnexion</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Veuillez modifier l’une des adresses pour accéder aux devis</string>
+    <string name="kh_uisdk_similar_addresses_title">Les adresses de départ et de destination sont similaires</string>
     <string name="kh_uisdk_something_went_wrong">Une erreur est survenue.</string>
+    <string name="kh_uisdk_sort_by">Trier par</string>
     <string name="kh_uisdk_sorter_cheapest">Prix</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Proximité</string>
@@ -405,6 +411,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Vous pouvez réserver jusqu\'à 7 jours à l\'avance.</string>
     <string name="kh_uisdk_update">Mettre à jour</string>
     <string name="kh_uisdk_vehicle">Véhicule</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Van</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">Fauteuil roulant</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Souhaitez-vous continuer?</string>
     <string name="kh_uisdk_you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>

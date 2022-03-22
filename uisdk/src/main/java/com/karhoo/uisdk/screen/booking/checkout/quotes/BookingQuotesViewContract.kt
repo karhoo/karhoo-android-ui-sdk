@@ -4,14 +4,13 @@ import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.CollapsiblePanelView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 
 interface BookingQuotesViewContract {
 
     interface BookingQuotesWidget {
         fun initAvailability(lifecycleOwner: LifecycleOwner)
-        fun setQuotesListVisibility()
-        fun bindViewToData(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
+        fun bindViewToData(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
     }
 
     sealed class BookingQuotesEvent {
