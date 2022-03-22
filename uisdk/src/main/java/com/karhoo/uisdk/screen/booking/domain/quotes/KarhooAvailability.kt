@@ -168,9 +168,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
                 availabilityHandler?.get()?.hasAvailability = false
             }
             KarhooError.OriginAndDestinationIdentical -> {
-                clearDestination()
-                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
-                returnErrorStringOrLogoutIfRequired(error), karhooError = error))
+                availabilityHandler?.get()?.handleSameAddressesError()
             }
             else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
             returnErrorStringOrLogoutIfRequired(error), karhooError = error))
