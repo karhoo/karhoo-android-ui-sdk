@@ -100,6 +100,10 @@ class AddressBarView
         clearDateTimeButtonIcon.visibility = View.VISIBLE
     }
 
+    fun setPrebookTime(time: DateTime){
+        addressPresenter.dateSet(time)
+    }
+
     override fun resetDateField() {
         timeDatePresenter.clearScheduledTimeClicked()
     }

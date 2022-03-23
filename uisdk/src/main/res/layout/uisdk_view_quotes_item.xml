@@ -135,7 +135,7 @@
                     android:maxLines="1"
                     android:textColor="@color/kh_uisdk_text_secondary"
                     android:textSize="@dimen/kh_uisdk_text_size_xsmall"
-                    android:text="Driver arrival"/>
+                    android:text="@string/kh_uisdk_driver_arrival"/>
             </LinearLayout>
 
             <LinearLayout

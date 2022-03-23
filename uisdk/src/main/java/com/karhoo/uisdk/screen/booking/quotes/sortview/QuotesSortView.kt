@@ -1,147 +1,77 @@
 package com.karhoo.uisdk.screen.booking.quotes.sortview
 
-import android.content.Context
-import android.util.AttributeSet
-import android.widget.LinearLayout
-import androidx.annotation.AttrRes
-import androidx.core.content.ContextCompat
-import com.google.android.material.tabs.TabLayout
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.radiobutton.MaterialRadioButton
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLabel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLayout
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.priceLabel
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.priceLayout
-import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.quotesSortTabLayout
 
-class QuotesSortView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        @AttrRes defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr) {
-
-    private var unselectedColor: Int = R.color.kh_uisdk_off_black
-    private var selectedColor: Int = R.color.kh_uisdk_off_white
-    private var leftBackground: Int = R.drawable.uisdk_sort_left_background
+class QuotesSortView : BottomSheetDialogFragment() {
 
     private var listener: Listener? = null
 
-    private var selectedSortMethod: SortMethod = SortMethod.ETA
-    private var hasDestination = false
-    private var isPrebook = false
+    var selectedSortMethod = MutableLiveData<SortMethod>()
+    private var quotesSortByPrice : MaterialRadioButton? = null
+    private var quotesSortByDriverArrival : MaterialRadioButton? = null
 
-    init {
-        inflate(context, R.layout.uisdk_view_quotes_sort, this)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.uisdk_view_quotes_sort, container, false)
 
-        getCustomisationParameters(context, attrs, defStyleAttr)
-
-        etaLayout.apply {
-            isActivated = true
-            setOnClickListener { etaClicked() }
+        val quotesSortBySave = view.findViewById<LoadingButtonView>(R.id.quotesSortBySave)
+        quotesSortBySave.apply {
+            setText(R.string.kh_uisdk_save)
+            setOnClickListener { saveClicked() }
         }
 
-        priceLayout.apply {
-            isActivated = false
-            setOnClickListener { priceClicked() }
+        quotesSortByDriverArrival = view?.findViewById(R.id.quotesSortByDriverArrival)
+        quotesSortByPrice = view?.findViewById(R.id.quotesSortByPrice)
+
+        val nameObserver = Observer<SortMethod> { sort ->
+            if(sort == SortMethod.PRICE)
+                quotesSortByPrice?.isChecked = true
+            else
+                quotesSortByDriverArrival?.isChecked = true
+        }
+        selectedSortMethod.observe(this, nameObserver)
+
+        val quotesSortByCloseDialog = view.findViewById<ImageButton>(R.id.quotesSortByCloseDialog)
+        quotesSortByCloseDialog.apply {
+            setOnClickListener { dismiss() }
         }
 
-        quotesSortTabLayout.apply {
-            addTab(quotesSortTabLayout.newTab())
-            addTab(quotesSortTabLayout.newTab())
-            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-                override fun onTabSelected(tab: TabLayout.Tab) {
-                    setSortingMethodByTabPosition(tab.position)
-                }
+        quotesSortByPrice?.apply { setOnClickListener { selectedSortMethod.value = SortMethod.PRICE } }
+        quotesSortByDriverArrival?.apply { setOnClickListener { selectedSortMethod.value = SortMethod.ETA } }
 
-                override fun onTabUnselected(tab: TabLayout.Tab) {
-                    // Do nothing
-                }
-
-                override fun onTabReselected(tab: TabLayout.Tab) {
-                    setSortingMethodByTabPosition(tab.position)
-                }
-            })
-        }
+        return view
     }
 
-    private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesSortView,
-                defStyleAttr, R.style.KhQuotesSortView)
-        val rightBackground = typedArray.getResourceId(R.styleable
-                .QuotesSortView_rightBackground, R
-                .drawable.uisdk_sort_right_background)
-        leftBackground = typedArray.getResourceId(R.styleable.QuotesSortView_leftBackground, R
-                .drawable
-                .uisdk_sort_left_background)
-        selectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_selectedTextColor, R.color.kh_uisdk_off_white)
-        unselectedColor = typedArray.getResourceId(R.styleable.QuotesSortView_unselectedTextColor, R.color.kh_uisdk_off_black)
-        typedArray.recycle()
-
-        etaLayout.background = ContextCompat.getDrawable(context, leftBackground)
-        priceLayout.background = ContextCompat.getDrawable(context, rightBackground)
+    companion object {
+        const val TAG = "QuotesSortView"
     }
 
-    private fun etaClicked() {
-        if (!isPrebook) {
-            setSelectedSortMethod(SortMethod.ETA)
-        }
+    override fun getTheme(): Int {
+        return R.style.KhQuoteListSortBottomSheetDialogTheme
     }
 
-    private fun priceClicked() {
-        if (hasDestination) {
-            setSelectedSortMethod(SortMethod.PRICE)
-        } else {
-            listener?.sortChoiceRequiresDestination()
-        }
-    }
-
-    private fun setSelectedSortMethod(selectedSortMethod: SortMethod) {
-        this.selectedSortMethod = selectedSortMethod
-        when (selectedSortMethod) {
-            SortMethod.ETA -> activateEtaButton()
-            SortMethod.PRICE -> activatePriceButton()
-        }
-
-        listener?.onUserChangedSortMethod(selectedSortMethod)
-    }
-
-    private fun activateEtaButton() {
-        // deactivate highPrice button
-        priceLayout.isActivated = false
-        priceLabel.setTextColor(ContextCompat.getColor(context, unselectedColor))
-        // activate eta button
-        etaLayout.isActivated = true
-        etaLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
-    }
-
-    private fun activatePriceButton() {
-        // deactivate eta button
-        etaLayout.isActivated = false
-        etaLabel.setTextColor(ContextCompat.getColor(context, unselectedColor))
-        // activate highPrice button
-        priceLayout.isActivated = true
-        priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
-    }
-
-    fun destinationChanged(journeyDetails: JourneyDetails?) {
-        hasDestination = journeyDetails?.destination != null
-        isPrebook = journeyDetails?.date != null
-        val sortMethod = if (hasDestination && isPrebook) SortMethod.PRICE else SortMethod.ETA
-        setSelectedSortMethod(sortMethod)
-    }
-
-    private fun setSortingMethodByTabPosition(position: Int) = if (position == 0) {
-        etaClicked()
-    } else {
-        priceClicked()
+    private fun saveClicked(){
+        selectedSortMethod.value?.let { listener?.onUserChangedSortMethod(it) }
+        dismiss()
     }
 
     interface Listener {
 
         fun onUserChangedSortMethod(sortMethod: SortMethod)
-
-        fun sortChoiceRequiresDestination()
 
     }
 
