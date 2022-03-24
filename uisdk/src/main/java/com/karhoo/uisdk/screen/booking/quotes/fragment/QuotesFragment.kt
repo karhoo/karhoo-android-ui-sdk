@@ -42,7 +42,6 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.quotesTaxesAndFeesLabel
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
