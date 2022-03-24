@@ -26,6 +26,8 @@ interface QuotesRecyclerContract {
 
         fun showNoCoverageError(show: Boolean)
 
+        fun showNoAddressesError(show: Boolean)
+
         fun watchQuoteListStatus(lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
         BookingQuotesViewModel)
 
