@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quotesListRecycler"
@@ -23,29 +23,30 @@
         android:id="@+id/quotesLoadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+ />
 
     <TextView
         android:id="@+id/quotesLoadingLabel"
-        android:layout_width="@dimen/kh_uisdk_spacing_none"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/kh_uisdk_spacing_none"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xxsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         android:gravity="center"
         android:padding="@dimen/kh_uisdk_spacing_xxsmall"
+        android:visibility="gone"
         android:text="@string/kh_uisdk_retrieving_quotes"
         android:textColor="@color/kh_uisdk_med_grey"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/quotesLoadingProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/quotesLoadingProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         />
 
     <com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorView
         android:id="@+id/quotesErrorView"

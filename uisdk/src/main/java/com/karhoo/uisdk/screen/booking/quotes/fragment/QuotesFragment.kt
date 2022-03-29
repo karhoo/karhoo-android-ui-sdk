@@ -135,6 +135,9 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
 
         initAvailability();
+
+        showFilteringWidgets(false)
+
         return view
     }
 
@@ -185,19 +188,17 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         val sortMethod = SortMethod.PRICE
         quotesSortWidget.selectedSortMethod.postValue(sortMethod)
         presenter.sortMethodChanged(sortMethod)
-        changeVisibilityOfQuotesSortByButton(journeyDetails.destination == null)
     }
 
-    private fun changeVisibilityOfQuotesSortByButton(gone: Boolean){
+    private fun changeVisibilityOfQuotesSortByButton(show: Boolean){
         this::quotesSortByButton.isInitialized.let {
             if(it)
-                quotesSortByButton.visibility = if (gone || isPrebook) GONE else VISIBLE
+                quotesSortByButton.visibility = if (show && !isPrebook) VISIBLE else GONE
         }
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        if (quoteList.isNotEmpty())
-            quotesTaxesAndFeesLabel.visibility = View.VISIBLE
+        showFilteringWidgets(quoteList.isNotEmpty())
         quotesRecyclerView.updateList(quoteList)
     }
 
@@ -242,7 +243,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showList(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(!show)
+        changeVisibilityOfQuotesSortByButton(show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
