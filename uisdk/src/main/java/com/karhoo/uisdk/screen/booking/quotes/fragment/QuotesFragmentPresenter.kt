@@ -93,7 +93,9 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
                 showNoAddressesError(true)
             }
             hasAvailability -> view?.apply {
-                showList(true)
+                if(dataModel?.quotes?.size?.compareTo(0) ?: 0 > 1) {
+                    showList(true)
+                }
             }
             else -> view?.apply {
                 showList(false)
