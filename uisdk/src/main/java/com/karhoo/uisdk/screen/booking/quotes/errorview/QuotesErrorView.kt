@@ -46,7 +46,7 @@ class QuotesErrorView @JvmOverloads constructor(
         quotesErrorSubtitle.text = presenter.setSpannableOnSubititle(
             reason.linkTitle,
             reason.subtitleLink,
-            reason.title,
+            reason.subtitle,
             resources.getColor(R.color.kh_uisdk_colorAccent)
         )
 

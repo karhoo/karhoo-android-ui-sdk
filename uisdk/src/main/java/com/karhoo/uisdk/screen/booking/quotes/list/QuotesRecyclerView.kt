@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -13,8 +14,10 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
+import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewGenericReason
+import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewLinkedReason
 import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorViewContract
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.*
 
@@ -126,18 +129,28 @@ class QuotesRecyclerView @JvmOverloads constructor(
         if (show) {
             quotesErrorView.visibility = View.VISIBLE
             quotesErrorView.setup(
-                ErrorViewGenericReason(
-                    context.resources.getString(R.string.kh_uisdk_no_availability_title),
-                    context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
-                    R.drawable.kh_uisdk_ic_no_available_quotes
+                ErrorViewLinkedReason(
+                    context.resources.getString(R.string.kh_uisdk_no_coverage_title),
+                    context.resources.getString(R.string.kh_uisdk_no_coverage_subtitle),
+                        "Contact us",
+                                "Contact Us",
+                    R.drawable.kh_uisdk_ic_no_coverage_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
                     override fun onClicked() {
-                        //do nothing
+//                        val emailComposer = KarhooFeedbackEmailComposer(context)
+//                        val noCoverageFeedbackIntent = emailComposer.showNoCoverageEmail()
+//                        noCoverageFeedbackIntent?.let { intent ->
+//                            context.startActivity(intent)
+//                        }
                     }
 
                     override fun onSubtitleClicked() {
-                        //do nothing
+                        val emailComposer = KarhooFeedbackEmailComposer(context)
+                        val noCoverageFeedbackIntent = emailComposer.showNoCoverageEmail()
+                        noCoverageFeedbackIntent?.let { intent ->
+                            context.startActivity(intent)
+                        }
                     }
                 })
         } else {

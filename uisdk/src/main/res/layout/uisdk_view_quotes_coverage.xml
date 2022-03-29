@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/quotesErrorIcon"
-        android:layout_width="@dimen/kh_uisdk_spacing_xlarge"
-        android:layout_height="@dimen/kh_uisdk_spacing_xlarge"
+        android:layout_width="@dimen/kh_uisdk_spacing_xxxlarge"
+        android:layout_height="@dimen/kh_uisdk_spacing_xxxlarge"
         android:src="@drawable/kh_uisdk_ic_no_coverage_quotes" />
 
     <TextView

@@ -264,6 +264,8 @@
     <string name="kh_uisdk_next">Next</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_no_coverage_title" translatable="false">We don\'t have any fleets in this area yet.</string>
+    <string name="kh_uisdk_no_coverage_subtitle" translatable="false">%s to suggest some.</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
