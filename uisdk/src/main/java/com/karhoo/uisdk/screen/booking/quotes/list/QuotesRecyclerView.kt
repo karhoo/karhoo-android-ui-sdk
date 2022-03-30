@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -138,11 +137,7 @@ class QuotesRecyclerView @JvmOverloads constructor(
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
                     override fun onClicked() {
-//                        val emailComposer = KarhooFeedbackEmailComposer(context)
-//                        val noCoverageFeedbackIntent = emailComposer.showNoCoverageEmail()
-//                        noCoverageFeedbackIntent?.let { intent ->
-//                            context.startActivity(intent)
-//                        }
+                        // Do nothing
                     }
 
                     override fun onSubtitleClicked() {
