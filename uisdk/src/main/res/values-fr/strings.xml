@@ -125,6 +125,8 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Merci de nous en dire un peu plus sur votre course.</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes et frais inclus</string>
+    <string name="kh_uisdk_filter">Filtre</string>
+    <string name="kh_uisdk_filter_page_results">Voir tout %s résultats</string>
     <string name="kh_uisdk_finding_your_ride">Création de votre course</string>
     <string name="kh_uisdk_first_name_hint">Prénom</string>
     <!-- Fare type -->
@@ -262,8 +264,6 @@
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
-    <string name="kh_uisdk_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
-    <string name="kh_uisdk_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -323,6 +323,12 @@
     <string name="kh_uisdk_quote_learn_more">Plus</string>
     <string name="kh_uisdk_quoted_fare">Prix indiqué</string>
     <string name="kh_uisdk_quotes_activity_title">Citations</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Veuillez saisir les adresses de prise en charge et de dépôt pour accéder aux offres</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">L’adresse de prise en charge ou de retour est manquante</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Veuillez modifier l’une des adresses pour accéder aux devis</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Les adresses de départ et de destination sont similaires</string>
     <string name="kh_uisdk_rate_trip_label">Veuillez donner une évaluation à votre voyage.</string>
     <string name="kh_uisdk_rating_submitted">Merci pour votre évaluation.</string>
     <string name="kh_uisdk_rebook_ride">Re-commander</string>
@@ -365,7 +371,6 @@
     <string name="kh_uisdk_sign_in_but">Connexion</string>
     <string name="kh_uisdk_sign_out">Déconnexion</string>
     <string name="kh_uisdk_similar_addresses_subtitle">Veuillez modifier l’une des adresses pour accéder aux devis</string>
-    <string name="kh_uisdk_similar_addresses_title">Les adresses de départ et de destination sont similaires</string>
     <string name="kh_uisdk_something_went_wrong">Une erreur est survenue.</string>
     <string name="kh_uisdk_sort_by">Trier par</string>
     <string name="kh_uisdk_sorter_cheapest">Prix</string>

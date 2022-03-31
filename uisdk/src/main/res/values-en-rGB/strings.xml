@@ -125,6 +125,8 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_page_results">View all %s results</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!-- Fare type -->
@@ -262,8 +264,6 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
-    <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
-    <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -323,6 +323,12 @@
     <string name="kh_uisdk_quote_learn_more">Learn more</string>
     <string name="kh_uisdk_quoted_fare">Estimated Fare</string>
     <string name="kh_uisdk_quotes_activity_title">Quotes</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Please enter both pickup and drop-off addresses to access the offers</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Pick up or drop-off address is missing</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Please select another time</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Departure and destination addresses are similar</string>
     <string name="kh_uisdk_rate_trip_label">How would you rate your trip?</string>
     <string name="kh_uisdk_rating_submitted">Thank you for submitting your rating.</string>
     <string name="kh_uisdk_rebook_ride">Rebook Ride</string>
@@ -365,7 +371,6 @@
     <string name="kh_uisdk_sign_in_but">SIGN IN</string>
     <string name="kh_uisdk_sign_out">Sign out</string>
     <string name="kh_uisdk_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
-    <string name="kh_uisdk_similar_addresses_title">Departure and destination addresses are similar</string>
     <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
     <string name="kh_uisdk_sort_by">Sort by</string>
     <string name="kh_uisdk_sorter_cheapest">PRICE</string>
