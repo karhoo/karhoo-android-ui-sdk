@@ -54,10 +54,12 @@ class JourneyDetailsStateViewModel(application: Application) : BaseStateViewMode
 
     private fun updatePickup(pickup: LocationInfo?) {
         viewState = JourneyDetails(pickup, viewState.destination, viewState.date)
+        viewAction = AddressBarViewContract.AddressBarActions.AddressChanged(pickup, AddressCodes.PICKUP)
     }
 
     private fun updateDestination(destination: LocationInfo?) {
         viewState = JourneyDetails(viewState.pickup, destination, viewState.date)
+        viewAction = AddressBarViewContract.AddressBarActions.AddressChanged(destination, AddressCodes.DESTINATION)
     }
 
     private fun updateDate(date: DateTime?) {

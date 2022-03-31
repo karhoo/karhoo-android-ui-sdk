@@ -29,6 +29,8 @@ interface QuotesFragmentContract {
 
         fun showSameAddressesError(show: Boolean)
 
+        fun showNoAddressesError(show: Boolean)
+
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
         fun provideResources(): Resources
