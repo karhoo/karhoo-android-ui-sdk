@@ -125,6 +125,8 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Merci de nous en dire un peu plus sur votre course.</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes et frais inclus</string>
+    <string name="kh_uisdk_filter">Filtre</string>
+    <string name="kh_uisdk_filter_page_results">Voir tout %s résultats</string>
     <string name="kh_uisdk_finding_your_ride">Création de votre course</string>
     <string name="kh_uisdk_first_name_hint">Prénom</string>
     <!-- Fare type -->
