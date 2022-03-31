@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
@@ -42,7 +43,6 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.quotesTaxesAndFeesLabel
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
@@ -69,6 +69,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
+    private lateinit var quotesTaxesAndFeesLabel: TextView
     private var currentValidityDeadlineTimestamp: Long? = null
     private lateinit var quotesSortByButton: MaterialButton
     private var isPrebook = false
@@ -83,6 +84,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
+        quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
 
         quotesSortWidget = QuotesSortView()
         quotesSortWidget.setListener(this)
@@ -133,7 +135,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
 
         initAvailability();
+
+        showFilteringWidgets(false)
+
         return view
+    }
+
+    override fun onPause() {
+        super.onPause()
+        availabilityProvider?.cleanup()
     }
 
     fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
@@ -183,19 +193,17 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         val sortMethod = SortMethod.PRICE
         quotesSortWidget.selectedSortMethod.postValue(sortMethod)
         presenter.sortMethodChanged(sortMethod)
-        changeVisibilityOfQuotesSortByButton(journeyDetails.destination == null)
     }
 
-    private fun changeVisibilityOfQuotesSortByButton(gone: Boolean){
+    private fun changeVisibilityOfQuotesSortByButton(show: Boolean){
         this::quotesSortByButton.isInitialized.let {
             if(it)
-                quotesSortByButton.visibility = if (gone || isPrebook) GONE else VISIBLE
+                quotesSortByButton.visibility = if (show && !isPrebook) VISIBLE else GONE
         }
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        if(quoteList.isNotEmpty())
-            quotesTaxesAndFeesLabel.visibility = View.VISIBLE
+        showFilteringWidgets(quoteList.isNotEmpty())
         quotesRecyclerView.updateList(quoteList)
     }
 
@@ -210,27 +218,29 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showNoCoverageError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showNoCoverageError(show)
     }
 
     override fun showNoFleetsError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showNoFleetsError(show)
     }
 
     override fun showSameAddressesError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showSameAddressesError(show)
+    }
+
+    override fun showNoAddressesError(show: Boolean) {
+        showFilteringWidgets(!show)
+        quotesRecyclerView.showNoAddressesError(show)
+    }
+
+    private fun showFilteringWidgets(show: Boolean) {
+        changeVisibilityOfQuotesSortByButton(show)
+        categorySelectorWidget.visibility = if (show) VISIBLE else GONE
+        quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
@@ -238,7 +248,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showList(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(!show)
+        changeVisibilityOfQuotesSortByButton(show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
@@ -295,6 +305,20 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
         return Observer { actions ->
             when (actions) {
+                is AddressBarViewContract.AddressBarActions.AddressChanged -> {
+                    when (actions.addressCode) {
+                        AddressCodes.PICKUP -> {
+                            dataModel?.journeyDetails?.pickup = actions.address
+                        }
+                        AddressCodes.DESTINATION -> {
+                            dataModel?.journeyDetails?.destination = actions.address
+                        }
+                    }
+
+                    dataModel?.let {
+                        presenter.setData(it)
+                    }
+                }
                 is AddressBarViewContract.AddressBarActions.ShowAddressActivity ->
                     startActivityForResult(actions.intent, actions.addressCode)
             }

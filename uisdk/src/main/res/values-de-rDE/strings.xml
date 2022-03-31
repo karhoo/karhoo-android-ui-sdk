@@ -264,8 +264,6 @@
     <string name="kh_uisdk_network_error">Wir scheinen Probleme mit der Verbindung zum Netzwerk zu haben</string>
     <string name="kh_uisdk_new_ride">NEUE FAHRT</string>
     <string name="kh_uisdk_next">Weiter</string>
-    <string name="kh_uisdk_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
-    <string name="kh_uisdk_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
     <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
@@ -325,6 +323,12 @@
     <string name="kh_uisdk_quote_learn_more">Erfahren Sie mehr</string>
     <string name="kh_uisdk_quoted_fare">Geschätzter Fahrpreis</string>
     <string name="kh_uisdk_quotes_activity_title">Zitate</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Bitte geben Sie sowohl die Abhol- als auch die Rückgabeadresse ein, um die Angebote zu nutzen</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Abhol- oder Rückgabeadresse fehlt</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Abgangs- und Zieladresse sind ähnlich</string>
     <string name="kh_uisdk_rate_trip_label">Wie würden Sie Ihre Reise bewerten?</string>
     <string name="kh_uisdk_rating_submitted">Vielen Dank für die Abgabe Ihrer Bewertung.</string>
     <string name="kh_uisdk_rebook_ride">Rebooking-Fahrt</string>
@@ -367,7 +371,6 @@
     <string name="kh_uisdk_sign_in_but">Anmelden</string>
     <string name="kh_uisdk_sign_out">Abmeldung</string>
     <string name="kh_uisdk_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
-    <string name="kh_uisdk_similar_addresses_title">Abgangs- und Zieladresse sind ähnlich</string>
     <string name="kh_uisdk_something_went_wrong">Es ist ein Fehler aufgetreten.</string>
     <string name="kh_uisdk_sort_by">Sortieren nach</string>
     <string name="kh_uisdk_sorter_cheapest">Preis</string>
