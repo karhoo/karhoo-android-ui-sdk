@@ -1,0 +1,9 @@
+<vector android:height="32dp" android:viewportHeight="34"
+    android:viewportWidth="34" android:width="32dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/kh_uisdk_light_blue"
+        android:pathData="M9,1L25,1A8,8 0,0 1,33 9L33,25A8,8 0,0 1,25 33L9,33A8,8 0,0 1,1 25L1,9A8,8 0,0 1,9 1z"
+        android:strokeColor="@color/kh_uisdk_accent" android:strokeWidth="1"/>
+    <path android:fillColor="@color/kh_uisdk_transparent" android:pathData="M10,17H24"
+        android:strokeColor="@color/kh_uisdk_accent" android:strokeLineCap="round"
+        android:strokeLineJoin="round" android:strokeWidth="2"/>
+</vector>

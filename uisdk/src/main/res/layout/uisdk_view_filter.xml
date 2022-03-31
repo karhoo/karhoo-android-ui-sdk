@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/kh_uisdk_spacing_small"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
+            android:id="@+id/filterViewPassengerNumberedFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
+            android:id="@+id/filterViewLuggageNumberedFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
+            android:id="@+id/filterViewVehicleTypeMultiSelectChipsFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <com.karhoo.uisdk.base.view.LoadingButtonView
+        android:id="@+id/quotesFilterSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_margin_medium" />
+</LinearLayout>
