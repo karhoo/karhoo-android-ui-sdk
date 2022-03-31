@@ -92,13 +92,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
         quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
-
-        quotesSortWidget = QuotesSortView()
-        quotesSortWidget.setListener(this)
-
-        quotesFilterWidget = FilterDialogFragment()
-        quotesFilterWidget.setListener(this)
-        quotesFilterWidget.createFilterChain(filterChain)
+        initializeSortView()
+        initializeFilterView()
 
         journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
@@ -157,6 +152,17 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         showFilteringWidgets(false)
 
         return view
+    }
+
+    fun initializeSortView(){
+        quotesSortWidget = QuotesSortView()
+        quotesSortWidget.setListener(this)
+    }
+
+    fun initializeFilterView(){
+        quotesFilterWidget = FilterDialogFragment()
+        quotesFilterWidget.setListener(this)
+        quotesFilterWidget.createFilterChain(filterChain)
     }
 
     override fun onPause() {
