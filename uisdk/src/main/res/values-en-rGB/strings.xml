@@ -125,6 +125,8 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_page_results">View all %s results</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!-- Fare type -->

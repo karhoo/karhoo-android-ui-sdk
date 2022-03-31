@@ -125,6 +125,8 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
     <string name="kh_uisdk_fees_and_taxes_included">Inklusive Steuern und Gebühren</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_page_results">Alle %s Ergebnisse anzeigen</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden...</string>
     <string name="kh_uisdk_first_name_hint">Vorname</string>
     <!-- Fare type -->
