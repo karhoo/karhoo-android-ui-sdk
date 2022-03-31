@@ -18,7 +18,7 @@ public class QuotesAdapter extends BaseRecyclerAdapter<Quote, QuotesListItemView
 
     private Context context;
     private boolean isPrebook;
-    private static SortMethod sortMethod = SortMethod.ETA;
+    private static SortMethod sortMethod = SortMethod.PRICE;
 
     public QuotesAdapter(Context context) {
         this.context = context;

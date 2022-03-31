@@ -22,17 +22,15 @@ class QuotesListViewMock: QuotesFragmentContract.View {
 
     override fun setSortMethod(sortMethod: SortMethod) { /** do nothing **/ }
 
-    override fun setChevronState(isExpanded: Boolean) { /** do nothing **/ }
-
     override fun prebook(isPrebook: Boolean) { /** do nothing **/ }
 
-    override fun showNoAvailability() { /** do nothing **/ }
+    override fun showNoCoverageError(show: Boolean) { /** do nothing **/ }
 
-    override fun showNoResultsText(show: Boolean) {
+    override fun showNoFleetsError(show: Boolean) {
         calledShowNowResults = show
     }
 
-    override fun initAvailability() {
+    override fun showSameAddressesError(show: Boolean) {
         /** do nothing **/
     }
 
@@ -49,6 +47,10 @@ class QuotesListViewMock: QuotesFragmentContract.View {
     }
 
     override fun showList(show: Boolean) {
+        /** do nothing **/
+    }
+
+    override fun showNoAddressesError(show: Boolean) {
         /** do nothing **/
     }
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }

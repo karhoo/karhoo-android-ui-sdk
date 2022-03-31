@@ -13,7 +13,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     QuotesFragmentContract.Presenter, AvailabilityHandler {
 
     private var isPrebook: Boolean = false
-    private var hasDestination: Boolean = false
+    private var hasAddresses: Boolean = false
     private var dataModel: QuoteListViewDataModel? = null
 
     override var hasAvailability: Boolean = false
@@ -24,15 +24,19 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     override var hasNoResults: Boolean = false
         set(value) {
             field = value
-            view?.showNoResultsText(hasNoResults)
+            view?.showNoFleetsError(hasNoResults)
         }
 
     init {
         attachView(view)
     }
 
+    override fun handleSameAddressesError() {
+        view?.showSameAddressesError(true)
+    }
+
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
-        view?.showSnackbarError(snackbarConfig)
+        view?.showNoCoverageError(true)
     }
 
     override fun setData(data: QuoteListViewDataModel) {
@@ -67,7 +71,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     private fun checkBookingInfo() {
         dataModel?.journeyDetails?.let {
             isPrebook = it.date != null
-            hasDestination = it.destination != null
+            hasAddresses = it.destination != null && it.pickup != null
 
             view?.apply {
                 prebook(isPrebook)
@@ -75,7 +79,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
                 destinationChanged(it)
             }
 
-            if (!hasDestination) {
+            if (!hasAddresses) {
                 shouldShowQuotesList()
             }
             updateList()
@@ -84,15 +88,18 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     private fun shouldShowQuotesList() {
         when {
-            !hasDestination -> view?.apply {
-                view?.showList(false)
+            !hasAddresses -> view?.apply {
+                showList(false)
+                showNoAddressesError(true)
             }
             hasAvailability -> view?.apply {
-                view?.showList(true)
+                if(dataModel?.quotes?.size?.compareTo(0) ?: 0 > 1) {
+                    showList(true)
+                }
             }
             else -> view?.apply {
-                view?.showList(false)
-                showNoAvailability()
+                showList(false)
+                showNoCoverageError(true)
             }
         }
     }

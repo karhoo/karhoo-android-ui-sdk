@@ -21,13 +21,15 @@ interface QuotesFragmentContract {
 
         fun setSortMethod(sortMethod: SortMethod)
 
-        fun setChevronState(isExpanded: Boolean)
-
         fun prebook(isPrebook: Boolean)
 
-        fun showNoAvailability()
+        fun showNoCoverageError(show: Boolean)
 
-        fun showNoResultsText(show: Boolean)
+        fun showNoFleetsError(show: Boolean)
+
+        fun showSameAddressesError(show: Boolean)
+
+        fun showNoAddressesError(show: Boolean)
 
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
@@ -38,8 +40,6 @@ interface QuotesFragmentContract {
         fun setup(data: QuoteListViewDataModel)
 
         fun showList(show: Boolean)
-
-        fun initAvailability()
     }
 
     interface Presenter {
@@ -55,9 +55,6 @@ interface QuotesFragmentContract {
 
     interface QuoteListDelegate {
         fun onQuoteSelected()
-        // These will disappear once we transition to a full-screen implementation
-        fun onListExpanded()
-        fun onListCollapsed()
         fun onError(snackBar: SnackbarConfig)
     }
 
