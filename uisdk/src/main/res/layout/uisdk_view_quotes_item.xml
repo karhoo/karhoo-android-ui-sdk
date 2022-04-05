@@ -4,112 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
     android:background="@drawable/kh_uisdk_quote_list_item_background"
     android:orientation="vertical"
-    android:padding="@dimen/kh_uisdk_spacing_none"
-    android:layout_marginBottom="@dimen/kh_uisdk_spacing_small">
+    android:padding="@dimen/kh_uisdk_spacing_none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="?android:attr/selectableItemBackground"
-        >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <FrameLayout
-                    android:layout_width="@dimen/kh_uisdk_logo_width"
-                    android:layout_height="@dimen/kh_uisdk_logo_height"
-                    android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
-                    android:padding="@dimen/kh_uisdk_spacing_xsmall"
-                    android:layout_marginStart="@dimen/kh_uisdk_spacing_x6small">
-
-                    <ProgressBar
-                        android:id="@+id/quoteProgressBar"
-                        style="@android:style/Widget.ProgressBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-
-                    <ImageView
-                        android:id="@+id/logoImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:scaleType="fitCenter"
-                        />
-
-                    <ImageView
-                        android:id="@+id/loadingIcon"
-                        android:layout_width="@dimen/kh_uisdk_spacing_medium_large"
-                        android:layout_height="@dimen/kh_uisdk_spacing_medium_large"
-                        android:layout_gravity="center"
-                        android:scaleType="centerInside"
-                        app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading" />
-
-                </FrameLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:paddingStart="@dimen/kh_uisdk_spacing_x6small"
-                        android:paddingTop="@dimen/kh_uisdk_spacing_x6small"
-                        android:paddingEnd="@dimen/kh_uisdk_spacing_x6small"
-                        >
-
-                        <TextView
-                            android:id="@+id/categoryText"
-                            style="@style/Text.Alternative.XSmall"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:textSize="@dimen/kh_uisdk_text_size_small_medium"
-                            tools:text="Car" />
-
-                        <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
-                            android:id="@+id/capacityWidget"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/detailsButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/kh_uisdk_quote_list_item_details_background"
-                        android:textColor="@color/white"
-                        android:layout_weight="0.3"
-                        android:paddingStart="@dimen/kh_uisdk_spacing_small"
-                        android:paddingEnd="@dimen/kh_uisdk_spacing_small"
-                        android:paddingTop="@dimen/kh_uisdk_spacing_semi_small"
-                        android:paddingBottom="@dimen/kh_uisdk_spacing_semi_small"
-                        android:textSize="@dimen/kh_uisdk_text_size_xsmall"
-                        tools:text="Details"/>
-                </LinearLayout>
-            </LinearLayout>
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/kh_uisdk_spacing_xxsmall"
-            android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small">
+            android:padding="@dimen/kh_uisdk_spacing_semi_small">
+
+            <FrameLayout
+                android:layout_width="@dimen/kh_uisdk_logo_width"
+                android:layout_height="@dimen/kh_uisdk_logo_height">
+
+                <ProgressBar
+                    android:id="@+id/quoteProgressBar"
+                    style="@android:style/Widget.ProgressBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <ImageView
+                    android:id="@+id/logoImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:id="@+id/loadingIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_x6small"
+                    android:paddingEnd="@dimen/kh_uisdk_spacing_x6small">
+
+                    <TextView
+                        android:id="@+id/categoryText"
+                        style="@style/Text.Alternative.XSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="@dimen/kh_uisdk_text_size_small_medium"
+                        tools:text="Car" />
+
+                    <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
+                        android:id="@+id/capacityWidget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/detailsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:background="@drawable/kh_uisdk_quote_list_item_details_background"
+                    android:paddingStart="@dimen/kh_uisdk_spacing_small"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_semi_small"
+                    android:paddingEnd="@dimen/kh_uisdk_spacing_small"
+                    android:paddingBottom="@dimen/kh_uisdk_spacing_semi_small"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
+                    tools:text="Details" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_x6small"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/kh_uisdk_spacing_semi_small"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_semi_small">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -120,29 +114,29 @@
                     android:id="@+id/etaText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:maxLines="1"
                     android:gravity="start"
+                    android:maxLines="1"
                     android:text="@string/kh_uisdk_loading_min"
                     android:textColor="@color/kh_uisdk_text_primary"
                     android:textSize="@dimen/kh_uisdk_text_size_large"
                     tools:text="99 min" />
 
                 <TextView
+                    style="@style/Text.Alternative.XSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    style="@style/Text.Alternative.XSmall"
                     android:gravity="start"
                     android:maxLines="1"
+                    android:text="@string/kh_uisdk_driver_arrival"
                     android:textColor="@color/kh_uisdk_text_secondary"
-                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
-                    android:text="@string/kh_uisdk_driver_arrival"/>
+                    android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="end">
+                android:gravity="end"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/priceText"
@@ -161,8 +155,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:maxLines="1"
-                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                     android:textColor="@color/kh_uisdk_text_secondary"
+                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                     tools:text="Fixed" />
             </LinearLayout>
         </LinearLayout>
@@ -170,32 +164,32 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/bt_border_color"/>
+            android:background="@color/bt_border_color" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@drawable/kh_uisdk_quote_list_item_review_background"
-            android:padding="@dimen/kh_uisdk_spacing_xsmall"
-            >
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/kh_uisdk_spacing_semi_small"
+            android:paddingTop="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingBottom="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_semi_small">
 
             <ImageView
                 android:id="@+id/logoImageSmall"
                 android:layout_width="@dimen/kh_uisdk_spacing_small"
                 android:layout_height="@dimen/kh_uisdk_spacing_small"
                 android:layout_gravity="center"
-                android:scaleType="centerInside"
-                android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
-                />
+                android:scaleType="centerInside" />
 
             <TextView
                 android:id="@+id/quoteNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
                 android:textColor="@color/kh_uisdk_text_primary"
                 android:textSize="@dimen/kh_uisdk_text_size_small"
                 tools:text="Quote Name" />
@@ -204,22 +198,21 @@
                 android:id="@+id/quoteFleetRatingLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:gravity="end"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@drawable/uisdk_ic_star"/>
+                    android:src="@drawable/uisdk_ic_star" />
 
                 <TextView
                     android:id="@+id/quoteFleetRating"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textSize="@dimen/kh_uisdk_text_size_small"
                     android:textColor="@color/kh_uisdk_warning"
-                    tools:text="Fleet Rating"/>
+                    android:textSize="@dimen/kh_uisdk_text_size_small"
+                    tools:text="Fleet Rating" />
             </LinearLayout>
 
         </LinearLayout>
