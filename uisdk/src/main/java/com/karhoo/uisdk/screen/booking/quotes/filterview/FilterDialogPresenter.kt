@@ -29,10 +29,17 @@ class FilterDialogPresenter(view: FilterDialogContract.View) :
     override fun resetFilters() {
         for(filter in filterChain.filters)
             filter.clearFilter()
+        filterDelegate?.onFiltersApplied()
+    }
+
+    override fun applyFilters() {
+        filterDelegate?.onFiltersApplied()
     }
 
     interface FilterDelegate {
         fun onUserChangedFilter(): Int
+
+        fun onFiltersApplied()
     }
 
     fun setFilterDelegate(filterDelegate: FilterDelegate) {

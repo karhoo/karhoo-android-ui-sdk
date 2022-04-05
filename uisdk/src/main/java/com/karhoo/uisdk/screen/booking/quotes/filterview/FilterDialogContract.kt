@@ -15,5 +15,7 @@ interface FilterDialogContract {
         fun callFilterChanged()
 
         fun resetFilters()
+
+        fun applyFilters()
     }
 }

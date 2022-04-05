@@ -19,6 +19,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewMod
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.extension.toNormalizedLocale
@@ -50,6 +51,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
     private var currentFilter: String? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
     private var analytics: Analytics? = null
+    private var filterChain: FilterChain? = null
 
     private val observer = createObservable()
     private var vehiclesJob: Job? = null
@@ -106,13 +108,38 @@ class KarhooAvailability(private val quotesService: QuotesService,
         filterVehicles()
     }
 
+    override fun filterVehicleListByFilterChain(filterChain: FilterChain) {
+        this.filterChain = filterChain
+        filterVehicles()
+    }
+
     private fun filterVehicles() {
-        if (currentFilter?.isEmpty() == true) {
-            return
+        filterChain?.let {
+            getFilteredVehiclesForFilterChain(it)
+        }?: kotlin.run {
+            if (currentFilter?.isEmpty() == true) {
+                return
+            }
+            currentFilter?.let {
+                getFilteredVehiclesForCategory(it)
+            }
         }
-        currentFilter?.let {
-            getFilteredVehiclesForCategory(it)
+    }
+
+    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
+        filteredList = mutableListOf()
+        availableVehicles.values.forEach {
+            filteredList?.addAll(filterChain.applyFilters(it))
         }
+        updateFleets(filteredList)
+    }
+
+    override fun getNonFilteredVehicles(): List<Quote> {
+        val nonFilteredList = mutableListOf<Quote>()
+        availableVehicles.values.forEach {
+            nonFilteredList.addAll(it)
+        }
+        return nonFilteredList
     }
 
     private fun getFilteredVehiclesForCategory(currentFilter: String) {

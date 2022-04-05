@@ -13,15 +13,23 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/filterViewResetFilters"
+            style="@style/KhFilterViewResetFilters"
+            android:text="@string/kh_uisdk_reset_filter"
+            />
+
         <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
             android:id="@+id/filterViewPassengerNumberedFilter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"/>
 
         <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
             android:id="@+id/filterViewLuggageNumberedFilter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"/>
 
         <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
             android:id="@+id/filterViewVehicleTypeMultiSelectChipsFilter"

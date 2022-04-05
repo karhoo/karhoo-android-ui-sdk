@@ -390,6 +390,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun onUserChangedFilter(): Int {
-        return filterChain.applyFilters(dataModel!!.quotes!!).size
+        return availabilityProvider?.getNonFilteredVehicles()
+            ?.let { filterChain.applyFilters(it).size }?: 0
+    }
+
+    override fun onFiltersApplied() {
+        availabilityProvider?.filterVehicleListByFilterChain(filterChain)
     }
 }

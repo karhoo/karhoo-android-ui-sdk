@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -18,9 +19,13 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     var quotesFilterSave: LoadingButtonView? = null
     var presenter = FilterDialogPresenter(this)
 
+    private lateinit var filterViewResetFilters: TextView
     private lateinit var filterViewPassengerNumberedFilter: NumberedFilterView
     private lateinit var filterViewLuggageNumberedFilter: NumberedFilterView
     private lateinit var filterViewVehicleTypeMultiSelectChipsFilter: MultiSelectChipsFilterView
+
+    private lateinit var passengersFilter: PassengersFilter
+    private lateinit var luggageFilter: LuggageFilter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +34,17 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         val view = inflater.inflate(R.layout.uisdk_view_filter, container, false)
 
         quotesFilterSave = view.findViewById(R.id.quotesFilterSave)
+        quotesFilterSave!!.setOnClickListener {
+            presenter.applyFilters()
+            dismiss()
+        }
+
+        filterViewResetFilters = view.findViewById(R.id.filterViewResetFilters)
+        filterViewResetFilters.setOnClickListener {
+            presenter.resetFilters()
+            dismiss()
+        }
+
         filterViewPassengerNumberedFilter =
             view.findViewById<NumberedFilterView>(R.id.filterViewPassengerNumberedFilter)
         filterViewLuggageNumberedFilter =
@@ -46,6 +62,12 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
     fun createFilterChain(filterChain: FilterChain) {
         presenter.filterChain = filterChain
+
+        passengersFilter = PassengersFilter(1)
+        luggageFilter = LuggageFilter(0)
+
+        filterChain.filters.add(passengersFilter)
+        filterChain.filters.add(luggageFilter)
     }
 
     companion object {
@@ -75,17 +97,19 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     override fun createFilters(filterChain: FilterChain) {
-//        filterViewPassengerNumberedFilter.filter = PassengersFilter(1)
-//        filterViewPassengerNumberedFilter.setTitle("Passenger")
-//        filterViewPassengerNumberedFilter.delegate = {
-//            presenter.callFilterChanged()
-//        }
-//
-//        filterViewLuggageNumberedFilter.filter = LuggageFilter(0)
-//        filterViewLuggageNumberedFilter.setTitle("Luggage")
-//        filterViewLuggageNumberedFilter.delegate = {
-//            presenter.callFilterChanged()
-//        }
+        filterViewPassengerNumberedFilter.filter = passengersFilter
+        filterViewPassengerNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_passengers))
+        filterViewPassengerNumberedFilter.icon = R.drawable.kh_uisdk_ic_passengers
+        filterViewPassengerNumberedFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        filterViewLuggageNumberedFilter.filter = luggageFilter
+        filterViewLuggageNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_luggages))
+        filterViewLuggageNumberedFilter.icon = R.drawable.kh_uisdk_ic_luggage
+        filterViewLuggageNumberedFilter.delegate = {
+            presenter.callFilterChanged()
+        }
 //
 //        val vehicleTypeFilter = VehicleTypeFilter(ArrayList()).apply {
 //            typeValues = ArrayList<String>().apply {

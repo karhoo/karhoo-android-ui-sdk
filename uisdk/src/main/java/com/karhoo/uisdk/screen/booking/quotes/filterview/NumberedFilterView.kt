@@ -27,6 +27,14 @@ class NumberedFilterView @JvmOverloads constructor(
             value?.invoke()
         }
 
+    var icon: Int? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                filterViewItemImage.setImageResource(value)
+            }
+        }
+
     init {
         View.inflate(context, R.layout.uisdk_view_filter_numbered, this)
 

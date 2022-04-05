@@ -4,44 +4,40 @@
     android:id="@+id/filterViewItemNumericUpDownLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="visible">
+    android:visibility="visible"
+    android:background="@drawable/kh_uisdk_view_filter_numbered_background"
+    android:padding="@dimen/kh_uisdk_spacing_semi_small">
 
     <ImageView
         android:id="@+id/filterViewItemImage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/kh_uisdk_ic_close_cross"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/filterViewItemTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:textSize="16sp"
-        android:gravity="center_vertical"
-        android:textColor="@color/textColor"
+        style="@style/KhFilterNumberedViewLabel"
         app:layout_constraintStart_toEndOf="@id/filterViewItemImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="Passenger(s)" />
 
     <ImageView
         android:id="@+id/filterViewItemMinusImage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small"
         android:src="@drawable/kh_uisdk_ic_minus_colored"
         app:layout_constraintEnd_toStartOf="@id/filterViewItemValue"/>
 
     <TextView
         android:id="@+id/filterViewItemValue"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:textAlignment="center"
-        android:layout_marginEnd="10dp"
-        android:textSize="16sp"
-        android:textColor="@color/textColor"
+        style="@style/KhFilterNumberedViewValue"
         app:layout_constraintEnd_toStartOf="@id/filterViewItemPlusImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="2" />
 
     <ImageView
