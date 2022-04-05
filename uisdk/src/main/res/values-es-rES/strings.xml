@@ -126,7 +126,9 @@
     <string name="kh_uisdk_feedback_title">Por favor, cuéntanos más sobre tu viaje</string>
     <string name="kh_uisdk_fees_and_taxes_included">Tasas e impuestos incluidos</string>
     <string name="kh_uisdk_filter">Filtrar</string>
+    <string name="kh_uisdk_filter_luggages">Equipaje(s)</string>
     <string name="kh_uisdk_filter_page_results">Ver todos los resultados %s</string>
+    <string name="kh_uisdk_filter_passengers">Pasajero(s)</string>
     <string name="kh_uisdk_finding_your_ride">Cargando tu viaje...</string>
     <string name="kh_uisdk_first_name_hint">Nombre</string>
     <!-- Fare type -->
@@ -340,6 +342,7 @@
     <string name="kh_uisdk_report_issue">Reportar problema</string>
     <string name="kh_uisdk_requested">Tu viaje ha sido solicitado con %s</string>
     <string name="kh_uisdk_requested_invite">Invitación solicitada</string>
+    <string name="kh_uisdk_reset_filter">Restablecer filtro</string>
     <string name="kh_uisdk_results_empty">Sin resultados</string>
     <string name="kh_uisdk_retrieving_dropoff">Buscando destino</string>
     <!-- Current Trip -->
