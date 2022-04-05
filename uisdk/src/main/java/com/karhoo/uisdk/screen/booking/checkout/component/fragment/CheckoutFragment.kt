@@ -184,6 +184,8 @@ internal class CheckoutFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+        checkoutView.onStop()
+
         if (expirationJob?.isActive == true) {
             expirationJob?.cancel()
         }
