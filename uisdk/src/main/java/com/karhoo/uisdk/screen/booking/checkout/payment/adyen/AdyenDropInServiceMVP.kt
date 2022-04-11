@@ -1,12 +1,12 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
-import com.adyen.checkout.dropin.service.CallResult
+import com.adyen.checkout.dropin.service.DropInServiceResult
 import org.json.JSONObject
 
 interface AdyenDropInServiceMVP {
 
     interface Service {
-        fun handleResult(callResult: CallResult)
+        fun handleResult(callResult: DropInServiceResult)
     }
 
     interface Presenter {

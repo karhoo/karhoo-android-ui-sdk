@@ -3,10 +3,12 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.adyen.checkout.base.model.payments.Amount
 import com.adyen.checkout.card.CardConfiguration
+import com.adyen.checkout.components.model.payments.Amount
 import com.adyen.checkout.core.api.Environment
+import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
+import com.adyen.checkout.dropin.DropInResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.KarhooError
@@ -23,9 +25,9 @@ import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
-import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.TRIP_ID
-import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView.Companion.ADDITIONAL_DATA
+import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toNormalizedLocale
@@ -34,10 +36,13 @@ import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
 
-class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
-                            private val userStore: UserStore = KarhooApi.userStore,
-                            private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter, UserManager.OnUserPaymentChangedListener {
+class AdyenPaymentPresenter(
+    view: PaymentDropInContract.Actions,
+    private val userStore: UserStore = KarhooApi.userStore,
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService,
+    private val clientKey: String
+) : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter,
+    UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
     var quote: Quote? = null
@@ -56,20 +61,15 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
         amount.value = quote?.price?.highPrice.orZero()
 
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
-                KarhooEnvironment.Production()) Environment.EUROPE else Environment.TEST
+            KarhooEnvironment.Production()
+        ) Environment.EUROPE else Environment.TEST
 
-        val dropInIntent = Intent(context, AdyenResultActivity::class.java).apply {
-            putExtra(AdyenResultActivity.TYPE_KEY, AdyenComponentType.DROPIN.id)
-            addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-        }
-
-        return DropInConfiguration.Builder(context, dropInIntent,
-                                           AdyenDropInService::class.java)
-                .setAmount(amount)
-                .setEnvironment(environment)
-                .setShopperLocale(Locale.getDefault())
-                .addCardConfiguration(createCardConfig(context, sdkToken))
-                .build()
+        return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
+            .setAmount(amount)
+            .setEnvironment(environment)
+            .setShopperLocale(Locale.getDefault())
+            .addCardConfiguration(createCardConfig(context.applicationContext, clientKey))
+            .build()
     }
 
     override fun getPaymentNonce(quote: Quote?) {
@@ -80,18 +80,31 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            val dataString = data.getStringExtra(AdyenResultActivity.RESULT_KEY) ?: ""
-            val payload = JSONObject(dataString)
-            when (payload.optString(RESULT_CODE, "")) {
-                AdyenPaymentView.AUTHORISED -> {
-                    this.tripId = payload.optString(TRIP_ID, "")
-                    updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
-                }
-                else -> {
-                    val error = convertToKarhooError(payload)
-                    view?.showPaymentFailureDialog(error)
+
+            //todo error reason map out to KHError
+            when (DropIn.handleActivityResult(requestCode, resultCode, data)) {
+                is DropInResult.Error -> view?.showPaymentFailureDialog()
+                is DropInResult.CancelledByUser -> view?.refresh()
+                is DropInResult.Finished -> { // No need to handle this case, it will not occur if resultIntent is specified
                 }
             }
+
+            val dataString = DropIn.getDropInResultFromIntent(data)
+
+            dataString?.let {
+                val payload = JSONObject(dataString)
+
+                when (payload.optString(RESULT_CODE, "")) {
+                    AdyenPaymentView.AUTHORISED -> {
+                        this.tripId = payload.optString(TRIP_ID, "")
+                        updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
+                    }
+                    else -> {
+                        val error = convertToKarhooError(payload)
+                        view?.showPaymentFailureDialog(error)
+                    }
+                }
+            } ?: view?.showPaymentFailureDialog()
         } else {
             view?.refresh()
         }
@@ -123,7 +136,10 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                         getPaymentMethods(locale)
                     }
                 }
-                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                is Resource.Failure -> view?.showError(
+                    R.string.kh_uisdk_something_went_wrong,
+                    result.error
+                )
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -134,22 +150,26 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
+        val saveCard = !KarhooUISDKConfigurationProvider.isGuest()
+
         return CardConfiguration.Builder(context, publicKey)
-                .setShopperLocale(Locale.getDefault())
-                .setHolderNameRequire(true)
-                .setShowStorePaymentField(false)
-                .build()
+            .setShopperLocale(Locale.getDefault())
+            .setHolderNameRequired(true)
+            .setShowStorePaymentField(saveCard)
+            .build()
     }
 
     private fun getPaymentMethods(locale: Locale?) {
-        val amount = AdyenAmount(quote?.price?.currencyCode ?: DEFAULT_CURRENCY
-                                 , quote?.price?.highPrice.orZero())
+        val amount = AdyenAmount(
+            quote?.price?.currencyCode ?: DEFAULT_CURRENCY, quote?.price?.highPrice.orZero()
+        )
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
         } else {
             let {
                 val localizedString: String? = locale?.toNormalizedLocale()
-                val request = AdyenPaymentMethodsRequest(amount = amount, shopperLocale = localizedString)
+                val request =
+                    AdyenPaymentMethodsRequest(amount = amount, shopperLocale = localizedString)
                 paymentsService.getAdyenPaymentMethods(request).execute { result ->
                     when (result) {
                         is Resource.Success -> {
@@ -157,7 +177,10 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                                 view?.showPaymentUI(this.adyenKey, it, this.quote)
                             }
                         }
-                        is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                        is Resource.Failure -> view?.showError(
+                            R.string.kh_uisdk_something_went_wrong,
+                            result.error
+                        )
                         //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
@@ -175,7 +198,10 @@ class AdyenPaymentPresenter(view: PaymentDropInContract.Actions,
                 view?.threeDSecureNonce(tripId, tripId, amount)
             }
             else -> {
-                view?.showError(R.string.kh_uisdk_something_went_wrong, karhooError = KarhooError.FailedToCallMoneyService)
+                view?.showError(
+                    R.string.kh_uisdk_something_went_wrong,
+                    karhooError = KarhooError.FailedToCallMoneyService
+                )
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }

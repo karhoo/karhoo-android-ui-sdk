@@ -22,21 +22,31 @@ class BookingPaymentPresenter(view: BookingPaymentContract.View,
     }
 
     override fun createPaymentView(actions: PaymentDropInContract.Actions) {
-        val paymentView = userStore.paymentProvider?.let {
+      userStore.paymentProvider?.let {
             when (enumValueOf<ProviderType>(it.provider.id.uppercase(Locale.US))) {
                 ProviderType.ADYEN -> {
-                    val view = AdyenPaymentView(actions)
-                    view.actions = actions
-                    view
+                    paymentsService.getAdyenClientKey().execute { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                val view = AdyenPaymentView(actions, result.data.clientKey)
+                                view.actions = actions
+                                this@BookingPaymentPresenter.view?.setPaymentView(view = view)
+                            }
+                            is Resource.Failure -> {
+                                view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                            }
+                        }
+
+                    }
+
                 }
                 ProviderType.BRAINTREE -> {
                     val view = BraintreePaymentView(actions)
                     view.actions = actions
-                    view
+                    this@BookingPaymentPresenter.view?.setPaymentView(view = view)
                 }
             }
         }
-        view?.setPaymentView(view = paymentView)
     }
 
     override fun getPaymentViewVisibility() {
