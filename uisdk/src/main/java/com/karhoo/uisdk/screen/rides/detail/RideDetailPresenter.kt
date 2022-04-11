@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.network.observable.Observer
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.fare.FareService
 import com.karhoo.sdk.api.service.trips.TripsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -45,6 +46,14 @@ class RideDetailPresenter(view: RideDetailMVP.View,
 
     init {
         attachView(view)
+
+        when (trip.tripState) {
+            TripStatus.DRIVER_EN_ROUTE,
+            TripStatus.ARRIVED,
+            TripStatus.PASSENGER_ON_BOARD ->
+                view.displayTrackDriverButton()
+            else -> view.hideTrackDriverButton()
+        }
     }
 
     private fun bindAll() {
@@ -237,6 +246,11 @@ class RideDetailPresenter(view: RideDetailMVP.View,
                 view?.showCancellationText(true)
             }
         }
+    }
+
+    override fun track() {
+        KarhooUISDK.analytics?.trackTripClicked(trip)
+        view?.trackTrip(trip)
     }
 
     override fun addTripInfoObserver(tripInfoListener: RideDetailMVP.Presenter.OnTripInfoChangedListener?) {
