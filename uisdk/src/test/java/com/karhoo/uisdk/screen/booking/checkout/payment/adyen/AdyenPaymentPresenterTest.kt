@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.adyen.checkout.dropin.DropIn
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -65,9 +66,10 @@ class AdyenPaymentPresenterTest {
         whenever(quote.price).thenReturn(price)
 
         adyenPaymentPresenter = AdyenPaymentPresenter(
-                paymentsService = paymentsService,
-                userStore = userStore,
-                view = paymentDropInActions)
+            paymentsService = paymentsService,
+            userStore = userStore,
+            view = paymentDropInActions,
+            clientKey = CLIENT_KEY)
     }
 
     /**
@@ -165,7 +167,7 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown is activity result is not RESULT_OK or RESULT_CANCELLED`() {
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_CANCELED,
                 data = null)
 
@@ -182,7 +184,7 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown is activity result is RESULT_OK but there is no data`() {
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = null)
 
@@ -214,7 +216,7 @@ class AdyenPaymentPresenterTest {
         """.trimIndent()
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response)
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
@@ -243,7 +245,7 @@ class AdyenPaymentPresenterTest {
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
@@ -271,7 +273,7 @@ class AdyenPaymentPresenterTest {
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
@@ -335,7 +337,7 @@ class AdyenPaymentPresenterTest {
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(payload)
 
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = REQUEST_CODE,
+                requestCode = DropIn.DROP_IN_REQUEST_CODE,
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
     }
@@ -351,7 +353,7 @@ class AdyenPaymentPresenterTest {
         private const val TRIP_ID_KEY = AdyenDropInServicePresenter.TRIP_ID
         private const val MERCHANT_REFERENCE = AdyenPaymentView.MERCHANT_REFERENCE
         private const val RESULT_KEY = AdyenResultActivity.RESULT_KEY
-        private const val REQUEST_CODE = AdyenPaymentView.REQ_CODE_ADYEN
         private const val RESULT_CODE = AdyenPaymentPresenter.RESULT_CODE
+        private const val CLIENT_KEY = "test"
     }
 }

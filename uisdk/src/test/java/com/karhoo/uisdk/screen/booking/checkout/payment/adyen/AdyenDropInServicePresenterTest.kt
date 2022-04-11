@@ -1,7 +1,7 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
 import android.content.Context
-import com.adyen.checkout.dropin.service.CallResult
+import com.adyen.checkout.dropin.service.DropInServiceResult
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -37,6 +37,8 @@ class AdyenDropInServicePresenterTest {
     private var context: Context = mock()
     private var paymentJson: JSONObject = JSONObject("{\"type\": \"scheme\",\n\"holderName\": " +
                                                              "\"Test\"}")
+    private var paymentDetails: JSONObject = JSONObject("{\"type\": \"await\",\n\"holderName\": " +
+                                                             "\"Test\"}")
     private var amountJson: JSONObject = JSONObject("{ \"currency\": \"GBP\" }")
     private val service: AdyenDropInServiceMVP.Service = mock()
     private var dropInRepository: AdyenDropInServiceMVP.Repository = mock()
@@ -46,7 +48,7 @@ class AdyenDropInServicePresenterTest {
     private val paymentsDetailsCall: Call<JSONObject> = mock()
     private val paymentsDetailsCaptor = argumentCaptor<(Resource<JSONObject>) -> Unit>()
     private val requestCaptor = argumentCaptor<String>()
-    private val resultsCaptor = argumentCaptor<CallResult>()
+    private val resultsCaptor = argumentCaptor<DropInServiceResult>()
 
     private lateinit var presenter: AdyenDropInServicePresenter
 
@@ -117,7 +119,7 @@ class AdyenDropInServicePresenterTest {
         verify(paymentsService).getAdyenPayments(requestCaptor.capture())
 
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Error)
     }
 
     /**
@@ -139,7 +141,7 @@ class AdyenDropInServicePresenterTest {
         verify(paymentsService).getAdyenPayments(any())
         verify(dropInRepository).tripId = TRIP_ID
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Finished)
     }
 
     /**
@@ -151,7 +153,7 @@ class AdyenDropInServicePresenterTest {
     @Test
     fun `action result returned when Adyen payment retrieval succeeds with an action`() {
         val response = JSONObject()
-                .put(ACTION, "some action")
+                .put(ACTION, paymentDetails)
                 .put(TRIP_ID_KEY, TRIP_ID)
 
         presenter.getAdyenPayments(jsonObject, RETURN_URL)
@@ -161,7 +163,7 @@ class AdyenDropInServicePresenterTest {
         verify(paymentsService).getAdyenPayments(any())
         verify(dropInRepository).tripId = TRIP_ID
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Action)
     }
 
     /**
@@ -177,7 +179,7 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Error)
     }
 
     /**
@@ -191,7 +193,8 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService, never()).getAdyenPaymentDetails(any())
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
+
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Error)
     }
 
     /**
@@ -207,7 +210,8 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ERROR, resultsCaptor.firstValue.type)
+
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Error)
     }
 
     /**
@@ -228,7 +232,8 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.FINISHED, resultsCaptor.firstValue.type)
+
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Finished)
     }
 
     /**
@@ -241,7 +246,7 @@ class AdyenDropInServicePresenterTest {
     fun `action result returned when Adyen payment details retrieval succeeds with an action`() {
 
         val response = JSONObject()
-                .put(ACTION, "some action")
+                .put(ACTION, paymentDetails)
                 .put(TRIP_ID_KEY, TRIP_ID)
 
         presenter.getAdyenPaymentDetails(jsonObject, TRIP_ID)
@@ -250,7 +255,8 @@ class AdyenDropInServicePresenterTest {
 
         verify(paymentsService).getAdyenPaymentDetails(any())
         verify(service).handleResult(resultsCaptor.capture())
-        assertEquals(CallResult.ResultType.ACTION, resultsCaptor.firstValue.type)
+
+        assertTrue(resultsCaptor.firstValue is DropInServiceResult.Action)
     }
 
     companion object {

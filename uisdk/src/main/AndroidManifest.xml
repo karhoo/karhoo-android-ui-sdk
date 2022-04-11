@@ -86,7 +86,7 @@
 
         <service
             android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+          />
 
     </application>
 
