@@ -320,12 +320,8 @@ class RideDetailView @JvmOverloads constructor(
         context.startActivity(TripActivity.Builder.builder.tripInfo(trip).build(context))
     }
 
-    override fun displayTrackDriverButton() {
-        trackButton.visibility = View.VISIBLE
-    }
-
-    override fun hideTrackDriverButton() {
-        trackButton.visibility = View.GONE
+    override fun displayTrackDriverButton(visible: Boolean) {
+        trackButton.visibility = if(visible) View.VISIBLE else View.GONE
     }
 
     override fun showCancellationText(show: Boolean) {

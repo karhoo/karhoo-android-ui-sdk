@@ -51,8 +51,8 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             TripStatus.DRIVER_EN_ROUTE,
             TripStatus.ARRIVED,
             TripStatus.PASSENGER_ON_BOARD ->
-                view.displayTrackDriverButton()
-            else -> view.hideTrackDriverButton()
+                view.displayTrackDriverButton(true)
+            else -> view.displayTrackDriverButton(false)
         }
     }
 

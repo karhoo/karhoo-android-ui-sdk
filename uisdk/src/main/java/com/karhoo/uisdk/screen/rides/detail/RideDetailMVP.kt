@@ -101,9 +101,7 @@ interface RideDetailMVP {
 
         fun trackTrip(trip: TripInfo)
 
-        fun displayTrackDriverButton()
-
-        fun hideTrackDriverButton()
+        fun displayTrackDriverButton(visible: Boolean)
 
         interface Actions {
 
