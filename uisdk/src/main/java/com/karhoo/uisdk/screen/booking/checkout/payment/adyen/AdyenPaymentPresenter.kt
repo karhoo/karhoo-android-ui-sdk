@@ -81,9 +81,9 @@ class AdyenPaymentPresenter(
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
 
-            //todo error reason map out to KHError
             when (DropIn.handleActivityResult(requestCode, resultCode, data)) {
-                is DropInResult.Error -> view?.showPaymentFailureDialog()
+                is DropInResult.Error -> { // Is handled below
+                }
                 is DropInResult.CancelledByUser -> view?.refresh()
                 is DropInResult.Finished -> { // No need to handle this case, it will not occur if resultIntent is specified
                 }
@@ -150,18 +150,17 @@ class AdyenPaymentPresenter(
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
-        val saveCard = !KarhooUISDKConfigurationProvider.isGuest()
-
         return CardConfiguration.Builder(context, publicKey)
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
-            .setShowStorePaymentField(saveCard)
+            .setShowStorePaymentField(false)
             .build()
     }
 
     private fun getPaymentMethods(locale: Locale?) {
         val amount = AdyenAmount(
-            quote?.price?.currencyCode ?: DEFAULT_CURRENCY, quote?.price?.highPrice.orZero()
+            quote?.price?.currencyCode ?: DEFAULT_CURRENCY,
+            quote?.price?.highPrice.orZero()
         )
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(tripId, tripId)
