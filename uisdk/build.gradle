@@ -57,7 +57,7 @@ afterEvaluate {
 
 dependencies {
 
-    api 'com.github.karhoo:karhoo-android-sdk:MOB-4027-Update-Network-SDK-to-support-versioning-of-payment-related-calls-SNAPSHOT'
+    api 'com.github.karhoo:karhoo-android-sdk:1.4.5'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
