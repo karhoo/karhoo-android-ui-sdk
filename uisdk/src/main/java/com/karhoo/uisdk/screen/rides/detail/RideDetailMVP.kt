@@ -43,6 +43,9 @@ interface RideDetailMVP {
             fun onTripInfoChanged(tripInfo: TripInfo?)
 
         }
+
+        fun track()
+
     }
 
     interface View : ScheduledDateView {
@@ -95,6 +98,10 @@ interface RideDetailMVP {
         fun showCancellationText(show: Boolean)
 
         fun setCancellationText(text: String)
+
+        fun trackTrip(trip: TripInfo)
+
+        fun displayTrackDriverButton(visible: Boolean)
 
         interface Actions {
 
