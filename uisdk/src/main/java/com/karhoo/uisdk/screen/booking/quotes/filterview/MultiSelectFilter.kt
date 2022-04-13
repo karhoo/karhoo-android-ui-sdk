@@ -13,4 +13,6 @@ open class MultiSelectFilter(var selectedTypes: ArrayList<String>): IFilter {
     override fun clearFilter() {
         selectedTypes.clear()
     }
+
+    lateinit var typeValues: HashMap<String, String>
 }

@@ -11,5 +11,4 @@ class VehicleTypeFilter(selectedTypes: ArrayList<String>) : MultiSelectFilter(se
         return quote.vehicle.vehicleType?.lowercase() in selectedTypes
     }
 
-    lateinit var typeValues: ArrayList<String>
 }

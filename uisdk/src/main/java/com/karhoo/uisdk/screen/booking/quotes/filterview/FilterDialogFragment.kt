@@ -23,9 +23,13 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     private lateinit var filterViewPassengerNumberedFilter: NumberedFilterView
     private lateinit var filterViewLuggageNumberedFilter: NumberedFilterView
     private lateinit var filterViewVehicleTypeMultiSelectChipsFilter: MultiSelectChipsFilterView
+    private lateinit var filterViewQuoteTypeMultiSelectCheckboxFilter: MultiSelectCheckboxFilterView
+    private lateinit var filterViewServiceAgreementsMultiSelectCheckboxFilter: MultiSelectCheckboxFilterView
 
     private lateinit var passengersFilter: PassengersFilter
     private lateinit var luggageFilter: LuggageFilter
+    private lateinit var quoteTypesFilter: QuoteTypesFilter
+    private lateinit var serviceAgreementsFilter: ServiceAgreementsFilter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +55,10 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
             view.findViewById<NumberedFilterView>(R.id.filterViewLuggageNumberedFilter)
         filterViewVehicleTypeMultiSelectChipsFilter =
             view.findViewById<MultiSelectChipsFilterView>(R.id.filterViewVehicleTypeMultiSelectChipsFilter)
+        filterViewQuoteTypeMultiSelectCheckboxFilter =
+            view.findViewById<MultiSelectCheckboxFilterView>(R.id.filterViewQuoteTypeMultiSelectCheckboxFilter)
+        filterViewServiceAgreementsMultiSelectCheckboxFilter =
+            view.findViewById<MultiSelectCheckboxFilterView>(R.id.filterViewServiceAgreementsMultiSelectCheckboxFilter)
 
         presenter.createFilters()
         return view
@@ -65,9 +73,13 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         passengersFilter = PassengersFilter(1)
         luggageFilter = LuggageFilter(0)
+        quoteTypesFilter = QuoteTypesFilter(ArrayList())
+        serviceAgreementsFilter = ServiceAgreementsFilter(ArrayList())
 
         filterChain.filters.add(passengersFilter)
         filterChain.filters.add(luggageFilter)
+        filterChain.filters.add(quoteTypesFilter)
+        filterChain.filters.add(serviceAgreementsFilter)
     }
 
     companion object {
@@ -110,6 +122,32 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewLuggageNumberedFilter.delegate = {
             presenter.callFilterChanged()
         }
+
+        quoteTypesFilter.apply {
+            typeValues = HashMap<String, String>().apply {
+                put(getString(R.string.kh_uisdk_fixed_fare), QuoteTypesFilter.FIXED_TAG)
+                put(getString(R.string.kh_uisdk_estimated_fare), QuoteTypesFilter.ESTIMATED_TAG)
+            }
+        }
+        filterViewQuoteTypeMultiSelectCheckboxFilter.filter = quoteTypesFilter
+        filterViewQuoteTypeMultiSelectCheckboxFilter.choices = quoteTypesFilter.typeValues
+        filterViewQuoteTypeMultiSelectCheckboxFilter.setTitle(getString(R.string.kh_uisdk_filter_quote_types))
+        filterViewQuoteTypeMultiSelectCheckboxFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        serviceAgreementsFilter.apply {
+            typeValues = HashMap<String, String>().apply {
+                put(getString(R.string.kh_uisdk_filter_free_waiting_time), ServiceAgreementsFilter.FREE_WAITING_TIME_TAG)
+                put(getString(R.string.kh_uisdk_filter_free_cancellation), ServiceAgreementsFilter.FREE_CANCELLATION_TAG)
+            }
+        }
+        filterViewServiceAgreementsMultiSelectCheckboxFilter.filter = serviceAgreementsFilter
+        filterViewServiceAgreementsMultiSelectCheckboxFilter.choices = serviceAgreementsFilter.typeValues
+        filterViewServiceAgreementsMultiSelectCheckboxFilter.setTitle(getString(R.string.kh_uisdk_filter_cancellation_and_waiting_time))
+        filterViewServiceAgreementsMultiSelectCheckboxFilter.delegate = {
+            presenter.callFilterChanged()
+        }
 //
 //        val vehicleTypeFilter = VehicleTypeFilter(ArrayList()).apply {
 //            typeValues = ArrayList<String>().apply {
@@ -128,10 +166,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 //        filterViewVehicleTypeMultiSelectChipsFilter.delegate = {
 //            presenter.callFilterChanged()
 //        }
-//
-//        filterChain.filters.add(filterViewPassengerNumberedFilter.filter as PassengersFilter)
-//        filterChain.filters.add(filterViewLuggageNumberedFilter.filter as LuggageFilter)
-//        filterChain.filters.add(filterViewVehicleTypeMultiSelectChipsFilter.filter as VehicleTypeFilter)
     }
 
     override fun setNumberOfResultsAfterFilter(size: Int) {

@@ -35,6 +35,28 @@
             android:id="@+id/filterViewVehicleTypeMultiSelectChipsFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/kh_uisdk_divider_height"
+            android:background="@color/kh_uisdk_border"/>
+
+        <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectCheckboxFilterView
+            android:id="@+id/filterViewQuoteTypeMultiSelectCheckboxFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/kh_uisdk_divider_height"
+            android:background="@color/kh_uisdk_border"/>
+
+        <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectCheckboxFilterView
+            android:id="@+id/filterViewServiceAgreementsMultiSelectCheckboxFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
     </LinearLayout>
 
     <com.karhoo.uisdk.base.view.LoadingButtonView
