@@ -16,6 +16,7 @@ internal val VALID_PAST_STATES = arrayOf(TripStatus.COMPLETED,
                                          TripStatus.INCOMPLETE)
 
 private const val TRIP_TYPE = "BOTH"
+private const val PAGE_SIZE = 10
 
 class PastRidesPresenter(view: PastRidesMVP.View,
                          private val tripsService: TripsService)
@@ -27,7 +28,7 @@ class PastRidesPresenter(view: PastRidesMVP.View,
 
     override fun getPastRides() {
         tripsService.search(TripSearch(tripType = TRIP_TYPE,
-                                       tripState = VALID_PAST_STATES.toList()))
+                                       tripState = VALID_PAST_STATES.toList(), paginationRowCount = PAGE_SIZE))
                 .execute { result ->
                     when (result) {
                         is Resource.Success -> handleSuccessfulTripHistory(result.data)
