@@ -8,6 +8,8 @@ import com.karhoo.sdk.api.service.trips.TripsService
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 
+private const val PAGE_SIZE = 10
+
 class UpcomingRidesPresenter(view: UpcomingRidesMVP.View,
                              private val tripsService: TripsService)
     : BasePresenter<UpcomingRidesMVP.View>(), UpcomingRidesMVP.Presenter {
@@ -18,7 +20,7 @@ class UpcomingRidesPresenter(view: UpcomingRidesMVP.View,
 
     override fun getUpcomingRides() {
         tripsService.search(TripSearch(tripType = TRIP_TYPE,
-                                       tripState = VALID_UPCOMING_STATES.toList()))
+                                       tripState = VALID_UPCOMING_STATES.toList(), paginationRowCount = PAGE_SIZE))
                 .execute { result ->
                     when (result) {
                         is Resource.Success -> handleSuccessfulTripHistory(result.data)
