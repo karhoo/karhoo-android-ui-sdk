@@ -150,7 +150,8 @@ class UpcomingRidesPresenterTest {
 
         private val TRIP_HISTORY_REQUEST = TripSearch(
                 tripState = VALID_UPCOMING_STATES,
-                tripType = TRIP_TYPE)
+                tripType = TRIP_TYPE,
+                paginationRowCount = 10)
     }
 
 }

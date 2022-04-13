@@ -2,7 +2,8 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
 import android.content.Context
 import android.os.Build
-import com.adyen.checkout.dropin.service.CallResult
+import com.adyen.checkout.components.model.payments.response.Action
+import com.adyen.checkout.dropin.service.DropInServiceResult
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -11,12 +12,14 @@ import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.ANDROID
 import org.json.JSONObject
 
-class AdyenDropInServicePresenter(context: Context,
-                                  service: AdyenDropInServiceMVP.Service,
-                                  private val paymentsService: PaymentsService = KarhooApi.paymentsService,
-                                  private val repository: AdyenDropInServiceMVP.Repository =
-                                          AdyenDropInServiceRepository(context = context)) :
-        BasePresenter<AdyenDropInServiceMVP.Service>(), AdyenDropInServiceMVP.Presenter {
+class AdyenDropInServicePresenter(
+    context: Context,
+    service: AdyenDropInServiceMVP.Service,
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService,
+    private val repository: AdyenDropInServiceMVP.Repository =
+        AdyenDropInServiceRepository(context = context)
+) :
+    BasePresenter<AdyenDropInServiceMVP.Service>(), AdyenDropInServiceMVP.Presenter {
     init {
         attachView(service)
     }
@@ -27,17 +30,15 @@ class AdyenDropInServicePresenter(context: Context,
         paymentsService.getAdyenPayments(requestString).execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    result.data.let { result ->
-                        val tripId = result.getString(TRIP_ID)
-                        storeTripId(tripId)
-                        result.optJSONObject(PAYLOAD)?.let { payload ->
-                            view?.handleResult(handlePaymentRequestResult(payload, tripId))
-                        } ?: view?.handleResult(handlePaymentRequestResult(result, tripId))
-                    }
+                    val data = result.data
+                    val tripId = data.getString(TRIP_ID)
+                    storeTripId(tripId)
+                    data.optJSONObject(PAYLOAD)?.let { payload ->
+                        view?.handleResult(handlePaymentRequestResult(payload, tripId))
+                    } ?: view?.handleResult(handlePaymentRequestResult(data, tripId))
                 }
                 is Resource.Failure -> {
-                    view?.handleResult(CallResult(CallResult.ResultType.ERROR, result.error
-                            .userFriendlyMessage))
+                    view?.handleResult(DropInServiceResult.Error(reason = result.error.userFriendlyMessage))
                 }
             }
         }
@@ -58,12 +59,11 @@ class AdyenDropInServicePresenter(context: Context,
                         }
                     }
                     is Resource.Failure -> {
-                        view?.handleResult(CallResult(CallResult.ResultType.ERROR, result.error
-                                .userFriendlyMessage))
+                        view?.handleResult(DropInServiceResult.Error(reason = result.error.userFriendlyMessage))
                     }
                 }
             }
-        } ?: view?.handleResult(CallResult(CallResult.ResultType.ERROR, "Invalid transactionId"))
+        } ?: view?.handleResult(DropInServiceResult.Error(reason = "Invalid transactionId"))
     }
 
     override fun clearTripId() {
@@ -82,18 +82,22 @@ class AdyenDropInServicePresenter(context: Context,
         return repository.supplyPartnerId
     }
 
-    private fun handlePaymentRequestResult(response: JSONObject, transactionId: String?): CallResult {
+    private fun handlePaymentRequestResult(
+        response: JSONObject,
+        transactionId: String?
+    ): DropInServiceResult {
         return try {
             if (response.has(ACTION)) {
-                CallResult(CallResult.ResultType.ACTION, response.getString(ACTION))
+                val action = Action.SERIALIZER.deserialize(response.getJSONObject(ACTION))
+                DropInServiceResult.Action(action)
             } else {
                 transactionId?.let {
                     response.put(TRIP_ID, transactionId)
-                    CallResult(CallResult.ResultType.FINISHED, response.toString())
-                } ?: CallResult(CallResult.ResultType.ERROR, "Invalid transaction id")
+                    DropInServiceResult.Finished(response.toString())
+                } ?: DropInServiceResult.Error(reason = "Invalid transaction id")
             }
         } catch (e: Exception) {
-            CallResult(CallResult.ResultType.ERROR, e.toString())
+            DropInServiceResult.Error(reason = e.toString())
         }
     }
 
@@ -155,6 +159,7 @@ class AdyenDropInServicePresenter(context: Context,
         const val SUPPLY_PARTNER_ID = "supply_partner_id"
         const val RETURN_URL = "returnUrl"
         const val TRIP_ID = "trip_id"
-        const val ACCEPT_HEADER_VALUE = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+        const val ACCEPT_HEADER_VALUE =
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
     }
 }

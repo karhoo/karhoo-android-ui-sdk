@@ -115,7 +115,8 @@ class PastRidesPresenterTest {
 
         private val TRIP_HISTORY_REQUEST = TripSearch(
                 tripState = VALID_PAST_STATES.toList(),
-                tripType = TRIP_TYPE)
+                tripType = TRIP_TYPE,
+                paginationRowCount = 10)
     }
 
 }
