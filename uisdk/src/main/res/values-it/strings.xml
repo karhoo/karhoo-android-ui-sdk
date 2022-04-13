@@ -126,9 +126,13 @@
     <string name="kh_uisdk_feedback_title">Per favore, dicci di più sul tuo viaggio</string>
     <string name="kh_uisdk_fees_and_taxes_included">Tasse e commissioni incluse</string>
     <string name="kh_uisdk_filter">Filtro</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Cancellazione e tempo di attesa</string>
+    <string name="kh_uisdk_filter_free_cancellation">Cancellazione gratuita</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Tempo di attesa gratuito</string>
     <string name="kh_uisdk_filter_luggages">Bagagli)</string>
     <string name="kh_uisdk_filter_page_results">Visualizza tutti %s risultati</string>
     <string name="kh_uisdk_filter_passengers">Passeggero/i</string>
+    <string name="kh_uisdk_filter_quote_types">Tipi di preventivo</string>
     <string name="kh_uisdk_finding_your_ride">Trovare la tua corsa...</string>
     <string name="kh_uisdk_first_name_hint">Nome</string>
     <!-- Fare type -->
