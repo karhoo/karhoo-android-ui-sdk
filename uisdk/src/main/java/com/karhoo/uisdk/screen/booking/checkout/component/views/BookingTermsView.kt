@@ -18,6 +18,7 @@ import android.view.View
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
+import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 
 class BookingTermsView @JvmOverloads constructor(context: Context,
                                                  attrs: AttributeSet? = null,
@@ -85,6 +86,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
     private fun createClickableSpan(url: String?): ClickableSpan {
         return object : ClickableSpan() {
             override fun onClick(widget: View) {
+                widget.hideSoftKeyboard()
                 actions?.showWebView(url)
             }
 
