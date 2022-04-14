@@ -1,26 +1,43 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
-import com.adyen.checkout.dropin.service.CallResult
+import com.adyen.checkout.components.ActionComponentData
+import com.adyen.checkout.components.PaymentComponentState
+import com.adyen.checkout.dropin.service.DropInServiceResult
 import com.adyen.checkout.dropin.service.DropInService
 import com.adyen.checkout.redirect.RedirectComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class AdyenDropInService : DropInService(), AdyenDropInServiceMVP.Service {
 
     private val presenter = AdyenDropInServicePresenter(this, this)
 
-    override fun makePaymentsCall(paymentComponentData: JSONObject): CallResult {
+    override fun onPaymentsCallRequested(
+        paymentComponentState: PaymentComponentState<*>,
+        paymentComponentJson: JSONObject
+    ) {
         presenter.clearTripId()
-        presenter.getAdyenPayments(paymentComponentData, RedirectComponent.getReturnUrl(this))
-        return CallResult(CallResult.ResultType.WAIT, "")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            presenter.getAdyenPayments(
+                paymentComponentJson,
+                RedirectComponent.getReturnUrl(this@AdyenDropInService)
+            )
+        }
     }
 
-    override fun makeDetailsCall(actionComponentData: JSONObject): CallResult {
-        presenter.getAdyenPaymentDetails(actionComponentData, presenter.getCachedTripId())
-        return CallResult(CallResult.ResultType.WAIT, "")
+    override fun onDetailsCallRequested(
+        actionComponentData: ActionComponentData,
+        actionComponentJson: JSONObject
+    ) {
+        CoroutineScope(Dispatchers.IO).launch {
+            presenter.getAdyenPaymentDetails(actionComponentJson, presenter.getCachedTripId())
+        }
     }
 
-    override fun handleResult(callResult: CallResult) {
-        asyncCallback(callResult)
+    override fun handleResult(callResult: DropInServiceResult) {
+        sendResult(callResult)
     }
 }
