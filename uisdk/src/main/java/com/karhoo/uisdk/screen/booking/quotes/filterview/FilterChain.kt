@@ -13,14 +13,14 @@ class FilterChain {
         val filteredList: MutableList<Quote> = mutableListOf()
 
         for(quote in quotes){
-            var stay: Boolean = true
+            var eligible: Boolean = true
             for(filter in filters) {
                 if(!filter.meetsCriteria(quote)){
-                    stay = false
+                    eligible = false
                     break
                 }
             }
-            if(stay){
+            if(eligible){
                 filteredList.add(quote)
             }
         }

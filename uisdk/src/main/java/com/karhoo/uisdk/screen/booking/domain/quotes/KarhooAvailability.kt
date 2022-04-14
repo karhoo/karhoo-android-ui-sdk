@@ -148,11 +148,7 @@ class KarhooAvailability(
     }
 
     override fun getNonFilteredVehicles(): List<Quote> {
-        val nonFilteredList = mutableListOf<Quote>()
-        availableVehicles.values.forEach {
-            nonFilteredList.addAll(it)
-        }
-        return nonFilteredList
+        return availableVehicles.values.flatten()
     }
 
     private fun getFilteredVehiclesForCategory(currentFilter: String) {

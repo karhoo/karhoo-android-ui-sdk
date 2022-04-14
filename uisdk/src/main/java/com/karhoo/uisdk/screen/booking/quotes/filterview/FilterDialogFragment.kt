@@ -16,7 +16,7 @@ import com.karhoo.uisdk.base.view.LoadingButtonView
 
 class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.View {
 
-    var quotesFilterSave: LoadingButtonView? = null
+    private lateinit var quotesFilterSave: LoadingButtonView
     var presenter = FilterDialogPresenter(this)
 
     private lateinit var filterViewResetFilters: TextView
@@ -38,7 +38,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         val view = inflater.inflate(R.layout.uisdk_view_filter, container, false)
 
         quotesFilterSave = view.findViewById(R.id.quotesFilterSave)
-        quotesFilterSave!!.setOnClickListener {
+        quotesFilterSave.setOnClickListener {
             presenter.applyFilters()
             dismiss()
         }
@@ -50,15 +50,15 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         }
 
         filterViewPassengerNumberedFilter =
-            view.findViewById<NumberedFilterView>(R.id.filterViewPassengerNumberedFilter)
+            view.findViewById(R.id.filterViewPassengerNumberedFilter)
         filterViewLuggageNumberedFilter =
-            view.findViewById<NumberedFilterView>(R.id.filterViewLuggageNumberedFilter)
+            view.findViewById(R.id.filterViewLuggageNumberedFilter)
         filterViewVehicleTypeMultiSelectChipsFilter =
-            view.findViewById<MultiSelectChipsFilterView>(R.id.filterViewVehicleTypeMultiSelectChipsFilter)
+            view.findViewById(R.id.filterViewVehicleTypeMultiSelectChipsFilter)
         filterViewQuoteTypeMultiSelectCheckboxFilter =
-            view.findViewById<MultiSelectCheckboxFilterView>(R.id.filterViewQuoteTypeMultiSelectCheckboxFilter)
+            view.findViewById(R.id.filterViewQuoteTypeMultiSelectCheckboxFilter)
         filterViewServiceAgreementsMultiSelectCheckboxFilter =
-            view.findViewById<MultiSelectCheckboxFilterView>(R.id.filterViewServiceAgreementsMultiSelectCheckboxFilter)
+            view.findViewById(R.id.filterViewServiceAgreementsMultiSelectCheckboxFilter)
 
         presenter.createFilters()
         return view
@@ -82,10 +82,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterChain.filters.add(serviceAgreementsFilter)
     }
 
-    companion object {
-        const val TAG = "FilterView"
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
         dialog.setOnShowListener {
@@ -93,9 +89,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
             val bottomSheetDialog = it as BottomSheetDialog
             val parentLayout =
                 bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            parentLayout?.let { it ->
-                val behaviour = BottomSheetBehavior.from(it)
-                setupFullHeight(it)
+            parentLayout?.let { layout ->
+                val behaviour = BottomSheetBehavior.from(layout)
+                setupFullHeight(layout)
                 behaviour.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
@@ -169,11 +165,15 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     override fun setNumberOfResultsAfterFilter(size: Int) {
-        quotesFilterSave?.setText(
+        quotesFilterSave.setText(
             String.format(
                 getString(R.string.kh_uisdk_filter_page_results),
                 size
             )
         )
+    }
+
+    companion object {
+        const val TAG = "FilterView"
     }
 }
