@@ -6,22 +6,16 @@ import android.content.Intent
 import com.adyen.checkout.components.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 import java.util.Locale
 
-class AdyenPaymentView : PaymentDropInContract.View {
+class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clientKey: String) : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter()
-    override var actions: PaymentDropInContract.Actions? = null
-        set(value) {
-            presenter?.view = value
-            field = value
-        }
+    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions, clientKey = clientKey)
+    var actions: PaymentDropInContract.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         presenter?.handleActivityResult(requestCode, resultCode, data)
@@ -39,34 +33,21 @@ class AdyenPaymentView : PaymentDropInContract.View {
         presenter?.getPaymentNonce(quote)
     }
 
-    override fun handleThreeDSecure(
-        context: Context, sdkToken: String, nonce: String, amount:
-        String
-    ) {
+    override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
+    String) {
         actions?.threeDSecureNonce(sdkToken, sdkToken)
     }
 
-    override fun showPaymentDropInUI(
-        context: Context,
-        sdkToken: String,
-        paymentData: String?,
-        quote: Quote?
-    ) {
+    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
-        try {
-            val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken) as DropInConfiguration
+        val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken)
+                as DropInConfiguration
 
-            cacheSupplyPartnerId(context, quote)
+        cacheSupplyPartnerId(context, quote)
 
-            DropIn.startPayment(context as Activity, paymentMethods, dropInConfiguration)
-        } catch (e: Exception) {
-            actions?.showError(
-                R.string.kh_uisdk_something_went_wrong,
-                karhooError = KarhooError.FailedToCallMoneyService
-            )
-        }
+        DropIn.startPayment(context as Activity, paymentMethods, dropInConfiguration)
     }
 
     private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {

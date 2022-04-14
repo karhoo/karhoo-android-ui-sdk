@@ -22,7 +22,6 @@ import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
-import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -36,52 +35,34 @@ import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
-import java.util.Date
 
 class AdyenPaymentPresenter(
+    view: PaymentDropInContract.Actions,
     private val userStore: UserStore = KarhooApi.userStore,
-    private val paymentsService: PaymentsService = KarhooApi.paymentsService
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService,
+    private val clientKey: String
 ) : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter,
     UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
-    private var clientKey: String = ""
-    private var quote: Quote? = null
+    var quote: Quote? = null
     private var tripId: String = ""
     private var passengerDetails: PassengerDetails? = null
+    private var _context: Context? = null
 
-    override var view: PaymentDropInContract.Actions? = null
-        set(value) {
-            field = value
-
-            attachView(view)
-
-            paymentsService.getAdyenClientKey().execute { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        this.clientKey = result.data.clientKey
-                        userStore.addSavedPaymentObserver(this)
-                    }
-                    is Resource.Failure -> {
-                        view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
-                    }
-                }
-
-            }
-        }
+    init {
+        attachView(view)
+        userStore.addSavedPaymentObserver(this)
+    }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
         val amount = Amount()
         amount.currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = quote?.price?.highPrice.orZero()
 
-        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
-                    KarhooEnvironment.Production
-        ) {
-            Environment.LIVE
-        } else {
-            Environment.TEST
-        }
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
+            KarhooEnvironment.Production()
+        ) Environment.EUROPE else Environment.TEST
 
         return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
             .setAmount(amount)
@@ -120,16 +101,6 @@ class AdyenPaymentPresenter(
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
-
-                        val lastFourDigits: String =
-                            JSONObject(payload.optString(ADDITIONAL_DATA, ""))
-                                .optString(CARD_SUMMARY, "")
-
-                        logPaymentErrorEvent(
-                            payload.optString(REFUSAL_REASON, ""),
-                            lastFourDigits,
-                        )
-
                         view?.showPaymentFailureDialog(error)
                     }
                 }
@@ -139,21 +110,10 @@ class AdyenPaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
-            refusalReason,
-            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
-    }
-
     private fun convertToKarhooError(payload: JSONObject): KarhooError {
         val result = payload.optString(RESULT_CODE, "")
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
-
         return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
 
@@ -176,16 +136,10 @@ class AdyenPaymentPresenter(
                         getPaymentMethods(locale)
                     }
                 }
-                is Resource.Failure -> {
-                    logPaymentErrorEvent(
-                        result.error.internalMessage
-                    )
-
-                    view?.showError(
-                        R.string.kh_uisdk_something_went_wrong,
-                        result.error
-                    )
-                }
+                is Resource.Failure -> view?.showError(
+                    R.string.kh_uisdk_something_went_wrong,
+                    result.error
+                )
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -196,18 +150,9 @@ class AdyenPaymentPresenter(
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
-        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
-                    KarhooEnvironment.Production
-        ) {
-            Environment.LIVE
-        } else {
-            Environment.TEST
-        }
-
         return CardConfiguration.Builder(context, publicKey)
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
-            .setEnvironment(environment)
             .setShowStorePaymentField(false)
             .build()
     }
@@ -231,16 +176,10 @@ class AdyenPaymentPresenter(
                                 view?.showPaymentUI(this.adyenKey, it, this.quote)
                             }
                         }
-                        is Resource.Failure -> {
-                            logPaymentErrorEvent(
-                                result.error.internalMessage
-                            )
-
-                            view?.showError(
-                                R.string.kh_uisdk_something_went_wrong,
-                                result.error
-                            )
-                        }
+                        is Resource.Failure -> view?.showError(
+                            R.string.kh_uisdk_something_went_wrong,
+                            result.error
+                        )
                         //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }
