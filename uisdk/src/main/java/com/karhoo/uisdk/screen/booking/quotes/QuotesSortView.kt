@@ -27,7 +27,7 @@ class QuotesSortView @JvmOverloads constructor(
 
     private var listener: Listener? = null
 
-    private var selectedSortMethod: SortMethod = SortMethod.ETA
+    private var selectedSortMethod: SortMethod = SortMethod.PRICE
     private var hasDestination = false
     private var isPrebook = false
 
@@ -126,8 +126,7 @@ class QuotesSortView @JvmOverloads constructor(
 
     fun destinationChanged(bookingInfo: BookingInfo?) {
         hasDestination = bookingInfo?.destination != null
-        isPrebook = bookingInfo?.date != null
-        val sortMethod = if (hasDestination && isPrebook) SortMethod.PRICE else SortMethod.ETA
+        val sortMethod = if (hasDestination) SortMethod.PRICE else SortMethod.ETA
         setSelectedSortMethod(sortMethod)
     }
 
