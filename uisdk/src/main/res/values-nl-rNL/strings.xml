@@ -124,6 +124,14 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Vertel ons alsjeblieft meer over je reis</string>
     <string name="kh_uisdk_fees_and_taxes_included">Belastingen en toeslagen inbegrepen</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Annulering en wachttijd</string>
+    <string name="kh_uisdk_filter_free_cancellation">Gratis afzegging</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Gratis wachttijd</string>
+    <string name="kh_uisdk_filter_luggages">Bagage)</string>
+    <string name="kh_uisdk_filter_page_results">Bekijk alle %s resultaten</string>
+    <string name="kh_uisdk_filter_passengers">Passagier(s)</string>
+    <string name="kh_uisdk_filter_quote_types">Soorten offertes</string>
     <string name="kh_uisdk_finding_your_ride">Uw rit vinden...</string>
     <string name="kh_uisdk_first_name_hint">Voornaam</string>
     <!-- Fare type -->
@@ -333,6 +341,7 @@
     <string name="kh_uisdk_report_issue">Probleem melden</string>
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requested_invite">Bedankt voor uw interesse! We sturen u een e-mail wanneer uw account is geactiveerd.</string>
+    <string name="kh_uisdk_reset_filter">Filter resetten</string>
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
