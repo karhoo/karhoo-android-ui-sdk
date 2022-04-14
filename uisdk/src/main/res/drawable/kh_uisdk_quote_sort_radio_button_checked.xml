@@ -19,7 +19,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="4.5dp"
-                android:color="@color/kh_uisdk_light_blue" />
+                android:color="@color/kh_uisdk_accent_opacity50" />
         </shape>
     </item>
     <item

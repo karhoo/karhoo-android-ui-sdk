@@ -109,7 +109,7 @@
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Estimated arrival time</string>
-    <string name="kh_uisdk_estimated_fare">Estimated</string>
+    <string name="kh_uisdk_estimated_fare">Estimated price</string>
     <string name="kh_uisdk_estimated_price">Estimated price</string>
     <string name="kh_uisdk_eta">ETA</string>
     <string name="kh_uisdk_exec">Exec</string>
@@ -125,10 +125,18 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Cancellation and waiting time</string>
+    <string name="kh_uisdk_filter_free_cancellation">Free cancellation</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Free waiting time</string>
+    <string name="kh_uisdk_filter_luggages">Luggage(s)</string>
+    <string name="kh_uisdk_filter_page_results">View all %s results</string>
+    <string name="kh_uisdk_filter_passengers">Passenger(s)</string>
+    <string name="kh_uisdk_filter_quote_types">Quote types</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!-- Fare type -->
-    <string name="kh_uisdk_fixed_fare">Fixed</string>
+    <string name="kh_uisdk_fixed_fare">Fixed price</string>
     <string name="kh_uisdk_fleet">Fleet</string>
     <!-- Email -->
     <string name="kh_uisdk_fleet_recommendation_body">Thank you for recommending a fleet in your area. To get coverage in your area as fast as possible, please provide us with area and the name of transportation company.\n                    Area:\n                    Fleet name:</string>
@@ -338,6 +346,7 @@
     <string name="kh_uisdk_report_issue">Report Issue</string>
     <string name="kh_uisdk_requested">Your trip has been requested with %s</string>
     <string name="kh_uisdk_requested_invite">Thanks for your interest! We will email you when your account is activated.</string>
+    <string name="kh_uisdk_reset_filter">Reset filter</string>
     <string name="kh_uisdk_results_empty">No results found</string>
     <string name="kh_uisdk_retrieving_dropoff">Getting dropoff location</string>
     <!-- Current Trip -->

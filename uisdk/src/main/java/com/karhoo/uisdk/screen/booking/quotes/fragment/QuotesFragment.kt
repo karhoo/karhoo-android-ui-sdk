@@ -41,12 +41,15 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogPresenter
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogFragment
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
-    QuotesFragmentContract.View, LifecycleObserver {
+    QuotesFragmentContract.View, LifecycleObserver, FilterDialogPresenter.FilterDelegate {
 
     private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy {
         ViewModelProvider(this).get(
@@ -66,13 +69,17 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private lateinit var quotesSortWidget: QuotesSortView
+    private lateinit var quotesFilterWidget: FilterDialogFragment
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
     private lateinit var quotesTaxesAndFeesLabel: TextView
     private var currentValidityDeadlineTimestamp: Long? = null
     private lateinit var quotesSortByButton: MaterialButton
+    private lateinit var quotesFilterByButton: MaterialButton
     private var isPrebook = false
+
+    var filterChain = FilterChain()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,9 +92,9 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
         quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
+        initializeSortView()
+        initializeFilterView()
 
-        quotesSortWidget = QuotesSortView()
-        quotesSortWidget.setListener(this)
         journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
 
@@ -134,11 +141,28 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             setOnClickListener { showSortBy() }
         }
 
-        initAvailability()
+        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
+        quotesFilterByButton.apply {
+            visibility = VISIBLE
+            setOnClickListener { showFilters() }
+        }
+
+        initAvailability();
 
         showFilteringWidgets(false)
 
         return view
+    }
+
+    fun initializeSortView(){
+        quotesSortWidget = QuotesSortView()
+        quotesSortWidget.setListener(this)
+    }
+
+    fun initializeFilterView(){
+        quotesFilterWidget = FilterDialogFragment()
+        quotesFilterWidget.setListener(this)
+        quotesFilterWidget.createFilterChain(filterChain)
     }
 
     override fun onPause() {
@@ -180,6 +204,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
     }
 
+    private fun showFilters(){
+        activity?.supportFragmentManager?.let {
+            quotesFilterWidget.show(it, FilterDialogFragment.TAG)
+        }
+    }
+
     override fun setViewDelegate(quoteListDelegate: QuotesFragmentContract.QuoteListDelegate) {
         this.quoteListViewDelegate = quoteListDelegate
     }
@@ -211,6 +241,13 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         this::quotesSortByButton.isInitialized.let {
             if(it)
                 quotesSortByButton.visibility = if (show && !isPrebook) VISIBLE else GONE
+        }
+    }
+
+    private fun changeVisibilityOfQuotesFilterByButton(show: Boolean){
+        this::quotesFilterByButton.isInitialized.let {
+            if(it)
+                quotesFilterByButton.visibility = if (show) VISIBLE else GONE
         }
     }
 
@@ -251,6 +288,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     private fun showFilteringWidgets(show: Boolean) {
         changeVisibilityOfQuotesSortByButton(show)
+        changeVisibilityOfQuotesFilterByButton(show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
     }
@@ -261,6 +299,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun showList(show: Boolean) {
         changeVisibilityOfQuotesSortByButton(show)
+        changeVisibilityOfQuotesFilterByButton(show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
@@ -360,5 +399,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun onUserChangedFilter(): Int {
+        return availabilityProvider?.getNonFilteredVehicles()
+            ?.let { filterChain.applyFilters(it).size }?: 0
+    }
+
+    override fun onFiltersApplied() {
+        availabilityProvider?.filterVehicleListByFilterChain(filterChain)
     }
 }

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Colours -->
-<!--    <color name="kh_uisdk_primary">@color/kh_uisdk_primary</color>-->
-<!--    <color name="kh_uisdk_secondary">@color/kh_uisdk_secondary</color>-->
+    <!--    <color name="kh_uisdk_primary">@color/kh_uisdk_primary</color>-->
+    <!--    <color name="kh_uisdk_secondary">@color/kh_uisdk_secondary</color>-->
     <color name="kh_uisdk_primary_red">@color/kh_uisdk_error</color>
-<!--    <color name="kh_uisdk_primary_green">#00CC66</color>-->
-<!--    <color name="kh_uisdk_secondary_green">#00994D</color>-->
+    <!--    <color name="kh_uisdk_primary_green">#00CC66</color>-->
+    <!--    <color name="kh_uisdk_secondary_green">#00994D</color>-->
     <color name="kh_uisdk_primary_blue">#43BCFF</color>
-    <color name="kh_uisdk_light_blue">#E1F4FC</color>
-<!--    <color name="kh_uisdk_secondary_blue">#0093BF</color>-->
-<!--    <color name="kh_uisdk_primary_yellow">#FFBC43</color>-->
-<!--    <color name="kh_uisdk_secondary_yellow">#E09323</color>-->
+    <!--    <color name="kh_uisdk_secondary_blue">#0093BF</color>-->
+    <!--    <color name="kh_uisdk_primary_yellow">#FFBC43</color>-->
+    <!--    <color name="kh_uisdk_secondary_yellow">#E09323</color>-->
     <color name="kh_uisdk_colorAccent">@color/kh_uisdk_accent</color>
     <color name="kh_uisdk_textColorError">@color/kh_uisdk_error</color>
     <color name="kh_uisdk_secondary_text">@color/kh_uisdk_label</color>
@@ -27,21 +26,21 @@
     <color name="kh_uisdkic_chevron_left">@color/kh_uisdk_text_primary</color>
 
     <!-- Gradients -->
-<!--    <color name="kh_uisdk_sort_grad_start_red">#FA0046</color>-->
+    <!--    <color name="kh_uisdk_sort_grad_start_red">#FA0046</color>-->
     <color name="kh_uisdk_sort_grad_end_pink">@color/kh_uisdk_secondary</color>
-<!--    <color name="kh_uisdk_sort_grad_end_primary">@color/kh_uisdk_primary</color>-->
+    <!--    <color name="kh_uisdk_sort_grad_end_primary">@color/kh_uisdk_primary</color>-->
     <color name="kh_uisdk_sort_grad_start_primary">@color/kh_uisdk_primary</color>
-<!--    <color name="kh_uisdk_sort_grad_end_secondary">@color/kh_uisdk_secondary</color>-->
-<!--    <color name="kh_uisdk_sort_grad_start_secondary">@color/kh_uisdk_secondary</color>-->
-<!--    <color name="kh_uisdk_light_green_grad">#00E5E5</color>-->
-<!--    <color name="kh_uisdk_dark_green_grad">#00E500</color>-->
+    <!--    <color name="kh_uisdk_sort_grad_end_secondary">@color/kh_uisdk_secondary</color>-->
+    <!--    <color name="kh_uisdk_sort_grad_start_secondary">@color/kh_uisdk_secondary</color>-->
+    <!--    <color name="kh_uisdk_light_green_grad">#00E5E5</color>-->
+    <!--    <color name="kh_uisdk_dark_green_grad">#00E500</color>-->
     <color name="kh_uisdk_cancellation_green">@color/kh_uisdk_success</color>
     <color name="kh_uisdk_light_green">#ADEFD1</color>
 
     <!-- Greys -->
     <color name="kh_uisdk_off_black">@color/kh_uisdk_text_secondary</color>
     <color name="kh_uisdk_pink">@color/kh_uisdk_secondary</color>
-<!--    <color name="kh_uisdk_dark_blue">#181447</color>-->
+    <!--    <color name="kh_uisdk_dark_blue">#181447</color>-->
     <color name="kh_uisdk_dark_grey">@color/kh_uisdk_text_secondary</color>
     <color name="kh_uisdk_med_grey">@color/kh_uisdk_label</color>
     <color name="kh_uisdk_silver">@color/kh_uisdk_label</color>
@@ -60,12 +59,12 @@
 
     <!-- Text -->
     <color name="kh_uisdk_text_white">@color/kh_uisdk_background_primary</color>
-<!--    <color name="kh_uisdk_text_primary">@color/kh_uisdk_newTextColor</color>-->
+    <!--    <color name="kh_uisdk_text_primary">@color/kh_uisdk_newTextColor</color>-->
     <color name="kh_uisdk_text_action_up">@color/kh_uisdk_dark_grey</color>
     <color name="kh_uisdk_text_action_pressed">#450815</color>
     <color name="kh_uisdk_text_alternative">#888888</color>
     <color name="kh_uisdk_text_unavailable">@color/kh_uisdk_disabled</color>
-<!--    <color name="kh_uisdk_text_green">@color/kh_uisdk_newSuccessColor</color>-->
+    <!--    <color name="kh_uisdk_text_green">@color/kh_uisdk_newSuccessColor</color>-->
 
     <!-- Category Selector Divider -->
     <color name="kh_uisdk_divider">#E2E2E2</color>
@@ -84,19 +83,21 @@
     <color name="kh_uisdk_ButtonDisabledColor">#66181447</color>
     <color name="kh_uisdk_ButtonEnabledColor">@color/kh_uisdk_secondary</color>
     <color name="kh_uisdk_TimePickerTitleBackgroundColor">@color/kh_uisdk_primary</color>
-    <color name="kh_uisdk_TimePickerTitleTextColor">@color/kh_uisdk_opacity_off_white_time_picker</color>
+    <color name="kh_uisdk_TimePickerTitleTextColor">@color/kh_uisdk_opacity_off_white_time_picker
+    </color>
 
     <!-- Icon -->
     <color name="kh_uisdk_icon_blue">#181A47</color>
 
     <!-- Adyen -->
-<!--    <color name="kh_uisdk_primaryColor">@color/kh_uisdk_primary</color>-->
+    <!--    <color name="kh_uisdk_primaryColor">@color/kh_uisdk_primary</color>-->
     <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_background_primary</color>
-    
+
     <!-- New Colors -->
     <color name="kh_uisdk_primary">#18183F</color>
     <color name="kh_uisdk_secondary">#FF0082</color>
     <color name="kh_uisdk_accent">#2485C2</color>
+    <color name="kh_uisdk_accent_opacity50">#7F2485C2</color>
     <color name="kh_uisdk_border">#EBEBEB</color>
     <color name="kh_uisdk_error">#ED3A3A</color>
     <color name="kh_uisdk_success">#12BE76</color>

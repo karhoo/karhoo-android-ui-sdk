@@ -18,6 +18,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewMod
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.extension.toNormalizedLocale
@@ -52,6 +53,7 @@ class KarhooAvailability(
     private var currentFilter: String? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
     private var analytics: Analytics? = null
+    private var filterChain: FilterChain? = null
     private var lastTimestampDate: Long = 0
     private var refreshDelay: Long = 0
     private var running: Boolean = false
@@ -119,13 +121,34 @@ class KarhooAvailability(
         filterVehicles()
     }
 
+    override fun filterVehicleListByFilterChain(filterChain: FilterChain) {
+        this.filterChain = filterChain
+        filterVehicles()
+    }
+
     private fun filterVehicles() {
-        if (currentFilter?.isEmpty() == true) {
-            return
+        filterChain?.let {
+            getFilteredVehiclesForFilterChain(it)
+        }?: kotlin.run {
+            if (currentFilter?.isEmpty() == true) {
+                return
+            }
+            currentFilter?.let {
+                getFilteredVehiclesForCategory(it)
+            }
         }
-        currentFilter?.let {
-            getFilteredVehiclesForCategory(it)
+    }
+
+    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
+        filteredList = mutableListOf()
+        availableVehicles.values.forEach {
+            filteredList?.addAll(filterChain.applyFilters(it))
         }
+        updateFleets(filteredList)
+    }
+
+    override fun getNonFilteredVehicles(): List<Quote> {
+        return availableVehicles.values.flatten()
     }
 
     private fun getFilteredVehiclesForCategory(currentFilter: String) {
