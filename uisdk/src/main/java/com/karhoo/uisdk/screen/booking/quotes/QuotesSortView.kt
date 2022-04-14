@@ -63,6 +63,7 @@ class QuotesSortView @JvmOverloads constructor(
                 }
             })
         }
+        setSelectedSortMethod(SortMethod.PRICE)
     }
 
     private fun getCustomisationParameters(context: Context, attr: AttributeSet?, defStyleAttr: Int) {
@@ -126,8 +127,6 @@ class QuotesSortView @JvmOverloads constructor(
 
     fun destinationChanged(bookingInfo: BookingInfo?) {
         hasDestination = bookingInfo?.destination != null
-        val sortMethod = if (hasDestination) SortMethod.PRICE else SortMethod.ETA
-        setSelectedSortMethod(sortMethod)
     }
 
     private fun setSortingMethodByTabPosition(position: Int) = if (position == 0) {
