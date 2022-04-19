@@ -60,9 +60,13 @@ class AdyenPaymentPresenter(
         amount.currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = quote?.price?.highPrice.orZero()
 
-        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
-            KarhooEnvironment.Production()
-        ) Environment.EUROPE else Environment.TEST
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
+            KarhooEnvironment.Production
+        ) {
+            Environment.LIVE
+        } else {
+            Environment.TEST
+        }
 
         return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
             .setAmount(amount)
@@ -150,9 +154,18 @@ class AdyenPaymentPresenter(
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
+            KarhooEnvironment.Production
+        ) {
+            Environment.LIVE
+        } else {
+            Environment.TEST
+        }
+
         return CardConfiguration.Builder(context, publicKey)
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
+            .setEnvironment(environment)
             .setShowStorePaymentField(false)
             .build()
     }

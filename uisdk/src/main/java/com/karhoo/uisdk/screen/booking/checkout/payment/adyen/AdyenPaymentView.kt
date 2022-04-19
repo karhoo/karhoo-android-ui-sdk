@@ -6,8 +6,10 @@ import android.content.Intent
 import com.adyen.checkout.components.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 import java.util.Locale
@@ -42,12 +44,20 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clien
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
-        val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken)
-                as DropInConfiguration
+        try {
+            val dropInConfiguration: DropInConfiguration =
+                presenter?.getDropInConfig(context, sdkToken)
+                        as DropInConfiguration
 
-        cacheSupplyPartnerId(context, quote)
+            cacheSupplyPartnerId(context, quote)
 
-        DropIn.startPayment(context as Activity, paymentMethods, dropInConfiguration)
+            DropIn.startPayment(context as Activity, paymentMethods, dropInConfiguration)
+        } catch (e: Exception) {
+            actions?.showError(
+                R.string.kh_uisdk_something_went_wrong,
+                karhooError = KarhooError.FailedToCallMoneyService
+            )
+        }
     }
 
     private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {
