@@ -89,13 +89,14 @@
     <string name="kh_uisdk_difficulties_cancelling_message">Wir haben Probleme, Ihre Fahrt zu stornieren. Bitte kontaktieren Sie die Flotte.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Schwierigkeiten bei der Annullierung</string>
     <string name="kh_uisdk_discard">verwerfen</string>
-    <string name="kh_uisdk_dismiss">DISMISS</string>
+    <string name="kh_uisdk_dismiss">ENTLASSEN</string>
     <string name="kh_uisdk_dispatch_cancelled" formatted="false">Bitte entschuldigen Sie, %s hat im Moment keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_done">Erledigt</string>
     <string name="kh_uisdk_drawer_closed">Navigation geschlossen</string>
     <string name="kh_uisdk_drawer_open">Navigation offen</string>
+    <string name="kh_uisdk_driver_arrival">Ankunft des Fahrers</string>
     <string name="kh_uisdk_driver_en_route">Ihr %s Fahrer ist auf dem Weg</string>
-    <string name="kh_uisdk_electric">Elektrisch</string>
+    <string name="kh_uisdk_electric">Electric</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
     <string name="kh_uisdk_email_info">Bitte löschen Sie diese Informationen nicht, da sie uns helfen, die App zu verbessern.</string>
     <string name="kh_uisdk_email_report_issue_message">Bitte nutzen Sie das folgende Feld, um ein bestimmtes Problem mit Ihrer Fahrt zu melden.</string>
@@ -124,6 +125,14 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
     <string name="kh_uisdk_fees_and_taxes_included">Inklusive Steuern und Gebühren</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Stornierung und Wartezeit</string>
+    <string name="kh_uisdk_filter_free_cancellation">Kostenlose Stornierung</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Kostenlose Wartezeit</string>
+    <string name="kh_uisdk_filter_luggages">Gepäckstücke</string>
+    <string name="kh_uisdk_filter_page_results">Alle %s Ergebnisse anzeigen</string>
+    <string name="kh_uisdk_filter_passengers">Passagier(e)</string>
+    <string name="kh_uisdk_filter_quote_types">Arten von Zitaten</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden...</string>
     <string name="kh_uisdk_first_name_hint">Vorname</string>
     <!-- Fare type -->
@@ -261,9 +270,8 @@
     <string name="kh_uisdk_network_error">Wir scheinen Probleme mit der Verbindung zum Netzwerk zu haben</string>
     <string name="kh_uisdk_new_ride">NEUE FAHRT</string>
     <string name="kh_uisdk_next">Weiter</string>
-    <string name="kh_uisdk_no_availability">Wir sind hier noch nicht live! Melden Sie sich, wenn Sie Vorschläge für lokale Flotten haben.</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
-    <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
+    <string name="kh_uisdk_no_results_found">Sofortige Buchungen sind für dieses Ziel leider nicht möglich, aber Sie können für Ihre nächste Reise im Voraus buchen!</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
     <string name="kh_uisdk_offer_expired">Zitat erloschen</string>
@@ -320,6 +328,13 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Erfahren Sie mehr</string>
     <string name="kh_uisdk_quoted_fare">Geschätzter Fahrpreis</string>
+    <string name="kh_uisdk_quotes_activity_title">Zitate</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Bitte geben Sie sowohl die Abhol- als auch die Rückgabeadresse ein, um die Angebote zu nutzen</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Abhol- oder Rückgabeadresse fehlt</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Abgangs- und Zieladresse sind ähnlich</string>
     <string name="kh_uisdk_rate_trip_label">Wie würden Sie Ihre Reise bewerten?</string>
     <string name="kh_uisdk_rating_submitted">Vielen Dank für die Abgabe Ihrer Bewertung.</string>
     <string name="kh_uisdk_rebook_ride">Rebooking-Fahrt</string>
@@ -331,6 +346,7 @@
     <string name="kh_uisdk_report_issue">Ausgabe melden</string>
     <string name="kh_uisdk_requested">Ihre Reise wurde angefordert mit %s</string>
     <string name="kh_uisdk_requested_invite">Vielen Dank für Ihr Interesse! Wir senden Ihnen eine E-Mail, sobald Ihr Konto aktiviert ist.</string>
+    <string name="kh_uisdk_reset_filter">Filter zurücksetzen</string>
     <string name="kh_uisdk_results_empty">Keine Ergebnisse gefunden</string>
     <string name="kh_uisdk_retrieving_dropoff">Übergabeort ermitteln</string>
     <!-- Current Trip -->
@@ -340,6 +356,7 @@
     <string name="kh_uisdk_ride_confirmed">Fahrt Bestätigt</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
     <string name="kh_uisdk_ride_details">Details zur Fahrt</string>
+    <string name="kh_uisdk_no_availability">Wir sind hier noch nicht live! Melden Sie sich, wenn Sie Vorschläge für lokale Flotten haben.</string>
     <!-- trip info -->
     <string name="kh_uisdk_ride_options">Fahrten-Optionen</string>
     <string name="kh_uisdk_ride_state_arrived">Angekommen</string>
@@ -361,7 +378,9 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Anmelden</string>
     <string name="kh_uisdk_sign_out">Abmeldung</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
     <string name="kh_uisdk_something_went_wrong">Es ist ein Fehler aufgetreten.</string>
+    <string name="kh_uisdk_sort_by">Sortieren nach</string>
     <string name="kh_uisdk_sorter_cheapest">Preis</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschätzte Ankunft</string>
@@ -405,6 +424,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Denken Sie daran, dass Sie ein Auto bis zu sieben Tage im Voraus buchen können.</string>
     <string name="kh_uisdk_update">Update</string>
     <string name="kh_uisdk_vehicle">Fahrzeug</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Großraum</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">Rollstuhl</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Möchten Sie fortfahren?</string>
     <string name="kh_uisdk_you_may_be_charged">Ihnen wird eine Stornierungsgebühr in Rechnung gestellt, die auf %s veranschlagt wird.\n\nMöchten Sie fortfahren?</string>
