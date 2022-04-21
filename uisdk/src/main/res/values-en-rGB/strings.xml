@@ -271,7 +271,7 @@
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
-    <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
+    <string name="kh_uisdk_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>

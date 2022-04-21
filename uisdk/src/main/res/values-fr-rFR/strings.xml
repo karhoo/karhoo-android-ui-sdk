@@ -271,8 +271,8 @@
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
-    <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
-    <string name="kh_uisdk_no_results_label">No results</string>
+    <string name="kh_uisdk_no_results_found">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage !</string>
+    <string name="kh_uisdk_no_results_label">Pas de résultats</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
     <string name="kh_uisdk_offer_expired">Offre expirée</string>
     <string name="kh_uisdk_offer_expired_text">Veuillez sélectionner un nouveau devis pour poursuivre votre réservation</string>

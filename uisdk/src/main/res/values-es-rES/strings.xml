@@ -271,7 +271,7 @@
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
     <string name="kh_uisdk_no_destination">Sin Destino</string>
-    <string name="kh_uisdk_no_results_found">No hay disponibilidad para la hora solicitada. Por favor, seleccione una hora diferente.</string>
+    <string name="kh_uisdk_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
     <string name="kh_uisdk_offer_expired">Cotización caducada</string>
