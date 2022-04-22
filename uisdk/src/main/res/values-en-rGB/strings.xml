@@ -180,7 +180,6 @@
     <!-- Locations errors, K2xxx -->
     <string name="kh_uisdk_K2001">Could not get address</string>
     <!-- Quotes errors, K3xxx -->
-    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_K3001">Could not get estimates</string>
     <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
     <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
@@ -327,6 +326,7 @@
     <string name="kh_uisdk_quote_cancellation_before_pickup_ending">before pickup</string>
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Free cancellation up to</string>
     <!-- Quote View Learn More -->
+    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_quote_learn_more">Learn more</string>
     <string name="kh_uisdk_quoted_fare">Estimated Fare</string>
     <string name="kh_uisdk_quotes_activity_title">Quotes</string>
