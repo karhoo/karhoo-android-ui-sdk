@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.domain.quotes
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
-import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.response.Resource
@@ -20,7 +19,6 @@ import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
