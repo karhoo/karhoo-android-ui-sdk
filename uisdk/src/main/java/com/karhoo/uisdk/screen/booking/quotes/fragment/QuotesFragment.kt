@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
@@ -40,13 +41,15 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogPresenter
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogFragment
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.quotesTaxesAndFeesLabel
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
-    QuotesFragmentContract.View, LifecycleObserver {
+    QuotesFragmentContract.View, LifecycleObserver, FilterDialogPresenter.FilterDelegate {
 
     private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy {
         ViewModelProvider(this).get(
@@ -66,12 +69,17 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private lateinit var quotesSortWidget: QuotesSortView
+    private lateinit var quotesFilterWidget: FilterDialogFragment
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
+    private lateinit var quotesTaxesAndFeesLabel: TextView
     private var currentValidityDeadlineTimestamp: Long? = null
     private lateinit var quotesSortByButton: MaterialButton
+    private lateinit var quotesFilterByButton: MaterialButton
     private var isPrebook = false
+
+    var filterChain = FilterChain()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,14 +91,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
         categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
+        quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
+        initializeSortView()
+        initializeFilterView()
 
-        quotesSortWidget = QuotesSortView()
-        quotesSortWidget.setListener(this)
         journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
 
         journeyDetailsStateViewModel.viewStates().apply {
-            observe(viewLifecycleOwner, subscribeToJourneyDetails(journeyDetailsStateViewModel))
+            observe(viewLifecycleOwner, subscribeToJourneyDetails())
         }
         categorySelectorWidget.bindViewToData(
             this.viewLifecycleOwner,
@@ -132,11 +141,48 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             setOnClickListener { showSortBy() }
         }
 
+        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
+        quotesFilterByButton.apply {
+            visibility = VISIBLE
+            setOnClickListener { showFilters() }
+        }
+
         initAvailability();
+
+        showFilteringWidgets(false)
+
         return view
     }
 
-    fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+    fun initializeSortView(){
+        quotesSortWidget = QuotesSortView()
+        quotesSortWidget.setListener(this)
+    }
+
+    fun initializeFilterView(){
+        quotesFilterWidget = FilterDialogFragment()
+        quotesFilterWidget.setListener(this)
+        quotesFilterWidget.createFilterChain(filterChain)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        availabilityProvider?.pauseUpdates()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        availabilityProvider?.resumeUpdates()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        availabilityProvider?.cleanup()
+    }
+
+    fun subscribeToJourneyDetails(): Observer<JourneyDetails> {
         return Observer {
             it?.let {
                 val sortMethod = SortMethod.PRICE
@@ -155,6 +201,12 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private fun showSortBy(){
         activity?.supportFragmentManager?.let {
             quotesSortWidget.show(it, QuotesSortView.TAG)
+        }
+    }
+
+    private fun showFilters(){
+        activity?.supportFragmentManager?.let {
+            quotesFilterWidget.show(it, FilterDialogFragment.TAG)
         }
     }
 
@@ -183,19 +235,24 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         val sortMethod = SortMethod.PRICE
         quotesSortWidget.selectedSortMethod.postValue(sortMethod)
         presenter.sortMethodChanged(sortMethod)
-        changeVisibilityOfQuotesSortByButton(journeyDetails.destination == null)
     }
 
-    private fun changeVisibilityOfQuotesSortByButton(gone: Boolean){
+    private fun changeVisibilityOfQuotesSortByButton(show: Boolean){
         this::quotesSortByButton.isInitialized.let {
             if(it)
-                quotesSortByButton.visibility = if (gone || isPrebook) GONE else VISIBLE
+                quotesSortByButton.visibility = if (show && !isPrebook) VISIBLE else GONE
+        }
+    }
+
+    private fun changeVisibilityOfQuotesFilterByButton(show: Boolean){
+        this::quotesFilterByButton.isInitialized.let {
+            if(it)
+                quotesFilterByButton.visibility = if (show) VISIBLE else GONE
         }
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        if(quoteList.isNotEmpty())
-            quotesTaxesAndFeesLabel.visibility = View.VISIBLE
+        showFilteringWidgets(quoteList.isNotEmpty())
         quotesRecyclerView.updateList(quoteList)
     }
 
@@ -210,27 +267,30 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showNoCoverageError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showNoCoverageError(show)
     }
 
     override fun showNoFleetsError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showNoFleetsError(show)
     }
 
     override fun showSameAddressesError(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(show)
-        categorySelectorWidget.visibility = if (show) GONE else VISIBLE
-        quotesTaxesAndFeesLabel.visibility = if (show) GONE else VISIBLE
-
+        showFilteringWidgets(!show)
         quotesRecyclerView.showSameAddressesError(show)
+    }
+
+    override fun showNoAddressesError(show: Boolean) {
+        showFilteringWidgets(!show)
+        quotesRecyclerView.showNoAddressesError(show)
+    }
+
+    private fun showFilteringWidgets(show: Boolean) {
+        changeVisibilityOfQuotesSortByButton(show)
+        changeVisibilityOfQuotesFilterByButton(show)
+        categorySelectorWidget.visibility = if (show) VISIBLE else GONE
+        quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
     }
 
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) {
@@ -238,7 +298,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showList(show: Boolean) {
-        changeVisibilityOfQuotesSortByButton(!show)
+        changeVisibilityOfQuotesSortByButton(show)
+        changeVisibilityOfQuotesFilterByButton(show)
         categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
@@ -295,6 +356,20 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
         return Observer { actions ->
             when (actions) {
+                is AddressBarViewContract.AddressBarActions.AddressChanged -> {
+                    when (actions.addressCode) {
+                        AddressCodes.PICKUP -> {
+                            dataModel?.journeyDetails?.pickup = actions.address
+                        }
+                        AddressCodes.DESTINATION -> {
+                            dataModel?.journeyDetails?.destination = actions.address
+                        }
+                    }
+
+                    dataModel?.let {
+                        presenter.setData(it)
+                    }
+                }
                 is AddressBarViewContract.AddressBarActions.ShowAddressActivity ->
                     startActivityForResult(actions.intent, actions.addressCode)
             }
@@ -324,5 +399,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun onUserChangedFilter(): Int {
+        return availabilityProvider?.getNonFilteredVehicles()
+            ?.let { filterChain.applyFilters(it).size }?: 0
+    }
+
+    override fun onFiltersApplied() {
+        availabilityProvider?.filterVehicleListByFilterChain(filterChain)
     }
 }

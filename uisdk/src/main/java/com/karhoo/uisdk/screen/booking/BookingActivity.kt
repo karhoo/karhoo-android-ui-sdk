@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -32,7 +33,6 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
@@ -183,6 +183,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
@@ -228,27 +229,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     waitForTripAllocation()
                 is CheckoutViewContract.Action.HandleBookingError ->
                     showErrorDialog(actions.stringId, actions.karhooError)
-            }
-        }
-    }
-
-    private fun bindToBookingQuoteOutputs(): Observer<in BookingQuotesViewContract.BookingQuotesAction> {
-        return Observer { actions ->
-            when (actions) {
-                is BookingQuotesViewContract.BookingQuotesAction.ShowError ->
-                    showSnackbar(actions.snackbarConfig)
-                is BookingQuotesViewContract.BookingQuotesAction.HideError -> dismissSnackbar()
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListVisibilityChange ->
-                    updateMapViewForQuoteListVisibilityChange(actions.isVisible)
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed ->
-                    bookingMapWidget.updateMapViewForQuotesListVisibilityCollapsed()
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded ->
-                    bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
-                is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
-
-                }
-                is BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp -> {
-                }
             }
         }
     }

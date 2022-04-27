@@ -126,6 +126,14 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Vertel ons alsjeblieft meer over je reis</string>
     <string name="kh_uisdk_fees_and_taxes_included">Belastingen en toeslagen inbegrepen</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Annulering en wachttijd</string>
+    <string name="kh_uisdk_filter_free_cancellation">Gratis afzegging</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Gratis wachttijd</string>
+    <string name="kh_uisdk_filter_luggages">Bagage)</string>
+    <string name="kh_uisdk_filter_page_results">Bekijk alle %s resultaten</string>
+    <string name="kh_uisdk_filter_passengers">Passagier(s)</string>
+    <string name="kh_uisdk_filter_quote_types">Soorten offertes</string>
     <string name="kh_uisdk_finding_your_ride">Uw rit vinden...</string>
     <string name="kh_uisdk_first_name_hint">Voornaam</string>
     <!-- Fare type -->
@@ -263,8 +271,6 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
-    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
-    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
     <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
@@ -324,6 +330,12 @@
     <string name="kh_uisdk_quote_learn_more">Meer informatie</string>
     <string name="kh_uisdk_quoted_fare">Geschat tarief</string>
     <string name="kh_uisdk_quotes_activity_title">Citaten</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Voer zowel het ophaal- als het inleveradres in om toegang te krijgen tot de aanbiedingen</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Ophaal- of afleveradres ontbreekt</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>
     <string name="kh_uisdk_rating_submitted">Bedankt voor het doorgeven van uw beoordeling.</string>
     <string name="kh_uisdk_rebook_ride">Rit opnieuw reserveren</string>
@@ -335,6 +347,7 @@
     <string name="kh_uisdk_report_issue">Probleem melden</string>
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requested_invite">Bedankt voor uw interesse! We sturen u een e-mail wanneer uw account is geactiveerd.</string>
+    <string name="kh_uisdk_reset_filter">Filter resetten</string>
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
@@ -366,7 +379,6 @@
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
     <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
-    <string name="kh_uisdk_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
     <string name="kh_uisdk_sort_by">Sorteer op</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>

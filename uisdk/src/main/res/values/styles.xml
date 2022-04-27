@@ -618,21 +618,21 @@
     <style name="KhLoyaltySeparatorLabel">
         <item name="background">@color/kh_uisdk_label</item>
         <item name="fontWeight">600</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
     <style name="KhQuotesErrorTitle">
         <item name="fontWeight">600</item>
         <item name="lineHeight">22dp</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
     <style name="KhQuotesErrorSubtitle">
         <item name="fontWeight">400</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="lineHeight">18dp</item>
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
@@ -683,5 +683,44 @@
         <item name="iconGravity">textStart</item>
         <item name="iconTint">@color/textColor</item>
         <item name="icon">@drawable/kh_uisdk_ic_arrow_down_tailed</item>
+    </style>
+
+    <style name="KhQuoteListFilterButton" parent="KhQuoteListSortByButton">
+        <item name="icon">@drawable/kh_uisdk_ic_filters</item>
+    </style>
+
+    <style name="KhFilterChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="checkedIconVisible">true</item>
+    </style>
+
+    <style name="KhFilterNumberedViewLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_semi_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/textColor</item>
+    </style>
+
+    <style name="KhFilterNumberedViewValue" parent="KhFilterNumberedViewLabel">
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_semi_small</item>
+    </style>
+
+    <style name="KhFilterViewResetFilters">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/kh_uisdk_accent</item>
+    </style>
+
+    <style name="KhFilterViewCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:layoutDirection">rtl</item>
+        <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
 </resources>
