@@ -131,8 +131,8 @@ class QuotesRecyclerView @JvmOverloads constructor(
                 ErrorViewLinkedReason(
                     context.resources.getString(R.string.kh_uisdk_no_coverage_title),
                     context.resources.getString(R.string.kh_uisdk_no_coverage_subtitle),
-                        "Contact us",
-                                "Contact Us",
+                        context.resources.getString(R.string.kh_uisdk_contact_us),
+                                context.resources.getString(R.string.kh_uisdk_contact_us),
                     R.drawable.kh_uisdk_ic_no_coverage_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
