@@ -271,6 +271,8 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
+    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
     <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
