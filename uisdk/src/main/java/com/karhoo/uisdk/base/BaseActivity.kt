@@ -48,6 +48,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!KarhooUISDKConfigurationProvider.isConfigurationInitialized()) {
             Logger.error(getString(R.string.kh_uisdk_logger_sdk_not_configured))
+            finish()
         }
 
         super.onCreate(savedInstanceState)

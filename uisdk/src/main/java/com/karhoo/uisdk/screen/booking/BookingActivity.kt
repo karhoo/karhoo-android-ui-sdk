@@ -73,7 +73,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var bookingMetadata: HashMap<String, String>? = null
     private var currentValidityDeadlineTimestamp: Long? = null
 
-    private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
+    private var isGuest = false
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -81,6 +81,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onCreate(savedInstanceState: Bundle?) {
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
+
+        isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
         setSupportActionBar(toolbar)
         if (KarhooUISDK.menuHandler == null) {
