@@ -11,9 +11,9 @@
 
     <ImageView
         android:id="@+id/quotesErrorIcon"
-        android:layout_width="@dimen/kh_uisdk_spacing_large"
-        android:layout_height="@dimen/kh_uisdk_spacing_large"
-        android:src="@drawable/kh_uisdk_ic_no_available_quotes" />
+        android:layout_width="@dimen/kh_uisdk_spacing_xxxlarge"
+        android:layout_height="@dimen/kh_uisdk_spacing_xxxlarge"
+        android:src="@drawable/kh_uisdk_ic_no_coverage_quotes" />
 
     <TextView
         android:id="@+id/quotesErrorTitle"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:gravity="center"
-        tools:text="No availability for the requested time" />
+        tools:text="We don't have any fleets in this area yet." />
 
     <TextView
         android:id="@+id/quotesErrorSubtitle"
@@ -31,7 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        tools:text="Please choose a different time" />
+        tools:text="Contact us to suggest some." />
 </LinearLayout>

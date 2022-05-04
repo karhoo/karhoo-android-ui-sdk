@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.quotes.errorview
 
 import android.content.Context
+import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.View
 import android.widget.RelativeLayout
@@ -46,9 +47,10 @@ class QuotesErrorView @JvmOverloads constructor(
         quotesErrorSubtitle.text = presenter.setSpannableOnSubititle(
             reason.linkTitle,
             reason.subtitleLink,
-            reason.title,
+            reason.subtitle,
             resources.getColor(R.color.kh_uisdk_colorAccent)
         )
+        quotesErrorSubtitle.movementMethod = LinkMovementMethod.getInstance()
 
         this.delegateQuotesError = delegateQuotesError
     }
