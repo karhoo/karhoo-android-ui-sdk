@@ -82,8 +82,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
 
-        isGuest = KarhooUISDKConfigurationProvider.isGuest()
-
         setSupportActionBar(toolbar)
         if (KarhooUISDK.menuHandler == null) {
             supportActionBar?.let {
@@ -159,6 +157,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViews() {
+        isGuest = KarhooUISDKConfigurationProvider.isGuest()
+
         addressBarWidget.watchBookingStatusState(this@BookingActivity, bookingStatusStateViewModel)
         tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
                                                        bookingRequestStateViewModel)
