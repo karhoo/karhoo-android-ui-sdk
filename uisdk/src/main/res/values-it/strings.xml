@@ -76,6 +76,7 @@
     <string name="kh_uisdk_contact">CONTATTO</string>
     <string name="kh_uisdk_contact_driver">Contatta l\'autista</string>
     <string name="kh_uisdk_contact_fleet">Contatta la flotta</string>
+    <string name="kh_uisdk_contact_us">Contattaci</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/it/requests/new</string>
     <string name="kh_uisdk_continue_journey">Continuare</string>
     <string name="kh_uisdk_continue_registration">Continuare</string>
@@ -270,6 +271,8 @@
     <string name="kh_uisdk_network_error">Sembra che ci siano problemi di connessione alla rete</string>
     <string name="kh_uisdk_new_ride">NUOVA CORSA</string>
     <string name="kh_uisdk_next">Successivo</string>
+    <string name="kh_uisdk_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
+    <string name="kh_uisdk_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
     <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
     <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
     <string name="kh_uisdk_no_results_label">Nessun risultato</string>

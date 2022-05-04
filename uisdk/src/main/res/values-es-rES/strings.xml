@@ -76,6 +76,7 @@
     <string name="kh_uisdk_contact">CONTACTO</string>
     <string name="kh_uisdk_contact_driver">Llamar</string>
     <string name="kh_uisdk_contact_fleet">Llamar a la flota</string>
+    <string name="kh_uisdk_contact_us">Contacta con nosotros</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/es/requests/new</string>
     <string name="kh_uisdk_continue_journey">CONTINUAR</string>
     <string name="kh_uisdk_continue_registration">CONTINUAR</string>
@@ -94,6 +95,7 @@
     <string name="kh_uisdk_done">OK</string>
     <string name="kh_uisdk_drawer_closed">Drawer closed</string>
     <string name="kh_uisdk_drawer_open">Drawer open</string>
+    <string name="kh_uisdk_driver_arrival">Llegada del conductor</string>
     <string name="kh_uisdk_driver_en_route">El conductor está en camino</string>
     <string name="kh_uisdk_electric">Eléctrico</string>
     <string name="kh_uisdk_email_hint">Email</string>
@@ -269,7 +271,6 @@
     <string name="kh_uisdk_network_error">Parece que tenemos problemas para conectarnos a la red</string>
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
-    <string name="kh_uisdk_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
     <string name="kh_uisdk_no_availability_subtitle">Por favor selecciona otra hora</string>
     <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
     <string name="kh_uisdk_no_destination">Sin Destino</string>
@@ -330,6 +331,13 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Leer más</string>
     <string name="kh_uisdk_quoted_fare">Tarifa estimada</string>
+    <string name="kh_uisdk_quotes_activity_title">Citas</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Ingrese las direcciones de recogida y devolución para acceder a las ofertas</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Falta la dirección de recogida o entrega</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Por favor selecciona otra hora</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Sin disponibilidad para la hora solicitada</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Las direcciones de salida y destino son similares</string>
     <string name="kh_uisdk_rate_trip_label">Como clasifica usted este viaje?</string>
     <string name="kh_uisdk_rating_submitted">Gracias por enviar tu calificación.</string>
     <string name="kh_uisdk_rebook_ride">Solicitar de nuevo</string>
@@ -372,7 +380,9 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">ACCEDER</string>
     <string name="kh_uisdk_sign_out">Salir</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
     <string name="kh_uisdk_something_went_wrong">Hubo un problema</string>
+    <string name="kh_uisdk_sort_by">Ordenar por</string>
     <string name="kh_uisdk_sorter_cheapest">Tarifa</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Proximidad</string>
