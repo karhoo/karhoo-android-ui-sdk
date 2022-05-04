@@ -10,6 +10,7 @@ buildscript {
         mavenCentral()
         mavenLocal()
         google()
+        jcenter()
     }
 
     dependencies {
@@ -64,6 +65,7 @@ allprojects {
                 password 'AKCp8jQcoDy2hxSWhDAUQKXLDPDx6NYRkqrgFLRc3qDrayg6rrCbJpsKKyMwaykVL8FWusJpp'
             }
         }
+        jcenter()
     }
     apply from: "$rootDir/detekt.gradle"
 }
