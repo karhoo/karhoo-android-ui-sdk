@@ -89,25 +89,4 @@ class PriceSortTest {
         assertEquals(expectedSortedOrder, result)
     }
 
-    /**
-     * Given:   a list of vehicles with same quotes, equal prices and no QTAs
-     * When:    sorted using PriceSort
-     * Then:    vehicles should be sorted alphabetically by category name
-     */
-    @Test
-    fun `sorted alphabetically by category name when quote is same, equal prices and no QTAs`() {
-        val v1 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
-                       vehicle = QuoteVehicle(vehicleClass = "ABC"))
-        val v2 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
-                       vehicle = QuoteVehicle(vehicleClass = "XYZ"))
-        val v3 = Quote(price = QuotePrice(highPrice = 5), fleet = Fleet(name = "A Cars"),
-                       vehicle = QuoteVehicle(vehicleClass = "DEF"))
-        val vehiclesToSort = listOf(v1, v2, v3)
-        val expectedSortOrder = listOf(v1, v3, v2)
-
-        val result = vehiclesToSort.sortedWith(priceSort)
-
-        assertEquals(expectedSortOrder, result)
-    }
-
 }
