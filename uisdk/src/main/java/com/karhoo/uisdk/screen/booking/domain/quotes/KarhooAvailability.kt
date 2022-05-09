@@ -281,45 +281,11 @@ class KarhooAvailability(
     }
 
     private fun currentAvailableQuotes() {
-        if (journeyDetailsStateViewModel.currentState.date != null) {
-            setAvailableCategories(handlePrebookCategories())
-        } else {
-            setAvailableCategories(handleAsapCategories())
-        }
-    }
-
-    private fun handleAsapCategories(): Map<String, Boolean> {
         val activeCategories = HashMap<String, Boolean>()
         availableVehicles.forEach {
-            it.value.filter { it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA }
-                .forEach { isCategoryAvailable(activeCategories, it) }
+            it.value.forEach { activeCategories[it.id!!] = true }
         }
-
-        return activeCategories
-    }
-
-    private fun handlePrebookCategories(): MutableMap<String, Boolean> {
-        val activeCategories = HashMap<String, Boolean>()
-        availableVehicles.forEach {
-            it.value.forEach { isCategoryAvailable(activeCategories, it) }
-        }
-        return activeCategories
-    }
-
-    private fun isCategoryAvailable(
-        activeCategories: HashMap<String, Boolean>, vehicleDetails:
-        Quote
-    ) {
-        vehicleDetails.vehicle.vehicleClass?.let {
-            if (!activeCategories.containsKey(it)) {
-                activeCategories[it] = true
-            }
-        }
-        allCategory?.let {
-            if (availableVehicles.isNotEmpty() && !activeCategories.containsKey(it.categoryName)) {
-                activeCategories[it.categoryName] = true
-            }
-        }
+        setAvailableCategories(activeCategories)
     }
 
     override fun pauseUpdates() {
