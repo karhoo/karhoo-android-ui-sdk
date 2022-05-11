@@ -15,7 +15,7 @@ import java.util.Locale
 class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clientKey: String) : PaymentDropInContract.View {
 
     var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions, clientKey = clientKey)
-    var actions: PaymentDropInContract.Actions? = null
+    override var actions: PaymentDropInContract.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         presenter?.handleActivityResult(requestCode, resultCode, data)

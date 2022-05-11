@@ -10,7 +10,6 @@ interface BookingPaymentContract {
 
     interface Widget {
 
-        fun setPaymentViewVisibility()
     }
 
     interface View {
@@ -43,11 +42,6 @@ interface BookingPaymentContract {
         fun createPaymentView(actions: PaymentDropInContract.Actions)
 
         fun getPaymentProvider()
-
-        fun getPaymentViewVisibility()
-
-        fun getPaymentProviderType(): ProviderType
-
     }
 
     interface PaymentViewActions {

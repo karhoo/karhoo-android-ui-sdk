@@ -21,7 +21,7 @@ import java.util.Locale
 class BraintreePaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
 
     var presenter: PaymentDropInContract.Presenter? = BraintreePaymentPresenter(actions)
-    var actions: PaymentDropInContract.Actions? = actions
+    override var actions: PaymentDropInContract.Actions? = actions
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment.newInstance(context as AppCompatActivity, sdkToken)

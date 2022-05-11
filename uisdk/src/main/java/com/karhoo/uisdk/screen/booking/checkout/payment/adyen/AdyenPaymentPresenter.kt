@@ -234,7 +234,7 @@ class AdyenPaymentPresenter(
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")
             val savedPaymentInfo = CardType.fromString(type)?.let {
-                SavedPaymentInfo(newCardNumber, it)
+                SavedPaymentInfo("****" + newCardNumber, it)
             } ?: SavedPaymentInfo(newCardNumber, CardType.NOT_SET)
             userStore.savedPaymentInfo = savedPaymentInfo
         }

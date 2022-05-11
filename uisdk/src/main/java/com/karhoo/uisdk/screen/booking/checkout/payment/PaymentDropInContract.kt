@@ -12,6 +12,7 @@ import java.util.Locale
 interface PaymentDropInContract {
 
     interface View {
+        var actions: Actions?
 
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 

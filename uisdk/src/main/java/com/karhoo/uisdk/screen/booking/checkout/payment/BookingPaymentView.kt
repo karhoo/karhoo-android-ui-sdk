@@ -70,10 +70,6 @@ class BookingPaymentView @JvmOverloads constructor(
         cardActions?.handleViewVisibility(visibility)
     }
 
-    override fun setPaymentViewVisibility() {
-        presenter?.getPaymentViewVisibility()
-    }
-
     private fun getCustomisationParameters(
         context: Context,
         attr: AttributeSet?,
@@ -111,8 +107,7 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        cardNumberText.text = if (isGuest() && presenter?.getPaymentProviderType() ==
-                ProviderType.BRAINTREE) number else "•••• $number"
+        cardNumberText.text = if (number.contains("••••")) number else "•••• $number"
         setCardType(cardType)
     }
 
