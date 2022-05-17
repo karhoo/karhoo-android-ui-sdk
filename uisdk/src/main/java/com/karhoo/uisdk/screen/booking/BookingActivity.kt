@@ -72,7 +72,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
 
-    private var isGuest = KarhooUISDKConfigurationProvider.isGuest()
+    private var isGuest = false
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -153,6 +153,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViews() {
+        isGuest = KarhooUISDKConfigurationProvider.isGuest()
+
         addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
         tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
                                                        bookingRequestStateViewModel)
