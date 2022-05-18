@@ -78,7 +78,7 @@ class BookingRobot : BaseTestRobot() {
         pressItemInList(R.id.quotesListRecycler, 0)
     }
 
-    fun clickCancel(){
+    fun clickCancel() {
         clickButtonByString(R.string.kh_uisdk_cancel)
     }
 
@@ -432,7 +432,7 @@ class ResultRobot : BaseTestRobot() {
 
     fun fullASAPQuotesListCheckGuest() {
         fullASAPQuotesListCheck()
-//        locateMeButtonIsNotVisible()
+        //        locateMeButtonIsNotVisible()
     }
 
     fun pickupPinIsVisible() {
@@ -504,9 +504,9 @@ class ResultRobot : BaseTestRobot() {
         passengerDetailsFieldsCheck()
     }
 
-    //TODO: FIX FOR CHECKOUT
+    //    TODO: FIX FOR CHECKOUT
     fun passengerDetailsTitleIsVisible() {
-        //        textIsVisibleIsDescendant(R.string.kh_uisdk_passenger_details, R.id.bookingRequestWidget)
+        textIsVisibleIsDescendant(R.string.kh_uisdk_passenger_details, R.id.bookingRequestPriceWidget)
     }
 
     fun passengerDetailsFieldsCheck() {
@@ -654,6 +654,14 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkDriverDetails() {
         viewIsVisible(R.id.rideOptionsLabel)
+    }
+
+    fun findYourRide() {
+        viewIsVisible(R.id.driverPhotoImage)
+    }
+
+    fun driverEnRoute() {
+        viewIsVisible(R.string.kh_uisdk_driver_en_route)
     }
 
     fun checkWebViewDisplayed() {

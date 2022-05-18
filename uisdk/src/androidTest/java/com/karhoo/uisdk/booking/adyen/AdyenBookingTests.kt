@@ -117,7 +117,7 @@ class AdyenBookingTests : Launch {
      * When:    I enter an address with no coverage
      * Then:    I am shown the snackbar about no coverage
      **/
-//    @Test
+    //    @Test
     //    @AllowFlaky(attempts = 5)
     fun snackbarShowsToUserWhenNoAvailability() {
         serverRobot {
@@ -132,7 +132,7 @@ class AdyenBookingTests : Launch {
         }
     }
 
-//    @Test
+    //    @Test
     //    @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
@@ -177,7 +177,7 @@ class AdyenBookingTests : Launch {
     fleet name, Price, Fare type, car category, category tabs
      **/
     @Test
-    @AllowFlaky(attempts = 5)
+    //    @AllowFlaky(attempts = 5)
     fun fullQuoteListCheckETA() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -678,15 +678,41 @@ class AdyenBookingTests : Launch {
             bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
             driverTrackingResponse(code = HTTP_OK, response = DRIVER_TRACKING, trip = TRIP.tripId)
             bookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
-        booking(this, INITIAL_TRIP_INTENT) {
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(SEARCH_ADDRESS)
+            mediumSleep()
+            clickBakerStreetResult()
+        }
+        serverRobot {
+            addressListResponse(HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+        booking {
+            clickDestinationAddressField()
+        }
+        address {
+            search(SEARCH_ADDRESS_EXTRA)
+            shortSleep()
+            clickOxfordStreetResult()
+        }
+        booking {
             shortSleep()
             pressFirstQuote()
-            mediumSleep()
+            shortSleep()
+            clickCancel()
             pressBookRideButton()
-            longSleep()
+            clearThenFillGuestPhoneNumber()
+            pressSaveButton()
+            pressBookRideButton()
+            mediumSleep()
         } result {
-            checkDriverDetails()
+            passengerDetailsTitleIsVisible()
         }
     }
 
