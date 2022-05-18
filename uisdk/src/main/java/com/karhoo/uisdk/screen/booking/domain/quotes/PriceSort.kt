@@ -42,8 +42,8 @@ class PriceSort : Comparator<Quote> {
     }
 
     private fun sortByCategoryName(vehicleOne: Quote, vehicleTwo: Quote): Int {
-        return vehicleOne.vehicle.vehicleType.orEmpty().compareTo(vehicleTwo.vehicle
-                                                                           .vehicleType.orEmpty(),
+        return vehicleOne.vehicle.vehicleClass.orEmpty().compareTo(vehicleTwo.vehicle
+                                                                           .vehicleClass.orEmpty(),
                                                                    ignoreCase = true)
     }
 

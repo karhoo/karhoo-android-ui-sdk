@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
@@ -78,7 +79,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun setCategoryText(vehicle: QuoteVehicle) {
-        categoryText.text = " ${vehicle.vehicleType?.replaceFirstChar { it.uppercase() }}"
+        categoryText.text = " ${vehicle.vehicleType?.replaceFirstChar { it.uppercase() }} ( ${vehicle.categoryToLocalisedString(context.applicationContext)?.replaceFirstChar { it.uppercase() } } )"
     }
 
     private fun loadImage(url: String?) {
