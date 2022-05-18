@@ -31,7 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
         tools:text="Please choose a different time" />
 </LinearLayout>
