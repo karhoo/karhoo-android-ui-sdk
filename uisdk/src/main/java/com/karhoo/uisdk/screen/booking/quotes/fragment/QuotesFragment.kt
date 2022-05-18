@@ -141,11 +141,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         return view
     }
 
-    override fun onPause() {
-        super.onPause()
-        availabilityProvider?.cleanup()
-    }
-
     fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
         return Observer {
             it?.let {
