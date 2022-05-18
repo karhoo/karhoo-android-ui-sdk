@@ -6,19 +6,12 @@
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
     android:elevation="@dimen/kh_uisdk_spacing_xxxsmall"
-    android:orientation="vertical"
-    android:background="@color/kh_uisdk_background2"
-    >
+    android:orientation="vertical">
 
     <com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
         android:id="@+id/addressBarWidget"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/marginBottom_10"
-        android:paddingBottom="@dimen/marginBottom_10"
-        android:paddingStart="@dimen/marginBottom"
-        android:paddingEnd="@dimen/marginBottom"
-        />
+        android:layout_height="wrap_content" />
 
     <include
         android:id="@+id/quoteWidget"

@@ -46,7 +46,7 @@ import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_quotes_list.quotesTaxesAndFeesLabel
+import kotlinx.android.synthetic.main.uisdk_view_quotes_list.*
 import java.util.Locale
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
@@ -132,6 +132,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         return resources
     }
 
+    override fun setChevronState(isExpanded: Boolean) {
+        val stateSet = intArrayOf(android.R.attr.state_checked * if (isExpanded) 1 else -1)
+        chevronIcon.setImageState(stateSet, true)
+    }
+
     override fun setSortMethod(sortMethod: SortMethod) {
         quotesRecyclerView.setSortMethod(sortMethod)
     }
@@ -154,8 +159,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        if(quoteList.isNotEmpty())
-            quotesTaxesAndFeesLabel.visibility = View.VISIBLE
         quotesRecyclerView.updateList(quoteList)
     }
 

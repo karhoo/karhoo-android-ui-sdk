@@ -21,6 +21,8 @@ interface QuotesFragmentContract {
 
         fun setSortMethod(sortMethod: SortMethod)
 
+        fun setChevronState(isExpanded: Boolean)
+
         fun prebook(isPrebook: Boolean)
 
         fun showNoAvailability()
