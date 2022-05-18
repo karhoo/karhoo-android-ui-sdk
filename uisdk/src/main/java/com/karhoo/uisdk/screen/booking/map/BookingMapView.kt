@@ -180,16 +180,15 @@ class BookingMapView @JvmOverloads constructor(
                 pickupPinIcon.visibility = View.VISIBLE
                 showLocationButton(true)
 
+                googleMap?.setOnMapLoadedCallback {
+                    googleMap?.setOnCameraIdleListener(this@BookingMapView)
+                    googleMap?.setOnCameraMoveStartedListener(this@BookingMapView)
+                }
             } else {
                 zoom(null)
                 isMyLocationEnabled = false
                 pickupPinIcon.visibility = View.GONE
             }
-        }
-
-        googleMap?.setOnMapLoadedCallback {
-            googleMap?.setOnCameraIdleListener(this@BookingMapView)
-            googleMap?.setOnCameraMoveStartedListener(this@BookingMapView)
         }
     }
 
@@ -200,15 +199,15 @@ class BookingMapView @JvmOverloads constructor(
                 cameraUpdate,
                 resources.getInteger(R.integer.kh_uisdk_map_anim_duration),
                 null
-                                    )
+            )
         } else {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 LatLng(
                     MAP_DEFAULT_LOCATION_LATITUDE,
                     MAP_DEFAULT_LOCATION_LONGITUDE
-                      ),
+                ),
                 MAP_DEFAULT_NO_PERMISSIONS_ZOOM
-                                                                )
+            )
             googleMap?.moveCamera(cameraUpdate)
         }
     }
