@@ -21,7 +21,7 @@ import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.TimePickerTitleView
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.util.DateUtil
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.clearDateTimeButtonIcon
@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dropOffLabe
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.flipButtonIcon
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.pickupLabel
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.scheduledIcon
+import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeDivider
 import org.joda.time.DateTime
 import java.util.Calendar
 
@@ -63,12 +64,14 @@ class AddressBarView
 
     override fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
         val calendar = Calendar.getInstance()
+        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
         val datePicker = DatePickerDialog(context,
                                           R.style.DialogTheme,
                                           this,
-                                          calendar.get(Calendar.YEAR),
-                                          calendar.get(Calendar.MONTH),
-                                          calendar.get(Calendar.DAY_OF_MONTH)).apply {
+                                     previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
+                               previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
+                               previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
+        ).apply {
             datePicker.minDate = minDate
             datePicker.maxDate = maxDate
         }
@@ -77,8 +80,13 @@ class AddressBarView
     }
 
     override fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
-        val dialog = TimePickerDialog(context, R.style.DialogTheme, this,
-                                      hour, minute, DateFormat.is24HourFormat(context))
+        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
+        val dialog = TimePickerDialog(context,
+            R.style.DialogTheme,
+            this,
+            previousSelectedDate?.hourOfDay ?: hour,
+            previousSelectedDate?.minuteOfHour ?: minute,
+            DateFormat.is24HourFormat(context))
         dialog.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
         dialog.show()
     }
@@ -92,6 +100,10 @@ class AddressBarView
         clearDateTimeButtonIcon.visibility = View.VISIBLE
     }
 
+    fun setPrebookTime(time: DateTime){
+        addressPresenter.dateSet(time)
+    }
+
     override fun resetDateField() {
         timeDatePresenter.clearScheduledTimeClicked()
     }
@@ -100,7 +112,8 @@ class AddressBarView
         dateTimeUpperText.visibility = View.GONE
         dateTimeLowerText.visibility = View.GONE
         clearDateTimeButtonIcon.visibility = View.GONE
-        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.INVISIBLE else View.VISIBLE
+        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
+        dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
     }
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
@@ -112,7 +125,8 @@ class AddressBarView
     }
 
     override fun setPickupAddress(displayAddress: String) {
-        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.INVISIBLE else View.VISIBLE
+        scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
+        dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
         pickupLabel.text = displayAddress
     }
 
@@ -195,10 +209,10 @@ class AddressBarView
         }
     }
 
-    override fun watchBookingStatusState(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
-        bookingStatusStateViewModel.viewStates().apply {
-            observe(lifecycleOwner, addressPresenter.subscribeToBookingStatus(bookingStatusStateViewModel))
-            observe(lifecycleOwner, timeDatePresenter.subscribeToBookingStatus(bookingStatusStateViewModel))
+    override fun watchJourneyDetailsState(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+        journeyDetailsStateViewModel.viewStates().apply {
+            observe(lifecycleOwner, addressPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
+            observe(lifecycleOwner, timeDatePresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
         }
     }
 

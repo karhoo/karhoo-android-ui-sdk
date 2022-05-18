@@ -49,8 +49,8 @@
             android:background="@color/kh_uisdk_off_white"
             android:elevation="@dimen/kh_uisdk_elevation_default"
             android:scrollbars="none"
-            app:tabIndicatorColor="@color/kh_uisdk_primary"
-            app:tabSelectedTextColor="@color/kh_uisdk_off_black"
+            app:tabIndicatorColor="@color/kh_uisdk_accent"
+            app:tabSelectedTextColor="@color/kh_uisdk_accent"
             app:tabTextColor="@color/kh_uisdk_off_black" />
 
     </androidx.viewpager.widget.ViewPager>
@@ -63,7 +63,8 @@
         android:layout_margin="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/kh_uisdk_new_ride"/>
 
     <include layout="@layout/uisdk_activity_base" />
 

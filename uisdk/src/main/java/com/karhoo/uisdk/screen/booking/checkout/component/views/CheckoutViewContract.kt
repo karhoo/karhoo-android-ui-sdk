@@ -14,8 +14,8 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -81,7 +81,13 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
+        fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean
+
         fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel? = null)
+
+        fun getDeviceLocale(): String
+
+        fun isTermsCheckBoxValid(): Boolean
     }
 
     interface Presenter {
@@ -101,14 +107,14 @@ interface CheckoutViewContract {
                                        comments: String,
                                        flightInfo: String)
 
-        fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String? = null, bookingMetadata:
+        fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)
 
         fun resetBooking()
 
         fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails? = null)
 
-        fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus>
+        fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails>
 
         fun watchBookingRequest(bookingRequestStateViewModel: BookingRequestStateViewModel)
                 : Observer<BookingRequestStatus>
@@ -117,14 +123,16 @@ interface CheckoutViewContract {
 
         fun onPaymentFailureDialogCancelled()
 
-        fun setBookingStatus(bookingStatus: BookingStatus?)
+        fun setJourneyDetails(journeyDetails: JourneyDetails?)
 
         fun consumeBackPressed(): Boolean
 
-        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean):
+        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean = true):
                 BookButtonState
 
         fun createLoyaltyViewResponse()
+
+        fun setLoyaltyNonce(nonce: String)
     }
 
     interface PrebookViewActions {
@@ -134,12 +142,12 @@ interface CheckoutViewContract {
     interface BookingRequestViewWidget {
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
         fun showBookingRequest(
-                quote: Quote,
-                bookingStatus: BookingStatus?,
-                outboundTripId: String? = null,
-                bookingMetadata: HashMap<String, String>?,
-                passengerDetails: PassengerDetails? = null,
-                comments: String? = null)
+            quote: Quote,
+            journeyDetails: JourneyDetails?,
+            outboundTripId: String? = null,
+            bookingMetadata: HashMap<String, String>?,
+            passengerDetails: PassengerDetails? = null,
+            comments: String? = null)
     }
 
     sealed class Event {

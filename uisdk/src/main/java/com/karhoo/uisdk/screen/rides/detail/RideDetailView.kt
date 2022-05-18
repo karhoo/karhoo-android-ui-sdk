@@ -30,6 +30,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.basefare.BaseFareView
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
+import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
@@ -61,6 +62,7 @@ import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.starRatingWidg
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateIcon
 import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateText
 import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
+import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.*
 import org.joda.time.DateTime
 
 class RideDetailView @JvmOverloads constructor(
@@ -99,6 +101,8 @@ class RideDetailView @JvmOverloads constructor(
         presenter?.let {
             contactOptionsWidget.observeTripStatus(it)
         }
+
+        trackButton.setOnClickListener { presenter?.track() }
 
         presenter?.checkCancellationSLA(context, trip, trip.serviceAgreements?.freeCancellation)
     }
@@ -310,6 +314,14 @@ class RideDetailView @JvmOverloads constructor(
 
     override fun setCancellationText(text: String) {
         rideDetailCancellationText.text = text
+    }
+
+    override fun trackTrip(trip: TripInfo) {
+        context.startActivity(TripActivity.Builder.builder.tripInfo(trip).build(context))
+    }
+
+    override fun displayTrackDriverButton(visible: Boolean) {
+        trackButton.visibility = if(visible) View.VISIBLE else View.GONE
     }
 
     override fun showCancellationText(show: Boolean) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <!-- Locale -->
+    <string name="karhoo_uisdk_locale">nl_NL</string>
     <string name="kh_uisdk_about">Over</string>
     <string name="kh_uisdk_add_card">VOEG EEN KAART TOE</string>
     <string name="kh_uisdk_add_flight_details">Voeg vluchtgegevens toe (Optioneel)</string>
@@ -24,14 +26,12 @@
     <string name="kh_uisdk_arrived">Uw %s chauffeur is gearriveerd</string>
     <string name="kh_uisdk_baggage_max">%d maximum aantal bagage</string>
     <string name="kh_uisdk_base">Basistarief</string>
-    <string name="kh_uisdk_book_now">Reserveer</string>
+    <string name="kh_uisdk_book_now">BETALEN EN BOEKEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier toevoegen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Betaalmethode toevoegen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Betalingswijze</string>
-    <string name="pay_button">Pre-autoriseren</string>
-    <string name="pay_button_with_value">Pre-autoriseren %s</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Terug</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Wijzigen</string>
@@ -41,10 +41,10 @@
     <string name="kh_uisdk_booking_error">Er lijkt een probleem te zijn met het boeken van uw reis. Probeer het opnieuw</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reservering is mislukt</string>
-    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
-    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$@ | %2$@ en %3$@ %4$@ | %3$@ %5$@.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
@@ -76,6 +76,7 @@
     <string name="kh_uisdk_contact">CONTACT</string>
     <string name="kh_uisdk_contact_driver">Neem contact op met de chauffeur</string>
     <string name="kh_uisdk_contact_fleet">Neem contact op met Vloot</string>
+    <string name="kh_uisdk_contact_us">Contact</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/nl/requests/new</string>
     <string name="kh_uisdk_continue_journey">VERDER GAAN</string>
     <string name="kh_uisdk_continue_registration">VERDER GAAN</string>
@@ -94,6 +95,7 @@
     <string name="kh_uisdk_done">Klaar</string>
     <string name="kh_uisdk_drawer_closed">Lade gesloten</string>
     <string name="kh_uisdk_drawer_open">Lade open</string>
+    <string name="kh_uisdk_driver_arrival">Aankomst chauffeur</string>
     <string name="kh_uisdk_driver_en_route">Uw %s chauffeur is onderweg</string>
     <string name="kh_uisdk_electric">Elektrisch</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
@@ -103,6 +105,8 @@
     <string name="kh_uisdk_enter_destination_for_vehicles">Voer bestemming in om beschikbare taxibedrijven te zien</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">Ophaallocatie</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_erase_address">Wis adres</string>
     <string name="kh_uisdk_error_cannot_create_user">Er lijkt een probleem te zijn met het registreren van uw account. Probeer het opnieuw.</string>
     <string name="kh_uisdk_error_invalid_password">Het e-mailadres of wachtwoord dat je hebt ingevoerd is onjuist</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschatte aankomsttijd</string>
@@ -121,6 +125,15 @@
     <string name="kh_uisdk_feedback_submitted">Bedankt voor het doorgeven van uw feedback</string>
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Vertel ons alsjeblieft meer over je reis</string>
+    <string name="kh_uisdk_fees_and_taxes_included">Belastingen en toeslagen inbegrepen</string>
+    <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Annulering en wachttijd</string>
+    <string name="kh_uisdk_filter_free_cancellation">Gratis afzegging</string>
+    <string name="kh_uisdk_filter_free_waiting_time">Gratis wachttijd</string>
+    <string name="kh_uisdk_filter_luggages">Bagage)</string>
+    <string name="kh_uisdk_filter_page_results">Bekijk alle %s resultaten</string>
+    <string name="kh_uisdk_filter_passengers">Passagier(s)</string>
+    <string name="kh_uisdk_filter_quote_types">Soorten offertes</string>
     <string name="kh_uisdk_finding_your_ride">Uw rit vinden...</string>
     <string name="kh_uisdk_first_name_hint">Voornaam</string>
     <!-- Fare type -->
@@ -139,6 +152,7 @@
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d uur</item>
         <item quantity="other">%d uur</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_info">Info</string>
     <string name="kh_uisdk_initialised">Karhoo initialiseert uw reis</string>
@@ -211,6 +225,10 @@
     <string name="kh_uisdk_last_name_hint">Achternaam</string>
     <string name="kh_uisdk_last_trip_id">Laatste reis-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Laatste reis-ID: nog niet ingesteld</string>
+    <string name="kh_uisdk_legal_notice_label">Juridische kennisgevingen</string>
+    <string name="kh_uisdk_legal_notice_link"/>
+    <string name="kh_uisdk_legal_notice_text"/>
+    <string name="kh_uisdk_legal_notice_title"/>
     <string name="kh_uisdk_licence">Licentie: %1$s</string>
     <string name="kh_uisdk_loading_min">~ min</string>
     <string name="kh_uisdk_location_disabled">Schakel locatieservices in op uw apparaat om van de volledige ervaring te genieten</string>
@@ -219,12 +237,22 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <!-- Navigation Drawer -->
     <string name="kh_uisdk_login">Inloggen</string>
+    <!-- Loyalty -->
+    <string name="kh_uisdk_loyalty_balance_title">BALANS: %s PUNTEN</string>
     <string name="kh_uisdk_loyalty_info">Uw kaart is nodig om deze transactie te autoriseren in het geval dat de uiteindelijke prijs van de rit uw puntensaldo overschrijdt. Er worden geen kosten in rekening gebracht op uw account als uw loyaliteitspunten de volledige prijs dekken.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
+    <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">De huidige loyaliteitsmodus komt niet in aanmerking voor pre-autorisatie</string>
     <string name="kh_uisdk_loyalty_points_burned_for_trip">Je gebruikt %1$s punten</string>
-    <string name="kh_uisdk_loyalty_points_earned_for_trip">Met deze rit verdien je %1$s punten</string>
+    <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyaliteitspunten worden aan het einde van de rit toegevoegd aan uw accountsaldo</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Je mag geen punten verbranden</string>
+    <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Uw puntensaldo is niet voldoende om deze rit te betalen</string>
+    <string name="kh_uisdk_loyalty_separator">OF</string>
     <string name="kh_uisdk_loyalty_title">Loyaliteitspunten</string>
-    <string name="kh_uisdk_loyalty_unsupported_currency">De valuta wordt nog niet ondersteund</string>
+    <string name="kh_uisdk_loyalty_unknown_error">Er is een fout opgetreden. Probeer het later opnieuw om loyaliteitspunten te verdienen of te gebruiken</string>
+    <string name="kh_uisdk_loyalty_unsupported_currency">Er is een fout opgetreden. De valuta wordt niet ondersteund</string>
+    <string name="kh_uisdk_loyalty_use_points_off_subtitle">U kunt uw loyaliteitspunten inschakelen om de rit te betalen</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Betaal %s %s met %s loyaliteitspunten</string>
+    <string name="kh_uisdk_loyalty_use_points_title">Gebruik je punten</string>
     <string name="kh_uisdk_map_selector">Op de kaart zetten</string>
     <string name="kh_uisdk_meeting_point">Ontmoetingspunt</string>
     <string name="kh_uisdk_metered">meterprijs</string>
@@ -234,18 +262,23 @@
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minuut</item>
         <item quantity="other">%d minuten</item>
+        <item quantity="zero"/>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Mobiel telefoonnummer</string>
     <string name="kh_uisdk_moto">Moto</string>
     <string name="kh_uisdk_mpv">Minibus</string>
     <string name="kh_uisdk_name_hint">Naam</string>
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
+    <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
-    <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
     <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
+    <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
+    <string name="kh_uisdk_offer_expired_text">Selecteer een nieuwe offerte om door te gaan met uw boeking</string>
     <!-- Dialogs -->
     <string name="kh_uisdk_ok">OK</string>
     <string name="kh_uisdk_origin_book_error">U moet een vertrekpunt selecteren voordat u een rit boekt</string>
@@ -298,6 +331,13 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Meer informatie</string>
     <string name="kh_uisdk_quoted_fare">Geschat tarief</string>
+    <string name="kh_uisdk_quotes_activity_title">Citaten</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Voer zowel het ophaal- als het inleveradres in om toegang te krijgen tot de aanbiedingen</string>
+    <string name="kh_uisdk_quotes_error_missing_addresses_title">Ophaal- of afleveradres ontbreekt</string>
+    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_quotes_error_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
+    <string name="kh_uisdk_quotes_error_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>
     <string name="kh_uisdk_rating_submitted">Bedankt voor het doorgeven van uw beoordeling.</string>
     <string name="kh_uisdk_rebook_ride">Rit opnieuw reserveren</string>
@@ -309,11 +349,12 @@
     <string name="kh_uisdk_report_issue">Probleem melden</string>
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requested_invite">Bedankt voor uw interesse! We sturen u een e-mail wanneer uw account is geactiveerd.</string>
+    <string name="kh_uisdk_reset_filter">Filter resetten</string>
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
     <string name="kh_uisdk_retrieving_pickup">Ophaallocatie</string>
-    <string name="kh_uisdk_retrieving_quotes">Citaten ophalen</string>
+    <string name="kh_uisdk_retrieving_quotes">Offertes ophalen</string>
     <string name="kh_uisdk_retry">opnieuw proberen</string>
     <string name="kh_uisdk_ride_confirmed">Rit bevestigd</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
@@ -333,12 +374,15 @@
     <string name="kh_uisdk_rides">Ritten</string>
     <string name="kh_uisdk_saloon">Standaard voertuig</string>
     <string name="kh_uisdk_save">BEWAREN</string>
+    <string name="kh_uisdk_schedule_ride">Plan de rit</string>
     <string name="kh_uisdk_settings">Instellingen</string>
     <string name="kh_uisdk_sign_in">Inloggen</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
+    <string name="kh_uisdk_sort_by">Sorteer op</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschatte aankomsttijd</string>
@@ -353,6 +397,8 @@
     <string name="kh_uisdk_supplier_email">leveranciers@karhoo.com</string>
     <string name="kh_uisdk_support_email">support@karhoo.com</string>
     <string name="kh_uisdk_support_report_issue">Probleem melden</string>
+    <!-- Address Picker -->
+    <string name="kh_uisdk_switch_departure_destination">Vertrek- en bestemmingsadres omwisselen</string>
     <string name="kh_uisdk_taxi">Taxi</string>
     <string name="kh_uisdk_tell_us_more">Vertel ons alstublieft meer over uw reis</string>
     <string name="kh_uisdk_temporary_message_error_codes_unknown">Het lijkt erop dat we momenteel technische problemen hebben.</string>
@@ -380,7 +426,15 @@
     <string name="kh_uisdk_upcoming_rides_empty">Vergeet niet dat u een auto tot zeven dagen van tevoren kunt reserveren.</string>
     <string name="kh_uisdk_update">BIJWERKEN</string>
     <string name="kh_uisdk_vehicle">Voertuig</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">Minibus</string>
+    <string name="kh_uisdk_vehicle_standard">Standaard</string>
     <string name="kh_uisdk_wheelchair">Rolstoel</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Wilt u doorgaan?</string>
     <string name="kh_uisdk_you_may_be_charged">Er worden annuleringskosten in rekening gebracht die geschat worden op %s .\n\nWilt u doorgaan?</string>
+    <!-- Adyen default "Pay" button -->
+    <string name="pay_button">Pre-autoriseren</string>
+    <!-- Adyen default "Pay %s" button for checkout -->
+    <string name="pay_button_with_value">Pre-autoriseren %s</string>
 </resources>

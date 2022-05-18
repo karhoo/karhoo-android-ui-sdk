@@ -20,8 +20,8 @@ import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonSta
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
@@ -78,7 +78,7 @@ class CheckoutViewPresenterTests {
     private val braintreePaymentNonce: PaymentMethodNonce = mock()
     private val context: Context = mock()
     private val flightDetails: FlightDetails = mock()
-    private val bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
+    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
     private var bookingRequestStateViewModel: BookingRequestStateViewModel = mock()
     private val locationDetails: LocationInfo = LocationInfo()
     private val preferenceStore: PreferenceStore = mock()
@@ -145,8 +145,8 @@ class CheckoutViewPresenterTests {
      */
     @Test
     fun `null destination doesn't show request screen`() {
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, null, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, null, null))
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
@@ -167,8 +167,8 @@ class CheckoutViewPresenterTests {
      */
     @Test
     fun `null origin doesn't show request screen`() {
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(null, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(null, locationDetails, null))
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
@@ -195,8 +195,8 @@ class CheckoutViewPresenterTests {
         whenever(quote.price).thenReturn(price)
         whenever(quote.fleet).thenReturn(fleet)
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, null))
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
@@ -282,6 +282,38 @@ class CheckoutViewPresenterTests {
     }
 
     /**
+     * Given:   The checkout is visible and CheckBox Terms&Conditions Required
+     * When:    The passenger details and payment is valid but checkbox not checked
+     * Then:    The button should be in next state
+     */
+    @Test
+    fun `passenger details and payment valid but checkbox not checked`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = true,
+            isTermsCheckBoxValid = false
+        )
+
+        assertEquals(returnValue, BookButtonState.NEXT)
+    }
+
+    /**
+     * Given:   The checkout is visible and CheckBox Terms&Conditions Required
+     * When:    The passenger details and payment is valid but checkbox is checked
+     * Then:    The button should be in book state
+     */
+    @Test
+    fun `passenger details and payment valid but checkbox is checked`() {
+        val returnValue = checkoutPresenter.getBookingButtonState(
+            arePassengerDetailsValid = true,
+            isPaymentValid = true,
+            isTermsCheckBoxValid = true
+        )
+
+        assertEquals(returnValue, BookButtonState.BOOK)
+    }
+
+    /**
      * Given:   A user has pressed a quote
      * When:    The quote is valid but there is no price
      * Then:    The view should be bound with the correct info
@@ -292,8 +324,8 @@ class CheckoutViewPresenterTests {
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.fleet).thenReturn(fleet)
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, null))
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
@@ -313,8 +345,8 @@ class CheckoutViewPresenterTests {
         whenever(quote.price).thenReturn(price)
         whenever(quote.fleet).thenReturn(fleet)
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, locationDetails, scheduledDate))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, scheduledDate))
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
@@ -334,8 +366,8 @@ class CheckoutViewPresenterTests {
 
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(origin, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
@@ -370,8 +402,8 @@ class CheckoutViewPresenterTests {
         whenever(quote.price).thenReturn(price)
         whenever(quote.fleet).thenReturn(fleet)
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(origin, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
@@ -387,8 +419,8 @@ class CheckoutViewPresenterTests {
     fun `display flight number field when pickup address has airport POI`() {
         val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
         PoiType.AIRPORT))
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(origin, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.price).thenReturn(price)
@@ -413,8 +445,8 @@ class CheckoutViewPresenterTests {
         val origin = LocationInfo(poiType = Poi.NOT_SET)
         val destination = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(origin, destination, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(origin, destination, null))
 
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
@@ -441,8 +473,8 @@ class CheckoutViewPresenterTests {
     fun `guest booking started for non-airport origin and destination triggers payment`() {
         setGuestUser()
 
-        val observer = checkoutPresenter.watchBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(locationDetails, locationDetails, null))
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, null))
 
         whenever(braintreePaymentNonce.nonce).thenReturn("")
         whenever(braintreePaymentNonce.description).thenReturn("desc")
@@ -582,7 +614,7 @@ class CheckoutViewPresenterTests {
         val map = hashMapOf<String, String>()
         map[BOOKING__META_MAP_KEY] = BOOKING__META_MAP_VALUE
 
-        checkoutPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map, bookingStatus = null)
+        checkoutPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map, journeyDetails = null)
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
         checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,

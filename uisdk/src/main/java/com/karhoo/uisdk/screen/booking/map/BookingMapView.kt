@@ -43,7 +43,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
 import com.karhoo.uisdk.base.state.NoObserverAttachedException
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationInfoListener
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.MapUtil
@@ -81,7 +81,7 @@ class BookingMapView @JvmOverloads constructor(
 
     private val locationProvider: LocationProvider =
         LocationProvider(context, KarhooUISDK.karhooApi.addressService)
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
 
     var actions: BookingMapMVP.Actions? = null
 
@@ -300,7 +300,7 @@ class BookingMapView @JvmOverloads constructor(
     }
 
     private fun recentreMapIfDestinationIsNull() {
-        with(bookingStatusStateViewModel?.currentState) {
+        with(journeyDetailsStateViewModel?.currentState) {
             val lat = this?.pickup?.position?.latitude
             val lng = this?.pickup?.position?.longitude
             val dest = this?.destination
@@ -321,13 +321,13 @@ class BookingMapView @JvmOverloads constructor(
     fun onCreate(
         bundle: Bundle?,
         lifecycleOwner: LifecycleOwner,
-        bookingStatusStateViewModel: BookingStatusStateViewModel,
+        journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
         shouldReverseGeolocate: Boolean = true,
         isDeepLink: Boolean = false
                 ) {
         this.isDeepLink = isDeepLink
         this.shouldReverseGeolocate = if (isLocateMeEnabled) shouldReverseGeolocate else false
-        bindViewToBookingStatus(lifecycleOwner, bookingStatusStateViewModel)
+        bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         mapView.onCreate(bundle)
         mapView.getMapAsync { googleMap ->
             this.googleMap = googleMap
@@ -371,7 +371,7 @@ class BookingMapView @JvmOverloads constructor(
                             })
                         }
                         try {
-                            bookingStatusStateViewModel?.process(
+                            journeyDetailsStateViewModel?.process(
                                 AddressBarViewContract.AddressBarEvent
                                     .PickUpAddressEvent(locationInfo)
                                                                 )
@@ -426,12 +426,12 @@ class BookingMapView @JvmOverloads constructor(
     }
     //endregion
 
-    private fun bindViewToBookingStatus(
+    private fun bindViewToJourneyDetails(
         lifecycleOwner: LifecycleOwner,
-        bookingStatusStateViewModel: BookingStatusStateViewModel
+        journeyDetailsStateViewModel: JourneyDetailsStateViewModel
                                        ) {
-        presenter.watchBookingStatus(lifecycleOwner, bookingStatusStateViewModel)
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
+        presenter.watchJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 
     override fun locateUser() {

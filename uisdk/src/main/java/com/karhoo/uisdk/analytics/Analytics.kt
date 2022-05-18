@@ -4,31 +4,13 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.TripStatus
-import com.karhoo.sdk.api.model.UserInfo
-import com.karhoo.uisdk.screen.rides.feedback.FeedbackAnswer
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import java.util.Date
 
 @Suppress("TooManyFunctions")
 interface Analytics {
 
-    fun appOpened()
-
-    fun appClosed()
-
-    fun appBackground(trip: TripInfo?)
-
-    fun userLoggedIn(userInfo: UserInfo)
-
-    fun userLoggedOut()
-
-    fun registrationStarted()
-
-    fun registrationComplete()
-
     fun userLocated(location: Location)
-
-    fun bookingWithCallbackOpened()
 
     fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?)
 
@@ -36,59 +18,43 @@ interface Analytics {
 
     fun userCancelTrip(trip: TripInfo?)
 
-    fun amountAddressesShown(amount: Int)
-
     fun pickupAddressSelected(locationDetails: LocationInfo, positionInAutocompleteList: Int)
 
     fun destinationAddressSelected(locationDetails: LocationInfo, positionInAutocompleteList: Int)
 
     fun destinationPressed()
 
-    fun reverseGeo()
-
-    fun currentLocationPressed()
-
     fun prebookSet(date: Date, timezone: String)
-
-    fun vehicleSelected(vehicle: String, quoteId: String?)
 
     fun fleetsShown(quoteListId: String?, amountShown: Int)
 
-    fun moreShown(currentVehicles: List<Quote>?, isExpanded: Boolean)
-
-    fun fleetsSorted(quoteListId: String?, sortType: String)
-
     fun prebookOpened()
-
-    fun locationServiceRejected()
-
-    fun cardAddedSuccessfully()
-
-    fun cardAddingFailed()
-
-    fun termsReviewed()
 
     fun userCalledDriver(trip: TripInfo?)
 
     fun userCalledFleet(trip: TripInfo?)
 
-    fun userEnteredTextSearch(search: String?)
-
     fun trackRide()
 
-    fun userPositionChanged(trip: TripStatus, location: Location)
+    fun bookingScreenOpened()
 
-    fun submitRating(tripId: String, rating: Float)
+    fun quoteListOpened(journeyDetails: JourneyDetails?)
 
-    fun submitAdditionalFeedback(tripId: String, answers: List<FeedbackAnswer>)
+    fun checkoutOpened(quote: Quote)
 
-    fun userProfileEditPressed()
+    fun paymentSucceed()
 
-    fun userProfileDiscardPressed()
+    fun paymentFailed(details: String)
 
-    fun userProfileSavePressed()
+    fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 
-    fun userProfileUpdateSuccess(userInfo: UserInfo)
+    fun pastTripsOpened()
 
-    fun userProfileUpdateFailed()
+    fun upcomingTripsOpened()
+
+    fun trackTripClicked(tripInfo: TripInfo)
+
+    fun contactFleetClicked(page: String, tripInfo: TripInfo)
+
+    fun contactDriverClicked(page: String, tripInfo: TripInfo)
 }

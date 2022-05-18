@@ -12,7 +12,7 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
@@ -129,12 +129,12 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
-         * By passing booking status into the Booking activity it will automatically prefill the origin
+         * By passing journey details into the Booking activity it will automatically prefill the origin
          * destination and date of the desired trip. This will only use the details available inside
-         * the BookingStatus object.
+         * the JourneyDetails object.
          */
-        fun bookingStatus(bookingStatus: BookingStatus): Builder {
-            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingStatus)
+        fun journeyDetails(journeyDetails: JourneyDetails): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, journeyDetails)
             return this
         }
 
@@ -165,12 +165,22 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * Sets the validity timestamp of the quote
+         * When validity of the quote is expired, a popup will be shown to the user to notify him
+         */
+        fun validityDeadlineTimestamp(timestamp: Long): Builder {
+            extrasBundle.putLong(BOOKING_CHECKOUT_VALIDITY_KEY, timestamp)
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
         fun build(context: Context): Intent = Intent(context, KarhooUISDK.Routing.checkout).apply {
             putExtras(extrasBundle)
         }
+
     }
 
     companion object {
@@ -185,6 +195,8 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_PASSENGER_KEY = "PASSENGER_KEY"
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
         const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
+        const val BOOKING_CHECKOUT_VALIDITY_KEY = "BOOKING_CHECKOUT_VALIDITY_KEY"
+        const val BOOKING_CHECKOUT_CANCELLED = 11
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10

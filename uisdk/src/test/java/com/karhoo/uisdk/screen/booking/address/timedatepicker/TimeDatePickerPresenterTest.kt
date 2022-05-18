@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.capture
 import com.nhaarman.mockitokotlin2.eq
@@ -34,8 +34,8 @@ class TimeDatePickerPresenterTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
-    private var bookingStatus: BookingStatus = mock()
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
+    private var journeyDetails: JourneyDetails = mock()
 
     private val view: TimeDatePickerMVP.View = mock()
     private val analytics: Analytics = mock()
@@ -55,7 +55,7 @@ class TimeDatePickerPresenterTest {
     fun setUp() {
         DateTimeZone.setDefault(timezoneAmsterdam)
         timePickerPresenter = TimeDatePickerPresenter(view, analytics)
-        timePickerPresenter.subscribeToBookingStatus(bookingStatusStateViewModel)
+        timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
     }
 
     /**
@@ -65,7 +65,7 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `subscribing to booking status returns observer`() {
-        val observer = timePickerPresenter.subscribeToBookingStatus(bookingStatusStateViewModel)
+        val observer = timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         assertNotNull(observer)
     }
 
@@ -76,8 +76,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `when the date is null a call is made to hide the time date field`() {
-        val observer = timePickerPresenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(null, null, null))
+        val observer = timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(null, null, null))
         verify(view).hideDateViews()
     }
 
@@ -88,8 +88,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `when the date picker is clicked the view is passes the timezone name`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.datePickerClicked()
         verify(view).displayDatePicker(any(), any(), any())
     }
@@ -112,8 +112,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `launching date picker should have min date of today and max of seven days time`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatusStateViewModel.currentState.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetailsStateViewModel.currentState.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         val now = DateTime.now(DateTimeZone.getDefault())
 
@@ -139,8 +139,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `analytical event prebook opened sends when date picker is clicked`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.datePickerClicked()
         verify(analytics).prebookOpened()
     }
@@ -152,8 +152,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `time picker is displayed after the date has been selected`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
         verify(view).displayTimePicker(any(), any(), any())
     }
@@ -165,8 +165,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `localised timezone string is sent to the time picker`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
         verify(view).displayTimePicker(any(), any(), eq("GMT"))
     }
@@ -178,8 +178,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `when selecting a time the inital set time is one hour ahead`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
 
         timePickerPresenter.dateSelected(1, 1, 1)
 
@@ -198,8 +198,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `prebook picker shows offset of the country of booking`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         timePickerPresenter.dateSelected(1, 1, 1)
 
@@ -219,8 +219,8 @@ class TimeDatePickerPresenterTest {
     @Test
     fun `time that is more than an hour ahead will be returned correctly`() {
         val localOneHourAheadAmsterdam: DateTime
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         val now = DateTime.now(DateTimeZone.forID(LOCATION_AMSTERDAM.timezone))
         localOneHourAheadAmsterdam = now.plusMinutes(59)
@@ -240,8 +240,8 @@ class TimeDatePickerPresenterTest {
     @Test
     fun `time gets round up if the time is less than the current time plus one hour`() {
         val localOneHourAheadAmsterdam: DateTime
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         val now = DateTime.now(DateTimeZone.forID(LOCATION_AMSTERDAM.timezone))
         localOneHourAheadAmsterdam = now.plusMinutes(59)
@@ -260,8 +260,8 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `analytical event is sent when the time is set`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         val now = DateTime.now(DateTimeZone.forID(LOCATION_AMSTERDAM.timezone))
         timePickerPresenter.dateSelected(now.year, now.monthOfYear - 1, now.dayOfMonth)
@@ -288,7 +288,7 @@ class TimeDatePickerPresenterTest {
     @Test
     fun `date should be null when clear prebook time is clicked`() {
         timePickerPresenter.clearScheduledTimeClicked()
-        verify(bookingStatusStateViewModel).process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(null))
+        verify(journeyDetailsStateViewModel).process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(null))
     }
 
     /**
@@ -298,16 +298,36 @@ class TimeDatePickerPresenterTest {
      **/
     @Test
     fun `once date has been selected it is set in live booking status`() {
-        whenever(bookingStatus.pickup).thenReturn(LOCATION_AMSTERDAM)
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatusStateViewModel.currentState.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_AMSTERDAM)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetailsStateViewModel.currentState.pickup).thenReturn(LOCATION_AMSTERDAM)
 
         val now = DateTime.now()
         timePickerPresenter.dateSelected(now.year, now.monthOfYear - 1, now.dayOfMonth)
         timePickerPresenter.timeSelected(twoHoursAheadAmsterdam.hourOfDay, 0)
 
-        verify(bookingStatusStateViewModel).process(any())
+        verify(journeyDetailsStateViewModel).process(any())
         verify(analytics).prebookSet(any(), any())
+    }
+
+    /**
+     * Given:   A date has been previously selected
+     * When:    Presetting the date and time
+     * Then:    The date and time should be the last ones selected
+     **/
+    @Test
+    fun `when selecting to edit a previously selected date and time`() {
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
+        whenever(journeyDetails.date).thenReturn(DateTime(1, 1, 1, 10, 11))
+
+        timePickerPresenter.dateSelected(1, 1, 1)
+        timePickerPresenter.timeSelected(10, 11)
+
+        val previouslySelectedDateTime = timePickerPresenter.getPreviousSelectedDateTime()
+
+        assertThat(previouslySelectedDateTime!!.hourOfDay).isEqualTo(10)
+        assertThat(previouslySelectedDateTime.minuteOfHour).isEqualTo(11)
     }
 
     companion object {

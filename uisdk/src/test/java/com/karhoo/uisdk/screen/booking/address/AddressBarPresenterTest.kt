@@ -14,8 +14,8 @@ import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarPresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
@@ -40,9 +40,9 @@ class AddressBarPresenterTest {
     var view: AddressBarMVP.View = mock()
     var analytics: Analytics = mock()
     var address: Address = mock()
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
-    private var bookingStatusMutable: MutableLiveData<BookingStatus> = mock()
-    private var bookingStatus: BookingStatus = mock()
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
+    private var journeyDetailsMutable: MutableLiveData<JourneyDetails> = mock()
+    private var journeyDetails: JourneyDetails = mock()
     private var mockedLocationOne: LocationInfo = mock()
     private var mockedLocationTwo: LocationInfo = mock()
     private var mockedTripInfo: TripInfo = mock()
@@ -60,7 +60,7 @@ class AddressBarPresenterTest {
                 view = view,
                 analytics = analytics,
                 addressService = addressService)
-        presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
     }
 
     /**
@@ -72,7 +72,7 @@ class AddressBarPresenterTest {
     @Throws(Exception::class)
     fun `pick up address clicked shows address search with type pickup when no location set`() {
         presenter.pickUpAddressClicked()
-        verify(bookingStatusStateViewModel, atLeastOnce()).process(AddressBarViewContract
+        verify(journeyDetailsStateViewModel, atLeastOnce()).process(AddressBarViewContract
                                                                            .AddressBarEvent
                                                                            .AddressClickedEvent(AddressType.PICKUP, null))
     }
@@ -86,13 +86,13 @@ class AddressBarPresenterTest {
     @Throws(Exception::class)
     fun `pick up address clicked shows address search with type pickup from booking status location`() {
         val locationInfo = LocationInfo(position = position)
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.pickup).thenReturn(locationInfo)
-        presenter.subscribeToBookingStatus(bookingStatusStateViewModel = bookingStatusStateViewModel)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.pickup).thenReturn(locationInfo)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel = journeyDetailsStateViewModel)
 
         presenter.pickUpAddressClicked()
 
-        verify(bookingStatusStateViewModel, atLeastOnce()).process(AddressBarViewContract
+        verify(journeyDetailsStateViewModel, atLeastOnce()).process(AddressBarViewContract
                                                                            .AddressBarEvent
                                                                            .AddressClickedEvent(AddressType.PICKUP, position))
     }
@@ -108,7 +108,7 @@ class AddressBarPresenterTest {
         presenter.dropOffAddressClicked()
 
         verify(analytics, atLeastOnce()).destinationPressed()
-        verify(bookingStatusStateViewModel, atLeastOnce()).process(AddressBarViewContract
+        verify(journeyDetailsStateViewModel, atLeastOnce()).process(AddressBarViewContract
                                                                            .AddressBarEvent
                                                                            .AddressClickedEvent(AddressType.DESTINATION, null))
     }
@@ -212,8 +212,8 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(origin)
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
-        val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, mockedLocationTwo, DateTime.now()))
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(mockedLocationOne, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
         verify(view, atLeastOnce()).setDropoffAddress(mockedLocationTwo.displayAddress)
@@ -236,8 +236,8 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(null)
         whenever(mockedTripInfo.destination).thenReturn(destination)
 
-        val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(null, mockedLocationTwo, DateTime.now()))
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(null, mockedLocationTwo, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setDefaultPickupText()
         verify(view, atLeastOnce()).setDropoffAddress(mockedLocationTwo.displayAddress)
@@ -259,8 +259,8 @@ class AddressBarPresenterTest {
         whenever(mockedTripInfo.origin).thenReturn(origin)
         whenever(mockedTripInfo.destination).thenReturn(null)
 
-        val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, null, DateTime.now()))
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(mockedLocationOne, null, DateTime.now()))
         presenter.setBothPickupDropoff(mockedTripInfo)
         verify(view, atLeastOnce()).setPickupAddress(mockedLocationOne.displayAddress)
         verify(view, atLeastOnce()).setDropoffAddress("")
@@ -302,8 +302,8 @@ class AddressBarPresenterTest {
         whenever(mockedLocationOne.displayAddress).thenReturn("address_one")
         whenever(mockedLocationTwo.displayAddress).thenReturn("address_two")
 
-        val observer = presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
-        observer.onChanged(BookingStatus(mockedLocationOne, mockedLocationTwo, DateTime.now()))
+        val observer = presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(mockedLocationOne, mockedLocationTwo, DateTime.now()))
 
         presenter.flipAddressesClicked()
 
@@ -342,7 +342,7 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `watching booking status returns the correct observable`() {
-        Assert.assertNotNull(presenter.subscribeToBookingStatus(bookingStatusStateViewModel))
+        Assert.assertNotNull(presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel))
     }
 
     /**
@@ -511,10 +511,10 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `journey info object injected with invalid date doesn't update booking info`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.date).thenReturn(journeyInfo.date)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.date).thenReturn(journeyInfo.date)
 
-        presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
 
         verify(view, never()).setPickupAddress(any())
@@ -530,10 +530,10 @@ class AddressBarPresenterTest {
      */
     @Test
     fun `journey info object injected with valid date updates date on view`() {
-        whenever(bookingStatusStateViewModel.currentState).thenReturn(bookingStatus)
-        whenever(bookingStatus.date).thenReturn(journeyInfoValidDate.date)
+        whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
+        whenever(journeyDetails.date).thenReturn(journeyInfoValidDate.date)
 
-        presenter.subscribeToBookingStatus(bookingStatusStateViewModel)
+        presenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
         presenter.prefillForJourney(journeyInfoNoOriginNoDestination)
 
         verify(view, never()).setPickupAddress(any())

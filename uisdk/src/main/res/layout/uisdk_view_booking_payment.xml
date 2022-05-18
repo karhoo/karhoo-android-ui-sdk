@@ -3,44 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/paymentLayout"
+    style="@style/KhPaymentView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:padding="@dimen/kh_uisdk_spacing_small"
-    style="@style/KhPaymentView">
+    android:padding="@dimen/kh_uisdk_spacing_small">
 
     <ImageView
         android:id="@+id/cardLogoImage"
+        style="@style/KhPaymentView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/KhPaymentView"
+        android:background="@drawable/uisdk_ic_plus"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/changeCardProgressBar"
         style="@android:style/Widget.ProgressBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="4dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/cardNumberText"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/cardNumberText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardNumberText" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/cardNumberText"
+        style="@style/KhPaymentView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/KhPaymentView"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/changeCardLabel"
         app:layout_constraintStart_toEndOf="@id/cardLogoImage"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
         tools:text="···· 6699"
         tools:visibility="visible" />
 
@@ -50,9 +51,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/bt_edit"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

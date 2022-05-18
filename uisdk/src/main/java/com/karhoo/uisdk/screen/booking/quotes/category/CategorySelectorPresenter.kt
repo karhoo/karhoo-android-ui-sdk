@@ -2,7 +2,7 @@ package com.karhoo.uisdk.screen.booking.quotes.category
 
 import androidx.lifecycle.Observer
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 
 internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
@@ -15,7 +15,7 @@ internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
     init {
         attachView(view)
         subscribeToAvailableCategories()
-        subscribeToBookingStatus()
+        subscribeToJourneyDetails()
     }
 
     override fun setVehicleCategory(vehicleType: String) {
@@ -29,7 +29,7 @@ internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
         }
     }
 
-    override fun subscribeToBookingStatus() = Observer<BookingStatus> { bookingStatus ->
+    override fun subscribeToJourneyDetails() = Observer<JourneyDetails> { bookingStatus ->
         hasDestination = bookingStatus?.destination != null
         setCategoriesAvailable()
     }

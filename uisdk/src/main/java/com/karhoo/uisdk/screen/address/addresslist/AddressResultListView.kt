@@ -50,7 +50,6 @@ class AddressResultListView @JvmOverloads constructor(
 
     private fun handleSelectedAddress(item: Place, addressPositionInList: Int) {
         focusedChild.hideSoftKeyboard()
-        addressAdapter.addressSelected()
         presenter?.onAddressSelected(item, addressPositionInList)
     }
 

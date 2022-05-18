@@ -1,15 +1,15 @@
 package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
 import androidx.lifecycle.Observer
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import org.joda.time.DateTime
 
 interface TimeDatePickerMVP {
 
     interface Presenter {
 
-        fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingStatus>
+        fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails>
 
         fun dateSelected(selectedYear: Int, selectedMonth: Int, dayOfMonth: Int)
 
@@ -19,6 +19,7 @@ interface TimeDatePickerMVP {
 
         fun clearScheduledTimeClicked()
 
+        fun getPreviousSelectedDateTime(): DateTime?
     }
 
     interface View {

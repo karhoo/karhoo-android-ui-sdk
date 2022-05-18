@@ -1,6 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.category
 
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.capture
@@ -57,14 +57,14 @@ class CategorySelectorPresenterTest {
     @Test
     fun `empty quotes list returned when requesting quotes`() {
         val observer = presenter.subscribeToAvailableCategories()
-        val observerBooking = presenter.subscribeToBookingStatus()
+        val observerBooking = presenter.subscribeToJourneyDetails()
 
         presenter.availabilityProvider = availabilityProvider
 
         doAnswer { observer.onChanged(createMockCategoryList()) }
                 .whenever(availabilityProvider).filterVehicleListByCategory("human")
 
-        observerBooking.onChanged(BookingStatus(mock(), mock(), null))
+        observerBooking.onChanged(JourneyDetails(mock(), mock(), null))
 
         presenter.setVehicleCategory("human")
 
@@ -82,14 +82,14 @@ class CategorySelectorPresenterTest {
     @Test
     fun `available categories are returned when requesting categories`() {
         val observer = presenter.subscribeToAvailableCategories()
-        val observerBooking = presenter.subscribeToBookingStatus()
+        val observerBooking = presenter.subscribeToJourneyDetails()
 
         presenter.availabilityProvider = availabilityProvider
 
         doAnswer { observer.onChanged(createQuoteAvailableMockList()) }
                 .whenever(availabilityProvider).filterVehicleListByCategory("MPV")
 
-        observerBooking.onChanged(BookingStatus(mock(), mock(), null))
+        observerBooking.onChanged(JourneyDetails(mock(), mock(), null))
         presenter.setVehicleCategory("MPV")
 
         verify(view, atLeastOnce()).setCategories(capture(categoryListCaptor))

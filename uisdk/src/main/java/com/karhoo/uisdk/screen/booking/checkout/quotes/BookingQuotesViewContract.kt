@@ -4,14 +4,13 @@ import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.CollapsiblePanelView
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 
 interface BookingQuotesViewContract {
 
     interface BookingQuotesWidget {
         fun initAvailability(lifecycleOwner: LifecycleOwner)
-        fun setQuotesListVisibility()
-        fun bindViewToData(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
+        fun bindViewToData(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
     }
 
     sealed class BookingQuotesEvent {
@@ -21,6 +20,7 @@ interface BookingQuotesViewContract {
         data class QuotesItemClicked(val quote: Quote) : BookingQuotesEvent()
         object Availability : BookingQuotesEvent()
         data class Error(val snackbarConfig: SnackbarConfig) : BookingQuotesEvent()
+        data class QuoteListValidity(val timestamp: Long) : BookingQuotesEvent()
     }
 
     sealed class BookingQuotesAction {
@@ -30,5 +30,6 @@ interface BookingQuotesViewContract {
         object UpdateViewForQuotesListCollapsed : BookingQuotesAction()
         object UpdateViewForQuotesListExpanded : BookingQuotesAction()
         data class ShowBookingRequest(val quote: Quote) : BookingQuotesAction()
+        data class SetValidityDeadlineTimestamp(val timestamp: Long) : BookingQuotesAction()
     }
 }

@@ -183,8 +183,13 @@ open abstract class BaseTestRobot {
     fun textStringIsVisibleIsDescendant(text: String, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
-    fun stringIsVisibleIsDescendant(text: String, resId: Int) {
-        Assert.assertEquals(text, getStringFromTextView(resId))
+    fun stringIsVisibleIsDescendant(expectedText: String, resId: Int) {
+        val actualText = getStringFromTextView(resId)
+
+        Assert.assertTrue("Saw =>{0}<= when expected to contain {1}".format(actualText,
+                                                                            expectedText),
+                          actualText.contains
+                          (expectedText))
     }
 
     fun stringIsVisibleIsDescendantWeb(text: String, resId: Int)
@@ -260,6 +265,11 @@ open abstract class BaseTestRobot {
 
     fun pressDeviceBackButton() {
         Espresso.pressBack()
+    }
+
+    fun returnToHomeScreen() {
+        Espresso.pressBackUnconditionally()
+        Espresso.pressBackUnconditionally()
     }
 
     fun checkTripStatusBarText(resId: Int, text: String): ViewInteraction =

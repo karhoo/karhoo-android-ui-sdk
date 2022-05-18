@@ -19,6 +19,7 @@ import com.karhoo.sdk.api.network.request.Passengers
 import com.karhoo.sdk.api.network.request.TripBooking
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.trips.TripsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
@@ -27,8 +28,8 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.payment.ProviderType
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -47,37 +48,38 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                                      private val userStore: UserStore)
     : BasePresenter<CheckoutViewContract.View>(), CheckoutViewContract.Presenter, LifecycleObserver {
 
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
     private var origin: LocationInfo? = null
     private var outboundTripId: String? = null
     private var quote: Quote? = null
     private var scheduledDate: DateTime? = null
+    private var loyaltyNonce: String? = null
     private var bookingMetadata: HashMap<String, String>? = null
 
     init {
         attachView(view)
     }
 
-    override fun setBookingStatus(bookingStatus: BookingStatus?) {
-        bookingStatus?.let {
+    override fun setJourneyDetails(journeyDetails: JourneyDetails?) {
+        journeyDetails?.let {
             scheduledDate = it.date
             destination = it.destination
             origin = it.pickup
         }
     }
 
-    override fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean): BookButtonState {
-        return if (arePassengerDetailsValid && isPaymentValid) {
+    override fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean): BookButtonState {
+        return if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
             BookButtonState.BOOK
         } else {
             BookButtonState.NEXT
         }
     }
 
-    override fun watchBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<in BookingStatus> {
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
+    override fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
         return Observer { currentStatus ->
             currentStatus?.let {
                 scheduledDate = it.date
@@ -117,6 +119,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
+        KarhooUISDK.analytics?.paymentSucceed()
         preferenceStore.lastTrip = tripInfo
         val date = scheduledDate
         if (date != null) {
@@ -129,6 +132,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     private fun onTripBookFailure(error: KarhooError) {
+        KarhooUISDK.analytics?.paymentFailed(error.internalMessage)
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(null, error)
             KarhooError.InvalidRequestPayload -> handleError(R.string.kh_uisdk_booking_details_error, error)
@@ -179,6 +183,12 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     override fun passBackPaymentIdentifiers(identifier: String, tripId: String?, passengerDetails: PassengerDetails?, comments: String, flightInfo: String) {
         val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
+        passenger.locale.let {
+            if(it.isNullOrEmpty() || !it.contains("_")){
+                passenger.locale = view?.getDeviceLocale()
+            }
+        }
+
         val flight = if (flightInfo.isNotEmpty()) {
             flightInfo
         } else {
@@ -192,6 +202,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                                       meta = metadata,
                                       nonce = identifier,
                                       quoteId = quote?.id.orEmpty(),
+                                      loyaltyNonce = loyaltyNonce,
                                       passengers = Passengers(additionalPassengers = 0,
                                                               passengerDetails = listOf(passenger),
                                                               luggage = Luggage(total = 0))))
@@ -223,7 +234,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
     }
 
     override fun resetBooking() {
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetBookingStatusEvent)
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun refreshPaymentDetails() {
@@ -236,14 +247,15 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
     }
 
-    override fun showBookingRequest(quote: Quote, bookingStatus: BookingStatus?, outboundTripId: String?, bookingMetadata:
+    override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String?, bookingMetadata:
     HashMap<String, String>?, passengerDetails: PassengerDetails?) {
         retrievePassengerDetailsForShowing(passengerDetails)
-        setBookingStatus(bookingStatus)
+        setJourneyDetails(journeyDetails)
         refreshPaymentDetails()
         this.bookingMetadata = bookingMetadata
         if (origin != null && destination != null) {
             this.quote = quote
+            KarhooUISDK.analytics?.checkoutOpened(quote = quote)
             this.outboundTripId = outboundTripId
             handleBookingType(quote)
             when (origin?.poiType) {
@@ -313,7 +325,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     override fun createLoyaltyViewResponse() {
         val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.id
-        if (loyaltyId != null) {
+        if (!loyaltyId.isNullOrEmpty()) {
             view?.showLoyaltyView(show = true,
                                   LoyaltyViewDataModel(
                                           loyaltyId = loyaltyId,
@@ -322,6 +334,10 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         } else {
             view?.showLoyaltyView(show = false)
         }
+    }
+
+    override fun setLoyaltyNonce(nonce: String) {
+        this.loyaltyNonce = nonce
     }
 
     companion object {

@@ -2,8 +2,8 @@ package com.karhoo.uisdk.screen.booking.quotes.category
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatus
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 
 interface CategorySelectorMVP {
@@ -12,7 +12,7 @@ interface CategorySelectorMVP {
 
         fun setCategories(categories: List<Category>)
 
-        fun bindViewToData(lifecycleOwner: LifecycleOwner, categoriesViewModel: CategoriesViewModel, bookingStatusStateViewModel: BookingStatusStateViewModel)
+        fun bindViewToData(lifecycleOwner: LifecycleOwner, categoriesViewModel: CategoriesViewModel, journeyDetailsStateViewModel: JourneyDetailsStateViewModel)
 
         fun bindAvailability(availabilityProvider: AvailabilityProvider)
 
@@ -28,7 +28,7 @@ interface CategorySelectorMVP {
 
         fun subscribeToAvailableCategories(): Observer<List<Category>>
 
-        fun subscribeToBookingStatus(): Observer<BookingStatus>
+        fun subscribeToJourneyDetails(): Observer<JourneyDetails>
 
     }
 

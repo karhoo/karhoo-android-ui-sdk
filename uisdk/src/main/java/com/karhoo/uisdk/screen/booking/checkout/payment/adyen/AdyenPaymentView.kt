@@ -1,8 +1,9 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment.adyen
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.adyen.checkout.base.model.PaymentMethodsApiResponse
+import com.adyen.checkout.components.model.PaymentMethodsApiResponse
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.model.Quote
@@ -11,9 +12,9 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 import java.util.Locale
 
-class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
+class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clientKey: String) : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions)
+    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions, clientKey = clientKey)
     var actions: PaymentDropInContract.Actions? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -46,7 +47,7 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : Pay
 
         cacheSupplyPartnerId(context, quote)
 
-        DropIn.startPayment(context, paymentMethods, dropInConfiguration)
+        DropIn.startPayment(context as Activity, paymentMethods, dropInConfiguration)
     }
 
     private fun cacheSupplyPartnerId(context: Context, quote: Quote?) {
@@ -62,7 +63,6 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions) : Pay
         const val ADDITIONAL_DATA = "additionalData"
         const val AUTHORISED = "Authorised"
         const val MERCHANT_REFERENCE = "merchantReference"
-        const val REQ_CODE_ADYEN = DropIn.Companion.DROP_IN_REQUEST_CODE
     }
 }
 
