@@ -39,6 +39,13 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.dropOffLabel)
     }
 
+    fun enterDestinationAddress() {
+        fillText(
+                resId = R.id.dropOffLabel,
+                text = TestData.ADDRESS_DESTINATION
+                )
+    }
+
     fun pressMenuButton() {
         clickButtonByContentDescription(R.string.kh_uisdk_drawer_open)
     }
@@ -55,9 +62,9 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.flipButtonIcon)
     }
 
-    fun pressExpandListButton() {
-        clickButton(R.id.chevronIcon)
-    }
+    //    fun pressExpandListButton() {
+    //        clickButton(R.id.chevronIcon)
+    //    }
 
     fun pressOKPrebookWindow() {
         clickButtonByString(R.string.kh_uisdk_ok)
@@ -69,6 +76,10 @@ class BookingRobot : BaseTestRobot() {
 
     fun pressFirstQuote() {
         pressItemInList(R.id.quotesListRecycler, 0)
+    }
+
+    fun clickCancel(){
+        clickButtonByString(R.string.kh_uisdk_cancel)
     }
 
     fun pressBookRideButton() {
@@ -272,8 +283,8 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun fullASAPQuotesListCheck() {
-        expandChevronIsVisibleAndEnabled()
-        tabsAreVisibleAndButtonsEnabled()
+        //        expandChevronIsVisibleAndEnabled()
+        //        tabsAreVisibleAndButtonsEnabled()
         fleetLogoIsVisible()
         quoteNameVisible()
         ETATextVisible()
@@ -283,17 +294,17 @@ class ResultRobot : BaseTestRobot() {
         allCategoriesAreVisible()
     }
 
-    fun expandChevronIsVisibleAndEnabled() {
-        viewIsVisible(R.id.chevronIcon)
-        buttonIsEnabled(R.id.chevronIcon)
-    }
+    //    fun expandChevronIsVisibleAndEnabled() {
+    //        viewIsVisible(R.id.chevronIcon)
+    //        buttonIsEnabled(R.id.chevronIcon)
+    //    }
 
-    fun tabsAreVisibleAndButtonsEnabled() {
-        viewIsVisible(R.id.etaLabel)
-        viewIsVisible(R.id.priceLabel)
-        buttonIsEnabled(R.id.etaLabel)
-        buttonIsEnabled(R.id.priceLabel)
-    }
+    //    fun tabsAreVisibleAndButtonsEnabled() {
+    //        viewIsVisible(R.id.etaLabel)
+    //        viewIsVisible(R.id.priceLabel)
+    //        buttonIsEnabled(R.id.etaLabel)
+    //        buttonIsEnabled(R.id.priceLabel)
+    //    }
 
     fun fleetLogoIsVisible() {
         viewIsVisibleIsDescendant(R.id.logoImage, R.id.quotesListRecycler)
@@ -335,11 +346,11 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun freeCancellationTextVisible() {
-        viewIsVisibleInDescendant(R.id.quoteCancellationText, R.id.quotesListRecycler)
+        viewIsVisibleInDescendant(R.id.quotesErrorView, R.id.quotesListRecycler)
     }
 
     fun freeCancellationTextNotVisible() {
-        viewIsNotVisibleInDescendant(R.id.quoteCancellationText, R.id.quotesListRecycler)
+        viewIsNotVisibleInDescendant(R.id.quotesErrorView, R.id.quotesListRecycler)
     }
 
     fun fareTypeVisible() {
@@ -415,12 +426,13 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun samePickUpAndDestinationErrorIsDisplayed() {
-        checkErrorIsShown("Pick up and destination cannot be the same [Q0001]")
+        textIsVisibleIsDescendant(R.string.kh_uisdk_quotes_error_similar_addresses_title, R.id.quotesErrorView)
+        //        checkErrorIsShown("Pick up and drop-off addresses are similar")
     }
 
     fun fullASAPQuotesListCheckGuest() {
         fullASAPQuotesListCheck()
-        locateMeButtonIsNotVisible()
+//        locateMeButtonIsNotVisible()
     }
 
     fun pickupPinIsVisible() {
