@@ -31,6 +31,22 @@
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView
+        android:id="@+id/quotesErrorSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/kh_uisdk_spacing_small"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginBottom="@dimen/kh_uisdk_address_picker_width"
+        android:gravity="center_horizontal"
+        android:text="@string/kh_uisdk_enter_destination_for_vehicles"
+        android:textColor="@color/kh_uisdk_med_grey"
+        android:textSize="@dimen/kh_uisdk_text_size_small_medium"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/quotesLoadingLabel"
         android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="@dimen/kh_uisdk_spacing_none"
@@ -47,12 +63,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorView
-        android:id="@+id/quotesErrorView"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/quotesErrorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/kh_uisdk_spacing_small"
+        android:text="@string/kh_uisdk_no_destination"
+        android:textColor="@color/kh_uisdk_med_grey"
+        android:textSize="@dimen/kh_uisdk_text_size_medium"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/quotesErrorSubtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="match_parent"/>
+        app:layout_constraintVertical_bias="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

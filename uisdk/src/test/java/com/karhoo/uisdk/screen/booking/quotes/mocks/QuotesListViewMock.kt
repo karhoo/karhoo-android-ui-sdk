@@ -24,13 +24,13 @@ class QuotesListViewMock: QuotesFragmentContract.View {
 
     override fun prebook(isPrebook: Boolean) { /** do nothing **/ }
 
-    override fun showNoCoverageError(show: Boolean) { /** do nothing **/ }
+    override fun showNoAvailability() { /** do nothing **/ }
 
-    override fun showNoFleetsError(show: Boolean) {
+    override fun showNoResultsText(show: Boolean) {
         calledShowNowResults = show
     }
 
-    override fun showSameAddressesError(show: Boolean) {
+    override fun initAvailability() {
         /** do nothing **/
     }
 

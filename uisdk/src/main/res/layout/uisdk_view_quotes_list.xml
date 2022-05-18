@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/quotesListLayout"
-    style="@style/KhSQuotesListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/KhSQuotesListView"
     android:gravity="bottom"
     android:orientation="vertical">
 
@@ -44,15 +44,15 @@
             style="@style/Text.Alternative.XSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
             android:ellipsize="end"
             android:gravity="end"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
             android:maxLines="1"
             android:text="@string/kh_uisdk_fees_and_taxes_included"
             android:textSize="@dimen/kh_uisdk_text_size_small"
-            android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/categorySelectorWidget" />
+            app:layout_constraintTop_toBottomOf="@+id/categorySelectorWidget"
+            android:visibility="invisible"/>
 
         <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"

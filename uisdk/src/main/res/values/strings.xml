@@ -100,8 +100,8 @@
     <string name="kh_uisdk_email_info">Please do not delete this information as it helps us improve the app.</string>
     <string name="kh_uisdk_email_report_issue_message">Please use the space below to report a specific issue with your ride.</string>
     <string name="kh_uisdk_enter_destination">Enter destination</string>
-    <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view available vehicles</string>
-    <!--  Address Picker  -->
+    <string name="kh_uisdk_enter_destination_for_vehicles">Enter a destination location to view\navailable vehicles</string>
+    <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Erase address</string>
@@ -261,14 +261,9 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
+    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
-    <string name="kh_uisdk_similar_addresses_title">Departure and destination addresses are similar</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
-    <string name="kh_uisdk_vehicle_bus">Bus</string>
-    <string name="kh_uisdk_vehicle_moto">Moto</string>
-    <string name="kh_uisdk_vehicle_mpv">MPV</string>
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -413,6 +408,10 @@
     <string name="kh_uisdk_upcoming_rides_empty">Remember, you can prebook a car up to seven days in advance.</string>
     <string name="kh_uisdk_update">UPDATE</string>
     <string name="kh_uisdk_vehicle">Vehicle</string>
+    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_moto">Moto</string>
+    <string name="kh_uisdk_vehicle_mpv">MPV</string>
+    <string name="kh_uisdk_vehicle_standard">Standard</string>
     <string name="kh_uisdk_wheelchair">Wheelchair</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>

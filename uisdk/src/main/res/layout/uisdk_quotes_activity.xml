@@ -29,6 +29,7 @@
 
 
     <include
+        android:id="@+id/include"
         layout="@layout/uisdk_activity_base" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

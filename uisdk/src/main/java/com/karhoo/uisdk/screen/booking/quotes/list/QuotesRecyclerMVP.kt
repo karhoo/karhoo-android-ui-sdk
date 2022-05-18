@@ -8,7 +8,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 
-interface QuotesRecyclerContract {
+interface QuotesRecyclerMVP {
 
     interface View {
 
@@ -20,11 +20,7 @@ interface QuotesRecyclerContract {
 
         fun setListVisibility(visible: Boolean)
 
-        fun showNoFleetsError(show: Boolean)
-
-        fun showSameAddressesError(show: Boolean)
-
-        fun showNoCoverageError(show: Boolean)
+        fun showNoResultsText(show: Boolean)
 
         fun watchQuoteListStatus(lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
         BookingQuotesViewModel)

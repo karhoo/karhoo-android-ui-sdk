@@ -261,6 +261,7 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
+    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
@@ -363,8 +364,6 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">SIGN IN</string>
     <string name="kh_uisdk_sign_out">Sign out</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
-    <string name="kh_uisdk_similar_addresses_title">Departure and destination addresses are similar</string>
     <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
     <string name="kh_uisdk_sorter_cheapest">PRICE</string>
     <!-- Quotes List -->

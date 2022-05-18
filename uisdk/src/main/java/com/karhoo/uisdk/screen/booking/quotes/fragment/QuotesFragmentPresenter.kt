@@ -24,19 +24,15 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     override var hasNoResults: Boolean = false
         set(value) {
             field = value
-            view?.showNoFleetsError(hasNoResults)
+            view?.showNoResultsText(hasNoResults)
         }
 
     init {
         attachView(view)
     }
 
-    override fun handleSameAddressesError() {
-        view?.showSameAddressesError(true)
-    }
-
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
-        view?.showNoCoverageError(true)
+        view?.showSnackbarError(snackbarConfig)
     }
 
     override fun setData(data: QuoteListViewDataModel) {
@@ -89,7 +85,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     private fun shouldShowQuotesList() {
         when {
             !hasDestination -> view?.apply {
-                //TODO add destination missing error
                 view?.showList(false)
             }
             hasAvailability -> view?.apply {
@@ -97,7 +92,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
             }
             else -> view?.apply {
                 view?.showList(false)
-                showNoCoverageError(true)
+                showNoAvailability()
             }
         }
     }

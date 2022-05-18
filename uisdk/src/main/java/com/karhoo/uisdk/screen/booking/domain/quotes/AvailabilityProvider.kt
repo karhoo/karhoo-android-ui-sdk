@@ -22,5 +22,4 @@ interface AvailabilityHandler {
     var hasNoResults: Boolean
 
     fun handleAvailabilityError(snackbarConfig: SnackbarConfig)
-    fun handleSameAddressesError()
 }

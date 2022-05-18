@@ -3,10 +3,13 @@ package com.karhoo.uisdk.screen.booking.quotes.category
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.RelativeLayout
 import androidx.lifecycle.LifecycleOwner
 import com.google.android.material.tabs.TabLayout
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.base.listener.SimpleTabListener
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
@@ -18,6 +21,9 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
     : RelativeLayout(context, attrs, defStyleAttr), CategorySelectorMVP.View {
 
     private var presenter: CategorySelectorPresenter? = null
+
+    private val containerAnimateIn: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_in_bottom_category)
+    private val containerAnimateOut: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_slide_out_bottom_category)
 
     init {
         View.inflate(context, R.layout.uisdk_view_category_selector, this)
@@ -36,10 +42,24 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
                 unavailableCategoryView?.setTabTextColor(false)
             }
         })
+
+        containerAnimateOut.fillAfter = true
+        containerAnimateOut.setAnimationListener(object : SimpleAnimationListener() {
+            override fun onAnimationEnd(animation: Animation) {
+                this@CategorySelectorView.visibility = View.GONE
+            }
+        })
+
+        containerAnimateIn.fillAfter = true
+        containerAnimateIn.setAnimationListener(object : SimpleAnimationListener() {
+            override fun onAnimationEnd(animation: Animation) {
+                this@CategorySelectorView.visibility = View.VISIBLE
+            }
+        })
     }
 
     override fun setCategories(categories: List<Category>) {
-        var differentTab = false
+        var differentTab : Boolean = false
         for (i in categories.indices){
             val tab = vehicleCategoryTabLayout.getTabAt(i)
             val tag = tab?.tag
@@ -103,11 +123,15 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     override fun hideCategories() {
-        this.visibility = View.GONE
+        if (visibility == View.VISIBLE) {
+            startAnimation(containerAnimateOut)
+        }
     }
 
     override fun showCategories() {
-        this.visibility = View.VISIBLE
+        if (visibility == View.GONE) {
+            startAnimation(containerAnimateIn)
+        }
     }
 
 }

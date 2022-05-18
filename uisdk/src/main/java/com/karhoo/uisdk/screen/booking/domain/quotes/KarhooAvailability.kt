@@ -165,16 +165,17 @@ class KarhooAvailability(private val quotesService: QuotesService,
     private fun handleAvailabilityError(error: KarhooError) {
         when (error) {
             KarhooError.CouldNotGetAvailabilityNoneFound -> {
+                cancelVehicleCallback()
                 availabilityHandler?.get()?.hasAvailability = false
             }
             KarhooError.OriginAndDestinationIdentical -> {
-                availabilityHandler?.get()?.handleSameAddressesError()
+                clearDestination()
+                availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
+                returnErrorStringOrLogoutIfRequired(error), karhooError = error))
             }
             else -> availabilityHandler?.get()?.handleAvailabilityError(SnackbarConfig(text = null, messageResId =
             returnErrorStringOrLogoutIfRequired(error), karhooError = error))
         }
-
-        cancelVehicleCallback()
     }
 
     private fun clearDestination() {

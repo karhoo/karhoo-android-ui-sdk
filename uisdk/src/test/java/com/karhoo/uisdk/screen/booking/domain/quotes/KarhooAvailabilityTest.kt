@@ -74,7 +74,6 @@ class KarhooAvailabilityTest {
             override var hasAvailability: Boolean = false
             override var hasNoResults: Boolean = false
             override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }
-            override fun handleSameAddressesError() {/** do nothing **/ }
         }
 
         availabilityHandler.hasNoResults = false

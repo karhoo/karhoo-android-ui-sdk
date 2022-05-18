@@ -41,10 +41,10 @@
     <string name="kh_uisdk_booking_error">Er lijkt een probleem te zijn met het boeken van uw reis. Probeer het opnieuw</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reservering is mislukt</string>
-    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
-    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$@ | %2$@ en %3$@ %4$@ | %3$@ %5$@.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
@@ -261,6 +261,7 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
+    <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
     <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
     <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
@@ -363,8 +364,6 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
-    <string name="kh_uisdk_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>
     <!-- Quotes List -->
