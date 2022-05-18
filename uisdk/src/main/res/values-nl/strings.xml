@@ -322,7 +322,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Meer informatie</string>
     <string name="kh_uisdk_quoted_fare">Geschat tarief</string>
-    <string name="kh_uisdk_quotes_activity_title">Citaten</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>
     <string name="kh_uisdk_rating_submitted">Bedankt voor het doorgeven van uw beoordeling.</string>
     <string name="kh_uisdk_rebook_ride">Rit opnieuw reserveren</string>

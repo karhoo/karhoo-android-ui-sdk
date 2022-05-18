@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes.list
+package com.karhoo.uisdk.screen.booking.quotes
 
 import android.content.Context
 import android.util.AttributeSet
@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.quotesLoad
 class QuotesRecyclerView @JvmOverloads constructor(context: Context, attr: AttributeSet? = null, defStyleAttr: Int = 0)
     : FrameLayout(context, attr, defStyleAttr), QuotesRecyclerMVP.View {
 
-    private val quotesAdapter =
-        QuotesAdapter(context)
+    private val quotesAdapter = QuotesAdapter(context)
     private val presenter: QuotesRecyclerMVP.Presenter = QuotesRecyclerPresenter(this)
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null

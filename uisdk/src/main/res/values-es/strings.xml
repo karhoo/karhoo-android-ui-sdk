@@ -322,7 +322,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Leer más</string>
     <string name="kh_uisdk_quoted_fare">Tarifa estimada</string>
-    <string name="kh_uisdk_quotes_activity_title">Citas</string>
     <string name="kh_uisdk_rate_trip_label">Como clasifica usted este viaje?</string>
     <string name="kh_uisdk_rating_submitted">Gracias por enviar tu calificación.</string>
     <string name="kh_uisdk_rebook_ride">Solicitar de nuevo</string>

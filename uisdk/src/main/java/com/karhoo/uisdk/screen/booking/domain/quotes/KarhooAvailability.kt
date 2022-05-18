@@ -16,7 +16,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
+import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.Category
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
@@ -53,7 +53,7 @@ class KarhooAvailability(private val quotesService: QuotesService,
 
     private val observer = createObservable()
     private var vehiclesJob: Job? = null
-    var quoteListValidityListener: QuotesFragmentContract.QuoteValidityListener? = null
+    var quoteListValidityListener: QuotesListMVP.QuoteValidityListener? = null
 
     init {
         journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, observer)

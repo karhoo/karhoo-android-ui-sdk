@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes.list
+package com.karhoo.uisdk.screen.booking.quotes
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer

@@ -83,10 +83,6 @@
             android:label="@string/kh_uisdk_payment_details"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screen.booking.quotes.QuotesActivity"
-            android:label="@string/kh_uisdk_quotes_activity_title"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService"

@@ -1,4 +1,4 @@
-package com.karhoo.uisdk.screen.booking.quotes.sortview
+package com.karhoo.uisdk.screen.booking.quotes
 
 import android.content.Context
 import android.util.AttributeSet

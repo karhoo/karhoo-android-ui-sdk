@@ -40,7 +40,7 @@
             android:textSize="@dimen/kh_uisdk_text_size_small"
             app:layout_constraintTop_toBottomOf="@+id/chevronIcon" />
 
-        <com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
+        <com.karhoo.uisdk.screen.booking.quotes.QuotesSortView
             android:id="@+id/quotesSortWidget"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quotesSortWidget" />
 
-        <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
+        <com.karhoo.uisdk.screen.booking.quotes.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="@dimen/kh_uisdk_spacing_none"

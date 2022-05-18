@@ -322,7 +322,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Erfahren Sie mehr</string>
     <string name="kh_uisdk_quoted_fare">Geschätzter Fahrpreis</string>
-    <string name="kh_uisdk_quotes_activity_title">Zitate</string>
     <string name="kh_uisdk_rate_trip_label">Wie würden Sie Ihre Reise bewerten?</string>
     <string name="kh_uisdk_rating_submitted">Vielen Dank für die Abgabe Ihrer Bewertung.</string>
     <string name="kh_uisdk_rebook_ride">Rebooking-Fahrt</string>

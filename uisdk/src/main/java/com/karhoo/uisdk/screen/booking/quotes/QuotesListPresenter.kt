@@ -1,20 +1,22 @@
-package com.karhoo.uisdk.screen.booking.quotes.fragment
+package com.karhoo.uisdk.screen.booking.quotes
 
+import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
-import androidx.lifecycle.Observer
 
-internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, private val analytics: Analytics?) :
-    BasePresenter<QuotesFragmentContract.View>(),
-    QuotesFragmentContract.Presenter, AvailabilityHandler {
+internal class QuotesListPresenter(view: QuotesListMVP.View, private val analytics: Analytics?)
+    : BasePresenter<QuotesListMVP.View>(),
+        QuotesListMVP.Presenter, AvailabilityHandler {
 
+    private var currentVehicles: List<Quote> = mutableListOf()
+    private var isExpanded: Boolean = false
     private var isPrebook: Boolean = false
     private var hasDestination: Boolean = false
-    private var dataModel: QuoteListViewDataModel? = null
 
     override var hasAvailability: Boolean = false
         set(value) {
@@ -29,16 +31,17 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     init {
         attachView(view)
+        this.currentVehicles = mutableListOf()
     }
 
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
         view?.showSnackbarError(snackbarConfig)
     }
 
-    override fun setData(data: QuoteListViewDataModel) {
-        this.dataModel = data
-
-        checkBookingInfo()
+    override fun showMore() {
+        isExpanded = !isExpanded
+        view?.togglePanelState()
+        view?.setChevronState(isExpanded)
     }
 
     override fun sortMethodChanged(sortMethod: SortMethod) {
@@ -47,31 +50,28 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     }
 
     private fun updateList() {
-        dataModel?.quotes?.let { quotes ->
-            if (isPrebook) {
-                view?.updateList(quotes)
-            } else {
-                val nearVehicles = quotes.filter {
-                    it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA
-                }
-                view?.updateList(nearVehicles)
+        if (isPrebook) {
+            view?.updateList(currentVehicles)
+        } else {
+            val nearVehicles = currentVehicles.filter {
+                it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA
             }
+            view?.updateList(nearVehicles)
         }
-
     }
 
     override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
         analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
     }
 
-    private fun checkBookingInfo() {
-        dataModel?.journeyDetails?.let {
+    override fun watchJourneyDetails() = Observer<JourneyDetails> { currentStatus ->
+        currentStatus?.let {
             isPrebook = it.date != null
-            hasDestination = it.destination != null
+            hasDestination = currentStatus.destination != null
 
             view?.apply {
                 prebook(isPrebook)
-                setListVisibility(it.pickup, it.destination)
+                setListVisibility(currentStatus.pickup, currentStatus.destination)
                 destinationChanged(it)
             }
 
@@ -82,25 +82,28 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
         }
     }
 
-    private fun shouldShowQuotesList() {
-        when {
-            !hasDestination -> view?.apply {
-                view?.showList(false)
-            }
-            hasAvailability -> view?.apply {
-                view?.showList(true)
-            }
-            else -> view?.apply {
-                view?.showList(false)
-                showNoAvailability()
-            }
+    override fun watchVehicles() = Observer<List<Quote>> { vehicleList ->
+        vehicleList?.let {
+            currentVehicles = it
+            updateList()
         }
     }
 
-    override fun watchQuotes() = Observer<List<Quote>> { quotes ->
-        quotes?.let {
-            dataModel?.quotes = it
-            updateList()
+    private fun shouldShowQuotesList() {
+        when {
+            !hasDestination -> view?.apply {
+                if (isExpanded) {
+                    showMore()
+                }
+                hideList()
+            }
+            hasAvailability -> view?.apply {
+                showList()
+            }
+            else -> view?.apply {
+                hideList()
+                showNoAvailability()
+            }
         }
     }
 
