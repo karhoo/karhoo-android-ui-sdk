@@ -92,7 +92,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
 
         journeyDetailsStateViewModel.viewStates().apply {
-            observe(viewLifecycleOwner, subscribeToJourneyDetails())
+            observe(viewLifecycleOwner, subscribeToJourneyDetails(journeyDetailsStateViewModel))
         }
         categorySelectorWidget.bindViewToData(
             this.viewLifecycleOwner,
@@ -134,7 +134,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             setOnClickListener { showSortBy() }
         }
 
-        initAvailability()
+        initAvailability();
 
         showFilteringWidgets(false)
 
@@ -143,22 +143,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun onPause() {
         super.onPause()
-        availabilityProvider?.pauseUpdates()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        availabilityProvider?.resumeUpdates()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
         availabilityProvider?.cleanup()
     }
 
-    fun subscribeToJourneyDetails(): Observer<JourneyDetails> {
+    fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
         return Observer {
             it?.let {
                 val sortMethod = SortMethod.PRICE

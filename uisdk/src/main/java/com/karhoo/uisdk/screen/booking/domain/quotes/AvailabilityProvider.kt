@@ -13,10 +13,6 @@ interface AvailabilityProvider {
 
     fun cleanup()
 
-    fun pauseUpdates()
-
-    fun resumeUpdates()
-
     fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails>
 
 }
