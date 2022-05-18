@@ -94,7 +94,6 @@
     <string name="kh_uisdk_done">Erledigt</string>
     <string name="kh_uisdk_drawer_closed">Navigation geschlossen</string>
     <string name="kh_uisdk_drawer_open">Navigation offen</string>
-    <string name="kh_uisdk_driver_arrival">Ankunft des Fahrers</string>
     <string name="kh_uisdk_driver_en_route">Ihr %s Fahrer ist auf dem Weg</string>
     <string name="kh_uisdk_electric">Elektrisch</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
@@ -367,7 +366,6 @@
     <string name="kh_uisdk_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
     <string name="kh_uisdk_similar_addresses_title">Abgangs- und Zieladresse sind ähnlich</string>
     <string name="kh_uisdk_something_went_wrong">Es ist ein Fehler aufgetreten.</string>
-    <string name="kh_uisdk_sort_by">Sortieren nach</string>
     <string name="kh_uisdk_sorter_cheapest">Preis</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschätzte Ankunft</string>

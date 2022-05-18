@@ -16,24 +16,18 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
-        <LinearLayout
-            android:id="@+id/quotesOptionsLayout"
-            android:layout_width="match_parent"
+        <com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
+            android:id="@+id/quotesSortWidget"
+            android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+            android:layout_marginStart="@dimen/kh_uisdk_margin_small"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+            android:layout_marginEnd="@dimen/kh_uisdk_margin_small"
+            android:clickable="true"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/quotesSortByButton"
-                style="@style/KhQuoteListSortByButton"
-                android:text="@string/kh_uisdk_sort_by"/>
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
             android:id="@+id/categorySelectorWidget"
@@ -41,10 +35,9 @@
             android:layout_height="wrap_content"
             android:background="@color/kh_uisdk_opacity_off_white"
             android:visibility="gone"
-            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quotesOptionsLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/quotesSortWidget" />
 
         <TextView
             android:id="@+id/quotesTaxesAndFeesLabel"

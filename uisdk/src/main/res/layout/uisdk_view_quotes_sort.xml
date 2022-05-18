@@ -1,57 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/kh_uisdk_spacing_small"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    tools:ignore="MissingPrefix">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineCentre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:id="@+id/etaLayout"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guidelineCentre"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            style="@style/KhQuoteListSortTitle"
-            android:text="@string/kh_uisdk_sort_by"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/etaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kh_uisdk_sorter_nearest"
+            android:textColor="@color/kh_uisdk_off_white"
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
-        <ImageButton
-            android:id="@+id/quotesSortByCloseDialog"
-            style="@style/KhQuoteListSortCloseButton"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/kh_uisdk_divider_height"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"
-        android:background="@color/kh_uisdk_border" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/priceLayout"
+        android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/quotesSortByPrice">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guidelineCentre"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <RadioButton
-            android:id="@+id/quotesSortByPrice"
-            style="@style/KhQuoteListSortRadioButton"
-            android:text="@string/kh_uisdk_price" />
+        <TextView
+            android:id="@+id/priceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kh_uisdk_sorter_cheapest"
+            android:textColor="@color/kh_uisdk_primary"
+            android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
+    </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/quotesSortByDriverArrival"
-            style="@style/KhQuoteListSortRadioButton"
-            android:text="@string/kh_uisdk_driver_arrival" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/quotesSortTabLayout"
+        style="@style/KhQuotesSortTabs"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </RadioGroup>
-
-    <com.karhoo.uisdk.base.view.LoadingButtonView
-        android:id="@+id/quotesSortBySave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/kh_uisdk_margin_medium" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

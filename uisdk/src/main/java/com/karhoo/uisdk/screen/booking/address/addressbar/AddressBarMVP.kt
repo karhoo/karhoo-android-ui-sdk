@@ -49,7 +49,6 @@ interface AddressBarMVP {
 
         fun prefillForJourney(journeyInfo: JourneyInfo)
 
-        fun dateSet(date: DateTime)
     }
 
     interface Actions {
