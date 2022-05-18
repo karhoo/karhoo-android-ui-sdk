@@ -13,7 +13,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     QuotesFragmentContract.Presenter, AvailabilityHandler {
 
     private var isPrebook: Boolean = false
-    private var hasAddresses: Boolean = false
+    private var hasDestination: Boolean = false
     private var dataModel: QuoteListViewDataModel? = null
 
     override var hasAvailability: Boolean = false
@@ -71,7 +71,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     private fun checkBookingInfo() {
         dataModel?.journeyDetails?.let {
             isPrebook = it.date != null
-            hasAddresses = it.destination != null && it.pickup != null
+            hasDestination = it.destination != null
 
             view?.apply {
                 prebook(isPrebook)
@@ -79,7 +79,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
                 destinationChanged(it)
             }
 
-            if (!hasAddresses) {
+            if (!hasDestination) {
                 shouldShowQuotesList()
             }
             updateList()
@@ -88,15 +88,15 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     private fun shouldShowQuotesList() {
         when {
-            !hasAddresses -> view?.apply {
-                showList(false)
-                showNoAddressesError(true)
+            !hasDestination -> view?.apply {
+                //TODO add destination missing error
+                view?.showList(false)
             }
             hasAvailability -> view?.apply {
-                showList(true)
+                view?.showList(true)
             }
             else -> view?.apply {
-                showList(false)
+                view?.showList(false)
                 showNoCoverageError(true)
             }
         }

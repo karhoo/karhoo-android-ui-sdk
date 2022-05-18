@@ -49,9 +49,5 @@ class QuotesListViewMock: QuotesFragmentContract.View {
     override fun showList(show: Boolean) {
         /** do nothing **/
     }
-
-    override fun showNoAddressesError(show: Boolean) {
-        /** do nothing **/
-    }
     override fun showSnackbarError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }
 }

@@ -53,7 +53,7 @@ interface AddressBarViewContract {
     }
 
     sealed class AddressBarActions {
-        data class AddressChanged(val address: LocationInfo?, val addressCode: Int): AddressBarActions()
+
         data class ShowAddressActivity(val intent: Intent, val addressCode: Int) : AddressBarActions()
 
     }

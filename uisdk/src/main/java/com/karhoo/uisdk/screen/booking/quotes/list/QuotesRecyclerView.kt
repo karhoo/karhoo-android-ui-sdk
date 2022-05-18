@@ -107,24 +107,16 @@ class QuotesRecyclerView @JvmOverloads constructor(
 
     override fun showSameAddressesError(show: Boolean) {
         showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_subtitle),
-            R.drawable.kh_uisdk_similar_pickup_dropoff
-        ))
-    }
-
-    override fun showNoAddressesError(show: Boolean) {
-        showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_subtitle),
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_title),
+            context.resources.getString(R.string.kh_uisdk_similar_addresses_subtitle),
             R.drawable.kh_uisdk_similar_pickup_dropoff
         ))
     }
 
     override fun showNoFleetsError(show: Boolean) {
         showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_subtitle),
+            context.resources.getString(R.string.kh_uisdk_no_availability_title),
+            context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
             R.drawable.kh_uisdk_ic_no_available_quotes
         ))
     }
@@ -135,8 +127,8 @@ class QuotesRecyclerView @JvmOverloads constructor(
             quotesErrorView.visibility = View.VISIBLE
             quotesErrorView.setup(
                 ErrorViewGenericReason(
-                    context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_title),
-                    context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_subtitle),
+                    context.resources.getString(R.string.kh_uisdk_no_availability_title),
+                    context.resources.getString(R.string.kh_uisdk_no_availability_subtitle),
                     R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
