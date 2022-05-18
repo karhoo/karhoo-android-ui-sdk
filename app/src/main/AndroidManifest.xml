@@ -34,37 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.karhoo.uisdk.screen.address.AddressActivity"
-            android:label="@string/kh_uisdk_title_activity_address"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            tools:replace="android:theme" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.booking.BookingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.trip.TripActivity"
-            android:label="@string/kh_uisdk_title_activity_trip"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
-            android:label="@string/kh_uisdk_title_activity_rides"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
-            android:label="@string/kh_uisdk_title_activity_rides"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
-            android:label="driverPhoto"
-            android:parentActivityName="com.karhoo.uisdk.screen.trip.TripActivity"
-            android:theme="@style/AppTheme.Transparent" />
-        <activity
-            android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
-            android:label="@string/kh_uisdk_feedback"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
