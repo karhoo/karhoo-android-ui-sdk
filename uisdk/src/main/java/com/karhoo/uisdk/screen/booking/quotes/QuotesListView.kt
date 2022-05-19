@@ -195,7 +195,6 @@ class QuotesListView @JvmOverloads constructor(
                         bookingQuotesViewModel?.process(
                                 BookingQuotesViewContract.BookingQuotesEvent
                                         .QuotesListVisibilityChanged(isVisible = true, panelState = collapsiblePanelView.panelState))
-                        KarhooUISDK.analytics?.quoteListOpened(journeyDetails = journeyDetailsStateViewModel?.currentState)
                     }
         }
     }
