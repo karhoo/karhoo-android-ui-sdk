@@ -56,7 +56,7 @@ if (getCurrentFlavor().contains('adyen')) {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 32            
     buildToolsVersion '30.0.3'
 
     defaultConfig {
