@@ -94,7 +94,6 @@
     <string name="kh_uisdk_done">Fatto</string>
     <string name="kh_uisdk_drawer_closed">Cassetto chiuso</string>
     <string name="kh_uisdk_drawer_open">Cassetto aperto</string>
-    <string name="kh_uisdk_driver_arrival">Arrivo dell\'autista</string>
     <string name="kh_uisdk_driver_en_route">Il tuo %s è in viaggio</string>
     <string name="kh_uisdk_electric">Elettrico</string>
     <string name="kh_uisdk_email_hint">E-mail</string>
@@ -125,14 +124,6 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Per favore, dicci di più sul tuo viaggio</string>
     <string name="kh_uisdk_fees_and_taxes_included">Tasse e commissioni incluse</string>
-    <string name="kh_uisdk_filter">Filtro</string>
-    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Cancellazione e tempo di attesa</string>
-    <string name="kh_uisdk_filter_free_cancellation">Cancellazione gratuita</string>
-    <string name="kh_uisdk_filter_free_waiting_time">Tempo di attesa gratuito</string>
-    <string name="kh_uisdk_filter_luggages">Bagagli)</string>
-    <string name="kh_uisdk_filter_page_results">Visualizza tutti %s risultati</string>
-    <string name="kh_uisdk_filter_passengers">Passeggero/i</string>
-    <string name="kh_uisdk_filter_quote_types">Tipi di preventivo</string>
     <string name="kh_uisdk_finding_your_ride">Trovare la tua corsa...</string>
     <string name="kh_uisdk_first_name_hint">Nome</string>
     <!-- Fare type -->
@@ -274,7 +265,7 @@
     <string name="kh_uisdk_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
     <string name="kh_uisdk_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
     <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
-    <string name="kh_uisdk_no_results_found">Siamo spiacenti, la prenotazione immediata non è disponibile per questa destinazione, ma puoi prenotare in anticipo per il tuo prossimo viaggio!</string>
+    <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
     <string name="kh_uisdk_no_results_label">Nessun risultato</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
     <string name="kh_uisdk_offer_expired">Preventivo scaduto</string>
@@ -331,13 +322,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Per saperne di più</string>
     <string name="kh_uisdk_quoted_fare">Tariffa stimata</string>
-    <string name="kh_uisdk_quotes_activity_title">Citazioni</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Inserisci sia l\'indirizzo di ritiro che quello di consegna per accedere alle offerte</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_title">Manca l\'indirizzo di ritiro o riconsegna</string>
-    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
-    <string name="kh_uisdk_quotes_error_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Si prega di modificare uno degli indirizzi per accedere ai preventivi</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_title">Gli indirizzi di partenza e di destinazione sono simili</string>
     <string name="kh_uisdk_rate_trip_label">Come valuteresti il tuo viaggio?</string>
     <string name="kh_uisdk_rating_submitted">Grazie per aver inviato la tua valutazione.</string>
     <string name="kh_uisdk_rebook_ride">Riprenota corsa</string>
@@ -349,7 +333,6 @@
     <string name="kh_uisdk_report_issue">Segnala problema</string>
     <string name="kh_uisdk_requested">Il tuo viaggio è stato richiesto con %s</string>
     <string name="kh_uisdk_requested_invite">Grazie per il tuo interesse! Ti invieremo un\'email quando il tuo account sarà attivato.</string>
-    <string name="kh_uisdk_reset_filter">Ripristina filtro</string>
     <string name="kh_uisdk_results_empty">Nessun risultato trovato</string>
     <string name="kh_uisdk_retrieving_dropoff">Ottenere il luogo di riconsegna</string>
     <!-- Current Trip -->
@@ -380,9 +363,7 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Registrati</string>
     <string name="kh_uisdk_sign_out">Esci</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Si prega di modificare uno degli indirizzi per accedere ai preventivi</string>
     <string name="kh_uisdk_something_went_wrong">Si è verificato un errore</string>
-    <string name="kh_uisdk_sort_by">Ordina per</string>
     <string name="kh_uisdk_sorter_cheapest">Prezzo</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Ora di arrivo stimata</string>
