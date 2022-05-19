@@ -349,10 +349,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
     }
 
-    override fun showPaymentDialog(error: KarhooError?) {
-        showPaymentFailureDialog(null, error)
-    }
-
     override fun showWebView(url: String?) {
         webViewListener.showWebViewOnPress(url)
     }

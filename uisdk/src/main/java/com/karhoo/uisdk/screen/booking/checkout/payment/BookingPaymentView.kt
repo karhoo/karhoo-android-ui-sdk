@@ -150,10 +150,6 @@ class BookingPaymentView @JvmOverloads constructor(
         paymentActions?.showPaymentFailureDialog(null, karhooError)
     }
 
-    override fun showPaymentDialog(karhooError: KarhooError?) {
-        paymentActions?.showPaymentFailureDialog(null, karhooError)
-    }
-
     override fun hasValidPaymentType(): Boolean = hasValidPayment
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
