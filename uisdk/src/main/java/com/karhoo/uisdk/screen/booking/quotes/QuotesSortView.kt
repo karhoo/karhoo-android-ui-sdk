@@ -125,8 +125,8 @@ class QuotesSortView @JvmOverloads constructor(
         priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
     }
 
-    fun destinationChanged(bookingInfo: BookingInfo?) {
-        hasDestination = bookingInfo?.destination != null
+    fun destinationChanged(journeyDetails: JourneyDetails?) {
+        hasDestination = journeyDetails?.destination != null
     }
 
     private fun setSortingMethodByTabPosition(position: Int) = if (position == 0) {
