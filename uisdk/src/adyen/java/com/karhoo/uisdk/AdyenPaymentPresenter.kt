@@ -22,6 +22,7 @@ import com.karhoo.sdk.api.network.request.AdyenPaymentMethodsRequest
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -35,6 +36,7 @@ import com.karhoo.uisdk.util.intToPriceNoSymbol
 import org.json.JSONObject
 import java.util.Currency
 import java.util.Locale
+import java.util.Date
 
 class AdyenPaymentPresenter(
     private val userStore: UserStore = KarhooApi.userStore,
@@ -147,6 +149,9 @@ class AdyenPaymentPresenter(
         val result = payload.optString(RESULT_CODE, "")
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
+
+        logPaymentErrorEvent(refusalReason)
+
         return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
 

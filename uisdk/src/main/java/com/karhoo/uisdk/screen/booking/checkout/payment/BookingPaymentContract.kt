@@ -57,8 +57,6 @@ interface BookingPaymentContract {
 
         fun handlePaymentDetailsUpdate()
 
-        fun showPaymentDialog(error: KarhooError? = null)
-
         fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
 
         fun retrieveLoyaltyStatus()

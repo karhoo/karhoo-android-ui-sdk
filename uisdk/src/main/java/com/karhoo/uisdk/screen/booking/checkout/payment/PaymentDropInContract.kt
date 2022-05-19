@@ -63,8 +63,6 @@ interface PaymentDropInContract {
 
         fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
-        fun showPaymentDialog(karhooError: KarhooError?)
-
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 
         fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
