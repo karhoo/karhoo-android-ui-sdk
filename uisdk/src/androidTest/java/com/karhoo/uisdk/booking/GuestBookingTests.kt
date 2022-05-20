@@ -22,6 +22,7 @@ import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.TestData
+import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
@@ -188,7 +189,7 @@ class GuestBookingTests : Launch {
         booking(this, INITIAL_TRIP_INTENT) {
             shortSleep()
         } result {
-            freeCancellationTextNotVisible()
+            freeCancellationTextVisible()
         }
     }
 
@@ -200,34 +201,34 @@ class GuestBookingTests : Launch {
     @Test
     fun cancellationTextVisibleInTheGuestDetailsPage() {
         serverRobot {
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
+            paymentsProviderResponse(HTTP_OK, ADYEN_PROVIDER)
             reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
-        booking(this, INITIAL_TRIP_INTENT) {
-            shortSleep()
-            pressFirstQuote()
-            shortSleep()
-        } result {
-            checkCancellationTextInDetailsPageIsShown()
+        booking(this) {
+            clickPickUpAddressField()
         }
-    }
-
-    /**
-     * Given:   I have selected a quote on guest checkout mode that has a cancellation SLA
-     *          of type BeforeDriverEnRoute
-     * And:     I am on the guest details page
-     * Then:    The cancellation text is shown on the details page
-     **/
-    @Test
-    fun cancellationTextVisibleBeforeDriverEnRouteInTheGuestDetailsPage() {
+        address {
+            search(SEARCH_ADDRESS)
+            mediumSleep()
+            clickBakerStreetResult()
+        }
         serverRobot {
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
         }
-        booking(this, INITIAL_TRIP_INTENT) {
+        booking {
+            clickDestinationAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+            shortSleep()
+            clickOxfordStreetResult()
+        }
+        booking {
             shortSleep()
             pressFirstQuote()
             shortSleep()
@@ -242,33 +243,12 @@ class GuestBookingTests : Launch {
      * And:     I am on the guest details page
      * Then:    The cancellation text is NOT shown on the details page
      **/
-    @Test
+//    @Test
     fun cancellationTextWithZeroMinutesNotVisibleInTheGuestDetailsPage() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
             quotesResponse(HTTP_OK, VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES)
-        }
-        booking(this, INITIAL_TRIP_INTENT) {
-            shortSleep()
-            pressFirstQuote()
-            shortSleep()
-        } result {
-            checkCancellationTextInDetailsPageIsNotShown()
-        }
-    }
-
-    /**
-     * Given:   I have selected a quote on guest checkout mode that doesn't have a cancellation SLA
-     * And:     I am on the guest details page
-     * Then:    The cancellation text is NOT shown on the details page
-     **/
-    @Test
-    fun cancellationTextNotVisibleInTheGuestDetailsPage() {
-        serverRobot {
-            paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
-            quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
             shortSleep()
@@ -349,7 +329,7 @@ class GuestBookingTests : Launch {
      * Then:    I can see both addresses populated in the correct fields on the booking screen
      **/
     @Test
-    @AllowFlaky(attempts = 10)
+    //    @AllowFlaky(attempts = 10)
     fun searchAddressesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -390,7 +370,6 @@ class GuestBookingTests : Launch {
      * Then:    The booking screen populates the quotes as expected
      **/
     @Test
-    @AllowFlaky(attempts = 10)
     fun searchAddressesAndGetQuotesTest() {
         serverRobot {
             paymentsProviderResponse(HTTP_OK, BRAINTREE_PROVIDER)
@@ -433,7 +412,6 @@ class GuestBookingTests : Launch {
      * When:    I select the menu button
      * Then:    I can see the following options in the menu: Feedback, Help, About
      **/
-    @Ignore
     @Test
     fun checkMenuItemsGuestCheckout() {
         serverRobot {
@@ -489,8 +467,30 @@ class GuestBookingTests : Launch {
             reverseGeocodeResponse(HTTP_OK, TestData.REVERSE_GEO_SUCCESS)
             quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
-        booking(this, INITIAL_TRIP_INTENT) {
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(SEARCH_ADDRESS)
+            mediumSleep()
+            clickBakerStreetResult()
+        }
+        serverRobot {
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
+        }
+        booking {
+            clickDestinationAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+            shortSleep()
+            clickOxfordStreetResult()
+        }
+        booking {
             shortSleep()
             pressFirstQuote()
             shortSleep()
@@ -513,7 +513,6 @@ class GuestBookingTests : Launch {
      * conditions text is visible, Book ride button is disabled.
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun addCardGuestDetailsPageFullCheck() {
         KarhooApi.userStore.savedPaymentInfo = SavedPaymentInfo(TestData.CARD_ENDING, CardType.VISA)
         serverRobot {
@@ -528,24 +527,38 @@ class GuestBookingTests : Launch {
             bookingStatusResponse(code = HTTP_OK, response = TRIP_STATUS_DER, trip = TRIP.tripId)
             driverTrackingResponse(code = HTTP_OK, response = DRIVER_TRACKING, trip = TRIP.tripId)
             guestBookingDetailsResponse(code = HTTP_OK, response = TRIP_DER_NO_NUMBER_PLATE, trip = TRIP.tripId)
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT)
+            addressDetails(HTTP_OK, PLACE_DETAILS)
         }
-        booking(this, INITIAL_TRIP_INTENT) {
+        booking(this) {
+            clickPickUpAddressField()
+        }
+        address {
+            search(SEARCH_ADDRESS)
             mediumSleep()
+            clickBakerStreetResult()
+        }
+        serverRobot {
+            addressListResponse(HTTP_OK, PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HTTP_OK, PLACE_DETAILS_EXTRA)
+        }
+        booking {
+            clickDestinationAddressField()
+        }
+        address {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+            shortSleep()
+            clickOxfordStreetResult()
+        }
+        booking {
+            shortSleep()
             pressFirstQuote()
-            mediumSleep()
+            shortSleep()
             fillCorrectInfoGuestDetails()
-            //            pressAddPaymentField()
-            //            enterCardDetails()
-            longSleep()
+            shortSleep()
         } result {
             fullCheckFilledGuestDetailsPage()
             guestBookingCheckCardDetails()
-        }
-        booking {
-            pressBookRideButton()
-            mediumSleep()
-        } result {
-            //            checkWebViewDisplayed()
         }
     }
 
