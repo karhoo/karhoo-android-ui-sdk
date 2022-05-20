@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.adyen.AdyenClientKey
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
@@ -48,6 +49,7 @@ class AdyenPaymentPresenterTest {
     private val paymentInfoCaptor = argumentCaptor<SavedPaymentInfo>()
     private val karhooErrorCaptor = argumentCaptor<KarhooError>()
     private val paymentMethodsCall: Call<String> = mock()
+    private val getAdyenClientKey: Call<AdyenClientKey> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
     private val publicKeyCall: Call<AdyenPublicKey> = mock()
     private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
@@ -62,14 +64,16 @@ class AdyenPaymentPresenterTest {
 
         whenever(paymentsService.getAdyenPaymentMethods(any()))
                 .thenReturn(paymentMethodsCall)
+        whenever(paymentsService.getAdyenClientKey())
+            .thenReturn(getAdyenClientKey)
         doNothing().whenever(paymentMethodsCall).execute(paymentMethodsCaptor.capture())
         whenever(quote.price).thenReturn(price)
 
         adyenPaymentPresenter = AdyenPaymentPresenter(
             paymentsService = paymentsService,
-            userStore = userStore,
-            view = paymentDropInActions,
-            clientKey = CLIENT_KEY)
+            userStore = userStore)
+
+        adyenPaymentPresenter.view = paymentDropInActions
     }
 
     /**

@@ -30,6 +30,7 @@ interface PaymentDropInContract {
     }
 
     interface Presenter {
+        var view: Actions?
 
         fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 

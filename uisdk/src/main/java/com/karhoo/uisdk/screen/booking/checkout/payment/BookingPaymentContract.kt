@@ -8,10 +8,6 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
 
-    interface Widget {
-
-    }
-
     interface View {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)

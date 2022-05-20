@@ -12,10 +12,14 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
 import java.util.Locale
 
-class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clientKey: String) : PaymentDropInContract.View {
+class AdyenPaymentView : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter(actions, clientKey = clientKey)
+    var presenter: PaymentDropInContract.Presenter? = AdyenPaymentPresenter()
     override var actions: PaymentDropInContract.Actions? = null
+        set(value) {
+            presenter?.view = value
+            field = value
+        }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         presenter?.handleActivityResult(requestCode, resultCode, data)
@@ -33,12 +37,19 @@ class AdyenPaymentView constructor(actions: PaymentDropInContract.Actions, clien
         presenter?.getPaymentNonce(quote)
     }
 
-    override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount:
-    String) {
+    override fun handleThreeDSecure(
+        context: Context, sdkToken: String, nonce: String, amount:
+        String
+    ) {
         actions?.threeDSecureNonce(sdkToken, sdkToken)
     }
 
-    override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
+    override fun showPaymentDropInUI(
+        context: Context,
+        sdkToken: String,
+        paymentData: String?,
+        quote: Quote?
+    ) {
         val payments = JSONObject(paymentData)
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 

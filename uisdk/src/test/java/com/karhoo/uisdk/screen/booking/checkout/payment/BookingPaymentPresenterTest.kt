@@ -44,34 +44,6 @@ class BookingPaymentPresenterTest {
     }
 
     /**
-     * Given:   A payment view visibility is requested
-     * When:    The provider is Adyen
-     * Then:    The visibility is set to GONE
-     */
-    @Test
-    fun `visibility set to GONE for Adyen provider`() {
-        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(adyenProvider, null))
-
-        presenter.getPaymentViewVisibility()
-
-        verify(view).setViewVisibility(GONE)
-    }
-
-    /**
-     * Given:   A payment view visibility is requested
-     * When:    The provider is Braintree
-     * Then:    The visibility is set to VISIBLE
-     */
-    @Test
-    fun `visibility set to VISIBLE for Adyen provider`() {
-        whenever(userStore.paymentProvider).thenReturn(PaymentProvider(braintreeProvider, null))
-
-        presenter.getPaymentViewVisibility()
-
-        verify(view).setViewVisibility(VISIBLE)
-    }
-
-    /**
      * Given:   A call is made to retrieve the payment provider
      * When:    There is a stored provider
      * Then:    Then the call is not made

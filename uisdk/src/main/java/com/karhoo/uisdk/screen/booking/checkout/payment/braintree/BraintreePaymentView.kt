@@ -18,10 +18,14 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.util.extension.isGuest
 import java.util.Locale
 
-class BraintreePaymentView constructor(actions: PaymentDropInContract.Actions) : PaymentDropInContract.View {
+class BraintreePaymentView : PaymentDropInContract.View {
 
-    var presenter: PaymentDropInContract.Presenter? = BraintreePaymentPresenter(actions)
-    override var actions: PaymentDropInContract.Actions? = actions
+    var presenter: PaymentDropInContract.Presenter? = BraintreePaymentPresenter()
+    override var actions: PaymentDropInContract.Actions? = null
+    set(value) {
+        field = value
+        presenter?.view = value
+    }
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         val braintreeFragment = BraintreeFragment.newInstance(context as AppCompatActivity, sdkToken)
