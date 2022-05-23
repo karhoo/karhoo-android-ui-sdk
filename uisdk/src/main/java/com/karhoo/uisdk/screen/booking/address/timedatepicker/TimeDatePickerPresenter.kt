@@ -8,6 +8,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
 import java.util.Date
 import java.util.TimeZone
 
@@ -116,7 +117,12 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
     private fun dateFromCalendar(setYear: Int = year, setMonth: Int = month, setDay: Int = day,
                                  setHour: Int = hour, setMinute: Int = minute): DateTime {
-        return DateTime(setYear, setMonth, setDay, setHour, setMinute, timezone)
+
+        val localDateTime = LocalDateTime(timezone).withYear(setYear).withMonthOfYear(setMonth).withDayOfMonth(setDay).withHourOfDay(setHour).withMinuteOfHour(setMinute)
+
+        return if(timezone.isLocalDateTimeGap(localDateTime)){
+            localDateTime.plusHours(1).toDateTime(timezone)
+        } else localDateTime.toDateTime(timezone)
     }
 
     override fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
