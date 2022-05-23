@@ -41,6 +41,8 @@ interface PaymentDropInContract {
         fun sdkInit(quote: Quote?, locale: Locale? = null)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
+
+        fun logPaymentErrorEvent(refusalReason: String)
     }
 
     interface Actions {
@@ -58,8 +60,6 @@ interface PaymentDropInContract {
         fun initialisePaymentFlow(quote: Quote?)
 
         fun showError(@StringRes error: Int, karhooError: KarhooError?)
-
-        fun showPaymentDialog(karhooError: KarhooError?)
 
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 

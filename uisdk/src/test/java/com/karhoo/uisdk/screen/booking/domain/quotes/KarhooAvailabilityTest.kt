@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.domain.quotes
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.response.Resource
@@ -19,6 +20,7 @@ import com.nhaarman.mockitokotlin2.doNothing
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -72,11 +74,58 @@ class KarhooAvailabilityTest {
             override var hasAvailability: Boolean = false
             override var hasNoResults: Boolean = false
             override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }
-            override fun handleSameAddressesError() {/** do nothing **/ }
         }
 
         availabilityHandler.hasNoResults = false
         availabilityHandler.hasAvailability = false
+    }
+
+    /**
+     * Given:   A list of quotes come in
+     * When:    Parsing the quotes
+     * Then:    The all category should be populated with all the quotes
+     **/
+    @Test
+    fun `all category gets populated with a full list of quotes`() {
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
+
+        val observer = availability.journeyDetailsObserver()
+        observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
+
+        availability.setAllCategory(ALL)
+        availability.filterVehicleListByCategory(ALL)
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
+                id = QuoteId(),
+                validity = 30)))
+        liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
+            assertEquals(7, it?.size)
+        })
+    }
+
+    /**
+     * Given:   A list of quotes come in
+     * When:    Parsing the quotes for MPV
+     * Then:    Only the MPV vehicles should be returned
+     **/
+    @Test
+    fun `selecting a category filter only returns vehicles of that category`() {
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
+
+        val observer = availability.journeyDetailsObserver()
+        observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
+
+        availability.setAllCategory(ALL)
+        availability.filterVehicleListByCategory(MPV)
+        lambdaCaptor.firstValue.onValueChanged(Resource.Success(QuoteList(categories = CATEGORIES,
+                id = QuoteId(),
+                validity = 30)))
+
+        liveFleetsViewModel.liveFleets.observe(lifecycleOwner, Observer {
+            assertEquals(3, it?.size)
+            it?.forEach {
+                assertEquals(MPV, it.vehicle.vehicleClass)
+            }
+        })
     }
 
     @Test
@@ -95,6 +144,24 @@ class KarhooAvailabilityTest {
         setCategories(CATEGORIES_WITH_EMPTY_QUOTES, QuoteStatus.COMPLETED)
 
         Assert.assertTrue(availabilityHandler.hasNoResults)
+    }
+
+    @Test
+    fun `When getting some quotes and an incomplete status, the availability handler will have hasAvailability set to true`() {
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES, QuoteStatus.PROGRESSING)
+
+        Assert.assertTrue(availabilityHandler.hasAvailability)
+    }
+
+    @Test
+    fun `When getting some quotes and a complete status, the availability handler will have hasAvailability set to true`() {
+        whenever(quotesService.quotes(any(), any())).thenReturn(quotesCall)
+
+        setCategories(CATEGORIES, QuoteStatus.COMPLETED)
+
+        Assert.assertTrue(availabilityHandler.hasAvailability)
     }
 
     private fun setCategories(categories: Map<String, MutableList<Quote>>, status: QuoteStatus) {

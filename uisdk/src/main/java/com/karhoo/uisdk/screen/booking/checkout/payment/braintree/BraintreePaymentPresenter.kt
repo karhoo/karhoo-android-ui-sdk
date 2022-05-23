@@ -18,6 +18,7 @@ import com.karhoo.sdk.api.network.request.Payer
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -26,8 +27,7 @@ import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.intToPriceNoSymbol
-import java.util.Currency
-import java.util.Locale
+import java.util.*
 
 class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
                                 private val userStore: UserStore = KarhooApi.userStore,
@@ -37,6 +37,7 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
     private var braintreeSDKToken: String? = null
     private var nonce: String? = null
     private var passengerDetails: PassengerDetails? = null
+    private var quote: Quote? = null
 
     init {
         attachView(view)
@@ -66,7 +67,10 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
-                is Resource.Failure -> view?.showPaymentFailureDialog(result.error)
+                is Resource.Failure -> {
+                    logPaymentErrorEvent(result.error.internalMessage)
+                    view?.showPaymentFailureDialog(result.error)
+                }
             }
         }
     }
@@ -76,7 +80,10 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(quote))
-                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                is Resource.Failure -> {
+                    logPaymentErrorEvent(result.error.internalMessage)
+                    view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -147,7 +154,10 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
                 }
-                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                is Resource.Failure -> {
+                    logPaymentErrorEvent(result.error.internalMessage)
+                    view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -167,15 +177,29 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
     }
 
     override fun sdkInit(quote: Quote?, locale: Locale?) {
+        this.quote = quote
         val currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         val sdkInitRequest = getSDKInitRequest(currency)
         paymentsService.initialisePaymentSDK(sdkInitRequest).execute { result ->
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
-                is Resource.Failure -> view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                is Resource.Failure -> {
+                    logPaymentErrorEvent(result.error.internalMessage)
+                    view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
+    }
+
+    override fun logPaymentErrorEvent(refusalReason: String) {
+        KarhooUISDK.analytics?.paymentFailed(
+            refusalReason,
+            userStore.savedPaymentInfo?.lastFour ?: "",
+            Date(),
+            quote?.price?.highPrice ?: 0,
+            quote?.price?.currencyCode ?: ""
+        )
     }
 
     fun updateCardDetails(cardNumber: String?, cardTypeLabel: String?) {

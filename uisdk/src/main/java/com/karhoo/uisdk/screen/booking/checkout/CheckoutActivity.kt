@@ -196,7 +196,6 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
         const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
         const val BOOKING_CHECKOUT_VALIDITY_KEY = "BOOKING_CHECKOUT_VALIDITY_KEY"
-        const val BOOKING_CHECKOUT_CANCELLED = 11
 
         /** Errors outputted by the Booking Request Activity**/
         const val BOOKING_CHECKOUT_ERROR = 10

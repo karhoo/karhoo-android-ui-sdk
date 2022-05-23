@@ -125,7 +125,7 @@ class AdyenBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.kh_uisdk_no_availability_title)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }
@@ -144,7 +144,7 @@ class AdyenBookingTests : Launch {
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
         } result {
-            checkErrorIsShown(R.string.kh_uisdk_no_availability_title)
+            checkErrorIsShown(R.string.kh_uisdk_no_availability)
             contactButtonSnackbarIsEnabled()
         }
     }

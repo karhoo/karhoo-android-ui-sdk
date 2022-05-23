@@ -27,10 +27,6 @@ class LoadingButtonView @JvmOverloads constructor(context: Context,
         bookingRequestLabel.setText(stringResId)
     }
 
-    fun setText(string: String) {
-        bookingRequestLabel.text = string
-    }
-
     override fun onClick(v: View) {
         if(bookingButtonLayout.isEnabled) {
             showLoading()
