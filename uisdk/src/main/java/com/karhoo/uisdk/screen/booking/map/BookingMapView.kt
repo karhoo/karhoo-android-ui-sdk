@@ -169,21 +169,7 @@ class BookingMapView @JvmOverloads constructor(
                     setMaxZoomPreference(this.float)
                 }
 
-                when {
-                    initialLocation != null -> {
-                        zoom(initialLocation)
-                    }
-                    journeyDetailsStateViewModel?.currentState?.pickup != null -> {
-                        journeyDetailsStateViewModel?.currentState?.pickup?.let {
-                            zoom(LatLng(it.position?.latitude!!, it.position?.longitude!!))
-                        }
-
-                    }
-                    else -> {
-                        zoom(null)
-                        getCurrentLocation()
-                    }
-                }
+                handleInitialLocation()
 
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
                 pickupPinIcon.visibility = View.VISIBLE
@@ -197,6 +183,24 @@ class BookingMapView @JvmOverloads constructor(
                 zoom(null)
                 isMyLocationEnabled = false
                 pickupPinIcon.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handleInitialLocation(){
+        when {
+            initialLocation != null -> {
+                zoom(initialLocation)
+            }
+            journeyDetailsStateViewModel?.currentState?.pickup != null -> {
+                journeyDetailsStateViewModel?.currentState?.pickup?.let {
+                    zoom(LatLng(it.position?.latitude!!, it.position?.longitude!!))
+                }
+
+            }
+            else -> {
+                zoom(null)
+                getCurrentLocation()
             }
         }
     }
