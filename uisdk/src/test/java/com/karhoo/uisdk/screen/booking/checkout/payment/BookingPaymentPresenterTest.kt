@@ -1,7 +1,5 @@
 package com.karhoo.uisdk.screen.booking.checkout.payment
 
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.PaymentProvider
