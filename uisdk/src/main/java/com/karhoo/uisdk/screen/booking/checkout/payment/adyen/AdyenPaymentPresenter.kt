@@ -37,23 +37,36 @@ import java.util.Currency
 import java.util.Locale
 
 class AdyenPaymentPresenter(
-    view: PaymentDropInContract.Actions,
     private val userStore: UserStore = KarhooApi.userStore,
-    private val paymentsService: PaymentsService = KarhooApi.paymentsService,
-    private val clientKey: String
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService
 ) : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter,
     UserManager.OnUserPaymentChangedListener {
 
     private var adyenKey: String = ""
-    var quote: Quote? = null
+    private var clientKey: String = ""
+    private var quote: Quote? = null
     private var tripId: String = ""
     private var passengerDetails: PassengerDetails? = null
-    private var _context: Context? = null
 
-    init {
-        attachView(view)
-        userStore.addSavedPaymentObserver(this)
-    }
+    override var view: PaymentDropInContract.Actions? = null
+        set(value) {
+            field = value
+
+            attachView(view)
+
+            paymentsService.getAdyenClientKey().execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        this.clientKey = result.data.clientKey
+                        userStore.addSavedPaymentObserver(this)
+                    }
+                    is Resource.Failure -> {
+                        view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
+                    }
+                }
+
+            }
+        }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
         val amount = Amount()

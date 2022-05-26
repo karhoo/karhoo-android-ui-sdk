@@ -29,25 +29,31 @@ import com.karhoo.uisdk.util.intToPriceNoSymbol
 import java.util.Currency
 import java.util.Locale
 
-class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
-                                private val userStore: UserStore = KarhooApi.userStore,
-                                private val paymentsService: PaymentsService = KarhooApi.paymentsService)
-    : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter, UserManager.OnUserPaymentChangedListener {
+class BraintreePaymentPresenter(
+    private val userStore: UserStore = KarhooApi.userStore,
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService
+) : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter,
+    UserManager.OnUserPaymentChangedListener {
 
     private var braintreeSDKToken: String? = null
     private var nonce: String? = null
     private var passengerDetails: PassengerDetails? = null
+    private var quote: Quote? = null
+    override var view: PaymentDropInContract.Actions? = null
+        set(value) {
+            field = value
 
-    init {
-        attachView(view)
-        userStore.addSavedPaymentObserver(this)
-    }
+            attachView(value)
+            userStore.addSavedPaymentObserver(this)
+        }
 
     private fun getSDKInitRequest(currencyCode: String): SDKInitRequest {
         val organisationId = KarhooUISDKConfigurationProvider.getGuestOrganisationId()
-                ?: userStore.currentUser.organisations.first().id
-        return SDKInitRequest(organisationId = organisationId,
-                              currency = currencyCode)
+            ?: userStore.currentUser.organisations.first().id
+        return SDKInitRequest(
+            organisationId = organisationId,
+            currency = currencyCode
+        )
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
@@ -57,12 +63,15 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
     private fun getNonce(braintreeSDKToken: String, amount: String) {
         this.braintreeSDKToken = braintreeSDKToken
         val user = userStore.currentUser
-        val nonceRequest = NonceRequest(payer = Payer(id = user.userId,
-                                               email = user.email,
-                                               firstName = user.firstName,
-                                               lastName = user.lastName),
-                                 organisationId = user.organisations.first().id
-                                )
+        val nonceRequest = NonceRequest(
+            payer = Payer(
+                id = user.userId,
+                email = user.email,
+                firstName = user.firstName,
+                lastName = user.lastName
+            ),
+            organisationId = user.organisations.first().id
+        )
         paymentsService.getNonce(nonceRequest).execute { result ->
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
@@ -86,15 +95,19 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             when (requestCode) {
                 BraintreePaymentView.REQ_CODE_BRAINTREE -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    val braintreeResult =
+                        data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     setNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
                 }
                 BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult = data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
+                    val braintreeResult =
+                        data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
                     braintreeResult?.paymentMethodNonce?.let {
                         this.nonce = it.nonce
-                        updateCardDetails(cardNumber = it.description,
-                                          cardTypeLabel = it.typeLabel)
+                        updateCardDetails(
+                            cardNumber = it.description,
+                            cardTypeLabel = it.typeLabel
+                        )
                     }
                 }
             }
@@ -108,7 +121,10 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             if (isGuest()) {
                 userStore.savedPaymentInfo?.let {
-                    updateCardDetails(it.lastFour, it.cardType.toString().toLowerCase(Locale.getDefault()).capitalize())
+                    updateCardDetails(
+                        it.lastFour,
+                        it.cardType.toString().toLowerCase(Locale.getDefault()).capitalize()
+                    )
                 }
             } else {
                 setNonce(braintreeSDKToken)
@@ -122,7 +138,11 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
         if (KarhooUISDKConfigurationProvider.simulatePaymentProvider()) {
             view?.threeDSecureNonce(braintreeSDKToken.orEmpty())
         } else {
-            view?.threeDSecureNonce(braintreeSDKToken.orEmpty(), nonce.orEmpty(), quotePriceToAmount(quote))
+            view?.threeDSecureNonce(
+                braintreeSDKToken.orEmpty(),
+                nonce.orEmpty(),
+                quotePriceToAmount(quote)
+            )
         }
     }
 
@@ -133,13 +153,17 @@ class BraintreePaymentPresenter(view: PaymentDropInContract.Actions,
 
     private fun setNonce(braintreeSDKNonce: String) {
         val user = userStore.currentUser
-        val addPaymentRequest = AddPaymentRequest(payer =
-                              Payer(id = user.userId,
-                                    email = user.email,
-                                    firstName = user.firstName,
-                                    lastName = user.lastName),
-                              organisationId = user.organisations.first().id,
-                              nonce = braintreeSDKNonce)
+        val addPaymentRequest = AddPaymentRequest(
+            payer =
+            Payer(
+                id = user.userId,
+                email = user.email,
+                firstName = user.firstName,
+                lastName = user.lastName
+            ),
+            organisationId = user.organisations.first().id,
+            nonce = braintreeSDKNonce
+        )
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {

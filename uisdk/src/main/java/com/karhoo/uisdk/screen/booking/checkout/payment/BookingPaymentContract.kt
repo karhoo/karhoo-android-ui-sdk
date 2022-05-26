@@ -8,11 +8,6 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
 
-    interface Widget {
-
-        fun setPaymentViewVisibility()
-    }
-
     interface View {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
@@ -43,11 +38,6 @@ interface BookingPaymentContract {
         fun createPaymentView(actions: PaymentDropInContract.Actions)
 
         fun getPaymentProvider()
-
-        fun getPaymentViewVisibility()
-
-        fun getPaymentProviderType(): ProviderType
-
     }
 
     interface PaymentViewActions {
