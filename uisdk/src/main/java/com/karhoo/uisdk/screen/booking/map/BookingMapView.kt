@@ -169,11 +169,20 @@ class BookingMapView @JvmOverloads constructor(
                     setMaxZoomPreference(this.float)
                 }
 
-                if (initialLocation != null) {
-                    zoom(initialLocation)
-                } else {
-                    zoom(null)
-                    getCurrentLocation()
+                when {
+                    initialLocation != null -> {
+                        zoom(initialLocation)
+                    }
+                    journeyDetailsStateViewModel?.currentState?.pickup != null -> {
+                        journeyDetailsStateViewModel?.currentState?.pickup?.let {
+                            zoom(LatLng(it.position?.latitude!!, it.position?.longitude!!))
+                        }
+
+                    }
+                    else -> {
+                        zoom(null)
+                        getCurrentLocation()
+                    }
                 }
 
                 AnalyticsManager.fireEvent(Event.LOADED_USERS_LOCATION)
@@ -353,7 +362,6 @@ class BookingMapView @JvmOverloads constructor(
     fun onResume() {
         isLocateMeEnabled = isLocateMeEnabled(context)
         mapView.onResume()
-        getCurrentLocation()
     }
 
     private fun getCurrentLocation() {
