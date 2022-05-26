@@ -1,3 +1,6 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -11,8 +14,46 @@ String[] fileFilter = [
         '**/*Activity.*'
 ]
 
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find())
+        return matcher.group(1).toLowerCase()
+    else {
+        println "NO MATCH FOUND"
+        return "";
+    }
+}
+
+project.logger.lifecycle(getCurrentFlavor())
+if (getCurrentFlavor().contains('adyen')) {
+    project.logger.lifecycle('Building the -adyen flavour of the UISDK')
+    apply from: "$rootDir/uisdk/src/adyen/build.gradle"
+}
+
+if (getCurrentFlavor().contains('braintree')) {
+    project.logger.lifecycle('Building the -braintree flavour of the UISDK')
+    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+}
+
+if(getCurrentFlavor().contains('full')) {
+    project.logger.lifecycle('Building the -full flavour of the UISDK')
+    apply from: "$rootDir/uisdk/src/adyen/build.gradle"
+    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+}
+
 android {
-    compileSdkVersion 32            
+    compileSdkVersion 32
     buildToolsVersion '30.0.3'
 
     defaultConfig {
@@ -20,18 +61,18 @@ android {
         targetSdkVersion 32
         versionCode 2
         versionName "1.5.3"
-        buildConfigField 'int', 'VERSION_CODE', "${versionCode}" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
-        buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\"" // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
+        buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
+        // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
+        buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
+        // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         testInstrumentationRunner "com.karhoo.uisdk.common.testrunner.UiSDKTestRunner"
         vectorDrawables.useSupportLibrary = true
+        missingDimensionStrategy 'paymentProvider', 'full'
     }
-    buildTypes {
-        def secureProps = new Properties()
-        if (file("../app/secure.properties").exists()) {
-            file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
-        }
-    }
-    lintOptions {
+
+    def secureProps = new Properties()
+    if (file("../app/secure.properties").exists()) {
+        file("../app/secure.properties")?.withInputStream { secureProps.load(it) }
     }
 
     testOptions {
@@ -39,26 +80,66 @@ android {
         animationsDisabled = true
     }
 
-}
+    flavorDimensions 'paymentProvider'
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
+    productFlavors {
+        adyen {
+            dimension "paymentProvider"
+            versionNameSuffix "-adyen"
+        }
+        braintree {
+            dimension "paymentProvider"
+            versionNameSuffix "-braintree"
+        }
+        full {
+            dimension "paymentProvider"
+            versionNameSuffix "-full"
+        }
+    }
 
-                groupId = 'com.karhoo'
-                artifactId = 'uisdk'
-                version = '1.5.2'
-            }
+    sourceSets {
+        adyen {
+            java.srcDirs = ['src/main/java/', 'src/adyen/java']
+        }
+        braintree {
+            java.srcDirs = ['src/main/java/', 'src/braintree/java']
+        }
+        full {
+            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/']
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            debuggable true
         }
     }
 }
 
+
+//
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//
+//                groupId = 'com.karhoo'
+//                artifactId = 'uisdk'
+//                version = '1.5.2'
+//            }
+//        }
+//    }
+//}
+
 dependencies {
 
     api 'com.github.karhoo:karhoo-android-sdk:1.4.5'
-    api 'com.braintreepayments.api:drop-in:5.2.1'
+    fullCompileOnly('com.adyen.checkout:drop-in:4.5.0')
+    fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
@@ -73,7 +154,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.2'
-    implementation 'com.adyen.checkout:drop-in:4.5.0'
     implementation 'com.github.heetch:Android-country-picker:1.0.6'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.1'
 
