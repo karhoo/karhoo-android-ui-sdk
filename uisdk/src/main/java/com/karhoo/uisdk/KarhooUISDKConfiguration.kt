@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.api.KarhooSDKConfiguration
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConfig {
 
@@ -18,6 +19,7 @@ interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConf
 internal object KarhooUISDKConfigurationProvider {
 
     lateinit var configuration: KarhooUISDKConfiguration
+    lateinit var paymentManager: PaymentManager
 
     fun setConfig(configuration: KarhooUISDKConfiguration) {
         this.configuration = configuration
@@ -39,5 +41,9 @@ internal object KarhooUISDKConfigurationProvider {
 
     fun isConfigurationInitialized(): Boolean {
         return this::configuration.isInitialized
+    }
+
+    fun configurePaymentManager(pm: PaymentManager) {
+        this.paymentManager = pm
     }
 }

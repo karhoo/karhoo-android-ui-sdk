@@ -88,8 +88,9 @@ class BraintreePaymentPresenterTest {
 
         braintreePaymentPresenter = BraintreePaymentPresenter(
                 paymentsService = paymentsService,
-                userStore = userStore,
-                view = paymentView)
+                userStore = userStore)
+
+        braintreePaymentPresenter.view = paymentView
     }
 
     @After

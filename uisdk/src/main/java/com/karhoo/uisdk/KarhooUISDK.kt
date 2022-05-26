@@ -8,6 +8,7 @@ import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
@@ -40,8 +41,9 @@ object KarhooUISDK {
 
     var menuHandler: MenuHandler? = null
 
-    fun setConfiguration(configuration: KarhooUISDKConfiguration) {
+    fun setConfiguration(configuration: KarhooUISDKConfiguration, paymentManager: PaymentManager) {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
+        KarhooUISDKConfigurationProvider.paymentManager = paymentManager
         KarhooApi.setConfiguration(configuration)
     }
 }
