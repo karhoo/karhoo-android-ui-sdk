@@ -120,6 +120,8 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
         val localDateTime = LocalDateTime(timezone).withYear(setYear).withMonthOfYear(setMonth).withDayOfMonth(setDay).withHourOfDay(setHour).withMinuteOfHour(setMinute)
 
+        // dateFromCalendar now adds an hour. This is because Jodatime cannot handle Daylight saving by itself and has issues with conversion.
+        // This ensures it does the conversion with the extra hour it needs added onto it for when the hours go forwards. This works for all timezones.
         return if(timezone.isLocalDateTimeGap(localDateTime)){
             localDateTime.plusHours(1).toDateTime(timezone)
         } else localDateTime.toDateTime(timezone)
