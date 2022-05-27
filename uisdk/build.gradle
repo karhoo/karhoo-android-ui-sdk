@@ -9,19 +9,19 @@ apply plugin: 'maven-publish'
 group = 'com.karhoo.uisdk'
 version = '1.0'
 
-String[] fileFilter = [
-        '**/*View*.*',
-        '**/*Activity.*'
-]
-
 def getCurrentFlavor() {
     Gradle gradle = getGradle()
     String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    println 'getCurrentFlavor'
+    println tskReqStr
 
     Pattern pattern;
 
     if (tskReqStr.contains("assemble"))
         pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else if(tskReqStr.contains("test"))
+        pattern = Pattern.compile("test(\\w+)(Release|Debug)UnitTest")
     else
         pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
 
@@ -35,19 +35,18 @@ def getCurrentFlavor() {
     }
 }
 
-project.logger.lifecycle(getCurrentFlavor())
 if (getCurrentFlavor().contains('adyen')) {
-    project.logger.lifecycle('Building the -adyen flavour of the UISDK')
+    println 'Building the -adyen flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
 }
 
 if (getCurrentFlavor().contains('braintree')) {
-    project.logger.lifecycle('Building the -braintree flavour of the UISDK')
+    println 'Building the -braintree flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 }
 
 if(getCurrentFlavor().contains('full')) {
-    project.logger.lifecycle('Building the -full flavour of the UISDK')
+    println 'Building the -full flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
     apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 }
