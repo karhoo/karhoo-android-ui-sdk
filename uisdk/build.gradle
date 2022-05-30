@@ -119,20 +119,20 @@ android {
 }
 
 
-//
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            release(MavenPublication) {
-//                from components.release
-//
-//                groupId = 'com.karhoo'
-//                artifactId = 'uisdk'
-//                version = '1.5.2'
-//            }
-//        }
-//    }
-//}
+
+afterEvaluate {
+    publishing {
+        publications {
+            fullRelease(MavenPublication) {
+                from components.fullRelease
+
+                groupId = 'com.karhoo'
+                artifactId = 'uisdk'
+                version = '1.5.2'
+            }
+        }
+    }
+}
 
 dependencies {
 
