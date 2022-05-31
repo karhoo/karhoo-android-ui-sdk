@@ -20,8 +20,10 @@ def getCurrentFlavor() {
 
     if (tskReqStr.contains("assemble"))
         pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
-    else if(tskReqStr.contains("test"))
+    else if(tskReqStr.contains("test") && tskReqStr.contains("UnitTest"))
         pattern = Pattern.compile("test(\\w+)(Release|Debug)UnitTest")
+    else if(tskReqStr.contains("test"))
+        pattern = Pattern.compile("test(\\w+)(Release|Debug)")
     else
         pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
 
