@@ -30,7 +30,7 @@ platform :android do
 
   desc "Runs lint and detekt"
   lane :linting do
-    gradle(task: "lintRelease")
+    gradle(task: "lintFullRelease")
     gradle(task: "detekt")
     slack_result(message: "*Karhoo Android UISDK* passed detekt and lint")
   end
