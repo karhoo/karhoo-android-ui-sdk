@@ -134,20 +134,36 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     override fun createFilters(filterChain: FilterChain) {
+        createPassengerNumberedFilter()
+        createLuggageNumberedFilter()
+        createQuoteTypeFilter()
+        createServiceAgreementsFilter()
+        createVehicleTypeFilter()
+        createVehicleClassFilter()
+        createVehicleExtrasFilter()
+        createVehicleEcoFilter()
+        createFleetCapabilitiesFilter()
+    }
+
+    private fun createPassengerNumberedFilter(){
         filterViewPassengerNumberedFilter.filter = passengersFilter
         filterViewPassengerNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_passengers))
         filterViewPassengerNumberedFilter.icon = R.drawable.kh_uisdk_ic_passengers
         filterViewPassengerNumberedFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createLuggageNumberedFilter(){
         filterViewLuggageNumberedFilter.filter = luggageFilter
         filterViewLuggageNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_luggages))
         filterViewLuggageNumberedFilter.icon = R.drawable.kh_uisdk_ic_luggage
         filterViewLuggageNumberedFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createQuoteTypeFilter(){
         quoteTypesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_fixed_fare)).apply { fixedTag = QuoteTypesFilter.FIXED_TAG })
@@ -160,7 +176,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewQuoteTypeMultiSelectCheckboxFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createServiceAgreementsFilter(){
         serviceAgreementsFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_filter_free_waiting_time)).apply { fixedTag = ServiceAgreementsFilter.FREE_WAITING_TIME_TAG })
@@ -173,7 +191,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewServiceAgreementsMultiSelectCheckboxFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createVehicleTypeFilter(){
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
@@ -190,7 +210,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewVehicleTypeMultiSelectChipsFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createVehicleClassFilter(){
         vehicleClassFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
@@ -204,7 +226,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewVehicleClassMultiSelectChipsFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createVehicleExtrasFilter(){
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
@@ -222,7 +246,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewVehicleExtrasMultiSelectChipsFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createVehicleEcoFilter(){
         vehicleEcoFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
@@ -238,7 +264,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewVehicleEcoMultiSelectChipsFilter.delegate = {
             presenter.callFilterChanged()
         }
+    }
 
+    private fun createFleetCapabilitiesFilter(){
         fleetCapabilitiesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
