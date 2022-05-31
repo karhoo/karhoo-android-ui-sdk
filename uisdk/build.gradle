@@ -24,6 +24,8 @@ def getCurrentFlavor() {
         pattern = Pattern.compile("test(\\w+)(Release|Debug)UnitTest")
     else if(tskReqStr.contains("test"))
         pattern = Pattern.compile("test(\\w+)(Release|Debug)")
+    else if(tskReqStr.contains("lint"))
+        pattern = Pattern.compile("lint(\\w+)(Release|Debug)")
     else
         pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
 
