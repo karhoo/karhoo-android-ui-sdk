@@ -83,7 +83,6 @@ android {
         animationsDisabled = true
     }
 
-    publishNonDefault true
     flavorDimensions 'paymentProvider'
 
     productFlavors {
@@ -121,35 +120,32 @@ android {
             debuggable true
         }
     }
+
+    defaultPublishConfig "fullRelease"
 }
 
 
+group = 'com.karhoo.uisdk'
+version = '1.5.2'
 
-afterEvaluate {
-    publishing {
-        publications {
-            fullRelease(MavenPublication) {
-                from components.fullRelease
 
-                groupId = 'com.karhoo'
-                artifactId = 'uisdk'
-                version = '1.5.2'
-            }
-            adyenRelease(MavenPublication) {
-                from components.adyenRelease
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
 
-                groupId = 'com.karhoo'
-                artifactId = 'uisdk-adyen'
-                version = '1.5.2'
-            }
-            braintreeRelease(MavenPublication) {
-                from components.braintreeRelease
+        if (variant.name.toLowerCase().contains("debug")) {
+            return
+        }
 
-                groupId = 'com.karhoo'
-                artifactId = 'uisdk-braintree'
-                version = '1.5.2'
+        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+
+        artifacts {
+            archives(bundleTask.archivePath) {
+                classifier variant.flavorName
+                builtBy bundleTask
+                name = project.name
             }
         }
+
     }
 }
 
