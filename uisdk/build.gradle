@@ -134,6 +134,20 @@ afterEvaluate {
                 artifactId = 'uisdk'
                 version = '1.5.2'
             }
+            adyenRelease(MavenPublication) {
+                from components.adyenRelease
+
+                groupId = 'com.karhoo'
+                artifactId = 'uisdk-adyen'
+                version = '1.5.2'
+            }
+            braintreeRelease(MavenPublication) {
+                from components.braintreeRelease
+
+                groupId = 'com.karhoo'
+                artifactId = 'uisdk-braintree'
+                version = '1.5.2'
+            }
         }
     }
 }
