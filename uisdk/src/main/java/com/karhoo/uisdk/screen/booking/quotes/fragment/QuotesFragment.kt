@@ -253,6 +253,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun updateList(quoteList: List<Quote>) {
         showFilteringWidgets(quoteList.isNotEmpty())
+        if(quotesFilterWidget.isVisible)
+            quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
     }
 

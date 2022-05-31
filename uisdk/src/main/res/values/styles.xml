@@ -690,7 +690,11 @@
     </style>
 
     <style name="KhFilterChip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="checkedIconVisible">true</item>
+        <item name="chipBackgroundColor">@color/kh_uisdk_quote_list_filter_chips</item>
+        <item name="chipStrokeColor">@color/kh_uisdk_quote_list_filter_chips_border</item>
+        <item name="chipStrokeWidth">@dimen/kh_uisdk_divider_height</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="chipIconVisible">true</item>
     </style>
 
     <style name="KhFilterNumberedViewLabel">

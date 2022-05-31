@@ -22,7 +22,13 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     private lateinit var filterViewResetFilters: TextView
     private lateinit var filterViewPassengerNumberedFilter: NumberedFilterView
     private lateinit var filterViewLuggageNumberedFilter: NumberedFilterView
+
     private lateinit var filterViewVehicleTypeMultiSelectChipsFilter: MultiSelectChipsFilterView
+    private lateinit var filterViewVehicleClassMultiSelectChipsFilter: MultiSelectChipsFilterView
+    private lateinit var filterViewVehicleExtrasMultiSelectChipsFilter: MultiSelectChipsFilterView
+    private lateinit var filterViewVehicleEcoMultiSelectChipsFilter: MultiSelectChipsFilterView
+    private lateinit var filterViewFleetCapabilitiesMultiSelectChipsFilter: MultiSelectChipsFilterView
+
     private lateinit var filterViewQuoteTypeMultiSelectCheckboxFilter: MultiSelectCheckboxFilterView
     private lateinit var filterViewServiceAgreementsMultiSelectCheckboxFilter: MultiSelectCheckboxFilterView
 
@@ -30,6 +36,11 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     private lateinit var luggageFilter: LuggageFilter
     private lateinit var quoteTypesFilter: QuoteTypesFilter
     private lateinit var serviceAgreementsFilter: ServiceAgreementsFilter
+    private lateinit var vehicleTypeFilter : VehicleTypeFilter
+    private lateinit var vehicleClassFilter : VehicleClassFilter
+    private lateinit var vehicleExtrasFilter : VehicleExtrasFilter
+    private lateinit var vehicleEcoFilter : VehicleEcoFilter
+    private lateinit var fleetCapabilitiesFilter : FleetCapabilitiesFilter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +66,14 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
             view.findViewById(R.id.filterViewLuggageNumberedFilter)
         filterViewVehicleTypeMultiSelectChipsFilter =
             view.findViewById(R.id.filterViewVehicleTypeMultiSelectChipsFilter)
+        filterViewVehicleClassMultiSelectChipsFilter =
+            view.findViewById(R.id.filterViewVehicleClassMultiSelectChipsFilter)
+        filterViewVehicleExtrasMultiSelectChipsFilter =
+            view.findViewById(R.id.filterViewVehicleExtrasMultiSelectChipsFilter)
+        filterViewVehicleEcoMultiSelectChipsFilter =
+            view.findViewById(R.id.filterViewVehicleEcoMultiSelectChipsFilter)
+        filterViewFleetCapabilitiesMultiSelectChipsFilter =
+            view.findViewById(R.id.filterViewFleetCapabilitiesMultiSelectChipsFilter)
         filterViewQuoteTypeMultiSelectCheckboxFilter =
             view.findViewById(R.id.filterViewQuoteTypeMultiSelectCheckboxFilter)
         filterViewServiceAgreementsMultiSelectCheckboxFilter =
@@ -75,11 +94,21 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         luggageFilter = LuggageFilter(0)
         quoteTypesFilter = QuoteTypesFilter(ArrayList())
         serviceAgreementsFilter = ServiceAgreementsFilter(ArrayList())
+        vehicleTypeFilter = VehicleTypeFilter(ArrayList())
+        vehicleClassFilter = VehicleClassFilter(ArrayList())
+        vehicleExtrasFilter = VehicleExtrasFilter(ArrayList())
+        vehicleEcoFilter = VehicleEcoFilter(ArrayList())
+        fleetCapabilitiesFilter = FleetCapabilitiesFilter(ArrayList())
 
         filterChain.filters.add(passengersFilter)
         filterChain.filters.add(luggageFilter)
         filterChain.filters.add(quoteTypesFilter)
         filterChain.filters.add(serviceAgreementsFilter)
+        filterChain.filters.add(vehicleTypeFilter)
+        filterChain.filters.add(vehicleClassFilter)
+        filterChain.filters.add(vehicleExtrasFilter)
+        filterChain.filters.add(vehicleEcoFilter)
+        filterChain.filters.add(fleetCapabilitiesFilter)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -120,9 +149,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         }
 
         quoteTypesFilter.apply {
-            typeValues = HashMap<String, String>().apply {
-                put(getString(R.string.kh_uisdk_fixed_fare), QuoteTypesFilter.FIXED_TAG)
-                put(getString(R.string.kh_uisdk_estimated_fare), QuoteTypesFilter.ESTIMATED_TAG)
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData(getString(R.string.kh_uisdk_fixed_fare)).apply { fixedTag = QuoteTypesFilter.FIXED_TAG })
+                add(MultiSelectData(getString(R.string.kh_uisdk_estimated_fare)).apply { fixedTag = QuoteTypesFilter.ESTIMATED_TAG })
             }
         }
         filterViewQuoteTypeMultiSelectCheckboxFilter.filter = quoteTypesFilter
@@ -133,9 +162,9 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         }
 
         serviceAgreementsFilter.apply {
-            typeValues = HashMap<String, String>().apply {
-                put(getString(R.string.kh_uisdk_filter_free_waiting_time), ServiceAgreementsFilter.FREE_WAITING_TIME_TAG)
-                put(getString(R.string.kh_uisdk_filter_free_cancellation), ServiceAgreementsFilter.FREE_CANCELLATION_TAG)
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData(getString(R.string.kh_uisdk_filter_free_waiting_time)).apply { fixedTag = ServiceAgreementsFilter.FREE_WAITING_TIME_TAG })
+                add(MultiSelectData(getString(R.string.kh_uisdk_filter_free_cancellation)).apply { fixedTag = ServiceAgreementsFilter.FREE_CANCELLATION_TAG })
             }
         }
         filterViewServiceAgreementsMultiSelectCheckboxFilter.filter = serviceAgreementsFilter
@@ -144,33 +173,117 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewServiceAgreementsMultiSelectCheckboxFilter.delegate = {
             presenter.callFilterChanged()
         }
-//
-//        val vehicleTypeFilter = VehicleTypeFilter(ArrayList()).apply {
-//            typeValues = ArrayList<String>().apply {
-//                add("All")
-//                add("Standard")
-//                add("Berline")
-//                add("Van")
-//                add("Moto")
-//                add("Bike")
-//            }
-//        }
-//
-//        filterViewVehicleTypeMultiSelectChipsFilter.filter = vehicleTypeFilter
-//        filterViewVehicleTypeMultiSelectChipsFilter.chips = vehicleTypeFilter.typeValues
-//        filterViewVehicleTypeMultiSelectChipsFilter.setTitle("Vehicle Types")
-//        filterViewVehicleTypeMultiSelectChipsFilter.delegate = {
-//            presenter.callFilterChanged()
-//        }
+
+        vehicleTypeFilter.apply {
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData("All").apply { fixedTag = VehicleTypeFilter.ALL_TAG })
+                add(MultiSelectData("Standard"))
+                add(MultiSelectData("Berline"))
+                add(MultiSelectData("Van"))
+                add(MultiSelectData("Moto"))
+                add(MultiSelectData("Bike"))
+            }
+        }
+        filterViewVehicleTypeMultiSelectChipsFilter.filter = vehicleTypeFilter
+        filterViewVehicleTypeMultiSelectChipsFilter.chips = vehicleTypeFilter.typeValues
+        filterViewVehicleTypeMultiSelectChipsFilter.setTitle("Vehicle Types")
+        filterViewVehicleTypeMultiSelectChipsFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        vehicleClassFilter.apply {
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData("All").apply { fixedTag = VehicleTypeFilter.ALL_TAG })
+                add(MultiSelectData("Executive").apply { icon = R.drawable.kh_uisdk_ic_briefcase })
+                add(MultiSelectData("Luxury").apply { icon = R.drawable.kh_uisdk_ic_star_empty })
+            }
+        }
+        filterViewVehicleClassMultiSelectChipsFilter.filter = vehicleClassFilter
+        filterViewVehicleClassMultiSelectChipsFilter.chips = vehicleClassFilter.typeValues
+        filterViewVehicleClassMultiSelectChipsFilter.setTitle("Vehicle Class")
+        filterViewVehicleClassMultiSelectChipsFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        vehicleExtrasFilter.apply {
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData("All").apply { fixedTag = VehicleTypeFilter.ALL_TAG })
+                add(MultiSelectData("Taxi").apply { icon = R.drawable.kh_uisdk_ic_car })
+                add(MultiSelectData("Child seat").apply {
+                    icon = R.drawable.kh_uisdk_ic_tag_child_seat
+                    fixedTag = VehicleExtrasFilter.CHILD_SEAT
+                })
+                add(MultiSelectData("Wheelchair").apply { icon = R.drawable.kh_uisdk_ic_wheelchair })
+            }
+        }
+        filterViewVehicleExtrasMultiSelectChipsFilter.filter = vehicleExtrasFilter
+        filterViewVehicleExtrasMultiSelectChipsFilter.chips = vehicleExtrasFilter.typeValues
+        filterViewVehicleExtrasMultiSelectChipsFilter.setTitle("Vehicle Extras")
+        filterViewVehicleExtrasMultiSelectChipsFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        vehicleEcoFilter.apply {
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData("All").apply { fixedTag = VehicleTypeFilter.ALL_TAG })
+                add(MultiSelectData("Electric").apply { icon = R.drawable.kh_uisdk_ic_zap })
+                add(MultiSelectData("Hybrid").apply {
+                    icon = R.drawable.kh_uisdk_ic_feather
+                })
+            }
+        }
+        filterViewVehicleEcoMultiSelectChipsFilter.filter = vehicleEcoFilter
+        filterViewVehicleEcoMultiSelectChipsFilter.chips = vehicleEcoFilter.typeValues
+        filterViewVehicleEcoMultiSelectChipsFilter.setTitle("Eco-friendly")
+        filterViewVehicleEcoMultiSelectChipsFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+
+        fleetCapabilitiesFilter.apply {
+            typeValues = ArrayList<MultiSelectData>().apply {
+                add(MultiSelectData("All").apply { fixedTag = VehicleTypeFilter.ALL_TAG })
+                add(MultiSelectData("Flight tracking").apply {
+                    icon = R.drawable.kh_uisdk_ic_plane
+                    fixedTag = FleetCapabilitiesFilter.FLIGHT_TRACKING
+                })
+                add(MultiSelectData("Train tracking").apply {
+                    icon = R.drawable.kh_uisdk_ic_train
+                    fixedTag = FleetCapabilitiesFilter.TRAIN_TRACKING
+                })
+                add(MultiSelectData("GPS tracking").apply {
+                    icon = R.drawable.kh_uisdk_ic_location_arrow_alt
+                    fixedTag = FleetCapabilitiesFilter.GPS_TRACKING
+                })
+                add(MultiSelectData("Driver details").apply {
+                    icon = R.drawable.kh_uisdk_ic_user
+                    fixedTag = FleetCapabilitiesFilter.DRIVER_DETAILS
+                })
+                add(MultiSelectData("Vehicle details").apply {
+                    icon = R.drawable.kh_uisdk_ic_car
+                    fixedTag = FleetCapabilitiesFilter.VEHICLE_DETAILS
+                })
+            }
+        }
+        filterViewFleetCapabilitiesMultiSelectChipsFilter.filter = fleetCapabilitiesFilter
+        filterViewFleetCapabilitiesMultiSelectChipsFilter.chips = fleetCapabilitiesFilter.typeValues
+        filterViewFleetCapabilitiesMultiSelectChipsFilter.setTitle("Fleet Capabilities")
+        filterViewFleetCapabilitiesMultiSelectChipsFilter.delegate = {
+            presenter.callFilterChanged()
+        }
+    }
+
+    fun updateVehicleNumber(){
+        presenter.callFilterChanged()
     }
 
     override fun setNumberOfResultsAfterFilter(size: Int) {
-        quotesFilterSave.setText(
-            String.format(
-                getString(R.string.kh_uisdk_filter_page_results),
-                size
+        if(::quotesFilterSave.isInitialized)
+            quotesFilterSave.setText(
+                String.format(
+                    getString(R.string.kh_uisdk_filter_page_results),
+                    size
+                )
             )
-        )
     }
 
     companion object {
