@@ -83,6 +83,7 @@ android {
         animationsDisabled = true
     }
 
+    publishNonDefault true
     flavorDimensions 'paymentProvider'
 
     productFlavors {
