@@ -172,7 +172,7 @@
     <string name="kh_uisdk_K2001">Adresse konnte nicht ermittelt werden</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Konnte keine Schätzungen erhalten</string>
-    <string name="kh_uisdk_K3002">Kein Kostenvoranschlag möglich (keine Verfügbarkeit im angefragten Gebiet gefunden)</string>
+    <string name="kh_uisdk_K3002">Sofortige Buchungen sind für dieses Ziel leider nicht möglich, aber Sie können für Ihre nächste Reise im Voraus buchen!</string>
     <string name="kh_uisdk_K3003">Kann keinen Kostenvoranschlag erhalten (konnte kein bestimmtes Angebot finden)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Konnte keine Reise buchen</string>

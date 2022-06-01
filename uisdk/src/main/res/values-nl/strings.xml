@@ -172,7 +172,7 @@
     <string name="kh_uisdk_K2001">Kon adres niet krijgen</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Kan geen schattingen krijgen</string>
-    <string name="kh_uisdk_K3002">Kan geen schattingen krijgen (geen beschikbaarheid gevonden in het gevraagde gebied)</string>
+    <string name="kh_uisdk_K3002">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
     <string name="kh_uisdk_K3003">Kan geen schattingen krijgen (kon gespecificeerde offerte niet vinden)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Kon reis niet boeken</string>

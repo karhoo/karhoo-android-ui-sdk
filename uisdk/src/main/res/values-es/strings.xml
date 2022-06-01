@@ -172,7 +172,7 @@
     <string name="kh_uisdk_K2001">Imposible obtener dirección</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Imposible obtener estimaciones</string>
-    <string name="kh_uisdk_K3002">Imposible obtener estimaciones (no se encontró disponibilidad en el área solicitada)</string>
+    <string name="kh_uisdk_K3002">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
     <string name="kh_uisdk_K3003">Imposible obtener estimaciones (no se encontró la tarifa específica)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Imposible reservar</string>
