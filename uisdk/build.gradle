@@ -26,6 +26,10 @@ def getCurrentFlavor() {
         pattern = Pattern.compile("test(\\w+)(Release|Debug)")
     else if(tskReqStr.contains("lint"))
         pattern = Pattern.compile("lint(\\w+)(Release|Debug)")
+    else if(tskReqStr.contains("compile") && tskReqStr.contains("Kotlin"))
+        pattern = Pattern.compile("compile(\\w+)(Release|Debug)Kotlin")
+    else if(tskReqStr.contains("process") && tskReqStr.contains("Resources"))
+        pattern = Pattern.compile("process(\\w+)(Release|Debug)Resources")
     else
         pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
 
@@ -42,14 +46,10 @@ def getCurrentFlavor() {
 if (getCurrentFlavor().contains('adyen')) {
     println 'Building the -adyen flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-}
-
-if (getCurrentFlavor().contains('braintree')) {
+} else if (getCurrentFlavor().contains('braintree')) {
     println 'Building the -braintree flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/braintree/build.gradle"
-}
-
-if(getCurrentFlavor().contains('full')) {
+} else if(getCurrentFlavor().contains('full')) {
     println 'Building the -full flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
     apply from: "$rootDir/uisdk/src/braintree/build.gradle"
@@ -125,27 +125,29 @@ android {
 }
 
 
-group = 'com.karhoo.uisdk'
-version = '1.5.2'
 
+afterEvaluate {
+    android.libraryVariants.each { variant ->
+        println 'matei publish' + variant.buildType.name + variant.flavorName
 
-if (android.productFlavors.size() > 0) {
-    android.libraryVariants.all { variant ->
-
-        if (variant.name.toLowerCase().contains("debug")) {
-            return
+        if (variant.flavorName == "adyen") {
+            apply from: "$rootDir/uisdk/src/adyen/build.gradle"
+        }
+        if (variant.flavorName == "braintree") {
+            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+        }
+        if (variant.flavorName == "full") {
+            apply from: "$rootDir/uisdk/src/adyen/build.gradle"
+            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
         }
 
-        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
-
-        artifacts {
-            archives(bundleTask.archivePath) {
-                classifier variant.flavorName
-                builtBy bundleTask
-                name = project.name
-            }
+        if (variant.buildType.name != "release") { return }
+        publishing.publications.create(variant.name, MavenPublication) {
+            from components.findByName(variant.name)
+            groupId 'com.karhoo'
+            artifactId "uisdk-${variant.flavorName}"
+            version '1.5.2'
         }
-
     }
 }
 
