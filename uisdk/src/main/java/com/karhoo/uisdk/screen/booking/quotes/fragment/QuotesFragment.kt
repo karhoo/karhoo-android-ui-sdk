@@ -33,6 +33,8 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.domain.quotes.LiveFleetsViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.LUGGAGE
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.PASSENGER_NUMBER
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DROPOFF_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RESULT_OK
@@ -41,9 +43,7 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
-import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogPresenter
-import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogFragment
-import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
+import com.karhoo.uisdk.screen.booking.quotes.filterview.*
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
 import java.util.Locale
@@ -320,6 +320,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
                     currentValidityDeadlineTimestamp ?: 0
                 )
+                bundle.putInt(PASSENGER_NUMBER, (filterChain.filters[0] as PassengersFilter).currentNumber)
+                bundle.putInt(LUGGAGE, (filterChain.filters[1] as LuggageFilter).currentNumber)
 
                 val intent = Intent()
                 intent.putExtras(bundle)
