@@ -43,7 +43,11 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
-import com.karhoo.uisdk.screen.booking.quotes.filterview.*
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogPresenter
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogFragment
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
+import com.karhoo.uisdk.screen.booking.quotes.filterview.PassengersFilter
+import com.karhoo.uisdk.screen.booking.quotes.filterview.LuggageFilter
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
 import java.util.Locale
