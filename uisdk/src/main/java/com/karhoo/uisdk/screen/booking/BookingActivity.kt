@@ -81,6 +81,20 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
 
+        savedInstanceState?.let {
+            if(it[JOURNEY_INFO] != null) {
+                val journeyDetails = it[JOURNEY_INFO] as JourneyDetails
+                journeyDetailsStateViewModel.process(
+                    AddressBarViewContract.AddressBarEvent
+                        .PrebookBookingEvent(
+                            journeyDetails.pickup,
+                            journeyDetails.destination,
+                            journeyDetails.date
+                        )
+                )
+            }
+        }
+
         setSupportActionBar(toolbar)
         if (KarhooUISDK.menuHandler == null) {
             supportActionBar?.let {
@@ -126,6 +140,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putParcelable(JOURNEY_INFO, journeyDetailsStateViewModel.currentState)
         bookingMapWidget.onSaveInstanceState(outState)
     }
 
@@ -526,6 +541,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         private const val REQ_CODE_BRAINTREE_GUEST = 302
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001
         private const val NAVIGATION_ICON_DELAY = 100L
+        private const val JOURNEY_INFO = "JOURNEY_INFO"
     }
 
 }

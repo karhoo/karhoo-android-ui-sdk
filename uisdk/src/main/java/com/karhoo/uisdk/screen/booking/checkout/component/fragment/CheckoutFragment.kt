@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
@@ -172,6 +173,28 @@ internal class CheckoutFragment : Fragment() {
         return view
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(PASSENGER_DETAILS, if(presenter.passengerDetails != null) presenter.passengerDetails else checkoutView.getPassengerDetails())
+        outState.putParcelable(SAVED_PAYMENT_INFO, KarhooApi.userStore.savedPaymentInfo)
+        checkoutView.onPause()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        savedInstanceState?.let {
+            if(it[PASSENGER_DETAILS] != null){
+                val passDetails = it[PASSENGER_DETAILS] as PassengerDetails
+                checkoutView.bindPassenger(passDetails)
+            }
+//            if(it[SAVED_PAYMENT_INFO] != null){
+//                val paymentInfo = it[SAVED_PAYMENT_INFO] as SavedPaymentInfo?
+//                KarhooApi.userStore.savedPaymentInfo = paymentInfo
+//                checkoutView.showUpdatedPaymentDetails(paymentInfo)
+//            }//seems an issue from adyen that is not closing their screen and we must handle the tripId to save the paymentInfo, it's useless otherwise
+        }
+    }
+
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
             activity?.finish()
@@ -193,6 +216,9 @@ internal class CheckoutFragment : Fragment() {
     }
 
     companion object {
+        private const val PASSENGER_DETAILS = "PASSENGER_DETAILS"
+        private const val SAVED_PAYMENT_INFO = "SAVED_PAYMENT_INFO"
+
         fun newInstance(arguments: Bundle): CheckoutFragment {
             val fragment = CheckoutFragment()
 

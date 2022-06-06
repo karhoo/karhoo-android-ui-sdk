@@ -82,7 +82,9 @@ class TripAllocationView @JvmOverloads constructor(
         cancelButton.setListener { cancelTrip() }
         presenter?.waitForAllocation(trip)
         if (!KarhooUISDKConfigurationProvider.isGuest()) {
-            handler.postDelayed({ presenter?.handleAllocationDelay(trip) }, ALLOCATION_ALERT_DELAY)
+            handler?.let {
+                it.postDelayed({ presenter?.handleAllocationDelay(trip) }, ALLOCATION_ALERT_DELAY)
+            }
         }
 
     }

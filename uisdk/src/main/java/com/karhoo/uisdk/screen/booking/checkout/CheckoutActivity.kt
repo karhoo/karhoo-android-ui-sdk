@@ -33,23 +33,35 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        extras?.let { extras ->
-            val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
+        if(savedInstanceState != null){
+            fragment = supportFragmentManager.getFragment(savedInstanceState, CHECKOUT_FRAGMENT) as CheckoutFragment
+            supportFragmentManager.beginTransaction().replace(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+                .commit()
+        }
+        else{
+            extras?.let { extras ->
+                val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
-            quote?.let {
-                removeIfCheckoutFragmentExists()
-                val ft = supportFragmentManager.beginTransaction()
+                quote?.let {
+                    removeIfCheckoutFragmentExists()
+                    val ft = supportFragmentManager.beginTransaction()
 
-                fragment = CheckoutFragment.newInstance(extras)
+                    fragment = CheckoutFragment.newInstance(extras)
 
-                ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                    .commit()
+                    ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+                        .commit()
+                } ?: run {
+                    finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
+                }
             } ?: run {
                 finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
-        } ?: run {
-            finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        supportFragmentManager.putFragment(outState, CHECKOUT_FRAGMENT, fragment)
     }
 
     fun removeIfCheckoutFragmentExists(){
@@ -201,5 +213,6 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_ERROR = 10
         const val BOOKING_CHECKOUT_ERROR_KEY = "BOOKING_CHECKOUT_ERROR_KEY"
         const val BOOKING_CHECKOUT_ERROR_NO_QUOTE = "BOOKING_CHECKOUT_ERROR_NO_QUOTE_KEY"
+        private const val CHECKOUT_FRAGMENT = "CHECKOUT_FRAGMENT"
     }
 }
