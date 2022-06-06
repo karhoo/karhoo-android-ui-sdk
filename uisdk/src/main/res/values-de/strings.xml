@@ -76,7 +76,6 @@
     <string name="kh_uisdk_contact">Kontakt</string>
     <string name="kh_uisdk_contact_driver">Kontakt Fahrer</string>
     <string name="kh_uisdk_contact_fleet">Kontakt Flotte</string>
-    <string name="kh_uisdk_contact_us">Kontakt</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/de/requests/new</string>
     <string name="kh_uisdk_continue_journey">Weitermachen</string>
     <string name="kh_uisdk_continue_registration">Weitermachen</string>
@@ -95,7 +94,6 @@
     <string name="kh_uisdk_done">Erledigt</string>
     <string name="kh_uisdk_drawer_closed">Navigation geschlossen</string>
     <string name="kh_uisdk_drawer_open">Navigation offen</string>
-    <string name="kh_uisdk_driver_arrival">Ankunft des Fahrers</string>
     <string name="kh_uisdk_driver_en_route">Ihr %s Fahrer ist auf dem Weg</string>
     <string name="kh_uisdk_electric">Electric</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
@@ -127,37 +125,6 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Bitte erzählen Sie uns mehr über Ihre Reise</string>
     <string name="kh_uisdk_fees_and_taxes_included">Inklusive Steuern und Gebühren</string>
-    <string name="kh_uisdk_filter">Filter</string>
-    <string name="kh_uisdk_filter_all">Alle</string>
-    <string name="kh_uisdk_filter_berline">Berline</string>
-    <string name="kh_uisdk_filter_bike">Fahrrad</string>
-    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Stornierung und Wartezeit</string>
-    <string name="kh_uisdk_filter_child_seat">Kindersitz</string>
-    <string name="kh_uisdk_filter_driver_details">Angaben zum Fahrer</string>
-    <string name="kh_uisdk_filter_eco_friendly">Umweltfreundlich</string>
-    <string name="kh_uisdk_filter_electric">Elektrisch</string>
-    <string name="kh_uisdk_filter_executive">Exekutive</string>
-    <string name="kh_uisdk_filter_fight_tracking">Flugverfolgung</string>
-    <string name="kh_uisdk_filter_fleet_capabilities">Flottenkapazitäten</string>
-    <string name="kh_uisdk_filter_free_cancellation">Kostenlose Stornierung</string>
-    <string name="kh_uisdk_filter_free_waiting_time">Kostenlose Wartezeit</string>
-    <string name="kh_uisdk_filter_gps_tracking">GPS-Ortung</string>
-    <string name="kh_uisdk_filter_hybrid">Hybrid</string>
-    <string name="kh_uisdk_filter_luggages">Gepäckstücke</string>
-    <string name="kh_uisdk_filter_luxury">Luxus</string>
-    <string name="kh_uisdk_filter_moto">Moto</string>
-    <string name="kh_uisdk_filter_page_results">Alle %s Ergebnisse anzeigen</string>
-    <string name="kh_uisdk_filter_passengers">Passagier(e)</string>
-    <string name="kh_uisdk_filter_quote_types">Arten von Zitaten</string>
-    <string name="kh_uisdk_filter_standard">Standard</string>
-    <string name="kh_uisdk_filter_taxi">Taxi</string>
-    <string name="kh_uisdk_filter_train_tracking">Zugverfolgung</string>
-    <string name="kh_uisdk_filter_van">Lieferwagen</string>
-    <string name="kh_uisdk_filter_vehicle_class">kh_uisdk_filter_fahrzeug_klasse</string>
-    <string name="kh_uisdk_filter_vehicle_details">Fahrzeug-Details</string>
-    <string name="kh_uisdk_filter_vehicle_extras">Fahrzeug-Extras</string>
-    <string name="kh_uisdk_filter_vehicle_types">Fahrzeugtypen</string>
-    <string name="kh_uisdk_filter_wheelchair">Rollstuhl</string>
     <string name="kh_uisdk_finding_your_ride">Ihr Fahrzeug finden...</string>
     <string name="kh_uisdk_first_name_hint">Vorname</string>
     <!-- Fare type -->
@@ -353,13 +320,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Erfahren Sie mehr</string>
     <string name="kh_uisdk_quoted_fare">Geschätzter Fahrpreis</string>
-    <string name="kh_uisdk_quotes_activity_title">Zitate</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Bitte geben Sie sowohl die Abhol- als auch die Rückgabeadresse ein, um die Angebote zu nutzen</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_title">Abhol- oder Rückgabeadresse fehlt</string>
-    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
-    <string name="kh_uisdk_quotes_error_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_title">Abgangs- und Zieladresse sind ähnlich</string>
     <string name="kh_uisdk_rate_trip_label">Wie würden Sie Ihre Reise bewerten?</string>
     <string name="kh_uisdk_rating_submitted">Vielen Dank für die Abgabe Ihrer Bewertung.</string>
     <string name="kh_uisdk_rebook_ride">Rebooking-Fahrt</string>
@@ -371,7 +331,6 @@
     <string name="kh_uisdk_report_issue">Ausgabe melden</string>
     <string name="kh_uisdk_requested">Ihre Reise wurde angefordert mit %s</string>
     <string name="kh_uisdk_requested_invite">Vielen Dank für Ihr Interesse! Wir senden Ihnen eine E-Mail, sobald Ihr Konto aktiviert ist.</string>
-    <string name="kh_uisdk_reset_filter">Filter zurücksetzen</string>
     <string name="kh_uisdk_results_empty">Keine Ergebnisse gefunden</string>
     <string name="kh_uisdk_retrieving_dropoff">Übergabeort ermitteln</string>
     <!-- Current Trip -->
@@ -402,9 +361,7 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Anmelden</string>
     <string name="kh_uisdk_sign_out">Abmeldung</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Bitte ändern Sie eine der Adressen, um Zugang zu den Angeboten zu erhalten</string>
     <string name="kh_uisdk_something_went_wrong">Es ist ein Fehler aufgetreten.</string>
-    <string name="kh_uisdk_sort_by">Sortieren nach</string>
     <string name="kh_uisdk_sorter_cheapest">Preis</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschätzte Ankunft</string>
