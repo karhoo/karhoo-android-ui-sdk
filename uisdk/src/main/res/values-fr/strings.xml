@@ -172,7 +172,7 @@
     <string name="kh_uisdk_K2001">Impossible de trouver l\'adresse</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Impossible de trouver un devis</string>
-    <string name="kh_uisdk_K3002">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l'avance pour votre prochain voyage!</string>
+    <string name="kh_uisdk_K3002">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage!</string>
     <string name="kh_uisdk_K3003">Impossible de trouver un devis (devis en question non trouvé)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Impossible de compléter la commande</string>
