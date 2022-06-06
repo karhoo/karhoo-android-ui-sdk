@@ -116,6 +116,16 @@ class AdyenPaymentPresenter(
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
+
+                        val lastFourDigits: String =
+                            JSONObject(payload.optString(ADDITIONAL_DATA, ""))
+                                .optString(CARD_SUMMARY, "")
+
+                        logPaymentErrorEvent(
+                            payload.optString(REFUSAL_REASON, ""),
+                            lastFourDigits,
+                        )
+
                         view?.showPaymentFailureDialog(error)
                     }
                 }
@@ -125,10 +135,10 @@ class AdyenPaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String) {
+    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
         KarhooUISDK.analytics?.paymentFailed(
             refusalReason,
-            userStore.savedPaymentInfo?.lastFour ?: "",
+            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
             Date(),
             quote?.price?.highPrice ?: 0,
             quote?.price?.currencyCode ?: ""
@@ -139,8 +149,6 @@ class AdyenPaymentPresenter(
         val result = payload.optString(RESULT_CODE, "")
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
-
-        logPaymentErrorEvent(refusalReason)
 
         return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
@@ -164,10 +172,16 @@ class AdyenPaymentPresenter(
                         getPaymentMethods(locale)
                     }
                 }
-                is Resource.Failure -> view?.showError(
-                    R.string.kh_uisdk_something_went_wrong,
-                    result.error
-                )
+                is Resource.Failure -> {
+                    logPaymentErrorEvent(
+                        result.error.internalMessage
+                    )
+
+                    view?.showError(
+                        R.string.kh_uisdk_something_went_wrong,
+                        result.error
+                    )
+                }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
@@ -204,10 +218,16 @@ class AdyenPaymentPresenter(
                                 view?.showPaymentUI(this.adyenKey, it, this.quote)
                             }
                         }
-                        is Resource.Failure -> view?.showError(
-                            R.string.kh_uisdk_something_went_wrong,
-                            result.error
-                        )
+                        is Resource.Failure -> {
+                            logPaymentErrorEvent(
+                                result.error.internalMessage
+                            )
+
+                            view?.showError(
+                                R.string.kh_uisdk_something_went_wrong,
+                                result.error
+                            )
+                        }
                         //TODO Consider using returnErrorStringOrLogoutIfRequired
                     }
                 }

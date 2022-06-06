@@ -215,10 +215,10 @@ class BraintreePaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String) {
+    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
         KarhooUISDK.analytics?.paymentFailed(
             refusalReason,
-            userStore.savedPaymentInfo?.lastFour ?: "",
+            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
             Date(),
             quote?.price?.highPrice ?: 0,
             quote?.price?.currencyCode ?: ""
