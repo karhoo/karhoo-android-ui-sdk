@@ -105,6 +105,7 @@
     <string name="kh_uisdk_enter_pickup">¿Dónde estás?</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Borrar dirección</string>
+    <string name="kh_uisdk_error">Error</string>
     <string name="kh_uisdk_error_cannot_create_user">Parece que hubo un problema al registrar tu cuenta. Vuelve a intentarlo.</string>
     <string name="kh_uisdk_error_invalid_password">Error: la contraseña es incorrecta</string>
     <string name="kh_uisdk_estimated_arrival_time">Tiempo estimado de llegada</string>
@@ -261,11 +262,8 @@
     <string name="kh_uisdk_network_error">Parece que tenemos problemas para conectarnos a la red</string>
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
-    <string name="kh_uisdk_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
-    <string name="kh_uisdk_no_availability_subtitle">Por favor selecciona otra hora</string>
-    <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
     <string name="kh_uisdk_no_destination">Sin Destino</string>
-    <string name="kh_uisdk_no_results_found">No hay disponibilidad para la hora solicitada. Por favor, seleccione una hora diferente.</string>
+    <string name="kh_uisdk_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
     <string name="kh_uisdk_offer_expired">Cotización caducada</string>

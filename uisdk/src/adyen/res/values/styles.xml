@@ -578,6 +578,18 @@
         <item name="colorError">@color/kh_uisdk_error</item>
     </style>
 
+    <style name="bt_drop_in_activity_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/kh_uisdk_transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="colorPrimary">@color/kh_uisdk_primary</item>
+        <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
+        <item name="colorAccent">@color/kh_uisdk_accent</item>
+    </style>
+
     <style name="bt_base_textview">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:fontFamily">sans-serif-light</item>

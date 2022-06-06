@@ -493,7 +493,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
 
                         val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.error_dialog_title,
+                            titleResId = R.string.kh_uisdk_error,
                             messageResId = reasonId,
                             karhooError = null,
                             positiveButton = KarhooAlertDialogAction(
