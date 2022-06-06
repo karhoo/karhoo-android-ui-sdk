@@ -48,6 +48,7 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
             }
 
             chip.setOnClickListener {
+                //chipViews.firstOrNull() is always the All choice
                 if(chip.isChecked){
                     if(item.fixedTag == VehicleTypeFilter.ALL_TAG){
                         chipViews.forEach {
