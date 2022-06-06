@@ -320,6 +320,27 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 AddressCodes.DESTINATION -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
             }
+        } else if (resultCode == QuotesActivity.QUOTES_RESULT_OK && data != null) {
+            val pickup = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+            val destination = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+
+            pickup?.let {
+                addressBarWidget.setPickup(pickup, -1)
+            }
+
+            destination?.let {
+                addressBarWidget.setDestination(destination, -1)
+            }
+            val passengerNumber = data.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
+            val luggage = data.getIntExtra(QuotesActivity.LUGGAGE, 0)
+            if(bookingMetadata == null)
+                bookingMetadata = HashMap()
+            bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+            bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+
+            startCheckoutActivity(data)
+        } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED) {
+            startQuoteListActivity()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
