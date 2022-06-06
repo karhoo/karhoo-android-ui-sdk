@@ -105,7 +105,7 @@
                     android:layout_width="48dp"
                     android:layout_height="30dp"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/bt_ic_visa" />
+                    app:srcCompat="@drawable/uisdk_ic_destination" />
 
                 <TextView
                     android:id="@+id/countryPrefixCodeText"

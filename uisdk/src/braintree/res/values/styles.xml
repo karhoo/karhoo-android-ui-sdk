@@ -121,15 +121,6 @@
         <item name="colorControlHighlight">@color/kh_uisdk_primary</item>
     </style>
 
-    <style name="AdyenCheckout.PrimaryFlatButton" parent="AdyenCheckout">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
-        <item name="colorAccent">@color/kh_uisdk_secondary</item>
-    </style>
-
-    <style name="AdyenCheckout.SecondaryFlatButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textColor">@color/kh_uisdk_secondary</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <declare-styleable name="CustomTextInputLayout">
@@ -302,8 +293,15 @@
         <item name="tabMode">fixed</item>
     </style>
 
+    <style name="KhQuotesSortView">
+        <item name="leftBackground">@drawable/uisdk_sort_left_background</item>
+        <item name="rightBackground">@drawable/uisdk_sort_right_background</item>
+        <item name="selectedTextColor">@color/kh_uisdk_off_white</item>
+        <item name="unselectedTextColor">@color/kh_uisdk_off_black</item>
+    </style>
+
     <style name="KhSQuotesListView">
-        <item name="android:background">@drawable/kh_uisdk_quote_list_background</item>
+        <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetTitle">
@@ -571,8 +569,21 @@
         <item name="colorError">@color/kh_uisdk_error</item>
     </style>
 
+    <style name="bt_drop_in_activity_theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/kh_uisdk_transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
+        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>
+        <item name="colorPrimary">@color/kh_uisdk_primary</item>
+        <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
+        <item name="colorAccent">@color/kh_uisdk_accent</item>
+    </style>
+
     <style name="bt_base_textview">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textSize">@dimen/bt_input_text_size</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
@@ -599,109 +610,9 @@
     <style name="KhLoyaltySeparatorLabel">
         <item name="background">@color/kh_uisdk_label</item>
         <item name="fontWeight">600</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
-    <style name="KhQuotesErrorTitle">
-        <item name="fontWeight">600</item>
-        <item name="lineHeight">22dp</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-    </style>
 
-    <style name="KhQuotesErrorSubtitle">
-        <item name="fontWeight">400</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="lineHeight">18dp</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-    </style>
-
-    <style name="KhQuoteListSortBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/KhQuoteListSortModalStyle</item>
-    </style>
-
-    <style name="KhQuoteListSortModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/uisdk_view_quotes_sort_background</item>
-    </style>
-
-    <style name="KhQuoteListSortRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/kh_uisdk_margin_medium</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name="android:button">@drawable/kh_uisdk_quote_sort_radio_button</item>
-    </style>
-
-    <style name="KhQuoteListSortTitle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-    </style>
-
-    <style name="KhQuoteListSortCloseButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_xxxsmall</item>
-        <item name="android:background">@null</item>
-        <item name="android:src">@drawable/kh_uisdk_ic_close_cross</item>
-    </style>
-
-    <style name="KhQuoteListSortByButton" parent="Widget.MaterialComponents.Button">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:background">@drawable/kh_uisdk_quote_list_sort_by_button</item>
-        <item name="android:textColor">@color/textColor</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="backgroundTint">@null</item>
-        <item name="iconGravity">textStart</item>
-        <item name="iconTint">@color/textColor</item>
-        <item name="icon">@drawable/kh_uisdk_ic_arrow_down_tailed</item>
-    </style>
-
-    <style name="KhQuoteListFilterButton" parent="KhQuoteListSortByButton">
-        <item name="icon">@drawable/kh_uisdk_ic_filters</item>
-    </style>
-
-    <style name="KhFilterChip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="checkedIconVisible">true</item>
-    </style>
-
-    <style name="KhFilterNumberedViewLabel">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_semi_small</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/textColor</item>
-    </style>
-
-    <style name="KhFilterNumberedViewValue" parent="KhFilterNumberedViewLabel">
-        <item name="android:textAlignment">center</item>
-        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_semi_small</item>
-    </style>
-
-    <style name="KhFilterViewResetFilters">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:gravity">end</item>
-        <item name="android:textColor">@color/kh_uisdk_accent</item>
-    </style>
-
-    <style name="KhFilterViewCheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:layoutDirection">rtl</item>
-        <item name="android:buttonTint">@color/kh_uisdk_accent</item>
-    </style>
 </resources>
