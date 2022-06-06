@@ -14,5 +14,8 @@ open class MultiSelectFilter(var selectedTypes: ArrayList<MultiSelectData>): IFi
         selectedTypes.clear()
     }
 
+    override val isFilterApplied: Boolean?
+        get() { return selectedTypes.isNotEmpty() }
+
     lateinit var typeValues: ArrayList<MultiSelectData>
 }

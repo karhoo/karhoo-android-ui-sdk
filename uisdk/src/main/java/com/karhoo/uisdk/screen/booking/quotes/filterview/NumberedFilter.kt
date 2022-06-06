@@ -9,6 +9,9 @@ open class NumberedFilter(private val defaultNumber: Int, private  val maxNumber
         currentNumber = defaultNumber
     }
 
+    override val isFilterApplied: Boolean?
+        get() { return currentNumber != defaultNumber }
+
     fun increment(): Boolean {
         if(currentNumber < maxNumber) {
             currentNumber++

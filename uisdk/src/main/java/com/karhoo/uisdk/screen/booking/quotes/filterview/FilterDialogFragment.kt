@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,6 +21,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     var presenter = FilterDialogPresenter(this)
 
     private lateinit var filterViewResetFilters: TextView
+    private lateinit var filterViewTitleExit: ImageView
     private lateinit var filterViewPassengerNumberedFilter: NumberedFilterView
     private lateinit var filterViewLuggageNumberedFilter: NumberedFilterView
 
@@ -57,6 +59,11 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterViewResetFilters = view.findViewById(R.id.filterViewResetFilters)
         filterViewResetFilters.setOnClickListener {
             presenter.resetFilters()
+            dismiss()
+        }
+
+        filterViewTitleExit = view.findViewById(R.id.filterViewTitleExit)
+        filterViewTitleExit.setOnClickListener {
             dismiss()
         }
 

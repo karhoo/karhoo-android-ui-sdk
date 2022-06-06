@@ -8,4 +8,6 @@ interface IFilter {
     }
 
     fun clearFilter() {}
+
+    val isFilterApplied: Boolean?
 }

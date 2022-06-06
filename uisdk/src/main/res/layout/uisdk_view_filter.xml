@@ -18,6 +18,25 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/margin_16">
+
+                <TextView
+                    android:id="@+id/filterViewTitle"
+                    style="@style/KhFilterViewTitle"
+                    android:text="@string/kh_uisdk_filter"
+                    />
+
+                <ImageView
+                    android:id="@+id/filterViewTitleExit"
+                    style="@style/KhFilterViewTitleExit"
+                    android:src="@drawable/kh_uisdk_ic_close_cross"
+                    />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/filterViewResetFilters"
                 style="@style/KhFilterViewResetFilters"
