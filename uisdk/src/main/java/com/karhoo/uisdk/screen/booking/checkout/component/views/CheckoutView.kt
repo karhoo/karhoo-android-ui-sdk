@@ -156,6 +156,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
+    fun getPassengerDetails(): PassengerDetails? {
+        return passengersDetailLayout.retrievePassenger()
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         if (holdOpenForPaymentFlow) {
