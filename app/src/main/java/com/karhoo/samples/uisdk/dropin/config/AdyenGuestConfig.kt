@@ -17,11 +17,7 @@ class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration 
     }
 
     override fun environment(): KarhooEnvironment {
-        return KarhooEnvironment.Custom(
-                host = BuildConfig.STAGING_HOST,
-                authHost = BuildConfig.STAGING_AUTH_HOST,
-                guestHost = BuildConfig.STAGING_GUEST_HOST
-        )
+        return KarhooEnvironment.Sandbox()
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
