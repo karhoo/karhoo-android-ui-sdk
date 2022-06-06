@@ -128,7 +128,7 @@ android {
 
 afterEvaluate {
     android.libraryVariants.each { variant ->
-        println 'matei publish' + variant.buildType.name + variant.flavorName
+        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
 
         if (variant.flavorName == "adyen") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
