@@ -196,6 +196,8 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
         }
 
         val metadata = getBookingMetadataMap(identifier, tripId)
+        val additionalPassengers = metadata?.get(PASSENGER_NUMBER)?.toInt() ?: kotlin.run { 0 }
+        val luggage = metadata?.get(LUGGAGE)?.toInt() ?: kotlin.run { 0 }
 
         tripsService.book(TripBooking(comments = comments,
                                       flightNumber = flight,
@@ -203,9 +205,9 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
                                       nonce = identifier,
                                       quoteId = quote?.id.orEmpty(),
                                       loyaltyNonce = loyaltyNonce,
-                                      passengers = Passengers(additionalPassengers = 0,
+                                      passengers = Passengers(additionalPassengers = additionalPassengers,
                                                               passengerDetails = listOf(passenger),
-                                                              luggage = Luggage(total = 0))))
+                                                              luggage = Luggage(total = luggage))))
                 .execute { result ->
                     when (result) {
                         is Resource.Success -> onTripBookSuccess(result.data)
@@ -342,5 +344,7 @@ internal class CheckoutViewPresenter(view: CheckoutViewContract.View,
 
     companion object {
         const val TRIP_ID = "trip_id"
+        const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
+        const val LUGGAGE = "LUGGAGE"
     }
 }

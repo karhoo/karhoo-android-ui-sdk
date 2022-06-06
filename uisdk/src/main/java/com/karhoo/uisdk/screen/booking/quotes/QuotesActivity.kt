@@ -97,6 +97,8 @@ class QuotesActivity : BaseActivity(), WebViewActions {
         const val QUOTES_RESULT_OK = 21
         const val QUOTES_INFO_REQUEST_NUMBER = 20
         const val QUOTES_CANCELLED = 22
+        const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
+        const val LUGGAGE = "LUGGAGE"
     }
 
 }
