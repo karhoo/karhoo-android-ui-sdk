@@ -172,7 +172,7 @@
     <string name="kh_uisdk_K2001">Could not get address</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Could not get estimates</string>
-    <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
+    <string name="kh_uisdk_K3002">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Could not book trip</string>
@@ -339,6 +339,7 @@
     <string name="kh_uisdk_retrieving_pickup">Getting pickup location</string>
     <string name="kh_uisdk_retrieving_quotes">Retrieving Quotes</string>
     <string name="kh_uisdk_retry">Retry</string>
+    <string name="kh_uisdk_error">Error</string>
     <string name="kh_uisdk_ride_confirmed">Ride Confirmed</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
     <string name="kh_uisdk_ride_details">Ride Details</string>

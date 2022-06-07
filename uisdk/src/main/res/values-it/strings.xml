@@ -105,6 +105,7 @@
     <string name="kh_uisdk_enter_pickup">Inserisci il ritiro</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Cancella indirizzo</string>
+    <string name="kh_uisdk_error">Errore</string>
     <string name="kh_uisdk_error_cannot_create_user">Sembra che ci sia un problema durante la registrazione del tuo account. Per favore riprova.</string>
     <string name="kh_uisdk_error_invalid_password">L\'e-mail o la password che hai inserito non sono corrette</string>
     <string name="kh_uisdk_estimated_arrival_time">Orario di arrivo stimato</string>
@@ -172,7 +173,7 @@
     <string name="kh_uisdk_K2001">Impossibile ottenere l\'indirizzo</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Impossibile ottenere stime</string>
-    <string name="kh_uisdk_K3002">Impossibile ottenere preventivi (nessuna disponibilità trovata nell\'area richiesta)</string>
+    <string name="kh_uisdk_K3002">Siamo spiacenti, la prenotazione immediata non è disponibile per questa destinazione, ma puoi prenotare in anticipo per il tuo prossimo viaggio!</string>
     <string name="kh_uisdk_K3003">Impossibile ottenere le stime (impossibile trovare il preventivo specificato)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Impossibile prenotare il viaggio</string>
@@ -261,11 +262,8 @@
     <string name="kh_uisdk_network_error">Sembra che ci siano problemi di connessione alla rete</string>
     <string name="kh_uisdk_new_ride">NUOVA CORSA</string>
     <string name="kh_uisdk_next">Successivo</string>
-    <string name="kh_uisdk_no_availability">Non siamo ancora qui! Contattaci se hai suggerimenti per le flotte locali.</string>
-    <string name="kh_uisdk_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
-    <string name="kh_uisdk_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
     <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
-    <string name="kh_uisdk_no_results_found">Nessuna disponibilità per l\'orario richiesto. Si prega di scegliere un orario diverso.</string>
+    <string name="kh_uisdk_no_results_found">Siamo spiacenti, la prenotazione immediata non è disponibile per questa destinazione, ma puoi prenotare in anticipo per il tuo prossimo viaggio!</string>
     <string name="kh_uisdk_no_results_label">Nessun risultato</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
     <string name="kh_uisdk_offer_expired">Preventivo scaduto</string>
