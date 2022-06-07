@@ -138,7 +138,14 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookFailure(error: KarhooError) {
-        KarhooUISDK.analytics?.paymentFailed(error.internalMessage)
+        KarhooUISDK.analytics?.paymentFailed(
+            error.internalMessage,
+            userStore.savedPaymentInfo?.lastFour ?: "",
+            Date(),
+            quote?.price?.highPrice ?: 0,
+            quote?.price?.currencyCode ?: ""
+        )
+
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(
                 null,

@@ -202,6 +202,16 @@ class BraintreePaymentPresenter(
         }
     }
 
+    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
+        KarhooUISDK.analytics?.paymentFailed(
+            refusalReason,
+            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+            Date(),
+            quote?.price?.highPrice ?: 0,
+            quote?.price?.currencyCode ?: ""
+        )
+    }
+
     fun updateCardDetails(cardNumber: String?, cardTypeLabel: String?) {
         if (cardNumber != null && cardTypeLabel != null) {
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))

@@ -43,6 +43,8 @@ interface PaymentDropInContract {
         fun sdkInit(quote: Quote?, locale: Locale? = null)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
+
+        fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String? = null)
     }
 
     interface Actions {
