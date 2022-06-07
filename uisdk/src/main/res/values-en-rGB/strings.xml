@@ -107,6 +107,7 @@
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Erase address</string>
+    <string name="kh_uisdk_error">Error</string>
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Estimated arrival time</string>
@@ -205,7 +206,7 @@
     <string name="kh_uisdk_K2001">Could not get address</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Could not get estimates</string>
-    <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
+    <string name="kh_uisdk_K3002">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Could not book trip</string>
@@ -357,6 +358,8 @@
     <string name="kh_uisdk_quotes_error_missing_addresses_title">Pick up or drop-off address is missing</string>
     <string name="kh_uisdk_quotes_error_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Please change your filter selection.</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_title">No results after filtering.</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Departure and destination addresses are similar</string>
     <string name="kh_uisdk_rate_trip_label">How would you rate your trip?</string>
