@@ -28,14 +28,14 @@ class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
             value.forEach { data ->
                 val box = CheckBox(ContextThemeWrapper(context, R.style.KhFilterViewCheckBox))
                 box.text = data.text
-                if(filter?.selectedTypes?.contains(data) == true)
+                if(filter?.selectedTypes?.map { it.fixedTag }?.contains(data.fixedTag) == true)
                     box.isChecked = true
 
                 box.setOnCheckedChangeListener { _, isChecked ->
                     if(isChecked)
                         filter?.addSelected(data)
                     else
-                        filter?.selectedTypes?.remove(data)
+                        filter?.selectedTypes?.remove(filter?.selectedTypes?.firstOrNull { it.fixedTag == data.fixedTag })
                     delegate?.invoke()
                 }
                 filterViewItemCheckboxGroup.addView(box)

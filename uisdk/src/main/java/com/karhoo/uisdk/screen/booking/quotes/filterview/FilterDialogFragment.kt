@@ -204,11 +204,11 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_standard)))
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_berline)))
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)))
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_moto)))
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_bike)))
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_standard)).apply { fixedTag = VehicleTypeFilter.STANDARD })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_berline)).apply { fixedTag = VehicleTypeFilter.BERLINE })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)).apply { fixedTag = VehicleTypeFilter.VAN })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_moto)).apply { fixedTag = VehicleTypeFilter.MOTO })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_bike)).apply { fixedTag = VehicleTypeFilter.BIKE })
             }
         }
         filterViewVehicleTypeMultiSelectChipsFilter.filter = vehicleTypeFilter
@@ -223,8 +223,14 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         vehicleClassFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_executive)).apply { icon = R.drawable.kh_uisdk_ic_briefcase })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_luxury)).apply { icon = R.drawable.kh_uisdk_ic_star_empty })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_executive)).apply {
+                    icon = R.drawable.kh_uisdk_ic_briefcase
+                    fixedTag = VehicleClassFilter.EXECUTIVE
+                })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_luxury)).apply {
+                    icon = R.drawable.kh_uisdk_ic_star_empty
+                    fixedTag = VehicleClassFilter.LUXURY
+                })
             }
         }
         filterViewVehicleClassMultiSelectChipsFilter.filter = vehicleClassFilter
@@ -239,12 +245,18 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_taxi)).apply { icon = R.drawable.kh_uisdk_ic_car })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_taxi)).apply {
+                    icon = R.drawable.kh_uisdk_ic_car
+                    fixedTag = VehicleExtrasFilter.TAXI
+                })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_child_seat)).apply {
                     icon = R.drawable.kh_uisdk_ic_tag_child_seat
                     fixedTag = VehicleExtrasFilter.CHILD_SEAT
                 })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_wheelchair)).apply { icon = R.drawable.kh_uisdk_ic_wheelchair })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_wheelchair)).apply {
+                    icon = R.drawable.kh_uisdk_ic_wheelchair
+                    fixedTag = VehicleExtrasFilter.WHEELCHAIR
+                })
             }
         }
         filterViewVehicleExtrasMultiSelectChipsFilter.filter = vehicleExtrasFilter
@@ -259,9 +271,13 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         vehicleEcoFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_electric)).apply { icon = R.drawable.kh_uisdk_ic_zap })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_electric)).apply {
+                    icon = R.drawable.kh_uisdk_ic_zap
+                    fixedTag = VehicleEcoFilter.ELECTRIC
+                })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_hybrid)).apply {
                     icon = R.drawable.kh_uisdk_ic_feather
+                    fixedTag = VehicleEcoFilter.HYBRID
                 })
             }
         }

@@ -17,4 +17,9 @@ class VehicleEcoFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelectF
         }
         return false
     }
+
+    companion object {
+        const val ELECTRIC = "electric"
+        const val HYBRID = "hybrid"
+    }
 }

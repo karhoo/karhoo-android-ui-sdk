@@ -72,8 +72,14 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
             }
             filterViewItemChipGroup.addView(chip)
             chipViews.add(chip)
+            if(filter?.selectedTypes?.map { it.fixedTag }?.contains(item.fixedTag) == true){
+                chip.performClick()
             }
-            chipViews.firstOrNull()?.isChecked = true
+            }
+            filter?.isFilterApplied?.let {
+                if(!it)
+                    chipViews.firstOrNull()?.isChecked = true
+            }
         }
 
     init {

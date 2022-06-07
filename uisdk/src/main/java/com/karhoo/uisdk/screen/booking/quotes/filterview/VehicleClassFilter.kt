@@ -10,4 +10,9 @@ class VehicleClassFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelec
         }
         return quote.vehicle.vehicleClass?.lowercase() in selectedTypes.map { it.text.lowercase() }
     }
+
+    companion object {
+        const val EXECUTIVE = "executive"
+        const val LUXURY = "luxury"
+    }
 }

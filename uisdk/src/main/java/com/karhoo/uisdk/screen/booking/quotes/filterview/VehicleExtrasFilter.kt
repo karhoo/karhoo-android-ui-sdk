@@ -24,5 +24,7 @@ class VehicleExtrasFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSele
 
     companion object {
         const val CHILD_SEAT = "child-seat"
+        const val TAXI = "taxi"
+        const val WHEELCHAIR = "wheelchair"
     }
 }
