@@ -44,7 +44,7 @@ interface PaymentDropInContract {
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
 
-        fun logPaymentErrorEvent(refusalReason: String)
+        fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String? = null)
     }
 
     interface Actions {
