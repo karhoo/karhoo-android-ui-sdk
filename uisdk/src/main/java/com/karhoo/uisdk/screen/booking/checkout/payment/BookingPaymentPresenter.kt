@@ -19,7 +19,7 @@ class BookingPaymentPresenter(
     }
 
     override fun createPaymentView(actions: PaymentDropInContract.Actions) {
-        val view = KarhooUISDKConfigurationProvider.paymentManager.paymentProviderView
+        val view = KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView
         view?.actions = actions
         this@BookingPaymentPresenter.view?.setPaymentView(view = view)
     }
