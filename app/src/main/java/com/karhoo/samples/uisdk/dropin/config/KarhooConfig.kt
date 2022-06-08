@@ -8,9 +8,11 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class KarhooConfig(val context: Context, private val authMethod: AuthenticationMethod = AuthenticationMethod.KarhooUser()) :
         KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun logo(): Drawable? {
         return context.getDrawable(R.drawable.karhoo_wordmark)

@@ -93,8 +93,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
+            val config = KarhooConfig(applicationContext)
+            config.paymentManager = braintreePaymentManager
+
             KarhooUISDK.apply {
-                setConfiguration(KarhooConfig(applicationContext), braintreePaymentManager)
+                setConfiguration(config)
             }
             showLoginInputDialog()
         }
@@ -127,55 +130,49 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyBraintreeTokenExchangeConfig() {
+        val config = BraintreeTokenExchangeConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
+
         KarhooUISDK.apply {
-            setConfiguration(
-                BraintreeTokenExchangeConfig(
-                    applicationContext
-                ),
-                braintreePaymentManager
-            )
+            setConfiguration(config)
         }
     }
 
     private fun applyBraintreeGuestConfig() {
+        val config = BraintreeGuestConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
+
         KarhooUISDK.apply {
-            setConfiguration(
-                BraintreeGuestConfig(
-                    applicationContext
-                ),
-                braintreePaymentManager
-            )
+            setConfiguration(config)
         }
     }
 
     private fun applyAdyenTokenExchangeConfig() {
+        val config = AdyenTokenExchangeConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
+
         KarhooUISDK.apply {
-            setConfiguration(
-                AdyenTokenExchangeConfig(
-                    applicationContext
-                ),
-                adyenPaymentManager
-            )
+            setConfiguration(config)
         }
     }
 
     private fun applyLoyaltyTokenExchangeConfig() {
+        val config = LoyaltyTokenConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
+
         KarhooUISDK.apply {
-            setConfiguration(
-                LoyaltyTokenConfig(applicationContext),
-                adyenPaymentManager
-            )
+            setConfiguration(config)
         }
     }
 
     private fun applyAdyenGuestConfig() {
+        val config = AdyenGuestConfig(
+            applicationContext
+        )
+
+        config.paymentManager = adyenPaymentManager
         KarhooUISDK.apply {
-            setConfiguration(
-                AdyenGuestConfig(
-                    applicationContext
-                ),
-                adyenPaymentManager
-            )
+            setConfiguration(config)
         }
     }
 

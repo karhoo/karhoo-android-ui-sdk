@@ -44,9 +44,8 @@ object KarhooUISDK {
 
     var menuHandler: MenuHandler? = null
 
-    fun setConfiguration(configuration: KarhooUISDKConfiguration, paymentManager: PaymentManager) {
+    fun setConfiguration(configuration: KarhooUISDKConfiguration) {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
-        KarhooUISDKConfigurationProvider.paymentManager = paymentManager
         KarhooApi.setConfiguration(configuration)
     }
 }

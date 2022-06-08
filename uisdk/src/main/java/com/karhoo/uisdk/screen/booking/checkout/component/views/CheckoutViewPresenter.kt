@@ -164,7 +164,7 @@ internal class CheckoutViewPresenter(
             userStore.removeCurrentUser()
         }
         if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
-                    KarhooUISDKConfigurationProvider.paymentManager.shouldClearStoredPaymentMethod) ||
+                    KarhooUISDKConfigurationProvider.configuration.paymentManager.shouldClearStoredPaymentMethod) ||
             KarhooUISDKConfigurationProvider.isGuest()
         ) {
             userStore.clearSavedPaymentInfo()
@@ -272,7 +272,7 @@ internal class CheckoutViewPresenter(
     private fun refreshPaymentDetails() {
         //todo check if commenting out 241-244 will not break anything
         if ((KarhooUISDKConfigurationProvider.configuration.authenticationMethod() is AuthenticationMethod.TokenExchange &&
-                    KarhooUISDKConfigurationProvider.paymentManager.showSavedPaymentInfo) || KarhooUISDKConfigurationProvider.isGuest()
+                    KarhooUISDKConfigurationProvider.configuration.paymentManager.showSavedPaymentInfo) || KarhooUISDKConfigurationProvider.isGuest()
         ) {
             view?.showUpdatedPaymentDetails(null)
         } else {
