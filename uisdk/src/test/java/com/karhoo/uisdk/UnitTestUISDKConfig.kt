@@ -7,6 +7,7 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class UnitTestUISDKConfig(
     private val context: Context, private val authenticationMethod:
@@ -14,6 +15,7 @@ class UnitTestUISDKConfig(
         AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true
 ) :
     KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun logo(): Drawable? {
         return null
@@ -41,8 +43,6 @@ class UnitTestUISDKConfig(
 
     companion object {
         fun setGuestAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.paymentManager = AdyenPaymentManager()
-
             KarhooUISDKConfigurationProvider.setConfig(
                 configuration = UnitTestUISDKConfig(
                     context =
@@ -54,10 +54,10 @@ class UnitTestUISDKConfig(
                     )
                 )
             )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
 
         fun setKarhooAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.paymentManager = BraintreePaymentManager()
 
             KarhooUISDKConfigurationProvider.setConfig(
                 configuration = UnitTestUISDKConfig(
@@ -65,10 +65,10 @@ class UnitTestUISDKConfig(
                     authenticationMethod = AuthenticationMethod.KarhooUser()
                 )
             )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = BraintreePaymentManager()
         }
 
         fun setTokenAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.paymentManager = AdyenPaymentManager()
             KarhooUISDKConfigurationProvider.setConfig(
                 configuration = UnitTestUISDKConfig(
                     context =
@@ -76,6 +76,7 @@ class UnitTestUISDKConfig(
                     authenticationMethod = AuthenticationMethod.TokenExchange("clientId", "scope")
                 )
             )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
     }
 }

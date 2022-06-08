@@ -9,8 +9,10 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun context(): Context {
         return context
