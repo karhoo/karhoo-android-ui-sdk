@@ -107,6 +107,31 @@ class QuotesRecyclerView @JvmOverloads constructor(
         quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
     }
 
+    private fun showFilterErrorView(show: Boolean, reason: ErrorViewGenericReason) {
+        if (show) {
+            quotesErrorView.setup(
+                reason,
+                object : QuotesErrorViewContract.QuotesErrorViewDelegate {
+                    override fun onClicked() {
+                        //do nothing
+                    }
+
+                    override fun onSubtitleClicked() {
+                        //do nothing
+                    }
+                })
+        }
+
+        if (!show) {
+            quotesListRecycler.visibility = View.VISIBLE
+            quotesErrorView.visibility = View.GONE
+        } else {
+            setQuotesLoaderVisibility(View.GONE)
+            quotesListRecycler.visibility = View.GONE
+        }
+        quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
+    }
+
     override fun showSameAddressesError(show: Boolean) {
         showErrorView(show, ErrorViewGenericReason(
             context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_title),
@@ -120,6 +145,14 @@ class QuotesRecyclerView @JvmOverloads constructor(
             context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_title),
             context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_subtitle),
             R.drawable.kh_uisdk_similar_pickup_dropoff
+        ))
+    }
+
+    override fun showNoResultsAfterFilterError(show: Boolean) {
+        showFilterErrorView(show, ErrorViewGenericReason(
+            context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_title),
+            context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_subtitle),
+            R.drawable.kh_uisdk_ic_filter_no_result
         ))
     }
 

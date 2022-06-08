@@ -28,6 +28,8 @@ interface QuotesRecyclerContract {
 
         fun showNoAddressesError(show: Boolean)
 
+        fun showNoResultsAfterFilterError(show: Boolean)
+
         fun watchQuoteListStatus(lifecycleOwner: LifecycleOwner, bookingQuotesViewModel:
         BookingQuotesViewModel)
 

@@ -107,7 +107,7 @@ class CategorySelectorView @JvmOverloads constructor(context: Context, attrs: At
     }
 
     override fun showCategories() {
-        this.visibility = View.VISIBLE
+        this.visibility = View.GONE
     }
 
 }
