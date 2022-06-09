@@ -21,10 +21,6 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
-import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
