@@ -17,7 +17,7 @@ For more general information about the SDKs, checkout [**the karhoo developer po
 ## Installation
 Stable Release
 ```gradle
-implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.5.3'
+implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.6.0'
 ```
 Canary Release
 ```gradle
@@ -27,7 +27,7 @@ implementation 'com.github.karhoo:karhoo-android-ui-sdk:develop-SNAPSHOT'
 ## Initialisation
 
 There are a few things the UI SDK needs to know before you can get started such as what environment to connect to, or what kind of authentication method to use.
-To configure the SDK you will need to provide an implementation of our KarhooUISDKConfiguration interface. This lets our SDK grab certain dependencies and configuration settings.
+To configure the UISDK from version 1.5.7 and above, you will need to provide an implementation of our KarhooUISDKConfiguration interface (e.g. KarhooConfig: KarhooUISDKConfiguration) and the desired payment provider
 
 ```kotlin
 class KarhooUIConfig(val context: Context): KarhooUISDKConfiguration {
