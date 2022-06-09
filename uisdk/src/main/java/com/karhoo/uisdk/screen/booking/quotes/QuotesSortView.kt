@@ -7,7 +7,7 @@ import androidx.annotation.AttrRes
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayout
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLabel
 import kotlinx.android.synthetic.main.uisdk_view_quotes_sort.view.etaLayout
@@ -125,8 +125,8 @@ class QuotesSortView @JvmOverloads constructor(
         priceLabel.setTextColor(ContextCompat.getColor(context, selectedColor))
     }
 
-    fun destinationChanged(bookingInfo: BookingInfo?) {
-        hasDestination = bookingInfo?.destination != null
+    fun destinationChanged(journeyDetails: JourneyDetails?) {
+        hasDestination = journeyDetails?.destination != null
     }
 
     private fun setSortingMethodByTabPosition(position: Int) = if (position == 0) {

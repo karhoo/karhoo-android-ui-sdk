@@ -30,7 +30,7 @@ import org.mockito.InjectMocks
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class BookingInfoPresenterTest {
+class JourneyDetailsPresenterTest {
 
     private var tripsService: TripsService = mock()
     private var tripDetailsCall: PollCall<TripInfo> = mock()

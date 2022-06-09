@@ -41,10 +41,10 @@
     <string name="kh_uisdk_booking_error">Er lijkt een probleem te zijn met het boeken van uw reis. Probeer het opnieuw</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reservering is mislukt</string>
-    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
-    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
+    <string name="kh_uisdk_booking_failed_body_no_fleet_name">Sorry, de vraag is groot. %1$@ momenteel geen beschikbare chauffeurs.</string>
     <!-- Terms and Conditions -->
-    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$s | %2$s en %3$s %4$s | %3$s %5$s.</string>
+    <string name="kh_uisdk_booking_terms">Door een reservering te maken gaat u akkoord met de %1$@ | %2$@ en %3$@ %4$@ | %3$@ %5$@.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Gebruiksvoorwaarden</string>
     <string name="kh_uisdk_by_continuing_you_agree_to">Door je Karhoo-account aan te maken, ga je akkoord met Karhoo\'s</string>
     <string name="kh_uisdk_call">TELEFOONGESPREK</string>
@@ -94,7 +94,6 @@
     <string name="kh_uisdk_done">Klaar</string>
     <string name="kh_uisdk_drawer_closed">Lade gesloten</string>
     <string name="kh_uisdk_drawer_open">Lade open</string>
-    <string name="kh_uisdk_driver_arrival">Aankomst chauffeur</string>
     <string name="kh_uisdk_driver_en_route">Uw %s chauffeur is onderweg</string>
     <string name="kh_uisdk_electric">Elektrisch</string>
     <string name="kh_uisdk_email_hint">E-Mail</string>
@@ -125,14 +124,6 @@
     <!-- FEEDBACK -->
     <string name="kh_uisdk_feedback_title">Vertel ons alsjeblieft meer over je reis</string>
     <string name="kh_uisdk_fees_and_taxes_included">Belastingen en toeslagen inbegrepen</string>
-    <string name="kh_uisdk_filter">Filter</string>
-    <string name="kh_uisdk_filter_cancellation_and_waiting_time">Annulering en wachttijd</string>
-    <string name="kh_uisdk_filter_free_cancellation">Gratis afzegging</string>
-    <string name="kh_uisdk_filter_free_waiting_time">Gratis wachttijd</string>
-    <string name="kh_uisdk_filter_luggages">Bagage)</string>
-    <string name="kh_uisdk_filter_page_results">Bekijk alle %s resultaten</string>
-    <string name="kh_uisdk_filter_passengers">Passagier(s)</string>
-    <string name="kh_uisdk_filter_quote_types">Soorten offertes</string>
     <string name="kh_uisdk_finding_your_ride">Uw rit vinden...</string>
     <string name="kh_uisdk_first_name_hint">Voornaam</string>
     <!-- Fare type -->
@@ -271,8 +262,10 @@
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
     <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
-    <string name="kh_uisdk_no_results_found">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
+    <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
     <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
@@ -329,13 +322,6 @@
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Meer informatie</string>
     <string name="kh_uisdk_quoted_fare">Geschat tarief</string>
-    <string name="kh_uisdk_quotes_activity_title">Citaten</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Voer zowel het ophaal- als het inleveradres in om toegang te krijgen tot de aanbiedingen</string>
-    <string name="kh_uisdk_quotes_error_missing_addresses_title">Ophaal- of afleveradres ontbreekt</string>
-    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Selecteer een ander tijdstip</string>
-    <string name="kh_uisdk_quotes_error_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
-    <string name="kh_uisdk_quotes_error_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>
     <string name="kh_uisdk_rating_submitted">Bedankt voor het doorgeven van uw beoordeling.</string>
     <string name="kh_uisdk_rebook_ride">Rit opnieuw reserveren</string>
@@ -347,7 +333,6 @@
     <string name="kh_uisdk_report_issue">Probleem melden</string>
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requested_invite">Bedankt voor uw interesse! We sturen u een e-mail wanneer uw account is geactiveerd.</string>
-    <string name="kh_uisdk_reset_filter">Filter resetten</string>
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->
@@ -378,9 +363,7 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
-    <string name="kh_uisdk_sort_by">Sorteer op</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>
     <!-- Quotes List -->
     <string name="kh_uisdk_sorter_nearest">Geschatte aankomsttijd</string>

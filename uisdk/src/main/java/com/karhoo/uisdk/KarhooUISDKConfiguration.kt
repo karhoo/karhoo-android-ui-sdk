@@ -4,8 +4,10 @@ import android.graphics.drawable.Drawable
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.api.KarhooSDKConfiguration
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConfig {
+    var paymentManager: PaymentManager
 
     fun logo(): Drawable?
 

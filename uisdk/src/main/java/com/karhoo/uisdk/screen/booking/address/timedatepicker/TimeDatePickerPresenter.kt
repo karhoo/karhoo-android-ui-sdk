@@ -4,10 +4,11 @@ import androidx.lifecycle.Observer
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
+import org.joda.time.LocalDateTime
 import java.util.Date
 import java.util.TimeZone
 
@@ -15,10 +16,10 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                               private val analytics: Analytics?)
     : BasePresenter<TimeDatePickerMVP.View>(), TimeDatePickerMVP.Presenter {
 
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
 
     private val timezone: DateTimeZone
-        get() = DateTimeZone.forID(bookingStatusStateViewModel?.currentState?.pickup?.timezone.orEmpty())
+        get() = DateTimeZone.forID(journeyDetailsStateViewModel?.currentState?.pickup?.timezone.orEmpty())
 
     private val nowPlusOneHour: DateTime
         get() = DateTime.now(timezone).plusMinutes(MAX_MINUTES)
@@ -31,7 +32,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     }
 
     override fun datePickerClicked() {
-        bookingStatusStateViewModel?.currentState?.pickup?.let {
+        journeyDetailsStateViewModel?.currentState?.pickup?.let {
             analytics?.prebookOpened()
             val nowPlusOneYear = DateTime.now(timezone).plusYears(1)
             view?.displayDatePicker(
@@ -47,7 +48,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     }
 
     override fun dateSelected(selectedYear: Int, selectedMonth: Int, dayOfMonth: Int) {
-        bookingStatusStateViewModel?.currentState?.pickup?.let {
+        journeyDetailsStateViewModel?.currentState?.pickup?.let {
             val localisedTimeZone = getTimezoneDisplayName(it.timezone)
 
             val calendarMinute = nowDateTime.minuteOfHour
@@ -107,38 +108,49 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     }
 
     private fun setDate(prebookDate: DateTime) {
-        bookingStatusStateViewModel?.currentState?.let {
+        journeyDetailsStateViewModel?.currentState?.let {
             analytics?.prebookSet(Date(prebookDate.millis), it.pickup?.timezone.orEmpty())
-            bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+            journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                                                          .BookingDateEvent(prebookDate))
         }
     }
 
     private fun dateFromCalendar(setYear: Int = year, setMonth: Int = month, setDay: Int = day,
                                  setHour: Int = hour, setMinute: Int = minute): DateTime {
-        return DateTime(setYear, setMonth, setDay, setHour, setMinute, timezone)
+
+        val localDateTime = LocalDateTime(timezone).withYear(setYear).withMonthOfYear(setMonth).withDayOfMonth(setDay).withHourOfDay(setHour).withMinuteOfHour(setMinute)
+
+        // dateFromCalendar now adds an hour. This is because Jodatime cannot handle Daylight saving by itself and has issues with conversion.
+        // This ensures it does the conversion with the extra hour it needs added onto it for when the hours go forwards. This works for all timezones.
+        return if(timezone.isLocalDateTimeGap(localDateTime)){
+            localDateTime.plusHours(1).toDateTime(timezone)
+        } else localDateTime.toDateTime(timezone)
     }
 
-    override fun subscribeToBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel): Observer<BookingInfo> {
-        setCurrentBookingStatus(bookingStatusStateViewModel)
+    override fun subscribeToJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<JourneyDetails> {
+        setCurrentJourneyDetails(journeyDetailsStateViewModel)
         return Observer {
-            it?.let { bookingStatus ->
+            it?.let {
                 it.date ?: view?.hideDateViews()
             }
         }
     }
 
-    private fun setCurrentBookingStatus(bookingStatusStateViewModel: BookingStatusStateViewModel) {
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
+    private fun setCurrentJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
 
     private fun clearScheduledTimeInView() {
-        bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(null))
+        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(null))
     }
 
     override fun clearScheduledTimeClicked() {
         clearScheduledTimeInView()
         view?.hideDateViews()
+    }
+
+    override fun getPreviousSelectedDateTime(): DateTime? {
+        return journeyDetailsStateViewModel?.currentState?.date
     }
 
     private companion object {

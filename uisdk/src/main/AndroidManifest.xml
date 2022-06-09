@@ -33,55 +33,66 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
+            android:exported="true"
             tools:replace="android:theme" />
         <activity
             android:name="com.karhoo.uisdk.screen.booking.BookingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name="com.karhoo.uisdk.screen.trip.TripActivity"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
             android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
             android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
             android:label="driverPhoto"
             android:parentActivityName="com.karhoo.uisdk.screen.trip.TripActivity"
+            android:exported="true"
             android:theme="@style/AppTheme.Transparent" />
         <activity
             android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
             android:label="@string/kh_uisdk_feedback"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.karhoo.uisdk.screen.web.WebActivity"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".screen.booking.checkout.payment.adyen.AdyenResultActivity"
             android:label="@string/kh_uisdk_payment_details"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

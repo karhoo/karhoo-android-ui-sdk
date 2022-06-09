@@ -76,6 +76,7 @@
     <string name="kh_uisdk_contact">CONTACT</string>
     <string name="kh_uisdk_contact_driver">Appeler chauffeur</string>
     <string name="kh_uisdk_contact_fleet">Contacter la flotte</string>
+    <string name="kh_uisdk_contact_us">Contact</string>
     <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/fr/requests/new</string>
     <string name="kh_uisdk_continue_journey">CONTINUER</string>
     <string name="kh_uisdk_continue_registration">Continuer</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_enter_pickup">Adresse de départ</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Effacer l’adresse</string>
+    <string name="kh_uisdk_error">Erreur</string>
     <string name="kh_uisdk_error_cannot_create_user">Une erreur est survenue pendant la création de votre compte. Veuillez réessayer.</string>
     <string name="kh_uisdk_error_invalid_password">Erreur: Mot de passe ou Email incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Heure d’arrivée estimée</string>
@@ -126,13 +128,36 @@
     <string name="kh_uisdk_feedback_title">Merci de nous en dire un peu plus sur votre course.</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes et frais inclus</string>
     <string name="kh_uisdk_filter">Filtre</string>
+    <string name="kh_uisdk_filter_all">Tous</string>
+    <string name="kh_uisdk_filter_berline">Berline</string>
+    <string name="kh_uisdk_filter_bike">Vélo</string>
     <string name="kh_uisdk_filter_cancellation_and_waiting_time">Annulation et temps d’attente</string>
+    <string name="kh_uisdk_filter_child_seat">Siège enfant</string>
+    <string name="kh_uisdk_filter_driver_details">Détails du conducteur</string>
+    <string name="kh_uisdk_filter_eco_friendly">Respectueux de l’environnement</string>
+    <string name="kh_uisdk_filter_electric">Electrique</string>
+    <string name="kh_uisdk_filter_executive">Business</string>
+    <string name="kh_uisdk_filter_fight_tracking">Associe votre vol</string>
+    <string name="kh_uisdk_filter_fleet_capabilities">Capacités de la flotte</string>
     <string name="kh_uisdk_filter_free_cancellation">Annulation gratuite</string>
     <string name="kh_uisdk_filter_free_waiting_time">Temps d’attente gratuit</string>
+    <string name="kh_uisdk_filter_gps_tracking">Suivi GPS</string>
+    <string name="kh_uisdk_filter_hybrid">Hybride</string>
     <string name="kh_uisdk_filter_luggages">Bagage(s)</string>
+    <string name="kh_uisdk_filter_luxury">luxe</string>
+    <string name="kh_uisdk_filter_moto">Moto</string>
     <string name="kh_uisdk_filter_page_results">Voir tout %s résultats</string>
     <string name="kh_uisdk_filter_passengers">Passager(s)</string>
     <string name="kh_uisdk_filter_quote_types">Types de devis</string>
+    <string name="kh_uisdk_filter_standard">Standard</string>
+    <string name="kh_uisdk_filter_taxi">Taxi</string>
+    <string name="kh_uisdk_filter_train_tracking">Associe votre train</string>
+    <string name="kh_uisdk_filter_van">Van</string>
+    <string name="kh_uisdk_filter_vehicle_class">kh_uisdk_filter_vehicle_class</string>
+    <string name="kh_uisdk_filter_vehicle_details">Détails du véhicule</string>
+    <string name="kh_uisdk_filter_vehicle_extras">Extras du véhicule</string>
+    <string name="kh_uisdk_filter_vehicle_types">Types de véhicules</string>
+    <string name="kh_uisdk_filter_wheelchair">Fauteuil roulant</string>
     <string name="kh_uisdk_finding_your_ride">Création de votre course</string>
     <string name="kh_uisdk_first_name_hint">Prénom</string>
     <!-- Fare type -->
@@ -181,7 +206,7 @@
     <string name="kh_uisdk_K2001">Impossible de trouver l\'adresse</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Impossible de trouver un devis</string>
-    <string name="kh_uisdk_K3002">Impossible de trouver un devis (aucune flotte trouvée dans la zone demandée)</string>
+    <string name="kh_uisdk_K3002">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage !</string>
     <string name="kh_uisdk_K3003">Impossible de trouver un devis (devis en question non trouvé)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Impossible de compléter la commande</string>
@@ -271,6 +296,8 @@
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
     <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
+    <string name="kh_uisdk_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
     <string name="kh_uisdk_no_results_found">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage !</string>
     <string name="kh_uisdk_no_results_label">Pas de résultats</string>
@@ -334,6 +361,8 @@
     <string name="kh_uisdk_quotes_error_missing_addresses_title">L’adresse de prise en charge ou de retour est manquante</string>
     <string name="kh_uisdk_quotes_error_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Veuillez modifier votre sélection de filtre.</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_title">Aucun résultat après filtrage.</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Veuillez modifier l’une des adresses pour accéder aux devis</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Les adresses de départ et de destination sont similaires</string>
     <string name="kh_uisdk_rate_trip_label">Veuillez donner une évaluation à votre voyage.</string>

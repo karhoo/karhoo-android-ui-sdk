@@ -40,14 +40,14 @@ import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
-import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
+import com.karhoo.uisdk.util.extension.typeToLocalisedString
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
@@ -156,6 +156,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
+    fun getPassengerDetails(): PassengerDetails? {
+        return passengersDetailLayout.retrievePassenger()
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         if (holdOpenForPaymentFlow) {
@@ -179,7 +183,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
     }
 
-    override fun showBookingRequest(quote: Quote, bookingInfo: BookingInfo?,
+    override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
@@ -192,7 +196,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         presenter.showBookingRequest(
                 quote = quote,
-                bookingInfo = bookingInfo,
+                journeyDetails = journeyDetails,
                 outboundTripId = outboundTripId,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails
@@ -229,7 +233,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
         bookingRequestQuotesWidget.bindViews(vehicle.fleet.logoUrl,
                                              vehicle.fleet.name.orEmpty(),
-                                             vehicle.vehicle.categoryToLocalisedString(this.context).orEmpty(),
+                                             vehicle.vehicle.typeToLocalisedString(this.context).orEmpty(),
                                              vehicle.serviceAgreements?.freeCancellation,
                                              vehicle.vehicle.vehicleTags.map {
                                                  return@map VehicleTags(it)
@@ -347,10 +351,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun initialiseGuestPayment(quote: Quote?) {
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
-    }
-
-    override fun showPaymentDialog(error: KarhooError?) {
-        showPaymentFailureDialog(null, error)
     }
 
     override fun showWebView(url: String?) {
@@ -493,7 +493,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
 
                         val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.error_dialog_title,
+                            titleResId = R.string.kh_uisdk_error,
                             messageResId = reasonId,
                             karhooError = null,
                             positiveButton = KarhooAlertDialogAction(

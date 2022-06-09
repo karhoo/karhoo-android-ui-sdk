@@ -33,7 +33,8 @@ import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_base.snackBarContainer
 import kotlinx.android.synthetic.main.uisdk_activity_base.topNotificationWidget
 
-abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, NetworkReceiver.Actions {
+abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
+    NetworkReceiver.Actions {
 
     private var backgroundFade: TransitionDrawable? = null
     private var networkReceiver: NetworkReceiver? = null
@@ -48,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
     override fun onCreate(savedInstanceState: Bundle?) {
         if (!KarhooUISDKConfigurationProvider.isConfigurationInitialized()) {
             Logger.error(getString(R.string.kh_uisdk_logger_sdk_not_configured))
+            finish()
         }
 
         super.onCreate(savedInstanceState)
@@ -96,16 +98,16 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
             errorShown = snackbarConfig.type
             if (snackbarConfig.action != null) {
                 snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
-                        .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_white))
-                val snackText = snackbar?.view?.findViewById(R.id.snackbar_text) as TextView
-                snackText.maxLines = 3
-
-                snackbar?.show()
-
+                    .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
+                    .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_white))
             } else {
-                Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_LONG).show()
+                snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_LONG)
             }
+
+            val snackText = snackbar?.view?.findViewById(R.id.snackbar_text) as? TextView
+            snackText?.maxLines = 3
+
+            snackbar?.show()
 
             if (snackbarConfig.type == SnackbarType.BLOCKING) {
                 enableErrorLock()
@@ -135,11 +137,12 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
         val config = KarhooAlertDialogConfig(
-                messageResId = stringId,
-                karhooError = karhooError,
-                cancellable = true,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
-                                                         DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() }))
+            messageResId = stringId,
+            karhooError = karhooError,
+            cancellable = true,
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
+                DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() })
+        )
         KarhooAlertDialogHelper(this).showAlertDialog(config)
     }
 
@@ -149,15 +152,19 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
 
     override fun showLocationLock() {
         AnalyticsManager.fireEvent(Event.REJECT_LOCATION_SERVICES)
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                            Uri.fromParts("package", packageName, null))
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", packageName, null)
+        )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val action = SnackbarAction(getString(R.string.kh_uisdk_settings)) { startActivity(intent) }
 
-        val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING,
-                                            priority = SnackbarPriority.HIGH,
-                                            action = action,
-                                            text = getString(R.string.kh_uisdk_permission_rationale_location))
+        val snackbarConfig = SnackbarConfig(
+            type = SnackbarType.BLOCKING,
+            priority = SnackbarPriority.HIGH,
+            action = action,
+            text = getString(R.string.kh_uisdk_permission_rationale_location)
+        )
         showSnackbar(snackbarConfig)
     }
 
@@ -169,11 +176,15 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView, Netw
             resetNetworkLost()
             resetErrorLock()
         } else if (!isConnected) {
-            val action = SnackbarAction(getString(R.string.kh_uisdk_settings)) { startActivity(networkReceiver?.settingsIntent) }
-            val snackbarConfig = SnackbarConfig(type = SnackbarType.BLOCKING,
-                                                priority = SnackbarPriority.HIGHEST,
-                                                action = action,
-                                                text = getString(R.string.kh_uisdk_network_error))
+            val action = SnackbarAction(getString(R.string.kh_uisdk_settings)) {
+                startActivity(networkReceiver?.settingsIntent)
+            }
+            val snackbarConfig = SnackbarConfig(
+                type = SnackbarType.BLOCKING,
+                priority = SnackbarPriority.HIGHEST,
+                action = action,
+                text = getString(R.string.kh_uisdk_network_error)
+            )
             showSnackbar(snackbarConfig)
             setNetworkLost()
             enableErrorLock()

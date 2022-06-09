@@ -12,6 +12,7 @@ import java.util.Locale
 interface PaymentDropInContract {
 
     interface View {
+        var actions: Actions?
 
         fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String)
 
@@ -29,6 +30,7 @@ interface PaymentDropInContract {
     }
 
     interface Presenter {
+        var view: Actions?
 
         fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
 
@@ -41,6 +43,8 @@ interface PaymentDropInContract {
         fun sdkInit(quote: Quote?, locale: Locale? = null)
 
         fun getDropInConfig(context: Context, sdkToken: String): Any
+
+        fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String? = null)
     }
 
     interface Actions {
@@ -58,8 +62,6 @@ interface PaymentDropInContract {
         fun initialisePaymentFlow(quote: Quote?)
 
         fun showError(@StringRes error: Int, karhooError: KarhooError?)
-
-        fun showPaymentDialog(karhooError: KarhooError?)
 
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 

@@ -12,6 +12,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.address.address
 import com.karhoo.uisdk.booking.booking
 import com.karhoo.uisdk.common.Launch
+import com.karhoo.uisdk.common.getLocale
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
@@ -105,7 +106,7 @@ class AdyenBookingTests : Launch {
         booking(this, null) {
             mediumSleep()
         } result {
-            checkSnackbarWithText( "General request error. [K0001]")
+            checkSnackbarWithText("General request error. [K0001]")
         }
     }
 
@@ -130,19 +131,15 @@ class AdyenBookingTests : Launch {
     }
 
     @Test
-    @AllowFlaky(attempts = 3)
+    //    @AllowFlaky(attempts = 3)
     fun snackbarShowsToUserWhenNoAvailabilityAfterBackgrounding() {
         serverRobot {
-            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY)
+            reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS, TIMEOUT)
+            quoteIdResponse(HTTP_BAD_REQUEST, NO_AVAILABILITY, locale = getLocale())
         }
         booking(this, CLEAN_TRIP_INTENT) {
             mediumSleep()
-            try {
-                //Send app to background
-                pressDeviceBackButton()
-            } catch (ex: NoActivityResumedException) {
-            }
+            returnToHomeScreen()
         }
         booking(this, CLEAN_TRIP_INTENT) {
             shortSleep()
@@ -181,7 +178,7 @@ class AdyenBookingTests : Launch {
     fun fullQuoteListCheckETA() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
-            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP)
+            quoteIdResponse(HTTP_CREATED, QUOTE_LIST_ID_ASAP, locale = getLocale())
             quotesResponse(HTTP_OK, VEHICLES_ASAP)
         }
         booking(this, INITIAL_TRIP_INTENT) {
@@ -402,7 +399,7 @@ class AdyenBookingTests : Launch {
      * Then:    The time should not be cleared
      **/
     @Test
-    @AllowFlaky(attempts = 10)
+    //    @AllowFlaky(attempts = 10)
     fun locateMeDoesNotClearPrebookTime() {
         serverRobot {
             reverseGeocodeResponse(HTTP_OK, REVERSE_GEO_SUCCESS)
@@ -499,10 +496,10 @@ class AdyenBookingTests : Launch {
             shortSleep()
             pressFirstQuote()
             shortSleep()
-            pressCloseBookARideScreen()
+            pressDeviceBackButton()
         } result {
             fullASAPQuotesListCheck()
-            bookARideScreenIsNotVisible()
+            fleetDetailsAreNotVisible()
         }
     }
 
@@ -565,24 +562,24 @@ class AdyenBookingTests : Launch {
      * Then:  I can see: First Name, Last Name, email, country code, mobile number, add card
      * button is not visible
      **/
-//    @Test
-//    @AllowFlaky(attempts = 10)
-//    fun fullCheckProfilePageAdyenUser() {
-//        preferences {
-//            setUserPreferenceAdyen(USER_INFO_ADYEN)
-//        }
-//        booking(this) {
-//            pressMenuButton()
-//        }
-//        menu {
-//            clickOnProfileButton()
-//        }
-//        userProfile {
-//            mediumSleep()
-//        } result {
-//            fullScreenCheckCardRegisteredAdyen()
-//        }
-//    }
+    //    @Test
+    //    @AllowFlaky(attempts = 10)
+    //    fun fullCheckProfilePageAdyenUser() {
+    //        preferences {
+    //            setUserPreferenceAdyen(USER_INFO_ADYEN)
+    //        }
+    //        booking(this) {
+    //            pressMenuButton()
+    //        }
+    //        menu {
+    //            clickOnProfileButton()
+    //        }
+    //        userProfile {
+    //            mediumSleep()
+    //        } result {
+    //            fullScreenCheckCardRegisteredAdyen()
+    //        }
+    //    }
 
     override fun launch(intent: Intent?) {
         intent?.let {

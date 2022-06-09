@@ -10,8 +10,8 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_PICKUP_GEOCODE_DELAY
 import java.util.Timer
 import kotlin.concurrent.schedule
@@ -22,8 +22,8 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
     : BasePresenter<BookingMapMVP.View>(), BookingMapMVP.Presenter, BookingMapStategy.Owner {
 
     private var mainPresenter: BookingMapStategy.Presenter? = null
-    private var currentBookingInfo: BookingInfo? = null
-    private var bookingStatusStateViewModel: BookingStatusStateViewModel? = null
+    private var currentJourneyDetails: JourneyDetails? = null
+    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
     private var mapMoving: Boolean = false
     private var timer: Timer? = null
 
@@ -33,33 +33,33 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
         pickupDropoffPresenter.setOwner(this)
     }
 
-    override fun watchBookingStatus(lifecycleOwner: LifecycleOwner, bookingStatusStateViewModel: BookingStatusStateViewModel) {
-        this.bookingStatusStateViewModel = bookingStatusStateViewModel
-        val observer = Observer<BookingInfo> { currentStatus ->
-            currentBookingInfo = currentStatus
+    override fun watchJourneyDetails(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel) {
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
+        val observer = Observer<JourneyDetails> { currentStatus ->
+            currentJourneyDetails = currentStatus
 
-            if (currentBookingInfo?.pickup != null && currentBookingInfo?.destination != null) {
+            if (currentJourneyDetails?.pickup != null && currentJourneyDetails?.destination != null) {
                 if (mainPresenter !== pickupDropoffPresenter) {
                     mainPresenter = pickupDropoffPresenter
                 }
                 addMarkers()
-                moveToMarker(currentBookingInfo?.pickup, currentBookingInfo?.destination)
-            } else if (currentBookingInfo?.pickup != null && currentBookingInfo?.destination == null) {
+                moveToMarker(currentJourneyDetails?.pickup, currentJourneyDetails?.destination)
+            } else if (currentJourneyDetails?.pickup != null && currentJourneyDetails?.destination == null) {
                 if (mainPresenter !== pickupOnlyPresenter) {
                     mainPresenter = pickupOnlyPresenter
-                    setPickupLocation(currentBookingInfo?.pickup)
+                    setPickupLocation(currentJourneyDetails?.pickup)
                 }
-                moveToMarker(currentBookingInfo?.pickup, currentBookingInfo?.destination)
-            } else if (!mapMoving && currentBookingInfo?.pickup == null) {
+                moveToMarker(currentJourneyDetails?.pickup, currentJourneyDetails?.destination)
+            } else if (!mapMoving && currentJourneyDetails?.pickup == null) {
                 view?.doReverseGeolocate()
             }
         }
-        bookingStatusStateViewModel.viewStates().observe(lifecycleOwner, observer)
+        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, observer)
     }
 
     private fun addMarkers() {
-        val pickup = currentBookingInfo?.pickup?.position
-        val dropOff = currentBookingInfo?.destination?.position
+        val pickup = currentJourneyDetails?.pickup?.position
+        val dropOff = currentJourneyDetails?.destination?.position
 
         if (pickup != null) {
             view?.addMarkers(pickup, dropOff)
@@ -84,7 +84,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
 
     override fun setPickupLocation(pickupLocation: LocationInfo?) {
         if (!mapMoving) {
-            bookingStatusStateViewModel?.process(AddressBarViewContract.AddressBarEvent
+            journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent
                     .PickUpAddressEvent(pickupLocation))
         }
     }
