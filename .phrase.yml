@@ -1,0 +1,94 @@
+phrase:
+  project_id: 92ec189a9ad1cabe44dec80b9762c592
+  push:
+    sources:
+    - file: ./uisdk/src/main/res/values/strings.xml
+      params:
+        file_format: xml
+  pull:
+    targets:
+    - file: ./uisdk/src/main/res/values/strings.xml
+      params:
+        file_format: xml
+        locale_id: 65a32749b3e494d1dad426b0f9ab1495
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-de/strings.xml
+      params:
+        file_format: xml
+        locale_id: 6a6bb7d20fe2c9c3db39a2cda58c25cd
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-es/strings.xml
+      params:
+        file_format: xml
+        locale_id: e113df71ab432c4ab546b8594876343d
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-fr/strings.xml
+      params:
+        file_format: xml
+        locale_id: 0617288f6a7614269b47e7c09b9211e2
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-it/strings.xml
+      params:
+        file_format: xml
+        locale_id: e01b27d1079f856f34dc1a3cbc00437c
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-nl/strings.xml
+      params:
+        file_format: xml
+        locale_id: ecae474b7fc75b9c320264696fcae1dc
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+## DUPLICATED VALUES FOR ADYEN
+    - file: ./uisdk/src/main/res/values-en-rGB/strings.xml
+      params:
+        file_format: xml
+        locale_id: 65a32749b3e494d1dad426b0f9ab1495
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-de-rDE/strings.xml
+      params:
+        file_format: xml
+        locale_id: 6a6bb7d20fe2c9c3db39a2cda58c25cd
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-es-rES/strings.xml
+      params:
+        file_format: xml
+        locale_id: e113df71ab432c4ab546b8594876343d
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-fr-rFR/strings.xml
+      params:
+        file_format: xml
+        locale_id: 0617288f6a7614269b47e7c09b9211e2
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-it-rIT/strings.xml
+      params:
+        file_format: xml
+        locale_id: e01b27d1079f856f34dc1a3cbc00437c
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true
+    - file: ./uisdk/src/main/res/values-nl-rNL/strings.xml
+      params:
+        file_format: xml
+        locale_id: ecae474b7fc75b9c320264696fcae1dc
+        include_empty_translations: true
+        format_options:
+          escape_linebreaks: true

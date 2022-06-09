@@ -7,7 +7,7 @@ import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.address.AddressService
 import com.karhoo.sdk.call.Call
-import com.karhoo.uisdk.screen.booking.domain.address.BookingStatusStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.atLeastOnce
@@ -29,7 +29,7 @@ class PickupOnlyPresenterTest {
 
     internal var addressService: AddressService = mock()
     internal var owner: BookingMapStategy.Owner = mock()
-    internal var bookingStatusStateViewModel: BookingStatusStateViewModel = mock()
+    internal var journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
     internal var locationDetails: LocationInfo = mock()
     internal var locationDetailsCall: Call<LocationInfo> = mock()
 

@@ -5,7 +5,7 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 
@@ -64,7 +64,7 @@ internal class QuotesListPresenter(view: QuotesListMVP.View, private val analyti
         analytics?.fleetsShown(quoteId, if (isExpanded) 4 else 2)
     }
 
-    override fun watchBookingStatus() = Observer<BookingInfo> { currentStatus ->
+    override fun watchJourneyDetails() = Observer<JourneyDetails> { currentStatus ->
         currentStatus?.let {
             isPrebook = it.date != null
             hasDestination = currentStatus.destination != null

@@ -3,7 +3,7 @@ package com.karhoo.uisdk.screen.booking.quotes.mocks
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.quotes.QuotesListMVP
 
@@ -12,7 +12,7 @@ class QuotesListViewMock: QuotesListMVP.View {
 
     override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) { /** do nothing **/ }
 
-    override fun destinationChanged(bookingInfo: BookingInfo) { /** do nothing **/ }
+    override fun destinationChanged(journeyDetails: JourneyDetails) { /** do nothing **/ }
 
     override fun updateList(quoteList: List<Quote>) { /** do nothing **/ }
 

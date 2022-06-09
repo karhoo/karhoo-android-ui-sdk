@@ -4,7 +4,6 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
 import java.util.Date
 
 @Suppress("TooManyFunctions")
@@ -38,13 +37,13 @@ interface Analytics {
 
     fun bookingScreenOpened()
 
-    fun quoteListOpened(bookingInfo: BookingInfo?)
-
     fun checkoutOpened(quote: Quote)
 
     fun paymentSucceed()
 
     fun paymentFailed(details: String)
+
+    fun paymentFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
 
     fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 

@@ -12,7 +12,7 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragment
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.domain.address.BookingInfo
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
@@ -33,23 +33,35 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        extras?.let { extras ->
-            val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
+        if(savedInstanceState != null){
+            fragment = supportFragmentManager.getFragment(savedInstanceState, CHECKOUT_FRAGMENT) as CheckoutFragment
+            supportFragmentManager.beginTransaction().replace(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+                .commit()
+        }
+        else{
+            extras?.let { extras ->
+                val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
 
-            quote?.let {
-                removeIfCheckoutFragmentExists()
-                val ft = supportFragmentManager.beginTransaction()
+                quote?.let {
+                    removeIfCheckoutFragmentExists()
+                    val ft = supportFragmentManager.beginTransaction()
 
-                fragment = CheckoutFragment.newInstance(extras)
+                    fragment = CheckoutFragment.newInstance(extras)
 
-                ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                    .commit()
+                    ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+                        .commit()
+                } ?: run {
+                    finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
+                }
             } ?: run {
                 finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
             }
-        } ?: run {
-            finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        supportFragmentManager.putFragment(outState, CHECKOUT_FRAGMENT, fragment)
     }
 
     fun removeIfCheckoutFragmentExists(){
@@ -129,12 +141,12 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
-         * By passing booking status into the Booking activity it will automatically prefill the origin
+         * By passing journey details into the Booking activity it will automatically prefill the origin
          * destination and date of the desired trip. This will only use the details available inside
-         * the BookingInfo object.
+         * the JourneyDetails object.
          */
-        fun bookingInfo(bookingInfo: BookingInfo): Builder {
-            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, bookingInfo)
+        fun journeyDetails(journeyDetails: JourneyDetails): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, journeyDetails)
             return this
         }
 
@@ -201,5 +213,6 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_ERROR = 10
         const val BOOKING_CHECKOUT_ERROR_KEY = "BOOKING_CHECKOUT_ERROR_KEY"
         const val BOOKING_CHECKOUT_ERROR_NO_QUOTE = "BOOKING_CHECKOUT_ERROR_NO_QUOTE_KEY"
+        private const val CHECKOUT_FRAGMENT = "CHECKOUT_FRAGMENT"
     }
 }

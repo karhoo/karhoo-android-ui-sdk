@@ -13,7 +13,6 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.util.extension.isGuest
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
@@ -24,10 +23,9 @@ class BookingPaymentView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-                                                  ) : LinearLayout(context, attrs, defStyleAttr),
-                                                      BookingPaymentContract.View,
-                                                      BookingPaymentContract.Widget,
-                                                      PaymentDropInContract.Actions {
+) : LinearLayout(context, attrs, defStyleAttr),
+    BookingPaymentContract.View,
+    PaymentDropInContract.Actions {
 
     private var presenter: BookingPaymentContract.Presenter? = BookingPaymentPresenter(this)
 
@@ -70,24 +68,20 @@ class BookingPaymentView @JvmOverloads constructor(
         cardActions?.handleViewVisibility(visibility)
     }
 
-    override fun setPaymentViewVisibility() {
-        presenter?.getPaymentViewVisibility()
-    }
-
     private fun getCustomisationParameters(
         context: Context,
         attr: AttributeSet?,
         defStyleAttr: Int
-                                          ) {
+    ) {
         val typedArray = context.obtainStyledAttributes(
             attr, R.styleable.BookingPaymentView,
             defStyleAttr, R.style.KhPaymentView
-                                                       )
+        )
         addCardIcon = typedArray.getResourceId(
             R.styleable.BookingPaymentView_addCardIcon, R
                 .drawable
                 .uisdk_ic_plus
-                                              )
+        )
     }
 
     private fun changeCard() {
@@ -111,8 +105,7 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     private fun bindViews(cardType: CardType?, number: String) {
-        cardNumberText.text = if (isGuest() && presenter?.getPaymentProviderType() ==
-                ProviderType.BRAINTREE) number else "•••• $number"
+        cardNumberText.text = if (number.contains("••••")) number else "•••• $number"
         setCardType(cardType)
     }
 
@@ -120,7 +113,7 @@ class BookingPaymentView @JvmOverloads constructor(
         KarhooApi.userStore.savedPaymentInfo?.let {
             changeCardLabel.visibility = visibility
         } ?: run {
-            if(hasValidPayment)
+            if (hasValidPayment)
                 changeCardLabel.visibility = GONE
             else
                 changeCardLabel.visibility = visibility
@@ -132,7 +125,7 @@ class BookingPaymentView @JvmOverloads constructor(
             CardType.VISA -> cardLogoImage.background = ContextCompat.getDrawable(
                 context, R.drawable
                     .uidsk_ic_card_visa
-                                                                                 )
+            )
             CardType.MASTERCARD -> cardLogoImage.background =
                 ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
             CardType.AMEX -> cardLogoImage.background =
@@ -147,10 +140,6 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun showError(error: Int, karhooError: KarhooError?) {
-        paymentActions?.showPaymentFailureDialog(null, karhooError)
-    }
-
-    override fun showPaymentDialog(karhooError: KarhooError?) {
         paymentActions?.showPaymentFailureDialog(null, karhooError)
     }
 
@@ -170,7 +159,7 @@ class BookingPaymentView @JvmOverloads constructor(
             paymentLayout.setBackgroundResource(
                 R.drawable
                     .uisdk_border_background
-                                               )
+            )
         } else {
             hasValidPayment = false
             cardNumberText.text =
@@ -183,7 +172,7 @@ class BookingPaymentView @JvmOverloads constructor(
             paymentLayout.setBackgroundResource(
                 R.drawable
                     .uisdk_dotted_background
-                                               )
+            )
         }
         paymentActions?.handlePaymentDetailsUpdate()
     }
@@ -192,7 +181,7 @@ class BookingPaymentView @JvmOverloads constructor(
         dropInView?.showPaymentDropInUI(
             context = context, sdkToken = sdkToken, paymentData =
             paymentData, quote = quote
-                                       )
+        )
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
