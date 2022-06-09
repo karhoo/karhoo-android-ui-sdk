@@ -15,22 +15,40 @@ The UI SDK extends our [**Network SDK**](https://github.com/karhoo/karhoo-androi
 For more general information about the SDKs, checkout [**the karhoo developer portal**](https://developer.karhoo.com/docs/build-apps-using-sdks)
 
 ## Installation
+
+Depending on the payment provider that you wish to integrate with, we offer three dependencies, each one containing a different payment provider integration. Only one of them should be used when adding the UISDK to your project
+
 Stable Release
 ```gradle
-implementation 'com.github.karhoo:karhoo-android-ui-sdk:1.6.0'
+dependencies {
+    //... Other project dependencies
+
+    //The -adyen dependency contains the Adyen integration:
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.6.0'
+
+    //The -braintree dependency contains the Braintree integration:
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.6.0'
+
+    //The -full dependency contains both payment providers and it's up to you which payment provider you shall use:
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.6.0'
+
+    //Note that only one dependency from the above three should be integrated into your project
+}
+
 ```
+
 Canary Release
 ```gradle
 implementation 'com.github.karhoo:karhoo-android-ui-sdk:develop-SNAPSHOT'
 ```
-
 ## Initialisation
 
 There are a few things the UI SDK needs to know before you can get started such as what environment to connect to, or what kind of authentication method to use.
-To configure the UISDK from version 1.5.7 and above, you will need to provide an implementation of our KarhooUISDKConfiguration interface (e.g. KarhooConfig: KarhooUISDKConfiguration) and the desired payment provider
+To configure the SDK you will need to provide an implementation of our KarhooUISDKConfiguration interface. This lets our SDK grab certain dependencies and configuration settings.
 
 ```kotlin
-class KarhooUIConfig(val context: Context): KarhooUISDKConfiguration {
+class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun logo(): Drawable? {
         return context.getDrawable(R.drawable.your-logo)
@@ -49,8 +67,13 @@ class KarhooUIConfig(val context: Context): KarhooUISDKConfiguration {
     }
 }
 
-// register configuration in your Application file
-KarhooUISDK.setConfiguration(KarhooConfig(applicationContext))
+// Set the payment provider and register the configuration in your Application file
+
+val config = KarhooConfig(applicationContext)
+config.paymentManager = braintreePaymentManager
+
+KarhooUISDK.setConfiguration(config)
+
 ```
 
 With this configuration the UISDK can be initialised in your Activities/Fragments. This will also ensure the network layer (KarhooSDK) is initialised and configured properly.
