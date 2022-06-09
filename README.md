@@ -69,12 +69,20 @@ class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     }
 }
 
-// Set the payment provider and register the configuration in your Application file
+// Then set the payment provider and register the configuration in your Application file
 
-val config = KarhooConfig(applicationContext)
-config.paymentManager = braintreePaymentManager
+// The payment provider's view needs to be instantiated. It can be AdyenPaymentView or BraintreePaymentView depending on the PSP choice
+// Adyen integration
+val paymentManager = AdyenPaymentManager()
+paymentManager.paymentProviderView = AdyenPaymentView()
 
-KarhooUISDK.setConfiguration(config)
+// Braintree integration
+val paymentManager = BraintreePaymentManager()
+paymentManager.paymentProviderView = BraintreePaymentView()
+
+// Later down the line
+KarhooUISDK.setConfiguration(KarhooConfig(applicationContext), paymentManager)
+
 
 ```
 
