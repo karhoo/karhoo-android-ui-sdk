@@ -295,6 +295,11 @@
     <string name="kh_uisdk_network_error">Sembra che ci siano problemi di connessione alla rete</string>
     <string name="kh_uisdk_new_ride">NUOVA CORSA</string>
     <string name="kh_uisdk_next">Successivo</string>
+    <string name="kh_uisdk_no_availability">Non siamo ancora qui! Contattaci se hai suggerimenti per le flotte locali.</string>
+    <string name="kh_uisdk_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
+    <string name="kh_uisdk_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Grazie per aver consigliato una flotta nella tua zona. Per ottenere la copertura nella tua zona il più velocemente possibile, ti preghiamo di fornirci l\'area e il nome della compagnia di trasporto.\nLa zona:\nTempo di flotta:</string>
+    <string name="kh_uisdk_no_coverage_title">Raccomandazione per la flotta</string>
     <string name="kh_uisdk_no_destination">Nessuna destinazione</string>
     <string name="kh_uisdk_no_results_found">Siamo spiacenti, la prenotazione immediata non è disponibile per questa destinazione, ma puoi prenotare in anticipo per il tuo prossimo viaggio!</string>
     <string name="kh_uisdk_no_results_label">Nessun risultato</string>
