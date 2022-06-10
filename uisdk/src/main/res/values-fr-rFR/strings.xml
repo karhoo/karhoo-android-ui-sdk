@@ -271,8 +271,11 @@
     <string name="kh_uisdk_network_error">Nous avons des difficultés de connection</string>
     <string name="kh_uisdk_new_ride">NOUVELLE COURSE</string>
     <string name="kh_uisdk_next">Suivant</string>
+    <string name="kh_uisdk_no_availability">Nous n\'avons pas encore de flottes dans cette zone. Contactez-nous pour nous en suggérer.</string>
     <string name="kh_uisdk_no_availability_subtitle">Veuillez sélectionner une autre fois</string>
     <string name="kh_uisdk_no_availability_title">Aucune disponibilité pour l’heure demandée</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Merci de recommander une flotte dans votre région. Pour obtenir une couverture dans votre région le plus rapidement possible, veuillez nous fournir la région et le nom de la société de transport.\nAire:\nTemps de flotte:</string>
+    <string name="kh_uisdk_no_coverage_title">Recommandation de flotte</string>
     <string name="kh_uisdk_no_destination">Aucune destination</string>
     <string name="kh_uisdk_no_results_found">Aucune course disponible à l\'horaire demandé. Veuillez modifier votre horaire.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
