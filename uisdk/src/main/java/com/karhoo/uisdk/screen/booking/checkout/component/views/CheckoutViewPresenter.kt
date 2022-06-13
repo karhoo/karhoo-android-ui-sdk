@@ -239,8 +239,7 @@ internal class CheckoutViewPresenter(
                         is Resource.Failure -> onTripBookFailure(result.error)
                     }
                 }
-            }
-    }
+        }
 
     private fun getBookingMetadataMap(
         identifier: String,
