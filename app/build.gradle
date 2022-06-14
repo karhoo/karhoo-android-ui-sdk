@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.karhoo.samples.uisdk.dropin"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -43,10 +43,27 @@ android {
         buildConfigField("String", "LOYALTY_CLIENT_ID", (secureProps.getProperty("LOYALTY_CLIENT_ID") ?: '""'))
         buildConfigField("String", "LOYALTY_CLIENT_SCOPE", (secureProps.getProperty("LOYALTY_CLIENT_SCOPE") ?: '""'))
         buildConfigField("String", "LOYALTY_AUTH_TOKEN", (secureProps.getProperty("LOYALTY_AUTH_TOKEN") ?: '""'))
+        missingDimensionStrategy 'uisdk', 'full'
 
+    }
+    flavorDimensions "paymentProvider"
+
+    productFlavors {
+        adyen {
+
+        }
+        braintree {
+
+        }
+        full {
+
+        }
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -62,9 +79,10 @@ android {
 
     //Add the source set from the UISDK for use in the UI Tests in the App layer
     sourceSets {
-        androidTest.java.srcDirs += ["${project(':uisdk').projectDir}/src/androidTest/java"]
+        androidTest.java.srcDirs += ["${project(':uisdk').projectDir}/java/androidTest/java"]
     }
 }
+
 
 dependencies {
     implementation project(path: ':uisdk')

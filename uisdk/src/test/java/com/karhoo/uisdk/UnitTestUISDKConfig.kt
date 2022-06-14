@@ -5,11 +5,17 @@ import android.graphics.drawable.Drawable
 import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
-class UnitTestUISDKConfig(private val context: Context, private val authenticationMethod:
-AuthenticationMethod =
-        AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true) :
-        KarhooUISDKConfiguration {
+class UnitTestUISDKConfig(
+    private val context: Context, private val authenticationMethod:
+    AuthenticationMethod =
+        AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true
+) :
+    KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun logo(): Drawable? {
         return null
@@ -37,21 +43,40 @@ AuthenticationMethod =
 
     companion object {
         fun setGuestAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                           context,
-                                                                                           authenticationMethod = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")))
+            KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                    context =
+                    context,
+                    authenticationMethod = AuthenticationMethod.Guest(
+                        "identifier",
+                        "referer",
+                        "guestOrganisationId"
+                    )
+                )
+            )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
 
         fun setKarhooAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                           context,
-                                                                                           authenticationMethod = AuthenticationMethod.KarhooUser()))
+
+            KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                    context = context,
+                    authenticationMethod = AuthenticationMethod.KarhooUser()
+                )
+            )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = BraintreePaymentManager()
         }
 
         fun setTokenAuthentication(context: Context) {
-            KarhooUISDKConfigurationProvider.setConfig(configuration = UnitTestUISDKConfig(context =
-                                                                                           context,
-                                                                                           authenticationMethod = AuthenticationMethod.TokenExchange("clientId", "scope")))
+            KarhooUISDKConfigurationProvider.setConfig(
+                configuration = UnitTestUISDKConfig(
+                    context =
+                    context,
+                    authenticationMethod = AuthenticationMethod.TokenExchange("clientId", "scope")
+                )
+            )
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
     }
 }

@@ -152,6 +152,9 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
                     clearDestinationInView()
                 }
 
+                it.date?.let { date ->
+                    view?.displayPrebookTime(date)
+                }
             }
         }
     }

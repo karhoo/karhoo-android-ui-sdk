@@ -107,6 +107,7 @@
     <string name="kh_uisdk_enter_pickup">Enter pickup</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Erase address</string>
+    <string name="kh_uisdk_error">Error</string>
     <string name="kh_uisdk_error_cannot_create_user">There seems to be an issue registering your account. Please try again.</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
     <string name="kh_uisdk_estimated_arrival_time">Estimated arrival time</string>
@@ -127,13 +128,36 @@
     <string name="kh_uisdk_feedback_title">Please, tell us more about your trip</string>
     <string name="kh_uisdk_fees_and_taxes_included">Taxes and fees included</string>
     <string name="kh_uisdk_filter">Filter</string>
+    <string name="kh_uisdk_filter_all">All</string>
+    <string name="kh_uisdk_filter_berline">Berline</string>
+    <string name="kh_uisdk_filter_bike">Bike</string>
     <string name="kh_uisdk_filter_cancellation_and_waiting_time">Cancellation and waiting time</string>
+    <string name="kh_uisdk_filter_child_seat">Child seat</string>
+    <string name="kh_uisdk_filter_driver_details">Driver details</string>
+    <string name="kh_uisdk_filter_eco_friendly">Eco-friendly</string>
+    <string name="kh_uisdk_filter_electric">Electric</string>
+    <string name="kh_uisdk_filter_executive">Executive</string>
+    <string name="kh_uisdk_filter_fight_tracking">Flight tracking</string>
+    <string name="kh_uisdk_filter_fleet_capabilities">Fleet Capabilities</string>
     <string name="kh_uisdk_filter_free_cancellation">Free cancellation</string>
     <string name="kh_uisdk_filter_free_waiting_time">Free waiting time</string>
+    <string name="kh_uisdk_filter_gps_tracking">GPS tracking</string>
+    <string name="kh_uisdk_filter_hybrid">Hybrid</string>
     <string name="kh_uisdk_filter_luggages">Luggage(s)</string>
+    <string name="kh_uisdk_filter_luxury">Luxury</string>
+    <string name="kh_uisdk_filter_moto">Moto</string>
     <string name="kh_uisdk_filter_page_results">View all %s results</string>
     <string name="kh_uisdk_filter_passengers">Passenger(s)</string>
     <string name="kh_uisdk_filter_quote_types">Quote types</string>
+    <string name="kh_uisdk_filter_standard">Standard</string>
+    <string name="kh_uisdk_filter_taxi">Taxi</string>
+    <string name="kh_uisdk_filter_train_tracking">Train tracking</string>
+    <string name="kh_uisdk_filter_van">Van</string>
+    <string name="kh_uisdk_filter_vehicle_class">Vehicle Class</string>
+    <string name="kh_uisdk_filter_vehicle_details">Vehicle details</string>
+    <string name="kh_uisdk_filter_vehicle_extras">Vehicle Extras</string>
+    <string name="kh_uisdk_filter_vehicle_types">Vehicle Types</string>
+    <string name="kh_uisdk_filter_wheelchair">Wheelchair</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!-- Fare type -->
@@ -182,7 +206,7 @@
     <string name="kh_uisdk_K2001">Could not get address</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Could not get estimates</string>
-    <string name="kh_uisdk_K3002">Could not get estimates (no availability found within requested area)</string>
+    <string name="kh_uisdk_K3002">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_K3003">Could not get estimates (could not find specified quote)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Could not book trip</string>
@@ -271,12 +295,13 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
+    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
-    <string name="kh_uisdk_no_coverage_title" translatable="false">We don\'t have any fleets in this area yet.</string>
-    <string name="kh_uisdk_no_coverage_subtitle" translatable="false">%s to suggest some.</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Thank you for recommending a fleet in your area. To get coverage in your area as fast as possible, please provide us with area and the name of transportation company.\nArea:\nFleet time:</string>
+    <string name="kh_uisdk_no_coverage_title">Fleet recommendation</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
-    <string name="kh_uisdk_no_results_found">No availability for the requested time. Please choose a different time.</string>
+    <string name="kh_uisdk_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>
@@ -338,6 +363,8 @@
     <string name="kh_uisdk_quotes_error_missing_addresses_title">Pick up or drop-off address is missing</string>
     <string name="kh_uisdk_quotes_error_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Please change your filter selection.</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_title">No results after filtering.</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Please change one of the addresses to access the quotes</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Departure and destination addresses are similar</string>
     <string name="kh_uisdk_rate_trip_label">How would you rate your trip?</string>

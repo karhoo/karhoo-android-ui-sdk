@@ -24,13 +24,13 @@ platform :android do
 
   desc "Runs all the unit tests"
   lane :unit_tests do
-    gradle(task: "testDebug")
+    gradle(task: "testFullDebug")
     slack_result(message: "*Karhoo Android UISDK* passed unit testing")
   end
 
   desc "Runs lint and detekt"
   lane :linting do
-    gradle(task: "lintRelease")
+    gradle(task: "lintFullRelease")
     gradle(task: "detekt")
     slack_result(message: "*Karhoo Android UISDK* passed detekt and lint")
   end
