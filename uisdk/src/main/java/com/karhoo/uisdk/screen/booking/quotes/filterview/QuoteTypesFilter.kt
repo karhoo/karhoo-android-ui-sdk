@@ -2,15 +2,15 @@ package com.karhoo.uisdk.screen.booking.quotes.filterview
 
 import com.karhoo.sdk.api.model.Quote
 
-class QuoteTypesFilter (selectedTypes: ArrayList<String>) : MultiSelectFilter(selectedTypes) {
+class QuoteTypesFilter (selectedTypes: ArrayList<MultiSelectData>) : MultiSelectFilter(selectedTypes) {
 
     override fun meetsCriteria(quote: Quote): Boolean {
         if (selectedTypes.size == 0) {
             return true
         }
-        return (quote.quoteType.ordinal == 0 && selectedTypes.contains(FIXED_TAG))
+        return (quote.quoteType.ordinal == 0 && selectedTypes.any { it.fixedTag?.contains(FIXED_TAG) == true })
                 ||
-                (quote.quoteType.ordinal == 1 && selectedTypes.contains(ESTIMATED_TAG))
+                (quote.quoteType.ordinal == 1 && selectedTypes.any { it.fixedTag?.contains(ESTIMATED_TAG) == true })
     }
 
     companion object {

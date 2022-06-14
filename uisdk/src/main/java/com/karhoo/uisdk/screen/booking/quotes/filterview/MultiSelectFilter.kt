@@ -1,12 +1,12 @@
 package com.karhoo.uisdk.screen.booking.quotes.filterview
 
-open class MultiSelectFilter(var selectedTypes: ArrayList<String>): IFilter {
+open class MultiSelectFilter(var selectedTypes: ArrayList<MultiSelectData>): IFilter {
 
-    fun addSelected(choice: String){
+    fun addSelected(choice: MultiSelectData){
         selectedTypes.add(choice)
     }
 
-    fun removeSelected(choice: String){
+    fun removeSelected(choice: MultiSelectData){
         selectedTypes.remove(choice)
     }
 
@@ -14,5 +14,8 @@ open class MultiSelectFilter(var selectedTypes: ArrayList<String>): IFilter {
         selectedTypes.clear()
     }
 
-    lateinit var typeValues: HashMap<String, String>
+    override val isFilterApplied: Boolean?
+        get() { return selectedTypes.isNotEmpty() }
+
+    lateinit var typeValues: ArrayList<MultiSelectData>
 }

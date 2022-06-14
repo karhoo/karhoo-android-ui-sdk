@@ -22,19 +22,20 @@ class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
             value?.invoke()
         }
 
-    var choices: HashMap<String, String> = HashMap()
+    var choices = ArrayList<MultiSelectData>()
         set(value) {
             field = value
-            for((key, mapValue) in choices){
+            value.forEach { data ->
                 val box = CheckBox(ContextThemeWrapper(context, R.style.KhFilterViewCheckBox))
-                box.text = key
-                if(filter?.selectedTypes?.contains(mapValue) == true)
+                box.text = data.text
+                if(filter?.selectedTypes?.map { it.fixedTag }?.contains(data.fixedTag) == true)
                     box.isChecked = true
+
                 box.setOnCheckedChangeListener { _, isChecked ->
                     if(isChecked)
-                        filter?.addSelected(mapValue.lowercase())
+                        filter?.addSelected(data)
                     else
-                        filter?.removeSelected(mapValue.lowercase())
+                        filter?.selectedTypes?.remove(filter?.selectedTypes?.firstOrNull { it.fixedTag == data.fixedTag })
                     delegate?.invoke()
                 }
                 filterViewItemCheckboxGroup.addView(box)

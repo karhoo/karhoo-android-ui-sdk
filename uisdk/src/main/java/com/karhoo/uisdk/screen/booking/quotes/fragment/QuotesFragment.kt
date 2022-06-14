@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.quotes.fragment
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
@@ -257,6 +259,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun updateList(quoteList: List<Quote>) {
         showFilteringWidgets(quoteList.isNotEmpty())
+        if(quotesFilterWidget.isVisible)
+            quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
     }
 
@@ -414,5 +418,18 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun onFiltersApplied() {
         availabilityProvider?.filterVehicleListByFilterChain(filterChain)
+        val nrOfFiltersApplied = filterChain.filters.filter { it.isFilterApplied == true }.size
+        if(nrOfFiltersApplied != 0){
+            quotesFilterByButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_accent))
+            quotesFilterByButton.iconTint = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_accent))
+            val textToShow = "${resources.getString(R.string.kh_uisdk_filter)}($nrOfFiltersApplied)"
+            quotesFilterByButton.text = textToShow
+            quotesFilterByButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.kh_uisdk_quote_list_filter_by_applied_button)
+        }else{
+            quotesFilterByButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
+            quotesFilterByButton.iconTint = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.textColor))
+            quotesFilterByButton.text = resources.getString(R.string.kh_uisdk_filter)
+            quotesFilterByButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.kh_uisdk_quote_list_sort_by_button)
+        }
     }
 }
