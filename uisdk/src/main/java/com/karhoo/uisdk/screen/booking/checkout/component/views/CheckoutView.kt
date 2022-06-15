@@ -156,6 +156,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
+    fun getPassengerDetails(): PassengerDetails? {
+        return passengersDetailLayout.retrievePassenger()
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         if (holdOpenForPaymentFlow) {
@@ -349,10 +353,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
     }
 
-    override fun showPaymentDialog(error: KarhooError?) {
-        showPaymentFailureDialog(null, error)
-    }
-
     override fun showWebView(url: String?) {
         webViewListener.showWebViewOnPress(url)
     }
@@ -493,7 +493,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         val reasonId = returnErrorStringOrLogoutIfRequired(result.error)
 
                         val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.error_dialog_title,
+                            titleResId = R.string.kh_uisdk_error,
                             messageResId = reasonId,
                             karhooError = null,
                             positiveButton = KarhooAlertDialogAction(

@@ -9,19 +9,17 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration {
+    override lateinit var paymentManager: PaymentManager
 
     override fun context(): Context {
         return context
     }
 
     override fun environment(): KarhooEnvironment {
-        return KarhooEnvironment.Custom(
-                host = BuildConfig.STAGING_HOST,
-                authHost = BuildConfig.STAGING_AUTH_HOST,
-                guestHost = BuildConfig.STAGING_GUEST_HOST
-        )
+        return KarhooEnvironment.Sandbox()
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
