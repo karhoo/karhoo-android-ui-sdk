@@ -107,6 +107,7 @@
     <string name="kh_uisdk_enter_pickup">Inserisci il ritiro</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Cancella indirizzo</string>
+    <string name="kh_uisdk_error">Errore</string>
     <string name="kh_uisdk_error_cannot_create_user">Sembra che ci sia un problema durante la registrazione del tuo account. Per favore riprova.</string>
     <string name="kh_uisdk_error_invalid_password">L\'e-mail o la password che hai inserito non sono corrette</string>
     <string name="kh_uisdk_estimated_arrival_time">Orario di arrivo stimato</string>
@@ -205,7 +206,7 @@
     <string name="kh_uisdk_K2001">Impossibile ottenere l\'indirizzo</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Impossibile ottenere stime</string>
-    <string name="kh_uisdk_K3002">Impossibile ottenere preventivi (nessuna disponibilità trovata nell\'area richiesta)</string>
+    <string name="kh_uisdk_K3002">Siamo spiacenti, la prenotazione immediata non è disponibile per questa destinazione, ma puoi prenotare in anticipo per il tuo prossimo viaggio!</string>
     <string name="kh_uisdk_K3003">Impossibile ottenere le stime (impossibile trovare il preventivo specificato)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Impossibile prenotare il viaggio</string>
@@ -362,6 +363,8 @@
     <string name="kh_uisdk_quotes_error_missing_addresses_title">Manca l\'indirizzo di ritiro o riconsegna</string>
     <string name="kh_uisdk_quotes_error_no_availability_subtitle">Si prega di selezionare un\'altra volta</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">Nessuna disponibilità per l\'orario richiesto</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Si prega di modificare la selezione del filtro.</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_title">Nessun risultato dopo il filtraggio.</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Si prega di modificare uno degli indirizzi per accedere ai preventivi</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Gli indirizzi di partenza e di destinazione sono simili</string>
     <string name="kh_uisdk_rate_trip_label">Come valuteresti il tuo viaggio?</string>

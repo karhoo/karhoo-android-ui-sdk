@@ -107,6 +107,7 @@
     <string name="kh_uisdk_enter_pickup">Ophaallocatie</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Wis adres</string>
+    <string name="kh_uisdk_error">Fout</string>
     <string name="kh_uisdk_error_cannot_create_user">Er lijkt een probleem te zijn met het registreren van uw account. Probeer het opnieuw.</string>
     <string name="kh_uisdk_error_invalid_password">Het e-mailadres of wachtwoord dat je hebt ingevoerd is onjuist</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschatte aankomsttijd</string>
@@ -205,7 +206,7 @@
     <string name="kh_uisdk_K2001">Kon adres niet krijgen</string>
     <!-- Quotes errors, K3xxx -->
     <string name="kh_uisdk_K3001">Kan geen schattingen krijgen</string>
-    <string name="kh_uisdk_K3002">Kan geen schattingen krijgen (geen beschikbaarheid gevonden in het gevraagde gebied)</string>
+    <string name="kh_uisdk_K3002">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
     <string name="kh_uisdk_K3003">Kan geen schattingen krijgen (kon gespecificeerde offerte niet vinden)</string>
     <!-- Bookings errors, K4xxx -->
     <string name="kh_uisdk_K4001">Kon reis niet boeken</string>
@@ -362,6 +363,8 @@
     <string name="kh_uisdk_quotes_error_missing_addresses_title">Ophaal- of afleveradres ontbreekt</string>
     <string name="kh_uisdk_quotes_error_no_availability_subtitle">Selecteer een ander tijdstip</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Wijzig uw filterselectie.</string>
+    <string name="kh_uisdk_quotes_error_no_results_after_filter_title">Geen resultaat na filteren.</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Vertrek- en bestemmingsadressen zijn vergelijkbaar</string>
     <string name="kh_uisdk_rate_trip_label">Hoe zou u uw reis beoordelen?</string>

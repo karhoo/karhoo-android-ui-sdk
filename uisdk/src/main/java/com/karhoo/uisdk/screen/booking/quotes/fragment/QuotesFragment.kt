@@ -258,7 +258,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        showFilteringWidgets(quoteList.isNotEmpty())
+        showNoResultsAfterFilterError()
         if(quotesFilterWidget.isVisible)
             quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
@@ -294,10 +294,19 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         quotesRecyclerView.showNoAddressesError(show)
     }
 
+    override fun showNoResultsAfterFilterError() {
+        if(dataModel?.quotes?.size == 0 && filterChain.filters.any { it.isFilterApplied == true }){
+            showFilteringWidgets(true)
+            quotesRecyclerView.showNoResultsAfterFilterError(true)
+        }
+        else {
+            quotesRecyclerView.showNoResultsAfterFilterError(false)
+        }
+    }
+
     private fun showFilteringWidgets(show: Boolean) {
         changeVisibilityOfQuotesSortByButton(show)
         changeVisibilityOfQuotesFilterByButton(show)
-        categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
     }
 
@@ -308,7 +317,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun showList(show: Boolean) {
         changeVisibilityOfQuotesSortByButton(show)
         changeVisibilityOfQuotesFilterByButton(show)
-        categorySelectorWidget.visibility = if (show) VISIBLE else GONE
         quotesTaxesAndFeesLabel.visibility = if (show) VISIBLE else GONE
         // will be modified later
     }
@@ -425,7 +433,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             val textToShow = "${resources.getString(R.string.kh_uisdk_filter)}($nrOfFiltersApplied)"
             quotesFilterByButton.text = textToShow
             quotesFilterByButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.kh_uisdk_quote_list_filter_by_applied_button)
+            if(dataModel?.quotes?.size == 0){
+                showNoResultsAfterFilterError()
+            }
         }else{
+            showNoResultsAfterFilterError()
             quotesFilterByButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
             quotesFilterByButton.iconTint = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.textColor))
             quotesFilterByButton.text = resources.getString(R.string.kh_uisdk_filter)

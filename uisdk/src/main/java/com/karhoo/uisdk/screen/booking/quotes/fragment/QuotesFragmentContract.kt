@@ -31,6 +31,8 @@ interface QuotesFragmentContract {
 
         fun showNoAddressesError(show: Boolean)
 
+        fun showNoResultsAfterFilterError()
+
         fun showSnackbarError(snackbarConfig: SnackbarConfig)
 
         fun provideResources(): Resources
