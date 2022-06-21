@@ -14,15 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 
-const val passengerFilterPosition = 0
-const val luggageFilterPosition = 1
-const val quoteTypesFilterPosition = 2
-const val serviceAgreementsFilterPosition = 3
-const val vehicleTypeFilterPosition = 4
-const val vehicleClassFilterPosition = 5
-const val vehicleExtrasFilterPosition = 6
-const val vehicleEcoFilterPosition = 7
-const val fleetCapabilitiesFilterPosition = 8
 
 class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.View {
 
@@ -359,5 +350,14 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
     companion object {
         const val TAG = "FilterView"
+        const val passengerFilterPosition = 0
+        const val luggageFilterPosition = 1
+        const val quoteTypesFilterPosition = 2
+        const val serviceAgreementsFilterPosition = 3
+        const val vehicleTypeFilterPosition = 4
+        const val vehicleClassFilterPosition = 5
+        const val vehicleExtrasFilterPosition = 6
+        const val vehicleEcoFilterPosition = 7
+        const val fleetCapabilitiesFilterPosition = 8
     }
 }
