@@ -124,7 +124,6 @@ class QuotesRecyclerView @JvmOverloads constructor(
 
         if (!show) {
             quotesListRecycler.visibility = View.VISIBLE
-            quotesErrorView.visibility = View.GONE
         } else {
             setQuotesLoaderVisibility(View.GONE)
             quotesListRecycler.visibility = View.GONE
