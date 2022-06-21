@@ -153,7 +153,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createPassengerNumberedFilter(){
-        filterViewPassengerNumberedFilter.filter = passengersFilter
+        filterViewPassengerNumberedFilter.filter = presenter.filterChain.filters[0] as PassengersFilter
         filterViewPassengerNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_passengers))
         filterViewPassengerNumberedFilter.icon = R.drawable.kh_uisdk_ic_passengers
         filterViewPassengerNumberedFilter.delegate = {
@@ -162,7 +162,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createLuggageNumberedFilter(){
-        filterViewLuggageNumberedFilter.filter = luggageFilter
+        filterViewLuggageNumberedFilter.filter = presenter.filterChain.filters[1] as LuggageFilter
         filterViewLuggageNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_luggages))
         filterViewLuggageNumberedFilter.icon = R.drawable.kh_uisdk_ic_luggage
         filterViewLuggageNumberedFilter.delegate = {
@@ -171,6 +171,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createQuoteTypeFilter(){
+        val quoteTypesFilter = presenter.filterChain.filters[2] as QuoteTypesFilter
         quoteTypesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_fixed_fare)).apply { fixedTag = QuoteTypesFilter.FIXED_TAG })
@@ -186,6 +187,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createServiceAgreementsFilter(){
+        val serviceAgreementsFilter = presenter.filterChain.filters[3] as ServiceAgreementsFilter
         serviceAgreementsFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_filter_free_waiting_time)).apply { fixedTag = ServiceAgreementsFilter.FREE_WAITING_TIME_TAG })
@@ -201,14 +203,15 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleTypeFilter(){
+        val vehicleTypeFilter = presenter.filterChain.filters[4] as VehicleTypeFilter
+
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_standard)).apply { fixedTag = VehicleTypeFilter.STANDARD })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_berline)).apply { fixedTag = VehicleTypeFilter.BERLINE })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_standard)).apply { fixedTag = VehicleTypeFilter.STANDARD })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_saloon)).apply { fixedTag = VehicleTypeFilter.BERLINE })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)).apply { fixedTag = VehicleTypeFilter.VAN })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_moto)).apply { fixedTag = VehicleTypeFilter.MOTO })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_bike)).apply { fixedTag = VehicleTypeFilter.BIKE })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_moto)).apply { fixedTag = VehicleTypeFilter.MOTO })
             }
         }
         filterViewVehicleTypeMultiSelectChipsFilter.filter = vehicleTypeFilter
@@ -220,6 +223,8 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleClassFilter(){
+        val vehicleClassFilter = presenter.filterChain.filters[5] as VehicleClassFilter
+
         vehicleClassFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
@@ -242,10 +247,12 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleExtrasFilter(){
+        val vehicleExtrasFilter = presenter.filterChain.filters[6] as VehicleExtrasFilter
+
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_taxi)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_taxi)).apply {
                     icon = R.drawable.kh_uisdk_ic_car
                     fixedTag = VehicleExtrasFilter.TAXI
                 })
@@ -253,7 +260,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
                     icon = R.drawable.kh_uisdk_ic_tag_child_seat
                     fixedTag = VehicleExtrasFilter.CHILD_SEAT
                 })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_wheelchair)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_wheelchair)).apply {
                     icon = R.drawable.kh_uisdk_ic_wheelchair
                     fixedTag = VehicleExtrasFilter.WHEELCHAIR
                 })
@@ -268,10 +275,12 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleEcoFilter(){
+        val vehicleEcoFilter = presenter.filterChain.filters[7] as VehicleEcoFilter
+
         vehicleEcoFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_electric)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_electric)).apply {
                     icon = R.drawable.kh_uisdk_ic_zap
                     fixedTag = VehicleEcoFilter.ELECTRIC
                 })
@@ -290,18 +299,20 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createFleetCapabilitiesFilter(){
+        val fleetCapabilitiesFilter = presenter.filterChain.filters[8] as FleetCapabilitiesFilter
+
         fleetCapabilitiesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_fight_tracking)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_flight_tracking)).apply {
                     icon = R.drawable.kh_uisdk_ic_plane
                     fixedTag = FleetCapabilitiesFilter.FLIGHT_TRACKING
                 })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_train_tracking)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_train_tracking)).apply {
                     icon = R.drawable.kh_uisdk_ic_train
                     fixedTag = FleetCapabilitiesFilter.TRAIN_TRACKING
                 })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_gps_tracking)).apply {
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_gps_tracking)).apply {
                     icon = R.drawable.kh_uisdk_ic_location_arrow_alt
                     fixedTag = FleetCapabilitiesFilter.GPS_TRACKING
                 })

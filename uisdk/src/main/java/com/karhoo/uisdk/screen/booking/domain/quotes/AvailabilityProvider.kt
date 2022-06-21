@@ -4,12 +4,18 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
+import androidx.lifecycle.LifecycleOwner
+import com.karhoo.sdk.api.service.quotes.QuotesService
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
+import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
+import java.util.*
 
 interface AvailabilityProvider {
+    var shouldRunInBackground: Boolean
 
     fun filterVehicleListByCategory(name: String)
 
-    fun filterVehicleListByFilterChain(filterChain: FilterChain)
+    fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain
 
     fun getNonFilteredVehicles(): List<Quote>
 
@@ -23,8 +29,19 @@ interface AvailabilityProvider {
 
     fun resumeUpdates()
 
+    fun restoreData()
+
     fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails>
 
+    fun setup(quotesService: QuotesService,
+              categoriesViewModel: CategoriesViewModel,
+              liveFleetsViewModel: LiveFleetsViewModel,
+              journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
+              lifecycleOwner: LifecycleOwner,
+              locale: Locale? = null,
+              shouldRestoreData: Boolean = false)
+
+    fun getExistingFilterChain(): FilterChain?
 }
 
 interface AvailabilityHandler {
@@ -33,4 +50,5 @@ interface AvailabilityHandler {
 
     fun handleAvailabilityError(snackbarConfig: SnackbarConfig)
     fun handleSameAddressesError()
+    fun handleNoResultsForFiltersError()
 }

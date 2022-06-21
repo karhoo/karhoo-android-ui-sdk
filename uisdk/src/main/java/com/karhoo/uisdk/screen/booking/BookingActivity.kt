@@ -267,7 +267,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 AddressCodes.DESTINATION -> {
                     addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                    startQuoteListActivity();
+                    startQuoteListActivity(restorePreviousData = false)
                 }
             }
         } else if (resultCode == QuotesActivity.QUOTES_RESULT_OK && data != null) {
@@ -290,7 +290,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
             startCheckoutActivity(data)
         } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED) {
-            startQuoteListActivity()
+            startQuoteListActivity(restorePreviousData = true)
         }
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -423,8 +423,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
         }
     }
-    private fun startQuoteListActivity() {
-        val builder = QuotesActivity.Builder().bookingInfo(journeyDetailsStateViewModel.viewStates().value)
+    private fun startQuoteListActivity(restorePreviousData: Boolean) {
+        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(journeyDetailsStateViewModel.viewStates().value)
         startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
     }
 

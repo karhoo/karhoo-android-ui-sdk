@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.detailsButton
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRating
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRatingLayout
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImageSmall
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.driverArrivalText
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
@@ -62,6 +63,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
         setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)
+        setDriverArrival(isPrebook)
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setCapacity(vehicleDetails.vehicle)
         setRating(vehicleDetails.fleet.rating)
@@ -70,6 +72,10 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         tag = vehicleDetails
 
         setOnClickListener { v -> itemClickListener.onRecyclerItemClicked(v, listPosition, vehicleDetails) }
+    }
+
+    private fun setDriverArrival(isPrebook: Boolean) {
+        driverArrivalText.visibility = if (isPrebook) View.GONE else View.VISIBLE
     }
 
     private fun setRating(rating: FleetRating?) {
