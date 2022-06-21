@@ -25,9 +25,6 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
-import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
-import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityHandler
-import com.karhoo.uisdk.screen.booking.domain.quotes.AvailabilityProvider
 
 @RunWith(MockitoJUnitRunner::class)
 class KarhooAvailabilityTest {

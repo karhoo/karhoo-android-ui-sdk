@@ -14,6 +14,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 
+const val passengerFilterPosition = 0
+const val luggageFilterPosition = 1
+const val quoteTypesFilterPosition = 2
+const val serviceAgreementsFilterPosition = 3
+const val vehicleTypeFilterPosition = 4
+const val vehicleClassFilterPosition = 5
+const val vehicleExtrasFilterPosition = 6
+const val vehicleEcoFilterPosition = 7
+const val fleetCapabilitiesFilterPosition = 8
 
 class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.View {
 
@@ -153,7 +162,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createPassengerNumberedFilter(){
-        filterViewPassengerNumberedFilter.filter = presenter.filterChain.filters[0] as PassengersFilter
+        filterViewPassengerNumberedFilter.filter = presenter.filterChain.filters[passengerFilterPosition] as PassengersFilter
         filterViewPassengerNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_passengers))
         filterViewPassengerNumberedFilter.icon = R.drawable.kh_uisdk_ic_passengers
         filterViewPassengerNumberedFilter.delegate = {
@@ -162,7 +171,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createLuggageNumberedFilter(){
-        filterViewLuggageNumberedFilter.filter = presenter.filterChain.filters[1] as LuggageFilter
+        filterViewLuggageNumberedFilter.filter = presenter.filterChain.filters[luggageFilterPosition] as LuggageFilter
         filterViewLuggageNumberedFilter.setTitle(getString(R.string.kh_uisdk_filter_luggages))
         filterViewLuggageNumberedFilter.icon = R.drawable.kh_uisdk_ic_luggage
         filterViewLuggageNumberedFilter.delegate = {
@@ -171,7 +180,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createQuoteTypeFilter(){
-        val quoteTypesFilter = presenter.filterChain.filters[2] as QuoteTypesFilter
+        val quoteTypesFilter = presenter.filterChain.filters[quoteTypesFilterPosition] as QuoteTypesFilter
         quoteTypesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_fixed_fare)).apply { fixedTag = QuoteTypesFilter.FIXED_TAG })
@@ -187,7 +196,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createServiceAgreementsFilter(){
-        val serviceAgreementsFilter = presenter.filterChain.filters[3] as ServiceAgreementsFilter
+        val serviceAgreementsFilter = presenter.filterChain.filters[serviceAgreementsFilterPosition] as ServiceAgreementsFilter
         serviceAgreementsFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(getString(R.string.kh_uisdk_filter_free_waiting_time)).apply { fixedTag = ServiceAgreementsFilter.FREE_WAITING_TIME_TAG })
@@ -203,7 +212,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleTypeFilter(){
-        val vehicleTypeFilter = presenter.filterChain.filters[4] as VehicleTypeFilter
+        val vehicleTypeFilter = presenter.filterChain.filters[vehicleTypeFilterPosition] as VehicleTypeFilter
 
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
@@ -223,7 +232,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleClassFilter(){
-        val vehicleClassFilter = presenter.filterChain.filters[5] as VehicleClassFilter
+        val vehicleClassFilter = presenter.filterChain.filters[vehicleClassFilterPosition] as VehicleClassFilter
 
         vehicleClassFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
@@ -247,7 +256,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleExtrasFilter(){
-        val vehicleExtrasFilter = presenter.filterChain.filters[6] as VehicleExtrasFilter
+        val vehicleExtrasFilter = presenter.filterChain.filters[vehicleExtrasFilterPosition] as VehicleExtrasFilter
 
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
@@ -275,7 +284,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createVehicleEcoFilter(){
-        val vehicleEcoFilter = presenter.filterChain.filters[7] as VehicleEcoFilter
+        val vehicleEcoFilter = presenter.filterChain.filters[vehicleEcoFilterPosition] as VehicleEcoFilter
 
         vehicleEcoFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
@@ -299,7 +308,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     }
 
     private fun createFleetCapabilitiesFilter(){
-        val fleetCapabilitiesFilter = presenter.filterChain.filters[8] as FleetCapabilitiesFilter
+        val fleetCapabilitiesFilter = presenter.filterChain.filters[fleetCapabilitiesFilterPosition] as FleetCapabilitiesFilter
 
         fleetCapabilitiesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
