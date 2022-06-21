@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.karhoo.samples.uisdk.dropin">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,7 +15,8 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="TEST_GOOGLE_MAPS_API_KEY" />
+            android:value="TEST_GOOGLE_MAPS_API_KEY"
+            tools:replace="android:value"/>
 
         <uses-library
             android:name="org.apache.http.legacy"
