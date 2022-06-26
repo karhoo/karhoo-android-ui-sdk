@@ -154,7 +154,7 @@ class BraintreePaymentPresenterTest {
      * Then:    The view should be asked to show payment UI
      */
     @Test
-    fun `change card pressed and result is successful for test`() {
+    fun `payment view shown when change card pressed and payment methods retrieved successfully`() {
         KarhooUISDKConfigurationProvider.setConfig(
                 configuration = UnitTestUISDKConfig(
                         context = context,
@@ -216,7 +216,7 @@ class BraintreePaymentPresenterTest {
      * Then:    The view should be asked to show an error
      */
     @Test
-    fun `change card pressed and result is unsuccessful`() {
+    fun `error shown when change card pressed`() {
         braintreePaymentPresenter.sdkInit(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
@@ -281,7 +281,7 @@ class BraintreePaymentPresenterTest {
      * Then:    Show payment dialog
      */
     @Test
-    fun `logged in user get nonce failure shows payment dialog`() {
+    fun `error shown when retrieval of a nonce is attempted`() {
         setAuthenticatedUser()
         val price = QuotePrice(currencyCode = DEFAULT_CURRENCY, highPrice =
         EXPECTED_AMOUNT_AS_STRING.toInt())
@@ -305,7 +305,7 @@ class BraintreePaymentPresenterTest {
      * Then:    Three D Secure the nonce
      */
     @Test
-    fun `logged in user get nonce success shows three d secure`() {
+    fun `nonce retrieved for 3ds when retrieval is attempted and it is not null`() {
         setAuthenticatedUser()
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
@@ -349,6 +349,7 @@ class BraintreePaymentPresenterTest {
      * And:     There is data
      * And:     It is a logged in Braintree user request
      * Then:    The payment view is refreshed
+     * Adyen: error shown is activity result is not RESULT_OK or RESULT_CANCELLED
      */
     @Test
     fun `view refreshed for activity result not RESULT_OK for logged in Braintree user`() {
@@ -385,6 +386,7 @@ class BraintreePaymentPresenterTest {
      * And:     There is no data
      * And:     It is a logged in Braintree user request
      * Then:    The payment view is refreshed
+     * Adyen: error shown is activity result is RESULT_OK but there is no data
      */
     @Test
     fun `view refreshed for activity result RESULT_OK with no data for logged in Braintree user`() {
@@ -485,7 +487,7 @@ class BraintreePaymentPresenterTest {
      * Then:    The payment details are updated
      */
     @Test
-    fun `payment details are updated if the add payment call succeeds`() {
+    fun `payment details updated when saved payment info changes and call succeeds`() {
         whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
 
         braintreePaymentPresenter.handleActivityResult(
