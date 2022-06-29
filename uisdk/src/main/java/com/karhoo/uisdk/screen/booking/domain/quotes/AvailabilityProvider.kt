@@ -7,19 +7,14 @@ import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import java.util.*
 
 interface AvailabilityProvider {
     var shouldRunInBackground: Boolean
 
-    fun filterVehicleListByCategory(name: String)
-
     fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain
 
     fun getNonFilteredVehicles(): List<Quote>
-
-    fun setAllCategory(category: String)
 
     fun setAvailabilityHandler(availabilityHandler: AvailabilityHandler)
 
@@ -34,7 +29,6 @@ interface AvailabilityProvider {
     fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails>
 
     fun setup(quotesService: QuotesService,
-              categoriesViewModel: CategoriesViewModel,
               liveFleetsViewModel: LiveFleetsViewModel,
               journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
               lifecycleOwner: LifecycleOwner,

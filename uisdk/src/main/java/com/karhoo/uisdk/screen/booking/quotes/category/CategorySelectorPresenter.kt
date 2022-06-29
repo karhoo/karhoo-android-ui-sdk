@@ -19,7 +19,7 @@ internal class CategorySelectorPresenter(view: CategorySelectorMVP.View)
     }
 
     override fun setVehicleCategory(vehicleType: String) {
-        availabilityProvider?.filterVehicleListByCategory(vehicleType)
+//        availabilityProvider?.filterVehicleListByCategory(vehicleType)
     }
 
     override fun subscribeToAvailableCategories() = Observer<List<Category>> { categories ->
