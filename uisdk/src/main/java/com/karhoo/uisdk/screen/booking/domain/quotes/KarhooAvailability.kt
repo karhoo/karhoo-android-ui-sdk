@@ -29,22 +29,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
 
-private const val MAX_ACCEPTABLE_QTA = 20
+object KarhooAvailability : AvailabilityProvider {
 
-class KarhooAvailability(
-    private val quotesService: QuotesService,
-    private val categoriesViewModel: CategoriesViewModel,
-    private val liveFleetsViewModel: LiveFleetsViewModel,
-    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
-    lifecycleOwner: LifecycleOwner,
-    private val locale: Locale? = null
-) : AvailabilityProvider {
+    private lateinit var quotesService: QuotesService
+    private lateinit var categoriesViewModel: CategoriesViewModel
+    private lateinit var liveFleetsViewModel: LiveFleetsViewModel
+    private lateinit var journeyDetailsStateViewModel: JourneyDetailsStateViewModel
+    private lateinit var lifecycleOwner: LifecycleOwner
+    private var locale: Locale? = null
+    private var filteredList: MutableList<Quote>? = null
+    private var lastDataRetrieved: QuoteList? = null
+    private var restorePreviousData = false
 
-    private var filteredList: MutableList<Quote>? =
-        liveFleetsViewModel.liveFleets.value?.toMutableList()
     private var categoryViewModels: MutableList<Category> = mutableListOf()
     private var availableVehicles: Map<String, List<Quote>> = mutableMapOf()
     private var allCategory: Category? = null
@@ -54,23 +52,48 @@ class KarhooAvailability(
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
     private var analytics: Analytics? = null
     private var filterChain: FilterChain? = null
-    private var lastTimestampDate: Long = 0
     private var refreshDelay: Long = 0
     private var running: Boolean = false
     private var journeyDetails: JourneyDetails? = null
 
-    private val observer = createObservable()
+    private lateinit var observer: androidx.lifecycle.Observer<JourneyDetails>
     private var vehiclesJob: Job? = null
     var quoteListValidityListener: QuotesFragmentContract.QuoteValidityListener? = null
 
-    init {
-        journeyDetailsStateViewModel.viewStates().observe(lifecycleOwner, observer)
+    override var shouldRunInBackground: Boolean = false
+
+    override fun setup(
+        quotesService: QuotesService,
+        categoriesViewModel: CategoriesViewModel,
+        liveFleetsViewModel: LiveFleetsViewModel,
+        journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
+        lifecycleOwner: LifecycleOwner,
+        locale: Locale?,
+        shouldRestoreData: Boolean
+    ) {
+        this.quotesService = quotesService
+        this.categoriesViewModel = categoriesViewModel
+        this.liveFleetsViewModel = liveFleetsViewModel
+        this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
+        this.lifecycleOwner = lifecycleOwner
+        this.locale = locale
+        this.restorePreviousData = shouldRestoreData
+        filteredList = KarhooAvailability.liveFleetsViewModel.liveFleets.value?.toMutableList()
+        observer = createObservable()
+        KarhooAvailability.journeyDetailsStateViewModel.viewStates()
+            .observe(KarhooAvailability.lifecycleOwner, observer)
+    }
+
+    override fun getExistingFilterChain(): FilterChain? {
+        return if(this.filterChain != null)
+            this.filterChain
+        else null
     }
 
 
     override fun cleanup() {
-        cancelVehicleCallback()
-        journeyDetailsStateViewModel.viewStates().removeObserver(observer)
+        filterChain = null
+        lastDataRetrieved = null
     }
 
     override fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails> {
@@ -86,6 +109,12 @@ class KarhooAvailability(
 
     @Suppress("NestedBlockDepth")
     private fun requestVehicleAvailability(journeyDetails: JourneyDetails?) {
+        if (restorePreviousData && lastDataRetrieved != null) {
+            restoreData()
+            restorePreviousData = false
+            return
+        }
+
         running = true
         cancelVehicleCallback()
         journeyDetails?.pickup?.let { bookingStatusPickup ->
@@ -121,15 +150,16 @@ class KarhooAvailability(
         filterVehicles()
     }
 
-    override fun filterVehicleListByFilterChain(filterChain: FilterChain) {
+    override fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain {
         this.filterChain = filterChain
         filterVehicles()
+        return this.filterChain!!
     }
 
     private fun filterVehicles() {
         filterChain?.let {
             getFilteredVehiclesForFilterChain(it)
-        }?: kotlin.run {
+        } ?: kotlin.run {
             if (currentFilter?.isEmpty() == true) {
                 return
             }
@@ -176,10 +206,10 @@ class KarhooAvailability(
     }
 
     private fun createObservable() = androidx.lifecycle.Observer<JourneyDetails> { journeyDetails ->
-        cancelVehicleCallback()
         if (journeyDetails != null && journeyDetails.destination == null
             && categoryViewModels.isNotEmpty()
         ) {
+            cancelVehicleCallback()
             updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
         } else {
             requestVehicleAvailability(journeyDetails)
@@ -194,7 +224,13 @@ class KarhooAvailability(
     private fun quotesCallback() = object : Observer<Resource<QuoteList>> {
         override fun onValueChanged(value: Resource<QuoteList>) {
             when (value) {
-                is Resource.Success -> updateVehicles(value.data)
+                is Resource.Success -> {
+                    handleVehiclePolling(value.data)
+                    if (!shouldRunInBackground) {
+                        updateVehicles(value.data)
+                        shouldRunInBackground = false;
+                    }
+                }
                 is Resource.Failure -> handleAvailabilityError(value.error)
             }
         }
@@ -239,8 +275,7 @@ class KarhooAvailability(
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
-
-        lastTimestampDate = Date().time
+        lastDataRetrieved = vehicles
 
         val calendar: Calendar = Calendar.getInstance()
         calendar.add(Calendar.SECOND, vehicles.validity)
@@ -248,7 +283,6 @@ class KarhooAvailability(
     }
 
     private fun updateVehicles(vehicles: QuoteList) {
-        handleVehiclePolling(vehicles)
 
         var hasQuotes = false
         vehicles.categories.forEach {
@@ -266,6 +300,10 @@ class KarhooAvailability(
             availableVehicles = vehicles.categories
             currentAvailableQuotes()
             filterVehicles()
+        }
+
+        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true){
+            availabilityHandler?.get()?.handleNoResultsForFiltersError()
         }
     }
 
@@ -294,18 +332,20 @@ class KarhooAvailability(
 
     override fun resumeUpdates() {
         if (!running) {
-            if (TimeUnit.MILLISECONDS.toSeconds((Date().time - lastTimestampDate)) < MINIMUM_REFRESH_DURATION_LEFT) {
-                requestVehicleAvailability(journeyDetails)
-            } else {
-                vehiclesJob = GlobalScope.launch {
-                    delay(refreshDelay)
-                    vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
-                }
+            vehiclesJob = GlobalScope.launch {
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
             }
+
+            running = true
         }
     }
 
-    companion object {
-        private const val MINIMUM_REFRESH_DURATION_LEFT = 120
+    override fun restoreData() {
+        if (shouldRunInBackground) {
+            lastDataRetrieved?.let {
+                updateVehicles(it)
+                shouldRunInBackground = false
+            }
+        }
     }
 }

@@ -74,6 +74,11 @@ class QuotesActivity : BaseActivity(), WebViewActions {
             return this
         }
 
+       fun restorePreviousData(restore: Boolean): Builder {
+               extrasBundle.putBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY, restore)
+               return this
+           }
+
         /**
          * Returns a launchable Intent to the configured quotes activity with the given
          * builder parameters in the extras bundle
@@ -99,6 +104,7 @@ class QuotesActivity : BaseActivity(), WebViewActions {
         const val QUOTES_CANCELLED = 22
         const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
         const val LUGGAGE = "LUGGAGE"
+        const val QUOTES_RESTORE_PREVIOUS_DATA_KEY = "QUOTES_SELECTED_DATE"
     }
 
 }

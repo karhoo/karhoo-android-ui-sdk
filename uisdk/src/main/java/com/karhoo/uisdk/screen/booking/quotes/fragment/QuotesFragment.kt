@@ -53,6 +53,12 @@ import com.karhoo.uisdk.screen.booking.quotes.filterview.LuggageFilter
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
 import java.util.Locale
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAllCategory
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAnalytics
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAvailabilityHandler
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RESTORE_PREVIOUS_DATA_KEY
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 class QuotesFragment : Fragment(), QuotesSortView.Listener,
     QuotesFragmentContract.View, LifecycleObserver, FilterDialogPresenter.FilterDelegate {
@@ -84,6 +90,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private lateinit var quotesSortByButton: MaterialButton
     private lateinit var quotesFilterByButton: MaterialButton
     private var isPrebook = false
+    private var restorePreviousData = false;
 
     var filterChain = FilterChain()
 
@@ -140,6 +147,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
         }
+        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) ?: false
 
         quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
         quotesSortByButton.apply {
@@ -160,32 +168,30 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         return view
     }
 
-    fun initializeSortView(){
+    fun initializeSortView() {
         quotesSortWidget = QuotesSortView()
         quotesSortWidget.setListener(this)
     }
 
-    fun initializeFilterView(){
+    fun initializeFilterView() {
         quotesFilterWidget = FilterDialogFragment()
         quotesFilterWidget.setListener(this)
         quotesFilterWidget.createFilterChain(filterChain)
     }
 
-    override fun onPause() {
-        super.onPause()
-        availabilityProvider?.pauseUpdates()
-    }
-
     override fun onResume() {
         super.onResume()
 
-        availabilityProvider?.resumeUpdates()
-    }
+        val shouldRefresh = TimeUnit.MILLISECONDS.toSeconds(
+            (Date().time - (currentValidityDeadlineTimestamp ?: Long.MAX_VALUE))
+        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        availabilityProvider?.cleanup()
+        if (availabilityProvider?.shouldRunInBackground == false || shouldRefresh) {
+            availabilityProvider?.resumeUpdates()
+        } else {
+            availabilityProvider?.restoreData()
+        }
+        onFiltersApplied()
     }
 
     fun subscribeToJourneyDetails(): Observer<JourneyDetails> {
@@ -204,13 +210,13 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
     }
 
-    private fun showSortBy(){
+    private fun showSortBy() {
         activity?.supportFragmentManager?.let {
             quotesSortWidget.show(it, QuotesSortView.TAG)
         }
     }
 
-    private fun showFilters(){
+    private fun showFilters() {
         activity?.supportFragmentManager?.let {
             quotesFilterWidget.show(it, FilterDialogFragment.TAG)
         }
@@ -243,23 +249,22 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         presenter.sortMethodChanged(sortMethod)
     }
 
-    private fun changeVisibilityOfQuotesSortByButton(show: Boolean){
+    private fun changeVisibilityOfQuotesSortByButton(show: Boolean) {
         this::quotesSortByButton.isInitialized.let {
-            if(it)
+            if (it)
                 quotesSortByButton.visibility = if (show && !isPrebook) VISIBLE else GONE
         }
     }
 
-    private fun changeVisibilityOfQuotesFilterByButton(show: Boolean){
+    private fun changeVisibilityOfQuotesFilterByButton(show: Boolean) {
         this::quotesFilterByButton.isInitialized.let {
-            if(it)
+            if (it)
                 quotesFilterByButton.visibility = if (show) VISIBLE else GONE
         }
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        showNoResultsAfterFilterError()
-        if(quotesFilterWidget.isVisible)
+        if (quotesFilterWidget.isVisible)
             quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
     }
@@ -295,11 +300,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     override fun showNoResultsAfterFilterError() {
-        if(dataModel?.quotes?.size == 0 && filterChain.filters.any { it.isFilterApplied == true }){
+        if (dataModel?.quotes?.size == 0 && filterChain.filters.any { it.isFilterApplied == true }) {
             showFilteringWidgets(true)
             quotesRecyclerView.showNoResultsAfterFilterError(true)
-        }
-        else {
+        } else {
             quotesRecyclerView.showNoResultsAfterFilterError(false)
         }
     }
@@ -336,8 +340,16 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
                     currentValidityDeadlineTimestamp ?: 0
                 )
-                bundle.putInt(PASSENGER_NUMBER, (filterChain.filters[0] as PassengersFilter).currentNumber)
+                bundle.putInt(
+                    PASSENGER_NUMBER,
+                    (filterChain.filters[0] as PassengersFilter).currentNumber
+                )
                 bundle.putInt(LUGGAGE, (filterChain.filters[1] as LuggageFilter).currentNumber)
+
+                /** Tell the availability provider to run in background when going to the
+                 * Checkout Screen after selecting a quote
+                 */
+                availabilityProvider?.shouldRunInBackground = true
 
                 val intent = Intent()
                 intent.putExtras(bundle)
@@ -348,18 +360,29 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     private fun initAvailability() {
-        availabilityProvider?.cleanup()
         val locale: Locale? = resources.configuration.locale
-        journeyDetailsStateViewModel?.let {
-            availabilityProvider = KarhooAvailability(
+        journeyDetailsStateViewModel.let {
+            availabilityProvider = KarhooAvailability
+            /** If there is a new availability request, we should cleanup the previous data */
+            if (!restorePreviousData) {
+                availabilityProvider?.cleanup()
+            }
+            else{
+                availabilityProvider?.getExistingFilterChain()?.let { chain ->
+                    filterChain = chain
+                    quotesFilterWidget.presenter.filterChain = filterChain
+                }
+            }
+
+            availabilityProvider?.setup(
                 KarhooApi.quotesService,
                 categoriesViewModel, liveFleetsViewModel,
-                it, this.viewLifecycleOwner, locale
+                it, this.viewLifecycleOwner, locale, restorePreviousData
             ).apply {
                 setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 setAnalytics(KarhooUISDK.analytics)
-                categorySelectorWidget.bindAvailability(this)
+                categorySelectorWidget.bindAvailability(KarhooAvailability)
             }
             (availabilityProvider as KarhooAvailability).quoteListValidityListener =
                 object : QuotesFragmentContract
@@ -412,6 +435,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     }
 
     companion object {
+        private const val MINIMUM_REFRESH_DURATION_LEFT_SECONDS = 120
+
         fun newInstance(bundle: Bundle?): Fragment {
             val fragment = QuotesFragment()
             fragment.arguments = bundle
@@ -421,27 +446,49 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun onUserChangedFilter(): Int {
         return availabilityProvider?.getNonFilteredVehicles()
-            ?.let { filterChain.applyFilters(it).size }?: 0
+            ?.let { filterChain.applyFilters(it).size } ?: 0
     }
 
     override fun onFiltersApplied() {
-        availabilityProvider?.filterVehicleListByFilterChain(filterChain)
+        availabilityProvider?.filterVehicleListByFilterChain(filterChain)!!
         val nrOfFiltersApplied = filterChain.filters.filter { it.isFilterApplied == true }.size
-        if(nrOfFiltersApplied != 0){
-            quotesFilterByButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_accent))
-            quotesFilterByButton.iconTint = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_accent))
+        if (nrOfFiltersApplied != 0) {
+            quotesFilterByButton.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.kh_uisdk_accent
+                )
+            )
+            quotesFilterByButton.iconTint = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.kh_uisdk_accent
+                )
+            )
             val textToShow = "${resources.getString(R.string.kh_uisdk_filter)}($nrOfFiltersApplied)"
             quotesFilterByButton.text = textToShow
-            quotesFilterByButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.kh_uisdk_quote_list_filter_by_applied_button)
-            if(dataModel?.quotes?.size == 0){
+            quotesFilterByButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.kh_uisdk_quote_list_filter_by_applied_button
+            )
+            if (dataModel?.quotes?.size == 0) {
                 showNoResultsAfterFilterError()
             }
-        }else{
+        } else {
             showNoResultsAfterFilterError()
-            quotesFilterByButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textColor))
-            quotesFilterByButton.iconTint = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.textColor))
+            quotesFilterByButton.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.textColor
+                )
+            )
+            quotesFilterByButton.iconTint =
+                ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.textColor))
             quotesFilterByButton.text = resources.getString(R.string.kh_uisdk_filter)
-            quotesFilterByButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.kh_uisdk_quote_list_sort_by_button)
+            quotesFilterByButton.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.kh_uisdk_quote_list_sort_by_button
+            )
         }
     }
 }

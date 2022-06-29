@@ -27,4 +27,18 @@ open class NumberedFilter(private val defaultNumber: Int, private  val maxNumber
         }
         return false
     }
+
+    fun canFurtherDecrement(): Boolean {
+        if(currentNumber - 1 >= defaultNumber) {
+            return true
+        }
+        return false
+    }
+
+    fun canFurtherIncrement(): Boolean {
+        if(currentNumber + 1 <= maxNumber) {
+            return true
+        }
+        return false
+    }
 }

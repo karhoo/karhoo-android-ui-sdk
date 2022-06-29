@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small"
-        android:src="@drawable/kh_uisdk_ic_minus_colored"
+        android:src="@drawable/kh_uisdk_ic_minus_colored_disabled"
         app:layout_constraintEnd_toStartOf="@id/filterViewItemValue"/>
 
     <TextView

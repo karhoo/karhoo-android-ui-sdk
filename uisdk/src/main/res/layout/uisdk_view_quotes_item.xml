@@ -21,39 +21,40 @@
             android:orientation="horizontal"
             android:padding="@dimen/kh_uisdk_spacing_semi_small">
 
-            <FrameLayout
-                android:layout_width="@dimen/kh_uisdk_logo_width"
-                android:layout_height="@dimen/kh_uisdk_logo_height">
-
-                <ProgressBar
-                    android:id="@+id/quoteProgressBar"
-                    style="@android:style/Widget.ProgressBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
-
-                <ImageView
-                    android:id="@+id/logoImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:id="@+id/loadingIcon"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading" />
-
-            </FrameLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/kh_uisdk_logo_height"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
+                <FrameLayout
+                    android:paddingTop="@dimen/kh_uisdk_spacing_semi_small"
+                    android:layout_width="@dimen/kh_uisdk_logo_width"
+                    android:layout_height="match_parent">
+
+                    <ProgressBar
+                        android:id="@+id/quoteProgressBar"
+                        style="@android:style/Widget.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <ImageView
+                        android:id="@+id/logoImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="fitCenter" />
+
+                    <ImageView
+                        android:id="@+id/loadingIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="centerInside"
+                        app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading" />
+
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                     android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/kh_uisdk_spacing_x6small"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
                     android:paddingEnd="@dimen/kh_uisdk_spacing_x6small">
 
                     <TextView
@@ -122,6 +123,7 @@
                     tools:text="99 min" />
 
                 <TextView
+                    android:id="@+id/driverArrivalText"
                     style="@style/Text.Alternative.XSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

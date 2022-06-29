@@ -35,6 +35,10 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
         view?.showSameAddressesError(true)
     }
 
+    override fun handleNoResultsForFiltersError() {
+        view?.showNoResultsAfterFilterError()
+    }
+
     override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
         view?.showNoCoverageError(true)
     }

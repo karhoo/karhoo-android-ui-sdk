@@ -119,7 +119,7 @@ internal class CheckoutFragment : Fragment() {
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
 
         if (validityTimestamp > 0) {
-            val milisUntilInvalid = presenter.getValidMilisSPeriod(validityTimestamp)
+            val milisUntilInvalid = presenter.getValidMilisPeriod(validityTimestamp)
 
             expirationJob = GlobalScope.launch {
                 delay(milisUntilInvalid)

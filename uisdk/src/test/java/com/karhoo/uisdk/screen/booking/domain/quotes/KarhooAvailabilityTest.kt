@@ -59,20 +59,30 @@ class KarhooAvailabilityTest {
         categoriesViewModel = CategoriesViewModel()
         journeyDetailsStateViewModel = JourneyDetailsStateViewModel(mock())
 
-        availability = KarhooAvailability(
-                quotesService = quotesService,
-                journeyDetailsStateViewModel = journeyDetailsStateViewModel,
-                liveFleetsViewModel = liveFleetsViewModel,
-                lifecycleOwner = lifecycleOwner,
-                categoriesViewModel = categoriesViewModel
+        availability = KarhooAvailability
+        availability.setup(
+            quotesService = quotesService,
+            journeyDetailsStateViewModel = journeyDetailsStateViewModel,
+            liveFleetsViewModel = liveFleetsViewModel,
+            lifecycleOwner = lifecycleOwner,
+            categoriesViewModel = categoriesViewModel
         )
         (availability as KarhooAvailability).setAnalytics(analytics)
 
         availabilityHandler = object : AvailabilityHandler {
             override var hasAvailability: Boolean = false
             override var hasNoResults: Boolean = false
-            override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) { /** do nothing **/ }
-            override fun handleSameAddressesError() {/** do nothing **/ }
+            override fun handleAvailabilityError(snackbarConfig: SnackbarConfig) {
+                /** do nothing **/
+            }
+
+            override fun handleSameAddressesError() {
+                /** do nothing **/
+            }
+
+            override fun handleNoResultsForFiltersError() {
+                /** do nothing **/
+            }
         }
 
         availabilityHandler.hasNoResults = false
@@ -104,14 +114,14 @@ class KarhooAvailabilityTest {
         availability.setAvailabilityHandler(availabilityHandler)
         availability.setAllCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(
-                Resource.Success(
-                        QuoteList(
-                                categories = categories,
-                                id = QuoteId(),
-                                status = status,
-                                validity = 30
-                        )
+            Resource.Success(
+                QuoteList(
+                    categories = categories,
+                    id = QuoteId(),
+                    status = status,
+                    validity = 30
                 )
+            )
         )
     }
 
@@ -122,22 +132,22 @@ class KarhooAvailabilityTest {
         const val SALOON = "SALOON"
 
         val CATEGORIES = mapOf(
-                SALOON to mutableListOf<Quote>().apply {
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
-                },
-                MPV to mutableListOf<Quote>().apply
-                {
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
-                    add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
-                }
+            SALOON to mutableListOf<Quote>().apply {
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = SALOON)))
+            },
+            MPV to mutableListOf<Quote>().apply
+            {
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
+                add(Quote(vehicle = QuoteVehicle(vehicleClass = MPV)))
+            }
         )
         val CATEGORIES_WITH_EMPTY_QUOTES = mapOf(
-                SALOON to mutableListOf<Quote>(),
-                MPV to mutableListOf<Quote>()
+            SALOON to mutableListOf<Quote>(),
+            MPV to mutableListOf<Quote>()
         )
     }
 
