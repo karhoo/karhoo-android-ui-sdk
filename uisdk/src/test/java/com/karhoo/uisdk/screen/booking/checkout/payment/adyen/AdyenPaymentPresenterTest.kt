@@ -74,6 +74,8 @@ class AdyenPaymentPresenterTest {
             userStore = userStore)
 
         adyenPaymentPresenter.view = paymentDropInActions
+
+        setConfig()
     }
 
     /**
@@ -98,6 +100,7 @@ class AdyenPaymentPresenterTest {
      * When:    The public key retrieval succeeds
      * And:     The payment methods retrieval fails
      * Then:    Then an error is shown
+     * Not applicable to Braintree
      */
     @Test
     fun `error shown when change card pressed and payment methods retrieval fails`() {
@@ -121,7 +124,6 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `payment view shown when change card pressed and payment methods retrieved successfully`() {
         val paymentData = "{paymentMethods: []}"
-        setConfig()
 
         adyenPaymentPresenter.sdkInit(quote)
 
@@ -140,8 +142,6 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown when retrieval of a nonce is attempted and it is null`() {
-        setConfig()
-
         adyenPaymentPresenter.getPaymentNonce(quote)
 
         verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.FailedToCallMoneyService)
@@ -154,8 +154,6 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `nonce retrieved for 3ds when retrieval is attempted and it is not null`() {
-        setConfig()
-
         setMockNonce()
 
         adyenPaymentPresenter.getPaymentNonce(quote)
@@ -318,7 +316,6 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `token and amount are passed back when guest payment is initialised`() {
-        setConfig()
         setMockNonce()
 
         adyenPaymentPresenter.initialiseGuestPayment(quote)
