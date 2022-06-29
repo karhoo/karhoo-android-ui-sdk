@@ -291,6 +291,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             startCheckoutActivity(data)
         } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED) {
             startQuoteListActivity(restorePreviousData = true)
+        } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED) {
+            startQuoteListActivity(restorePreviousData = false)
         }
 
         super.onActivityResult(requestCode, resultCode, data)
