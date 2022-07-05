@@ -125,12 +125,13 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
-        KarhooUISDK.analytics?.paymentSucceed()
         preferenceStore.lastTrip = tripInfo
         val date = scheduledDate
         if (date != null) {
+            KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
+            KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingSuccess(tripInfo))
         }
