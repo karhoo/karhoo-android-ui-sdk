@@ -44,7 +44,7 @@ open class BaseStateViewModel<STATE, ACTION, EVENT>(application: Application) : 
     @CallSuper
     override fun process(viewEvent: EVENT) {
         if (!viewStates().hasObservers()) {
-            throw NoObserverAttachedException("No observer attached. In case of custom View \"startObserving()\" function needs to be called manually.")
+            Log.e(BaseStateViewModel::class.java.name, "No observer attached. In case of custom View \"startObserving()\" function needs to be called manually.")
         }
         Log.d("TAG", "processing viewEvent: $viewEvent")
     }

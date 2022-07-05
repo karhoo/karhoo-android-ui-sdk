@@ -153,7 +153,7 @@ afterEvaluate {
 
 dependencies {
 
-    implementation 'com.github.karhoo:karhoo-android-sdk:1.4.7'
+    implementation 'com.github.karhoo:karhoo-android-sdk:1.4.8-RC2'
     fullCompileOnly('com.adyen.checkout:drop-in:4.5.0')
     fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

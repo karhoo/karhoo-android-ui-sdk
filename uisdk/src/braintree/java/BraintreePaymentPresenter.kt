@@ -76,7 +76,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage)
                     view?.showPaymentFailureDialog(result.error)
                 }
             }
@@ -89,7 +89,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(quote))
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -178,7 +178,7 @@ class BraintreePaymentPresenter(
                     view?.handlePaymentDetailsUpdate()
                 }
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -207,7 +207,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -215,8 +215,8 @@ class BraintreePaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
+    override fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int, lastFourDigits: String?) {
+        KarhooUISDK.analytics?.cardAuthorizationFailed(
             refusalReason,
             lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
             Date(),
