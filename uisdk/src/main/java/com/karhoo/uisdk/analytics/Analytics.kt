@@ -45,6 +45,10 @@ interface Analytics {
 
     fun paymentFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
 
+    fun cardAuthorizationFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
+
+    fun tripPrebookConfirmation(tripInfo: TripInfo)
+
     fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 
     fun pastTripsOpened()

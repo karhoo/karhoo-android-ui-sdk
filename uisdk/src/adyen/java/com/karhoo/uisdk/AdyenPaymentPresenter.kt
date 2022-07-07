@@ -121,8 +121,9 @@ class AdyenPaymentPresenter(
                             JSONObject(payload.optString(ADDITIONAL_DATA, ""))
                                 .optString(CARD_SUMMARY, "")
 
-                        logPaymentErrorEvent(
+                        logPaymentFailureEvent(
                             payload.optString(REFUSAL_REASON, ""),
+                            payload.optInt(REFUSAL_REASON_CODE, 0),
                             lastFourDigits,
                         )
 
@@ -135,22 +136,43 @@ class AdyenPaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
-            refusalReason,
-            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
+    override fun logPaymentFailureEvent(
+        refusalReason: String,
+        refusalReasonCode: Int,
+        lastFourDigits: String?
+    ) {
+        when (refusalReasonCode) {
+            11,// 3DS Not Authenticated
+            12, // Not enough balance
+            14, // Acquirer Fraud
+            2 // Refused The transaction was refused.
+            -> {
+                KarhooUISDK.analytics?.paymentFailed(
+                    refusalReason,
+                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    Date(),
+                    quote?.price?.highPrice ?: 0,
+                    quote?.price?.currencyCode ?: ""
+                )
+            }
+            else -> {
+                KarhooUISDK.analytics?.cardAuthorizationFailed(
+                    refusalReason,
+                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    Date(),
+                    quote?.price?.highPrice ?: 0,
+                    quote?.price?.currencyCode ?: ""
+                )
+            }
+        }
+
+
     }
 
     private fun convertToKarhooError(payload: JSONObject): KarhooError {
         val result = payload.optString(RESULT_CODE, "")
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
-
-        logPaymentErrorEvent(refusalReason)
 
         return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
@@ -175,8 +197,9 @@ class AdyenPaymentPresenter(
                     }
                 }
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(
-                        result.error.internalMessage
+                    logPaymentFailureEvent(
+                        result.error.internalMessage,
+                        0
                     )
 
                     view?.showError(
@@ -221,8 +244,9 @@ class AdyenPaymentPresenter(
                             }
                         }
                         is Resource.Failure -> {
-                            logPaymentErrorEvent(
-                                result.error.internalMessage
+                            logPaymentFailureEvent(
+                                result.error.internalMessage,
+                                0
                             )
 
                             view?.showError(
