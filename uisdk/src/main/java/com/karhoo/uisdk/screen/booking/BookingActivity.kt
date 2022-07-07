@@ -255,44 +255,48 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
-            if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
-                showPrebookConfirmationDialog(data)
-            } else {
-                waitForTripAllocation()
-                tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
-            }
-        } else if (resultCode == RESULT_OK && data != null) {
-            when (requestCode) {
-                AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                AddressCodes.DESTINATION -> {
-                    addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                    startQuoteListActivity(restorePreviousData = false)
+        when {
+            resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {
+                if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
+                    showPrebookConfirmationDialog(data)
+                } else {
+                    waitForTripAllocation()
+                    tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
-        } else if (resultCode == QuotesActivity.QUOTES_RESULT_OK && data != null) {
-            val pickup = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
-            val destination = data.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
-
-            pickup?.let {
-                addressBarWidget.setPickup(pickup, -1)
+            resultCode == RESULT_OK -> {
+                when (requestCode) {
+                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                    AddressCodes.DESTINATION -> {
+                        addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                        startQuoteListActivity(restorePreviousData = false)
+                    }
+                }
             }
+            resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
+                val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+                val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
 
-            destination?.let {
-                addressBarWidget.setDestination(destination, -1)
+                pickup?.let {
+                    addressBarWidget.setPickup(pickup, -1)
+                }
+
+                destination?.let {
+                    addressBarWidget.setDestination(destination, -1)
+                }
+                val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
+                val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
+                if(bookingMetadata == null)
+                    bookingMetadata = HashMap()
+                bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+                bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+
+                startCheckoutActivity(data)
             }
-            val passengerNumber = data.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
-            val luggage = data.getIntExtra(QuotesActivity.LUGGAGE, 0)
-            if(bookingMetadata == null)
-                bookingMetadata = HashMap()
-            bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
-            bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
-
-            startCheckoutActivity(data)
-        } else if(resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED) {
-            startQuoteListActivity(restorePreviousData = true)
+            resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
+                startQuoteListActivity(restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED)
+            }
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 

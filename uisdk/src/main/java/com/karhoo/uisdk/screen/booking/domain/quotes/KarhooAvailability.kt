@@ -283,7 +283,6 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     private fun updateVehicles(vehicles: QuoteList) {
-
         var hasQuotes = false
         vehicles.categories.forEach {
             if (it.value.isNotEmpty()) {
@@ -298,6 +297,7 @@ object KarhooAvailability : AvailabilityProvider {
             availabilityHandler?.get()?.hasAvailability = true
             currentCategories(currentCategories = vehicles.categories.keys.toList())
             availableVehicles = vehicles.categories
+
             currentAvailableQuotes()
             filterVehicles()
         }

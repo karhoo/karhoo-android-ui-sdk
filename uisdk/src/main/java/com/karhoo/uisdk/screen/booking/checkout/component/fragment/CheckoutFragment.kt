@@ -20,9 +20,11 @@ import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_CANCELLED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_EXPIRED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -102,6 +104,8 @@ internal class CheckoutFragment : Fragment() {
 
                 activity?.setResult(RESULT_OK, intent)
                 activity?.finish()
+
+                KarhooAvailability.pauseUpdates()
             }
         })
 
@@ -130,7 +134,7 @@ internal class CheckoutFragment : Fragment() {
                                 titleResId = R.string.kh_uisdk_offer_expired,
                                 messageResId = R.string.kh_uisdk_offer_expired_text,
                                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
-                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
+                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
                                     this@CheckoutFragment.activity?.finish()
                                 })
 
@@ -212,6 +216,8 @@ internal class CheckoutFragment : Fragment() {
         if (expirationJob?.isActive == true) {
             expirationJob?.cancel()
         }
+
+        KarhooAvailability.pauseUpdates()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

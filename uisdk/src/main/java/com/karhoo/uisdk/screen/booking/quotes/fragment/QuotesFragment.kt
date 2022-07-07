@@ -90,7 +90,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private lateinit var quotesSortByButton: MaterialButton
     private lateinit var quotesFilterByButton: MaterialButton
     private var isPrebook = false
-    private var restorePreviousData = false;
+    private var restorePreviousData = false
 
     var filterChain = FilterChain()
 
@@ -366,8 +366,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             /** If there is a new availability request, we should cleanup the previous data */
             if (!restorePreviousData) {
                 availabilityProvider?.cleanup()
-            }
-            else{
+            } else {
                 availabilityProvider?.getExistingFilterChain()?.let { chain ->
                     filterChain = chain
                     quotesFilterWidget.presenter.filterChain = filterChain
@@ -384,6 +383,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 setAnalytics(KarhooUISDK.analytics)
                 categorySelectorWidget.bindAvailability(KarhooAvailability)
             }
+            availabilityProvider?.shouldRunInBackground = false
             (availabilityProvider as KarhooAvailability).quoteListValidityListener =
                 object : QuotesFragmentContract
                 .QuoteValidityListener {
