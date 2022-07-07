@@ -43,8 +43,6 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
-import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import com.karhoo.uisdk.screen.booking.quotes.category.CategorySelectorView
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogPresenter
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterDialogFragment
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
@@ -53,7 +51,6 @@ import com.karhoo.uisdk.screen.booking.quotes.filterview.LuggageFilter
 import com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
 import java.util.Locale
-import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAllCategory
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAnalytics
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability.setAvailabilityHandler
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_RESTORE_PREVIOUS_DATA_KEY
@@ -78,12 +75,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private var presenter = QuotesFragmentPresenter(this, KarhooUISDK.analytics)
     private var availabilityProvider: AvailabilityProvider? = null
     private var dataModel: QuoteListViewDataModel? = null
-    private val categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private lateinit var quotesSortWidget: QuotesSortView
     private lateinit var quotesFilterWidget: FilterDialogFragment
     private lateinit var addressBarWidget: AddressBarView
-    private lateinit var categorySelectorWidget: CategorySelectorView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
     private lateinit var quotesTaxesAndFeesLabel: TextView
     private var currentValidityDeadlineTimestamp: Long? = null
@@ -102,7 +97,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         val view = inflater.inflate(R.layout.uisdk_quotes_fragment, container, false)
 
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
-        categorySelectorWidget = view.findViewById(R.id.categorySelectorWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
         quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
         initializeSortView()
@@ -114,12 +108,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         journeyDetailsStateViewModel.viewStates().apply {
             observe(viewLifecycleOwner, subscribeToJourneyDetails())
         }
-        categorySelectorWidget.bindViewToData(
-            this.viewLifecycleOwner,
-            categoriesViewModel,
-            journeyDetailsStateViewModel
-        )
-        quotesRecyclerView.watchCategories(this.viewLifecycleOwner, categoriesViewModel)
         quotesRecyclerView.watchQuoteListStatus(this.viewLifecycleOwner, bookingQuotesViewModel)
         bookingQuotesViewModel.viewStates()
             .observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
@@ -375,13 +363,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
             availabilityProvider?.setup(
                 KarhooApi.quotesService,
-                categoriesViewModel, liveFleetsViewModel,
+                liveFleetsViewModel,
                 it, this.viewLifecycleOwner, locale, restorePreviousData
             ).apply {
-                setAllCategory(resources.getString(R.string.kh_uisdk_all_category))
                 setAvailabilityHandler(presenter)
                 setAnalytics(KarhooUISDK.analytics)
-                categorySelectorWidget.bindAvailability(KarhooAvailability)
             }
             availabilityProvider?.shouldRunInBackground = false
             (availabilityProvider as KarhooAvailability).quoteListValidityListener =

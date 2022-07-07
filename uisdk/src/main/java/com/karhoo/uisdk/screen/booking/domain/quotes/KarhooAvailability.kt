@@ -16,8 +16,6 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
-import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
-import com.karhoo.uisdk.screen.booking.quotes.category.Category
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
@@ -34,7 +32,6 @@ import kotlin.collections.HashMap
 object KarhooAvailability : AvailabilityProvider {
 
     private lateinit var quotesService: QuotesService
-    private lateinit var categoriesViewModel: CategoriesViewModel
     private lateinit var liveFleetsViewModel: LiveFleetsViewModel
     private lateinit var journeyDetailsStateViewModel: JourneyDetailsStateViewModel
     private lateinit var lifecycleOwner: LifecycleOwner
@@ -43,9 +40,7 @@ object KarhooAvailability : AvailabilityProvider {
     private var lastDataRetrieved: QuoteList? = null
     private var restorePreviousData = false
 
-    private var categoryViewModels: MutableList<Category> = mutableListOf()
     private var availableVehicles: Map<String, List<Quote>> = mutableMapOf()
-    private var allCategory: Category? = null
     private var vehiclesObserver: Observer<Resource<QuoteList>>? = null
     private var vehiclesObservable: Observable<QuoteList>? = null
     private var currentFilter: String? = null
@@ -64,7 +59,6 @@ object KarhooAvailability : AvailabilityProvider {
 
     override fun setup(
         quotesService: QuotesService,
-        categoriesViewModel: CategoriesViewModel,
         liveFleetsViewModel: LiveFleetsViewModel,
         journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
         lifecycleOwner: LifecycleOwner,
@@ -72,7 +66,6 @@ object KarhooAvailability : AvailabilityProvider {
         shouldRestoreData: Boolean
     ) {
         this.quotesService = quotesService
-        this.categoriesViewModel = categoriesViewModel
         this.liveFleetsViewModel = liveFleetsViewModel
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
         this.lifecycleOwner = lifecycleOwner
@@ -98,13 +91,6 @@ object KarhooAvailability : AvailabilityProvider {
 
     override fun journeyDetailsObserver(): androidx.lifecycle.Observer<JourneyDetails> {
         return observer
-    }
-
-    private fun setAvailableCategories(availableCategories: Map<String, Boolean>) {
-        categoryViewModels.forEach {
-            it.isAvailable = availableCategories.containsKey(it.categoryName)
-        }
-        categoriesViewModel.categories.value = categoryViewModels
     }
 
     @Suppress("NestedBlockDepth")
@@ -145,11 +131,6 @@ object KarhooAvailability : AvailabilityProvider {
         this.journeyDetails = null
     }
 
-    override fun filterVehicleListByCategory(name: String) {
-        this.currentFilter = name
-        filterVehicles()
-    }
-
     override fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain {
         this.filterChain = filterChain
         filterVehicles()
@@ -159,13 +140,6 @@ object KarhooAvailability : AvailabilityProvider {
     private fun filterVehicles() {
         filterChain?.let {
             getFilteredVehiclesForFilterChain(it)
-        } ?: kotlin.run {
-            if (currentFilter?.isEmpty() == true) {
-                return
-            }
-            currentFilter?.let {
-                getFilteredVehiclesForCategory(it)
-            }
         }
     }
 
@@ -181,24 +155,10 @@ object KarhooAvailability : AvailabilityProvider {
         return availableVehicles.values.flatten()
     }
 
-    private fun getFilteredVehiclesForCategory(currentFilter: String) {
-        if (currentFilter == allCategory?.categoryName) {
-            filteredList = mutableListOf()
-            availableVehicles.values.forEach { filteredList?.addAll(it) }
-        } else {
-            filteredList = availableVehicles[this.currentFilter.orEmpty()]?.toMutableList()
-        }
-        updateFleets(filteredList)
-    }
-
     private fun updateFleets(filteredList: MutableList<Quote>?) {
         filteredList?.let {
             liveFleetsViewModel.liveFleets.value = filteredList
         }
-    }
-
-    override fun setAllCategory(category: String) {
-        allCategory = Category(category, false)
     }
 
     fun setAnalytics(analytics: Analytics?) {
@@ -207,7 +167,6 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun createObservable() = androidx.lifecycle.Observer<JourneyDetails> { journeyDetails ->
         if (journeyDetails != null && journeyDetails.destination == null
-            && categoryViewModels.isNotEmpty()
         ) {
             cancelVehicleCallback()
             updateVehicles(QuoteList(categories = emptyMap(), id = QuoteId(), validity = 0))
@@ -295,7 +254,6 @@ object KarhooAvailability : AvailabilityProvider {
         } else {
             availabilityHandler?.get()?.hasNoResults = false
             availabilityHandler?.get()?.hasAvailability = true
-            currentCategories(currentCategories = vehicles.categories.keys.toList())
             availableVehicles = vehicles.categories
 
             currentAvailableQuotes()
@@ -307,22 +265,11 @@ object KarhooAvailability : AvailabilityProvider {
         }
     }
 
-    private fun currentCategories(currentCategories: List<String>) {
-        if (currentCategories.isEmpty()) {
-            categoryViewModels.clear()
-        } else {
-            categoryViewModels = mutableListOf()
-            currentCategories.forEach { categoryViewModels.add(Category(it, false)) }
-            allCategory?.let { categoryViewModels.add(it) }
-        }
-    }
-
     private fun currentAvailableQuotes() {
         val activeCategories = HashMap<String, Boolean>()
         availableVehicles.forEach {
             it.value.forEach { activeCategories[it.id!!] = true }
         }
-        setAvailableCategories(activeCategories)
     }
 
     override fun pauseUpdates() {

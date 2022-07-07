@@ -65,7 +65,6 @@ class KarhooAvailabilityTest {
             journeyDetailsStateViewModel = journeyDetailsStateViewModel,
             liveFleetsViewModel = liveFleetsViewModel,
             lifecycleOwner = lifecycleOwner,
-            categoriesViewModel = categoriesViewModel
         )
         (availability as KarhooAvailability).setAnalytics(analytics)
 
@@ -112,7 +111,6 @@ class KarhooAvailabilityTest {
         observer.onChanged(JourneyDetails(locationInfo, locationInfo, null))
 
         availability.setAvailabilityHandler(availabilityHandler)
-        availability.setAllCategory(ALL)
         lambdaCaptor.firstValue.onValueChanged(
             Resource.Success(
                 QuoteList(
