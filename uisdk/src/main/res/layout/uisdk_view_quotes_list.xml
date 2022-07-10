@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
@@ -59,7 +59,7 @@
         <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
-            android:layout_height="@dimen/kh_uisdk_spacing_none"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
