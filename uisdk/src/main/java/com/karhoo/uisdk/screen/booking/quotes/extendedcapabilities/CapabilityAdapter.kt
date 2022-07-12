@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
@@ -17,9 +18,12 @@ class CapabilityAdapter(private val context: Context) : BaseRecyclerAdapter<Capa
 
         val iconId = getCapabilityIcon(capability.type)
         val text = getCapabilityText(capability.type, capability.count)
+        val canShowCapability = canShowCapability(capability.type, capability.count)
 
-        if (iconId != null) {
+        if (iconId != null && canShowCapability) {
             holder.view.bind(iconId, text)
+        }else{
+            holder.view.visibility = View.GONE
         }
     }
 
@@ -31,6 +35,14 @@ class CapabilityAdapter(private val context: Context) : BaseRecyclerAdapter<Capa
             PASSENGERS_MAX -> String.format(context.getString(R.string.kh_uisdk_passengers_max), count)
             BAGGAGE_MAX -> String.format(context.getString(R.string.kh_uisdk_baggage_max), count)
             else -> ""
+        }
+    }
+
+    private fun canShowCapability(type: String, count: Int?): Boolean {
+        return when (type) {
+            PASSENGERS_MAX -> count != null
+            BAGGAGE_MAX -> count != null
+            else -> true
         }
     }
 
