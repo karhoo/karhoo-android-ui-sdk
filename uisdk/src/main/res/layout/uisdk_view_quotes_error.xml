@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:id="@+id/quotesErrorContainer"
     android:layout_centerInParent="true"
-    android:layout_margin="@dimen/kh_uisdk_spacing_small"
+    android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+    android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+    android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
     android:gravity="center"
     android:orientation="vertical">
 

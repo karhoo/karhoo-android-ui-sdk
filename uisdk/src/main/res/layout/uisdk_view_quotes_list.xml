@@ -16,46 +16,6 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
-        <LinearLayout
-            android:id="@+id/quotesOptionsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/quotesSortByButton"
-                style="@style/KhQuoteListSortByButton"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small"
-                android:text="@string/kh_uisdk_sort_by"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/quotesFilterByButton"
-                style="@style/KhQuoteListFilterButton"
-                android:text="@string/kh_uisdk_filter"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/quotesTaxesAndFeesLabel"
-            style="@style/Text.Alternative.XSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-            android:ellipsize="end"
-            android:gravity="end"
-            android:maxLines="1"
-            android:text="@string/kh_uisdk_fees_and_taxes_included"
-            android:textSize="@dimen/kh_uisdk_text_size_small"
-            android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@+id/quotesOptionsLayout" />
-
         <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
@@ -64,7 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quotesTaxesAndFeesLabel"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
