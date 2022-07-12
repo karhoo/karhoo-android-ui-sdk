@@ -2,6 +2,7 @@ package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
 import android.content.res.Resources
 import com.karhoo.sdk.api.model.LoyaltyNonce
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.response.Resource
 
 interface LoyaltyContract {
@@ -9,9 +10,8 @@ interface LoyaltyContract {
         var delegate: LoyaltyViewDelegate?
 
         fun getCurrentMode(): LoyaltyMode
-        fun set(loyaltyDataModel: LoyaltyViewDataModel)
-        fun getLoyaltyStatus()
-        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit)
+        fun set(loyaltyDataModel: LoyaltyViewDataModel, callback: ((Resource<LoyaltyStatus>) -> Unit?)? = null)
+        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit)
     }
 
     interface LoyaltyPresenterDelegate {
@@ -38,8 +38,8 @@ interface LoyaltyContract {
         fun updateBalancePoints()
         fun updateLoyaltyMode(mode: LoyaltyMode)
         fun getCurrentMode(): LoyaltyMode
-        fun getLoyaltyStatus()
-        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit)
+        fun getLoyaltyStatus(callback: ((Resource<LoyaltyStatus>) -> Unit?)? = null)
+        fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit)
     }
 
     interface LoyaltyViewDelegate {

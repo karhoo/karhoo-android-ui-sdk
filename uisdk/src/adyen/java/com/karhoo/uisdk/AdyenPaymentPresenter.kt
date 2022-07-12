@@ -129,6 +129,7 @@ class AdyenPaymentPresenter(
                             payload.optString(REFUSAL_REASON, ""),
                             payload.optInt(REFUSAL_REASON_CODE, 0),
                             lastFourDigits,
+                            quoteId = quote?.id
                         )
 
                         view?.showPaymentFailureDialog(error)
@@ -143,7 +144,8 @@ class AdyenPaymentPresenter(
     override fun logPaymentFailureEvent(
         refusalReason: String,
         refusalReasonCode: Int,
-        lastFourDigits: String?
+        lastFourDigits: String?,
+        quoteId: String?
     ) {
         when (refusalReasonCode) {
             11,// 3DS Not Authenticated
@@ -153,6 +155,7 @@ class AdyenPaymentPresenter(
             -> {
                 KarhooUISDK.analytics?.paymentFailed(
                     refusalReason,
+                    quoteId,
                     lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
                     Date(),
                     quote?.price?.highPrice ?: 0,
@@ -162,6 +165,7 @@ class AdyenPaymentPresenter(
             else -> {
                 KarhooUISDK.analytics?.cardAuthorizationFailed(
                     refusalReason,
+                    quoteId,
                     lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
                     Date(),
                     quote?.price?.highPrice ?: 0,
@@ -203,7 +207,8 @@ class AdyenPaymentPresenter(
                 is Resource.Failure -> {
                     logPaymentFailureEvent(
                         result.error.internalMessage,
-                        0
+                        0,
+                        quoteId = quote?.id
                     )
 
                     view?.showError(
@@ -259,7 +264,8 @@ class AdyenPaymentPresenter(
                         is Resource.Failure -> {
                             logPaymentFailureEvent(
                                 result.error.internalMessage,
-                                0
+                                0,
+                                quoteId = quote?.id
                             )
 
                             view?.showError(

@@ -133,6 +133,8 @@ interface CheckoutViewContract {
         fun createLoyaltyViewResponse()
 
         fun setLoyaltyNonce(nonce: String)
+
+        fun getCurrentQuote(): Quote?
     }
 
     interface PrebookViewActions {

@@ -11,7 +11,19 @@ interface Analytics {
 
     fun userLocated(location: Location)
 
-    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?)
+    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?, quoteId: String?)
+
+    fun bookingSuccess(trip: TripInfo?, quoteId: String?, correlationId: String?)
+
+    fun bookingFailure(
+        errorMessage: String,
+        quoteId: String?,
+        correlationId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
     fun tripStateChanged(tripState: TripInfo?)
 
@@ -41,11 +53,23 @@ interface Analytics {
 
     fun paymentSucceed()
 
-    fun paymentFailed(details: String)
+    fun paymentFailed(
+        errorMessage: String,
+        quoteId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
-    fun paymentFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
-
-    fun cardAuthorizationFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
+    fun cardAuthorizationFailed(
+        errorMessage: String,
+        quoteId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
     fun tripPrebookConfirmation(tripInfo: TripInfo)
 
@@ -60,4 +84,27 @@ interface Analytics {
     fun contactFleetClicked(page: String, tripInfo: TripInfo)
 
     fun contactDriverClicked(page: String, tripInfo: TripInfo)
+
+    fun loyaltyPreAuthFailure(
+        slug: String?,
+        correlationId: String?,
+        quoteId: String?,
+        loyaltyMode: String,
+        balance: Int?
+    )
+
+    fun loyaltyPreAuthSuccess(
+        correlationId: String?,
+        quoteId: String?,
+        loyaltyMode: String,
+        balance: Int?
+    )
+
+    fun loyaltyStatusRequested(
+        slug: String? = null,
+        correlationId: String?,
+        quoteId: String?,
+        loyaltyMode: String,
+        balance: Int?
+    )
 }
