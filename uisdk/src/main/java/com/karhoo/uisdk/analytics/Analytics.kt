@@ -4,6 +4,8 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.LoyaltyProgramme
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import java.util.Date
 
 @Suppress("TooManyFunctions")
@@ -87,24 +89,26 @@ interface Analytics {
 
     fun loyaltyPreAuthFailure(
         slug: String?,
-        correlationId: String?,
         quoteId: String?,
+        correlationId: String?,
         loyaltyMode: String,
         balance: Int?
     )
 
     fun loyaltyPreAuthSuccess(
-        correlationId: String?,
         quoteId: String?,
+        correlationId: String?,
         loyaltyMode: String,
         balance: Int?
     )
 
     fun loyaltyStatusRequested(
         slug: String? = null,
-        correlationId: String?,
         quoteId: String?,
+        correlationId: String?,
         loyaltyMode: String,
-        balance: Int?
+        balance: Int? = null,
+        loyaltyStatus: LoyaltyStatus? = null,
+        loyaltyProgramme: LoyaltyProgramme?,
     )
 }

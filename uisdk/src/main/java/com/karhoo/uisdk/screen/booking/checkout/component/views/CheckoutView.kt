@@ -459,7 +459,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             quoteId = presenter.getCurrentQuote()?.id,
                             correlationId = result.correlationId,
                             loyaltyMode = loyaltyView.getCurrentMode().name,
-                            balance  = result.data.points
+                            balance = result.data.points,
+                            loyaltyStatus = result.data,
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
                         )
                     }
                     is Resource.Failure -> {
@@ -468,7 +470,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             correlationId = result.correlationId,
                             loyaltyMode = loyaltyView.getCurrentMode().name,
                             slug = result.error.internalMessage,
-                            balance = null
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
                         )
                     }
                 }
