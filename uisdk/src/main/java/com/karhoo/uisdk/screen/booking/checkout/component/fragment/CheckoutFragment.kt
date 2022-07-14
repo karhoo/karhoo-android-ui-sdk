@@ -203,6 +203,7 @@ internal class CheckoutFragment : Fragment() {
 
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
+            KarhooAvailability.pauseUpdates(fromBackButton = true)
             activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
             activity?.finish()
         }
@@ -217,7 +218,6 @@ internal class CheckoutFragment : Fragment() {
             expirationJob?.cancel()
         }
 
-        KarhooAvailability.pauseUpdates()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
