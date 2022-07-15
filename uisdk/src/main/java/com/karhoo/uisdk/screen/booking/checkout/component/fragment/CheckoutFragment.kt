@@ -25,6 +25,7 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -203,7 +204,12 @@ internal class CheckoutFragment : Fragment() {
 
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
-            activity?.setResult(BOOKING_CHECKOUT_CANCELLED)
+            val intent = Intent()
+            intent.putExtra(
+                QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
+                arguments?.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
+            )
+            activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)
             activity?.finish()
         }
     }
