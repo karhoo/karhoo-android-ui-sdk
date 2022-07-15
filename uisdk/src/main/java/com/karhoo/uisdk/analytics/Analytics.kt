@@ -4,6 +4,8 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.LoyaltyProgramme
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import java.util.Date
 
 @Suppress("TooManyFunctions")
@@ -11,7 +13,19 @@ interface Analytics {
 
     fun userLocated(location: Location)
 
-    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?)
+    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?, quoteId: String?)
+
+    fun bookingSuccess(trip: TripInfo?, quoteId: String?, correlationId: String?)
+
+    fun bookingFailure(
+        errorMessage: String,
+        quoteId: String?,
+        correlationId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
     fun tripStateChanged(tripState: TripInfo?)
 
@@ -41,9 +55,25 @@ interface Analytics {
 
     fun paymentSucceed()
 
-    fun paymentFailed(details: String)
+    fun paymentFailed(
+        errorMessage: String,
+        quoteId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
-    fun paymentFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
+    fun cardAuthorizationFailed(
+        errorMessage: String,
+        quoteId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
+
+    fun tripPrebookConfirmation(tripInfo: TripInfo)
 
     fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 
@@ -56,4 +86,29 @@ interface Analytics {
     fun contactFleetClicked(page: String, tripInfo: TripInfo)
 
     fun contactDriverClicked(page: String, tripInfo: TripInfo)
+
+    fun loyaltyPreAuthFailure(
+        slug: String?,
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyMode: String,
+        balance: Int?
+    )
+
+    fun loyaltyPreAuthSuccess(
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyMode: String,
+        balance: Int?
+    )
+
+    fun loyaltyStatusRequested(
+        slug: String? = null,
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyMode: String,
+        balance: Int? = null,
+        loyaltyStatus: LoyaltyStatus? = null,
+        loyaltyProgramme: LoyaltyProgramme?,
+    )
 }

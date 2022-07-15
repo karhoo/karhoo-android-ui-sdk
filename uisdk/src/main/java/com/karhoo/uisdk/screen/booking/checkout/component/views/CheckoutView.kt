@@ -20,6 +20,8 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.LoyaltyNonce
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
@@ -450,7 +452,30 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {
         loyaltyView.visibility = if (show) VISIBLE else GONE
         loyaltyViewDataModel?.let {
-            loyaltyView.set(it)
+            loyaltyView.set(it, callback = { result: Resource<LoyaltyStatus> ->
+                when (result) {
+                    is Resource.Success -> {
+                        KarhooUISDK.analytics?.loyaltyStatusRequested(
+                            quoteId = presenter.getCurrentQuote()?.id,
+                            correlationId = result.correlationId,
+                            loyaltyMode = loyaltyView.getCurrentMode().name,
+                            balance = result.data.points,
+                            loyaltyStatus = result.data,
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
+                        )
+                    }
+                    is Resource.Failure -> {
+                        KarhooUISDK.analytics?.loyaltyStatusRequested(
+                            quoteId = presenter.getCurrentQuote()?.id,
+                            correlationId = result.correlationId,
+                            loyaltyMode = loyaltyView.getCurrentMode().name,
+                            slug = result.error.internalMessage,
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
+                        )
+                    }
+                }
+
+            })
         }
         loyaltyView.set(LoyaltyMode.NONE)
     }
@@ -477,14 +502,14 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE) {
-            loyaltyView.getLoyaltyPreAuthNonce { result ->
+            loyaltyView.getLoyaltyPreAuthNonce { result, loyaltyStatus ->
                 when (result) {
                     is Resource.Success -> {
                         presenter.setLoyaltyNonce(result.data.nonce)
                         startBooking()
                     }
                     is Resource.Failure -> {
-                        if(result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
+                        if (result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
                             //Start the booking even if the loyalty is in an error state
                             startBooking()
                             return@getLoyaltyPreAuthNonce
@@ -498,15 +523,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             karhooError = null,
                             positiveButton = KarhooAlertDialogAction(
                                 R.string.kh_uisdk_ok
-                                                                    ) { d, _ ->
+                            ) { d, _ ->
                                 loadingButtonCallback.onLoadingComplete()
                                 d.dismiss()
                             },
                             negativeButton = null
-                                                            )
+                        )
                         KarhooAlertDialogHelper(context).showAlertDialog(config)
                     }
                 }
+
+                logLoyaltyPreAuthEvent(result, loyaltyStatus)
             }
             true
         } else {
@@ -514,7 +541,29 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
-    private fun termsAndConditionsCheckBoxCheckedChanged(isChecked: Boolean){
+    private fun logLoyaltyPreAuthEvent(result: Resource<LoyaltyNonce>, loyaltyStatus: LoyaltyStatus?) {
+        when (result) {
+            is Resource.Success -> {
+                KarhooUISDK.analytics?.loyaltyPreAuthSuccess(
+                    quoteId = presenter.getCurrentQuote()?.id,
+                    correlationId = result.correlationId,
+                    loyaltyMode = loyaltyView.getCurrentMode().name,
+                    balance = loyaltyStatus?.points
+                )
+            }
+            is Resource.Failure -> {
+                KarhooUISDK.analytics?.loyaltyPreAuthFailure(
+                    result.error.internalMessage,
+                    quoteId = presenter.getCurrentQuote()?.id,
+                    correlationId = result.correlationId,
+                    loyaltyMode = loyaltyView.getCurrentMode().name,
+                    balance = loyaltyStatus?.points
+                )
+            }
+        }
+    }
+
+    private fun termsAndConditionsCheckBoxCheckedChanged() {
         loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
     }
 

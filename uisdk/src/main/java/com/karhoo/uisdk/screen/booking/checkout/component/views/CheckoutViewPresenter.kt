@@ -108,7 +108,11 @@ internal class CheckoutViewPresenter(
         } else {
             view?.initialisePaymentProvider(quote)
         }
-        analytics?.bookingRequested(currentTripInfo(), outboundTripId)
+        analytics?.bookingRequested(currentTripInfo(), outboundTripId, quoteId = quote?.id)
+    }
+
+    override fun getCurrentQuote(): Quote? {
+        return quote
     }
 
     override fun isPaymentSet(): Boolean {
@@ -125,12 +129,13 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
-        KarhooUISDK.analytics?.paymentSucceed()
         preferenceStore.lastTrip = tripInfo
         val date = scheduledDate
         if (date != null) {
+            KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
+            KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingSuccess(tripInfo))
         }
@@ -138,14 +143,6 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookFailure(error: KarhooError) {
-        KarhooUISDK.analytics?.paymentFailed(
-            error.internalMessage,
-            userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
-
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(
                 null,
@@ -224,22 +221,33 @@ internal class CheckoutViewPresenter(
         val additionalPassengers = metadata?.get(PASSENGER_NUMBER)?.toInt() ?: kotlin.run { 0 }
         val luggage = metadata?.get(LUGGAGE)?.toInt() ?: kotlin.run { 0 }
 
-        tripsService.book(TripBooking(comments = comments,
-                                      flightNumber = flight,
-                                      meta = metadata,
-                                      nonce = identifier,
-                                      quoteId = quote?.id.orEmpty(),
-                                      loyaltyNonce = loyaltyNonce,
-                                      passengers = Passengers(additionalPassengers = additionalPassengers,
-                                                              passengerDetails = listOf(passenger),
-                                                              luggage = Luggage(total = luggage))))
-                .execute { result ->
-                    when (result) {
-                        is Resource.Success -> onTripBookSuccess(result.data)
-                        is Resource.Failure -> onTripBookFailure(result.error)
-                    }
+        tripsService.book(
+            TripBooking(
+                comments = comments,
+                flightNumber = flight,
+                meta = metadata,
+                nonce = identifier,
+                quoteId = quote?.id.orEmpty(),
+                loyaltyNonce = loyaltyNonce,
+                passengers = Passengers(
+                    additionalPassengers = additionalPassengers,
+                    passengerDetails = listOf(passenger),
+                    luggage = Luggage(total = luggage)
+                )
+            )
+        ).execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    onTripBookSuccess(result.data)
                 }
+                is Resource.Failure -> {
+                    onTripBookFailure(result.error)
+                }
+            }
+
+            logBookingEvent(result)
         }
+    }
 
     private fun getBookingMetadataMap(
         identifier: String,
@@ -388,6 +396,29 @@ internal class CheckoutViewPresenter(
             )
         } else {
             view?.showLoyaltyView(show = false)
+        }
+    }
+
+    private fun logBookingEvent(result: Resource<TripInfo>) {
+        when (result) {
+            is Resource.Success -> {
+                analytics?.bookingSuccess(
+                    result.data,
+                    quoteId = quote?.id,
+                    correlationId = result.correlationId
+                )
+            }
+            is Resource.Failure -> {
+                analytics?.bookingFailure(
+                    result.error.internalMessage,
+                    quoteId = quote?.id,
+                    correlationId = result.correlationId,
+                    userStore.savedPaymentInfo?.lastFour ?: "",
+                    Date(),
+                    quote?.price?.highPrice ?: 0,
+                    quote?.price?.currencyCode ?: ""
+                )
+            }
         }
     }
 

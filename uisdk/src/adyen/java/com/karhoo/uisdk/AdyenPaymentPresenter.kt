@@ -75,9 +75,13 @@ class AdyenPaymentPresenter(
         amount.currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = quote?.price?.highPrice.orZero()
 
-        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() ==
-            KarhooEnvironment.Production()
-        ) Environment.EUROPE else Environment.TEST
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
+                    KarhooEnvironment.Production
+        ) {
+            Environment.LIVE
+        } else {
+            Environment.TEST
+        }
 
         return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
             .setAmount(amount)
@@ -121,9 +125,11 @@ class AdyenPaymentPresenter(
                             JSONObject(payload.optString(ADDITIONAL_DATA, ""))
                                 .optString(CARD_SUMMARY, "")
 
-                        logPaymentErrorEvent(
+                        logPaymentFailureEvent(
                             payload.optString(REFUSAL_REASON, ""),
+                            payload.optInt(REFUSAL_REASON_CODE, 0),
                             lastFourDigits,
+                            quoteId = quote?.id
                         )
 
                         view?.showPaymentFailureDialog(error)
@@ -135,22 +141,46 @@ class AdyenPaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
-            refusalReason,
-            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
+    override fun logPaymentFailureEvent(
+        refusalReason: String,
+        refusalReasonCode: Int,
+        lastFourDigits: String?,
+        quoteId: String?
+    ) {
+        when (refusalReasonCode) {
+            11,// 3DS Not Authenticated
+            12, // Not enough balance
+            14, // Acquirer Fraud
+            2 // Refused The transaction was refused.
+            -> {
+                KarhooUISDK.analytics?.paymentFailed(
+                    refusalReason,
+                    quoteId,
+                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    Date(),
+                    quote?.price?.highPrice ?: 0,
+                    quote?.price?.currencyCode ?: ""
+                )
+            }
+            else -> {
+                KarhooUISDK.analytics?.cardAuthorizationFailed(
+                    refusalReason,
+                    quoteId,
+                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    Date(),
+                    quote?.price?.highPrice ?: 0,
+                    quote?.price?.currencyCode ?: ""
+                )
+            }
+        }
+
+
     }
 
     private fun convertToKarhooError(payload: JSONObject): KarhooError {
         val result = payload.optString(RESULT_CODE, "")
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
-
-        logPaymentErrorEvent(refusalReason)
 
         return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
     }
@@ -175,8 +205,10 @@ class AdyenPaymentPresenter(
                     }
                 }
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(
-                        result.error.internalMessage
+                    logPaymentFailureEvent(
+                        result.error.internalMessage,
+                        0,
+                        quoteId = quote?.id
                     )
 
                     view?.showError(
@@ -194,9 +226,18 @@ class AdyenPaymentPresenter(
     }
 
     private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
+        val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
+                    KarhooEnvironment.Production
+        ) {
+            Environment.LIVE
+        } else {
+            Environment.TEST
+        }
+
         return CardConfiguration.Builder(context, publicKey)
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
+            .setEnvironment(environment)
             .setShowStorePaymentField(false)
             .build()
     }
@@ -221,8 +262,10 @@ class AdyenPaymentPresenter(
                             }
                         }
                         is Resource.Failure -> {
-                            logPaymentErrorEvent(
-                                result.error.internalMessage
+                            logPaymentFailureEvent(
+                                result.error.internalMessage,
+                                0,
+                                quoteId = quote?.id
                             )
 
                             view?.showError(
