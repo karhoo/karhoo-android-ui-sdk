@@ -20,7 +20,7 @@ interface AvailabilityProvider {
 
     fun cleanup()
 
-    fun pauseUpdates()
+    fun pauseUpdates(fromBackButton: Boolean = false)
 
     fun resumeUpdates()
 

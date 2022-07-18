@@ -457,9 +457,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 requireContext(),
                 R.drawable.kh_uisdk_quote_list_filter_by_applied_button
             )
-            if (dataModel?.quotes?.size == 0) {
-                showNoResultsAfterFilterError()
-            }
+            showNoResultsAfterFilterError()
         } else {
             showNoResultsAfterFilterError()
             quotesFilterByButton.setTextColor(
