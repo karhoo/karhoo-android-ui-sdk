@@ -151,15 +151,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
         initAvailability();
 
-        dataModel?.quotes?.size?.let {
-            if(it <= 0)
-                showFilteringWidgets(false)
-            else
-                showFilteringWidgets(true)
-        }?: kotlin.run {
-            showFilteringWidgets(true)
-        }
-
         return view
     }
 
@@ -384,6 +375,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                         currentValidityDeadlineTimestamp = timestamp
                     }
                 }
+        }
+
+        dataModel?.quotes?.size?.let {
+            if(it <= 0)
+                showFilteringWidgets(false)
+            else
+                showFilteringWidgets(true)
+        }?: kotlin.run {
+            showFilteringWidgets(true)
         }
     }
 
