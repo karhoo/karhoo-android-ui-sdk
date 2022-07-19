@@ -45,7 +45,13 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
                 chip.chipIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
                 chip.checkedIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
                 chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_text_size_large)
+                chip.isChipIconVisible = true
+            }?: kotlin.run {
+                chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_spacing_none)
+                chip.isChipIconVisible = false
             }
+            chip.minimumWidth = 0
+            chip.setEnsureMinTouchTargetSize(false)
 
             chip.setOnClickListener {
                 //chipViews.firstOrNull() is always the All choice

@@ -35,7 +35,7 @@
         style="@style/Text.Alternative.XSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_x6small"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
         android:ellipsize="end"
         android:gravity="end"
