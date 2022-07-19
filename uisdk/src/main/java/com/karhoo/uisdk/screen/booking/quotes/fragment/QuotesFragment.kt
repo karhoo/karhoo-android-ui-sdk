@@ -151,7 +151,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
         initAvailability();
 
-        showFilteringWidgets(false)
+        dataModel?.quotes?.size?.let {
+            if(it <= 0)
+                showFilteringWidgets(false)
+            else
+                showFilteringWidgets(true)
+        }?: kotlin.run {
+            showFilteringWidgets(true)
+        }
 
         return view
     }
@@ -264,7 +271,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
         this.isPrebook = isPrebook
-        changeVisibilityOfQuotesSortByButton(isPrebook)
+        changeVisibilityOfQuotesSortByButton(true)
     }
 
     override fun showNoCoverageError(show: Boolean) {
