@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
@@ -14,8 +13,6 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragment
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
-import kotlinx.android.synthetic.main.uisdk_quotes_activity.*
 
 class QuotesActivity : BaseActivity(), WebViewActions {
     override val layout: Int
