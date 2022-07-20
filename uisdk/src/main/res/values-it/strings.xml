@@ -379,6 +379,7 @@
     <string name="kh_uisdk_requested">Il tuo viaggio è stato richiesto con %s</string>
     <string name="kh_uisdk_requested_invite">Grazie per il tuo interesse! Ti invieremo un\'email quando il tuo account sarà attivato.</string>
     <string name="kh_uisdk_reset_filter">Ripristina filtro</string>
+    <string name="kh_uisdk_results">risultati</string>
     <string name="kh_uisdk_results_empty">Nessun risultato trovato</string>
     <string name="kh_uisdk_retrieving_dropoff">Ottenere il luogo di riconsegna</string>
     <!-- Current Trip -->
