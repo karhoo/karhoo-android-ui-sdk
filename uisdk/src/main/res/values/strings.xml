@@ -153,7 +153,6 @@
     <string name="kh_uisdk_filter_taxi">Taxi</string>
     <string name="kh_uisdk_filter_train_tracking">Train tracking</string>
     <string name="kh_uisdk_filter_van">Van</string>
-    <string name="kh_uisdk_results">results</string>
     <string name="kh_uisdk_filter_vehicle_class">Vehicle Class</string>
     <string name="kh_uisdk_filter_vehicle_details">Vehicle details</string>
     <string name="kh_uisdk_filter_vehicle_extras">Vehicle Extras</string>
