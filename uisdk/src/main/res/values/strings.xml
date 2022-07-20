@@ -158,7 +158,7 @@
     <string name="kh_uisdk_filter_vehicle_details">Vehicle details</string>
     <string name="kh_uisdk_filter_vehicle_extras">Vehicle Extras</string>
     <string name="kh_uisdk_filter_vehicle_types">Vehicle Types</string>
-    <string name="kh_uisdk_filter_wheelchair">Wheelchair</string>
+    <string name="kh_uisdk_filter_wheelchair">Wheelchair accessible</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
     <!-- Fare type -->
@@ -380,6 +380,7 @@
     <string name="kh_uisdk_requested">Your trip has been requested with %s</string>
     <string name="kh_uisdk_requested_invite">Thanks for your interest! We will email you when your account is activated.</string>
     <string name="kh_uisdk_reset_filter">Reset filter</string>
+    <string name="kh_uisdk_results">results</string>
     <string name="kh_uisdk_results_empty">No results found</string>
     <string name="kh_uisdk_retrieving_dropoff">Getting dropoff location</string>
     <!-- Current Trip -->
@@ -460,7 +461,7 @@
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">MPV</string>
     <string name="kh_uisdk_vehicle_standard">Standard</string>
-    <string name="kh_uisdk_wheelchair">Wheelchair</string>
+    <string name="kh_uisdk_wheelchair">Wheelchair Accessible</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>
     <!-- Adyen default "Pay" button -->
