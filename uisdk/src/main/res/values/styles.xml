@@ -725,4 +725,16 @@
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
+
+    <style name="QuotesFontTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="QuotesFontTitleTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
 </resources>

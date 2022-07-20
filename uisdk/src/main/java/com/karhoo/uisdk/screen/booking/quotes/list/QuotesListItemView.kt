@@ -32,22 +32,18 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.driverArrivalT
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(context: Context,
-                                                   attrs: AttributeSet? = null,
-                                                   defStyleAttr: Int = 0)
+                                                   private var attrs: AttributeSet? = null,
+                                                   private var defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr) {
 
     var itemLayout: Int = R.layout.uisdk_view_quotes_item
-
-    init {
-        itemLayout = getListItemLayout(context, attrs, defStyleAttr)
-        View.inflate(context, itemLayout, this)
-    }
+    private var isPrebook: Boolean = false
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
         val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesListItem,
                 defStyleAttr, R.style.KhQuoteListItemView)
-        val layout = typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
-                .layout.uisdk_view_quotes_item)
+        val layout = if(!isPrebook) typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
+                .layout.uisdk_view_quotes_item) else R.layout.uisdk_view_quotes_item_prebook
         typedArray.recycle()
         return layout
     }
@@ -56,6 +52,11 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
              vehicleDetails: Quote,
              isPrebook: Boolean,
              itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
+
+        this.isPrebook = isPrebook
+        itemLayout = getListItemLayout(context, attrs, defStyleAttr)
+        View.inflate(context, itemLayout, this)
+
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
 
@@ -67,7 +68,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
         setEta(vehicleDetails.vehicle.vehicleQta.highMinutes, isPrebook)
         setCapacity(vehicleDetails.vehicle)
         setRating(vehicleDetails.fleet.rating)
-        detailsButton.visibility = View.INVISIBLE
+        detailsButton?.visibility = View.INVISIBLE
 
         tag = vehicleDetails
 
@@ -75,7 +76,7 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun setDriverArrival(isPrebook: Boolean) {
-        driverArrivalText.visibility = if (isPrebook) View.GONE else View.VISIBLE
+        driverArrivalText?.visibility = if (isPrebook) View.GONE else View.VISIBLE
     }
 
     private fun setRating(rating: FleetRating?) {
@@ -163,9 +164,9 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     }
 
     private fun setEta(etaTime: Int?, isPrebook: Boolean) {
-        etaText.visibility = if (isPrebook) View.GONE else View.VISIBLE
+        etaText?.visibility = if (isPrebook) View.GONE else View.VISIBLE
         val etaTimeString = etaTime?.toString() ?: "~"
-        etaText.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
+        etaText?.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
     }
 
     private fun setCapacity(vehicle: QuoteVehicle) {
