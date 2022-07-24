@@ -15,7 +15,7 @@ class UnitTestUISDKConfig(
         AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true
 ) :
     KarhooUISDKConfiguration {
-    override lateinit var paymentManager: PaymentManager
+    override var paymentManager: PaymentManager = AdyenPaymentManager()
 
     override fun logo(): Drawable? {
         return null
