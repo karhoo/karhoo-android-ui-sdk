@@ -105,7 +105,7 @@ interface Analytics {
         loyaltyMode: String,
         balance: Int?
     )
-
+    @Suppress("LongParameterList")
     fun loyaltyStatusRequested(
         slug: String? = null,
         errorMessage: String?,
