@@ -13,10 +13,11 @@ interface Analytics {
 
     fun userLocated(location: Location)
 
-    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?, quoteId: String?)
+    fun bookingRequested(quoteId: String?)
 
-    fun bookingSuccess(trip: TripInfo?, quoteId: String?, correlationId: String?)
+    fun bookingSuccess(tripId: String, quoteId: String?, correlationId: String?)
 
+    @Suppress("LongParameterList")
     fun bookingFailure(
         errorMessage: String,
         quoteId: String?,
@@ -24,7 +25,8 @@ interface Analytics {
         lastFourDigits: String,
         date: Date,
         amount: Int,
-        currency: String
+        currency: String,
+        paymentMethodUsed: String,
     )
 
     fun tripStateChanged(tripState: TripInfo?)
@@ -64,13 +66,14 @@ interface Analytics {
         currency: String
     )
 
-    fun cardAuthorizationFailed(
+    fun cardAuthorisationFailure(
         errorMessage: String,
         quoteId: String?,
         lastFourDigits: String,
         date: Date,
         amount: Int,
-        currency: String
+        currency: String,
+        paymentMethodUsed: String
     )
 
     fun tripPrebookConfirmation(tripInfo: TripInfo)
@@ -89,6 +92,7 @@ interface Analytics {
 
     fun loyaltyPreAuthFailure(
         slug: String?,
+        errorMessage: String?,
         quoteId: String?,
         correlationId: String?,
         loyaltyMode: String,
@@ -104,11 +108,16 @@ interface Analytics {
 
     fun loyaltyStatusRequested(
         slug: String? = null,
+        errorMessage: String?,
         quoteId: String?,
         correlationId: String?,
         loyaltyMode: String,
         balance: Int? = null,
         loyaltyStatus: LoyaltyStatus? = null,
         loyaltyProgramme: LoyaltyProgramme?,
+    )
+
+    fun cardAuthorisationSuccess(
+        quoteId: String?
     )
 }

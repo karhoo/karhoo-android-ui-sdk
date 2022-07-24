@@ -461,7 +461,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             loyaltyMode = loyaltyView.getCurrentMode().name,
                             balance = result.data.points,
                             loyaltyStatus = result.data,
-                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty,
+                            errorMessage = null
                         )
                     }
                     is Resource.Failure -> {
@@ -470,7 +471,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                             correlationId = result.correlationId,
                             loyaltyMode = loyaltyView.getCurrentMode().name,
                             slug = result.error.internalMessage,
-                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty
+                            loyaltyProgramme = KarhooApi.userStore.paymentProvider?.loyalty,
+                            errorMessage = result.error.internalMessage
                         )
                     }
                 }
@@ -554,6 +556,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             is Resource.Failure -> {
                 KarhooUISDK.analytics?.loyaltyPreAuthFailure(
                     result.error.internalMessage,
+                    errorMessage = result.error.internalMessage,
                     quoteId = presenter.getCurrentQuote()?.id,
                     correlationId = result.correlationId,
                     loyaltyMode = loyaltyView.getCurrentMode().name,

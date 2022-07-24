@@ -108,7 +108,7 @@ internal class CheckoutViewPresenter(
         } else {
             view?.initialisePaymentProvider(quote)
         }
-        analytics?.bookingRequested(currentTripInfo(), outboundTripId, quoteId = quote?.id)
+        analytics?.bookingRequested(quoteId = quote?.id)
     }
 
     override fun getCurrentQuote(): Quote? {
@@ -403,21 +403,24 @@ internal class CheckoutViewPresenter(
         when (result) {
             is Resource.Success -> {
                 analytics?.bookingSuccess(
-                    result.data,
+                    result.data.tripId,
                     quoteId = quote?.id,
                     correlationId = result.correlationId
                 )
             }
             is Resource.Failure -> {
-                analytics?.bookingFailure(
-                    result.error.internalMessage,
-                    quoteId = quote?.id,
-                    correlationId = result.correlationId,
-                    userStore.savedPaymentInfo?.lastFour ?: "",
-                    Date(),
-                    quote?.price?.highPrice ?: 0,
-                    quote?.price?.currencyCode ?: ""
-                )
+                KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
+                    analytics?.bookingFailure(
+                        result.error.internalMessage,
+                        quoteId = quote?.id,
+                        correlationId = result.correlationId,
+                        userStore.savedPaymentInfo?.lastFour ?: "",
+                        Date(),
+                        quote?.price?.highPrice ?: 0,
+                        quote?.price?.currencyCode ?: "",
+                        paymentMethodUsed = it
+                    )
+                }
             }
         }
     }
