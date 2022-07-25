@@ -1,1 +1,3 @@
-include ':app', ':uisdk'
+if (!System.env.JITPACK)
+    include ':app'
+include ':uisdk'
