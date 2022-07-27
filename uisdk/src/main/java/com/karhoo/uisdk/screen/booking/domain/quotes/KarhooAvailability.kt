@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
-import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
@@ -158,11 +157,13 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList?) {
         filteredList?.let {
-            if(vehicles != null && (vehicles.status != QuoteStatus.COMPLETED) && liveFleetsViewModel.liveFleets.value?.isEmpty() == true && filteredList.size > 0){
-                filteredList.size.let {
-                    analytics?.fleetsShown(vehicles.id.toString(),
-                        it
-                    )
+            vehicles?.let { quoteList ->
+                if(quoteList.status != QuoteStatus.COMPLETED && liveFleetsViewModel.liveFleets.value?.isEmpty() == true && filteredList.size > 0){
+                    filteredList.size.let {
+                        analytics?.fleetsShown(quoteList.id.toString(),
+                            it
+                        )
+                    }
                 }
             }
             liveFleetsViewModel.liveFleets.value = filteredList
