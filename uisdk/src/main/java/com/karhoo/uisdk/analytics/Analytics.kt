@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.LoyaltyProgramme
 import com.karhoo.sdk.api.model.LoyaltyStatus
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import java.util.Date
 
 @Suppress("TooManyFunctions")
@@ -42,6 +43,8 @@ interface Analytics {
     fun prebookSet(date: Date, timezone: String)
 
     fun fleetsShown(quoteListId: String?, amountShown: Int)
+
+    fun quoteListOpened(journeyDetails: JourneyDetails)
 
     fun prebookOpened()
 

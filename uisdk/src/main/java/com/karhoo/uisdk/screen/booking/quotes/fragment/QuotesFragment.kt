@@ -149,6 +149,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             setOnClickListener { showFilters() }
         }
 
+        dataModel?.journeyDetails?.let { KarhooUISDK.analytics?.quoteListOpened(journeyDetails = it) }
+
         initAvailability();
 
         showFilteringWidgets(false)

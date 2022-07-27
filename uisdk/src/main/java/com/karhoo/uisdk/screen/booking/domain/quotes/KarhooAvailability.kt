@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
@@ -127,36 +128,43 @@ object KarhooAvailability : AvailabilityProvider {
         vehiclesJob?.cancel()
         availableVehicles = mutableMapOf()
         currentAvailableQuotes()
-        updateFleets(mutableListOf())
+        updateFleets(mutableListOf(), null)
         this.journeyDetails = null
     }
 
     override fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain {
         this.filterChain = filterChain
-        filterVehicles()
+        filterVehicles(null)
         return this.filterChain!!
     }
 
-    private fun filterVehicles() {
+    private fun filterVehicles(vehicles: QuoteList?) {
         filterChain?.let {
-            getFilteredVehiclesForFilterChain(it)
+            getFilteredVehiclesForFilterChain(it, vehicles)
         }
     }
 
-    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
+    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain, vehicles: QuoteList?) {
         filteredList = mutableListOf()
         availableVehicles.values.forEach {
             filteredList?.addAll(filterChain.applyFilters(it))
         }
-        updateFleets(filteredList)
+        updateFleets(filteredList, vehicles)
     }
 
     override fun getNonFilteredVehicles(): List<Quote> {
         return availableVehicles.values.flatten()
     }
 
-    private fun updateFleets(filteredList: MutableList<Quote>?) {
+    private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList?) {
         filteredList?.let {
+            if(vehicles != null && (vehicles.status != QuoteStatus.COMPLETED) && liveFleetsViewModel.liveFleets.value?.isEmpty() == true && filteredList.size > 0){
+                filteredList.size.let {
+                    analytics?.fleetsShown(vehicles.id.toString(),
+                        it
+                    )
+                }
+            }
             liveFleetsViewModel.liveFleets.value = filteredList
         }
     }
@@ -231,6 +239,11 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
+            liveFleetsViewModel.liveFleets.value?.size?.let {
+                analytics?.fleetsShown(vehicles.id.toString(),
+                    it
+                )
+            }
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
@@ -257,7 +270,7 @@ object KarhooAvailability : AvailabilityProvider {
             availableVehicles = vehicles.categories
 
             currentAvailableQuotes()
-            filterVehicles()
+            filterVehicles(vehicles)
         }
 
         if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true){
