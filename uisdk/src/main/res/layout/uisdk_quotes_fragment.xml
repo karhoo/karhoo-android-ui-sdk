@@ -10,6 +10,20 @@
     android:background="@color/kh_uisdk_background2"
     >
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="4dp">
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:id="@+id/progress_circular"
+
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminateTint="@color/kh_uisdk_secondary"/>
+    </FrameLayout>
+
     <com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
         android:id="@+id/addressBarWidget"
         android:layout_width="match_parent"
