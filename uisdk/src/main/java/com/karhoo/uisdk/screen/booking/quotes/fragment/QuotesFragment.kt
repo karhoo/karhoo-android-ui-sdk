@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
@@ -87,6 +88,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private var isPrebook = false
     private var restorePreviousData = false
 
+    var nrOfResults: MutableLiveData<Int> = MutableLiveData(0)
     var filterChain = FilterChain()
 
     override fun onCreateView(
@@ -263,6 +265,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         if (quotesFilterWidget.isVisible)
             quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
+        nrOfResults.postValue(quoteList.size)
     }
 
     override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) {
