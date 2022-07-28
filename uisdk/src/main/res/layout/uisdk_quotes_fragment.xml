@@ -13,14 +13,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="4dp">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:indeterminate="true"
-        android:layout_gravity="center"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:indeterminateTint="@color/kh_uisdk_secondary"/>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:indeterminateTint="@color/kh_uisdk_secondary"/>
     </FrameLayout>
 
     <com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
