@@ -112,8 +112,30 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         bookingQuotesViewModel.viewStates()
             .observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
         liveFleetsViewModel.liveFleets.observe(this.viewLifecycleOwner, presenter.watchQuotes())
-        val bundle = arguments
 
+        parseArguments(arguments)
+
+        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
+        quotesSortByButton.apply {
+            visibility = if (isPrebook) GONE else VISIBLE
+            setOnClickListener { showSortBy() }
+        }
+
+        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
+        quotesFilterByButton.apply {
+            visibility = VISIBLE
+            setOnClickListener { showFilters() }
+        }
+
+        initAvailability();
+
+        showFilteringWidgets(true)
+
+        return view
+    }
+
+
+    private fun parseArguments(bundle: Bundle?) {
         if (bundle?.containsKey(QuotesActivity.QUOTES_BOOKING_INFO_KEY) == true) {
             dataModel = QuoteListViewDataModel(
                 quotes = null,
@@ -135,25 +157,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
         }
-        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) ?: false
 
-        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
-        quotesSortByButton.apply {
-            visibility = if (isPrebook) GONE else VISIBLE
-            setOnClickListener { showSortBy() }
-        }
+        currentValidityDeadlineTimestamp =
+            if (bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP) != 0L) {
+                bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP)
+            } else {
+                null
+            }
 
-        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
-        quotesFilterByButton.apply {
-            visibility = VISIBLE
-            setOnClickListener { showFilters() }
-        }
-
-        initAvailability();
-
-        showFilteringWidgets(false)
-
-        return view
+        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
     }
 
     fun initializeSortView() {
@@ -170,11 +182,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun onResume() {
         super.onResume()
 
-        val shouldRefresh = TimeUnit.MILLISECONDS.toSeconds(
-            (Date().time - (currentValidityDeadlineTimestamp ?: Long.MAX_VALUE))
-        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
-
-        if (availabilityProvider?.shouldRunInBackground == false || shouldRefresh) {
+        if (availabilityProvider?.shouldRunInBackground == true || shouldRefreshQuoteList()) {
             availabilityProvider?.resumeUpdates()
         } else {
             availabilityProvider?.restoreData()
@@ -264,7 +272,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
         this.isPrebook = isPrebook
-        changeVisibilityOfQuotesSortByButton(isPrebook)
+        changeVisibilityOfQuotesSortByButton(true)
     }
 
     override fun showNoCoverageError(show: Boolean) {
@@ -359,6 +367,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     filterChain = chain
                     quotesFilterWidget.presenter.filterChain = filterChain
                 }
+            }
+
+            if(shouldRefreshQuoteList()) {
+                availabilityProvider?.shouldRunInBackground = false
             }
 
             availabilityProvider?.setup(
@@ -474,5 +486,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 R.drawable.kh_uisdk_quote_list_sort_by_button
             )
         }
+    }
+
+    private fun shouldRefreshQuoteList(): Boolean {
+        return TimeUnit.MILLISECONDS.toSeconds(
+            ((currentValidityDeadlineTimestamp ?: Long.MAX_VALUE) - Date().time)
+        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
     }
 }
