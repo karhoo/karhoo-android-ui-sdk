@@ -19,6 +19,17 @@ class NumberedFilterView @JvmOverloads constructor(
         set(value) {
             field = value
             filterViewItemValue.text = filter?.currentNumber.toString()
+
+            if (filter?.canFurtherDecrement() == true) {
+                filterViewItemMinusImage.setImageResource(R.drawable.kh_uisdk_ic_minus_colored)
+            } else {
+                filterViewItemMinusImage.setImageResource(R.drawable.kh_uisdk_ic_minus_colored_disabled)
+            }
+            if (filter?.canFurtherIncrement() == true) {
+                filterViewItemPlusImage.setImageResource(R.drawable.kh_uisdk_ic_plus_colored)
+            } else {
+                filterViewItemPlusImage.setImageResource(R.drawable.kh_uisdk_ic_plus_colored_disabled)
+            }
         }
 
     var delegate: (() -> Unit)? = null
