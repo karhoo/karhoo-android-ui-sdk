@@ -8,6 +8,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import androidx.lifecycle.Observer
+import com.karhoo.sdk.api.model.QuoteStatus
 
 interface QuotesFragmentContract {
 
@@ -64,5 +65,9 @@ interface QuotesFragmentContract {
 
     interface QuoteValidityListener {
         fun isValidUntil(timestamp: Long)
+    }
+
+    interface QuotePoolingStatusListener {
+        fun changedStatus(status: QuoteStatus?)
     }
 }

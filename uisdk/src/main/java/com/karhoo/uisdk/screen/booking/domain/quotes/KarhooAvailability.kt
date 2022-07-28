@@ -54,6 +54,7 @@ object KarhooAvailability : AvailabilityProvider {
     private lateinit var observer: androidx.lifecycle.Observer<JourneyDetails>
     private var vehiclesJob: Job? = null
     var quoteListValidityListener: QuotesFragmentContract.QuoteValidityListener? = null
+    var quoteListPoolingStatusListener: QuotesFragmentContract.QuotePoolingStatusListener? = null
 
     override var shouldRunInBackground: Boolean = false
 
@@ -184,13 +185,17 @@ object KarhooAvailability : AvailabilityProvider {
         override fun onValueChanged(value: Resource<QuoteList>) {
             when (value) {
                 is Resource.Success -> {
+                    quoteListPoolingStatusListener?.changedStatus(value.data.status)
                     handleVehiclePolling(value.data)
                     if (!shouldRunInBackground) {
                         updateVehicles(value.data)
                         shouldRunInBackground = false;
                     }
                 }
-                is Resource.Failure -> handleAvailabilityError(value.error)
+                is Resource.Failure -> {
+                    quoteListPoolingStatusListener?.changedStatus(QuoteStatus.COMPLETED)
+                    handleAvailabilityError(value.error)
+                }
             }
         }
     }
