@@ -79,7 +79,7 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     override fun getExistingFilterChain(): FilterChain? {
-        return if(this.filterChain != null)
+        return if (this.filterChain != null)
             this.filterChain
         else null
     }
@@ -236,6 +236,7 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
+            running = false
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
@@ -265,7 +266,7 @@ object KarhooAvailability : AvailabilityProvider {
             filterVehicles()
         }
 
-        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true){
+        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true) {
             availabilityHandler?.get()?.handleNoResultsForFiltersError()
         }
     }

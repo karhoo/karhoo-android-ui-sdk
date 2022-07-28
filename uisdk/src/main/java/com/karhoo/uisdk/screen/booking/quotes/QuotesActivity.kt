@@ -74,10 +74,15 @@ class QuotesActivity : BaseActivity(), WebViewActions {
             return this
         }
 
-       fun restorePreviousData(restore: Boolean): Builder {
-               extrasBundle.putBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY, restore)
-               return this
-           }
+        fun restorePreviousData(restore: Boolean): Builder {
+            extrasBundle.putBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY, restore)
+            return this
+        }
+
+        fun validityTimestamp(ts: Long): Builder {
+            extrasBundle.putLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, ts)
+            return this
+        }
 
         /**
          * Returns a launchable Intent to the configured quotes activity with the given

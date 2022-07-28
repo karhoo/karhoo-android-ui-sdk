@@ -9,7 +9,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,7 +20,6 @@ import com.google.android.material.button.MaterialButton
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
@@ -80,7 +78,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private lateinit var quotesSortWidget: QuotesSortView
     private lateinit var quotesFilterWidget: FilterDialogFragment
-    private lateinit var progressBarWidget: ProgressBar
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
     private lateinit var quotesTaxesAndFeesLabel: TextView
@@ -99,7 +96,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_quotes_fragment, container, false)
 
-        progressBarWidget = view.findViewById(R.id.progressBar)
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
         quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
@@ -116,8 +112,30 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         bookingQuotesViewModel.viewStates()
             .observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
         liveFleetsViewModel.liveFleets.observe(this.viewLifecycleOwner, presenter.watchQuotes())
-        val bundle = arguments
 
+        parseArguments(arguments)
+
+        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
+        quotesSortByButton.apply {
+            visibility = if (isPrebook) GONE else VISIBLE
+            setOnClickListener { showSortBy() }
+        }
+
+        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
+        quotesFilterByButton.apply {
+            visibility = VISIBLE
+            setOnClickListener { showFilters() }
+        }
+
+        initAvailability();
+
+        showFilteringWidgets(true)
+
+        return view
+    }
+
+
+    private fun parseArguments(bundle: Bundle?) {
         if (bundle?.containsKey(QuotesActivity.QUOTES_BOOKING_INFO_KEY) == true) {
             dataModel = QuoteListViewDataModel(
                 quotes = null,
@@ -139,26 +157,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
         }
-        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) ?: false
 
-        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
-        quotesSortByButton.apply {
-            visibility = if (isPrebook) GONE else VISIBLE
-            setOnClickListener { showSortBy() }
-        }
+        currentValidityDeadlineTimestamp =
+            if (bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP) != 0L) {
+                bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP)
+            } else {
+                null
+            }
 
-        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
-        quotesFilterByButton.apply {
-            visibility = VISIBLE
-            setOnClickListener { showFilters() }
-        }
-
-        initAvailability();
-        initProgressBar();
-
-        showFilteringWidgets(false)
-
-        return view
+        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
     }
 
     fun initializeSortView() {
@@ -175,11 +182,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun onResume() {
         super.onResume()
 
-        val shouldRefresh = TimeUnit.MILLISECONDS.toSeconds(
-            (Date().time - (currentValidityDeadlineTimestamp ?: Long.MAX_VALUE))
-        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
-
-        if (availabilityProvider?.shouldRunInBackground == false || shouldRefresh) {
+        if (availabilityProvider?.shouldRunInBackground == true || shouldRefreshQuoteList()) {
             availabilityProvider?.resumeUpdates()
         } else {
             availabilityProvider?.restoreData()
@@ -269,7 +272,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
         this.isPrebook = isPrebook
-        changeVisibilityOfQuotesSortByButton(isPrebook)
+        changeVisibilityOfQuotesSortByButton(true)
     }
 
     override fun showNoCoverageError(show: Boolean) {
@@ -366,6 +369,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
 
+            if(shouldRefreshQuoteList()) {
+                availabilityProvider?.shouldRunInBackground = false
+            }
+
             availabilityProvider?.setup(
                 KarhooApi.quotesService,
                 liveFleetsViewModel,
@@ -383,20 +390,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     }
                 }
         }
-    }
-
-    private fun initProgressBar() {
-        (availabilityProvider as KarhooAvailability).quoteListPoolingStatusListener =
-            object : QuotesFragmentContract
-            .QuotePoolingStatusListener {
-                override fun changedStatus(status: QuoteStatus?) {
-                    if (status == QuoteStatus.COMPLETED) {
-                        progressBarWidget.visibility = GONE
-                    } else {
-                        progressBarWidget.visibility = VISIBLE
-                    }
-                }
-            }
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
@@ -493,5 +486,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 R.drawable.kh_uisdk_quote_list_sort_by_button
             )
         }
+    }
+
+    private fun shouldRefreshQuoteList(): Boolean {
+        return TimeUnit.MILLISECONDS.toSeconds(
+            ((currentValidityDeadlineTimestamp ?: Long.MAX_VALUE) - Date().time)
+        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
     }
 }
