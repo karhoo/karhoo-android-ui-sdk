@@ -32,7 +32,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
     }
 
     private var initialCheckBoxColorStateList: ColorStateList? = null
-    var checkBoxChangedCallback: ((isChecked: Boolean) -> Unit?)? = null
+    var checkBoxChangedCallback: (() -> Unit?)? = null
 
     fun bindViews(vehicle: Quote) {
         val bookingTermsAndConditionsText = resources.getString(R.string.kh_uisdk_booking_terms_and_conditions)
@@ -76,9 +76,9 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
             khTermsAndConditionsCheckBoxLayout.visibility = View.VISIBLE
             khTermsAndConditionsTextWithCheckBox.text = spannableString
             khTermsAndConditionsTextWithCheckBox.movementMethod = LinkMovementMethod.getInstance()
-            khTermsAndConditionsCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            khTermsAndConditionsCheckBox.setOnCheckedChangeListener { _, _ ->
                 khTermsAndConditionsCheckBox.buttonTintList =  initialCheckBoxColorStateList
-                checkBoxChangedCallback?.invoke(khTermsAndConditionsCheckBox.isChecked)
+                checkBoxChangedCallback?.invoke()
             }
         }
     }

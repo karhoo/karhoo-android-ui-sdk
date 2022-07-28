@@ -5,10 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/quotesOptionsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/quotesSortByButton"
+            style="@style/KhQuoteListSortByButton"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_semi_small"
+            android:text="@string/kh_uisdk_sort_by"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/quotesFilterByButton"
+            style="@style/KhQuoteListFilterButton"
+            android:text="@string/kh_uisdk_filter"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/quotesTaxesAndFeesLabel"
+        style="@style/Text.Alternative.XSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_x6small"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        android:text="@string/kh_uisdk_fees_and_taxes_included"
+        android:textSize="@dimen/kh_uisdk_text_size_small"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@+id/quotesOptionsLayout" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quotesListRecycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
@@ -17,7 +57,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/quotesTaxesAndFeesLabel" />
 
     <ProgressBar
         android:id="@+id/quotesLoadingProgressBar"
@@ -53,7 +93,7 @@
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="match_parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/quotesTaxesAndFeesLabel"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

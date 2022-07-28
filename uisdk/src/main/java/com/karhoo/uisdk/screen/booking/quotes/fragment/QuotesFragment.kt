@@ -129,7 +129,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
         initAvailability();
 
-        showFilteringWidgets(false)
+        showFilteringWidgets(true)
 
         return view
     }
@@ -272,7 +272,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun prebook(isPrebook: Boolean) {
         quotesRecyclerView.prebook(isPrebook)
         this.isPrebook = isPrebook
-        changeVisibilityOfQuotesSortByButton(isPrebook)
+        changeVisibilityOfQuotesSortByButton(true)
     }
 
     override fun showNoCoverageError(show: Boolean) {
@@ -469,9 +469,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 requireContext(),
                 R.drawable.kh_uisdk_quote_list_filter_by_applied_button
             )
-            if (dataModel?.quotes?.size == 0) {
-                showNoResultsAfterFilterError()
-            }
+            showNoResultsAfterFilterError()
         } else {
             showNoResultsAfterFilterError()
             quotesFilterByButton.setTextColor(

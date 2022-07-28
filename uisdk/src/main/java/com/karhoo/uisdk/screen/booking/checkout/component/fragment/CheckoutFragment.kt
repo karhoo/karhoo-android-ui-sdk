@@ -209,6 +209,7 @@ internal class CheckoutFragment : Fragment() {
                 QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
                 arguments?.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
             )
+            KarhooAvailability.pauseUpdates(fromBackButton = true)
             activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)
             activity?.finish()
         }
@@ -223,7 +224,6 @@ internal class CheckoutFragment : Fragment() {
             expirationJob?.cancel()
         }
 
-        KarhooAvailability.pauseUpdates()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -273,9 +273,14 @@ object KarhooAvailability : AvailabilityProvider {
         }
     }
 
-    override fun pauseUpdates() {
-        running = false
-        vehiclesJob?.cancel()
+    override fun pauseUpdates(fromBackButton: Boolean) {
+        if(!fromBackButton){
+            running = false
+            vehiclesObserver?.let {
+                vehiclesObservable?.unsubscribe(it)
+            }
+            vehiclesJob?.cancel()
+        }
     }
 
     override fun resumeUpdates() {

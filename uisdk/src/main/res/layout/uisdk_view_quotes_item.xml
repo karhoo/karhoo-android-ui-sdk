@@ -19,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/kh_uisdk_spacing_semi_small">
+            android:paddingStart="@dimen/kh_uisdk_spacing_x6small"
+            android:paddingEnd="@dimen/kh_uisdk_spacing_x6small"
+            android:paddingTop="@dimen/kh_uisdk_spacing_none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,7 +64,7 @@
                     android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+                    android:paddingTop="@dimen/kh_uisdk_spacing_x6small"
                     android:paddingEnd="@dimen/kh_uisdk_spacing_x6small">
 
                     <TextView
@@ -119,7 +121,7 @@
                     android:maxLines="1"
                     android:text="@string/kh_uisdk_loading_min"
                     android:textColor="@color/kh_uisdk_text_primary"
-                    android:textSize="@dimen/kh_uisdk_text_size_large"
+                    android:textSize="@dimen/kh_uisdk_text_size_medium"
                     tools:text="99 min" />
 
                 <TextView
@@ -147,7 +149,7 @@
                     android:gravity="end"
                     android:maxLines="1"
                     android:textColor="@color/kh_uisdk_text_primary"
-                    android:textSize="@dimen/kh_uisdk_text_size_large"
+                    android:textSize="@dimen/kh_uisdk_text_size_medium"
                     tools:text="GBP100.00 - 100.00" />
 
                 <TextView
@@ -174,8 +176,8 @@
             android:background="@drawable/kh_uisdk_quote_list_item_review_background"
             android:orientation="horizontal"
             android:paddingStart="@dimen/kh_uisdk_spacing_semi_small"
-            android:paddingTop="@dimen/kh_uisdk_spacing_small_intermediate"
-            android:paddingBottom="@dimen/kh_uisdk_spacing_small_intermediate"
+            android:paddingTop="@dimen/kh_uisdk_spacing_x6small"
+            android:paddingBottom="@dimen/kh_uisdk_spacing_x6small"
             android:paddingEnd="@dimen/kh_uisdk_spacing_semi_small">
 
             <ImageView
@@ -193,7 +195,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/kh_uisdk_text_primary"
-                android:textSize="@dimen/kh_uisdk_text_size_small"
+                android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                 tools:text="Quote Name" />
 
             <LinearLayout
@@ -213,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textColor="@color/kh_uisdk_warning"
-                    android:textSize="@dimen/kh_uisdk_text_size_small"
+                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                     tools:text="Fleet Rating" />
             </LinearLayout>
 

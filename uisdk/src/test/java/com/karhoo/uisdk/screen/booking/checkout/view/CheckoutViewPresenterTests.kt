@@ -377,13 +377,14 @@ class CheckoutViewPresenterTests {
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.price).thenReturn(price)
         whenever(quote.fleet).thenReturn(fleet)
+        whenever(quote.id).thenReturn(IDENTIFIER)
 
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString())
+        verify(analytics).bookingRequested(any(), anyString(), anyString())
         verify(view).initialiseGuestPayment(any())
     }
 
@@ -454,12 +455,13 @@ class CheckoutViewPresenterTests {
         whenever(quote.price).thenReturn(price)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.fleet).thenReturn(fleet)
+        whenever(quote.id).thenReturn(IDENTIFIER)
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString())
+        verify(analytics).bookingRequested(any(), anyString(), anyString())
         verify(view).initialiseGuestPayment(quote)
     }
 
@@ -482,13 +484,14 @@ class CheckoutViewPresenterTests {
         whenever(quote.price).thenReturn(price)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.fleet).thenReturn(fleet)
+        whenever(quote.id).thenReturn(IDENTIFIER)
 
         //        requestPresenter.updateCardDetails(braintreePaymentNonce.nonce)
         checkoutPresenter.showBookingRequest(quote, null, outboundTripId = "tripId")
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString())
+        verify(analytics).bookingRequested(any(), anyString(), anyString())
         verify(view).initialiseGuestPayment(quote)
     }
 
