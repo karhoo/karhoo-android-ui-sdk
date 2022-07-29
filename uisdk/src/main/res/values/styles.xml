@@ -732,4 +732,12 @@
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
+
+    <style name="khIndeterminateProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/progress_bar_height</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:indeterminateTint">@color/kh_uisdk_secondary</item>
+    </style>
 </resources>
