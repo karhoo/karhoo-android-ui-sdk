@@ -43,7 +43,6 @@ object KarhooAvailability : AvailabilityProvider {
     private var availableVehicles: Map<String, List<Quote>> = mutableMapOf()
     private var vehiclesObserver: Observer<Resource<QuoteList>>? = null
     private var vehiclesObservable: Observable<QuoteList>? = null
-    private var currentFilter: String? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
     private var analytics: Analytics? = null
     private var filterChain: FilterChain? = null
@@ -137,25 +136,28 @@ object KarhooAvailability : AvailabilityProvider {
         return this.filterChain!!
     }
 
-    private fun filterVehicles() {
+    private fun filterVehicles(vehicles: QuoteList? = null) {
         filterChain?.let {
-            getFilteredVehiclesForFilterChain(it)
+            getFilteredVehiclesForFilterChain(it, vehicles)
         }
     }
 
-    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
+    private fun getFilteredVehiclesForFilterChain(
+        filterChain: FilterChain,
+        vehicles: QuoteList? = null
+    ) {
         filteredList = mutableListOf()
         availableVehicles.values.forEach {
             filteredList?.addAll(filterChain.applyFilters(it))
         }
-        updateFleets(filteredList)
+        updateFleets(filteredList, vehicles)
     }
 
     override fun getNonFilteredVehicles(): List<Quote> {
         return availableVehicles.values.flatten()
     }
 
-    private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList?) {
+    private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList? = null) {
         filteredList?.let {
             vehicles?.let { quoteList ->
                 if (quoteList.status != QuoteStatus.COMPLETED &&
@@ -272,7 +274,7 @@ object KarhooAvailability : AvailabilityProvider {
             availableVehicles = vehicles.categories
 
             currentAvailableQuotes()
-            filterVehicles()
+            filterVehicles(vehicles)
         }
 
         if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true) {
