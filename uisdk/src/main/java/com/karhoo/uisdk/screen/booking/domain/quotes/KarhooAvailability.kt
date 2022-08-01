@@ -127,28 +127,28 @@ object KarhooAvailability : AvailabilityProvider {
         vehiclesJob?.cancel()
         availableVehicles = mutableMapOf()
         currentAvailableQuotes()
-        updateFleets(mutableListOf(), null)
+        updateFleets(mutableListOf())
         this.journeyDetails = null
     }
 
     override fun filterVehicleListByFilterChain(filterChain: FilterChain): FilterChain {
         this.filterChain = filterChain
-        filterVehicles(null)
+        filterVehicles()
         return this.filterChain!!
     }
 
-    private fun filterVehicles(vehicles: QuoteList?) {
+    private fun filterVehicles() {
         filterChain?.let {
-            getFilteredVehiclesForFilterChain(it, vehicles)
+            getFilteredVehiclesForFilterChain(it)
         }
     }
 
-    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain, vehicles: QuoteList?) {
+    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
         filteredList = mutableListOf()
         availableVehicles.values.forEach {
             filteredList?.addAll(filterChain.applyFilters(it))
         }
-        updateFleets(filteredList, vehicles)
+        updateFleets(filteredList)
     }
 
     override fun getNonFilteredVehicles(): List<Quote> {
@@ -239,6 +239,7 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
+            running = false
             liveFleetsViewModel.liveFleets.value?.size?.let {
                 analytics?.fleetsShown(
                     vehicles.id.toString(),
@@ -271,7 +272,7 @@ object KarhooAvailability : AvailabilityProvider {
             availableVehicles = vehicles.categories
 
             currentAvailableQuotes()
-            filterVehicles(vehicles)
+            filterVehicles()
         }
 
         if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true) {
