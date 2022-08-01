@@ -108,7 +108,10 @@ internal class CheckoutViewPresenter(
         } else {
             view?.initialisePaymentProvider(quote)
         }
-        analytics?.bookingRequested(quoteId = quote?.id)
+
+        quote?.id?.let {
+            analytics?.bookingRequested(quoteId = it)
+        }
     }
 
     override fun getCurrentQuote(): Quote? {

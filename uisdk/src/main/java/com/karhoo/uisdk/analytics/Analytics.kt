@@ -14,7 +14,7 @@ interface Analytics {
 
     fun userLocated(location: Location)
 
-    fun bookingRequested(quoteId: String?)
+    fun bookingRequested(quoteId: String)
 
     fun bookingSuccess(tripId: String, quoteId: String?, correlationId: String?)
 
@@ -98,16 +98,15 @@ interface Analytics {
         errorMessage: String?,
         quoteId: String?,
         correlationId: String?,
-        loyaltyMode: String,
-        balance: Int?
+        loyaltyMode: String
     )
 
     fun loyaltyPreAuthSuccess(
         quoteId: String?,
         correlationId: String?,
-        loyaltyMode: String,
-        balance: Int?
+        loyaltyMode: String
     )
+
     @Suppress("LongParameterList")
     fun loyaltyStatusRequested(
         slug: String? = null,

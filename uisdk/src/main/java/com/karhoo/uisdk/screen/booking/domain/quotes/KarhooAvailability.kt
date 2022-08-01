@@ -78,7 +78,7 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     override fun getExistingFilterChain(): FilterChain? {
-        return if(this.filterChain != null)
+        return if (this.filterChain != null)
             this.filterChain
         else null
     }
@@ -158,12 +158,11 @@ object KarhooAvailability : AvailabilityProvider {
     private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList?) {
         filteredList?.let {
             vehicles?.let { quoteList ->
-                if(quoteList.status != QuoteStatus.COMPLETED && liveFleetsViewModel.liveFleets.value?.isEmpty() == true && filteredList.size > 0){
-                    filteredList.size.let {
-                        analytics?.fleetsShown(quoteList.id.toString(),
-                            it
-                        )
-                    }
+                if (quoteList.status != QuoteStatus.COMPLETED &&
+                    liveFleetsViewModel.liveFleets.value?.isEmpty() == true &&
+                    filteredList.size > 0
+                ) {
+                    analytics?.fleetsShown(quoteList.id.toString(), filteredList.size)
                 }
             }
             liveFleetsViewModel.liveFleets.value = filteredList
@@ -241,7 +240,8 @@ object KarhooAvailability : AvailabilityProvider {
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
             liveFleetsViewModel.liveFleets.value?.size?.let {
-                analytics?.fleetsShown(vehicles.id.toString(),
+                analytics?.fleetsShown(
+                    vehicles.id.toString(),
                     it
                 )
             }
@@ -274,7 +274,7 @@ object KarhooAvailability : AvailabilityProvider {
             filterVehicles(vehicles)
         }
 
-        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true){
+        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true) {
             availabilityHandler?.get()?.handleNoResultsForFiltersError()
         }
     }
@@ -287,7 +287,7 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     override fun pauseUpdates(fromBackButton: Boolean) {
-        if(!fromBackButton){
+        if (!fromBackButton) {
             running = false
             vehiclesObserver?.let {
                 vehiclesObservable?.unsubscribe(it)

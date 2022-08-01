@@ -535,7 +535,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     }
                 }
 
-                logLoyaltyPreAuthEvent(result, loyaltyStatus)
+                logLoyaltyPreAuthEvent(result)
             }
             true
         } else {
@@ -543,14 +543,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
-    private fun logLoyaltyPreAuthEvent(result: Resource<LoyaltyNonce>, loyaltyStatus: LoyaltyStatus?) {
+    private fun logLoyaltyPreAuthEvent(result: Resource<LoyaltyNonce>) {
         when (result) {
             is Resource.Success -> {
                 KarhooUISDK.analytics?.loyaltyPreAuthSuccess(
                     quoteId = presenter.getCurrentQuote()?.id,
                     correlationId = result.correlationId,
-                    loyaltyMode = loyaltyView.getCurrentMode().name,
-                    balance = loyaltyStatus?.points
+                    loyaltyMode = loyaltyView.getCurrentMode().name
                 )
             }
             is Resource.Failure -> {
@@ -559,8 +558,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     errorMessage = result.error.internalMessage,
                     quoteId = presenter.getCurrentQuote()?.id,
                     correlationId = result.correlationId,
-                    loyaltyMode = loyaltyView.getCurrentMode().name,
-                    balance = loyaltyStatus?.points
+                    loyaltyMode = loyaltyView.getCurrentMode().name
                 )
             }
         }
