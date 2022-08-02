@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
@@ -38,6 +39,14 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
         ft.add(R.id.quotesActivityFragmentContainer, fragment, fragment::class.java.name)
             .commit()
+
+        (fragment as QuotesFragment).nrOfResults.observe(this, watchQuoteNumber())
+    }
+
+    private fun watchQuoteNumber() = Observer<Int> { quotes ->
+        quotes?.let {
+            checkoutToolbar.title = it.toString() + " " + getString(R.string.kh_uisdk_results)
+        }
     }
 
     override fun handleExtras() {
@@ -74,10 +83,15 @@ class QuotesActivity : BaseActivity(), WebViewActions {
             return this
         }
 
-       fun restorePreviousData(restore: Boolean): Builder {
-               extrasBundle.putBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY, restore)
-               return this
-           }
+        fun restorePreviousData(restore: Boolean): Builder {
+            extrasBundle.putBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY, restore)
+            return this
+        }
+
+        fun validityTimestamp(ts: Long): Builder {
+            extrasBundle.putLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, ts)
+            return this
+        }
 
         /**
          * Returns a launchable Intent to the configured quotes activity with the given

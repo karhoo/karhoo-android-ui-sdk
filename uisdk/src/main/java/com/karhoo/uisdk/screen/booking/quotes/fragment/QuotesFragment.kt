@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
@@ -87,6 +88,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private var isPrebook = false
     private var restorePreviousData = false
 
+    var nrOfResults: MutableLiveData<Int> = MutableLiveData(0)
     var filterChain = FilterChain()
 
     override fun onCreateView(
@@ -112,8 +114,30 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         bookingQuotesViewModel.viewStates()
             .observe(this.viewLifecycleOwner, watchBookingQuotesStatus())
         liveFleetsViewModel.liveFleets.observe(this.viewLifecycleOwner, presenter.watchQuotes())
-        val bundle = arguments
 
+        parseArguments(arguments)
+
+        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
+        quotesSortByButton.apply {
+            visibility = if (isPrebook) GONE else VISIBLE
+            setOnClickListener { showSortBy() }
+        }
+
+        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
+        quotesFilterByButton.apply {
+            visibility = VISIBLE
+            setOnClickListener { showFilters() }
+        }
+
+        initAvailability();
+
+        showFilteringWidgets(true)
+
+        return view
+    }
+
+
+    private fun parseArguments(bundle: Bundle?) {
         if (bundle?.containsKey(QuotesActivity.QUOTES_BOOKING_INFO_KEY) == true) {
             dataModel = QuoteListViewDataModel(
                 quotes = null,
@@ -135,13 +159,15 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
         }
-        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) ?: false
 
-        quotesSortByButton = view.findViewById(R.id.quotesSortByButton)
-        quotesSortByButton.apply {
-            visibility = if (isPrebook) GONE else VISIBLE
-            setOnClickListener { showSortBy() }
-        }
+        currentValidityDeadlineTimestamp =
+            if (bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP) != 0L) {
+                bundle?.getLong(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP)
+            } else {
+                null
+            }
+
+        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
 
         quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
         quotesFilterByButton.apply {
@@ -168,11 +194,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun onResume() {
         super.onResume()
 
-        val shouldRefresh = TimeUnit.MILLISECONDS.toSeconds(
-            (Date().time - (currentValidityDeadlineTimestamp ?: Long.MAX_VALUE))
-        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
-
-        if (availabilityProvider?.shouldRunInBackground == false || shouldRefresh) {
+        if (availabilityProvider?.shouldRunInBackground == true || shouldRefreshQuoteList()) {
             availabilityProvider?.resumeUpdates()
         } else {
             availabilityProvider?.restoreData()
@@ -253,6 +275,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         if (quotesFilterWidget.isVisible)
             quotesFilterWidget.updateVehicleNumber()
         quotesRecyclerView.updateList(quoteList)
+        nrOfResults.postValue(quoteList.size)
     }
 
     override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) {
@@ -357,6 +380,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     filterChain = chain
                     quotesFilterWidget.presenter.filterChain = filterChain
                 }
+            }
+
+            if(shouldRefreshQuoteList()) {
+                availabilityProvider?.shouldRunInBackground = false
             }
 
             availabilityProvider?.setup(
@@ -481,5 +508,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 R.drawable.kh_uisdk_quote_list_sort_by_button
             )
         }
+    }
+
+    private fun shouldRefreshQuoteList(): Boolean {
+        return TimeUnit.MILLISECONDS.toSeconds(
+            ((currentValidityDeadlineTimestamp ?: Long.MAX_VALUE) - Date().time)
+        ) < MINIMUM_REFRESH_DURATION_LEFT_SECONDS
     }
 }
