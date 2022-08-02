@@ -54,24 +54,11 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
             chip.setEnsureMinTouchTargetSize(false)
 
             chip.setOnClickListener {
-                //chipViews.firstOrNull() is always the All choice
                 if(chip.isChecked){
-                    if(item.fixedTag == VehicleTypeFilter.ALL_TAG){
-                        chipViews.forEach {
-                            if(it != chip)
-                                it.isChecked = false
-                        }
-                        filter?.selectedTypes?.clear()
-                    }
-                    else{
-                        chipViews.firstOrNull()?.isChecked = false
-                        filter?.addSelected(item)
-                    }
+                    filter?.addSelected(item)
                 }
                 else{
                     filter?.removeSelected(item)
-                    if(filter?.selectedTypes?.size == 0)
-                        chipViews.firstOrNull()?.isChecked = true
                 }
 
                 delegate?.invoke()
@@ -81,10 +68,6 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
             if(filter?.selectedTypes?.map { it.fixedTag }?.contains(item.fixedTag) == true){
                 chip.performClick()
             }
-            }
-            filter?.isFilterApplied?.let {
-                if(!it)
-                    chipViews.firstOrNull()?.isChecked = true
             }
         }
 

@@ -207,7 +207,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_standard)).apply { fixedTag = VehicleTypeFilter.STANDARD })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_saloon)).apply { fixedTag = VehicleTypeFilter.BERLINE })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)).apply { fixedTag = VehicleTypeFilter.VAN })
@@ -227,7 +226,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         vehicleClassFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_executive)).apply {
                     icon = R.drawable.kh_uisdk_ic_briefcase
                     fixedTag = VehicleClassFilter.EXECUTIVE
@@ -251,7 +249,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_taxi)).apply {
                     icon = R.drawable.kh_uisdk_ic_car
                     fixedTag = VehicleExtrasFilter.TAXI
@@ -279,7 +276,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         vehicleEcoFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_electric)).apply {
                     icon = R.drawable.kh_uisdk_ic_zap
                     fixedTag = VehicleEcoFilter.ELECTRIC
@@ -303,7 +299,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         fleetCapabilitiesFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_all)).apply { fixedTag = VehicleTypeFilter.ALL_TAG })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_flight_tracking)).apply {
                     icon = R.drawable.kh_uisdk_ic_plane
                     fixedTag = FleetCapabilitiesFilter.FLIGHT_TRACKING

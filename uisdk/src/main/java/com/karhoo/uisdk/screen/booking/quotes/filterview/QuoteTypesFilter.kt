@@ -10,11 +10,13 @@ class QuoteTypesFilter (selectedTypes: ArrayList<MultiSelectData>) : MultiSelect
         }
         return (quote.quoteType.ordinal == 0 && selectedTypes.any { it.fixedTag?.contains(FIXED_TAG) == true })
                 ||
-                (quote.quoteType.ordinal == 1 && selectedTypes.any { it.fixedTag?.contains(ESTIMATED_TAG) == true })
+                ((quote.quoteType.ordinal == 1 || quote.quoteType.ordinal == 2) && selectedTypes.any { it.fixedTag?.contains(ESTIMATED_TAG) == true || it.fixedTag?.contains(
+                    METERED_TAG) == true })
     }
 
     companion object {
         const val FIXED_TAG = "fixed"
         const val ESTIMATED_TAG = "estimated"
+        const val METERED_TAG = "metered"
     }
 }

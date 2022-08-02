@@ -9,17 +9,30 @@ class ServiceAgreementsFilter(selectedTypes: ArrayList<MultiSelectData>) :
         if (selectedTypes.size == 0) {
             return true
         }
-        return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
-            it.fixedTag?.contains(
-                FREE_CANCELLATION_TAG
-            ) == true
-        })
-                ||
-                (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
-                    it.fixedTag?.contains(
-                        FREE_WAITING_TIME_TAG
-                    ) == true
-                })
+        if (selectedTypes.size == 1)
+            return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
+                it.fixedTag?.contains(
+                    FREE_CANCELLATION_TAG
+                ) == true
+            })
+                    ||
+                    (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
+                        it.fixedTag?.contains(
+                            FREE_WAITING_TIME_TAG
+                        ) == true
+                    })
+        else
+            return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
+                it.fixedTag?.contains(
+                    FREE_CANCELLATION_TAG
+                ) == true
+            })
+                    &&
+                    (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
+                        it.fixedTag?.contains(
+                            FREE_WAITING_TIME_TAG
+                        ) == true
+                    })
     }
 
     companion object {
