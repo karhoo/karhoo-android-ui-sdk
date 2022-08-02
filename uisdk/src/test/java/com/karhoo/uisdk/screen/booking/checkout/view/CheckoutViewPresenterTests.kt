@@ -384,7 +384,7 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString(), anyString())
+        verify(analytics).bookingRequested(anyString())
         verify(view).initialiseGuestPayment(any())
     }
 
@@ -461,7 +461,7 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString(), anyString())
+        verify(analytics).bookingRequested(anyString())
         verify(view).initialiseGuestPayment(quote)
     }
 
@@ -491,7 +491,7 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.makeBooking()
 
-        verify(analytics).bookingRequested(any(), anyString(), anyString())
+        verify(analytics).bookingRequested(anyString())
         verify(view).initialiseGuestPayment(quote)
     }
 

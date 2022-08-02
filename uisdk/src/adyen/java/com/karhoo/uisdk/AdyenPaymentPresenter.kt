@@ -23,6 +23,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDK.analytics
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -104,7 +105,7 @@ class AdyenPaymentPresenter(
                 is DropInResult.Error -> { // Is handled below
                 }
                 is DropInResult.CancelledByUser -> view?.refresh()
-                is DropInResult.Finished -> { // No need to handle this case, it will not occur if resultIntent is specified
+                is DropInResult.Finished -> { // We treat this case below based on the resultIntent's data
                 }
             }
 
@@ -117,6 +118,7 @@ class AdyenPaymentPresenter(
                     AdyenPaymentView.AUTHORISED -> {
                         this.tripId = payload.optString(TRIP_ID, "")
                         updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
+                        analytics?.cardAuthorisationSuccess(quote?.id)
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
@@ -163,14 +165,17 @@ class AdyenPaymentPresenter(
                 )
             }
             else -> {
-                KarhooUISDK.analytics?.cardAuthorizationFailed(
-                    refusalReason,
-                    quoteId,
-                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-                    Date(),
-                    quote?.price?.highPrice ?: 0,
-                    quote?.price?.currencyCode ?: ""
-                )
+                KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
+                    KarhooUISDK.analytics?.cardAuthorisationFailure(
+                        refusalReason,
+                        quoteId,
+                        lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                        Date(),
+                        quote?.price?.highPrice ?: 0,
+                        quote?.price?.currencyCode ?: "",
+                        paymentMethodUsed = it
+                    )
+                }
             }
         }
 
