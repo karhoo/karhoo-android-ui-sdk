@@ -31,27 +31,34 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImageSmall
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.driverArrivalText
 import java.util.Currency
 
-class QuotesListItemView @JvmOverloads constructor(context: Context,
-                                                   private var attrs: AttributeSet? = null,
-                                                   private var defStyleAttr: Int = 0)
-    : LinearLayout(context, attrs, defStyleAttr) {
+class QuotesListItemView @JvmOverloads constructor(
+    context: Context,
+    private var attrs: AttributeSet? = null,
+    private var defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     var itemLayout: Int = R.layout.uisdk_view_quotes_item
     private var isPrebook: Boolean = false
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.QuotesListItem,
-                defStyleAttr, R.style.KhQuoteListItemView)
-        val layout = if(!isPrebook) typedArray.getResourceId(R.styleable.QuotesListItem_layout, R
-                .layout.uisdk_view_quotes_item) else R.layout.uisdk_view_quotes_item_prebook
+        val typedArray = context.obtainStyledAttributes(
+            attr, R.styleable.QuotesListItem,
+            defStyleAttr, R.style.KhQuoteListItemView
+        )
+        val layout = if (!isPrebook) typedArray.getResourceId(
+            R.styleable.QuotesListItem_layout, R
+                .layout.uisdk_view_quotes_item
+        ) else R.layout.uisdk_view_quotes_item_prebook
         typedArray.recycle()
         return layout
     }
 
-    fun bind(listPosition: Int,
-             vehicleDetails: Quote,
-             isPrebook: Boolean,
-             itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>) {
+    fun bind(
+        listPosition: Int,
+        vehicleDetails: Quote,
+        isPrebook: Boolean,
+        itemClickListener: BaseRecyclerAdapter.OnRecyclerItemClickListener<Quote>
+    ) {
 
         this.isPrebook = isPrebook
         itemLayout = getListItemLayout(context, attrs, defStyleAttr)
@@ -72,7 +79,13 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
         tag = vehicleDetails
 
-        setOnClickListener { v -> itemClickListener.onRecyclerItemClicked(v, listPosition, vehicleDetails) }
+        setOnClickListener { v ->
+            itemClickListener.onRecyclerItemClicked(
+                v,
+                listPosition,
+                vehicleDetails
+            )
+        }
     }
 
     private fun setDriverArrival(isPrebook: Boolean) {
@@ -90,36 +103,36 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
 
     private fun loadImage(url: String?) {
         PicassoLoader.loadImage(context,
-                logoImage,
-                url,
-                R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.kh_uisdk_driver_photo_size,
-                R.integer.kh_uisdk_logo_radius,
-                object : Callback {
-                    override fun onSuccess() {
-                        stopLoading()
-                    }
+            logoImage,
+            url,
+            R.drawable.uisdk_ic_quotes_logo_empty,
+            R.dimen.kh_uisdk_driver_photo_size,
+            R.integer.kh_uisdk_logo_radius,
+            object : Callback {
+                override fun onSuccess() {
+                    stopLoading()
+                }
 
-                    override fun onError(e: java.lang.Exception?) {
-                        //Do Nothing
-                    }
-                })
+                override fun onError(e: java.lang.Exception?) {
+                    //Do Nothing
+                }
+            })
 
         PicassoLoader.loadImage(context,
-                logoImageSmall,
-                url,
-                R.drawable.uisdk_ic_quotes_logo_empty,
-                R.dimen.kh_uisdk_spacing_small,
-                R.integer.kh_uisdk_logo_radius,
-                object : Callback {
-                    override fun onSuccess() {
-                        stopLoading()
-                    }
+            logoImageSmall,
+            url,
+            R.drawable.uisdk_ic_quotes_logo_empty,
+            R.dimen.kh_uisdk_spacing_small,
+            R.integer.kh_uisdk_logo_radius,
+            object : Callback {
+                override fun onSuccess() {
+                    stopLoading()
+                }
 
-                    override fun onError(e: java.lang.Exception?) {
-                        //Do Nothing
-                    }
-                })
+                override fun onError(e: java.lang.Exception?) {
+                    //Do Nothing
+                }
+            })
     }
 
     @Suppress("NestedBlockDepth")
@@ -134,10 +147,12 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
                         priceText.text = currency.formatted(it.price.highPrice)
 
                         when (vehicleDetails.quoteSource) {
-                            QuoteSource.FLEET -> priceText.text = currency.formatted(vehicleDetails.price.highPrice)
+                            QuoteSource.FLEET -> priceText.text =
+                                currency.formatted(vehicleDetails.price.highPrice)
                             QuoteSource.MARKET -> priceText.text = currency.intToRangedPrice(
-                                    lowPrice = vehicleDetails.price.lowPrice,
-                                    highPrice = vehicleDetails.price.highPrice)
+                                lowPrice = vehicleDetails.price.lowPrice,
+                                highPrice = vehicleDetails.price.highPrice
+                            )
                         }
                     } catch (e: Exception) {
                         priceText.text = "??"
@@ -166,14 +181,16 @@ class QuotesListItemView @JvmOverloads constructor(context: Context,
     private fun setEta(etaTime: Int?, isPrebook: Boolean) {
         etaText?.visibility = if (isPrebook) View.GONE else View.VISIBLE
         val etaTimeString = etaTime?.toString() ?: "~"
-        etaText?.text = String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
+        etaText?.text =
+            String.format("%s %s", etaTimeString, context.getString(R.string.kh_uisdk_min))
     }
 
     private fun setCapacity(vehicle: QuoteVehicle) {
         capacityWidget.setCapacity(
-                luggage = vehicle.luggageCapacity,
-                people = vehicle.passengerCapacity,
-                otherCapabilities = null)
+            luggage = vehicle.luggageCapacity,
+            people = vehicle.passengerCapacity,
+            otherCapabilities = null
+        )
     }
 
     private fun startLoading() {
