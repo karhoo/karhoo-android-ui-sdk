@@ -9,30 +9,30 @@ class ServiceAgreementsFilter(selectedTypes: ArrayList<MultiSelectData>) :
         if (selectedTypes.size == 0) {
             return true
         }
-        if (selectedTypes.size == 1)
-            return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
-                it.fixedTag?.contains(
-                    FREE_CANCELLATION_TAG
-                ) == true
-            })
+        return if (selectedTypes.size == 1)
+            quoteContainsFreeCancellation(quote)
                     ||
-                    (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
-                        it.fixedTag?.contains(
-                            FREE_WAITING_TIME_TAG
-                        ) == true
-                    })
+            quoteContainsFreeWaitingTime(quote)
         else
-            return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
-                it.fixedTag?.contains(
-                    FREE_CANCELLATION_TAG
-                ) == true
-            })
+            quoteContainsFreeCancellation(quote)
                     &&
-                    (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
-                        it.fixedTag?.contains(
-                            FREE_WAITING_TIME_TAG
-                        ) == true
-                    })
+            quoteContainsFreeWaitingTime(quote)
+    }
+
+    private fun quoteContainsFreeCancellation(quote: Quote): Boolean {
+        return (quote.serviceAgreements?.freeCancellation != null && selectedTypes.any {
+            it.fixedTag?.contains(
+                FREE_CANCELLATION_TAG
+            ) == true
+        })
+    }
+
+    private fun quoteContainsFreeWaitingTime(quote: Quote): Boolean {
+        return (quote.serviceAgreements?.freeWaitingTime != null && selectedTypes.any {
+            it.fixedTag?.contains(
+                FREE_WAITING_TIME_TAG
+            ) == true
+        })
     }
 
     companion object {
