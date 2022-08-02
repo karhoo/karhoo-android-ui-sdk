@@ -393,6 +393,11 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     }
                 }
         }
+
+        if((dataModel?.quotes?.size?.compareTo(0) ?: 1) <= 0)
+            showFilteringWidgets(false)
+        else
+            showFilteringWidgets(true)
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
