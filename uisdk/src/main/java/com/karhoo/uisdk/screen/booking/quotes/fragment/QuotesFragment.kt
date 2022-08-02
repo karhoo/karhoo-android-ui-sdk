@@ -168,16 +168,6 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             }
 
         restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
-
-        quotesFilterByButton = view.findViewById(R.id.quotesFilterByButton)
-        quotesFilterByButton.apply {
-            visibility = VISIBLE
-            setOnClickListener { showFilters() }
-        }
-
-        initAvailability();
-
-        return view
     }
 
     fun initializeSortView() {
