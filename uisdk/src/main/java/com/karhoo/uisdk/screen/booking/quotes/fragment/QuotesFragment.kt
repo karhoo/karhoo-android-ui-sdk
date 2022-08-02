@@ -394,14 +394,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
         }
 
-        dataModel?.quotes?.size?.let {
-            if(it <= 0)
-                showFilteringWidgets(false)
-            else
-                showFilteringWidgets(true)
-        }?: kotlin.run {
+        if((dataModel?.quotes?.size?.compareTo(0) ?: 1) <= 0)
+            showFilteringWidgets(false)
+        else
             showFilteringWidgets(true)
-        }
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
