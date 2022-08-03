@@ -9,6 +9,8 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -18,6 +20,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
@@ -91,6 +94,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     var nrOfResults: MutableLiveData<Int> = MutableLiveData(0)
     var filterChain = FilterChain()
 
+    private lateinit var floating_btn_change_color: FloatingActionButton
+    private var currentBackgroundState = BackgroundStates.INITIAL
+    enum class BackgroundStates {
+        INITIAL,
+        BG1,
+        BG2
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -132,6 +143,29 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         initAvailability();
 
         showFilteringWidgets(true)
+
+        floating_btn_change_color = view.findViewById(R.id.floating_btn_change_color)
+        floating_btn_change_color.setOnClickListener {
+            val quoteFragmentLinearLayout: LinearLayout = view.findViewById(R.id.quoteFragmentLinearLayout)
+//            val quotesListLayout: RelativeLayout = view.findViewById(R.id.quotesRecyclerView)
+            when (currentBackgroundState){
+                BackgroundStates.INITIAL -> {
+                    currentBackgroundState = BackgroundStates.BG1
+                    quoteFragmentLinearLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background1))
+                    quotesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background1))
+                }
+                BackgroundStates.BG1 -> {
+                    currentBackgroundState = BackgroundStates.BG2
+                    quoteFragmentLinearLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background2))
+                    quotesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background2))
+                }
+                BackgroundStates.BG2 -> {
+                    currentBackgroundState = BackgroundStates.INITIAL
+                    quoteFragmentLinearLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background2))
+                    quotesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.kh_uisdk_background_primary))
+                }
+            }
+        }
 
         return view
     }
