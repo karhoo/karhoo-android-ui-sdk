@@ -74,6 +74,8 @@ class QuotesRecyclerView @JvmOverloads constructor(
     }
 
     override fun prebook(isPrebook: Boolean) {
+        quotesListRecycler.adapter = null;
+        quotesListRecycler.adapter = quotesAdapter;
         quotesAdapter.prebook(isPrebook)
     }
 

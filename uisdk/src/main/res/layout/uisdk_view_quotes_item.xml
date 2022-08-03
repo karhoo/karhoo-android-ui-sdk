@@ -69,13 +69,13 @@
 
                     <TextView
                         android:id="@+id/categoryText"
-                        style="@style/Text.Alternative.XSmall"
+                        style="@style/QuotesFontTitleTextAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:textSize="@dimen/kh_uisdk_text_size_small_medium"
+                        android:textSize="@dimen/kh_uisdk_text_size_medium"
                         tools:text="Car" />
 
                     <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
@@ -117,6 +117,8 @@
                     android:id="@+id/etaText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    style="@style/QuotesFontTextAppearance"
+                    android:textStyle="bold"
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/kh_uisdk_loading_min"
@@ -126,14 +128,14 @@
 
                 <TextView
                     android:id="@+id/driverArrivalText"
-                    style="@style/Text.Alternative.XSmall"
+                    style="@style/QuotesFontTextAppearance"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/kh_uisdk_driver_arrival"
                     android:textColor="@color/kh_uisdk_text_secondary"
-                    android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
+                    android:textSize="@dimen/kh_uisdk_text_size_small" />
             </LinearLayout>
 
             <LinearLayout
@@ -148,19 +150,21 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:maxLines="1"
+                    style="@style/QuotesFontTextAppearance"
+                    android:textStyle="bold"
                     android:textColor="@color/kh_uisdk_text_primary"
                     android:textSize="@dimen/kh_uisdk_text_size_medium"
                     tools:text="GBP100.00 - 100.00" />
 
                 <TextView
                     android:id="@+id/fareTypeText"
-                    style="@style/Text.Alternative.XSmall"
+                    style="@style/QuotesFontTextAppearance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:maxLines="1"
                     android:textColor="@color/kh_uisdk_text_secondary"
-                    android:textSize="@dimen/kh_uisdk_text_size_xsmall"
+                    android:textSize="@dimen/kh_uisdk_text_size_small"
                     tools:text="Fixed" />
             </LinearLayout>
         </LinearLayout>
