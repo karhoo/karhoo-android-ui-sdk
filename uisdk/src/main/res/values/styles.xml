@@ -763,6 +763,8 @@
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+    </style>
+
     <style name="khIndeterminateProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/progress_bar_height</item>
