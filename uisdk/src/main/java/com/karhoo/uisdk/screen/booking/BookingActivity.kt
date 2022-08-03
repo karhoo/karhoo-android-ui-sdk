@@ -42,6 +42,7 @@ import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_INFO_REQUEST_NUMBER
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
@@ -294,7 +295,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 startCheckoutActivity(data)
             }
             resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
-                startQuoteListActivity(restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED)
+                startQuoteListActivity(
+                    restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED,
+                    validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0)
+                )
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -427,8 +431,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
         }
     }
-    private fun startQuoteListActivity(restorePreviousData: Boolean) {
+    private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null) {
         val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(journeyDetailsStateViewModel.viewStates().value)
+        validityTimestamp?.let {
+            builder.validityTimestamp(validityTimestamp)
+        }
         startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
     }
 

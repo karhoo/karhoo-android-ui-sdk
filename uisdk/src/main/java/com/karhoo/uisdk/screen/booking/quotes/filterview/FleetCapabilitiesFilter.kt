@@ -9,17 +9,7 @@ class FleetCapabilitiesFilter(selectedTypes: ArrayList<MultiSelectData>) : Multi
             return true
         }
 
-        selectedTypes.forEach { data ->
-            if(quote.fleet.capabilities.map { tag -> tag.lowercase() }.any { tag ->
-                    data.fixedTag?.let {
-                        tag == it
-                    }?: kotlin.run {
-                        tag == data.text
-                    }
-                })
-                return true
-        }
-        return false
+        return quote.fleet.capabilities.map { tag -> tag.lowercase() }.containsAll(selectedTypes.map { tag -> tag.fixedTag })
     }
 
     companion object {

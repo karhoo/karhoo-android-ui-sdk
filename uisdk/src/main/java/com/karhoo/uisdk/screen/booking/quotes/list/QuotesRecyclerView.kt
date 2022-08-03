@@ -86,7 +86,7 @@ class QuotesRecyclerView @JvmOverloads constructor(
         } else {
             quotesListRecycler.visibility = View.GONE
         }
-        setQuotesLoaderVisibility(if (visible) View.VISIBLE else View.GONE)
+        setQuotesLoaderVisibility(if (visible && quotesAdapter.itemCount <= 0) View.VISIBLE else View.GONE)
     }
 
     private fun showErrorView(show: Boolean, reason: ErrorViewGenericReason) {

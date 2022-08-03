@@ -66,9 +66,10 @@
                     android:id="@+id/filterViewVehicleTypeMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>
@@ -80,6 +81,7 @@
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>
@@ -91,6 +93,7 @@
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>
@@ -102,6 +105,7 @@
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>
@@ -113,6 +117,7 @@
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>
@@ -124,6 +129,7 @@
                     android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
 
                 <View
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
                     android:background="@color/kh_uisdk_border"/>

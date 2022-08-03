@@ -12,7 +12,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 class UnitTestUISDKConfig(
     private val context: Context, private val authenticationMethod:
     AuthenticationMethod =
-        AuthenticationMethod.KarhooUser(), private val handleBraintree: Boolean = true
+        AuthenticationMethod.KarhooUser(), private var handleBraintree: Boolean = true
 ) :
     KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
@@ -63,7 +63,9 @@ class UnitTestUISDKConfig(
                 configuration = UnitTestUISDKConfig(
                     context = context,
                     authenticationMethod = AuthenticationMethod.KarhooUser()
-                )
+                ).apply {
+                    handleBraintree = false
+                }
             )
             KarhooUISDKConfigurationProvider.configuration.paymentManager = BraintreePaymentManager()
         }
@@ -74,7 +76,9 @@ class UnitTestUISDKConfig(
                     context =
                     context,
                     authenticationMethod = AuthenticationMethod.TokenExchange("clientId", "scope")
-                )
+                ).apply {
+                    handleBraintree = false
+                }
             )
             KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }

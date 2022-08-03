@@ -673,12 +673,19 @@
         <item name="icon">@drawable/kh_uisdk_ic_filters</item>
     </style>
 
+    <style name="KhFilterChipShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
     <style name="KhFilterChip" parent="Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/kh_uisdk_quote_list_filter_chips</item>
         <item name="chipStrokeColor">@color/kh_uisdk_quote_list_filter_chips_border</item>
         <item name="chipStrokeWidth">@dimen/kh_uisdk_divider_height</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="chipIconVisible">true</item>
+        <item name="chipIconVisible">false</item>
+        <item name="shapeAppearanceOverlay">@style/KhFilterChipShape</item>
+        <item name="chipMinTouchTargetSize">0dp</item>
     </style>
 
     <style name="KhFilterNumberedViewLabel">
@@ -756,5 +763,11 @@
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+    <style name="khIndeterminateProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/progress_bar_height</item>
+        <item name="android:indeterminate">true</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:indeterminateTint">@color/kh_uisdk_secondary</item>
     </style>
 </resources>

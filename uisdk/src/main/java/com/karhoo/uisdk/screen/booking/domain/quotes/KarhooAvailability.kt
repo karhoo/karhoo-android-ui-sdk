@@ -43,7 +43,6 @@ object KarhooAvailability : AvailabilityProvider {
     private var availableVehicles: Map<String, List<Quote>> = mutableMapOf()
     private var vehiclesObserver: Observer<Resource<QuoteList>>? = null
     private var vehiclesObservable: Observable<QuoteList>? = null
-    private var currentFilter: String? = null
     private var availabilityHandler: WeakReference<AvailabilityHandler>? = null
     private var analytics: Analytics? = null
     private var filterChain: FilterChain? = null
@@ -54,6 +53,7 @@ object KarhooAvailability : AvailabilityProvider {
     private lateinit var observer: androidx.lifecycle.Observer<JourneyDetails>
     private var vehiclesJob: Job? = null
     var quoteListValidityListener: QuotesFragmentContract.QuoteValidityListener? = null
+    var quoteListPoolingStatusListener: QuotesFragmentContract.QuotePoolingStatusListener? = null
 
     override var shouldRunInBackground: Boolean = false
 
@@ -78,7 +78,7 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     override fun getExistingFilterChain(): FilterChain? {
-        return if(this.filterChain != null)
+        return if (this.filterChain != null)
             this.filterChain
         else null
     }
@@ -137,26 +137,37 @@ object KarhooAvailability : AvailabilityProvider {
         return this.filterChain!!
     }
 
-    private fun filterVehicles() {
+    private fun filterVehicles(vehicles: QuoteList? = null) {
         filterChain?.let {
-            getFilteredVehiclesForFilterChain(it)
+            getFilteredVehiclesForFilterChain(it, vehicles)
         }
     }
 
-    private fun getFilteredVehiclesForFilterChain(filterChain: FilterChain) {
+    private fun getFilteredVehiclesForFilterChain(
+        filterChain: FilterChain,
+        vehicles: QuoteList? = null
+    ) {
         filteredList = mutableListOf()
         availableVehicles.values.forEach {
             filteredList?.addAll(filterChain.applyFilters(it))
         }
-        updateFleets(filteredList)
+        updateFleets(filteredList, vehicles)
     }
 
     override fun getNonFilteredVehicles(): List<Quote> {
         return availableVehicles.values.flatten()
     }
 
-    private fun updateFleets(filteredList: MutableList<Quote>?) {
+    private fun updateFleets(filteredList: MutableList<Quote>?, vehicles: QuoteList? = null) {
         filteredList?.let {
+            vehicles?.let { quoteList ->
+                if (quoteList.status != QuoteStatus.COMPLETED &&
+                    liveFleetsViewModel.liveFleets.value?.isEmpty() == true &&
+                    filteredList.size > 0
+                ) {
+                    analytics?.fleetsShown(quoteList.id.toString(), filteredList.size)
+                }
+            }
             liveFleetsViewModel.liveFleets.value = filteredList
         }
     }
@@ -184,13 +195,17 @@ object KarhooAvailability : AvailabilityProvider {
         override fun onValueChanged(value: Resource<QuoteList>) {
             when (value) {
                 is Resource.Success -> {
+                    quoteListPoolingStatusListener?.changedStatus(value.data.status)
                     handleVehiclePolling(value.data)
                     if (!shouldRunInBackground) {
                         updateVehicles(value.data)
                         shouldRunInBackground = false;
                     }
                 }
-                is Resource.Failure -> handleAvailabilityError(value.error)
+                is Resource.Failure -> {
+                    quoteListPoolingStatusListener?.changedStatus(QuoteStatus.COMPLETED)
+                    handleAvailabilityError(value.error)
+                }
             }
         }
     }
@@ -231,6 +246,13 @@ object KarhooAvailability : AvailabilityProvider {
 
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
+            running = false
+            liveFleetsViewModel.liveFleets.value?.size?.let {
+                analytics?.fleetsShown(
+                    vehicles.id.toString(),
+                    it
+                )
+            }
             cancelVehicleCallback()
             handleVehicleValidity(vehicles)
         }
@@ -257,10 +279,10 @@ object KarhooAvailability : AvailabilityProvider {
             availableVehicles = vehicles.categories
 
             currentAvailableQuotes()
-            filterVehicles()
+            filterVehicles(vehicles)
         }
 
-        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true){
+        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true) {
             availabilityHandler?.get()?.handleNoResultsForFiltersError()
         }
     }
@@ -273,7 +295,7 @@ object KarhooAvailability : AvailabilityProvider {
     }
 
     override fun pauseUpdates(fromBackButton: Boolean) {
-        if(!fromBackButton){
+        if (!fromBackButton) {
             running = false
             vehiclesObserver?.let {
                 vehiclesObservable?.unsubscribe(it)
