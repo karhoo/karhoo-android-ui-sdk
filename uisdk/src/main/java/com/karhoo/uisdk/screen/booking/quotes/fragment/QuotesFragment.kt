@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ import com.google.android.material.button.MaterialButton
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
@@ -78,6 +80,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     private var dataModel: QuoteListViewDataModel? = null
     private val liveFleetsViewModel: LiveFleetsViewModel = LiveFleetsViewModel()
     private lateinit var quotesSortWidget: QuotesSortView
+    private lateinit var progressBarWidget: ProgressBar
     private lateinit var quotesFilterWidget: FilterDialogFragment
     private lateinit var addressBarWidget: AddressBarView
     private lateinit var quotesRecyclerView: QuotesRecyclerView
@@ -98,6 +101,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_quotes_fragment, container, false)
 
+        progressBarWidget = view.findViewById(R.id.progressBar)
         addressBarWidget = view.findViewById(R.id.addressBarWidget)
         quotesRecyclerView = view.findViewById(R.id.quotesRecyclerView)
         quotesTaxesAndFeesLabel = view.findViewById(R.id.quotesTaxesAndFeesLabel)
@@ -130,6 +134,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
 
         initAvailability();
+        initProgressBar();
 
         showFilteringWidgets(true)
 
@@ -398,6 +403,20 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             showFilteringWidgets(false)
         else
             showFilteringWidgets(true)
+    }
+
+    private fun initProgressBar() {
+        (availabilityProvider as KarhooAvailability).quoteListPoolingStatusListener =
+            object : QuotesFragmentContract
+            .QuotePoolingStatusListener {
+                override fun changedStatus(status: QuoteStatus?) {
+                    if (status == QuoteStatus.COMPLETED) {
+                        progressBarWidget.visibility = View.INVISIBLE
+                    } else {
+                        progressBarWidget.visibility = VISIBLE
+                    }
+                }
+            }
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
