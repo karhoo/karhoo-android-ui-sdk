@@ -9,17 +9,7 @@ class VehicleExtrasFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSele
             return true
         }
 
-        selectedTypes.forEach { data ->
-            if(quote.vehicle.vehicleTags.map { tag -> tag.lowercase() }.any { tag ->
-                    data.fixedTag?.let {
-                        tag == it
-                    }?: kotlin.run {
-                        tag == data.text
-                    }
-            })
-                return true
-        }
-        return false
+        return quote.vehicle.vehicleTags.map { tag -> tag.lowercase() }.containsAll(selectedTypes.map { tag -> tag.fixedTag })
     }
 
     companion object {
