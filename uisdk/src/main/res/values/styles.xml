@@ -737,4 +737,24 @@
         <item name="android:letterSpacing">0.05</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+
+    <style name="QuotesItemPriceText" parent="QuotesFontTextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+    </style>
+
+    <style name="QuotesItemFareTypeText" parent="QuotesFontTextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">bottom|end</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+    </style>
 </resources>

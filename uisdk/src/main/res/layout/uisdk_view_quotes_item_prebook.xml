@@ -85,31 +85,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
-
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/priceText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        style="@style/QuotesFontTextAppearance"
-                        android:textStyle="bold"
-                        android:maxLines="1"
-                        android:textColor="@color/kh_uisdk_text_primary"
-                        android:textSize="@dimen/kh_uisdk_text_size_large"
+                        style="@style/QuotesItemPriceText"
                         tools:text="GBP100.00 - 100.00" />
 
                     <TextView
                         android:id="@+id/fareTypeText"
-                        style="@style/QuotesFontTextAppearance"
-                        android:textStyle="normal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom|end"
-                        android:maxLines="1"
-                        android:textColor="@color/kh_uisdk_text_primary"
-                        android:textSize="@dimen/kh_uisdk_text_size_small"
+                        style="@style/QuotesItemFareTypeText"
                         tools:text="Fixed" />
                 </LinearLayout>
 
