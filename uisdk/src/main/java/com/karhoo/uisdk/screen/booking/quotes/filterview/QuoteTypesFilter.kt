@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.quotes.filterview
 
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.QuoteType
 
 class QuoteTypesFilter (selectedTypes: ArrayList<MultiSelectData>) : MultiSelectFilter(selectedTypes) {
 
@@ -8,9 +9,9 @@ class QuoteTypesFilter (selectedTypes: ArrayList<MultiSelectData>) : MultiSelect
         if (selectedTypes.size == 0) {
             return true
         }
-        return (quote.quoteType.ordinal == 0 && selectedTypes.any { it.fixedTag?.contains(FIXED_TAG) == true })
+        return (quote.quoteType == QuoteType.FIXED && selectedTypes.any { it.fixedTag?.contains(FIXED_TAG) == true })
                 ||
-                ((quote.quoteType.ordinal == 1 || quote.quoteType.ordinal == 2) && selectedTypes.any { it.fixedTag?.contains(ESTIMATED_TAG) == true || it.fixedTag?.contains(
+                ((quote.quoteType == QuoteType.ESTIMATED || quote.quoteType == QuoteType.METERED) && selectedTypes.any { it.fixedTag?.contains(ESTIMATED_TAG) == true || it.fixedTag?.contains(
                     METERED_TAG) == true })
     }
 
