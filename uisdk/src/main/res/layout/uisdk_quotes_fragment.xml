@@ -8,7 +8,7 @@
     android:layout_alignParentBottom="true"
     android:elevation="@dimen/kh_uisdk_spacing_xxxsmall"
     android:orientation="vertical"
-    android:background="@color/kh_uisdk_background2"
+    android:background="@color/kh_uisdk_background1"
     >
 
     <com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView

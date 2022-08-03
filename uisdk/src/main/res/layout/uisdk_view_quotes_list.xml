@@ -18,6 +18,7 @@
 
         <com.karhoo.uisdk.screen.booking.quotes.list.QuotesRecyclerView
             android:id="@+id/quotesRecyclerView"
+            android:background="@color/kh_uisdk_background1"
             android:layout_width="@dimen/kh_uisdk_spacing_none"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -26,16 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_btn_change_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/uisdk_ic_arrow_details"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
