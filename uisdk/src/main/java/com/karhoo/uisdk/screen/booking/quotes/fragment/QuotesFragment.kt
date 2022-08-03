@@ -403,7 +403,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             .QuotePoolingStatusListener {
                 override fun changedStatus(status: QuoteStatus?) {
                     if (status == QuoteStatus.COMPLETED) {
-                        progressBarWidget.visibility = GONE
+                        progressBarWidget.visibility = View.INVISIBLE
                     } else {
                         progressBarWidget.visibility = VISIBLE
                     }
