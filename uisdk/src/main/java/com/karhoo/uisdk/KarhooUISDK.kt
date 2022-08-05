@@ -8,6 +8,7 @@ import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
@@ -46,5 +47,12 @@ object KarhooUISDK {
     fun setConfiguration(configuration: KarhooUISDKConfiguration) {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
         KarhooApi.setConfiguration(configuration)
+
+        cacheVehicleMappings()
+    }
+
+    private fun cacheVehicleMappings() {
+        VehicleMappingsProvider.setup(KarhooApi.quotesService)
+        VehicleMappingsProvider.retrieveVehicleMappings()
     }
 }

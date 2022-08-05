@@ -11,7 +11,9 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
+import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
@@ -67,7 +69,10 @@ class QuotesListItemView @JvmOverloads constructor(
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
 
-        loadImage(vehicleDetails.fleet.logoUrl)
+        var logoImage = VehicleMappingsProvider.getVehicleMappings()?.let {
+            vehicleDetails.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
+        } ?: vehicleDetails.fleet.logoUrl
+        loadImage(logoImage)
 
         setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)

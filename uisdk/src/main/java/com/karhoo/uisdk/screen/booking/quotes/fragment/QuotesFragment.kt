@@ -133,8 +133,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
             setOnClickListener { showFilters() }
         }
 
-        initAvailability();
-        initProgressBar();
+        initAvailability()
+        initProgressBar()
 
         showFilteringWidgets(true)
 
@@ -172,7 +172,8 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 null
             }
 
-        restorePreviousData = bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
+        restorePreviousData =
+            bundle?.getBoolean(QUOTES_RESTORE_PREVIOUS_DATA_KEY) == true && !shouldRefreshQuoteList()
     }
 
     fun initializeSortView() {
@@ -377,7 +378,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
             }
 
-            if(shouldRefreshQuoteList()) {
+            if (shouldRefreshQuoteList()) {
                 availabilityProvider?.shouldRunInBackground = false
             }
 
@@ -399,7 +400,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                 }
         }
 
-        if((dataModel?.quotes?.size?.compareTo(0) ?: 1) <= 0)
+        if ((dataModel?.quotes?.size?.compareTo(0) ?: 1) <= 0)
             showFilteringWidgets(false)
         else
             showFilteringWidgets(true)
