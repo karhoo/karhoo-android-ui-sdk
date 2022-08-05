@@ -3,7 +3,8 @@ package com.karhoo.uisdk.screen.booking.quotes.filterview
 open class MultiSelectFilter(var selectedTypes: ArrayList<MultiSelectData>): IFilter {
 
     fun addSelected(choice: MultiSelectData){
-        selectedTypes.add(choice)
+        if(!selectedTypes.contains(choice))
+            selectedTypes.add(choice)
     }
 
     fun removeSelected(choice: MultiSelectData){
@@ -17,5 +18,5 @@ open class MultiSelectFilter(var selectedTypes: ArrayList<MultiSelectData>): IFi
     override val isFilterApplied: Boolean?
         get() { return selectedTypes.isNotEmpty() }
 
-    lateinit var typeValues: ArrayList<MultiSelectData>
+    var typeValues: ArrayList<MultiSelectData> = ArrayList()
 }
