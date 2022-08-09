@@ -98,7 +98,16 @@ class QuotesListItemView @JvmOverloads constructor(
     }
 
     private fun setCategoryText(vehicle: QuoteVehicle) {
-        categoryText.text = " ${vehicle.vehicleType?.replaceFirstChar { it.uppercase() }}"
+        val luxuryTag = "luxury"
+        val executiveTag = "executive"
+        var textToDisplay = if (vehicle.vehicleTags.contains(executiveTag)) {
+            resources.getString(R.string.kh_uisdk_filter_executive)
+        } else if (vehicle.vehicleTags.contains(luxuryTag)) {
+            resources.getString(R.string.kh_uisdk_filter_luxury)
+        } else {
+            "${vehicle.vehicleType}"
+        }
+        categoryText.text = textToDisplay.replaceFirstChar { it.uppercase() }
     }
 
     private fun loadImage(url: String?) {
