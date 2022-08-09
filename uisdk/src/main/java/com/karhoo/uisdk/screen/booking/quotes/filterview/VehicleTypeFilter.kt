@@ -12,10 +12,9 @@ class VehicleTypeFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelect
     }
 
     companion object {
-        const val STANDARD = "standard"
-        const val BERLINE = "berline"
-        const val VAN = "van"
-        const val MOTO = "moto"
-        const val BIKE = "bike"
+        const val STANDARD = "STANDARD"
+        const val BUS = "BUS"
+        const val MPV = "MPV"
+        const val MOTO = "MOTO"
     }
 }

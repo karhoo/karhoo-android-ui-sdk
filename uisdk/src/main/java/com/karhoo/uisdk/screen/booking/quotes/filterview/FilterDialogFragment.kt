@@ -208,8 +208,8 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         vehicleTypeFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_standard)).apply { fixedTag = VehicleTypeFilter.STANDARD })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_saloon)).apply { fixedTag = VehicleTypeFilter.BERLINE })
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)).apply { fixedTag = VehicleTypeFilter.VAN })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_bus)).apply { fixedTag = VehicleTypeFilter.BUS })
+                add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_mpv)).apply { fixedTag = VehicleTypeFilter.MPV })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_moto)).apply { fixedTag = VehicleTypeFilter.MOTO })
             }
         }
@@ -249,10 +249,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
 
         vehicleExtrasFilter.apply {
             typeValues = ArrayList<MultiSelectData>().apply {
-                add(MultiSelectData(resources.getString(R.string.kh_uisdk_taxi)).apply {
-                    icon = R.drawable.kh_uisdk_ic_car
-                    fixedTag = VehicleExtrasFilter.TAXI
-                })
                 add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_child_seat)).apply {
                     icon = R.drawable.kh_uisdk_ic_tag_child_seat
                     fixedTag = VehicleExtrasFilter.CHILD_SEAT
