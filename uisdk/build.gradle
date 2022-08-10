@@ -56,7 +56,7 @@ if (getCurrentFlavor().contains('adyen')) {
 }
 
 android {
-    compileSdkVersion 32            
+    compileSdkVersion 32
     buildToolsVersion '30.0.3'
 
     defaultConfig {
@@ -146,14 +146,14 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
             artifactId "uisdk-${variant.flavorName}"
-            version '1.6.2-RC6'
+            version '1.6.2-RC7'
         }
     }
 }
 
 dependencies {
 
-    implementation 'com.github.karhoo:karhoo-android-sdk:1.4.8-RC6'
+    implementation 'com.github.karhoo:karhoo-android-sdk:1.4.8-RC7'
     fullCompileOnly('com.adyen.checkout:drop-in:4.5.0')
     fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
