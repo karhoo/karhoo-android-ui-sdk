@@ -111,7 +111,7 @@ class AdyenPaymentPresenter(
 
             val dataString = DropIn.getDropInResultFromIntent(data)
 
-            dataString?.let {
+            if (dataString != null) {
                 val payload = JSONObject(dataString)
 
                 when (payload.optString(RESULT_CODE, "")) {
@@ -137,7 +137,9 @@ class AdyenPaymentPresenter(
                         view?.showPaymentFailureDialog(error)
                     }
                 }
-            } ?: view?.showPaymentFailureDialog()
+            } else {
+                view?.showPaymentFailureDialog()
+            }
         } else {
             view?.refresh()
         }
