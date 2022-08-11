@@ -38,18 +38,20 @@ class QuotesErrorView @JvmOverloads constructor(
         this.delegateQuotesError = delegateQuotesError
     }
 
-    override fun setup(
-        reason: ErrorViewLinkedReason,
+    override fun setupWithSpan(
+        reason: ErrorViewGenericReason,
         delegateQuotesError: QuotesErrorViewContract.QuotesErrorViewDelegate
     ) {
+        val contactUsLabel = resources.getString(R.string.kh_uisdk_contact_us)
+
         quotesErrorIcon.setImageResource(reason.iconId)
         quotesErrorTitle.text = reason.title
-        quotesErrorSubtitle.text = presenter.setSpannableOnSubititle(
-            reason.linkTitle,
-            reason.subtitleLink,
+        quotesErrorSubtitle.text = presenter.createSpannable(
+            contactUsLabel[0].uppercaseChar() + contactUsLabel.substring(1).toLowerCase(),
             reason.subtitle,
             resources.getColor(R.color.kh_uisdk_colorAccent)
         )
+
         quotesErrorSubtitle.movementMethod = LinkMovementMethod.getInstance()
 
         this.delegateQuotesError = delegateQuotesError

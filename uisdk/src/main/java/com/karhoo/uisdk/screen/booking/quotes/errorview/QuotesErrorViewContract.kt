@@ -5,7 +5,7 @@ import android.text.SpannableString
 interface QuotesErrorViewContract {
     interface View {
         fun setup(reason: ErrorViewGenericReason, delegateQuotesError: QuotesErrorViewDelegate)
-        fun setup(reason: ErrorViewLinkedReason, delegateQuotesError: QuotesErrorViewDelegate)
+        fun setupWithSpan(reason: ErrorViewGenericReason, delegateQuotesError: QuotesErrorViewDelegate)
         fun show(show: Boolean)
     }
 
@@ -20,7 +20,7 @@ interface QuotesErrorViewContract {
 
     interface Presenter {
         fun setDelegate(delegate: QuotesErrorPresenterDelegate)
-        fun setSpannableOnSubititle(keyword: String, link: String?, baseText: String, linkColor: Int):
+        fun createSpannable(keyword: String, baseText: String, linkColor: Int):
                 SpannableString
     }
 }

@@ -13,30 +13,26 @@ class QuotesErrorViewPresenter : QuotesErrorViewContract.Presenter {
         this.delegate = delegate
     }
 
-    override fun setSpannableOnSubititle(
+    override fun createSpannable(
         keyword: String,
-        link: String?,
         baseText: String,
         linkColor: Int
     ): SpannableString {
-        val formattedText = baseText.format(keyword)
-        val spannableString = SpannableString(formattedText)
+        val spannableString = SpannableString(baseText)
         spannableString.setSpan(
-            createClickableSpan(link, linkColor),
-            baseText.indexOf(FORMATTER_KEYWORD),
-            baseText.indexOf(FORMATTER_KEYWORD) + keyword.length,
+            createClickableSpan(linkColor),
+            baseText.indexOf(keyword),
+            baseText.indexOf(keyword) + keyword.length,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
         return spannableString
     }
 
-    private fun createClickableSpan(url: String?, color: Int): ClickableSpan {
+    private fun createClickableSpan(color: Int): ClickableSpan {
         return object : ClickableSpan() {
             override fun onClick(widget: View) {
-                url?.let {
-                    delegate?.onSubtitleClicked()
-                }
+                delegate?.onSubtitleClicked()
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -45,9 +41,5 @@ class QuotesErrorViewPresenter : QuotesErrorViewContract.Presenter {
                 ds.color = color
             }
         }
-    }
-
-    companion object {
-        private const val FORMATTER_KEYWORD = "%s"
     }
 }
