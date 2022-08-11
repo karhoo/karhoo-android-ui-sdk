@@ -69,10 +69,10 @@ class QuotesListItemView @JvmOverloads constructor(
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
 
-        var logoImage = VehicleMappingsProvider.getVehicleMappings()?.let {
+        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
             vehicleDetails.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
         } ?: vehicleDetails.fleet.logoUrl
-        loadImage(logoImage)
+        loadImages(logoImageUrl , vehicleDetails.fleet.logoUrl)
 
         setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)
@@ -115,7 +115,7 @@ class QuotesListItemView @JvmOverloads constructor(
         categoryText.text = textToDisplay.replaceFirstChar { it.uppercase() }
     }
 
-    private fun loadImage(url: String?) {
+    private fun loadImages(url: String?, fleetUrl: String?) {
         PicassoLoader.loadImage(context,
             logoImage,
             url,
@@ -134,7 +134,7 @@ class QuotesListItemView @JvmOverloads constructor(
 
         PicassoLoader.loadImage(context,
             logoImageSmall,
-            url,
+            fleetUrl,
             R.drawable.uisdk_ic_quotes_logo_empty,
             R.dimen.kh_uisdk_spacing_small,
             R.integer.kh_uisdk_logo_radius,
