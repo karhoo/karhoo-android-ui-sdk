@@ -26,6 +26,8 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
+import android.util.Log
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +36,12 @@ class MainActivity : AppCompatActivity() {
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
 
     init {
-        Thread.setDefaultUncaughtExceptionHandler { _, _ ->
+        Thread.setDefaultUncaughtExceptionHandler { _, eh ->
+            Log.e(TAG, "Uncaught exception")
+            eh.message?.let { Log.e(TAG, it) }
+            eh.stackTrace.let { Log.e(TAG, Arrays.toString(eh.stackTrace)) }
+            eh.printStackTrace()
+
             this.startActivity(Intent(this, MainActivity::class.java))
             exitProcess(0)
         }
@@ -208,5 +215,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideLoading() {
         loadingProgressBar.visibility = View.INVISIBLE
+    }
+
+    companion object {
+        private val TAG = MainActivity::class.java.name
     }
 }
