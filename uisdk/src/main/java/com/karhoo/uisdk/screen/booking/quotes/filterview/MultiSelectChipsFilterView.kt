@@ -31,43 +31,43 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
             for(item in chips){
                 val chip = Chip(context)
                 chip.text = item.text
-            val chipDrawable = ChipDrawable.createFromAttributes(
-                context,
-                null,
-                0,
-                R.style.KhFilterChip
-            )
-            chip.setTextColor(ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text))
-            chip.setChipDrawable(chipDrawable)
-            item.icon?.let {
-                chip.chipIcon = ContextCompat.getDrawable(context, it)
-                chip.checkedIcon = ContextCompat.getDrawable(context, it)
-                chip.chipIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
-                chip.checkedIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
-                chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_text_size_large)
-                chip.isChipIconVisible = true
-            }?: kotlin.run {
-                chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_spacing_none)
-                chip.isChipIconVisible = false
-            }
-            chip.minimumWidth = 0
-            chip.setEnsureMinTouchTargetSize(false)
-
-            chip.setOnClickListener {
-                if(chip.isChecked){
-                    filter?.addSelected(item)
+                val chipDrawable = ChipDrawable.createFromAttributes(
+                    context,
+                    null,
+                    0,
+                    R.style.KhFilterChip
+                )
+                chip.setTextColor(ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text))
+                chip.setChipDrawable(chipDrawable)
+                item.icon?.let {
+                    chip.chipIcon = ContextCompat.getDrawable(context, it)
+                    chip.checkedIcon = ContextCompat.getDrawable(context, it)
+                    chip.chipIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
+                    chip.checkedIconTint = ContextCompat.getColorStateList(context, R.color.kh_uisdk_quote_list_filter_chips_text)
+                    chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_text_size_large)
+                    chip.isChipIconVisible = true
+                }?: kotlin.run {
+                    chip.chipIconSize = resources.getDimension(R.dimen.kh_uisdk_spacing_none)
+                    chip.isChipIconVisible = false
                 }
-                else{
-                    filter?.removeSelected(item)
-                }
+                chip.minimumWidth = 0
+                chip.setEnsureMinTouchTargetSize(false)
 
-                delegate?.invoke()
-            }
-            filterViewItemChipGroup.addView(chip)
-            chipViews.add(chip)
-            if(filter?.selectedTypes?.map { it.fixedTag }?.contains(item.fixedTag) == true){
-                chip.performClick()
-            }
+                chip.setOnClickListener {
+                    if(chip.isChecked){
+                        filter?.addSelected(item)
+                    }
+                    else{
+                        filter?.removeSelected(item)
+                    }
+
+                    delegate?.invoke()
+                }
+                filterViewItemChipGroup.addView(chip)
+                chipViews.add(chip)
+                if(filter?.selectedTypes?.map { it.fixedTag }?.contains(item.fixedTag) == true){
+                    chip.performClick()
+                }
             }
         }
 
