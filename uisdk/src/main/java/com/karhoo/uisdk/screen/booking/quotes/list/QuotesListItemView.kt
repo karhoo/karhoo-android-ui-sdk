@@ -11,7 +11,9 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
+import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
@@ -67,7 +69,10 @@ class QuotesListItemView @JvmOverloads constructor(
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
 
-        loadImage(vehicleDetails.fleet.logoUrl)
+        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
+            vehicleDetails.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
+        } ?: vehicleDetails.fleet.logoUrl
+        loadImages(logoImageUrl , vehicleDetails.fleet.logoUrl)
 
         setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)
@@ -98,10 +103,19 @@ class QuotesListItemView @JvmOverloads constructor(
     }
 
     private fun setCategoryText(vehicle: QuoteVehicle) {
-        categoryText.text = " ${vehicle.vehicleType?.replaceFirstChar { it.uppercase() }}"
+        val luxuryTag = "luxury"
+        val executiveTag = "executive"
+        var textToDisplay = if (vehicle.vehicleTags.contains(executiveTag)) {
+            resources.getString(R.string.kh_uisdk_filter_executive)
+        } else if (vehicle.vehicleTags.contains(luxuryTag)) {
+            resources.getString(R.string.kh_uisdk_filter_luxury)
+        } else {
+            "${vehicle.vehicleType}"
+        }
+        categoryText.text = textToDisplay.replaceFirstChar { it.uppercase() }
     }
 
-    private fun loadImage(url: String?) {
+    private fun loadImages(url: String?, fleetUrl: String?) {
         PicassoLoader.loadImage(context,
             logoImage,
             url,
@@ -120,7 +134,7 @@ class QuotesListItemView @JvmOverloads constructor(
 
         PicassoLoader.loadImage(context,
             logoImageSmall,
-            url,
+            fleetUrl,
             R.drawable.uisdk_ic_quotes_logo_empty,
             R.dimen.kh_uisdk_spacing_small,
             R.integer.kh_uisdk_logo_radius,

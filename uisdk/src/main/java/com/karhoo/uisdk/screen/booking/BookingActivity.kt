@@ -382,14 +382,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
-    private fun updateMapViewForQuoteListVisibilityChange(isVisible: Boolean) {
-        if (isVisible) {
-            bookingMapWidget.setDefaultPadding()
-        } else {
-            bookingMapWidget.setNoBottomPadding()
-        }
-    }
-
     private fun startCheckoutActivity(data: Intent?) {
         this.quote = data?.getParcelableExtra(QUOTES_SELECTED_QUOTE_KEY)
 

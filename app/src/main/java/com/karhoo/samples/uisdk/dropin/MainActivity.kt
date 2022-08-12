@@ -21,11 +21,17 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
+import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loadingProgressBar: View
+    private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
+    private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, _ ->
@@ -41,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         KarhooApi.userService.logout()
 
         KarhooApi.paymentsService.getAdyenClientKey()
+        adyenPaymentManager.paymentProviderView = AdyenPaymentView()
+        braintreePaymentManager.paymentProviderView = BraintreePaymentView()
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
@@ -86,6 +94,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
+            config.paymentManager = braintreePaymentManager
 
             KarhooUISDK.apply {
                 setConfiguration(config)
@@ -122,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -130,6 +140,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeGuestConfig() {
         val config = BraintreeGuestConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -138,6 +149,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -146,6 +158,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -157,6 +170,7 @@ class MainActivity : AppCompatActivity() {
             applicationContext
         )
 
+        config.paymentManager = adyenPaymentManager
         KarhooUISDK.apply {
             setConfiguration(config)
         }
