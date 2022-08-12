@@ -17,15 +17,56 @@ fun QuoteVehicle.typeToLocalisedString(context: Context): String? {
 }
 
 fun QuoteVehicle.getCorrespondingLogoMapping(vehicleMappings: VehicleMappings): VehicleMapping? {
-    val fallbackMapping = vehicleMappings.mappings?.firstOrNull {
-        it.vehicleType.equals("*")
+    /**
+     * Try and find the first precise mapping between the vehicle tags of the vehicle
+     * and the standard mappings
+     */
+    var specificMapping = vehicleMappings.mappings?.firstOrNull {
+        it.vehicleType.equals(this.vehicleType) &&
+                (it.vehicleTags?.size == this.vehicleTags.size
+                        && it.vehicleTags?.toSet() == this.vehicleTags.toSet())
     }
+
+    /**
+     * Fallback if exact match hasn't been found
+     * Try and find the first matching mapping for an individual vehicle tag
+     */
+    if (specificMapping == null) {
+        specificMapping = vehicleMappings.mappings?.firstOrNull { vehicleMapping ->
+            this.vehicleTags.forEach { tag ->
+                if(vehicleMapping.vehicleTags?.size == 1 &&
+                            vehicleMapping.vehicleTags?.contains(tag) == true &&
+                            vehicleMapping.vehicleType.equals(this.vehicleType)) {
+                    return@firstOrNull true
+                }
+            }
+
+            return@firstOrNull false
+        }
+    }
+
+    if (specificMapping != null) {
+        return specificMapping
+    }
+
+    /**
+     * Default mapping if no tags are present on the vehicle
+     * The matching will be done by the vehicle type
+     */
     val defaultMapping = vehicleMappings.mappings?.firstOrNull {
         it.vehicleType.equals(this.vehicleType) && it.vehicleTags.isNullOrEmpty()
     }
-    val specificMapping = vehicleMappings.mappings?.firstOrNull {
-        it.vehicleType.equals(this.vehicleType) && it.vehicleTags?.containsAll(this.vehicleTags) == true
+
+    if (defaultMapping != null) {
+        return defaultMapping
     }
 
-    return (specificMapping ?: defaultMapping) ?: fallbackMapping
+    /**
+     * Generic fallback to a default standard mapping
+     */
+    val fallbackMapping = vehicleMappings.mappings?.firstOrNull {
+        it.vehicleType.equals("*")
+    }
+
+    return fallbackMapping
 }
