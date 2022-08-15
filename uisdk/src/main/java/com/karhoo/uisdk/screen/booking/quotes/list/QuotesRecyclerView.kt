@@ -16,7 +16,6 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewGenericReason
-import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewLinkedReason
 import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorViewContract
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.*
 
@@ -134,48 +133,52 @@ class QuotesRecyclerView @JvmOverloads constructor(
     }
 
     override fun showSameAddressesError(show: Boolean) {
-        showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_subtitle),
-            R.drawable.kh_uisdk_similar_pickup_dropoff
-        ))
+        showErrorView(
+            show, ErrorViewGenericReason(
+                context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_title),
+                context.resources.getString(R.string.kh_uisdk_quotes_error_similar_addresses_subtitle),
+                R.drawable.kh_uisdk_similar_pickup_dropoff
+            )
+        )
     }
 
     override fun showNoAddressesError(show: Boolean) {
-        showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_subtitle),
-            R.drawable.kh_uisdk_similar_pickup_dropoff
-        ))
+        showErrorView(
+            show, ErrorViewGenericReason(
+                context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_title),
+                context.resources.getString(R.string.kh_uisdk_quotes_error_missing_addresses_subtitle),
+                R.drawable.kh_uisdk_similar_pickup_dropoff
+            )
+        )
     }
 
     override fun showNoResultsAfterFilterError(show: Boolean) {
-        showFilterErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_subtitle),
-            R.drawable.kh_uisdk_ic_filter_no_result
-        ))
+        showFilterErrorView(
+            show, ErrorViewGenericReason(
+                context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_title),
+                context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_after_filter_subtitle),
+                R.drawable.kh_uisdk_ic_filter_no_result
+            )
+        )
     }
 
     override fun showNoFleetsError(show: Boolean) {
-        showErrorView(show, ErrorViewGenericReason(
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_title),
-            context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_subtitle),
-            R.drawable.kh_uisdk_ic_no_available_quotes
-        ))
+        showErrorView(
+            show, ErrorViewGenericReason(
+                "",
+                context.resources.getString(R.string.kh_uisdk_no_results_found),
+                R.drawable.kh_uisdk_ic_no_available_quotes
+            )
+        )
     }
 
     override fun showNoCoverageError(show: Boolean) {
-        //TODO will be changed when the proper error is implemented
         if (show) {
-            quotesErrorView.visibility = View.VISIBLE
-            quotesErrorView.setup(
-                ErrorViewLinkedReason(
+            quotesErrorView.setupWithSpan(
+                ErrorViewGenericReason(
                     context.resources.getString(R.string.kh_uisdk_no_coverage_title),
                     context.resources.getString(R.string.kh_uisdk_no_coverage_subtitle),
-                        context.resources.getString(R.string.kh_uisdk_contact_us),
-                                context.resources.getString(R.string.kh_uisdk_contact_us),
-                    R.drawable.kh_uisdk_ic_no_coverage_quotes
+                    R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
                     override fun onClicked() {
@@ -190,9 +193,11 @@ class QuotesRecyclerView @JvmOverloads constructor(
                         }
                     }
                 })
-        } else {
-            quotesErrorView.visibility = View.GONE
         }
+
+        setListVisibility(!show)
+        setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)
+        quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     override fun watchCategories(
