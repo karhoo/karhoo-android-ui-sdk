@@ -4,7 +4,6 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.LoyaltyProgramme
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import java.util.Date
