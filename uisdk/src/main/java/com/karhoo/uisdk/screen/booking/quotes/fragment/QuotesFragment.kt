@@ -152,14 +152,14 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
             presenter.setData(dataModel!!)
 
-            dataModel?.journeyDetails?.let { bookingInfo ->
-                bookingInfo.pickup?.let {
+            dataModel?.journeyDetails?.let { journeyDetails ->
+                journeyDetails.pickup?.let {
                     addressBarWidget.setPickup(it, -1)
                 }
-                bookingInfo.destination?.let {
+                journeyDetails.destination?.let {
                     addressBarWidget.setDestination(it, -1)
                 }
-                bookingInfo.date?.let {
+                journeyDetails.date?.let {
                     addressBarWidget.setPrebookTime(it)
                 }
             }

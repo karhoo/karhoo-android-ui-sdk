@@ -24,7 +24,9 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -113,7 +115,7 @@ internal class CheckoutFragment : Fragment() {
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
                 bookingMetadata = bundle.getSerializable(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
@@ -208,6 +210,10 @@ internal class CheckoutFragment : Fragment() {
             intent.putExtra(
                 QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
                 arguments?.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
+            )
+            intent.putExtra(
+                QUOTES_SELECTED_DATE,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.date
             )
             KarhooAvailability.pauseUpdates(fromBackButton = true)
             activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)

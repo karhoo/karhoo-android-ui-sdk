@@ -146,7 +146,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
          * the JourneyDetails object.
          */
         fun journeyDetails(journeyDetails: JourneyDetails): Builder {
-            extrasBundle.putParcelable(BOOKING_CHECKOUT_STATUS_KEY, journeyDetails)
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY, journeyDetails)
             return this
         }
 
@@ -199,7 +199,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_QUOTE_KEY = "BOOKING_CHECKOUT_INPUT_QUOTE_KEY"
         const val BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY = "BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY"
         const val BOOKING_CHECKOUT_METADATA_KEY = "BOOKING_CHECKOUT_METADATA_KEY"
-        const val BOOKING_CHECKOUT_STATUS_KEY = "BOOKING_STATUS_KEY"
+        const val BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY = "BOOKING_STATUS_KEY"
         const val BOOKING_CHECKOUT_TRIP_INFO_KEY = "TRIP_INFO_KEY"
         const val BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY = "PREBOOK_TRIP_INFO_KEY"
         const val BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY = "PREBOOK_QUOTE_TYPE_KEY"
