@@ -406,7 +406,7 @@ internal class CheckoutViewPresenter(
         when (result) {
             is Resource.Success -> {
                 analytics?.bookingSuccess(
-                    result.data.tripId,
+                    tripId = result.data.tripId,
                     quoteId = quote?.id,
                     correlationId = result.correlationId
                 )
@@ -414,13 +414,13 @@ internal class CheckoutViewPresenter(
             is Resource.Failure -> {
                 KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
                     analytics?.bookingFailure(
-                        result.error.internalMessage,
+                        errorMessage = result.error.internalMessage,
                         quoteId = quote?.id,
                         correlationId = result.correlationId,
-                        userStore.savedPaymentInfo?.lastFour ?: "",
-                        Date(),
-                        quote?.price?.highPrice ?: 0,
-                        quote?.price?.currencyCode ?: "",
+                        lastFourDigits = userStore.savedPaymentInfo?.lastFour ?: "",
+                        date = Date(),
+                        amount = quote?.price?.highPrice ?: 0,
+                        currency = quote?.price?.currencyCode ?: "",
                         paymentMethodUsed = it
                     )
                 }

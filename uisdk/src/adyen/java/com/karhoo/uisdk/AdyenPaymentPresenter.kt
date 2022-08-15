@@ -118,7 +118,7 @@ class AdyenPaymentPresenter(
                     AdyenPaymentView.AUTHORISED -> {
                         this.tripId = payload.optString(TRIP_ID, "")
                         updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
-                        analytics?.cardAuthorisationSuccess(quote?.id)
+                        analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
@@ -158,24 +158,24 @@ class AdyenPaymentPresenter(
             2 // Refused The transaction was refused.
             -> {
                 KarhooUISDK.analytics?.paymentFailed(
-                    refusalReason,
-                    quoteId,
-                    lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-                    Date(),
-                    quote?.price?.highPrice ?: 0,
-                    quote?.price?.currencyCode ?: ""
+                    errorMessage = refusalReason,
+                    quoteId = quoteId,
+                    lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    date = Date(),
+                    amount = quote?.price?.highPrice ?: 0,
+                    currency = quote?.price?.currencyCode ?: ""
                 )
             }
             else -> {
                 KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
                     KarhooUISDK.analytics?.cardAuthorisationFailure(
-                        refusalReason,
-                        quoteId,
-                        lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-                        Date(),
-                        quote?.price?.highPrice ?: 0,
-                        quote?.price?.currencyCode ?: "",
-                        paymentMethodUsed = it
+                        quoteId = quoteId,
+                        errorMessage = refusalReason,
+                        lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                        paymentMethodUsed = it,
+                        date = Date(),
+                        amount = quote?.price?.highPrice ?: 0,
+                        currency = quote?.price?.currencyCode ?: ""
                     )
                 }
             }
