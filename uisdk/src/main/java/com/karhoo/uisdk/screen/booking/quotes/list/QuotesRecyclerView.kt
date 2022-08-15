@@ -165,24 +165,20 @@ class QuotesRecyclerView @JvmOverloads constructor(
     override fun showNoFleetsError(show: Boolean) {
         showErrorView(
             show, ErrorViewGenericReason(
-                context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_title),
-                context.resources.getString(R.string.kh_uisdk_quotes_error_no_availability_subtitle),
+                "",
+                context.resources.getString(R.string.kh_uisdk_no_results_found),
                 R.drawable.kh_uisdk_ic_no_available_quotes
             )
         )
     }
 
     override fun showNoCoverageError(show: Boolean) {
-        //TODO will be changed when the proper error is implemented
         if (show) {
-            quotesErrorView.visibility = View.VISIBLE
-            val contactUsLabel = context.resources.getString(R.string.kh_uisdk_contact_us)
-
             quotesErrorView.setupWithSpan(
                 ErrorViewGenericReason(
                     context.resources.getString(R.string.kh_uisdk_no_coverage_title),
                     context.resources.getString(R.string.kh_uisdk_no_coverage_subtitle),
-                    R.drawable.kh_uisdk_ic_no_coverage_quotes
+                    R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
                     override fun onClicked() {
@@ -197,8 +193,6 @@ class QuotesRecyclerView @JvmOverloads constructor(
                         }
                     }
                 })
-        } else {
-            quotesErrorView.visibility = View.GONE
         }
 
         setListVisibility(!show)
