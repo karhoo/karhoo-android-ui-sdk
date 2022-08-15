@@ -214,6 +214,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         }
     }
 
+    fun getJourneyDetails(): JourneyDetails? {
+        return dataModel?.journeyDetails
+    }
+
     private fun showSortBy() {
         activity?.supportFragmentManager?.let {
             quotesSortWidget.show(it, QuotesSortView.TAG)
