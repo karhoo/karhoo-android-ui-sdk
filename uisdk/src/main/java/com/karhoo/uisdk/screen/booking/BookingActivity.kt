@@ -278,6 +278,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
                 val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
                 val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+                val date = data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime
 
                 pickup?.let {
                     addressBarWidget.setPickup(pickup, -1)
@@ -286,6 +287,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 destination?.let {
                     addressBarWidget.setDestination(destination, -1)
                 }
+
+                date?.let {
+                    addressBarWidget.setPrebookTime(date)
+                }
+
                 val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
                 val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
                 if(bookingMetadata == null)

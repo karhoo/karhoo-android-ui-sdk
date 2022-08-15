@@ -24,7 +24,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
@@ -273,10 +272,6 @@ internal class CheckoutViewPresenter(
             email = user.email,
             locale = user.locale
         )
-    }
-
-    override fun resetBooking() {
-        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun refreshPaymentDetails() {

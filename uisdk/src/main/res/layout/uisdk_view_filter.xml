@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,117 +27,114 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/margin_16">
+                    android:layout_marginBottom="@dimen/margin_16"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/filterViewTitle"
                         style="@style/KhFilterViewTitle"
-                        android:text="@string/kh_uisdk_filter"
-                        />
+                        android:text="@string/kh_uisdk_filter" />
 
                     <ImageView
                         android:id="@+id/filterViewTitleExit"
                         style="@style/KhFilterViewTitleExit"
-                        android:src="@drawable/kh_uisdk_ic_close_cross"
-                        />
+                        android:src="@drawable/kh_uisdk_ic_close_cross" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/filterViewResetFilters"
                     style="@style/KhFilterViewResetFilters"
-                    android:text="@string/kh_uisdk_reset_filter"
-                    />
+                    android:text="@string/kh_uisdk_reset_filter" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
                     android:id="@+id/filterViewPassengerNumberedFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.NumberedFilterView
                     android:id="@+id/filterViewLuggageNumberedFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
                     android:id="@+id/filterViewVehicleTypeMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
                     android:id="@+id/filterViewVehicleClassMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
                     android:id="@+id/filterViewVehicleExtrasMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
                     android:id="@+id/filterViewVehicleEcoMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectChipsFilterView
                     android:id="@+id/filterViewFleetCapabilitiesMultiSelectChipsFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectCheckboxFilterView
                     android:id="@+id/filterViewQuoteTypeMultiSelectCheckboxFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
 
                 <View
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_border"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+                    android:background="@color/kh_uisdk_border" />
 
                 <com.karhoo.uisdk.screen.booking.quotes.filterview.MultiSelectCheckboxFilterView
                     android:id="@+id/filterViewServiceAgreementsMultiSelectCheckboxFilter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"/>
+                    android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small" />
             </LinearLayout>
 
 
@@ -150,20 +146,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="0.2"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:paddingTop="0dp">
-<!--        android:layout_marginTop="@dimen/kh_uisdk_margin_medium"-->
+        android:layout_margin="@dimen/kh_uisdk_spacing_small"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+        <!--        android:layout_marginTop="@dimen/kh_uisdk_margin_medium"-->
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/kh_uisdk_divider_height"
-            android:background="@color/kh_uisdk_border"/>
+            android:background="@color/kh_uisdk_border" />
 
         <com.karhoo.uisdk.base.view.LoadingButtonView
             android:id="@+id/quotesFilterSave"
-            android:layout_marginTop="@dimen/kh_uisdk_margin_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
