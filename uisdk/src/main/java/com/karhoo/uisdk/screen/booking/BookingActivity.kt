@@ -276,28 +276,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 }
             }
             resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
-                val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
-                val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
-                val date = data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime
-
-                pickup?.let {
-                    addressBarWidget.setPickup(pickup, -1)
-                }
-
-                destination?.let {
-                    addressBarWidget.setDestination(destination, -1)
-                }
-
-                date?.let {
-                    addressBarWidget.setPrebookTime(date)
-                }
-
-                val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
-                val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
-                if(bookingMetadata == null)
-                    bookingMetadata = HashMap()
-                bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
-                bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+                parseDataFromIntent(data)
 
                 startCheckoutActivity(data)
             }
@@ -441,6 +420,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
         }
     }
+
     private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null) {
         val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(journeyDetailsStateViewModel.viewStates().value)
         validityTimestamp?.let {
@@ -448,6 +428,33 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
         startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
     }
+
+    private fun parseDataFromIntent(data: Intent?) {
+        val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+        val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+        val date = data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime
+
+        pickup?.let {
+            addressBarWidget.setPickup(pickup, -1)
+        }
+
+        destination?.let {
+            addressBarWidget.setDestination(destination, -1)
+        }
+
+        date?.let {
+            addressBarWidget.setPrebookTime(date)
+        }
+
+        val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
+        val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
+        if(bookingMetadata == null) {
+            bookingMetadata = HashMap()
+        }
+        bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+        bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+    }
+
 
     /**
      * Intent Builder
