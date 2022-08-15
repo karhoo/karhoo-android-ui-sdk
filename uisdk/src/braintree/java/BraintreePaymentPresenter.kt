@@ -99,7 +99,7 @@ class BraintreePaymentPresenter(
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            KarhooUISDK.analytics?.cardAuthorisationSuccess(quote?.id)
+            KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
             when (requestCode) {
                 BraintreePaymentView.REQ_CODE_BRAINTREE -> {
                     val braintreeResult =
@@ -219,13 +219,13 @@ class BraintreePaymentPresenter(
     override fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int, lastFourDigits: String?, quoteId: String?) {
         KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
             KarhooUISDK.analytics?.cardAuthorisationFailure(
-                refusalReason,
-                quoteId,
-                lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-                Date(),
-                quote?.price?.highPrice ?: 0,
-                quote?.price?.currencyCode ?: "",
-                it
+                quoteId = quoteId,
+                errorMessage = refusalReason,
+                lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                paymentMethodUsed = it,
+                date = Date(),
+                amount = quote?.price?.highPrice ?: 0,
+                currency = quote?.price?.currencyCode ?: ""
             )
         }
     }
