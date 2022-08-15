@@ -9,6 +9,7 @@ import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
+import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragment
@@ -25,7 +26,10 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
         setSupportActionBar(checkoutToolbar)
         checkoutToolbar.setNavigationOnClickListener {
-            setResult(QUOTES_CANCELLED)
+            val data = Intent().apply {
+                putExtra(BookingActivity.Builder.EXTRA_JOURNEY_INFO, (fragment as QuotesFragment).getJourneyDetails())
+            }
+            setResult(QUOTES_CANCELLED, data)
 
             onBackPressed()
         }

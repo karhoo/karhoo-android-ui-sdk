@@ -40,6 +40,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_CANCELLED
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_INFO_REQUEST_NUMBER
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
@@ -298,6 +299,17 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 startQuoteListActivity(
                     restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED,
                     validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0)
+                )
+            }
+            resultCode == QUOTES_CANCELLED -> {
+                val journeyDetails = data?.getParcelableExtra(Builder.EXTRA_JOURNEY_INFO) as JourneyDetails?
+                journeyDetailsStateViewModel.process(
+                    AddressBarViewContract.AddressBarEvent
+                        .PrebookBookingEvent(
+                            journeyDetails?.pickup,
+                            journeyDetails?.destination,
+                            journeyDetails?.date
+                        )
                 )
             }
         }
