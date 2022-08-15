@@ -271,15 +271,8 @@ object KarhooAvailability : AvailabilityProvider {
             }
         }
 
-        if (vehicles.status == QuoteStatus.COMPLETED) {
-            if (filteredList?.isEmpty() == true) {
-                availabilityHandler?.get()?.handleNoResultsForFiltersError()
-
-            }
-
-            if(!hasQuotes) {
-                availabilityHandler?.get()?.hasNoResults = true
-            }
+        if (vehicles.status == QuoteStatus.COMPLETED && !hasQuotes) {
+            availabilityHandler?.get()?.hasNoResults = true
         } else {
             availabilityHandler?.get()?.hasNoResults = false
             availabilityHandler?.get()?.hasAvailability = true
@@ -287,6 +280,10 @@ object KarhooAvailability : AvailabilityProvider {
 
             currentAvailableQuotes()
             filterVehicles(vehicles)
+        }
+
+        if (vehicles.status == QuoteStatus.COMPLETED && filteredList?.isEmpty() == true && hasQuotes) {
+            availabilityHandler?.get()?.handleNoResultsForFiltersError()
         }
     }
 
