@@ -158,6 +158,6 @@
     <dimen name="kh_uisdk_loyalty_balance_margin_top">-9dp</dimen>
     <dimen name="kh_uisdk_loyalty_balance_corner_radius">6dp</dimen>
     <dimen name="progress_bar_container_height">4dp</dimen>
-    <dimen name="progress_bar_height">16dp</dimen>
+    <dimen name="progress_bar_height">20dp</dimen>
 
 </resources>
