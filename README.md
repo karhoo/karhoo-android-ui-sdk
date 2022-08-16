@@ -26,13 +26,13 @@ dependencies {
     //... Other project dependencies
 
     //The -adyen dependency contains the Adyen integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.6.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.7.0'
 
     //The -braintree dependency contains the Braintree integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.6.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.7.0'
 
     //The -full dependency contains both payment providers and it's up to you which payment provider you shall use:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.6.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.7.0'
 
     //Note that only one dependency from the above three should be integrated into your project
 }
