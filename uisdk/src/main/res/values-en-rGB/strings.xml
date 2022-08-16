@@ -138,7 +138,7 @@
     <string name="kh_uisdk_filter_electric">Electric</string>
     <string name="kh_uisdk_filter_executive">Executive</string>
     <string name="kh_uisdk_filter_fight_tracking">Flight tracking</string>
-    <string name="kh_uisdk_filter_fleet_capabilities">Fleet Capabilities</string>
+    <string name="kh_uisdk_filter_fleet_capabilities">Fleet capabilities</string>
     <string name="kh_uisdk_filter_free_cancellation">Free cancellation</string>
     <string name="kh_uisdk_filter_free_waiting_time">Free waiting time</string>
     <string name="kh_uisdk_filter_gps_tracking">GPS tracking</string>
@@ -153,10 +153,10 @@
     <string name="kh_uisdk_filter_taxi">Taxi</string>
     <string name="kh_uisdk_filter_train_tracking">Train tracking</string>
     <string name="kh_uisdk_filter_van">Van</string>
-    <string name="kh_uisdk_filter_vehicle_class">Vehicle Class</string>
+    <string name="kh_uisdk_filter_vehicle_class">Vehicle class</string>
     <string name="kh_uisdk_filter_vehicle_details">Vehicle details</string>
-    <string name="kh_uisdk_filter_vehicle_extras">Vehicle Extras</string>
-    <string name="kh_uisdk_filter_vehicle_types">Vehicle Types</string>
+    <string name="kh_uisdk_filter_vehicle_extras">Vehicle extras</string>
+    <string name="kh_uisdk_filter_vehicle_types">Vehicle types</string>
     <string name="kh_uisdk_filter_wheelchair">Wheelchair accessible</string>
     <string name="kh_uisdk_finding_your_ride">Finding your ride...</string>
     <string name="kh_uisdk_first_name_hint">First name</string>
@@ -298,7 +298,7 @@
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
-    <string name="kh_uisdk_no_coverage_subtitle">%s to suggest news fleets</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Contact us to suggest news fleets</string>
     <string name="kh_uisdk_no_coverage_title">No fleets in this area yet</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
