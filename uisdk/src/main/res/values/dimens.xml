@@ -4,6 +4,7 @@
     <dimen name="kh_uisdk_spacing_none">0dp</dimen>
     <dimen name="kh_uisdk_spacing_xxxsmall">2dp</dimen>
     <dimen name="kh_uisdk_spacing_xxsmall">4dp</dimen>
+    <dimen name="kh_uisdk_spacing_x6small">6dp</dimen>
     <dimen name="kh_uisdk_spacing_xsmall">8dp</dimen>
     <dimen name="kh_uisdk_spacing_small">16dp</dimen>
     <dimen name="kh_uisdk_spacing_small_intermediate">12dp</dimen>
@@ -52,6 +53,11 @@
     <dimen name="kh_uisdk_driver_photo_size">48dp</dimen>
     <integer name="kh_uisdk_logo_radius">12</integer>
     <dimen name="kh_uisdk_logo_booking_status_radius">8dp</dimen>
+    <dimen name="kh_uisdk_logo_width">64dp</dimen>
+    <dimen name="kh_uisdk_logo_height">68dp</dimen>
+    <dimen name="kh_uisdk_rating_star_size">9dp</dimen>
+    <dimen name="kh_uisdk_rating_star_viewport">9</dimen>
+    <dimen name="kh_uisdk_quote_item_corner_radius">10dp</dimen>
 
     <!-- Address Picker -->
     <dimen name="kh_uisdk_ic_left_width">26dp</dimen>
@@ -151,4 +157,7 @@
     <dimen name="kh_uisdk_loyalty_balance_translation_z">1dp</dimen>
     <dimen name="kh_uisdk_loyalty_balance_margin_top">-9dp</dimen>
     <dimen name="kh_uisdk_loyalty_balance_corner_radius">6dp</dimen>
+    <dimen name="progress_bar_container_height">4dp</dimen>
+    <dimen name="progress_bar_height">20dp</dimen>
+
 </resources>

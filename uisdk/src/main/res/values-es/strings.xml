@@ -153,7 +153,7 @@
     <string name="kh_uisdk_filter_taxi">Taxi</string>
     <string name="kh_uisdk_filter_train_tracking">Vincule su tren</string>
     <string name="kh_uisdk_filter_van">camioneta</string>
-    <string name="kh_uisdk_filter_vehicle_class">kh_uisdk_filter_vehicle_class</string>
+    <string name="kh_uisdk_filter_vehicle_class">Clase de vehículo</string>
     <string name="kh_uisdk_filter_vehicle_details">Detalles del vehículo</string>
     <string name="kh_uisdk_filter_vehicle_extras">Extras del vehículo</string>
     <string name="kh_uisdk_filter_vehicle_types">Tipos de vehículos</string>
@@ -298,6 +298,8 @@
     <string name="kh_uisdk_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
     <string name="kh_uisdk_no_availability_subtitle">Por favor selecciona otra hora</string>
     <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Contáctenos para sugerir flotas nuevas</string>
+    <string name="kh_uisdk_no_coverage_title">Aún no hay flotas en esta área</string>
     <string name="kh_uisdk_no_destination">Sin Destino</string>
     <string name="kh_uisdk_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
     <string name="kh_uisdk_no_results_label">No results</string>
@@ -377,6 +379,7 @@
     <string name="kh_uisdk_requested">Tu viaje ha sido solicitado con %s</string>
     <string name="kh_uisdk_requested_invite">Invitación solicitada</string>
     <string name="kh_uisdk_reset_filter">Restablecer filtro</string>
+    <string name="kh_uisdk_results">resultados</string>
     <string name="kh_uisdk_results_empty">Sin resultados</string>
     <string name="kh_uisdk_retrieving_dropoff">Buscando destino</string>
     <!-- Current Trip -->

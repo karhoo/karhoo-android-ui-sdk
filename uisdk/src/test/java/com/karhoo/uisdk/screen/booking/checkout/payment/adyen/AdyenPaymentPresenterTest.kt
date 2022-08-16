@@ -83,7 +83,7 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown when change card pressed and public key retrieval fails`() {
-
+        UnitTestUISDKConfig.setTokenAuthentication(context)
         adyenPaymentPresenter.sdkInit(quote)
 
         publicKeyCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
@@ -101,7 +101,7 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown when change card pressed and payment methods retrieval fails`() {
-
+        UnitTestUISDKConfig.setTokenAuthentication(context)
         adyenPaymentPresenter.sdkInit(quote)
 
         publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
@@ -203,6 +203,7 @@ class AdyenPaymentPresenterTest {
      */
     @Test
     fun `error shown is activity result is RESULT_OK and the result code is not authorised`() {
+        UnitTestUISDKConfig.setTokenAuthentication(context)
         val response = """
             {
                 "additionalData": {

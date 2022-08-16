@@ -28,7 +28,7 @@ class CheckoutPresenter : CheckoutFragmentContract.Presenter {
         }
     }
 
-    override fun getValidMilisSPeriod(validityTimestamp: Long): Long {
+    override fun getValidMilisPeriod(validityTimestamp: Long): Long {
         return validityTimestamp - Date().time
     }
 }

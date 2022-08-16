@@ -24,7 +24,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
-import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
@@ -108,7 +107,14 @@ internal class CheckoutViewPresenter(
         } else {
             view?.initialisePaymentProvider(quote)
         }
-        analytics?.bookingRequested(currentTripInfo(), outboundTripId)
+
+        quote?.id?.let {
+            analytics?.bookingRequested(quoteId = it)
+        }
+    }
+
+    override fun getCurrentQuote(): Quote? {
+        return quote
     }
 
     override fun isPaymentSet(): Boolean {
@@ -125,12 +131,13 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
-        KarhooUISDK.analytics?.paymentSucceed()
         preferenceStore.lastTrip = tripInfo
         val date = scheduledDate
         if (date != null) {
+            KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
             view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
         } else {
+            KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)
             bookingRequestStateViewModel?.process(CheckoutViewContract.Event.BookingSuccess(tripInfo))
         }
@@ -138,14 +145,6 @@ internal class CheckoutViewPresenter(
     }
 
     private fun onTripBookFailure(error: KarhooError) {
-        KarhooUISDK.analytics?.paymentFailed(
-            error.internalMessage,
-            userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
-
         when (error) {
             KarhooError.CouldNotBookPaymentPreAuthFailed -> view?.showPaymentFailureDialog(
                 null,
@@ -221,6 +220,8 @@ internal class CheckoutViewPresenter(
         }
 
         val metadata = getBookingMetadataMap(identifier, tripId)
+        val additionalPassengers = metadata?.get(PASSENGER_NUMBER)?.toInt() ?: kotlin.run { 0 }
+        val luggage = metadata?.get(LUGGAGE)?.toInt() ?: kotlin.run { 0 }
 
         tripsService.book(
             TripBooking(
@@ -231,18 +232,23 @@ internal class CheckoutViewPresenter(
                 quoteId = quote?.id.orEmpty(),
                 loyaltyNonce = loyaltyNonce,
                 passengers = Passengers(
-                    additionalPassengers = 0,
+                    additionalPassengers = additionalPassengers,
                     passengerDetails = listOf(passenger),
-                    luggage = Luggage(total = 0)
+                    luggage = Luggage(total = luggage)
                 )
             )
-        )
-            .execute { result ->
-                when (result) {
-                    is Resource.Success -> onTripBookSuccess(result.data)
-                    is Resource.Failure -> onTripBookFailure(result.error)
+        ).execute { result ->
+            when (result) {
+                is Resource.Success -> {
+                    onTripBookSuccess(result.data)
+                }
+                is Resource.Failure -> {
+                    onTripBookFailure(result.error)
                 }
             }
+
+            logBookingEvent(result)
+        }
     }
 
     private fun getBookingMetadataMap(
@@ -266,10 +272,6 @@ internal class CheckoutViewPresenter(
             email = user.email,
             locale = user.locale
         )
-    }
-
-    override fun resetBooking() {
-        journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun refreshPaymentDetails() {
@@ -395,11 +397,39 @@ internal class CheckoutViewPresenter(
         }
     }
 
+    private fun logBookingEvent(result: Resource<TripInfo>) {
+        when (result) {
+            is Resource.Success -> {
+                analytics?.bookingSuccess(
+                    tripId = result.data.tripId,
+                    quoteId = quote?.id,
+                    correlationId = result.correlationId
+                )
+            }
+            is Resource.Failure -> {
+                KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
+                    analytics?.bookingFailure(
+                        errorMessage = result.error.internalMessage,
+                        quoteId = quote?.id,
+                        correlationId = result.correlationId,
+                        lastFourDigits = userStore.savedPaymentInfo?.lastFour ?: "",
+                        date = Date(),
+                        amount = quote?.price?.highPrice ?: 0,
+                        currency = quote?.price?.currencyCode ?: "",
+                        paymentMethodUsed = it
+                    )
+                }
+            }
+        }
+    }
+
     override fun setLoyaltyNonce(nonce: String) {
         this.loyaltyNonce = nonce
     }
 
     companion object {
         const val TRIP_ID = "trip_id"
+        const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
+        const val LUGGAGE = "LUGGAGE"
     }
 }

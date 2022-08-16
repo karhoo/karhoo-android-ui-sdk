@@ -76,7 +76,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showPaymentFailureDialog(result.error)
                 }
             }
@@ -89,7 +89,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> getNonce(result.data.token, quotePriceToAmount(quote))
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -99,6 +99,7 @@ class BraintreePaymentPresenter(
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
+            KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
             when (requestCode) {
                 BraintreePaymentView.REQ_CODE_BRAINTREE -> {
                     val braintreeResult =
@@ -178,7 +179,7 @@ class BraintreePaymentPresenter(
                     view?.handlePaymentDetailsUpdate()
                 }
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -207,7 +208,7 @@ class BraintreePaymentPresenter(
             when (result) {
                 is Resource.Success -> handleChangeCardSuccess(result.data.token)
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(result.error.internalMessage)
+                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
                 //TODO Consider using returnErrorStringOrLogoutIfRequired
@@ -215,14 +216,18 @@ class BraintreePaymentPresenter(
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
-            refusalReason,
-            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
+    override fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int, lastFourDigits: String?, quoteId: String?) {
+        KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
+            KarhooUISDK.analytics?.cardAuthorisationFailure(
+                quoteId = quoteId,
+                errorMessage = refusalReason,
+                lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                paymentMethodUsed = it,
+                date = Date(),
+                amount = quote?.price?.highPrice ?: 0,
+                currency = quote?.price?.currencyCode ?: ""
+            )
+        }
     }
 
     fun updateCardDetails(cardNumber: String?, cardTypeLabel: String?) {

@@ -143,7 +143,7 @@
     <string name="kh_uisdk_filter_free_waiting_time">Gratis wachttijd</string>
     <string name="kh_uisdk_filter_gps_tracking">GPS-tracking</string>
     <string name="kh_uisdk_filter_hybrid">Hybride</string>
-    <string name="kh_uisdk_filter_luggages">Bagage)</string>
+    <string name="kh_uisdk_filter_luggages">Bagage</string>
     <string name="kh_uisdk_filter_luxury">Luxe</string>
     <string name="kh_uisdk_filter_moto">Moto</string>
     <string name="kh_uisdk_filter_page_results">Bekijk alle %s resultaten</string>
@@ -153,7 +153,7 @@
     <string name="kh_uisdk_filter_taxi">Taxi</string>
     <string name="kh_uisdk_filter_train_tracking">Trein volgen</string>
     <string name="kh_uisdk_filter_van">Busje</string>
-    <string name="kh_uisdk_filter_vehicle_class">kh_uisdk_filter_vehicle_class</string>
+    <string name="kh_uisdk_filter_vehicle_class">Voertuigklasse</string>
     <string name="kh_uisdk_filter_vehicle_details">voertuiggegevens</string>
     <string name="kh_uisdk_filter_vehicle_extras">Voertuig Extra\'s</string>
     <string name="kh_uisdk_filter_vehicle_types">Voertuigtypes</string>
@@ -298,6 +298,8 @@
     <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
     <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
     <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Neem contact met ons op om nieuwsvloten voor te stellen</string>
+    <string name="kh_uisdk_no_coverage_title">Nog geen vloten in dit gebied</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
     <string name="kh_uisdk_no_results_found">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
@@ -377,6 +379,7 @@
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requested_invite">Bedankt voor uw interesse! We sturen u een e-mail wanneer uw account is geactiveerd.</string>
     <string name="kh_uisdk_reset_filter">Filter resetten</string>
+    <string name="kh_uisdk_results">uitslagen</string>
     <string name="kh_uisdk_results_empty">Geen resultaten gevonden</string>
     <string name="kh_uisdk_retrieving_dropoff">Afleverlocatie ophalen</string>
     <!-- Current Trip -->

@@ -110,8 +110,6 @@ interface CheckoutViewContract {
         fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)
 
-        fun resetBooking()
-
         fun retrievePassengerDetailsForShowing(passengerDetails: PassengerDetails? = null)
 
         fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails>
@@ -133,6 +131,8 @@ interface CheckoutViewContract {
         fun createLoyaltyViewResponse()
 
         fun setLoyaltyNonce(nonce: String)
+
+        fun getCurrentQuote(): Quote?
     }
 
     interface PrebookViewActions {
