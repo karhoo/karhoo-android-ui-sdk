@@ -241,21 +241,21 @@ class TripTests : Launch {
      * When:    I click details
      * Then:    Driver details are no longer expanded
      **/
-    @Test
-    @AllowFlaky(attempts = 3)
-    fun driverDetailsSuccessfullyClosed() {
-        mockTripSuccessResponse(
-                status = TRIP_STATUS_ARRIVED,
-                tracking = DRIVER_TRACKING,
-                details = TRIP_ARRIVED)
-        trip(this) {
-            clickOnDriverDetails()
-            mediumSleep()
-            clickOnDriverDetails()
-        } result {
-            driverDetailsNoLongerExpanded()
-        }
-    }
+//    @Test
+//    @AllowFlaky(attempts = 3)
+//    fun driverDetailsSuccessfullyClosed() {
+//        mockTripSuccessResponse(
+//                status = TRIP_STATUS_ARRIVED,
+//                tracking = DRIVER_TRACKING,
+//                details = TRIP_ARRIVED)
+//        trip(this) {
+//            clickOnDriverDetails()
+//            mediumSleep()
+//            clickOnDriverDetails()
+//        } result {
+//            driverDetailsNoLongerExpanded()
+//        }
+//    }
 
     /**
      * Given:   Trip status is DER (driver en route)

@@ -73,6 +73,8 @@ class BraintreePaymentPresenterTest {
 
     @Before
     fun setUp() {
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
+
         whenever(paymentsService.initialisePaymentSDK(any()))
                 .thenReturn(sdkInitCall)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
@@ -263,7 +265,7 @@ class BraintreePaymentPresenterTest {
     @Test
     fun `logged in user sdk init error shows error`() {
         setAuthenticatedUser()
-
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
 
         braintreePaymentPresenter.getPaymentNonce(quote)
@@ -283,6 +285,7 @@ class BraintreePaymentPresenterTest {
     @Test
     fun `logged in user get nonce failure shows payment dialog`() {
         setAuthenticatedUser()
+        UnitTestUISDKConfig.setKarhooAuthentication(context)
         val price = QuotePrice(currencyCode = DEFAULT_CURRENCY, highPrice =
         EXPECTED_AMOUNT_AS_STRING.toInt())
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)

@@ -23,6 +23,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDK.analytics
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
@@ -104,19 +105,20 @@ class AdyenPaymentPresenter(
                 is DropInResult.Error -> { // Is handled below
                 }
                 is DropInResult.CancelledByUser -> view?.refresh()
-                is DropInResult.Finished -> { // No need to handle this case, it will not occur if resultIntent is specified
+                is DropInResult.Finished -> { // We treat this case below based on the resultIntent's data
                 }
             }
 
             val dataString = DropIn.getDropInResultFromIntent(data)
 
-            dataString?.let {
+            if (dataString != null) {
                 val payload = JSONObject(dataString)
 
                 when (payload.optString(RESULT_CODE, "")) {
                     AdyenPaymentView.AUTHORISED -> {
                         this.tripId = payload.optString(TRIP_ID, "")
                         updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
+                        analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
@@ -125,28 +127,61 @@ class AdyenPaymentPresenter(
                             JSONObject(payload.optString(ADDITIONAL_DATA, ""))
                                 .optString(CARD_SUMMARY, "")
 
-                        logPaymentErrorEvent(
+                        logPaymentFailureEvent(
                             payload.optString(REFUSAL_REASON, ""),
+                            payload.optInt(REFUSAL_REASON_CODE, 0),
                             lastFourDigits,
+                            quoteId = quote?.id
                         )
 
                         view?.showPaymentFailureDialog(error)
                     }
                 }
-            } ?: view?.showPaymentFailureDialog()
+            } else {
+                view?.showPaymentFailureDialog()
+            }
         } else {
             view?.refresh()
         }
     }
 
-    override fun logPaymentErrorEvent(refusalReason: String, lastFourDigits: String?) {
-        KarhooUISDK.analytics?.paymentFailed(
-            refusalReason,
-            lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
-            Date(),
-            quote?.price?.highPrice ?: 0,
-            quote?.price?.currencyCode ?: ""
-        )
+    override fun logPaymentFailureEvent(
+        refusalReason: String,
+        refusalReasonCode: Int,
+        lastFourDigits: String?,
+        quoteId: String?
+    ) {
+        when (refusalReasonCode) {
+            11,// 3DS Not Authenticated
+            12, // Not enough balance
+            14, // Acquirer Fraud
+            2 // Refused The transaction was refused.
+            -> {
+                KarhooUISDK.analytics?.paymentFailed(
+                    errorMessage = refusalReason,
+                    quoteId = quoteId,
+                    lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                    date = Date(),
+                    amount = quote?.price?.highPrice ?: 0,
+                    currency = quote?.price?.currencyCode ?: ""
+                )
+            }
+            else -> {
+                KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
+                    KarhooUISDK.analytics?.cardAuthorisationFailure(
+                        quoteId = quoteId,
+                        errorMessage = refusalReason,
+                        lastFourDigits = lastFourDigits ?: userStore.savedPaymentInfo?.lastFour ?: "",
+                        paymentMethodUsed = it,
+                        date = Date(),
+                        amount = quote?.price?.highPrice ?: 0,
+                        currency = quote?.price?.currencyCode ?: ""
+                    )
+                }
+            }
+        }
+
+
     }
 
     private fun convertToKarhooError(payload: JSONObject): KarhooError {
@@ -177,8 +212,10 @@ class AdyenPaymentPresenter(
                     }
                 }
                 is Resource.Failure -> {
-                    logPaymentErrorEvent(
-                        result.error.internalMessage
+                    logPaymentFailureEvent(
+                        result.error.internalMessage,
+                        0,
+                        quoteId = quote?.id
                     )
 
                     view?.showError(
@@ -232,8 +269,10 @@ class AdyenPaymentPresenter(
                             }
                         }
                         is Resource.Failure -> {
-                            logPaymentErrorEvent(
-                                result.error.internalMessage
+                            logPaymentFailureEvent(
+                                result.error.internalMessage,
+                                0,
+                                quoteId = quote?.id
                             )
 
                             view?.showError(

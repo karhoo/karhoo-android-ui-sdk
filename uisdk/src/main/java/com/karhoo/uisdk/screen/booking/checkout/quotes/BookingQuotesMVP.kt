@@ -11,7 +11,7 @@ import com.karhoo.uisdk.util.VehicleTags
 interface BookingQuotesMVP {
 
     interface View {
-        fun setCapacity(luggage: Int, people: Int, capabilitiesCount: Int)
+        fun setCapacity(luggage: Int?, people: Int?, capabilitiesCount: Int)
         fun setCancellationText(text: String)
         fun setCategoryText(text: String)
         fun showCancellationText(show: Boolean)

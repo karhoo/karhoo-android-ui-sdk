@@ -60,7 +60,7 @@ class TestData {
 
         const val TEST_FLEET = "KarhooTestFleet"
 
-        const val PAST_DATE_TIME = "31 Jul 2019, 13:35"
+        const val PAST_DATE_TIME = "31 Jul 2019, 1:35pm"
 
         const val VEHICLE_DETAILS = "MPV: 123 XYZ"
 

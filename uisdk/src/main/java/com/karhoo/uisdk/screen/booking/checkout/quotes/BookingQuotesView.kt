@@ -142,7 +142,7 @@ class BookingQuotesView @JvmOverloads constructor(context: Context,
         view.startAnimation(animation)
     }
 
-    override fun setCapacity(luggage: Int, people: Int, capabilitiesCount: Int) {
+    override fun setCapacity(luggage: Int?, people: Int?, capabilitiesCount: Int) {
         capacityWidget.setCapacity(luggage, people, capabilitiesCount)
     }
 
