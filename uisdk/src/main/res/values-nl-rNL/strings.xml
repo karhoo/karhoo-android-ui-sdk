@@ -301,7 +301,7 @@
     <string name="kh_uisdk_no_coverage_subtitle">Bedankt voor het aanbevelen van een vloot bij u in de buurt. Om zo snel mogelijk dekking in uw regio te krijgen, verzoeken wij u ons het gebied en de naam van het transportbedrijf door te geven.\nGebied:\nVloottijd:</string>
     <string name="kh_uisdk_no_coverage_title">Aanbeveling taxibedrijf</string>
     <string name="kh_uisdk_no_destination">Geen bestemming</string>
-    <string name="kh_uisdk_no_results_found">Geen beschikbaarheid voor de gevraagde tijd. Kies een ander tijdstip.</string>
+    <string name="kh_uisdk_no_results_found">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
     <string name="kh_uisdk_no_results_label">Er zijn geen resultaten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
     <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
@@ -410,6 +410,7 @@
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">Inloggen</string>
     <string name="kh_uisdk_sign_out">Afmelden</string>
+    <string name="kh_uisdk_similar_addresses_subtitle">Wijzig een van de adressen om toegang te krijgen tot de offertes</string>
     <string name="kh_uisdk_something_went_wrong">Er is een fout opgetreden</string>
     <string name="kh_uisdk_sort_by">Sorteer op</string>
     <string name="kh_uisdk_sorter_cheapest">Prijs</string>

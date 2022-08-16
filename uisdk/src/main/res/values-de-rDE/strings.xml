@@ -90,7 +90,7 @@
     <string name="kh_uisdk_difficulties_cancelling_message">Wir haben Probleme, Ihre Fahrt zu stornieren. Bitte kontaktieren Sie die Flotte.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Schwierigkeiten bei der Annullierung</string>
     <string name="kh_uisdk_discard">verwerfen</string>
-    <string name="kh_uisdk_dismiss">DISMISS</string>
+    <string name="kh_uisdk_dismiss">ENTLASSEN</string>
     <string name="kh_uisdk_dispatch_cancelled" formatted="false">Bitte entschuldigen Sie, %s hat im Moment keine verfügbaren Fahrer.</string>
     <string name="kh_uisdk_done">Erledigt</string>
     <string name="kh_uisdk_drawer_closed">Navigation geschlossen</string>
@@ -301,7 +301,7 @@
     <string name="kh_uisdk_no_coverage_subtitle">Vielen Dank, dass Sie uns einen Fuhrpark in Ihrer Nähe empfehlen. Um die Abdeckung in Ihrem Gebiet so schnell wie möglich zu erhalten, geben Sie uns bitte das Gebiet und den Namen des Transportunternehmens an.\nGebiet:\nFlottenzeit:</string>
     <string name="kh_uisdk_no_coverage_title">Empfehlung für die Flotte</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
-    <string name="kh_uisdk_no_results_found">Keine Verfügbarkeit für die gewünschte Zeit. Bitte wählen Sie eine andere Zeit.</string>
+    <string name="kh_uisdk_no_results_found">Sofortige Buchungen sind für dieses Ziel leider nicht möglich, aber Sie können für Ihre nächste Reise im Voraus buchen!</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
     <string name="kh_uisdk_offer_expired">Zitat erloschen</string>

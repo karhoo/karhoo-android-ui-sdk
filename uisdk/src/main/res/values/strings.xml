@@ -298,8 +298,8 @@
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
     <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_no_coverage_subtitle">%s to suggest news fleets</string>
     <string name="kh_uisdk_no_coverage_title">No fleets in this area yet</string>
-    <string name="kh_uisdk_no_coverage_subtitle">Contact us to suggest news fleets</string>
     <string name="kh_uisdk_no_destination">No Destination</string>
     <string name="kh_uisdk_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_no_results_label">No results</string>
