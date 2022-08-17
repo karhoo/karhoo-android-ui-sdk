@@ -294,8 +294,6 @@
     </style>
 
     <style name="KhQuotesSortView">
-        <item name="leftBackground">@drawable/uisdk_sort_left_background</item>
-        <item name="rightBackground">@drawable/uisdk_sort_right_background</item>
         <item name="selectedTextColor">@color/kh_uisdk_off_white</item>
         <item name="unselectedTextColor">@color/kh_uisdk_off_black</item>
     </style>

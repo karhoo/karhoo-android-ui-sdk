@@ -4,6 +4,8 @@ import android.location.Location
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.LoyaltyStatus
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import java.util.Date
 
 @Suppress("TooManyFunctions")
@@ -11,7 +13,21 @@ interface Analytics {
 
     fun userLocated(location: Location)
 
-    fun bookingRequested(tripDetails: TripInfo, outboundTripId: String?)
+    fun bookingRequested(quoteId: String)
+
+    fun bookingSuccess(tripId: String, quoteId: String?, correlationId: String?)
+
+    @Suppress("LongParameterList")
+    fun bookingFailure(
+        quoteId: String?,
+        correlationId: String?,
+        errorMessage: String,
+        lastFourDigits: String,
+        paymentMethodUsed: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
     fun tripStateChanged(tripState: TripInfo?)
 
@@ -27,6 +43,8 @@ interface Analytics {
 
     fun fleetsShown(quoteListId: String?, amountShown: Int)
 
+    fun quoteListOpened(journeyDetails: JourneyDetails)
+
     fun prebookOpened()
 
     fun userCalledDriver(trip: TripInfo?)
@@ -41,9 +59,26 @@ interface Analytics {
 
     fun paymentSucceed()
 
-    fun paymentFailed(details: String)
+    fun paymentFailed(
+        errorMessage: String,
+        quoteId: String?,
+        lastFourDigits: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
 
-    fun paymentFailed(errorMessage: String, lastFourDigits: String, date: Date, amount: Int, currency: String)
+    fun cardAuthorisationFailure(
+        quoteId: String?,
+        errorMessage: String,
+        lastFourDigits: String,
+        paymentMethodUsed: String,
+        date: Date,
+        amount: Int,
+        currency: String
+    )
+
+    fun tripPrebookConfirmation(tripInfo: TripInfo)
 
     fun trackTripOpened(tripInfo: TripInfo, isGuest: Boolean)
 
@@ -56,4 +91,32 @@ interface Analytics {
     fun contactFleetClicked(page: String, tripInfo: TripInfo)
 
     fun contactDriverClicked(page: String, tripInfo: TripInfo)
+
+    fun loyaltyPreAuthFailure(
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyMode: String,
+        errorSlug: String?,
+        errorMessage: String?
+    )
+
+    fun loyaltyPreAuthSuccess(
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyMode: String
+    )
+
+    fun loyaltyStatusRequested(
+        quoteId: String?,
+        correlationId: String?,
+        loyaltyName: String?,
+        loyaltyMode: String,
+        loyaltyStatus: LoyaltyStatus?,
+        errorSlug: String?,
+        errorMessage: String?
+    )
+
+    fun cardAuthorisationSuccess(
+        quoteId: String?
+    )
 }

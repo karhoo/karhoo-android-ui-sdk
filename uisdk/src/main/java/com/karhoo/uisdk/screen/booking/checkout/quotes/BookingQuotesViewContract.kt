@@ -10,7 +10,6 @@ interface BookingQuotesViewContract {
 
     interface BookingQuotesWidget {
         fun initAvailability(lifecycleOwner: LifecycleOwner)
-        fun setQuotesListVisibility()
         fun bindViewToData(lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel, bookingQuotesViewModel: BookingQuotesViewModel)
     }
 

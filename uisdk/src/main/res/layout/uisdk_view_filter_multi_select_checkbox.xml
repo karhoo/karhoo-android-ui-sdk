@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/filterViewItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/kh_uisdk_text_size_xlarge"
+        android:gravity="center_vertical"
+        android:textColor="@color/textColor"
+        tools:text="Quote types" />
+
+    <LinearLayout
+        android:id="@+id/filterViewItemCheckboxGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+        android:orientation="vertical"/>
+
+</LinearLayout>

@@ -153,7 +153,7 @@
     <string name="kh_uisdk_filter_taxi">Taxi</string>
     <string name="kh_uisdk_filter_train_tracking">Zugverfolgung</string>
     <string name="kh_uisdk_filter_van">Lieferwagen</string>
-    <string name="kh_uisdk_filter_vehicle_class">kh_uisdk_filter_fahrzeug_klasse</string>
+    <string name="kh_uisdk_filter_vehicle_class">Fahrzeugklasse</string>
     <string name="kh_uisdk_filter_vehicle_details">Fahrzeug-Details</string>
     <string name="kh_uisdk_filter_vehicle_extras">Fahrzeug-Extras</string>
     <string name="kh_uisdk_filter_vehicle_types">Fahrzeugtypen</string>
@@ -298,6 +298,8 @@
     <string name="kh_uisdk_no_availability">Wir sind hier noch nicht live! Melden Sie sich, wenn Sie Vorschläge für lokale Flotten haben.</string>
     <string name="kh_uisdk_no_availability_subtitle">Bitte wählen Sie eine andere Zeit</string>
     <string name="kh_uisdk_no_availability_title">Keine Verfügbarkeit für die gewünschte Zeit</string>
+    <string name="kh_uisdk_no_coverage_subtitle">Kontaktieren Sie uns, um neue Flotten vorzuschlagen</string>
+    <string name="kh_uisdk_no_coverage_title">Noch keine Flotten in diesem Gebiet</string>
     <string name="kh_uisdk_no_destination">Kein Ziel</string>
     <string name="kh_uisdk_no_results_found">Sofortige Buchungen sind für dieses Ziel leider nicht möglich, aber Sie können für Ihre nächste Reise im Voraus buchen!</string>
     <string name="kh_uisdk_no_results_label">Keine Ergebnisse</string>
@@ -377,6 +379,7 @@
     <string name="kh_uisdk_requested">Ihre Reise wurde angefordert mit %s</string>
     <string name="kh_uisdk_requested_invite">Vielen Dank für Ihr Interesse! Wir senden Ihnen eine E-Mail, sobald Ihr Konto aktiviert ist.</string>
     <string name="kh_uisdk_reset_filter">Filter zurücksetzen</string>
+    <string name="kh_uisdk_results">Ergebnisse</string>
     <string name="kh_uisdk_results_empty">Keine Ergebnisse gefunden</string>
     <string name="kh_uisdk_retrieving_dropoff">Übergabeort ermitteln</string>
     <!-- Current Trip -->

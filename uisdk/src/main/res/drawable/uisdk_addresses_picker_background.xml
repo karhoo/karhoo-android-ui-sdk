@@ -6,4 +6,8 @@
 
     <solid android:color="#EEFFFFFF" />
 
+    <stroke
+        android:width="@dimen/kh_uisdk_divider_height"
+        android:color="@color/kh_uisdk_border" >
+    </stroke>
 </shape>

@@ -31,6 +31,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/locateMeButton"
+        style="@style/KhBookingMapLocationIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -42,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/driverDetailsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/KhBookingMapLocationIcon" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/driverDetailsLayout"
@@ -51,12 +52,16 @@
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/kh_uisdk_spacing_small"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
-        android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:animateLayoutChanges="true"
         android:background="@drawable/uisdk_background_off_white_rounded"
         android:elevation="@dimen/kh_uisdk_spacing_small"
+        android:rotationX="360"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible">
 
@@ -143,9 +148,9 @@
 
         <TextView
             android:id="@+id/licenceNumberText"
+            style="@style/Text.Faded.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Text.Faded.Small"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
             android:textSize="@dimen/kh_uisdk_text_size_small"
             app:layout_constraintStart_toStartOf="@+id/carTypeText"

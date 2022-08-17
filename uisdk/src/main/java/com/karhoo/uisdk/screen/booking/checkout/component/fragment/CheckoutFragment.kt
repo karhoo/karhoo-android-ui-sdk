@@ -18,10 +18,16 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.LoadingButtonView
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_CANCELLED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_EXPIRED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -101,13 +107,15 @@ internal class CheckoutFragment : Fragment() {
 
                 activity?.setResult(RESULT_OK, intent)
                 activity?.finish()
+
+                KarhooAvailability.pauseUpdates()
             }
         })
 
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
                 quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_STATUS_KEY),
+                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
                 outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
                 bookingMetadata = bundle.getSerializable(CheckoutActivity
                                                                  .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
@@ -118,7 +126,7 @@ internal class CheckoutFragment : Fragment() {
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
 
         if (validityTimestamp > 0) {
-            val milisUntilInvalid = presenter.getValidMilisSPeriod(validityTimestamp)
+            val milisUntilInvalid = presenter.getValidMilisPeriod(validityTimestamp)
 
             expirationJob = GlobalScope.launch {
                 delay(milisUntilInvalid)
@@ -129,6 +137,7 @@ internal class CheckoutFragment : Fragment() {
                                 titleResId = R.string.kh_uisdk_offer_expired,
                                 messageResId = R.string.kh_uisdk_offer_expired_text,
                                 positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
                                     this@CheckoutFragment.activity?.finish()
                                 })
 
@@ -197,6 +206,17 @@ internal class CheckoutFragment : Fragment() {
 
     fun onBackPressed() {
         if (!checkoutView.consumeBackPressed()) {
+            val intent = Intent()
+            intent.putExtra(
+                QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
+                arguments?.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
+            )
+            intent.putExtra(
+                QUOTES_SELECTED_DATE,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.date
+            )
+            KarhooAvailability.pauseUpdates(fromBackButton = true)
+            activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)
             activity?.finish()
         }
     }
@@ -209,6 +229,7 @@ internal class CheckoutFragment : Fragment() {
         if (expirationJob?.isActive == true) {
             expirationJob?.cancel()
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
