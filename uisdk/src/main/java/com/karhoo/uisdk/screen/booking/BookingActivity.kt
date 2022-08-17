@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
@@ -32,34 +33,36 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_CANCELLED
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_INFO_REQUEST_NUMBER
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.addressBarWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingMapWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.quotesListWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
+import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
                         TripAllocationContract.Actions {
 
     private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy { ViewModelProvider(this).get(JourneyDetailsStateViewModel::class.java) }
     private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
-    private val bookingQuotesViewModel: BookingQuotesViewModel by lazy { ViewModelProvider(this).get(BookingQuotesViewModel::class.java) }
 
     private var quote: Quote? = null
 
@@ -70,7 +73,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var loyaltyInfo: LoyaltyInfo? = null
     private var bookingComments: String? = ""
     private var bookingMetadata: HashMap<String, String>? = null
-    private var currentValidityDeadlineTimestamp: Long? = null
 
     private var isGuest = false
 
@@ -116,9 +118,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun onResume() {
         super.onResume()
-        if (tripAllocationWidget.visibility != View.VISIBLE) {
-            quotesListWidget.initAvailability(this)
-        }
         setWatchers()
         setNavHeaderImage()
     }
@@ -185,7 +184,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             navigationWidget.menu.removeItem(R.id.action_profile)
         }
 
-        quotesListWidget.bindViewToData(this@BookingActivity, journeyDetailsStateViewModel, bookingQuotesViewModel)
         addressBarWidget.setJourneyInfo(journeyInfo)
 
         locateMeButton.setOnClickListener {
@@ -230,7 +228,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
         bookingRequestStateViewModel.viewActions().observe(this, bindToBookingRequestOutputs())
-        bookingQuotesViewModel.viewActions().observe(this, bindToBookingQuoteOutputs())
     }
 
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
@@ -255,70 +252,50 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun bindToBookingQuoteOutputs(): Observer<in BookingQuotesViewContract.BookingQuotesAction> {
-        return Observer { actions ->
-            when (actions) {
-                is BookingQuotesViewContract.BookingQuotesAction.ShowError ->
-                    showSnackbar(actions.snackbarConfig)
-                is BookingQuotesViewContract.BookingQuotesAction.HideError -> dismissSnackbar()
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListVisibilityChange ->
-                    updateMapViewForQuoteListVisibilityChange(actions.isVisible)
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListCollapsed ->
-                    bookingMapWidget.updateMapViewForQuotesListVisibilityCollapsed()
-                is BookingQuotesViewContract.BookingQuotesAction.UpdateViewForQuotesListExpanded ->
-                    bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded()
-                is BookingQuotesViewContract.BookingQuotesAction.ShowBookingRequest -> {
-                    this.quote = actions.quote
-
-                    val builder = CheckoutActivity.Builder()
-                            .quote(actions.quote)
-                            .outboundTripId(outboundTripId)
-                            .bookingMetadata(bookingMetadata)
-                            .journeyDetails(JourneyDetails(journeyDetailsStateViewModel.currentState.pickup,
-                                                     journeyDetailsStateViewModel.currentState.destination,
-                                                     journeyDetailsStateViewModel.currentState.date))
-
-                    passengerDetails?.let {
-                        builder.passengerDetails(it)
-                    }
-
-                    bookingComments?.let {
-                        builder.comments(it)
-                    }
-
-                    loyaltyInfo?.let {
-                        builder.loyaltyInfo(it)
-                    }
-
-                    currentValidityDeadlineTimestamp?.let {
-                        builder.validityDeadlineTimestamp(it)
-                    }
-
-                    startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
-                }
-                is BookingQuotesViewContract.BookingQuotesAction.SetValidityDeadlineTimestamp -> {
-                    this.currentValidityDeadlineTimestamp = actions.timestamp
-                }
-            }
-        }
-    }
-
     override fun selectAddress(intent: Intent, addressCode: Int) {
         startActivityForResult(intent, addressCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY) {
-            if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
-                showPrebookConfirmationDialog(data)
-            } else {
-                waitForTripAllocation()
-                tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
+        when {
+            resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {
+                if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
+                    showPrebookConfirmationDialog(data)
+                } else {
+                    waitForTripAllocation()
+                    tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
+                }
             }
-        } else if (resultCode == RESULT_OK && data != null) {
-            when (requestCode) {
-                AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                AddressCodes.DESTINATION -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
+            resultCode == RESULT_OK -> {
+                when (requestCode) {
+                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                    AddressCodes.DESTINATION -> {
+                        addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                        startQuoteListActivity(restorePreviousData = false)
+                    }
+                }
+            }
+            resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
+                parseDataFromIntent(data)
+
+                startCheckoutActivity(data)
+            }
+            resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
+                startQuoteListActivity(
+                    restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED,
+                    validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0)
+                )
+            }
+            resultCode == QUOTES_CANCELLED -> {
+                val journeyDetails = data?.getParcelableExtra(Builder.EXTRA_JOURNEY_INFO) as JourneyDetails?
+                journeyDetailsStateViewModel.process(
+                    AddressBarViewContract.AddressBarEvent
+                        .PrebookBookingEvent(
+                            journeyDetails?.pickup,
+                            journeyDetails?.destination,
+                            journeyDetails?.date
+                        )
+                )
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -346,7 +323,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     private fun waitForTripAllocation() {
-        quotesListWidget.hideList()
         addressBarWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -396,7 +372,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun onBookingCancelledOrFinished() {
-        quotesListWidget.initAvailability(this)
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -404,18 +379,82 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
-    override fun dismissSnackbar() {
-        quotesListWidget.setQuotesListVisibility()
-        super.dismissSnackbar()
-    }
+    private fun startCheckoutActivity(data: Intent?) {
+        this.quote = data?.getParcelableExtra(QUOTES_SELECTED_QUOTE_KEY)
 
-    private fun updateMapViewForQuoteListVisibilityChange(isVisible: Boolean) {
-        if (isVisible) {
-            bookingMapWidget.setDefaultPadding()
-        } else {
-            bookingMapWidget.setNoBottomPadding()
+        this.quote?.let { quote ->
+            val builder = CheckoutActivity.Builder()
+                .quote(quote)
+                .outboundTripId(outboundTripId)
+                .bookingMetadata(bookingMetadata)
+                .journeyDetails(
+                    JourneyDetails(
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
+                        data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: journeyDetailsStateViewModel.currentState.destination,
+                        data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime ?: journeyDetailsStateViewModel.currentState.date
+                    )
+                )
+
+            passengerDetails?.let {
+                builder.passengerDetails(it)
+            }
+
+            bookingComments?.let {
+                builder.comments(it)
+            }
+
+            loyaltyInfo?.let {
+                builder.loyaltyInfo(it)
+            }
+
+            val validityTimeStamp = data?.getLongExtra(
+                QuotesActivity.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
+            )
+
+            validityTimeStamp?.let {
+                builder.validityDeadlineTimestamp(
+                    validityTimeStamp
+                )
+            }
+
+            startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
         }
     }
+
+    private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null) {
+        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(journeyDetailsStateViewModel.viewStates().value)
+        validityTimestamp?.let {
+            builder.validityTimestamp(validityTimestamp)
+        }
+        startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
+    }
+
+    private fun parseDataFromIntent(data: Intent?) {
+        val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+        val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+        val date = data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime
+
+        pickup?.let {
+            addressBarWidget.setPickup(pickup, -1)
+        }
+
+        destination?.let {
+            addressBarWidget.setDestination(destination, -1)
+        }
+
+        date?.let {
+            addressBarWidget.setPrebookTime(date)
+        }
+
+        val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
+        val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
+        if(bookingMetadata == null) {
+            bookingMetadata = HashMap()
+        }
+        bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+        bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+    }
+
 
     /**
      * Intent Builder

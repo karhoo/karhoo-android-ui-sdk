@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.service.loyalty.LoyaltyService
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import java.util.Currency
 
 class LoyaltyPresenter(
@@ -61,7 +62,7 @@ class LoyaltyPresenter(
                         is Resource.Success -> {
                             earnedPoints = result.data.points
 
-                            if(currentMode != LoyaltyMode.ERROR_BAD_CURRENCY && currentMode != LoyaltyMode.ERROR_UNKNOWN) {
+                            if (currentMode != LoyaltyMode.ERROR_BAD_CURRENCY && currentMode != LoyaltyMode.ERROR_UNKNOWN) {
                                 setSubtitleBasedOnMode(LoyaltyMode.EARN)
                             }
                         }
@@ -178,7 +179,7 @@ class LoyaltyPresenter(
         return currentMode
     }
 
-    override fun getLoyaltyStatus() {
+    override fun getLoyaltyStatus(callback: ((Resource<LoyaltyStatus>) -> Unit?)?) {
         val loyaltyId = userStore.paymentProvider?.loyalty?.id
         loyaltyId?.let {
             loyaltyService.getLoyaltyStatus(loyaltyId).execute { result ->
@@ -192,9 +193,13 @@ class LoyaltyPresenter(
                         updateBalancePoints()
                         updateEarnedPoints()
                         updateBurnedPoints()
+
+                        callback?.invoke(result)
                     }
                     is Resource.Failure -> {
                         getErrorFromResponse(result.error)
+
+                        callback?.invoke(result)
                     }
                 }
             }
@@ -210,7 +215,7 @@ class LoyaltyPresenter(
         loyaltyPresenterDelegate?.toggleFeatures(canEarn, canBurn)
     }
 
-    override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit) {
+    override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit) {
         if (currentMode == LoyaltyMode.ERROR_BAD_CURRENCY || currentMode == LoyaltyMode.ERROR_UNKNOWN) {
             // Loyalty related web-services return slug based errors, not error code based ones
             // this error does not coincide with any error returned by the backend
@@ -219,10 +224,13 @@ class LoyaltyPresenter(
                 Resource.Failure(
                     KarhooError.fromCustomError(
                         erCode = KarhooError.FailedToGenerateNonce.code,
-                        erInternalMessage = loyaltyPresenterDelegate?.provideResources()?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: "",
-                        erUserFriendlyMessage = loyaltyPresenterDelegate?.provideResources()?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: ""
+                        erInternalMessage = loyaltyPresenterDelegate?.provideResources()
+                            ?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: "",
+                        erUserFriendlyMessage = loyaltyPresenterDelegate?.provideResources()
+                            ?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: ""
                     )
-                )
+                ),
+                loyaltyStatus
             )
             return
         }
@@ -238,10 +246,10 @@ class LoyaltyPresenter(
             ).execute { result ->
                 when (result) {
                     is Resource.Success -> {
-                        callback.invoke(result)
+                        callback.invoke(result, loyaltyStatus)
                     }
                     is Resource.Failure -> {
-                        callback.invoke(result)
+                        callback.invoke(result, loyaltyStatus)
                     }
                 }
             }

@@ -33,16 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
-    <com.karhoo.uisdk.screen.booking.quotes.QuotesListView
-        android:id="@+id/quotesListWidget"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/kh_uisdk_collapsible_pane_expanded_height"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:expandedListPercentageOfScreen="@integer/kh_uisdk_query_list_view_default_expanded_screen_percentage"
-        app:collapsedListPercentageOfScreen="@integer/kh_uisdk_query_list_view_default_collapsed_screen_percentage"/>
-
     <com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
         android:id="@+id/tripAllocationWidget"
         android:layout_width="match_parent"

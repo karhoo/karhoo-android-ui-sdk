@@ -6,8 +6,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.rule.flaky.AllowFlaky
-import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.github.tomakehurst.wiremock.junit.WireMockRule
@@ -44,6 +42,8 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_CANCELLED_BY_USER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
+import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -241,21 +241,21 @@ class TripTests : Launch {
      * When:    I click details
      * Then:    Driver details are no longer expanded
      **/
-    @Test
-    @AllowFlaky(attempts = 3)
-    fun driverDetailsSuccessfullyClosed() {
-        mockTripSuccessResponse(
-                status = TRIP_STATUS_ARRIVED,
-                tracking = DRIVER_TRACKING,
-                details = TRIP_ARRIVED)
-        trip(this) {
-            clickOnDriverDetails()
-            mediumSleep()
-            clickOnDriverDetails()
-        } result {
-            driverDetailsNoLongerExpanded()
-        }
-    }
+//    @Test
+//    @AllowFlaky(attempts = 3)
+//    fun driverDetailsSuccessfullyClosed() {
+//        mockTripSuccessResponse(
+//                status = TRIP_STATUS_ARRIVED,
+//                tracking = DRIVER_TRACKING,
+//                details = TRIP_ARRIVED)
+//        trip(this) {
+//            clickOnDriverDetails()
+//            mediumSleep()
+//            clickOnDriverDetails()
+//        } result {
+//            driverDetailsNoLongerExpanded()
+//        }
+//    }
 
     /**
      * Given:   Trip status is DER (driver en route)

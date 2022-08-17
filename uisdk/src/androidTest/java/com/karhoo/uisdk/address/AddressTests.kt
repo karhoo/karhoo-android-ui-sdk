@@ -5,8 +5,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.rule.flaky.AllowFlaky
-import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.common.Launch
@@ -23,6 +21,8 @@ import com.karhoo.uisdk.util.TestData.Companion.SEARCH_AIRPORT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_INCORRECT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.USER
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
+import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

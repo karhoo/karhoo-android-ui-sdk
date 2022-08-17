@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import com.adevinta.android.barista.rule.flaky.AllowFlaky
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.booking.booking
@@ -15,8 +14,10 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

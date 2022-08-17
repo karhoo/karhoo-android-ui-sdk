@@ -47,12 +47,12 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
-import com.adevinta.android.barista.interaction.BaristaClickInteractions
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.matcher.RecyclerMatcher
 import com.karhoo.uisdk.common.matcher.withDrawable
+import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions
+import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not

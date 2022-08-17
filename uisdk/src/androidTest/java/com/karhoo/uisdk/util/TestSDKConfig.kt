@@ -6,17 +6,12 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
-import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 
 class TestSDKConfig(val context: Context, private val authenticationMethod: AuthenticationMethod =
         AuthenticationMethod.KarhooUser()) :
         KarhooUISDKConfiguration {
-    override var paymentManager: PaymentManager = AdyenPaymentManager()
 
     override fun environment(): KarhooEnvironment {
-        paymentManager.paymentProviderView = AdyenPaymentView()
         return KarhooEnvironment.Custom(host = "http://127.0.0.1:8089", authHost = "", guestHost = "")
     }
 

@@ -3,7 +3,6 @@ package com.karhoo.uisdk.rides
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import com.adevinta.android.barista.rule.flaky.AllowFlaky
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.Launch
@@ -35,6 +34,7 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test

@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.model.LoyaltyNonce
+import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
@@ -132,20 +133,19 @@ class LoyaltyView @JvmOverloads constructor(
         }
     }
 
-    override fun set(loyaltyDataModel: LoyaltyViewDataModel) {
+    override fun set(
+        loyaltyDataModel: LoyaltyViewDataModel,
+        callback: ((Resource<LoyaltyStatus>) -> Unit?)?
+    ) {
         presenter.set(loyaltyDataModel)
-        getLoyaltyStatus()
-    }
-
-    override fun getLoyaltyStatus() {
-        presenter.getLoyaltyStatus()
+        presenter.getLoyaltyStatus(callback)
     }
 
     override fun provideResources(): Resources {
         return resources
     }
 
-    override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>) -> Unit) {
+    override fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit) {
         presenter.getLoyaltyPreAuthNonce(callback)
     }
 

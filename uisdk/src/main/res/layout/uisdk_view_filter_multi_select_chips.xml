@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/filterViewItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/textColor"
+        tools:text="Vehicle types" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/filterViewItemChipGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacingHorizontal="@dimen/kh_uisdk_spacing_semi_small"
+        app:chipSpacingVertical="@dimen/kh_uisdk_spacing_semi_small"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

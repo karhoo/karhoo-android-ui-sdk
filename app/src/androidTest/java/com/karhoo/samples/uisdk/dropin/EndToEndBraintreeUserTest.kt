@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
-import com.adevinta.android.barista.rule.flaky.AllowFlaky
-import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.samples.uisdk.dropin.common.preferences
@@ -40,6 +38,8 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_POB
 import com.karhoo.uisdk.util.TestData.Companion.USER_INFO
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
+import com.schibsted.spain.barista.rule.flaky.AllowFlaky
+import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
