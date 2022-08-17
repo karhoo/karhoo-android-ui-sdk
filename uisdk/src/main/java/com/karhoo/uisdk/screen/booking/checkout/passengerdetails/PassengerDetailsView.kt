@@ -192,7 +192,7 @@ class PassengerDetailsView @JvmOverloads constructor(
         lastNameInput.setText(passengerDetails.lastName)
         emailInput.setText(passengerDetails.email)
         mobileNumberInput.setText(presenter.removeCountryCodeFromPhoneNumber(passengerDetails.phoneNumber, resources))
-        setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), false)
+        setCountryFlag(presenter.getCountryCode(context), presenter.getDialingCode(context), validateField = true)
 
         validateAll()
         if(!areFieldsValid())
