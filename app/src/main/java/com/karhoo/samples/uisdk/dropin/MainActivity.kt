@@ -27,6 +27,8 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 import android.util.Log
+import com.karhoo.farechoice.service.analytics.KarhooAnalytics
+import com.karhoo.sdk.analytics.AnalyticsManager
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -194,6 +196,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToBooking() {
+        AnalyticsManager.initialise()
+        KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
         startActivity(builder.build(this))
