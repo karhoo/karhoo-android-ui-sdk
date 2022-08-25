@@ -36,6 +36,7 @@
     <string name="kh_uisdk_booking_checkout_back_button">Back</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
+    <string name="kh_uisdk_booking_checkout_title">Checkout</string>
     <string name="kh_uisdk_booking_confirmation">Booking Confirmed</string>
     <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
     <string name="kh_uisdk_booking_error">There seems to be an issue booking your trip. Please try again</string>
@@ -296,7 +297,7 @@
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
     <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
-    <string name="kh_uisdk_no_availability_subtitle">Please select another time</string>
+    <string name="kh_uisdk_no_availability_subtitle">Please choose a different time</string>
     <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
     <string name="kh_uisdk_no_coverage_subtitle">Contact us to suggest news fleets</string>
     <string name="kh_uisdk_no_coverage_title">No fleets in this area yet</string>
@@ -456,7 +457,7 @@
     <string name="kh_uisdk_upcoming_rides_empty">Remember, you can prebook a car up to seven days in advance.</string>
     <string name="kh_uisdk_update">UPDATE</string>
     <string name="kh_uisdk_vehicle">Vehicle</string>
-    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">MPV</string>
     <string name="kh_uisdk_vehicle_standard">Standard</string>
