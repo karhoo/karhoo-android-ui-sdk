@@ -36,6 +36,7 @@
     <string name="kh_uisdk_booking_checkout_back_button">Indietro</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifica</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passeggeri</string>
+    <string name="kh_uisdk_booking_checkout_title">Cassa</string>
     <string name="kh_uisdk_booking_confirmation">Prenotazione confermata</string>
     <string name="kh_uisdk_booking_details_error">Dettagli della prenotazione non validi</string>
     <string name="kh_uisdk_booking_error">Sembra che ci sia un problema durante la prenotazione del viaggio. Per favore riprova</string>
@@ -456,7 +457,7 @@
     <string name="kh_uisdk_upcoming_rides_empty">Ricorda, puoi prenotare un\'auto fino a sette giorni in anticipo.</string>
     <string name="kh_uisdk_update">AGGIORNARE</string>
     <string name="kh_uisdk_vehicle">Veicolo</string>
-    <string name="kh_uisdk_vehicle_bus">Autobus</string>
+    <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">Multiposto</string>
     <string name="kh_uisdk_vehicle_standard">Standard</string>
