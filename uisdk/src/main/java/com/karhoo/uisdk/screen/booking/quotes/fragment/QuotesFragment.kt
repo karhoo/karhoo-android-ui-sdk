@@ -295,7 +295,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     override fun showNoFleetsError(show: Boolean) {
         showFilteringWidgets(!show)
-        quotesRecyclerView.showNoFleetsError(show)
+        quotesRecyclerView.showNoFleetsError(show, isPrebook)
     }
 
     override fun showSameAddressesError(show: Boolean) {

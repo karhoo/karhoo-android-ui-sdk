@@ -36,6 +36,7 @@
     <string name="kh_uisdk_booking_checkout_back_button">Zurück</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Bearbeiten</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passagier</string>
+    <string name="kh_uisdk_booking_checkout_title">Zur Kasse</string>
     <string name="kh_uisdk_booking_confirmation">Buchung Bestätigt</string>
     <string name="kh_uisdk_booking_details_error">Ungültige Buchungsdaten</string>
     <string name="kh_uisdk_booking_error">Es scheint ein Problem bei der Buchung Ihrer Reise zu geben. Bitte versuchen Sie es erneut</string>
@@ -456,7 +457,7 @@
     <string name="kh_uisdk_upcoming_rides_empty">Denken Sie daran, dass Sie ein Auto bis zu sieben Tage im Voraus buchen können.</string>
     <string name="kh_uisdk_update">Update</string>
     <string name="kh_uisdk_vehicle">Fahrzeug</string>
-    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_bus">Kleinbus</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">Großraum</string>
     <string name="kh_uisdk_vehicle_standard">Standard</string>

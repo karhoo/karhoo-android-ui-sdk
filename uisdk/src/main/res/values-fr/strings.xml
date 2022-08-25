@@ -36,6 +36,7 @@
     <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifier</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passager</string>
+    <string name="kh_uisdk_booking_checkout_title">Caisse</string>
     <string name="kh_uisdk_booking_confirmation">Course confirmée</string>
     <string name="kh_uisdk_booking_details_error">Détails de course non valables</string>
     <string name="kh_uisdk_booking_error">Il y a un problème avec la réservation. Veuillez réessayer.</string>
@@ -456,7 +457,7 @@
     <string name="kh_uisdk_upcoming_rides_empty">Vous pouvez réserver jusqu\'à 7 jours à l\'avance.</string>
     <string name="kh_uisdk_update">Mettre à jour</string>
     <string name="kh_uisdk_vehicle">Véhicule</string>
-    <string name="kh_uisdk_vehicle_bus">Bus</string>
+    <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">Van</string>
     <string name="kh_uisdk_vehicle_standard">Standard</string>

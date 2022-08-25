@@ -20,7 +20,7 @@ interface QuotesRecyclerContract {
 
         fun setListVisibility(visible: Boolean)
 
-        fun showNoFleetsError(show: Boolean)
+        fun showNoFleetsError(show: Boolean, isPrebook: Boolean)
 
         fun showSameAddressesError(show: Boolean)
 
