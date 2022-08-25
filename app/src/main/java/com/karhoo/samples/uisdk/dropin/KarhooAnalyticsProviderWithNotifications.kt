@@ -17,6 +17,7 @@ class KarhooAnalyticsProviderWithNotifications: AnalyticProvider {
         notification.setContentText(payloadMap.toString())
         notification.setSmallIcon(R.drawable.uisdk_karhoo_wordmark)
         notification.setAutoCancel(true)
+        notification.setPriority(NotificationCompat.PRIORITY_MAX)
         notification.setStyle(NotificationCompat.BigTextStyle().bigText(payloadMap.toString()))
         val managerCompat = NotificationManagerCompat.from(KarhooApplication.appContext)
         managerCompat.notify(Random.nextInt(), notification.build())
