@@ -1,7 +1,9 @@
 package com.karhoo.samples.uisdk.dropin
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -27,6 +29,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 import android.util.Log
+import android.widget.CheckBox
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.sdk.analytics.AnalyticsManager
 import java.util.*
@@ -36,6 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loadingProgressBar: View
     private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
+    private lateinit var sharedPrefs: SharedPreferences
+    private val notifications_id = "notifications_enabled"
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -50,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sharedPrefs = this?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -110,6 +116,9 @@ class MainActivity : AppCompatActivity() {
             }
             showLoginInputDialog()
         }
+
+        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
+        checkbox.setChecked(getCurrentNotificationStatus())
     }
 
     private fun showLoginInputDialog() {
@@ -223,5 +232,24 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.java.name
+    }
+
+    fun onCheckboxClicked(view: View) {view
+        toggleNotificationStatus()
+    }
+
+    private fun getCurrentNotificationStatus() : Boolean {
+         return sharedPrefs.getBoolean(notifications_id, false)
+    }
+
+    private fun setNotificationStatus(value: Boolean){
+        with (sharedPrefs.edit()) {
+            putBoolean(notifications_id, value)
+            apply()
+        }
+    }
+
+    private fun toggleNotificationStatus(){
+        setNotificationStatus(!getCurrentNotificationStatus())
     }
 }
