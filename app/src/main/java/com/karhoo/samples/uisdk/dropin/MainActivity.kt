@@ -239,12 +239,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getCurrentNotificationStatus() : Boolean {
-         return sharedPrefs.getBoolean(notifications_id, false)
+         return sharedPrefs.getBoolean(notificationsId, false)
     }
 
     private fun setNotificationStatus(value: Boolean){
         with (sharedPrefs.edit()) {
-            putBoolean(notifications_id, value)
+            putBoolean(notificationsId, value)
             apply()
         }
     }
