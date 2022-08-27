@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
-    private val notifications_id = "notifications_enabled"
+    private val notificationsId = "notifications_enabled"
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->

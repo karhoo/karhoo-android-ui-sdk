@@ -2,12 +2,9 @@ package com.karhoo.farechoice.service.analytics
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.location.Location
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.BatteryManager
 import android.os.Build
 import com.karhoo.samples.uisdk.dropin.KarhooApplication
 import com.karhoo.sdk.analytics.AnalyticsManager
@@ -17,7 +14,6 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Position
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.model.LoyaltyProgramme
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails

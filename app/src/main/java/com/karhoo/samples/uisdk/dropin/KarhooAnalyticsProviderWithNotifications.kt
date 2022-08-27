@@ -3,7 +3,6 @@ package com.karhoo.samples.uisdk.dropin
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.karhoo.samples.uisdk.dropin.KarhooApplication
 import com.karhoo.sdk.analytics.AnalyticProvider
 import kotlin.random.Random
 

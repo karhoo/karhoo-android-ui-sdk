@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import com.karhoo.samples.uisdk.dropin.config.KarhooConfig
-import com.karhoo.sdk.analytics.AnalyticsManager
-import com.karhoo.sdk.api.KarhooApi.setConfiguration
 import com.karhoo.uisdk.KarhooUISDK
 
 open class KarhooApplication : Application() {
@@ -23,7 +21,7 @@ open class KarhooApplication : Application() {
     }
 
     private fun initChannel(channelId: String, channelName: String) {
-        if (Build.VERSION.SDK_INT < 26) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             return
         }
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
