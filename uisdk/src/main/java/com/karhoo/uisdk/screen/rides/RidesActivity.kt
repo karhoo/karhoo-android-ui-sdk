@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.viewpager.widget.ViewPager
+import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import kotlinx.android.synthetic.main.uisdk_activity_rides.bookRideButton
 import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbar
 import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbarProgressBar
@@ -40,8 +42,13 @@ class RidesActivity : BaseActivity(), RidesLoading, ViewPager.OnPageChangeListen
     }
 
     private fun goToBooking() {
-        val intent = BookingActivity.Builder.builder.build(this)
-        startActivity(intent)
+        val passenger = extras?.getParcelable<PassengerDetails?>(CheckoutActivity.BOOKING_CHECKOUT_PASSENGER_KEY)
+
+        val intent = BookingActivity.Builder.builder
+        passenger?.let {
+            intent.passengerDetails(it)
+        }
+        startActivity(intent.build(this))
     }
 
     override fun handleExtras() {
@@ -81,6 +88,13 @@ class RidesActivity : BaseActivity(), RidesLoading, ViewPager.OnPageChangeListen
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtras(extras)
             return intent
+        }
+
+        fun passengerDetails(passenger: PassengerDetails?): Builder {
+            passenger?.let {
+                extras.putParcelable(CheckoutActivity.BOOKING_CHECKOUT_PASSENGER_KEY, passenger)
+            }
+            return this
         }
 
         companion object {

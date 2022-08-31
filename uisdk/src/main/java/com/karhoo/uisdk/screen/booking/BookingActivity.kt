@@ -364,7 +364,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 true
             }
             R.id.booking_action_rides -> {
-                startActivity(RidesActivity.Builder.builder.build(this))
+                startActivity(RidesActivity.Builder.builder
+                    .passengerDetails(passengerDetails)
+                    .build(this))
                 true
             }
             else -> super.onOptionsItemSelected(item)
