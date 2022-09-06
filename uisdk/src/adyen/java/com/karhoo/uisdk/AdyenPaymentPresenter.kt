@@ -96,7 +96,7 @@ class AdyenPaymentPresenter(
         passBackThreeDSecureNonce(quote)
     }
 
-    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
@@ -119,6 +119,7 @@ class AdyenPaymentPresenter(
                         this.tripId = payload.optString(TRIP_ID, "")
                         updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
                         analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
+                        return true
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
@@ -143,6 +144,7 @@ class AdyenPaymentPresenter(
         } else {
             view?.refresh()
         }
+        return false
     }
 
     override fun logPaymentFailureEvent(

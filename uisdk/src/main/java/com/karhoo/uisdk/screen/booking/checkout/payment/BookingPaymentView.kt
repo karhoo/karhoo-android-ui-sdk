@@ -135,8 +135,8 @@ class BookingPaymentView @JvmOverloads constructor(
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        dropInView?.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        return dropInView?.onActivityResult(requestCode, resultCode, data) == true
     }
 
     override fun showError(error: Int, karhooError: KarhooError?) {

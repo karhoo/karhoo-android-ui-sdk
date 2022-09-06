@@ -10,7 +10,7 @@ interface BookingPaymentContract {
 
     interface View {
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
         fun bindDropInView()
 

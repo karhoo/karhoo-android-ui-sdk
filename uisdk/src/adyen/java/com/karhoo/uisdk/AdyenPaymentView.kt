@@ -23,8 +23,8 @@ class AdyenPaymentView : PaymentDropInContract.View {
             field = value
         }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter?.handleActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        return presenter?.handleActivityResult(requestCode, resultCode, data) == true
     }
 
     override fun initialiseChangeCard(quote: Quote?, locale: Locale?) {
