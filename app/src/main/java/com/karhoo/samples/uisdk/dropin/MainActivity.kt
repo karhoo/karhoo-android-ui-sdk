@@ -198,17 +198,21 @@ class MainActivity : AppCompatActivity() {
         KarhooApi.userService.logout()
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
-                is Resource.Success -> goToBooking()
+                is Resource.Success -> goToBooking(useProgressDialog = true)
                 is Resource.Failure -> toastErrorMessage(result.error)
             }
         }
     }
 
-    private fun goToBooking() {
+    private fun goToBooking(useProgressDialog: Boolean = false) {
         AnalyticsManager.initialise()
         KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
+
+        if(useProgressDialog)
+            builder.showProgressDialog()
+
         startActivity(builder.build(this))
         hideLoading()
     }

@@ -3,16 +3,19 @@ package com.karhoo.uisdk.screen.booking
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -47,15 +50,11 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.addressBarWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingMapWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
+import kotlinx.android.synthetic.main.uisdk_activity_base.*
+import kotlinx.android.synthetic.main.uisdk_activity_booking_content.*
+import kotlinx.android.synthetic.main.uisdk_activity_booking_main.*
+import kotlinx.android.synthetic.main.uisdk_nav_header_main.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.*
 import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
@@ -75,6 +74,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var bookingMetadata: HashMap<String, String>? = null
 
     private var isGuest = false
+    private lateinit var loadingProgressDialog: AlertDialog
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -116,6 +116,49 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         KarhooUISDK.analytics?.bookingScreenOpened()
     }
 
+    private fun setProgressDialog() {
+        val llPadding = 30
+        val ll = LinearLayout(this)
+        ll.orientation = LinearLayout.HORIZONTAL
+        ll.setPadding(llPadding, llPadding, llPadding, llPadding)
+        ll.gravity = Gravity.CENTER
+        var llParam = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        llParam.gravity = Gravity.CENTER
+        ll.layoutParams = llParam
+        val progressBar = ProgressBar(this)
+        progressBar.isIndeterminate = true
+        progressBar.setPadding(0, 0, llPadding, 0)
+        progressBar.layoutParams = llParam
+        llParam = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        llParam.gravity = Gravity.CENTER
+        val tvText = TextView(this)
+        tvText.text = "Loading" //TODO to be not-hardcoded if needed
+        tvText.setTextColor(ContextCompat.getColor(baseContext, R.color.textColor))
+        tvText.textSize = 20f
+        tvText.layoutParams = llParam
+        ll.addView(progressBar)
+        ll.addView(tvText)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setCancelable(true)
+        builder.setView(ll)
+        loadingProgressDialog = builder.create()
+        loadingProgressDialog.show()
+        val window: Window? = loadingProgressDialog.window
+        if (window != null) {
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(loadingProgressDialog.window?.attributes)
+            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
+            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
+            loadingProgressDialog.window?.attributes = layoutParams
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         setWatchers()
@@ -129,7 +172,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                                   } ?: run {
                                       navigationHeaderIcon?.setImageDrawable(getDrawable(R.drawable.uisdk_karhoo_wordmark))
                                   }
-                              }, NAVIGATION_ICON_DELAY)
+            if(::loadingProgressDialog.isInitialized)
+                loadingProgressDialog.dismiss()
+        }, NAVIGATION_ICON_DELAY)
     }
 
     private fun setWatchers() {
@@ -150,6 +195,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     override fun handleExtras() {
         extras?.let { extras ->
+            if(extras.getBoolean(Builder.EXTRA_SHOW_PROGRESS_DIALOG)){
+                setProgressDialog()
+            }
             tripDetails = extras.get(Builder.EXTRA_TRIP_DETAILS) as TripInfo?
             tripDetails?.let {
                 journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
@@ -472,6 +520,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             return this
         }
 
+        fun showProgressDialog(){
+            extrasBundle.putBoolean(EXTRA_SHOW_PROGRESS_DIALOG, true)
+        }
+
         /**
          * By passing journey info into the Booking activity it will automatically prefill the origin
          * destination and date of the desired trip. This will only use the details available inside
@@ -568,6 +620,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             const val EXTRA_COMMENTS = "booking::comments"
             const val EXTRA_META = "booking::meta"
             const val EXTRA_LOYALTY_INFO = "extraLoyaltyInfo"
+            const val EXTRA_SHOW_PROGRESS_DIALOG = "extraShowProgressDialog"
 
             val builder: Builder
                 get() = Builder()
