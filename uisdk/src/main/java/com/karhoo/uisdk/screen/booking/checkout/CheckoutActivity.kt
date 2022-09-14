@@ -31,7 +31,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(true)
 
         if(savedInstanceState != null){
             fragment = supportFragmentManager.getFragment(savedInstanceState, CHECKOUT_FRAGMENT) as CheckoutFragment

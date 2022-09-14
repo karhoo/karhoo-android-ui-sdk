@@ -1,7 +1,9 @@
 package com.karhoo.samples.uisdk.dropin
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.Window
@@ -21,13 +23,24 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
+import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 import android.util.Log
+import android.widget.CheckBox
+import com.karhoo.farechoice.service.analytics.KarhooAnalytics
+import com.karhoo.sdk.analytics.AnalyticsManager
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loadingProgressBar: View
+    private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
+    private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
+    private lateinit var sharedPrefs: SharedPreferences
+    private val notificationsId = "notifications_enabled"
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -42,12 +55,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sharedPrefs = this?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         KarhooApi.userService.logout()
 
         KarhooApi.paymentsService.getAdyenClientKey()
+        adyenPaymentManager.paymentProviderView = AdyenPaymentView()
+        braintreePaymentManager.paymentProviderView = BraintreePaymentView()
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
@@ -93,12 +109,16 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
+            config.paymentManager = braintreePaymentManager
 
             KarhooUISDK.apply {
                 setConfiguration(config)
             }
             showLoginInputDialog()
         }
+
+        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
+        checkbox.setChecked(getCurrentNotificationStatus())
     }
 
     private fun showLoginInputDialog() {
@@ -129,6 +149,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -137,6 +158,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeGuestConfig() {
         val config = BraintreeGuestConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -145,6 +167,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -153,6 +176,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
+        config.paymentManager = adyenPaymentManager
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -164,6 +188,7 @@ class MainActivity : AppCompatActivity() {
             applicationContext
         )
 
+        config.paymentManager = adyenPaymentManager
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -180,6 +205,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun goToBooking() {
+        AnalyticsManager.initialise()
+        KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
         startActivity(builder.build(this))
@@ -205,5 +232,24 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.java.name
+    }
+
+    fun onCheckboxClicked(view: View) {view
+        toggleNotificationStatus()
+    }
+
+    private fun getCurrentNotificationStatus() : Boolean {
+         return sharedPrefs.getBoolean(notificationsId, false)
+    }
+
+    private fun setNotificationStatus(value: Boolean){
+        with (sharedPrefs.edit()) {
+            putBoolean(notificationsId, value)
+            apply()
+        }
+    }
+
+    private fun toggleNotificationStatus(){
+        setNotificationStatus(!getCurrentNotificationStatus())
     }
 }

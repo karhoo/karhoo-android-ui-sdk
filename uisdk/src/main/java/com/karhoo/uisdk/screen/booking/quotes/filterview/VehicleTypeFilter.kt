@@ -8,7 +8,7 @@ class VehicleTypeFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelect
         if (selectedTypes.size == 0) {
             return true
         }
-        return quote.vehicle.vehicleType?.lowercase() in selectedTypes.map { it.text.lowercase() }
+        return quote.vehicle.vehicleType?.lowercase() in selectedTypes.map { it.fixedTag?.lowercase() }
     }
 
     companion object {
