@@ -9,6 +9,7 @@ import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
 import com.adyen.checkout.dropin.DropInResult
+import com.adyen.checkout.googlepay.GooglePayConfiguration
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.KarhooError
@@ -84,9 +85,16 @@ class AdyenPaymentPresenter(
             Environment.TEST
         }
 
+        val googlePayConfig = GooglePayConfiguration.Builder(context, clientKey)
+            .setAmount(amount)
+            .setEnvironment(environment)
+            .setShopperLocale(Locale.getDefault())
+            .build()
+
         return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
             .setAmount(amount)
             .setEnvironment(environment)
+            .addGooglePayConfiguration(googlePayConfig)
             .setShopperLocale(Locale.getDefault())
             .addCardConfiguration(createCardConfig(context.applicationContext, clientKey))
             .build()

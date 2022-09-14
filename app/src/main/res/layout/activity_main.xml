@@ -70,6 +70,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bookTripButtonAdyenTokenExchange" />
 
+    <CheckBox android:id="@+id/notifications_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:layout_marginLeft="20dp"
+        android:text="Analytics notifications"
+        android:onClick="onCheckboxClicked"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLoyaltyTokenExchange" />
+    />
+
     <ProgressBar
         android:id="@+id/loadingSpinner"
         style="?android:attr/progressBarStyle"

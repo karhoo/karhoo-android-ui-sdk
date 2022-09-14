@@ -14,7 +14,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:theme="@style/AppTheme.Toolbar">
+        app:theme="@style/AppTheme.Toolbar"
+        app:title="@string/kh_uisdk_booking_checkout_title">
 
     </androidx.appcompat.widget.Toolbar>
 
