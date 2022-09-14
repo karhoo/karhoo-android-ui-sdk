@@ -31,7 +31,7 @@ class BookingPriceViewPresenterTests {
     fun `When formatting the price in case of a FLEET quote, the price is formatted correctly `() {
         whenever(quote.quoteSource).thenReturn(QuoteSource.FLEET)
         whenever(quote.price).thenReturn(price)
-        priceViewPresenter.formatPriceText(quote, currency)
+        priceViewPresenter.formatPriceText(quote, currency, Locale.UK)
         verify(view).setPriceText(FLEET_PRICE_RESULT)
     }
 
@@ -39,7 +39,7 @@ class BookingPriceViewPresenterTests {
     fun `When formatting the price in case of a fleet quote, the price is formatted correctly `() {
         whenever(quote.quoteSource).thenReturn(QuoteSource.MARKET)
         whenever(quote.price).thenReturn(price)
-        priceViewPresenter.formatPriceText(quote, currency)
+        priceViewPresenter.formatPriceText(quote, currency, Locale.UK)
         verify(view).setPriceText(MARKET_PRICE_RESULT)
     }
 
