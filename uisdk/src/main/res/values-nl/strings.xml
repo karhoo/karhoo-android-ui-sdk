@@ -6,7 +6,7 @@
     <string name="kh_uisdk_add_card">VOEG EEN KAART TOE</string>
     <string name="kh_uisdk_add_flight_details">Voeg vluchtgegevens toe (Optioneel)</string>
     <string name="kh_uisdk_add_payment">Betaling toevoegen</string>
-    <string name="kh_uisdk_additional_comments">Opmerkingen (optioneel)</string>
+    <string name="kh_uisdk_additional_comments">Opmerkingen (babystoel, rolstoel, enz.)</string>
     <string name="kh_uisdk_address_drop_off">Afzetten</string>
     <string name="kh_uisdk_address_pick_up">Oppakken</string>
     <string name="kh_uisdk_address_picker_add_pickup">Ophaallocatie toevoegen</string>
@@ -26,7 +26,7 @@
     <string name="kh_uisdk_arrived">Uw %s chauffeur is gearriveerd</string>
     <string name="kh_uisdk_baggage_max">%d maximum aantal bagage</string>
     <string name="kh_uisdk_base">Basistarief</string>
-    <string name="kh_uisdk_book_now">BETALEN EN BOEKEN</string>
+    <string name="kh_uisdk_book_now">BOEKING BEVESTIGEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier toevoegen</string>

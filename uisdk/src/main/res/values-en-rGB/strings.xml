@@ -6,7 +6,7 @@
     <string name="kh_uisdk_add_card">ADD CARD</string>
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
     <string name="kh_uisdk_add_payment">Add Payment</string>
-    <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
+    <string name="kh_uisdk_additional_comments">Additional comments (Child seat, wheelchair, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
     <string name="kh_uisdk_address_pick_up">Pick up</string>
     <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
@@ -26,7 +26,7 @@
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_baggage_max">%d luggages max</string>
     <string name="kh_uisdk_base">Base Fare</string>
-    <string name="kh_uisdk_book_now">PAY AND BOOK</string>
+    <string name="kh_uisdk_book_now">CONFIRM BOOKING</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add</string>
