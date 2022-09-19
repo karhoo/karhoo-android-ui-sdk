@@ -6,7 +6,7 @@
     <string name="kh_uisdk_add_card">Ajouter une carte</string>
     <string name="kh_uisdk_add_flight_details">Numéro de vol (optionnel)</string>
     <string name="kh_uisdk_add_payment">Ajouter un moyen de paiement</string>
-    <string name="kh_uisdk_additional_comments">Commentaires supplémentaires (optionnel)</string>
+    <string name="kh_uisdk_additional_comments">Commentaires supplémentaires (Siège bébé, PMR, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Arrivée</string>
     <string name="kh_uisdk_address_pick_up">Départ</string>
     <string name="kh_uisdk_address_picker_add_pickup">Ajouter une adresse de départ</string>
@@ -26,7 +26,7 @@
     <string name="kh_uisdk_arrived">Votre chauffeur est arrivé</string>
     <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
     <string name="kh_uisdk_base">Prix de base</string>
-    <string name="kh_uisdk_book_now">PAYER ET RÉSERVER</string>
+    <string name="kh_uisdk_book_now">VALIDER LA RÉSERVATION</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter</string>
@@ -36,7 +36,7 @@
     <string name="kh_uisdk_booking_checkout_back_button">Retour</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Modifier</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passager</string>
-    <string name="kh_uisdk_booking_checkout_title">Caisse</string>
+    <string name="kh_uisdk_booking_checkout_title">Réservation</string>
     <string name="kh_uisdk_booking_confirmation">Course confirmée</string>
     <string name="kh_uisdk_booking_details_error">Détails de course non valables</string>
     <string name="kh_uisdk_booking_error">Il y a un problème avec la réservation. Veuillez réessayer.</string>
