@@ -8,7 +8,7 @@ class VehicleClassFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelec
         if (selectedTypes.size == 0) {
             return true
         }
-        return selectedTypes.map { it.text.lowercase() }.find { tag ->
+        return selectedTypes.map { it.fixedTag?.lowercase() }.find { tag ->
             quote.vehicle.vehicleTags.contains(tag)
         } != null
     }
