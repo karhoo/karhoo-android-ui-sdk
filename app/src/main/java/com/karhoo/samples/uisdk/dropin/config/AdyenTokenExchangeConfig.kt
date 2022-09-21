@@ -9,10 +9,12 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
+import android.util.Log
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
+    var externalAuthenticationNeeded: ((callback: () -> Unit) -> Unit)? = null
 
     override fun context(): Context {
         return context
@@ -43,5 +45,10 @@ class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfig
 
     override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
         return true
+    }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+        Log.e("matei","requireSDKAuthentication")
+        externalAuthenticationNeeded?.invoke(callback)
     }
 }

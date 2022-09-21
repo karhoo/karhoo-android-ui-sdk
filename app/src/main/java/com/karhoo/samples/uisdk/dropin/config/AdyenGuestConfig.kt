@@ -37,4 +37,8 @@ class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration 
     override fun logo(): Drawable? {
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+
+    }
 }

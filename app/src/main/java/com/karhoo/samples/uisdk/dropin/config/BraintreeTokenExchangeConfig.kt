@@ -40,4 +40,8 @@ class BraintreeTokenExchangeConfig(private val context: Context) : KarhooUISDKCo
     override fun logo(): Drawable? {
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+
+    }
 }

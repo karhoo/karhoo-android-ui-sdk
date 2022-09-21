@@ -34,5 +34,9 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
     override fun logo(): Drawable? {
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+
+    }
 }
 

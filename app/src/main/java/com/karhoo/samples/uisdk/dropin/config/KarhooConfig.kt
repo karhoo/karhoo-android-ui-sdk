@@ -43,4 +43,8 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     override fun analyticsProvider(): AnalyticProvider? {
         return null
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+
+    }
 }

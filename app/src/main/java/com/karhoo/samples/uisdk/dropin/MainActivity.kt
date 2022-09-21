@@ -26,7 +26,12 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
+import com.adyen.checkout.core.log.Logger
+import kotlinx.coroutines.GlobalScope
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -154,9 +159,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    var requestedAuthentication = false
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
         config.paymentManager = adyenPaymentManager
+        config.externalAuthenticationNeeded = {
+            if (!requestedAuthentication) {
+                Log.e("matei", "Need an external authentication")
+                requestedAuthentication = true
+                GlobalScope.launch {
+                    delay(20000)
+                    KarhooApi.userService.logout()
+                    KarhooApi.authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
+                        requestedAuthentication = false
+                        when (result) {
+                            is Resource.Success -> {
+                                Log.e("matei", "Refreshed token with a new one")
+                                it.invoke()
+                            }
+                            is Resource.Failure -> toastErrorMessage(result.error)
+                        }
+                    }
+                }
+            }
+        }
 
         KarhooUISDK.apply {
             setConfiguration(config)
