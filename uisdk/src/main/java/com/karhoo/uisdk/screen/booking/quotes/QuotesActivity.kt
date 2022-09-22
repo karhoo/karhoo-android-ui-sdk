@@ -40,7 +40,7 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
         val ft = supportFragmentManager.beginTransaction()
 
-        fragment = if (savedInstanceState != null) {
+        fragment = if(savedInstanceState != null && supportFragmentManager.getFragment(savedInstanceState, QUOTES_FRAGMENT) != null){
             supportFragmentManager.getFragment(savedInstanceState, QUOTES_FRAGMENT)!!;
         } else
             QuotesFragment.newInstance(extras)
