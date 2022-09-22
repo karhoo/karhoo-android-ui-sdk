@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.quotes
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.karhoo.uisdk.KarhooUISDK
@@ -39,12 +40,20 @@ class QuotesActivity : BaseActivity(), WebViewActions {
 
         val ft = supportFragmentManager.beginTransaction()
 
-        fragment = QuotesFragment.newInstance(extras)
+        fragment = if (savedInstanceState != null) {
+            supportFragmentManager.getFragment(savedInstanceState, QUOTES_FRAGMENT)!!;
+        } else
+            QuotesFragment.newInstance(extras)
 
         ft.add(R.id.quotesActivityFragmentContainer, fragment, fragment::class.java.name)
             .commit()
 
         (fragment as QuotesFragment).nrOfResults.observe(this, watchQuoteNumber())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        supportFragmentManager.putFragment(outState, QUOTES_FRAGMENT, fragment);
     }
 
     private fun watchQuoteNumber() = Observer<Int> { quotes ->
@@ -123,6 +132,7 @@ class QuotesActivity : BaseActivity(), WebViewActions {
         const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
         const val LUGGAGE = "LUGGAGE"
         const val QUOTES_RESTORE_PREVIOUS_DATA_KEY = "QUOTES_SELECTED_DATE"
+        const val QUOTES_FRAGMENT = "QUOTES_FRAGMENT"
     }
 
 }
