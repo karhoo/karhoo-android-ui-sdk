@@ -45,6 +45,6 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-
+        //Do nothing
     }
 }

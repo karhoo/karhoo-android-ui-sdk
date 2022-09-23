@@ -39,6 +39,6 @@ class BraintreeGuestConfig(private val context: Context) : KarhooUISDKConfigurat
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-
+        //Do nothing
     }
 }

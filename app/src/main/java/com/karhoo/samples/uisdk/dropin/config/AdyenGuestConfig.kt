@@ -39,6 +39,6 @@ class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration 
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-
+        //Do nothing
     }
 }

@@ -36,7 +36,7 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-
+        //Do nothing
     }
 }
 
