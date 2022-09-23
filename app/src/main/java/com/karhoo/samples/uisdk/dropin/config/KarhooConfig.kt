@@ -3,6 +3,7 @@ package com.karhoo.samples.uisdk.dropin.config
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.karhoo.samples.uisdk.dropin.BuildConfig
+import com.karhoo.samples.uisdk.dropin.KarhooAnalyticsProviderWithNotifications
 import com.karhoo.samples.uisdk.dropin.R
 import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
@@ -41,7 +42,7 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
-        return null
+        return KarhooAnalyticsProviderWithNotifications()
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {

@@ -11,7 +11,7 @@ class VehicleEcoFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelectF
 
         selectedTypes.forEach { data ->
             if(quote.vehicle.vehicleTags.map { tag -> tag.lowercase() }.any { tag ->
-                    tag == data.text
+                    tag == data.fixedTag
                 })
                 return true
         }

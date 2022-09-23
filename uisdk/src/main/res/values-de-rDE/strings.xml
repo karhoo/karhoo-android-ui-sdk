@@ -6,7 +6,7 @@
     <string name="kh_uisdk_add_card">Karte hinzufügen</string>
     <string name="kh_uisdk_add_flight_details">Flugdetails hinzufügen (optional)</string>
     <string name="kh_uisdk_add_payment">Zahlung hinzufügen</string>
-    <string name="kh_uisdk_additional_comments">Zusätzliche Bemerkungen (optional)</string>
+    <string name="kh_uisdk_additional_comments">Zusätzliche Bemerkungen (Babysitz, Rollstuhl, usw.)</string>
     <string name="kh_uisdk_address_drop_off">Absetzen</string>
     <string name="kh_uisdk_address_pick_up">Abholen</string>
     <string name="kh_uisdk_address_picker_add_pickup">Start hinzufügen</string>
@@ -26,7 +26,7 @@
     <string name="kh_uisdk_arrived">Ihr %s Fahrer ist angekommen</string>
     <string name="kh_uisdk_baggage_max">%d Gepäckstücke max.</string>
     <string name="kh_uisdk_base">Grundtarif</string>
-    <string name="kh_uisdk_book_now">BEZAHLEN UND BUCHEN</string>
+    <string name="kh_uisdk_book_now">BUCHUNG BESTÄTIGEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Fahrt buchen</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagier hinzufügen</string>

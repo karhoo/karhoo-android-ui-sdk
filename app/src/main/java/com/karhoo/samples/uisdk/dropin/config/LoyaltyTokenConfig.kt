@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import com.karhoo.samples.uisdk.dropin.BuildConfig
+import com.karhoo.samples.uisdk.dropin.KarhooAnalyticsProviderWithNotifications
 import com.karhoo.samples.uisdk.dropin.R
 import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
@@ -23,7 +24,7 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
     }
 
     override fun analyticsProvider(): AnalyticProvider? {
-        return null
+        return KarhooAnalyticsProviderWithNotifications()
     }
 
     override fun authenticationMethod(): AuthenticationMethod {
