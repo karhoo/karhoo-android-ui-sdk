@@ -14,6 +14,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 class KarhooConfig(val context: Context, private val authMethod: AuthenticationMethod = AuthenticationMethod.KarhooUser()) :
         KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
+    var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
 
     override fun logo(): Drawable? {
         return context.getDrawable(R.drawable.karhoo_wordmark)
@@ -46,6 +47,6 @@ class KarhooConfig(val context: Context, private val authMethod: AuthenticationM
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-        //Do nothing
+        sdkAuthenticationRequired?.invoke(callback)
     }
 }

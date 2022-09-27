@@ -32,6 +32,8 @@ import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import android.widget.CheckBox
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
+import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
+import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.sdk.analytics.AnalyticsManager
 import kotlinx.coroutines.launch
 import java.util.*
@@ -43,6 +45,9 @@ class MainActivity : AppCompatActivity() {
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
     private val notificationsId = "notifications_enabled"
+    private var requestedAuthentication = false
+    private var username: String? = null
+    private var password: String? = null
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -112,6 +117,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
             config.paymentManager = braintreePaymentManager
+            config.sdkAuthenticationRequired = {
+                Log.e(TAG, "Need an external authentication")
+
+                if(username != null && password != null) {
+                    KarhooApi.userService.logout()
+                    loginUser(username!!, password!!, goToBooking = false)
+                }
+            }
 
             KarhooUISDK.apply {
                 setConfiguration(config)
@@ -133,17 +146,29 @@ class MainActivity : AppCompatActivity() {
         val signInButton = dialog.findViewById(R.id.signInButton) as Button
         signInButton.setOnClickListener {
             showLoading()
-            loginUser(userNameEditText.text.toString(), passwordEditText.text.toString())
+            this.username = userNameEditText.text.toString()
+            this.password = passwordEditText.text.toString()
+
+            if(username != null && password != null) {
+                loginUser(username!!, password!!, goToBooking = true)
+            }
+
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    private fun loginUser(email: String, password: String) {
+    private fun loginUser(email: String, password: String, goToBooking: Boolean) {
         KarhooApi.userService.loginUser(UserLogin(email = email, password = password))
             .execute { result ->
                 when (result) {
-                    is Resource.Success -> goToBooking()
+                    is Resource.Success -> {
+                        Log.d(TAG, "User authenticated with success")
+
+                        if(goToBooking) {
+                            goToBooking()
+                        }
+                    }
                     is Resource.Failure -> toastErrorMessage(result.error)
                 }
             }
@@ -152,7 +177,9 @@ class MainActivity : AppCompatActivity() {
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
         config.paymentManager = braintreePaymentManager
-
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BRAINTREE_AUTH_TOKEN)
+        }
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -167,28 +194,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    var requestedAuthentication = false
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
         config.paymentManager = adyenPaymentManager
-        config.externalAuthenticationNeeded = {
-            if (!requestedAuthentication) {
-                Log.e(TAG, "Need an external authentication")
-                requestedAuthentication = true
-                GlobalScope.launch {
-                    KarhooApi.userService.logout()
-                    KarhooApi.authService.login(BuildConfig.ADYEN_AUTH_TOKEN).execute { result ->
-                        requestedAuthentication = false
-                        when (result) {
-                            is Resource.Success -> {
-                                Log.e(TAG, "Refreshed token with a new one")
-                                it.invoke()
-                            }
-                            is Resource.Failure -> toastErrorMessage(result.error)
-                        }
-                    }
-                }
-            }
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, ADYEN_AUTH_TOKEN)
         }
 
         KarhooUISDK.apply {
@@ -199,9 +209,32 @@ class MainActivity : AppCompatActivity() {
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
         config.paymentManager = adyenPaymentManager
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
+        }
 
         KarhooUISDK.apply {
             setConfiguration(config)
+        }
+    }
+
+    private fun loginInBackground(callback: () -> Unit, token: String) {
+        if (!requestedAuthentication) {
+            Log.e(TAG, "Need an external authentication")
+            requestedAuthentication = true
+            GlobalScope.launch {
+                KarhooApi.userService.logout()
+                KarhooApi.authService.login(token).execute { result ->
+                    requestedAuthentication = false
+                    when (result) {
+                        is Resource.Success -> {
+                            Log.e(TAG, "Refreshed token with a new one")
+                            callback.invoke()
+                        }
+                        is Resource.Failure -> toastErrorMessage(result.error)
+                    }
+                }
+            }
         }
     }
 
