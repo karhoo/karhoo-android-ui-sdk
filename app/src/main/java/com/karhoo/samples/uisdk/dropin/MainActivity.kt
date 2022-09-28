@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             config.sdkAuthenticationRequired = {
                 Log.e(TAG, "Need an external authentication")
 
-                if(username != null && password != null) {
+                if (username != null && password != null) {
                     KarhooApi.userService.logout()
                     loginUser(username!!, password!!, goToBooking = false)
                 }
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity() {
             this.username = userNameEditText.text.toString()
             this.password = passwordEditText.text.toString()
 
-            if(username != null && password != null) {
+            if (username != null && password != null) {
                 loginUser(username!!, password!!, goToBooking = true)
             }
 
@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         Log.d(TAG, "User authenticated with success")
 
-                        if(goToBooking) {
+                        if (goToBooking) {
                             goToBooking()
                         }
                     }
@@ -222,18 +222,16 @@ class MainActivity : AppCompatActivity() {
         if (!requestedAuthentication) {
             Log.e(TAG, "Need an external authentication")
             requestedAuthentication = true
-            GlobalScope.launch {
-                KarhooApi.userService.logout()
-                KarhooApi.authService.login(token).execute { result ->
-                    requestedAuthentication = false
-                    when (result) {
-                        is Resource.Success -> {
-                            Log.e(TAG, "Refreshed token with a new one")
-                            callback.invoke()
-                        }
-                        is Resource.Failure -> toastErrorMessage(result.error)
+            KarhooApi.userService.logout()
+            KarhooApi.authService.login(token).execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        Log.e(TAG, "Refreshed token with a new one")
+                        callback.invoke()
                     }
+                    is Resource.Failure -> toastErrorMessage(result.error)
                 }
+                requestedAuthentication = false
             }
         }
     }
