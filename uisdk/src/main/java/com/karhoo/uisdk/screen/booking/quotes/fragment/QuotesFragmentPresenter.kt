@@ -116,7 +116,7 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
     }
 
     companion object {
-        private const val MAX_ACCEPTABLE_QTA = 20
+        const val MAX_ACCEPTABLE_QTA = 20
     }
 
 }
