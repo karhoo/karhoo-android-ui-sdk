@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.filterview
 
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentPresenter
 
 class FilterChain {
     var filters: MutableList<IFilter> = mutableListOf()
