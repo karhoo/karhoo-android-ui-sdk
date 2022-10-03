@@ -56,16 +56,8 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     private fun updateList() {
         dataModel?.quotes?.let { quotes ->
-            if (isPrebook) {
-                view?.updateList(quotes)
-            } else {
-                val nearVehicles = quotes.filter {
-                    it.vehicle.vehicleQta.highMinutes <= MAX_ACCEPTABLE_QTA
-                }
-                view?.updateList(nearVehicles)
-            }
+            view?.updateList(quotes)
         }
-
     }
 
     override fun vehiclesShown(quoteId: String, isExpanded: Boolean) {
@@ -113,10 +105,6 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
             dataModel?.quotes = it
             updateList()
         }
-    }
-
-    companion object {
-        const val MAX_ACCEPTABLE_QTA = 20
     }
 
 }

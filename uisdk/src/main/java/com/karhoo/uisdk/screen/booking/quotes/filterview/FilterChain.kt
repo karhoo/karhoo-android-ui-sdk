@@ -25,8 +25,6 @@ class FilterChain {
                 filteredList.add(quote)
             }
         }
-        return filteredList.filter {
-            it.vehicle.vehicleQta.highMinutes <= QuotesFragmentPresenter.MAX_ACCEPTABLE_QTA
-        }
+        return filteredList
     }
 }
