@@ -65,6 +65,17 @@ class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     override fun authenticationMethod(): AuthenticationMethod {
         return AuthenticationMethod.KarhooUser()
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+       KarhooApi.userService.logout()
+       KarhooApi.authService.login(token).execute { result ->
+            when (result) {
+                is Resource.Success -> callback.invoke()
+                is Resource.Failure -> //Show error
+            }
+       }
+
+    }
 }
 
 // Then set the payment provider and register the configuration in your Application file
@@ -109,6 +120,9 @@ For authenticating with a guest user, the following authentication method should
         return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
     }
 ```
+
+The UISDK also provides the requireSDKAuthentication method in the KarhooUISDKConfiguration interface to notify whenever an external authentication is required. This happens only when all attempts to refresh the access token needed for authenticating requests have failed.
+This method receives a callback parameter which should be invoked when the external authentication has finalized. An example of how the requireSDKAuthentication flow should be handled is found above.
 
 ## Screens
 
