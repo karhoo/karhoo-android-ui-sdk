@@ -197,7 +197,10 @@ class AdyenPaymentPresenter(
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
 
-        return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
+        return KarhooError.fromCustomError(result,
+            refusalReasonCode,
+            if (AdyenPaymentErrorCode.getByRefusalCode(refusalReasonCode) == -1) refusalReason else AdyenPaymentErrorCode.getByRefusalCode(refusalReasonCode).toString() ,
+        )
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {
