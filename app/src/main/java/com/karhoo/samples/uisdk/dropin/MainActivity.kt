@@ -35,6 +35,7 @@ import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.sdk.analytics.AnalyticsManager
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -222,17 +223,22 @@ class MainActivity : AppCompatActivity() {
         if (!requestedAuthentication) {
             Log.e(TAG, "Need an external authentication")
             requestedAuthentication = true
-            KarhooApi.userService.logout()
-            KarhooApi.authService.login(token).execute { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        Log.e(TAG, "Refreshed token with a new one")
-                        callback.invoke()
+
+            GlobalScope.launch {
+                delay(TESTING_DELAY)
+                KarhooApi.userService.logout()
+                KarhooApi.authService.login(token).execute { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            Log.e(TAG, "We got a new token from the back-end")
+                            callback.invoke()
+                            requestedAuthentication = false
+                        }
+                        is Resource.Failure -> toastErrorMessage(result.error)
                     }
-                    is Resource.Failure -> toastErrorMessage(result.error)
                 }
-                requestedAuthentication = false
             }
+
         }
     }
 
@@ -283,26 +289,28 @@ class MainActivity : AppCompatActivity() {
         loadingProgressBar.visibility = View.INVISIBLE
     }
 
-    companion object {
-        private val TAG = MainActivity::class.java.name
-    }
-
-    fun onCheckboxClicked(view: View) {view
+    fun onCheckboxClicked(view: View) {
+        view
         toggleNotificationStatus()
     }
 
-    private fun getCurrentNotificationStatus() : Boolean {
-         return sharedPrefs.getBoolean(notificationsId, false)
+    private fun getCurrentNotificationStatus(): Boolean {
+        return sharedPrefs.getBoolean(notificationsId, false)
     }
 
-    private fun setNotificationStatus(value: Boolean){
-        with (sharedPrefs.edit()) {
+    private fun setNotificationStatus(value: Boolean) {
+        with(sharedPrefs.edit()) {
             putBoolean(notificationsId, value)
             apply()
         }
     }
 
-    private fun toggleNotificationStatus(){
+    private fun toggleNotificationStatus() {
         setNotificationStatus(!getCurrentNotificationStatus())
+    }
+
+    companion object {
+        private val TAG = MainActivity::class.java.name
+        private const val TESTING_DELAY = 30000L
     }
 }

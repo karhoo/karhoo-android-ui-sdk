@@ -18,7 +18,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/quotesActivityFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
