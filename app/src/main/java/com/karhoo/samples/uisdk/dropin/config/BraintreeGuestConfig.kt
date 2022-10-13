@@ -38,4 +38,8 @@ class BraintreeGuestConfig(private val context: Context) : KarhooUISDKConfigurat
     override fun logo(): Drawable? {
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+        //Do nothing
+    }
 }
