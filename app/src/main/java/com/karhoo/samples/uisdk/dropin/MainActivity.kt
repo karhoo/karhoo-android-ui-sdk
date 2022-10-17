@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private var requestedAuthentication = false
     private var username: String? = null
     private var password: String? = null
+    private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -118,12 +119,12 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
             config.paymentManager = braintreePaymentManager
-            config.sdkAuthenticationRequired = {
+            config.sdkAuthenticationRequired = { callback ->
                 Log.e(TAG, "Need an external authentication")
 
                 if (username != null && password != null) {
                     KarhooApi.userService.logout()
-                    loginUser(username!!, password!!, goToBooking = false)
+                    loginUser(username!!, password!!, goToBooking = false, callback)
                 }
             }
 
@@ -159,7 +160,12 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun loginUser(email: String, password: String, goToBooking: Boolean) {
+    private fun loginUser(
+        email: String,
+        password: String,
+        goToBooking: Boolean,
+        callback: (() -> Unit)? = null
+    ) {
         KarhooApi.userService.loginUser(UserLogin(email = email, password = password))
             .execute { result ->
                 when (result) {
@@ -169,6 +175,8 @@ class MainActivity : AppCompatActivity() {
                         if (goToBooking) {
                             goToBooking()
                         }
+
+                        callback?.invoke()
                     }
                     is Resource.Failure -> toastErrorMessage(result.error)
                 }
@@ -223,22 +231,28 @@ class MainActivity : AppCompatActivity() {
         if (!requestedAuthentication) {
             Log.e(TAG, "Need an external authentication")
             requestedAuthentication = true
+            deferredRequests.add(callback)
 
             GlobalScope.launch {
                 delay(TESTING_DELAY)
-                KarhooApi.userService.logout()
                 KarhooApi.authService.login(token).execute { result ->
                     when (result) {
                         is Resource.Success -> {
                             Log.e(TAG, "We got a new token from the back-end")
-                            callback.invoke()
+
+                            deferredRequests.map {
+                                it.invoke()
+                            }
+                            deferredRequests.clear()
+
                             requestedAuthentication = false
                         }
                         is Resource.Failure -> toastErrorMessage(result.error)
                     }
                 }
             }
-
+        } else {
+            deferredRequests.add(callback)
         }
     }
 
@@ -311,6 +325,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.java.name
-        private const val TESTING_DELAY = 30000L
+        private const val TESTING_DELAY = 5000L
     }
 }
