@@ -134,6 +134,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun setWatchers() {
         addressBarWidget.bindTripToView(tripDetails)
+        tripDetails?.let {
+            if (it.origin != null && it.destination != null) {
+                startQuoteListActivity(false)
+            }
+        }
         tripDetails = null
     }
 
