@@ -20,10 +20,6 @@ interface BookingPaymentContract {
 
         fun setPaymentView(view: PaymentDropInContract.View?)
 
-        fun setViewVisibility(visibility: Int)
-
-        fun updatePaymentViewVisbility(visibility: Int)
-
         fun setPassengerDetails(passengerDetails: PassengerDetails?)
 
         fun hasValidPaymentType(): Boolean
@@ -45,8 +41,6 @@ interface BookingPaymentContract {
         fun showErrorDialog(@StringRes stringId: Int, karhooError: KarhooError?)
 
         fun handleChangeCard()
-
-        fun handleViewVisibility(visibility: Int)
     }
 
     interface PaymentActions {

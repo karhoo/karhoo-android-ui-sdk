@@ -119,8 +119,6 @@ class BraintreePaymentPresenter(
                 }
             }
             return true
-        } else if (requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE || requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST) {
-            view?.refresh()
         }
         return false
     }
@@ -237,7 +235,6 @@ class BraintreePaymentPresenter(
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
             userStore.savedPaymentInfo = userInfo
         }
-        view?.refresh()
     }
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {

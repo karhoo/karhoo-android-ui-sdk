@@ -104,7 +104,8 @@ class AdyenPaymentPresenter(
             when (DropIn.handleActivityResult(requestCode, resultCode, data)) {
                 is DropInResult.Error -> { // Is handled below
                 }
-                is DropInResult.CancelledByUser -> view?.refresh()
+                is DropInResult.CancelledByUser -> { //No need for this now
+                }
                 is DropInResult.Finished -> { // We treat this case below based on the resultIntent's data
                 }
             }
@@ -141,8 +142,6 @@ class AdyenPaymentPresenter(
             } else {
                 view?.showPaymentFailureDialog()
             }
-        } else {
-            view?.refresh()
         }
         return false
     }
@@ -314,9 +313,7 @@ class AdyenPaymentPresenter(
     }
 
     private fun updateCardDetails(paymentData: String?) {
-        if (paymentData.isNullOrEmpty()) {
-            view?.refresh()
-        } else {
+        if (!paymentData.isNullOrEmpty()) {
             val additionalData = JSONObject(paymentData)
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")

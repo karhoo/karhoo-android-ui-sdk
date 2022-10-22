@@ -41,6 +41,7 @@ import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
+import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
@@ -56,7 +57,6 @@ import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCh
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestFlightDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestLinearLayout
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPaymentDetailsWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
@@ -88,6 +88,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     private val flightInfo: String
         get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
+
+    private val bookingRequestPaymentDetailsWidget = BookingPaymentHandler(context = context)
 
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
@@ -310,10 +312,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         presenter.handleChangeCard()
     }
 
-    override fun handleViewVisibility(visibility: Int) {
-        bookingRequestPaymentDetailsWidget.visibility = visibility
-    }
-
     override fun showPaymentUI() {
         holdOpenForPaymentFlow = true
     }
@@ -382,17 +380,17 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun startBooking() {
-        if (!presenter.isPaymentSet()) {
-            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            bookingRequestPaymentDetailsWidget.callOnClick()
-        }
-        else if(!isTermsCheckBoxValid()){
+        if(!isTermsCheckBoxValid()){
             loadingButtonCallback.onLoadingComplete()
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.buttonTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(context, R.color.kh_uisdk_error))
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
+        }
+        else if (!presenter.isPaymentSet()) {
+            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
+            bookingRequestPaymentDetailsWidget.changeCard()
         }
         else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
