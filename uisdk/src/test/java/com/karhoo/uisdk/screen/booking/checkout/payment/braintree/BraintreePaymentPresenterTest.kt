@@ -190,10 +190,8 @@ class BraintreePaymentPresenterTest {
 
         verify(paymentView, never()).showPaymentUI(BRAINTREE_SDK_TOKEN, null, quote)
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
         assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
-        verify(paymentView).refresh()
     }
 
     /**
@@ -251,7 +249,6 @@ class BraintreePaymentPresenterTest {
         braintreePaymentPresenter.updateCardDetails(desc, "Visa")
 
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-        verify(paymentView).refresh()
         assertEquals(CardType.VISA, paymentInfoCaptor.value.cardType)
         assertEquals(desc, paymentInfoCaptor.value.lastFour)
     }
@@ -361,7 +358,6 @@ class BraintreePaymentPresenterTest {
                 data = data)
 
         verify(paymentsService, never()).addPaymentMethod(any())
-        verify(paymentView).refresh()
     }
 
     /**
@@ -379,7 +375,6 @@ class BraintreePaymentPresenterTest {
                 data = data)
 
         verify(paymentsService, never()).addPaymentMethod(any())
-        verify(paymentView).refresh()
     }
 
     /**
@@ -397,7 +392,6 @@ class BraintreePaymentPresenterTest {
                 data = null)
 
         verify(paymentsService, never()).addPaymentMethod(any())
-        verify(paymentView).refresh()
     }
 
     /**
@@ -415,7 +409,6 @@ class BraintreePaymentPresenterTest {
                 data = null)
 
         verify(paymentsService, never()).addPaymentMethod(any())
-        verify(paymentView).refresh()
     }
 
     /**

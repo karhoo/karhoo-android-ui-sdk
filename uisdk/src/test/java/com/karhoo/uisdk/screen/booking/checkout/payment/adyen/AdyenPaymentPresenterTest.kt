@@ -176,7 +176,6 @@ class AdyenPaymentPresenterTest {
                 data = null)
 
         verify(paymentDropInActions, never()).showPaymentFailureDialog()
-        verify(paymentDropInActions).refresh()
     }
 
     /**
