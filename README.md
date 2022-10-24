@@ -8,6 +8,8 @@ src="https://cdn.karhoo.com/s/images/logos/karhoo_logo.png"
 </a>
 </div>
 
+[![](https://jitpack.io/v/karhoo/karhoo-android-ui-sdk.svg)](https://jitpack.io/#karhoo/karhoo-android-ui-sdk)
+
 #Karhoo Android UI SDK
 
 The UI SDK extends our [**Network SDK**](https://github.com/karhoo/karhoo-android-sdk) with ready to use screens and views for your end users to book rides with [**Karhoo**](https://karhoo.com/) in your application.
@@ -46,9 +48,11 @@ implementation 'com.github.karhoo:karhoo-android-ui-sdk:develop-SNAPSHOT'
 There are a few things the UI SDK needs to know before you can get started such as what environment to connect to, or what kind of authentication method to use.
 To configure the SDK you will need to provide an implementation of our KarhooUISDKConfiguration interface. This lets our SDK grab certain dependencies and configuration settings.
 
+
 ```kotlin
 class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
+    var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
 
     override fun logo(): Drawable? {
         return context.getDrawable(R.drawable.your-logo)
@@ -67,14 +71,7 @@ class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-       KarhooApi.userService.logout()
-       KarhooApi.authService.login(token).execute { result ->
-            when (result) {
-                is Resource.Success -> callback.invoke()
-                is Resource.Failure -> //Show error
-            }
-       }
-
+            sdkAuthenticationRequired?.invoke(callback)
     }
 }
 
@@ -90,9 +87,42 @@ val paymentManager = BraintreePaymentManager()
 paymentManager.paymentProviderView = BraintreePaymentView()
 
 // Later down the line
-KarhooUISDK.setConfiguration(KarhooConfig(applicationContext), paymentManager)
+val config = SDKConfig(context = this.applicationContext)
+config.sdkAuthenticationRequired = {
+    loginInBackground(it, yourToken)
+}
 
+KarhooApi.setConfiguration(configuration = config)
 
+// Implementing the token refresh flow
+private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
+private fun loginInBackground(callback: () -> Unit, token: String) {
+    if (!requestedAuthentication) {
+        Log.e(TAG, "Need an external authentication")
+        requestedAuthentication = true
+        deferredRequests.add(callback)
+
+        GlobalScope.launch {
+        //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
+        //Then use that token to refresh the credentials inside the SDK
+          KarhooApi.authService.login(token).execute { result ->
+                 when (result) {
+                     is Resource.Success -> {
+                                 Log.e(TAG, "We got a new token from the back-end")
+                                 deferredRequests.map {
+                                     it.invoke()
+                                 }
+                                 deferredRequests.clear()
+                                 requestedAuthentication = false
+                             }
+                             is Resource.Failure -> toastErrorMessage(result.error)
+                         }
+                     }
+                 }
+    } else {
+        deferredRequests.add(callback)
+    }
+}
 ```
 
 With this configuration the UISDK can be initialised in your Activities/Fragments. This will also ensure the network layer (KarhooSDK) is initialised and configured properly.
