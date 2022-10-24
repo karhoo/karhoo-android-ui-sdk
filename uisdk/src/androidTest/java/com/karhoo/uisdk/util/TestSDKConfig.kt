@@ -6,6 +6,8 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class TestSDKConfig(val context: Context, private val authenticationMethod: AuthenticationMethod =
         AuthenticationMethod.KarhooUser()) :
@@ -33,5 +35,10 @@ class TestSDKConfig(val context: Context, private val authenticationMethod: Auth
 
     override fun analyticsProvider(): AnalyticProvider? {
         return null
+    }
+
+    override var paymentManager: PaymentManager = AdyenPaymentManager()
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+        // do nothing
     }
 }
