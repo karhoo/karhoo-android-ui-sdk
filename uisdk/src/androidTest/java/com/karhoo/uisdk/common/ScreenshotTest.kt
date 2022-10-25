@@ -23,7 +23,7 @@ abstract class ScreenshotTest<T : Activity>(private val clazz: Class<T>) :
     }
 
     @After
-    fun tearDown() {
+    open fun tearDown() {
         scenario?.close()
         Intents.release()
     }
