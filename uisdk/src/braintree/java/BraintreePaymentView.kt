@@ -65,8 +65,8 @@ class BraintreePaymentView : PaymentDropInContract.View {
         presenter?.getPaymentNonce(quote)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        presenter?.handleActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        return presenter?.handleActivityResult(requestCode, resultCode, data) == true
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {

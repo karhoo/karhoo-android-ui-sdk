@@ -22,7 +22,7 @@ interface PaymentDropInContract {
 
         fun initialisePaymentFlow(quote: Quote?)
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
         fun setPassenger(passengerDetails: PassengerDetails?)
 
@@ -32,7 +32,7 @@ interface PaymentDropInContract {
     interface Presenter {
         var view: Actions?
 
-        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
         fun getPaymentNonce(quote: Quote?)
 
