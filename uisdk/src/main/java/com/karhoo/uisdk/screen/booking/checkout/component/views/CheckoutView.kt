@@ -295,7 +295,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     presenter.onPaymentFailureDialogCancelled()
                     d.dismiss()
                 })
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        KarhooAlertDialogHelper(context).showPaymentFailureDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {
@@ -372,8 +372,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                  )
         } else {
             bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+            val paymentSuccess = bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
             loadingButtonCallback.onLoadingComplete()
+
+            if(paymentSuccess){
+                bookingListener.startBookingProcess()
+            }
         }
     }
 

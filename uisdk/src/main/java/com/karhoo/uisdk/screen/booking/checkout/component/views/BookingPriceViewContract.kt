@@ -4,6 +4,7 @@ import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import java.util.Currency
+import java.util.Locale
 
 interface BookingPriceViewContract {
     interface View {
@@ -15,7 +16,7 @@ interface BookingPriceViewContract {
 
     interface Presenter {
         fun attachView(view: View)
-        fun formatPriceText(quote: Quote, currency: Currency)
+        fun formatPriceText(quote: Quote, currency: Currency, locale: Locale = Locale.getDefault())
         fun formatPickUpType(quote: Quote)
         fun formatQuoteType(quote: Quote)
     }
