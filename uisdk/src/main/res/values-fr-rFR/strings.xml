@@ -29,7 +29,7 @@
     <string name="kh_uisdk_book_now">PAYER ET RÉSERVER</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter un contact passager</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Ajouter</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Mode de paiement</string>
     <!-- Booking Checkout Component -->

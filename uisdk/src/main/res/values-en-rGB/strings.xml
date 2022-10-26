@@ -29,7 +29,7 @@
     <string name="kh_uisdk_book_now">PAY AND BOOK</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Add</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger contact</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Add</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Payment method</string>
     <!-- Booking Checkout Component -->
