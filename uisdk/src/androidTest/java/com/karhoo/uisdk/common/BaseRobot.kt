@@ -28,20 +28,7 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.Visibility
-import androidx.test.espresso.matcher.ViewMatchers.hasFocus
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isClickable
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isEnabled
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
-import androidx.test.espresso.matcher.ViewMatchers.withHint
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
@@ -53,6 +40,7 @@ import com.karhoo.uisdk.common.matcher.withDrawable
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions
 import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
+import com.schibsted.spain.barista.internal.matcher.HelperMatchers.atPosition
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not
@@ -167,6 +155,9 @@ open abstract class BaseTestRobot {
     fun viewIsVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(isDisplayed()))
 
+    fun checkboxIsChecked(resId: Int): ViewInteraction =
+        onView(withId(resId)).check(matches(isChecked()))
+
     fun viewIsNotVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(not(isDisplayed())))
 
@@ -229,6 +220,10 @@ open abstract class BaseTestRobot {
                 .inAdapterView(allOf(withId(listRes)))
                 .atPosition(position).perform(click())
     }
+
+    fun checkItemInList(listId: Int, position: Int, text: String) : ViewInteraction =
+        onView(withId(listId))
+            .check(matches(atPosition(position, hasDescendant(withText(text)))))
 
     fun pressItemInList(listRes: Int, position: Int): ViewInteraction =
             onView(withId(listRes))
@@ -389,5 +384,8 @@ open abstract class BaseTestRobot {
 
     fun scrollUp(resId: Int): ViewInteraction =
             onView(withId(resId)).perform(ViewActions.swipeUp())
+
+    fun scrollDown(resId: Int): ViewInteraction =
+        onView(withId(resId)).perform(ViewActions.swipeDown())
 
 }
