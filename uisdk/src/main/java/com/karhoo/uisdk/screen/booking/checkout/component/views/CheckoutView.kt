@@ -295,7 +295,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     presenter.onPaymentFailureDialogCancelled()
                     d.dismiss()
                 })
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        KarhooAlertDialogHelper(context).showPaymentFailureDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {

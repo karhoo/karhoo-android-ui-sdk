@@ -228,7 +228,7 @@ class AdyenPaymentPresenterTest {
         verify(paymentDropInActions).showPaymentFailureDialog(karhooErrorCaptor.capture())
         assertEquals(karhooErrorCaptor.firstValue.code, "KSDK00 Cancelled")
         assertEquals(karhooErrorCaptor.firstValue.internalMessage, "22")
-        assertEquals(karhooErrorCaptor.firstValue.userFriendlyMessage, "FRAUD-CANCELLED")
+        assertEquals(karhooErrorCaptor.firstValue.userFriendlyMessage, R.string.kh_uisdk_adyen_payment_error_22.toString())
     }
 
     /**
