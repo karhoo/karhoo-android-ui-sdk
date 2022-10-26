@@ -89,13 +89,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private val flightInfo: String
         get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
 
-    private val bookingRequestPaymentDetailsWidget = BookingPaymentHandler(context = context)
+    private val bookingPaymentHandler = BookingPaymentHandler(context = context)
 
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingPaymentHandler.cardActions = this
+        bookingPaymentHandler.paymentActions = this
         bookingRequestTermsWidget.actions = this
         bookingRequestTermsWidget.checkBoxChangedCallback = ::termsAndConditionsCheckBoxCheckedChanged
 
@@ -184,7 +184,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
+        bookingPaymentHandler.initialiseChangeCard(quote = quote)
     }
 
     override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?,
@@ -206,7 +206,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 passengerDetails = passengerDetails
                                     )
 
-        bookingRequestPaymentDetailsWidget.getPaymentProvider()
+        bookingPaymentHandler.getPaymentProvider()
 
     }
 
@@ -337,7 +337,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
+        bookingPaymentHandler.bindPaymentDetails(savedPaymentInfo)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
@@ -346,11 +346,11 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialisePaymentProvider(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(quote)
+        bookingPaymentHandler.initialisePaymentFlow(quote)
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
+        bookingPaymentHandler.initialiseGuestPayment(quote)
     }
 
     override fun showWebView(url: String?) {
@@ -369,8 +369,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                   focusPhoneNumber = true
                                                  )
         } else {
-            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            val paymentSuccess = bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+            bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
+            val paymentSuccess = bookingPaymentHandler.onActivityResult(requestCode, resultCode, data)
             loadingButtonCallback.onLoadingComplete()
 
             if(paymentSuccess){
@@ -389,8 +389,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
         }
         else if (!presenter.isPaymentSet()) {
-            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            bookingRequestPaymentDetailsWidget.changeCard()
+            bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
+            bookingPaymentHandler.changeCard()
         }
         else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
@@ -503,7 +503,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
-    override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
+    override fun isPaymentMethodValid(): Boolean = bookingPaymentHandler.hasValidPaymentType()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE) {

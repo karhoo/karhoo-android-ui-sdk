@@ -100,16 +100,6 @@ class AdyenPaymentPresenter(
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-
-            when (DropIn.handleActivityResult(requestCode, resultCode, data)) {
-                is DropInResult.Error -> { // Is handled below
-                }
-                is DropInResult.CancelledByUser -> { //No need for this now
-                }
-                is DropInResult.Finished -> { // We treat this case below based on the resultIntent's data
-                }
-            }
-
             val dataString = DropIn.getDropInResultFromIntent(data)
 
             if (dataString != null) {

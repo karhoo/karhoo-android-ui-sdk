@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
 
-    interface View {
+    interface PaymentHandler {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 

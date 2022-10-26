@@ -17,7 +17,7 @@ class BookingPaymentHandler @JvmOverloads constructor(
     private val userStore: UserStore = KarhooApi.userStore,
     private val paymentsService: PaymentsService = KarhooApi.paymentsService,
     val context: Context,
-) : BookingPaymentContract.View,
+) : BookingPaymentContract.PaymentHandler,
     PaymentDropInContract.Actions {
 
     var paymentActions: BookingPaymentContract.PaymentActions? = null
