@@ -65,7 +65,7 @@
     <string name="kh_uisdk_arrived">Uw %s chauffeur is gearriveerd</string>
     <string name="kh_uisdk_baggage_max">%d maximum aantal bagage</string>
     <string name="kh_uisdk_base">Basistarief</string>
-    <string name="kh_uisdk_book_now">BOEKING BEVESTIGEN</string>
+    <string name="kh_uisdk_book_now">BEVESTIG EN BETAAL</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Passagierscontact toevoegen</string>

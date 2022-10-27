@@ -65,7 +65,7 @@
     <string name="kh_uisdk_arrived">Votre chauffeur est arrivé</string>
     <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
     <string name="kh_uisdk_base">Prix de base</string>
-    <string name="kh_uisdk_book_now">VALIDER LA RÉSERVATION</string>
+    <string name="kh_uisdk_book_now">CONFIRMER ET PAYER</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Commander</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Ajouter un contact passager</string>
