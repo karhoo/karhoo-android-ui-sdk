@@ -134,6 +134,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun setWatchers() {
         addressBarWidget.bindTripToView(tripDetails)
+        tripDetails?.let {
+            if (it.origin != null && it.destination != null) {
+                startQuoteListActivity(false)
+            }
+        }
         tripDetails = null
     }
 
@@ -364,7 +369,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 true
             }
             R.id.booking_action_rides -> {
-                startActivity(RidesActivity.Builder.builder.build(this))
+                startActivity(RidesActivity.Builder.builder
+                    .passengerDetails(passengerDetails)
+                    .build(this))
                 true
             }
             else -> super.onOptionsItemSelected(item)

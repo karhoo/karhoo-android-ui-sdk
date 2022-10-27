@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 dependencies {
 
 //    api 'com.github.karhoo:karhoo-android-sdk:1.4.5'
-    api 'com.github.karhoo:karhoo-android-sdk:1.5.0'
+    api 'com.github.karhoo:karhoo-android-sdk:1.6.1-RC1'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'

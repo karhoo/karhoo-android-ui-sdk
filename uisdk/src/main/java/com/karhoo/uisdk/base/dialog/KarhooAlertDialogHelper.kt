@@ -26,6 +26,24 @@ class KarhooAlertDialogHelper(val context: Context) {
         return builder.show()
     }
 
+    fun showPaymentFailureDialog(config: KarhooAlertDialogConfig): AlertDialog {
+        with(builder) {
+            config.view?.let { setView(it) }
+            setTitle(formatTitle(config))
+            setMessage(formatPaymentFailureMessage(config))
+            config.positiveButton?.let {
+                setPositiveButton(config.positiveButton.buttonLabel) { dialog, which -> config
+                        .positiveButton.buttonListener.onClick(dialog, which) }
+            }
+            config.negativeButton?.let {
+                setNegativeButton(config.negativeButton.buttonLabel) { dialog, which -> config
+                        .negativeButton.buttonListener.onClick(dialog, which) }
+            }
+            setCancelable(config.cancellable)
+        }
+        return builder.show()
+    }
+
     private fun formatMessage(config: KarhooAlertDialogConfig): String {
         var message = config.message.orEmpty()
         if (message.isEmpty() && config.messageResId > 0) {
@@ -33,6 +51,18 @@ class KarhooAlertDialogHelper(val context: Context) {
         }
         config.karhooError?.let { error ->
             message = "$message [${error.code}]"
+        }
+        return message
+    }
+
+    private fun formatPaymentFailureMessage(config: KarhooAlertDialogConfig): String {
+        var message = config.message.orEmpty()
+        if (message.isEmpty() && config.messageResId > 0) {
+            message = context.getString(config.messageResId)
+        }
+        config.karhooError?.let { error ->
+            if(error.userFriendlyMessage.toInt() != -1)
+                message = "$message [${context.getString(error.userFriendlyMessage.toInt())}]"
         }
         return message
     }
