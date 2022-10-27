@@ -68,7 +68,7 @@
     <string name="kh_uisdk_book_now">BOEKING BEVESTIGEN</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Boek rit</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Passagierscontact toevoegen</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Voeg passagier details toe</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Betaalmethode toevoegen</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Betalingswijze</string>
     <!-- Booking Checkout Component -->
