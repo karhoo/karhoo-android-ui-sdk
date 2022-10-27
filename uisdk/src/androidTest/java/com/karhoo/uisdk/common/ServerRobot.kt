@@ -1,12 +1,6 @@
 package com.karhoo.uisdk.common
 
-import com.github.tomakehurst.wiremock.client.WireMock.delete
-import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.givenThat
-import com.github.tomakehurst.wiremock.client.WireMock.post
-import com.github.tomakehurst.wiremock.client.WireMock.put
-import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
-import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
+import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.stubbing.Scenario
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -125,7 +119,7 @@ class ServerRobot {
     }
 
     fun quoteIdResponse(code: Int, response: Any, endpoint: String = APITemplate
-            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0, locale: String = "en-GB") {
+            .QUOTES_REQUEST_METHOD, delayInMillis: Int = 0, locale: String = "en-US") {
         val url = "$endpoint?locale=$locale"
         mockPostResponse(
                 code = code,
