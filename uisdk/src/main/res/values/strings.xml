@@ -6,12 +6,51 @@
     <string name="kh_uisdk_add_card">ADD CARD</string>
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
     <string name="kh_uisdk_add_payment">Add Payment</string>
-    <string name="kh_uisdk_additional_comments">Additional comments (Optional)</string>
+    <string name="kh_uisdk_additional_comments">Additional comments (Child seat, wheelchair, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
     <string name="kh_uisdk_address_pick_up">Pick up</string>
     <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
     <string name="kh_uisdk_address_picker_pickup">Finding address</string>
+    <string name="kh_uisdk_adyen_payment_error_02">The transaction was refused.</string>
+    <string name="kh_uisdk_adyen_payment_error_03">Referrals</string>
+    <string name="kh_uisdk_adyen_payment_error_04">The transaction did not go through due to an error that occurred on the acquirer\'s end</string>
+    <string name="kh_uisdk_adyen_payment_error_05">The card used for the transaction is blocked, therefore unusable</string>
+    <string name="kh_uisdk_adyen_payment_error_06">The card used for the transaction has expired. Therefore it is unusable</string>
+    <string name="kh_uisdk_adyen_payment_error_07">An amount mismatch occurred during the transaction process</string>
+    <string name="kh_uisdk_adyen_payment_error_08">The specified card number is incorrect or invalid</string>
+    <string name="kh_uisdk_adyen_payment_error_09">It is not possible to contact the shopper\'s bank to authorise the transaction</string>
+    <string name="kh_uisdk_adyen_payment_error_10">The shopper\'s bank does not support or does not allow this type of transaction</string>
+    <string name="kh_uisdk_adyen_payment_error_11">3D Secure authentication was not executed, or it did not execute successfully</string>
+    <string name="kh_uisdk_adyen_payment_error_12">The card does not have enough money to cover the payable amount</string>
+    <string name="kh_uisdk_adyen_payment_error_14">Possible fraud.</string>
+    <string name="kh_uisdk_adyen_payment_error_15">The transaction was cancelled.</string>
+    <string name="kh_uisdk_adyen_payment_error_16">The shopper cancelled the transaction before completing it.</string>
+    <string name="kh_uisdk_adyen_payment_error_17">The specified PIN is incorrect or invalid.</string>
+    <string name="kh_uisdk_adyen_payment_error_18">The shopper specified an incorrect PIN more that three times in a row.</string>
+    <string name="kh_uisdk_adyen_payment_error_19">It is not possible to validate the specified PIN number.</string>
+    <string name="kh_uisdk_adyen_payment_error_20">The pre-authorisation risk checks resulted in a fraud score of 100 or more. Therefore, the transaction was flagged as fraudulent, and was refused.</string>
+    <string name="kh_uisdk_adyen_payment_error_21">The transaction was not submitted correctly for processing.</string>
+    <string name="kh_uisdk_adyen_payment_error_22">The sum of pre-authorisation and post-authorisation risk checks resulted in a fraud score of 100 or more. Therefore, the transaction was flagged as fraudulent, and was refused.</string>
+    <string name="kh_uisdk_adyen_payment_error_23">Transaction not permitted</string>
+    <string name="kh_uisdk_adyen_payment_error_24">The specified CVC (card security code) is invalid.</string>
+    <string name="kh_uisdk_adyen_payment_error_25">Restricted Card</string>
+    <string name="kh_uisdk_adyen_payment_error_26">Revocation of Authorization Order</string>
+    <string name="kh_uisdk_adyen_payment_error_27">Non Generic Error</string>
+    <string name="kh_uisdk_adyen_payment_error_28">The withdrawal amount permitted for the shopper\'s card has exceeded.</string>
+    <string name="kh_uisdk_adyen_payment_error_29">The number of withdrawals permitted for the shopper\'s card has exceeded.</string>
+    <string name="kh_uisdk_adyen_payment_error_31">Issuer reported the transaction as suspected fraud.</string>
+    <string name="kh_uisdk_adyen_payment_error_32">The address data the shopper entered is incorrect.</string>
+    <string name="kh_uisdk_adyen_payment_error_33">The shopper\'s bank requires the shopper to enter an online PIN.</string>
+    <string name="kh_uisdk_adyen_payment_error_34">The shopper\'s bank requires a checking account to complete the purchase.</string>
+    <string name="kh_uisdk_adyen_payment_error_35">The shopper\'s bank requires a savings account to complete the purchase.</string>
+    <string name="kh_uisdk_adyen_payment_error_36">The shopper\'s bank requires the shopper to enter a mobile PIN.</string>
+    <string name="kh_uisdk_adyen_payment_error_37">The shopper abandoned the transaction after they attempted a contactless payment and were prompted to try a different card entry method (PIN or swipe).</string>
+    <string name="kh_uisdk_adyen_payment_error_38">The issuer declined the authentication exemption request and requires authentication for the transaction. Retry with 3D Secure.</string>
+    <string name="kh_uisdk_adyen_payment_error_39">The issuer or the scheme wasn\'t able to communicate the outcome via RReq.</string>
+    <string name="kh_uisdk_adyen_payment_error_40">The payment network can\'t be reached. Retry the transaction with a different payment method.</string>
+    <string name="kh_uisdk_adyen_payment_error_41">A PIN or signature is required. Retry the transaction.</string>
+    <string name="kh_uisdk_adyen_payment_error_42">The 3D Secure authentication failed due to an issue at the card network or issuer. Retry the transaction, or retry the transaction with a different payment method.</string>
     <!-- Categories -->
     <string name="kh_uisdk_all_category">All</string>
     <string name="kh_uisdk_allocated">Your trip has now been allocated to a driver</string>
@@ -26,7 +65,7 @@
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_baggage_max">%d luggages max</string>
     <string name="kh_uisdk_base">Base Fare</string>
-    <string name="kh_uisdk_book_now">PAY AND BOOK</string>
+    <string name="kh_uisdk_book_now">CONFIRM BOOKING</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add</string>
@@ -239,11 +278,15 @@
     <string name="kh_uisdk_karhoo_privacy_policy">Privacy Policy</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
-    <string name="kh_uisdk_KP001">Failed to find customer in braintree</string>
-    <string name="kh_uisdk_KP002">Failed to initialise client for organisation</string>
-    <string name="kh_uisdk_KP003">Failed to find default payment method</string>
-    <string name="kh_uisdk_KP004">Failed to find default credit card</string>
-    <string name="kh_uisdk_KP005">Failed to generate nonce</string>
+    <string name="kh_uisdk_KP001">Unable to decode request body</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP002">Primary org for user is not UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP003">Missing supply partner ID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP004">UserID is not UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP005">Browser information must be defined to enforce 3DS</string>
     <string name="kh_uisdk_label_and"> and to the</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Cancellation Policy</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Terms and Conditions</string>

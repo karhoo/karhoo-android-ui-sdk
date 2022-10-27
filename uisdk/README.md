@@ -8,6 +8,8 @@ src="https://cdn.karhoo.com/s/images/logos/karhoo_logo.png"
 </a>
 </div>
 
+[![](https://jitpack.io/v/karhoo/karhoo-android-ui-sdk.svg)](https://jitpack.io/#karhoo/karhoo-android-ui-sdk)
+
 #Karhoo Android UI SDK
 
 The UI SDK extends our [**Network SDK**](https://github.com/karhoo/karhoo-android-sdk) with ready to use screens and views for your end users to book rides with [**Karhoo**](https://karhoo.com/) in your application.
@@ -24,13 +26,13 @@ dependencies {
     //... Other project dependencies
 
     //The -adyen dependency contains the Adyen integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.7.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.7.4'
 
     //The -braintree dependency contains the Braintree integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.7.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.7.4'
 
     //The -full dependency contains both payment providers and it's up to you which payment provider you shall use:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.7.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.7.4'
 
     //Note that only one dependency from the above three should be integrated into your project
 }
@@ -49,6 +51,7 @@ To configure the SDK you will need to provide an implementation of our KarhooUIS
 ```kotlin
 class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
+    var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
 
     override fun logo(): Drawable? {
         return context.getDrawable(R.drawable.your-logo)
@@ -65,6 +68,10 @@ class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
     override fun authenticationMethod(): AuthenticationMethod {
         return AuthenticationMethod.KarhooUser()
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+            sdkAuthenticationRequired?.invoke(callback)
+    }
 }
 
 // Then set the payment provider and register the configuration in your Application file
@@ -79,8 +86,42 @@ val paymentManager = BraintreePaymentManager()
 paymentManager.paymentProviderView = BraintreePaymentView()
 
 // Later down the line
-KarhooUISDK.setConfiguration(KarhooConfig(applicationContext), paymentManager)
+val config = SDKConfig(context = this.applicationContext)
+config.sdkAuthenticationRequired = {
+    loginInBackground(it, yourToken)
+}
 
+KarhooApi.setConfiguration(configuration = config)
+
+// Implementing the token refresh flow
+private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
+private fun loginInBackground(callback: () -> Unit, token: String) {
+    if (!requestedAuthentication) {
+        Log.e(TAG, "Need an external authentication")
+        requestedAuthentication = true
+        deferredRequests.add(callback)
+
+        GlobalScope.launch {
+        //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
+        //Then use that token to refresh the credentials inside the SDK
+          KarhooApi.authService.login(token).execute { result ->
+                 when (result) {
+                     is Resource.Success -> {
+                                 Log.e(TAG, "We got a new token from the back-end")
+                                 deferredRequests.map {
+                                     it.invoke()
+                                 }
+                                 deferredRequests.clear()
+                                 requestedAuthentication = false
+                             }
+                             is Resource.Failure -> toastErrorMessage(result.error)
+                         }
+                     }
+                 }
+    } else {
+        deferredRequests.add(callback)
+    }
+}
 ```
 
 With this configuration the UISDK can be initialised in your Activities/Fragments. This will also ensure the network layer (KarhooSDK) is initialised and configured properly.
@@ -109,6 +150,9 @@ For authenticating with a guest user, the following authentication method should
         return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
     }
 ```
+
+The UISDK also provides the requireSDKAuthentication method in the KarhooUISDKConfiguration interface to notify whenever an external authentication is required. This happens only when all attempts to refresh the access token needed for authenticating requests have failed.
+This method receives a callback parameter which should be invoked when the external authentication has finalized. An example of how the requireSDKAuthentication flow should be handled is found above.
 
 ## Screens
 

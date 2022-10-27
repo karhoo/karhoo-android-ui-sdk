@@ -226,7 +226,7 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
                     add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_standard)).apply {
                         fixedTag = VehicleTypeFilter.STANDARD
                     })
-                    add(MultiSelectData(resources.getString(R.string.kh_uisdk_saloon)).apply {
+                    add(MultiSelectData(resources.getString(R.string.kh_uisdk_vehicle_bus)).apply {
                         fixedTag = VehicleTypeFilter.BUS
                     })
                     add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_van)).apply {

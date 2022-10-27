@@ -28,10 +28,15 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
+import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import android.widget.CheckBox
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
+import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
+import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.sdk.analytics.AnalyticsManager
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,6 +46,10 @@ class MainActivity : AppCompatActivity() {
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
     private val notificationsId = "notifications_enabled"
+    private var requestedAuthentication = false
+    private var username: String? = null
+    private var password: String? = null
+    private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -110,6 +119,14 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
             config.paymentManager = braintreePaymentManager
+            config.sdkAuthenticationRequired = { callback ->
+                Log.e(TAG, "Need an external authentication")
+
+                if (username != null && password != null) {
+                    KarhooApi.userService.logout()
+                    loginUser(username!!, password!!, goToBooking = false, callback)
+                }
+            }
 
             KarhooUISDK.apply {
                 setConfiguration(config)
@@ -131,17 +148,36 @@ class MainActivity : AppCompatActivity() {
         val signInButton = dialog.findViewById(R.id.signInButton) as Button
         signInButton.setOnClickListener {
             showLoading()
-            loginUser(userNameEditText.text.toString(), passwordEditText.text.toString())
+            this.username = userNameEditText.text.toString()
+            this.password = passwordEditText.text.toString()
+
+            if (username != null && password != null) {
+                loginUser(username!!, password!!, goToBooking = true)
+            }
+
             dialog.dismiss()
         }
         dialog.show()
     }
 
-    private fun loginUser(email: String, password: String) {
+    private fun loginUser(
+        email: String,
+        password: String,
+        goToBooking: Boolean,
+        callback: (() -> Unit)? = null
+    ) {
         KarhooApi.userService.loginUser(UserLogin(email = email, password = password))
             .execute { result ->
                 when (result) {
-                    is Resource.Success -> goToBooking()
+                    is Resource.Success -> {
+                        Log.d(TAG, "User authenticated with success")
+
+                        if (goToBooking) {
+                            goToBooking()
+                        }
+
+                        callback?.invoke()
+                    }
                     is Resource.Failure -> toastErrorMessage(result.error)
                 }
             }
@@ -150,7 +186,9 @@ class MainActivity : AppCompatActivity() {
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
         config.paymentManager = braintreePaymentManager
-
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BRAINTREE_AUTH_TOKEN)
+        }
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -168,6 +206,9 @@ class MainActivity : AppCompatActivity() {
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
         config.paymentManager = adyenPaymentManager
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, ADYEN_AUTH_TOKEN)
+        }
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -177,9 +218,41 @@ class MainActivity : AppCompatActivity() {
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
         config.paymentManager = adyenPaymentManager
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
+        }
 
         KarhooUISDK.apply {
             setConfiguration(config)
+        }
+    }
+
+    private fun loginInBackground(callback: () -> Unit, token: String) {
+        if (!requestedAuthentication) {
+            Log.e(TAG, "Need an external authentication")
+            requestedAuthentication = true
+            deferredRequests.add(callback)
+
+            GlobalScope.launch {
+                delay(TESTING_DELAY)
+                KarhooApi.authService.login(token).execute { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            Log.e(TAG, "We got a new token from the back-end")
+
+                            deferredRequests.map {
+                                it.invoke()
+                            }
+                            deferredRequests.clear()
+
+                            requestedAuthentication = false
+                        }
+                        is Resource.Failure -> toastErrorMessage(result.error)
+                    }
+                }
+            }
+        } else {
+            deferredRequests.add(callback)
         }
     }
 
@@ -230,26 +303,28 @@ class MainActivity : AppCompatActivity() {
         loadingProgressBar.visibility = View.INVISIBLE
     }
 
-    companion object {
-        private val TAG = MainActivity::class.java.name
-    }
-
-    fun onCheckboxClicked(view: View) {view
+    fun onCheckboxClicked(view: View) {
+        view
         toggleNotificationStatus()
     }
 
-    private fun getCurrentNotificationStatus() : Boolean {
-         return sharedPrefs.getBoolean(notificationsId, false)
+    private fun getCurrentNotificationStatus(): Boolean {
+        return sharedPrefs.getBoolean(notificationsId, false)
     }
 
-    private fun setNotificationStatus(value: Boolean){
-        with (sharedPrefs.edit()) {
+    private fun setNotificationStatus(value: Boolean) {
+        with(sharedPrefs.edit()) {
             putBoolean(notificationsId, value)
             apply()
         }
     }
 
-    private fun toggleNotificationStatus(){
+    private fun toggleNotificationStatus() {
         setNotificationStatus(!getCurrentNotificationStatus())
+    }
+
+    companion object {
+        private val TAG = MainActivity::class.java.name
+        private const val TESTING_DELAY = 5000L
     }
 }

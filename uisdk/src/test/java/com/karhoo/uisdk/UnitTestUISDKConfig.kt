@@ -83,4 +83,8 @@ class UnitTestUISDKConfig(
             KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
     }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+        //Do nothing
+    }
 }

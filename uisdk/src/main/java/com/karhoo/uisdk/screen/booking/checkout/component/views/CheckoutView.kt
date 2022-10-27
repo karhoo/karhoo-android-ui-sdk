@@ -297,7 +297,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     presenter.onPaymentFailureDialogCancelled()
                     d.dismiss()
                 })
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        KarhooAlertDialogHelper(context).showPaymentFailureDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {
@@ -514,7 +514,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         startBooking()
                     }
                     is Resource.Failure -> {
-                        if (result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
+                        if (result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.ErrMissingBrowserInfo.code) {
                             //Start the booking even if the loyalty is in an error state
                             startBooking()
                             return@getLoyaltyPreAuthNonce
