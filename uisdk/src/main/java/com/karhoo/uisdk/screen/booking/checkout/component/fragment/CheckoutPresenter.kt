@@ -21,7 +21,7 @@ class CheckoutPresenter : CheckoutFragmentContract.Presenter {
                                    ): BookButtonState {
         return if (isPassengerDetailsVisible) {
             BookButtonState.SAVE
-        } else if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
+        } else if (arePassengerDetailsValid && isTermsCheckBoxValid) {
             BookButtonState.BOOK
         } else {
             BookButtonState.NEXT

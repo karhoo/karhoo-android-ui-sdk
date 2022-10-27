@@ -10,6 +10,7 @@ interface CheckoutFragmentContract {
         fun showLoading()
         fun enableButton(enable: Boolean)
         fun setState(bookButtonState: BookButtonState)
+        fun checkState()
     }
 
     interface WebViewListener {

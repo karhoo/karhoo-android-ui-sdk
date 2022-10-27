@@ -69,6 +69,16 @@ internal class CheckoutFragment : Fragment() {
             override fun setState(bookButtonState: BookButtonState) {
                 checkoutActionButton.setText(bookButtonState.resId)
             }
+
+            override fun checkState() {
+                checkoutActionButton.setText(
+                    presenter.getBookButtonState(
+                        false, checkoutView
+                            .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid(),
+                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+                    ).resId
+                )
+            }
         }, object : CheckoutFragmentContract.WebViewListener {
             override fun showWebViewOnPress(url: String?) {
                 if (activity is WebViewActions) {

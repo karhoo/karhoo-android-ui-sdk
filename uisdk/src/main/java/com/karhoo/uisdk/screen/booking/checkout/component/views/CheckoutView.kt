@@ -140,6 +140,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
 
         showLoyaltyView(false)
+
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired()) {
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.setOnClickListener {
+                loadingButtonCallback.checkState()
+            }
+        }
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
