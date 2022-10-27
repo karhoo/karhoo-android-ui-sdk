@@ -278,11 +278,15 @@
     <string name="kh_uisdk_karhoo_privacy_policy">Privacy Policy</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
-    <string name="kh_uisdk_KP001">Failed to find customer in braintree</string>
-    <string name="kh_uisdk_KP002">Failed to initialise client for organisation</string>
-    <string name="kh_uisdk_KP003">Failed to find default payment method</string>
-    <string name="kh_uisdk_KP004">Failed to find default credit card</string>
-    <string name="kh_uisdk_KP005">Failed to generate nonce</string>
+    <string name="kh_uisdk_KP001">Unable to decode request body</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP002">Primary org for user is not UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP003">Missing supply partner ID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP004">UserID is not UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP005">Browser information must be defined to enforce 3DS</string>
     <string name="kh_uisdk_label_and"> and to the</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Cancellation Policy</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Terms and Conditions</string>

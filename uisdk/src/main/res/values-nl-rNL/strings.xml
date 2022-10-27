@@ -278,11 +278,15 @@
     <string name="kh_uisdk_karhoo_privacy_policy">Privacybeleid</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
-    <string name="kh_uisdk_KP001">Kan klant niet vinden in braintree</string>
-    <string name="kh_uisdk_KP002">Kan client niet initialiseren voor organisatie</string>
-    <string name="kh_uisdk_KP003">Kan standaard betaalmethode niet vinden</string>
-    <string name="kh_uisdk_KP004">Kan standaardcreditcard niet vinden</string>
-    <string name="kh_uisdk_KP005">Kan nonce niet genereren</string>
+    <string name="kh_uisdk_KP001">Kan verzoektekst niet decoderen</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP002">Primaire organisatie voor gebruiker is geen UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP003">Ontbrekende leveringspartner-ID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP004">Gebruikers-ID is geen UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP005">Browserinformatie moet worden gedefinieerd om 3DS af te dwingen</string>
     <string name="kh_uisdk_label_and">en</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden Taxibedrijf</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene Gebruiksvoorwaarden Taxibedrijf</string>
