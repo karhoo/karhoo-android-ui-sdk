@@ -53,8 +53,6 @@ interface PaymentDropInContract {
 
         fun handlePaymentDetailsUpdate()
 
-        fun updatePaymentViewVisbility(visibility: Int)
-
         fun initialiseChangeCard(quote: Quote?)
 
         fun initialiseGuestPayment(quote: Quote?)
@@ -66,8 +64,6 @@ interface PaymentDropInContract {
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 
         fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
-
-        fun refresh()
 
         fun showPaymentFailureDialog(error: KarhooError? = null)
 

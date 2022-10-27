@@ -8,7 +8,7 @@ import com.karhoo.sdk.api.network.request.PassengerDetails
 
 interface BookingPaymentContract {
 
-    interface View {
+    interface PaymentHandler {
 
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
@@ -19,10 +19,6 @@ interface BookingPaymentContract {
         fun showError(@StringRes error: Int, karhooError: KarhooError?)
 
         fun setPaymentView(view: PaymentDropInContract.View?)
-
-        fun setViewVisibility(visibility: Int)
-
-        fun updatePaymentViewVisbility(visibility: Int)
 
         fun setPassengerDetails(passengerDetails: PassengerDetails?)
 
@@ -45,8 +41,6 @@ interface BookingPaymentContract {
         fun showErrorDialog(@StringRes stringId: Int, karhooError: KarhooError?)
 
         fun handleChangeCard()
-
-        fun handleViewVisibility(visibility: Int)
     }
 
     interface PaymentActions {

@@ -9,10 +9,10 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 
 class BookingPaymentPresenter(
-    view: BookingPaymentContract.View,
+    view: BookingPaymentContract.PaymentHandler,
     private val userStore: UserStore = KarhooApi.userStore,
     private val paymentsService: PaymentsService = KarhooApi.paymentsService
-) : BasePresenter<BookingPaymentContract.View>(), BookingPaymentContract.Presenter {
+) : BasePresenter<BookingPaymentContract.PaymentHandler>(), BookingPaymentContract.Presenter {
 
     init {
         attachView(view)
