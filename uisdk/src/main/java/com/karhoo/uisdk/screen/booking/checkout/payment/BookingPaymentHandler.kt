@@ -81,10 +81,7 @@ class BookingPaymentHandler @JvmOverloads constructor(
         paymentActions?.showPaymentFailureDialog(null, karhooError)
     }
 
-    override fun hasValidPaymentType(): Boolean = hasValidPayment
-
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        hasValidPayment = savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()
         paymentActions?.handlePaymentDetailsUpdate()
     }
 

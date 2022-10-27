@@ -41,10 +41,10 @@ internal class CheckoutFragment : Fragment() {
     private var expirationJob: Job? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-                             ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_checkout_fragment, container, false)
 
         presenter = CheckoutPresenter()
@@ -74,7 +74,7 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
                         false, checkoutView
-                            .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid(),
+                            .arePassengerDetailsValid(),
                         isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
@@ -88,12 +88,12 @@ internal class CheckoutFragment : Fragment() {
         }, object : CheckoutFragmentContract.PassengersListener {
             override fun onPassengerPageVisibilityChanged(visible: Boolean) {
                 checkoutActionButton.setText(
-                        presenter.getBookButtonState(
-                                visible, checkoutView
-                                .arePassengerDetailsValid(), checkoutView.isPaymentMethodValid(),
-                                isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
-                                                    ).resId
-                                            )
+                    presenter.getBookButtonState(
+                        visible, checkoutView
+                            .arePassengerDetailsValid(),
+                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+                    ).resId
+                )
             }
 
             override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
@@ -128,14 +128,19 @@ internal class CheckoutFragment : Fragment() {
 
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
-                quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-                journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
-                outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-                bookingMetadata = bundle.getSerializable(CheckoutActivity
-                                                                 .BOOKING_CHECKOUT_METADATA_KEY) as HashMap<String, String>?,
-                passengerDetails = bundle.getParcelable(CheckoutActivity
-                                                                .BOOKING_CHECKOUT_PASSENGER_KEY),
-                comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY))
+            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
+            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+            bookingMetadata = bundle.getSerializable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_METADATA_KEY
+            ) as HashMap<String, String>?,
+            passengerDetails = bundle.getParcelable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_PASSENGER_KEY
+            ),
+            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
+        )
 
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
 
@@ -148,12 +153,12 @@ internal class CheckoutFragment : Fragment() {
                 activity?.runOnUiThread {
                     if (isAdded) {
                         val config = KarhooAlertDialogConfig(
-                                titleResId = R.string.kh_uisdk_offer_expired,
-                                messageResId = R.string.kh_uisdk_offer_expired_text,
-                                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
-                                    this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
-                                    this@CheckoutFragment.activity?.finish()
-                                })
+                            titleResId = R.string.kh_uisdk_offer_expired,
+                            messageResId = R.string.kh_uisdk_offer_expired_text,
+                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
+                                this@CheckoutFragment.activity?.finish()
+                            })
 
                         context?.let { KarhooAlertDialogHelper(it).showAlertDialog(config) }
                     }
@@ -185,20 +190,22 @@ internal class CheckoutFragment : Fragment() {
         }
 
         checkoutActionButton.setText(
-                presenter.getBookButtonState(
-                        arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
-                        isPaymentValid = checkoutView.isPaymentMethodValid(),
-                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
-                                            )
-                        .resId
-                                    )
+            presenter.getBookButtonState(
+                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+            )
+                .resId
+        )
 
         return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(PASSENGER_DETAILS, if(presenter.passengerDetails != null) presenter.passengerDetails else checkoutView.getPassengerDetails())
+        outState.putParcelable(
+            PASSENGER_DETAILS,
+            if (presenter.passengerDetails != null) presenter.passengerDetails else checkoutView.getPassengerDetails()
+        )
         outState.putParcelable(SAVED_PAYMENT_INFO, KarhooApi.userStore.savedPaymentInfo)
         checkoutView.onPause()
     }
@@ -206,7 +213,7 @@ internal class CheckoutFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         savedInstanceState?.let {
-            if(it[PASSENGER_DETAILS] != null){
+            if (it[PASSENGER_DETAILS] != null) {
                 val passDetails = it[PASSENGER_DETAILS] as PassengerDetails
                 checkoutView.bindPassenger(passDetails)
             }
