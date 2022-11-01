@@ -118,9 +118,8 @@ class BraintreePaymentPresenter(
                     }
                 }
             }
-            return true
         }
-        return false
+        return true
     }
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/actionViewIcon"
-        android:layout_width="@dimen/kh_uisdk_logo_size"
-        android:layout_height="@dimen/kh_uisdk_logo_size"
+        android:layout_width="@dimen/kh_uisdk_checkout_icon_size_default"
+        android:layout_height="@dimen/kh_uisdk_checkout_icon_size_default"
         android:background="@drawable/kh_uisdk_ic_passenger"
         android:layout_gravity="center"/>
 
