@@ -245,10 +245,9 @@ class CheckoutViewPresenterTests {
     fun `passenger details visible and valid but payment is not`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
-            isPaymentValid = false
                                                                  )
 
-        assertEquals(returnValue, BookButtonState.NEXT)
+        assertEquals(returnValue, BookButtonState.BOOK)
     }
 
     /**
@@ -260,7 +259,6 @@ class CheckoutViewPresenterTests {
     fun `passenger details are invalid but payment is valid`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = false,
-            isPaymentValid = true
                                                                  )
 
         assertEquals(returnValue, BookButtonState.NEXT)
@@ -275,7 +273,6 @@ class CheckoutViewPresenterTests {
     fun `passenger details and payment valid`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
-            isPaymentValid = true
                                                                  )
 
         assertEquals(returnValue, BookButtonState.BOOK)
@@ -290,7 +287,6 @@ class CheckoutViewPresenterTests {
     fun `passenger details and payment valid but checkbox not checked`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
-            isPaymentValid = true,
             isTermsCheckBoxValid = false
         )
 
@@ -306,7 +302,6 @@ class CheckoutViewPresenterTests {
     fun `passenger details and payment valid but checkbox is checked`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
-            isPaymentValid = true,
             isTermsCheckBoxValid = true
         )
 
