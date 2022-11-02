@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Create avd
           command: |
-            SYSTEM_IMAGES="system-images;android-29;default;armeabi-v7a"
+            SYSTEM_IMAGES="system-images;android-23;default;armeabi-v7a"
             sdkmanager "$SYSTEM_IMAGES"
             echo "no" | avdmanager --verbose create avd -n test -k "$SYSTEM_IMAGES"
       - run:
