@@ -169,7 +169,7 @@ When instantiating the Booking screen make sure the user has granted location pe
 <img
 alt="Booking screen"
 width="400px"
-src="https://files.readme.io/b28bcb0-android_quotes.jpg"
+src="https://files.readme.io/491a2aa-Screenshot_2022-11-02_at_10.19.00.png"
 />
 </a>
 </div>
