@@ -50,14 +50,20 @@ jobs:
       - run:
           name: Create avd
           command: |
-            SYSTEM_IMAGES="system-images;android-28;default;armeabi-v7a"
-            sdkmanager "$SYSTEM_IMAGES"
-            echo "no" | avdmanager --verbose create avd -n test -k "$SYSTEM_IMAGES"
+            AVD_PACKAGES="system-images;android-23;google_apis;armeabi-v7a"
+            echo "Installing system image for $AVD_PACKAGES"
+            sdkmanager $AVD_PACKAGES
+            echo "Creating AVD with packages $AVD_PACKAGES"
+            echo no | avdmanager create avd --name "test" --force --package "$AVD_PACKAGES" --tag google_apis --abi "armeabi-v7a"
       - run:
           name: Launch emulator
           command: |
-            emulator -avd test -delay-adb -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+            emulator -avd "test" -delay-adb -verbose -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           background: true
+      - run:
+          name: Wait for emulator to start
+          command: |
+            circle-android wait-for-boot
       - run:
           name: Generate cache key
           command: |
@@ -70,10 +76,6 @@ jobs:
           name: Run assembleDebugAndroidTest task
           command: |
             ./gradlew assembleDebugAndroidTest
-      - run:
-          name: Wait for emulator to start
-          command: |
-            circle-android wait-for-boot
       - run:
           name: Disable emulator animations
           command: |
