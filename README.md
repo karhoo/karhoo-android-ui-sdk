@@ -239,7 +239,7 @@ src="https://files.readme.io/848b44d-Screenshot_2022-10-31_at_20.54.08.png"
 
 Here the user can check the T&Cs if they are required and must complete the passenger contact details in order to get to the next step.
 After everything is filled up correctly, the button will state "CONFIRM AND PAY" and then the Adyen/Braintree payment flow will start.
-If the payment is successfully, the booking is created.
+If the payment is successful, the booking is created.
 
 Here is how it looks filled up
 
@@ -253,7 +253,7 @@ src="https://files.readme.io/abbc1b2-Screenshot_2022-11-02_at_09.20.49.png"
 </a>
 </div>
 
-We also have a loyalty feature in the checkout that may be available and users can earn and burn points for the trips.
+We also offer the possibility to enable the use of loyalty to earn and burn points on trips. Some extra development on your side is needed to enable this capability.
 
 <div align="center">
 <a href="https://karhoo.com">

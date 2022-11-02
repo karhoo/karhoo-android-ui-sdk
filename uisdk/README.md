@@ -51,28 +51,28 @@ To configure the SDK you will need to provide an implementation of our KarhooUIS
 
 ```kotlin
 class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
-    override lateinit var paymentManager: PaymentManager
-    var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
+  override lateinit var paymentManager: PaymentManager
+  var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
 
-    override fun logo(): Drawable? {
-        return context.getDrawable(R.drawable.your-logo)
-    }
+  override fun logo(): Drawable? {
+    return context.getDrawable(R.drawable.your-logo)
+  }
 
-    override fun environment(): KarhooEnvironment {
-        return KarhooEnvironment.Sandbox()
-    }
+  override fun environment(): KarhooEnvironment {
+    return KarhooEnvironment.Sandbox()
+  }
 
-    override fun context(): Context {
-        return context
-    }
+  override fun context(): Context {
+    return context
+  }
 
-    override fun authenticationMethod(): AuthenticationMethod {
-        return AuthenticationMethod.KarhooUser()
-    }
+  override fun authenticationMethod(): AuthenticationMethod {
+    return AuthenticationMethod.KarhooUser()
+  }
 
-    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-            sdkAuthenticationRequired?.invoke(callback)
-    }
+  override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+    sdkAuthenticationRequired?.invoke(callback)
+  }
 }
 
 // Then set the payment provider and register the configuration in your Application file
@@ -89,7 +89,7 @@ paymentManager.paymentProviderView = BraintreePaymentView()
 // Later down the line
 val config = SDKConfig(context = this.applicationContext)
 config.sdkAuthenticationRequired = {
-    loginInBackground(it, yourToken)
+  loginInBackground(it, yourToken)
 }
 
 KarhooApi.setConfiguration(configuration = config)
@@ -97,31 +97,31 @@ KarhooApi.setConfiguration(configuration = config)
 // Implementing the token refresh flow
 private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
 private fun loginInBackground(callback: () -> Unit, token: String) {
-    if (!requestedAuthentication) {
-        Log.e(TAG, "Need an external authentication")
-        requestedAuthentication = true
-        deferredRequests.add(callback)
+  if (!requestedAuthentication) {
+    Log.e(TAG, "Need an external authentication")
+    requestedAuthentication = true
+    deferredRequests.add(callback)
 
-        GlobalScope.launch {
-        //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
-        //Then use that token to refresh the credentials inside the SDK
-          KarhooApi.authService.login(token).execute { result ->
-                 when (result) {
-                     is Resource.Success -> {
-                                 Log.e(TAG, "We got a new token from the back-end")
-                                 deferredRequests.map {
-                                     it.invoke()
-                                 }
-                                 deferredRequests.clear()
-                                 requestedAuthentication = false
-                             }
-                             is Resource.Failure -> toastErrorMessage(result.error)
-                         }
-                     }
-                 }
-    } else {
-        deferredRequests.add(callback)
+    GlobalScope.launch {
+      //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
+      //Then use that token to refresh the credentials inside the SDK
+      KarhooApi.authService.login(token).execute { result ->
+        when (result) {
+          is Resource.Success -> {
+            Log.e(TAG, "We got a new token from the back-end")
+            deferredRequests.map {
+              it.invoke()
+            }
+            deferredRequests.clear()
+            requestedAuthentication = false
+          }
+          is Resource.Failure -> toastErrorMessage(result.error)
+        }
+      }
     }
+  } else {
+    deferredRequests.add(callback)
+  }
 }
 ```
 
@@ -148,8 +148,8 @@ override fun authenticationMethod(): AuthenticationMethod {
 For authenticating with a guest user, the following authentication method should be set
 ```kotlin
   override fun authenticationMethod(): AuthenticationMethod {
-        return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
-    }
+  return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
+}
 ```
 
 The UISDK also provides the requireSDKAuthentication method in the KarhooUISDKConfiguration interface to notify whenever an external authentication is required. This happens only when all attempts to refresh the access token needed for authenticating requests have failed.
@@ -239,7 +239,7 @@ src="https://files.readme.io/848b44d-Screenshot_2022-10-31_at_20.54.08.png"
 
 Here the user can check the T&Cs if they are required and must complete the passenger contact details in order to get to the next step.
 After everything is filled up correctly, the button will state "CONFIRM AND PAY" and then the Adyen/Braintree payment flow will start.
-If the payment is successfully, the booking is created.
+If the payment is successful, the booking is created.
 
 Here is how it looks filled up
 
@@ -253,7 +253,7 @@ src="https://files.readme.io/abbc1b2-Screenshot_2022-11-02_at_09.20.49.png"
 </a>
 </div>
 
-We also have a loyalty feature in the checkout that may be available and users can earn and burn points for the trips.
+We also offer the possibility to enable the use of loyalty to earn and burn points on trips. Some extra development on your side is needed to enable this capability.
 
 <div align="center">
 <a href="https://karhoo.com">
@@ -377,8 +377,8 @@ In order to launch the Rides screen, an intent for the RideDetailsActivity has t
 ```kotlin
 // launching example
 val intent = RideDetailsActivity.Builder.builder
-  .trip(tripInfo)
-  .build(context)
+ .trip(tripInfo)
+        .build(context)
 startActivity(intent)
 ```
 
@@ -408,11 +408,11 @@ Add a custom theme in the styles.xml file of your app
 
 ```xml
 <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-  <!-- Customize your theme here. -->
-  <item name="colorPrimary">@color/primary</item>
-  <item name="colorPrimaryDark">@color/secondary</item>
-  <item name="colorAccent">@color/primary</item>
-  <item name="fontFamily">sans-serif-medium</item>
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/secondary</item>
+    <item name="colorAccent">@color/primary</item>
+    <item name="fontFamily">sans-serif-medium</item>
 </style>
 ```
 
