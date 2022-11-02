@@ -30,6 +30,16 @@ jobs:
           name: Download Dependencies
           command: |
             bundle check || bundle install --path vendor/bundle
+            - echo y | android update sdk --no-ui --all --filter tools
+            - echo y | android update sdk --no-ui --all --filter platform-tools
+            - echo y | android update sdk --no-ui --all --filter extra-android-m2repository
+            - echo y | android update sdk --no-ui --all --filter extra-android-support
+            - echo y | android update sdk --no-ui --all --filter extra-google-google_play_services
+            - echo y | android update sdk --no-ui --all --filter extra-google-m2repository
+            - echo y | android update sdk --no-ui --all --filter android-22
+            - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
+            - echo y | android update sdk -a -u -t sys-img-armeabi-v7a-google_apis-22
+            - android list targets
       - save_cache:
           key: 1-gems-{{ checksum "Gemfile.lock" }}
           paths:
