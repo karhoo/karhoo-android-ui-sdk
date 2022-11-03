@@ -24,6 +24,7 @@ interface CheckoutFragmentContract {
     interface BookingListener {
         fun onTripBooked(tripInfo: TripInfo?)
         fun onBookingFailed(error: KarhooError?)
+        fun startBookingProcess()
     }
 
     interface Presenter {

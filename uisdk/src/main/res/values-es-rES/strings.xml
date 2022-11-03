@@ -12,6 +12,45 @@
     <string name="kh_uisdk_address_picker_add_pickup">Añadir dirección de recogida</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
     <string name="kh_uisdk_address_picker_pickup">Buscando dirección</string>
+    <string name="kh_uisdk_adyen_payment_error_02">La transacción fue rechazada.</string>
+    <string name="kh_uisdk_adyen_payment_error_03">Referencias</string>
+    <string name="kh_uisdk_adyen_payment_error_04">La transacción no se realizó debido a un error que ocurrió por parte del adquirente.</string>
+    <string name="kh_uisdk_adyen_payment_error_05">La tarjeta utilizada para la transacción está bloqueada, por lo tanto inutilizable</string>
+    <string name="kh_uisdk_adyen_payment_error_06">La tarjeta utilizada para la transacción ha caducado. Por lo tanto es inservible</string>
+    <string name="kh_uisdk_adyen_payment_error_07">Se produjo un desajuste de cantidad durante el proceso de transacción</string>
+    <string name="kh_uisdk_adyen_payment_error_08">El número de tarjeta especificado es incorrecto o no válido</string>
+    <string name="kh_uisdk_adyen_payment_error_09">No es posible contactar con el banco del comprador para autorizar la transacción</string>
+    <string name="kh_uisdk_adyen_payment_error_10">El banco del comprador no admite o no permite este tipo de transacciones</string>
+    <string name="kh_uisdk_adyen_payment_error_11">La autenticación 3D Secure no se ejecutó o no se ejecutó correctamente</string>
+    <string name="kh_uisdk_adyen_payment_error_12">La tarjeta no tiene suficiente dinero para cubrir el monto a pagar</string>
+    <string name="kh_uisdk_adyen_payment_error_14">Posible fraude.</string>
+    <string name="kh_uisdk_adyen_payment_error_15">La transacción fue cancelada.</string>
+    <string name="kh_uisdk_adyen_payment_error_16">El comprador canceló la transacción antes de completarla.</string>
+    <string name="kh_uisdk_adyen_payment_error_17">El PIN especificado es incorrecto o no válido.</string>
+    <string name="kh_uisdk_adyen_payment_error_18">El comprador especificó un PIN incorrecto más de tres veces seguidas.</string>
+    <string name="kh_uisdk_adyen_payment_error_19">No es posible validar el número PIN especificado.</string>
+    <string name="kh_uisdk_adyen_payment_error_20">Los controles de riesgo de autorización previa dieron como resultado una puntuación de fraude de 100 o más. Por lo tanto, la transacción se marcó como fraudulenta y se rechazó.</string>
+    <string name="kh_uisdk_adyen_payment_error_21">La transacción no se envió correctamente para su procesamiento.</string>
+    <string name="kh_uisdk_adyen_payment_error_22">La suma de las comprobaciones de riesgo previas y posteriores a la autorización dio como resultado una puntuación de fraude de 100 o más. Por lo tanto, la transacción se marcó como fraudulenta y se rechazó.</string>
+    <string name="kh_uisdk_adyen_payment_error_23">Transacción no permitida</string>
+    <string name="kh_uisdk_adyen_payment_error_24">El CVC (código de seguridad de la tarjeta) especificado no es válido.</string>
+    <string name="kh_uisdk_adyen_payment_error_25">Tarjeta restringida</string>
+    <string name="kh_uisdk_adyen_payment_error_26">Orden de Revocación de Autorización</string>
+    <string name="kh_uisdk_adyen_payment_error_27">Error no genérico</string>
+    <string name="kh_uisdk_adyen_payment_error_28">Se ha excedido el monto de retiro permitido para la tarjeta del comprador.</string>
+    <string name="kh_uisdk_adyen_payment_error_29">Se ha excedido el número de retiros permitidos para la tarjeta del comprador.</string>
+    <string name="kh_uisdk_adyen_payment_error_31">El emisor reportó la transacción como sospecha de fraude.</string>
+    <string name="kh_uisdk_adyen_payment_error_32">Los datos de la dirección que ingresó el comprador son incorrectos.</string>
+    <string name="kh_uisdk_adyen_payment_error_33">El banco del comprador requiere que el comprador ingrese un PIN en línea.</string>
+    <string name="kh_uisdk_adyen_payment_error_34">El banco del comprador requiere una cuenta corriente para completar la compra.</string>
+    <string name="kh_uisdk_adyen_payment_error_35">El banco del comprador requiere una cuenta de ahorros para completar la compra.</string>
+    <string name="kh_uisdk_adyen_payment_error_36">El banco del comprador requiere que el comprador ingrese un PIN móvil.</string>
+    <string name="kh_uisdk_adyen_payment_error_37">El comprador abandonó la transacción después de intentar un pago sin contacto y se le solicitó que probara con un método de ingreso de tarjeta diferente (PIN o deslizamiento).</string>
+    <string name="kh_uisdk_adyen_payment_error_38">El emisor rechazó la solicitud de exención de autenticación y requiere autenticación para la transacción. Vuelva a intentarlo con 3D Secure.</string>
+    <string name="kh_uisdk_adyen_payment_error_39">El emisor o el esquema no pudo comunicar el resultado a través de RReq.</string>
+    <string name="kh_uisdk_adyen_payment_error_40">No se puede acceder a la red de pago. Vuelva a intentar la transacción con un método de pago diferente.</string>
+    <string name="kh_uisdk_adyen_payment_error_41">Se requiere un PIN o una firma. Vuelva a intentar la transacción.</string>
+    <string name="kh_uisdk_adyen_payment_error_42">La autenticación 3D Secure falló debido a un problema en la red o el emisor de la tarjeta. Vuelva a intentar la transacción o vuelva a intentar la transacción con un método de pago diferente.</string>
     <!-- Categories -->
     <string name="kh_uisdk_all_category">Todo</string>
     <string name="kh_uisdk_allocated">Conductor asignado</string>
@@ -29,7 +68,7 @@
     <string name="kh_uisdk_book_now">CONFIRMAR LA RESERVA</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">Confirmar viaje</string>
-    <string name="kh_uisdk_booking_checkout_add_passenger">Agregar pasajero</string>
+    <string name="kh_uisdk_booking_checkout_add_passenger">Agregar detalles del pasajero</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Añadir método de pago</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method_title">Método de pago</string>
     <!-- Booking Checkout Component -->
@@ -239,11 +278,15 @@
     <string name="kh_uisdk_karhoo_privacy_policy">Política de Privacidad</string>
     <string name="kh_uisdk_karhoo_privacy_policy_url">https://cdn.karhoo.com/s/mobile/sdk/terms/privacy-policy-sdk.en-gb.html</string>
     <!-- Payment Errors -->
-    <string name="kh_uisdk_KP001">No se pudo encontrar al cliente en Braintree</string>
-    <string name="kh_uisdk_KP002">No se pudo inicializar el cliente para la organización</string>
-    <string name="kh_uisdk_KP003">No se pudo encontrar el método de pago predeterminado</string>
-    <string name="kh_uisdk_KP004">No se pudo encontrar la tarjeta de crédito predeterminada</string>
-    <string name="kh_uisdk_KP005">Error al generar nonce</string>
+    <string name="kh_uisdk_KP001">No se puede decodificar el cuerpo de la solicitud</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP002">La organización principal del usuario no es UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP003">ID de socio de suministro faltante</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP004">ID de usuario no es UUID</string>
+    <!-- Payment Errors -->
+    <string name="kh_uisdk_KP005">La información del navegador debe estar definida para hacer cumplir 3DS</string>
     <string name="kh_uisdk_label_and"> y </string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Política de Cancelación</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Condiciones Generales</string>

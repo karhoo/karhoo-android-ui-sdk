@@ -104,19 +104,10 @@ class AdyenPaymentPresenter(
         passBackThreeDSecureNonce(quote)
     }
 
-    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (resultCode == AppCompatActivity.RESULT_OK && data == null) {
             view?.showPaymentFailureDialog()
         } else if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-
-            when (DropIn.handleActivityResult(requestCode, resultCode, data)) {
-                is DropInResult.Error -> { // Is handled below
-                }
-                is DropInResult.CancelledByUser -> view?.refresh()
-                is DropInResult.Finished -> { // We treat this case below based on the resultIntent's data
-                }
-            }
-
             val dataString = DropIn.getDropInResultFromIntent(data)
 
             if (dataString != null) {
@@ -127,6 +118,7 @@ class AdyenPaymentPresenter(
                         this.tripId = payload.optString(TRIP_ID, "")
                         updateCardDetails(paymentData = payload.optString(ADDITIONAL_DATA, ""))
                         analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
+                        return true
                     }
                     else -> {
                         val error = convertToKarhooError(payload)
@@ -148,9 +140,8 @@ class AdyenPaymentPresenter(
             } else {
                 view?.showPaymentFailureDialog()
             }
-        } else {
-            view?.refresh()
         }
+        return false
     }
 
     override fun logPaymentFailureEvent(
@@ -197,7 +188,10 @@ class AdyenPaymentPresenter(
         val refusalReason = payload.optString(REFUSAL_REASON, "")
         val refusalReasonCode = payload.optString(REFUSAL_REASON_CODE, "")
 
-        return KarhooError.fromCustomError(result, refusalReasonCode, refusalReason)
+        return KarhooError.fromCustomError(result,
+            refusalReasonCode,
+            if (AdyenPaymentErrorCode.getByRefusalCode(refusalReasonCode) == -1) refusalReason else AdyenPaymentErrorCode.getByRefusalCode(refusalReasonCode).toString() ,
+        )
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {
@@ -320,9 +314,7 @@ class AdyenPaymentPresenter(
     }
 
     private fun updateCardDetails(paymentData: String?) {
-        if (paymentData.isNullOrEmpty()) {
-            view?.refresh()
-        } else {
+        if (!paymentData.isNullOrEmpty()) {
             val additionalData = JSONObject(paymentData)
             val newCardNumber = additionalData.optString(CARD_SUMMARY, "")
             val type = additionalData.optString(PAYMENT_METHOD, "")

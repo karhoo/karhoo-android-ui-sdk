@@ -2,31 +2,23 @@ package com.karhoo.uisdk.screen.booking.checkout.payment
 
 import android.content.Context
 import android.content.Intent
-import android.util.AttributeSet
-import android.view.View
-import android.widget.LinearLayout
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
+import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.sdk.api.network.response.Resource
+import com.karhoo.sdk.api.service.payments.PaymentsService
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
-import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
-import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
-import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
 
-class BookingPaymentView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr),
-    BookingPaymentContract.View,
+class BookingPaymentHandler @JvmOverloads constructor(
+    private val userStore: UserStore = KarhooApi.userStore,
+    private val paymentsService: PaymentsService = KarhooApi.paymentsService,
+    val context: Context,
+) : BookingPaymentContract.PaymentHandler,
     PaymentDropInContract.Actions {
-
-    private var presenter: BookingPaymentContract.Presenter? = BookingPaymentPresenter(this)
-
-    private var addCardIcon: Int = R.drawable.uisdk_ic_plus
 
     var paymentActions: BookingPaymentContract.PaymentActions? = null
     var cardActions: BookingPaymentContract.PaymentViewActions? = null
@@ -34,18 +26,24 @@ class BookingPaymentView @JvmOverloads constructor(
 
     private var hasValidPayment = false
 
-    init {
-        inflate(context, R.layout.uisdk_view_booking_checkout_payment, this)
-        getCustomisationParameters(context, attrs, defStyleAttr)
-        if (!isInEditMode) {
-            this.setOnClickListener {
-                changeCard()
-            }
-        }
-    }
-
     override fun getPaymentProvider() {
-        presenter?.getPaymentProvider()
+        if (userStore.paymentProvider == null) {
+            paymentsService.getPaymentProvider().execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        retrieveLoyaltyStatus()
+                        bindDropInView()
+                    }
+                    is Resource.Failure -> showError(
+                        R.string.kh_uisdk_something_went_wrong,
+                        result.error
+                    )
+                }
+            }
+        } else {
+            retrieveLoyaltyStatus()
+            bindDropInView()
+        }
     }
 
     override fun setPassengerDetails(passengerDetails: PassengerDetails?) {
@@ -53,7 +51,9 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun bindDropInView() {
-        presenter?.createPaymentView(this)
+        val view = KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView
+        view?.actions = this
+        setPaymentView(view = view)
         bindPaymentDetails(KarhooApi.userStore.savedPaymentInfo)
     }
 
@@ -61,36 +61,8 @@ class BookingPaymentView @JvmOverloads constructor(
         dropInView = view
     }
 
-    override fun setViewVisibility(visibility: Int) {
-        cardActions?.handleViewVisibility(visibility)
-    }
-
-    private fun getCustomisationParameters(
-        context: Context,
-        attr: AttributeSet?,
-        defStyleAttr: Int
-    ) {
-        val typedArray = context.obtainStyledAttributes(
-            attr, R.styleable.BookingPaymentView,
-            defStyleAttr, R.style.KhPaymentView
-        )
-        addCardIcon = typedArray.getResourceId(
-            R.styleable.BookingPaymentView_addCardIcon, R
-                .drawable
-                .uisdk_ic_plus
-        )
-    }
-
-    private fun changeCard() {
-        changeCardProgressBar.visibility = VISIBLE
-        cardLogoImage.visibility = INVISIBLE
+    fun changeCard() {
         cardActions?.handleChangeCard()
-    }
-
-    override fun refresh() {
-        editCardButtonVisibility(View.VISIBLE)
-        changeCardProgressBar.visibility = GONE
-        cardLogoImage.visibility = VISIBLE
     }
 
     override fun initialisePaymentFlow(quote: Quote?) {
@@ -101,19 +73,8 @@ class BookingPaymentView @JvmOverloads constructor(
         dropInView?.initialiseGuestPayment(quote)
     }
 
-    private fun editCardButtonVisibility(visibility: Int) {
-        KarhooApi.userStore.savedPaymentInfo?.let {
-            changeCardLabel.visibility = visibility
-        } ?: run {
-            if (hasValidPayment)
-                changeCardLabel.visibility = GONE
-            else
-                changeCardLabel.visibility = visibility
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        dropInView?.onActivityResult(requestCode, resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        return dropInView?.onActivityResult(requestCode, resultCode, data) == true
     }
 
     override fun showError(error: Int, karhooError: KarhooError?) {
@@ -135,7 +96,6 @@ class BookingPaymentView @JvmOverloads constructor(
     }
 
     override fun showPaymentFailureDialog(error: KarhooError?) {
-        refresh()
         paymentActions?.showPaymentFailureDialog(null, error)
     }
 
@@ -145,10 +105,6 @@ class BookingPaymentView @JvmOverloads constructor(
 
     override fun handlePaymentDetailsUpdate() {
         paymentActions?.handlePaymentDetailsUpdate()
-    }
-
-    override fun updatePaymentViewVisbility(visibility: Int) {
-        paymentLayout.visibility = visibility
     }
 
     override fun initialiseChangeCard(quote: Quote?) {

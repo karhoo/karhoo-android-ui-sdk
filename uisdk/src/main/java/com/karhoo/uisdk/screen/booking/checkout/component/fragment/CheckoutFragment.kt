@@ -110,6 +110,10 @@ internal class CheckoutFragment : Fragment() {
 
                 KarhooAvailability.pauseUpdates()
             }
+
+            override fun startBookingProcess() {
+                checkoutActionButton.performClick()
+            }
         })
 
         val bundle = arguments as Bundle
