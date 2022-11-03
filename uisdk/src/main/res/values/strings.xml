@@ -5,23 +5,17 @@
     <string name="kh_uisdk_about">About</string>
     <string name="kh_uisdk_add_card">ADD CARD</string>
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
-    <string name="kh_uisdk_add_payment">Add Payment</string>
     <string name="kh_uisdk_additional_comments">Additional comments (Child seat, wheelchair, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
     <string name="kh_uisdk_address_pick_up">Pick up</string>
     <string name="kh_uisdk_address_picker_add_pickup">Add pick up</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
-    <string name="kh_uisdk_address_picker_pickup">Finding address</string>
     <!-- Categories -->
-    <string name="kh_uisdk_all_category">All</string>
-    <string name="kh_uisdk_allocated">Your trip has now been allocated to a driver</string>
     <string name="kh_uisdk_allocating_trip_one">Please wait whilst you\'re allocated a driver</string>
     <string name="kh_uisdk_allocating_trip_two">This may take a moment or two</string>
     <string name="kh_uisdk_allocation_delay_text">It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.</string>
     <string name="kh_uisdk_allocation_delay_title">Allocation delay</string>
     <string name="kh_uisdk_alternative">ALTERNATIVE</string>
-    <string name="kh_uisdk_app_invalid">The current version of the app is out of date, please update.</string>
-    <string name="kh_uisdk_app_name">Karhoo Traveller</string>
     <string name="kh_uisdk_arrival">Arrival</string>
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_baggage_max">%d luggages max</string>
@@ -31,7 +25,6 @@
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Add</string>
-    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Payment method</string>
     <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_back_button">Back</string>
     <string name="kh_uisdk_booking_checkout_edit_passenger">Edit</string>

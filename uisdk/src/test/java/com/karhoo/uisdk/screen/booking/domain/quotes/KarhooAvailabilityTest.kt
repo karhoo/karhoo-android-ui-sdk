@@ -12,7 +12,6 @@ import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doNothing

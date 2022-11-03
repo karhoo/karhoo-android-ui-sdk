@@ -5,16 +5,13 @@ import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
-import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardLogoImage
-import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.cardNumberText
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardLabel
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.changeCardProgressBar
 import kotlinx.android.synthetic.main.uisdk_view_booking_payment.view.paymentLayout
@@ -104,11 +101,6 @@ class BookingPaymentView @JvmOverloads constructor(
         dropInView?.initialiseGuestPayment(quote)
     }
 
-    private fun bindViews(cardType: CardType?, number: String) {
-        cardNumberText.text = if (number.contains("••••")) number else "•••• $number"
-        setCardType(cardType)
-    }
-
     private fun editCardButtonVisibility(visibility: Int) {
         KarhooApi.userStore.savedPaymentInfo?.let {
             changeCardLabel.visibility = visibility
@@ -117,21 +109,6 @@ class BookingPaymentView @JvmOverloads constructor(
                 changeCardLabel.visibility = GONE
             else
                 changeCardLabel.visibility = visibility
-        }
-    }
-
-    private fun setCardType(cardType: CardType?) {
-        when (cardType) {
-            CardType.VISA -> cardLogoImage.background = ContextCompat.getDrawable(
-                context, R.drawable
-                    .uidsk_ic_card_visa
-            )
-            CardType.MASTERCARD -> cardLogoImage.background =
-                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_mastercard)
-            CardType.AMEX -> cardLogoImage.background =
-                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_amex)
-            else -> cardLogoImage.background =
-                ContextCompat.getDrawable(context, R.drawable.uisdk_ic_card_blank)
         }
     }
 
@@ -146,34 +123,7 @@ class BookingPaymentView @JvmOverloads constructor(
     override fun hasValidPaymentType(): Boolean = hasValidPayment
 
     override fun bindPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        if (savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()) {
-            hasValidPayment = true
-            bindViews(savedPaymentInfo.cardType, savedPaymentInfo.lastFour)
-            changeCardProgressBar.visibility = INVISIBLE
-            editCardButtonVisibility(View.VISIBLE)
-            changeCardLabel.visibility = VISIBLE
-            cardLogoImage.visibility = VISIBLE
-            changeCardLabel.text =
-                resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger) //TODO fixme
-            setCardType(savedPaymentInfo.cardType)
-            paymentLayout.setBackgroundResource(
-                R.drawable
-                    .uisdk_border_background
-            )
-        } else {
-            hasValidPayment = false
-            cardNumberText.text =
-                resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method_title)
-            changeCardLabel.text =
-                resources.getString(R.string.kh_uisdk_booking_checkout_add_payment_method)
-            changeCardLabel.visibility = VISIBLE
-            cardLogoImage.visibility = VISIBLE
-            cardLogoImage.background = ContextCompat.getDrawable(context, addCardIcon)
-            paymentLayout.setBackgroundResource(
-                R.drawable
-                    .uisdk_dotted_background
-            )
-        }
+        hasValidPayment = savedPaymentInfo != null && savedPaymentInfo.lastFour.isNotEmpty()
         paymentActions?.handlePaymentDetailsUpdate()
     }
 
