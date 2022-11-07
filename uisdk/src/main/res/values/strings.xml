@@ -49,7 +49,6 @@
     <string name="kh_uisdk_adyen_payment_error_40">The payment network can\'t be reached. Retry the transaction with a different payment method.</string>
     <string name="kh_uisdk_adyen_payment_error_41">A PIN or signature is required. Retry the transaction.</string>
     <string name="kh_uisdk_adyen_payment_error_42">The 3D Secure authentication failed due to an issue at the card network or issuer. Retry the transaction, or retry the transaction with a different payment method.</string>
-    <!-- Categories -->
     <string name="kh_uisdk_allocating_trip_one">Please wait whilst you\'re allocated a driver</string>
     <string name="kh_uisdk_allocating_trip_two">This may take a moment or two</string>
     <string name="kh_uisdk_allocation_delay_text">It is taking longer than usual for the fleet to allocate a driver. Please wait, contact the fleet, or cancel and rebook with a different fleet.</string>
@@ -64,7 +63,6 @@
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger details</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Add</string>
-    <!-- Booking Checkout Component -->
     <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
     <string name="kh_uisdk_booking_checkout_title">Checkout</string>
     <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
@@ -88,7 +86,6 @@
     <string name="kh_uisdk_cancelling_ride">Cancelling Ride</string>
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Card</string>
-    <!-- Central Lat Lng Charring X -->
     <string name="kh_uisdk_checkout_as_guest">BOOK RIDE</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your journey</string>
     <!-- Trip states -->
@@ -101,7 +98,6 @@
     <string name="kh_uisdk_country_search">Search country/region</string>
     <string name="kh_uisdk_current_location">Get current location</string>
     <string name="kh_uisdk_destination_book_error">You must select a destination before booking a ride</string>
-    <!-- Errors -->
     <string name="kh_uisdk_difficulties_cancelling_message">We are experiencing issues cancelling your ride. Please contact the fleet.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Difficulties Cancelling</string>
     <string name="kh_uisdk_dismiss">DISMISS</string>
@@ -316,14 +312,12 @@
     <string name="kh_uisdk_passengers_max">%d passengers max</string>
     <string name="kh_uisdk_password_hint">Password</string>
     <string name="kh_uisdk_past_rides_empty">You have not taken any rides yet. We can help you get from A to B.</string>
-    <!-- Adyen -->
     <string name="kh_uisdk_payment_details">Payment Details</string>
     <string name="kh_uisdk_payment_issue">Payment Issue</string>
     <string name="kh_uisdk_payment_issue_message">There has been an issue with your card</string>
     <string name="kh_uisdk_pending">Pending</string>
     <string name="kh_uisdk_permission_rationale_location">In order to locate you on the map we need to use your devices location. Please allow location permissions</string>
     <string name="kh_uisdk_permissions">PERMISSIONS</string>
-    <!-- Profile -->
     <string name="kh_uisdk_pickup_type_curbside">Curbside</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and Greet</string>
     <string name="kh_uisdk_pickup_type_standby">Standby</string>
@@ -362,7 +356,6 @@
     <string name="kh_uisdk_rebook_ride">Rebook Ride</string>
     <!-- Address -->
     <string name="kh_uisdk_recents_empty">No recent results</string>
-    <!-- Register -->
     <string name="kh_uisdk_report_issue">Report Issue</string>
     <string name="kh_uisdk_requested">Your trip has been requested with %s</string>
     <string name="kh_uisdk_reset_filter">Reset filter</string>
@@ -376,7 +369,6 @@
     <string name="kh_uisdk_ride_confirmed">Ride Confirmed</string>
     <string name="kh_uisdk_ride_contact_details">Details</string>
     <string name="kh_uisdk_ride_details">Ride Details</string>
-    <!-- trip info -->
     <string name="kh_uisdk_ride_state_arrived">Arrived</string>
     <string name="kh_uisdk_ride_state_cancelled">Cancelled</string>
     <string name="kh_uisdk_ride_state_completed">Completed</string>
@@ -384,7 +376,6 @@
     <string name="kh_uisdk_ride_state_der">Driver en route</string>
     <string name="kh_uisdk_ride_state_pob">Passenger on board</string>
     <string name="kh_uisdk_ride_state_requested">Requested</string>
-    <!-- Completed trip -->
     <string name="kh_uisdk_rides">Rides</string>
     <string name="kh_uisdk_saloon">Saloon</string>
     <string name="kh_uisdk_save">Save</string>
@@ -395,7 +386,6 @@
     <string name="kh_uisdk_sign_in_but">SIGN IN</string>
     <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
     <string name="kh_uisdk_sort_by">Sort by</string>
-    <!-- Quotes List -->
     <string name="kh_uisdk_star_excellent">Excellent</string>
     <string name="kh_uisdk_star_fair">Fair</string>
     <string name="kh_uisdk_star_good">Good</string>
