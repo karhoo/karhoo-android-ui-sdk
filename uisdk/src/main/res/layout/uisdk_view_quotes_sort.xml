@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/quotesSortByTitle"
             style="@style/KhQuoteListSortTitle"
             android:text="@string/kh_uisdk_sort_by"
             app:layout_constraintBottom_toBottomOf="parent"
