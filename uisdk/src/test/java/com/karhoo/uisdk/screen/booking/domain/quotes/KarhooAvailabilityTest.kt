@@ -38,7 +38,6 @@ class KarhooAvailabilityTest {
     private var observable: Observable<QuoteList> = mock()
     private var locationInfo = LocationInfo()
     private lateinit var liveFleetsViewModel: LiveFleetsViewModel
-    private lateinit var categoriesViewModel: CategoriesViewModel
     private lateinit var availability: AvailabilityProvider
     private var lifecycle = LifecycleRegistry(lifecycleOwner)
     private lateinit var availabilityHandler: AvailabilityHandler
@@ -55,7 +54,6 @@ class KarhooAvailabilityTest {
         whenever(lifecycleOwner.lifecycle).thenReturn(lifecycle)
 
         liveFleetsViewModel = LiveFleetsViewModel()
-        categoriesViewModel = CategoriesViewModel()
         journeyDetailsStateViewModel = JourneyDetailsStateViewModel(mock())
 
         availability = KarhooAvailability
