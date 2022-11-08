@@ -291,7 +291,6 @@ class ResultRobot : BaseTestRobot() {
         categoryTextVisible()
         priceTextVisible()
         fareTypeVisible()
-        allCategoriesAreVisible()
     }
 
     //    fun expandChevronIsVisibleAndEnabled() {
@@ -355,14 +354,6 @@ class ResultRobot : BaseTestRobot() {
 
     fun fareTypeVisible() {
         viewIsVisibleIsDescendant(R.id.fareTypeText, R.id.quotesListRecycler)
-    }
-
-    fun allCategoriesAreVisible() {
-        textIsVisibleIsDescendant(R.string.kh_uisdk_taxi, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_mpv, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_electric, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_moto, R.id.categorySelectorWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_all_category, R.id.categorySelectorWidget)
     }
 
     fun sideMenuIsNotVisible() {
@@ -531,7 +522,6 @@ class ResultRobot : BaseTestRobot() {
         viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         //        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_add_payment, R.id.cardNumberText)
     }
 
     fun paymentCardDetailsCheck() {
