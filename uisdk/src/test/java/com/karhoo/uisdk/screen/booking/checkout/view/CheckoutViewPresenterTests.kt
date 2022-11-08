@@ -247,7 +247,7 @@ class CheckoutViewPresenterTests {
             arePassengerDetailsValid = true,
                                                                  )
 
-        assertEquals(returnValue, BookButtonState.BOOK)
+        assertEquals(returnValue, BookButtonState.NEXT)
     }
 
     /**

@@ -179,7 +179,7 @@ Along the builder data we can find a few parameters that can be passed down:
  - "tripDetails" of type TripInfo which may contain the origin and destination in order for the addressView to be filled in
  - "outboundTripId" can be used when "rebooking" a trip
  - "initialLocation" should be passed if the user shouldn't wait for the GPS sensor to retrieve a location
- - "passengerDetails" can be passed for easy completing the passenger details in checkout
+ - "passengerDetails" can be passed to pre-fill the passenger details in the checkout screen
 The below example launches a Booking Activity in a default state:
 
 ```kotlin

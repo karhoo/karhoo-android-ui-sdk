@@ -148,8 +148,8 @@ override fun authenticationMethod(): AuthenticationMethod {
 For authenticating with a guest user, the following authentication method should be set
 ```kotlin
   override fun authenticationMethod(): AuthenticationMethod {
-  return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
-}
+        return AuthenticationMethod.Guest(identifier = "client_identifier", referer = "referer", organisationId = "organisation_id")
+    }
 ```
 
 The UISDK also provides the requireSDKAuthentication method in the KarhooUISDKConfiguration interface to notify whenever an external authentication is required. This happens only when all attempts to refresh the access token needed for authenticating requests have failed.
@@ -179,7 +179,7 @@ Along the builder data we can find a few parameters that can be passed down:
 - "tripDetails" of type TripInfo which may contain the origin and destination in order for the addressView to be filled in
 - "outboundTripId" can be used when "rebooking" a trip
 - "initialLocation" should be passed if the user shouldn't wait for the GPS sensor to retrieve a location
-- "passengerDetails" can be passed for easy completing the passenger details in checkout
+- "passengerDetails" can be passed to pre-fill the passenger details in the checkout screen
   The below example launches a Booking Activity in a default state:
 
 ```kotlin
