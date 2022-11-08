@@ -82,6 +82,6 @@ class CheckoutPresenterTests {
             arePassengerDetailsValid = true,
                                                       )
 
-        Assert.assertEquals(BookButtonState.BOOK, buttonState)
+        Assert.assertEquals(BookButtonState.NEXT, buttonState)
     }
 }
