@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <string name="continue_button">Successivo</string>
     <!-- Locale -->
     <string name="karhoo_uisdk_locale">it_IT</string>
     <string name="kh_uisdk_about">Circa</string>
@@ -428,6 +429,4 @@
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pre-autorizzare</string>
-    <!-- Adyen default "Pay %s" button for checkout -->
-    <string name="pay_button_with_value">Pre-autorizzare %s</string>
 </resources>
