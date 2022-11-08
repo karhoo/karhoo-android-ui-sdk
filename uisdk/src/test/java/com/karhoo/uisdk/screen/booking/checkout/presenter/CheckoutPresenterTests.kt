@@ -30,7 +30,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = true,
             arePassengerDetailsValid = false,
-            isPaymentValid = false
                                                       )
 
         Assert.assertEquals(BookButtonState.SAVE, buttonState)
@@ -41,7 +40,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = true,
             arePassengerDetailsValid = true,
-            isPaymentValid = false
                                                       )
 
         Assert.assertEquals(BookButtonState.SAVE, buttonState)
@@ -52,7 +50,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = true,
             arePassengerDetailsValid = false,
-            isPaymentValid = true
                                                       )
 
         Assert.assertEquals(BookButtonState.SAVE, buttonState)
@@ -63,7 +60,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = true,
             arePassengerDetailsValid = true,
-            isPaymentValid = true
                                                       )
 
         Assert.assertEquals(BookButtonState.SAVE, buttonState)
@@ -74,7 +70,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = false,
             arePassengerDetailsValid = false,
-            isPaymentValid = false
                                                       )
 
         Assert.assertEquals(BookButtonState.NEXT, buttonState)
@@ -85,7 +80,6 @@ class CheckoutPresenterTests {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = false,
             arePassengerDetailsValid = true,
-            isPaymentValid = true
                                                       )
 
         Assert.assertEquals(BookButtonState.BOOK, buttonState)

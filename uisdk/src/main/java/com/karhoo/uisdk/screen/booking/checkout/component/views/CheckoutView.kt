@@ -140,6 +140,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
 
         showLoyaltyView(false)
+
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired()) {
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.setOnClickListener {
+                loadingButtonCallback.checkState()
+            }
+        }
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
@@ -301,7 +307,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun handlePaymentDetailsUpdate() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isTermsCheckBoxValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -501,8 +507,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
-    override fun isPaymentMethodValid(): Boolean = bookingPaymentHandler.hasValidPaymentType()
-
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE) {
             loyaltyView.getLoyaltyPreAuthNonce { result, loyaltyStatus ->
@@ -566,7 +570,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     private fun termsAndConditionsCheckBoxCheckedChanged() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isTermsCheckBoxValid()))
     }
 
     companion object {

@@ -58,7 +58,7 @@
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_baggage_max">%d luggages max</string>
     <string name="kh_uisdk_base">Base Fare</string>
-    <string name="kh_uisdk_book_now">CONFIRM BOOKING</string>
+    <string name="kh_uisdk_book_now">CONFIRM AND PAY</string>
     <!-- Booking Confirmation -->
     <string name="kh_uisdk_booking_car">BOOK RIDE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger details</string>

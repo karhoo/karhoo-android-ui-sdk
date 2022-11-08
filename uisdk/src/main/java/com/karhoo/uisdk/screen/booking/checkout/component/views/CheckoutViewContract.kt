@@ -73,8 +73,6 @@ interface CheckoutViewContract {
 
         fun arePassengerDetailsValid(): Boolean
 
-        fun isPaymentMethodValid(): Boolean
-
         fun clickedPassengerSaveButton()
 
         fun isPassengerDetailsViewVisible(): Boolean
@@ -125,7 +123,7 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
-        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean = true):
+        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isTermsCheckBoxValid: Boolean = true):
                 BookButtonState
 
         fun createLoyaltyViewResponse()
