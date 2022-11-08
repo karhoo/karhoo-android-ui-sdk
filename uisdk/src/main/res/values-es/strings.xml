@@ -5,13 +5,11 @@
     <string name="kh_uisdk_about">Información</string>
     <string name="kh_uisdk_add_card">AGREGAR PAGO</string>
     <string name="kh_uisdk_add_flight_details">Agregar información de vuelo</string>
-    <string name="kh_uisdk_add_payment">Agrege un método de pago</string>
     <string name="kh_uisdk_additional_comments">Comentarios adicionales (Niños, Silla de ruedas, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Destino</string>
     <string name="kh_uisdk_address_pick_up">Recogida</string>
     <string name="kh_uisdk_address_picker_add_pickup">Añadir dirección de recogida</string>
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir destino</string>
-    <string name="kh_uisdk_address_picker_pickup">Buscando dirección</string>
     <string name="kh_uisdk_adyen_payment_error_02">La transacción fue rechazada.</string>
     <string name="kh_uisdk_adyen_payment_error_03">Referencias</string>
     <string name="kh_uisdk_adyen_payment_error_04">La transacción no se realizó debido a un error que ocurrió por parte del adquirente.</string>
@@ -51,16 +49,11 @@
     <string name="kh_uisdk_adyen_payment_error_40">No se puede acceder a la red de pago. Vuelva a intentar la transacción con un método de pago diferente.</string>
     <string name="kh_uisdk_adyen_payment_error_41">Se requiere un PIN o una firma. Vuelva a intentar la transacción.</string>
     <string name="kh_uisdk_adyen_payment_error_42">La autenticación 3D Secure falló debido a un problema en la red o el emisor de la tarjeta. Vuelva a intentar la transacción o vuelva a intentar la transacción con un método de pago diferente.</string>
-    <!-- Categories -->
-    <string name="kh_uisdk_all_category">Todo</string>
-    <string name="kh_uisdk_allocated">Conductor asignado</string>
     <string name="kh_uisdk_allocating_trip_one">Espera hasta que se te asigne un conductor</string>
     <string name="kh_uisdk_allocating_trip_two">Esto puede llevar unos minutos</string>
     <string name="kh_uisdk_allocation_delay_text">La flota está tardando más de lo habitual en asignar un conductor. Por favor espere, contacte con la flota o cancele y vuelva a reservar con una flota diferente.</string>
     <string name="kh_uisdk_allocation_delay_title">Retraso en asignación</string>
     <string name="kh_uisdk_alternative">Otras Opciones</string>
-    <string name="kh_uisdk_app_invalid">Esta versión de la app no está actualizada. Actualízala.</string>
-    <string name="kh_uisdk_app_name">KarhooTraveller</string>
     <string name="kh_uisdk_arrival">Llegada</string>
     <string name="kh_uisdk_arrived">Tu conductor ha llegado</string>
     <string name="kh_uisdk_baggage_max">Máximo %d piezas de equipaje</string>
@@ -70,15 +63,9 @@
     <string name="kh_uisdk_booking_car">Confirmar viaje</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Agregar detalles del pasajero</string>
     <string name="kh_uisdk_booking_checkout_add_payment_method">Añadir método de pago</string>
-    <string name="kh_uisdk_booking_checkout_add_payment_method_title">Método de pago</string>
-    <!-- Booking Checkout Component -->
-    <string name="kh_uisdk_booking_checkout_back_button">Volver</string>
-    <string name="kh_uisdk_booking_checkout_edit_passenger">Editar</string>
     <string name="kh_uisdk_booking_checkout_passenger">Pasajero</string>
     <string name="kh_uisdk_booking_checkout_title">Caja</string>
-    <string name="kh_uisdk_booking_confirmation">Reserva confirmada</string>
     <string name="kh_uisdk_booking_details_error">Detalles de reserva inválidos</string>
-    <string name="kh_uisdk_booking_error">Hubo un problema con tu solicitud de viaje. Inténtalo de nuevo</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reserva fallida</string>
     <string name="kh_uisdk_booking_failed_body">La demanda es alta. %1 no tiene conductores disponibles en este momento</string>
@@ -86,30 +73,20 @@
     <!-- Terms and Conditions -->
     <string name="kh_uisdk_booking_terms">Al hacer una reserva, usted  acepta las %1$s | %2$s así como los %4$s de %3$s | %5$s de %3$s.</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Condiciones de Uso</string>
-    <string name="kh_uisdk_by_continuing_you_agree_to">Al crear una cuenta de Karhoo estás aceptando sus</string>
     <string name="kh_uisdk_call">LLAMAR</string>
     <string name="kh_uisdk_cancel">CANCELAR</string>
     <string name="kh_uisdk_cancel_ride">Cancelar Reserva</string>
     <string name="kh_uisdk_cancel_ride_successful">Tu viaje se canceló con éxito</string>
     <string name="kh_uisdk_cancel_ride_successful_message">Tu reserva se canceló con éxito.</string>
     <string name="kh_uisdk_cancel_your_ride">¿Cancelar el viaje?</string>
-    <string name="kh_uisdk_cancellation_fee">Puede que se te cobre una tarifa de cancelación</string>
     <string name="kh_uisdk_cancelled">Cancelado</string>
     <string name="kh_uisdk_cancelled_by_dispatch">El proveedor %s canceló tu reserva</string>
-    <string name="kh_uisdk_cancelled_by_karhoo">Karhoo canceló tu reserva</string>
     <string name="kh_uisdk_cancelled_by_user">Has cancelado tu reserva con %s</string>
     <string name="kh_uisdk_cancelling">Mantenga para cancelar</string>
     <string name="kh_uisdk_cancelling_ride">Cancelando viaje</string>
     <string name="kh_uisdk_capacity">%s</string>
-    <string name="kh_uisdk_car_description">Coche: %1$s</string>
     <string name="kh_uisdk_card">Tarjeta</string>
-    <string name="kh_uisdk_card_charged">Cobro realizado</string>
-    <!-- Central Lat Lng Charring X -->
-    <string name="kh_uisdk_central_lat">51.5073</string>
-    <string name="kh_uisdk_central_long">0.1276</string>
-    <string name="kh_uisdk_change">Adjuntar</string>
     <string name="kh_uisdk_checkout_as_guest">Ordenar como invitado</string>
-    <string name="kh_uisdk_code">Prefijo</string>
     <string name="kh_uisdk_completed">Esperamos que hayas disfrutado del viaje</string>
     <!-- Trip states -->
     <string name="kh_uisdk_confirmed">Tu viaje ha sido confirmado con %s</string>
@@ -117,22 +94,14 @@
     <string name="kh_uisdk_contact_driver">Llamar</string>
     <string name="kh_uisdk_contact_fleet">Llamar a la flota</string>
     <string name="kh_uisdk_contact_us">Contacta con nosotros</string>
-    <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/es/requests/new</string>
     <string name="kh_uisdk_continue_journey">CONTINUAR</string>
-    <string name="kh_uisdk_continue_registration">CONTINUAR</string>
     <string name="kh_uisdk_country_search">Buscar país/región</string>
     <string name="kh_uisdk_current_location">Seleccionar ubicación actual</string>
-    <string name="kh_uisdk_date">Fecha</string>
-    <string name="kh_uisdk_date_label">Fecha:</string>
     <string name="kh_uisdk_destination_book_error">Selecciona un destino para poder hacer una reserva</string>
-    <!-- Errors -->
-    <string name="kh_uisdk_destination_price_error">Selecciona un destino para ver las tarifas</string>
     <string name="kh_uisdk_difficulties_cancelling_message">"Estamos experimentando dificultades cancelando tu viaje. Por favor llama a la flota. "</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Dificultades para cancelar</string>
-    <string name="kh_uisdk_discard">Cancelar</string>
     <string name="kh_uisdk_dismiss">OK</string>
     <string name="kh_uisdk_dispatch_cancelled" formatted="false">Disculpa, %s no tiene conductores disponibles ahora</string>
-    <string name="kh_uisdk_done">OK</string>
     <string name="kh_uisdk_drawer_closed">Drawer closed</string>
     <string name="kh_uisdk_drawer_open">Drawer open</string>
     <string name="kh_uisdk_driver_arrival">Llegada del conductor</string>
@@ -142,13 +111,11 @@
     <string name="kh_uisdk_email_info">Por favor no elimines esta información ya que nos ayuda a mejorar la app.</string>
     <string name="kh_uisdk_email_report_issue_message">Por favor, deje sus comentarios sobre un tema específico en el espacio a continuación.</string>
     <string name="kh_uisdk_enter_destination">¿Dónde vas?</string>
-    <string name="kh_uisdk_enter_destination_for_vehicles">Introduce un destino para ver los vehículos disponibles</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_enter_pickup">¿Dónde estás?</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Borrar dirección</string>
     <string name="kh_uisdk_error">Error</string>
-    <string name="kh_uisdk_error_cannot_create_user">Parece que hubo un problema al registrar tu cuenta. Vuelve a intentarlo.</string>
     <string name="kh_uisdk_error_invalid_password">Error: la contraseña es incorrecta</string>
     <string name="kh_uisdk_estimated_arrival_time">Tiempo estimado de llegada</string>
     <string name="kh_uisdk_estimated_fare">Precio estimado</string>
@@ -156,8 +123,6 @@
     <string name="kh_uisdk_eta">Proximidad</string>
     <string name="kh_uisdk_exec">Ejecutivo</string>
     <string name="kh_uisdk_extra_capabilities">+%d</string>
-    <string name="kh_uisdk_failed_trip">No pudimos reservar tu viaje</string>
-    <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/es</string>
     <!-- Alerts -->
     <string name="kh_uisdk_faretype_info_base">La tarifa final puede verse afectada por propinas, peajes, impuestos u otros cargos</string>
     <!-- Support -->
@@ -209,10 +174,8 @@
     <!-- Airports -->
     <string name="kh_uisdk_flight_number">Número de vuelo</string>
     <string name="kh_uisdk_flight_tracking">Vincule su vuelo</string>
-    <string name="kh_uisdk_getting_trip_status">Cargando el estado de tu reserva...</string>
     <string name="kh_uisdk_got_it">ENTENDIDO</string>
     <string name="kh_uisdk_gps_tracking">Seguimiento GPS</string>
-    <string name="kh_uisdk_help">Ayuda</string>
     <plurals name="kh_uisdk_hours_plural">
         <item quantity="one">%d hora</item>
         <item quantity="other">%d horas</item>
@@ -223,9 +186,7 @@
     <string name="kh_uisdk_invalid_email">email no válido</string>
     <string name="kh_uisdk_invalid_empty_field">Error: no se permiten campos vacíos</string>
     <string name="kh_uisdk_invalid_input_value">valor no válido</string>
-    <string name="kh_uisdk_invalid_password">" Min. 8 caracteres, 1 mayúscula, 1 número"</string>
     <string name="kh_uisdk_invalid_phone_number">Número de teléfono invalido</string>
-    <string name="kh_uisdk_invalid_prebook_time_error">La pre-reserva debe realizarse por lo menos a una hora de la hora actual</string>
     <!-- General errors, K0xxx -->
     <string name="kh_uisdk_K0001">Error general</string>
     <string name="kh_uisdk_K0002">Petición de solicitud no válida</string>
@@ -236,7 +197,6 @@
     <string name="kh_uisdk_K0007">Error generalizado</string>
     <!-- User errors, K1xxx -->
     <string name="kh_uisdk_K1001">Imposible registrar usuario</string>
-    <string name="kh_uisdk_K1002">Imposible registrar usuario (el usuario ya existe)</string>
     <string name="kh_uisdk_K1003">Imposible registrar usuario</string>
     <string name="kh_uisdk_K1004">Imposible registrar usuario (número de teléfono no válido)</string>
     <string name="kh_uisdk_K1005">Imposible obtener los datos del usuario (token no válido)</string>
@@ -297,20 +257,15 @@
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
     <string name="kh_uisdk_legal_notice_title"/>
-    <string name="kh_uisdk_licence">Licencia:%1$s</string>
     <string name="kh_uisdk_loading_min">min</string>
     <string name="kh_uisdk_location_disabled">Activa los servicios de localización para utilizar la aplicación</string>
-    <string name="kh_uisdk_location_permission_denied">El permiso de ubicación ha sido denegado, permítelo para que podamos ubicarlo.</string>
     <!-- Shared Preferences -->
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
-    <!-- Navigation Drawer -->
-    <string name="kh_uisdk_login">Acceder</string>
     <!-- Loyalty -->
     <string name="kh_uisdk_loyalty_balance_title">SALDO: %s PUNTOS</string>
     <string name="kh_uisdk_loyalty_info">Su tarjeta es necesaria para autorizar esta transacción en caso de que el precio final del viaje exceda su saldo de puntos. No se le cobrará a su cuenta si sus puntos de fidelidad cubren el precio total.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Tu saldo de puntos es insuficiente</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">El modo de lealtad actual no es elegible para autorización previa</string>
-    <string name="kh_uisdk_loyalty_points_burned_for_trip">Estás usando %1$s puntos</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Se añadirán %1$s puntos de fidelidad al saldo de su cuenta al final del viaje</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">No se le permite quemar puntos</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Su saldo de puntos no es suficiente para pagar este viaje</string>
@@ -325,7 +280,6 @@
     <string name="kh_uisdk_meeting_point">Punto de encuentro</string>
     <string name="kh_uisdk_metered">Precio taxímetro</string>
     <string name="kh_uisdk_min">min</string>
-    <string name="kh_uisdk_minibus">Minibus</string>
     <string name="kh_uisdk_mins">min</string>
     <plurals name="kh_uisdk_minutes_plurals">
         <item quantity="one">%d minuto</item>
@@ -335,7 +289,6 @@
     <string name="kh_uisdk_mobile_phone_number_hint">Número de teléfono</string>
     <string name="kh_uisdk_moto">Moto</string>
     <string name="kh_uisdk_mpv">Monovolumen</string>
-    <string name="kh_uisdk_name_hint">Nombre</string>
     <string name="kh_uisdk_network_error">Parece que tenemos problemas para conectarnos a la red</string>
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
@@ -344,9 +297,7 @@
     <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
     <string name="kh_uisdk_no_coverage_subtitle">Contáctenos para sugerir flotas nuevas</string>
     <string name="kh_uisdk_no_coverage_title">Aún no hay flotas en esta área</string>
-    <string name="kh_uisdk_no_destination">Sin Destino</string>
     <string name="kh_uisdk_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
-    <string name="kh_uisdk_no_results_label">No results</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
     <string name="kh_uisdk_offer_expired">Cotización caducada</string>
     <string name="kh_uisdk_offer_expired_text">Seleccione una nueva cotización para continuar con su reserva</string>
@@ -355,26 +306,18 @@
     <string name="kh_uisdk_origin_book_error">Selecciona un origin para poder hacer una reserva</string>
     <string name="kh_uisdk_P0001">Error al recuperar ID de usuario del token</string>
     <string name="kh_uisdk_P0002">Servicio de pago de llamadas fallido</string>
-    <string name="kh_uisdk_pass_length">Al menos 8 caracteres</string>
     <string name="kh_uisdk_pass_on_board">Ten un buen viaje con %s</string>
     <!-- Guest Checkout -->
     <string name="kh_uisdk_passenger_details">Detalles del pasajero</string>
     <string name="kh_uisdk_passengers_max">Máximo %d pasajero(s)</string>
     <string name="kh_uisdk_password_hint">Contraseña</string>
     <string name="kh_uisdk_past_rides_empty">Una vez hayas hecho un viaje, aparecerá aquí.</string>
-    <!-- Adyen -->
-    <string name="kh_uisdk_pay_button">Enviar</string>
-    <string name="kh_uisdk_pay_button_with_value">Preauthorise %s</string>
     <string name="kh_uisdk_payment_details">Detalles del pago</string>
     <string name="kh_uisdk_payment_issue">Error con el pago</string>
     <string name="kh_uisdk_payment_issue_message">Hubo un problema con tu tarjeta</string>
-    <string name="kh_uisdk_payment_summary">Resumen del pago</string>
     <string name="kh_uisdk_pending">Pendiente</string>
     <string name="kh_uisdk_permission_rationale_location">Para poder ubicarte en el mapa necesitamos acceso a tu localización. Por favor, activa el permiso de localización.</string>
-    <string name="kh_uisdk_permission_required">Para utilizar la app de Karhoo, activa el permiso de localización</string>
     <string name="kh_uisdk_permissions">PERMISOS</string>
-    <!-- Profile -->
-    <string name="kh_uisdk_phone_number_hint">Número de teléfono</string>
     <string name="kh_uisdk_pickup_type_curbside">Recoger afuera</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Dar la bienvenida</string>
     <string name="kh_uisdk_pickup_type_standby">Llamar conductor</string>
@@ -385,7 +328,6 @@
     <string name="kh_uisdk_price_info_text_fixed">Esta flota cobra una tarifa plana. La tarifa final puede verse afectada por extras (peajes, retrasos, etc.), por favor, compruebe los Términos y Condiciones de la flota.</string>
     <string name="kh_uisdk_price_info_text_metered">Esta flota es un taxi con taxímetro regulado. El presupuesto es una estimación basada en los factores del viaje (distancia, tiempo, etc.).</string>
     <string name="kh_uisdk_price_meet_and_greet">Dar la bienvenida</string>
-    <string name="kh_uisdk_privacy_policy_small">Política de privacidad</string>
     <string name="kh_uisdk_profile">Perfil</string>
     <!-- Qxxxx errors -->
     <string name="kh_uisdk_Q0001">La recogida y el destino no pueden ser iguales.</string>
@@ -401,11 +343,9 @@
     <string name="kh_uisdk_quote_cancellation_before_pickup_start">Cancelación gratuita hasta</string>
     <!-- Quote View Learn More -->
     <string name="kh_uisdk_quote_learn_more">Leer más</string>
-    <string name="kh_uisdk_quoted_fare">Tarifa estimada</string>
     <string name="kh_uisdk_quotes_activity_title">Citas</string>
     <string name="kh_uisdk_quotes_error_missing_addresses_subtitle">Ingrese las direcciones de recogida y devolución para acceder a las ofertas</string>
     <string name="kh_uisdk_quotes_error_missing_addresses_title">Falta la dirección de recogida o entrega</string>
-    <string name="kh_uisdk_quotes_error_no_availability_subtitle">Por favor selecciona otra hora</string>
     <string name="kh_uisdk_quotes_error_no_availability_title">Sin disponibilidad para la hora solicitada</string>
     <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Cambie su selección de filtro.</string>
     <string name="kh_uisdk_quotes_error_no_results_after_filter_title">No hay resultados después del filtrado.</string>
@@ -416,12 +356,8 @@
     <string name="kh_uisdk_rebook_ride">Solicitar de nuevo</string>
     <!-- Address -->
     <string name="kh_uisdk_recents_empty">No hay resultados recientes</string>
-    <!-- Register -->
-    <string name="kh_uisdk_register">REGISTRARSE</string>
-    <string name="kh_uisdk_register_check_box">No deseo recibir viajes gratuitos, promociones ni ofertas</string>
     <string name="kh_uisdk_report_issue">Reportar problema</string>
     <string name="kh_uisdk_requested">Tu viaje ha sido solicitado con %s</string>
-    <string name="kh_uisdk_requested_invite">Invitación solicitada</string>
     <string name="kh_uisdk_reset_filter">Restablecer filtro</string>
     <string name="kh_uisdk_results">resultados</string>
     <string name="kh_uisdk_results_empty">Sin resultados</string>
@@ -433,18 +369,13 @@
     <string name="kh_uisdk_ride_confirmed">Viaje confirmado</string>
     <string name="kh_uisdk_ride_contact_details">Detalles</string>
     <string name="kh_uisdk_ride_details">Detalles del viaje</string>
-    <!-- trip info -->
-    <string name="kh_uisdk_ride_options">Opciones del viaje</string>
     <string name="kh_uisdk_ride_state_arrived">Completado</string>
     <string name="kh_uisdk_ride_state_cancelled">Cancelado</string>
     <string name="kh_uisdk_ride_state_completed">Completado</string>
     <string name="kh_uisdk_ride_state_confirmed">Confirmado</string>
     <string name="kh_uisdk_ride_state_der">Conductor de camino</string>
-    <string name="kh_uisdk_ride_state_failed">Error</string>
     <string name="kh_uisdk_ride_state_pob">Pasajero a bordo</string>
     <string name="kh_uisdk_ride_state_requested">Solicitado</string>
-    <!-- Completed trip -->
-    <string name="kh_uisdk_ride_summary">Resumen del viaje</string>
     <string name="kh_uisdk_rides">Viajes</string>
     <string name="kh_uisdk_saloon">Sedan</string>
     <string name="kh_uisdk_save">Guardar</string>
@@ -453,13 +384,8 @@
     <string name="kh_uisdk_sign_in">Acceder</string>
     <!-- Login -->
     <string name="kh_uisdk_sign_in_but">ACCEDER</string>
-    <string name="kh_uisdk_sign_out">Salir</string>
-    <string name="kh_uisdk_similar_addresses_subtitle">Por favor cambie una de las direcciones para acceder a las cotizaciones</string>
     <string name="kh_uisdk_something_went_wrong">Hubo un problema</string>
     <string name="kh_uisdk_sort_by">Ordenar por</string>
-    <string name="kh_uisdk_sorter_cheapest">Tarifa</string>
-    <!-- Quotes List -->
-    <string name="kh_uisdk_sorter_nearest">Proximidad</string>
     <string name="kh_uisdk_star_excellent">Fantástico</string>
     <string name="kh_uisdk_star_fair">Justo</string>
     <string name="kh_uisdk_star_good">Bueno</string>
@@ -474,14 +400,9 @@
     <!-- Address Picker -->
     <string name="kh_uisdk_switch_departure_destination">Cambiar dirección de salida y destino</string>
     <string name="kh_uisdk_taxi">Taxi</string>
-    <string name="kh_uisdk_tell_us_more">Por favor, cuéntanos más sobre tu viaje</string>
     <string name="kh_uisdk_temporary_message_error_codes_unknown">Parece que estamos teniendo problemas técnicos en este momento.</string>
-    <string name="kh_uisdk_terms_conditions">Condiciones generales de utilización</string>
-    <string name="kh_uisdk_time_label">Hora:</string>
-    <string name="kh_uisdk_tip_10">Propina (10%)</string>
     <!-- Activity Titles -->
     <string name="kh_uisdk_title_activity_address">Dirección</string>
-    <string name="kh_uisdk_title_activity_airport">Recogida en aeropuerto</string>
     <string name="kh_uisdk_title_activity_intent_chooser_send_email">Enviar Email</string>
     <string name="kh_uisdk_title_activity_rides">Viajes</string>
     <string name="kh_uisdk_title_activity_threedsecure">3D Secure</string>
@@ -492,13 +413,11 @@
     <string name="kh_uisdk_title_page_upcoming">Próximos</string>
     <string name="kh_uisdk_title_past_rides_empty">No tienes viajes anteriores</string>
     <string name="kh_uisdk_title_upcoming_rides_empty">No tienes reservas</string>
-    <string name="kh_uisdk_total_fare">Tarifa total</string>
     <string name="kh_uisdk_track_driver">Localizar conductor</string>
     <string name="kh_uisdk_train_tracking">Vincule su tren</string>
     <string name="kh_uisdk_trip_id">№ de reserva: %1$s</string>
     <string name="kh_uisdk_trip_id_label">Trip ID</string>
     <string name="kh_uisdk_upcoming_rides_empty">Recuerda que puedes reservar hasta con 7 días de antelación</string>
-    <string name="kh_uisdk_update">ACTUALIZAR</string>
     <string name="kh_uisdk_vehicle">Vehículo</string>
     <string name="kh_uisdk_vehicle_bus">Minibús</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>

@@ -40,7 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/kh_uisdk_spacing_xxsmall"
         android:gravity="center"
-        android:text="@string/kh_uisdk_booking_checkout_add_payment_method_title"
         tools:visibility="visible" />
 
     <TextView
