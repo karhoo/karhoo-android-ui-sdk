@@ -10,6 +10,7 @@ interface CheckoutFragmentContract {
         fun showLoading()
         fun enableButton(enable: Boolean)
         fun setState(bookButtonState: BookButtonState)
+        fun checkState()
     }
 
     interface WebViewListener {
@@ -32,7 +33,6 @@ interface CheckoutFragmentContract {
         fun getBookButtonState(
             isPassengerDetailsVisible: Boolean = false,
             arePassengerDetailsValid: Boolean,
-            isPaymentValid: Boolean,
             isTermsCheckBoxValid: Boolean = true
                               ): BookButtonState
         fun getValidMilisPeriod(validityTimestamp: Long): Long

@@ -22,8 +22,6 @@ interface BookingPaymentContract {
 
         fun setPassengerDetails(passengerDetails: PassengerDetails?)
 
-        fun hasValidPaymentType(): Boolean
-
         fun retrieveLoyaltyStatus()
 
         fun getPaymentProvider()
