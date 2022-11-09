@@ -168,6 +168,9 @@ open abstract class BaseTestRobot {
     fun viewIsVisibleWithIndex(text: Int, page: Int): ViewInteraction =
             onView(withIndex(withText(text), page)).check(matches(isDisplayed()))
 
+    fun viewIsVisibleWithText(text: Int): ViewInteraction =
+        onView(withText(text)).check(matches(isDisplayed()))
+
     fun textIsVisibleIsDescendant(text: Int, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
@@ -224,6 +227,13 @@ open abstract class BaseTestRobot {
     fun checkItemInList(listId: Int, position: Int, text: String) : ViewInteraction =
         onView(withId(listId))
             .check(matches(atPosition(position, hasDescendant(withText(text)))))
+
+    fun checkItemInList(listId: Int, text: String) : ViewInteraction =
+        onView(withId(listId))
+            .check(matches(hasDescendant(withText(text))))
+
+    fun clickItemWithText(text: Int): ViewInteraction =
+        onView((withText(text))).perform(click())
 
     fun pressItemInList(listRes: Int, position: Int): ViewInteraction =
             onView(withId(listRes))

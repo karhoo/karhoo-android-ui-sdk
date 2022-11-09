@@ -29,6 +29,7 @@ import java.net.HttpURLConnection
 
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
+import com.karhoo.uisdk.R
 import org.junit.After
 
 @RunWith(AndroidJUnit4::class)
@@ -532,6 +533,529 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
         compareScreenshot(activity)
     }
 
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded
+     * Then:    The user should be able to click on a quote
+     **/
+
+    @Test
+    fun quotesListLoadedUserSelectsQuote() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            pressItemInList(R.id.quotesListRecycler, 0)
+
+            mediumSleep()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded
+     * Then:    The user should see the Taxes and Fees label
+     **/
+
+    @Test
+    fun quotesActivityContainsTaxesAndFees() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            taxesAndFeesVisible()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded
+     * Then:    The quotes count matches the data retrieved from the server
+     **/
+
+    @Test
+    fun quotesListDataCountIsCorrect() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(4000)
+
+            quotesCount()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded and we have TestType vehicle type
+     *          AND the quote contains and empty array of tags
+     * Then:    The title is the vehicle type title
+     **/
+
+    @Test
+    fun quoteTitleIsCorrectForEmptyTag() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            quoteTitleIsCorrect("TestType", 0)
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded
+     * Then:    The first quote's vehicle image url matches the one from the json
+     **/
+
+    @Test
+    fun quoteTitleIsCorrectForClassicTags() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            scrollDownQuotesList()
+
+            quoteTitleIsCorrect("TestClassicTagsTitle")
+        }
+
+        compareScreenshot(activity)
+    }
 
 
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded and we have TestType vehicle type
+     *          AND the quote contains the executive tag
+     * Then:    The title is Executive
+     **/
+
+    @Test
+    fun quoteTitleIsCorrectForExecutiveTag() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            scrollDownQuotesList()
+
+            quoteTitleIsCorrect("Executive")
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded
+     * Then:    The first quote's price is correct
+     **/
+
+    @Test
+    fun quotePriceIsCorrectlyShown() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(10000)
+
+            scrollDownQuotesList()
+
+            quotePriceIsCorrect("£8.41", 1)
+        }
+
+        compareScreenshot(activity)
+    }
+
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded and we have ASAP rides
+     * Then:    The ETA is shown
+     **/
+
+    @Test
+    fun quoteETAIsShown() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            quoteETAIsCorrect("30 min", 0)
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The quotes have been loaded and we have quotes with luggages and passengers
+     * Then:    The passengers and luggages views are visibile
+     **/
+
+    @Test
+    fun quoteLuggagesAndPassengersAreCorrect() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            luggagesVisible()
+            passengersVisible()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The user filters the quotes by flight tracking
+     * Then:    Only 1 quote is shown
+     **/
+
+    @Test
+    fun flightTrackingCapabilitySelected() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            clickFilterButton()
+
+            mediumSleep()
+
+            scrollUpFilterScreen()
+
+            pressFlightTrackingFilter()
+
+            mediumSleep()
+
+            pressFilterByButton()
+
+            mediumSleep()
+
+            quotesCountFlightTracking()
+        }
+
+        compareScreenshot(activity)
+    }
+
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The user filters the quotes by vehicle details
+     * Then:    Warning with no quotes results after filtering is shown
+     **/
+
+    @Test
+    fun vehicleDetailsCapabilitySelectedGeneratesNoResults() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            clickFilterButton()
+
+            mediumSleep()
+
+            scrollUpFilterScreen()
+
+            pressVehicleDetails()
+
+            mediumSleep()
+
+            pressFilterByButton()
+
+            mediumSleep()
+
+            noResultsAfterFilteringVisible()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The user has started the quotes activity
+     * When:    The user delets the Pick-up or Drop-off
+     * Then:    Warning with the pick-up or drop-off address is missing is shown
+     **/
+
+    @Test
+    fun quotesMissingAddress() {
+        val activity = startActivity()
+
+        quotes {
+            clickPickUpAddressField()
+
+            search(TestData.SEARCH_ADDRESS)
+
+            clickBakerStreetResult()
+
+            clickDestinationAddressField()
+        }
+
+        serverRobot {
+            addressListResponse(HttpURLConnection.HTTP_OK, TestData.PLACE_SEARCH_RESULT_EXTRA)
+            addressDetails(HttpURLConnection.HTTP_OK, TestData.PLACE_DETAILS_EXTRA)
+        }
+
+        quotes {
+            search(TestData.SEARCH_ADDRESS_EXTRA)
+
+            clickOxfordStreetResult()
+        }
+
+        quotes {
+            mediumSleep(2000)
+
+            clearDestinationAddress()
+
+            mediumSleep()
+
+            noResultsAfterFilteringLabelIsVisible()
+        }
+
+        compareScreenshot(activity)
+    }
 }
