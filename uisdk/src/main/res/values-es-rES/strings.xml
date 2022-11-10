@@ -429,4 +429,5 @@
     <string name="kh_uisdk_you_may_be_charged">Se le cargará una tasa de cancelación estimada en %s.\n\n¿Quiere continuar?</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Autorizar previamente</string>
+    <string name="pay_button_with_value">Autorizar transacción</string>
 </resources>
