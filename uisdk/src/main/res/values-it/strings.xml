@@ -429,4 +429,5 @@
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pre-autorizzare</string>
+    <string name="pay_button_with_value">Autorizza transazione</string>
 </resources>
