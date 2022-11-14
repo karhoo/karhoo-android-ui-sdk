@@ -114,4 +114,68 @@ class QuotesRobot : BaseTestRobot() {
     fun checkFirstItemOfQuoteListSortedByDriverArrival() {
         checkItemInList(R.id.quotesRecyclerView, 0, "A Taxi Fleet")
     }
+
+    fun taxesAndFeesVisible() {
+        viewIsVisible(R.id.quotesTaxesAndFeesLabel)
+    }
+
+    fun quotesCount() {
+        checkListSize(R.id.quotesListRecycler, 6)
+    }
+
+    fun quoteTitleIsCorrect(title: String, position: Int) {
+        checkItemInList(R.id.quotesRecyclerView, position, title)
+    }
+
+    fun quoteTitleIsCorrect(title: String) {
+        checkItemInList(R.id.quotesRecyclerView, title)
+    }
+
+    fun scrollDownQuotesList() {
+        scrollUp(R.id.quotesRecyclerView)
+    }
+
+    fun quotePriceIsCorrect(price: String, position: Int) {
+        checkItemInList(R.id.quotesRecyclerView, position, price)
+    }
+
+    fun quoteETAIsCorrect(eta: String, position: Int) {
+        checkItemInList(R.id.quotesRecyclerView, position, eta)
+    }
+
+    fun luggagesVisible() {
+        viewIsVisibleInDescendant(R.id.quotesRecyclerView, R.id.luggageCapacityText)
+    }
+
+    fun passengersVisible() {
+        viewIsVisibleInDescendant(R.id.quotesRecyclerView, R.id.peopleCapacityText)
+    }
+
+    fun pressFlightTrackingFilter() {
+        clickItemWithText(R.string.kh_uisdk_flight_tracking)
+    }
+
+    fun pressVehicleDetails() {
+        clickItemWithText(R.string.kh_uisdk_filter_vehicle_details)
+    }
+
+    fun pressFilterByButton() {
+        clickButton(R.id.quotesFilterSave)
+    }
+
+    fun quotesCountFlightTracking() {
+        checkListSize(R.id.quotesListRecycler, 1)
+    }
+
+    fun noResultsAfterFilteringVisible() {
+        viewIsVisibleWithText(R.string.kh_uisdk_quotes_error_no_results_after_filter_title)
+    }
+
+    fun clearDestinationAddress() {
+        clickButton(R.id.clearDestinationButtonIcon)
+    }
+
+    fun noResultsAfterFilteringLabelIsVisible() {
+        viewIsVisibleWithText(R.string.kh_uisdk_quotes_error_missing_addresses_title)
+    }
 }
