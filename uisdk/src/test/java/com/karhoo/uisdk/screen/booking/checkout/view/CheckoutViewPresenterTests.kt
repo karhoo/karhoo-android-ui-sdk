@@ -237,54 +237,12 @@ class CheckoutViewPresenterTests {
     }
 
     /**
-     * Given:   The checkout is visible
-     * When:    The passenger details are valid but payment is not
-     * Then:    The button should be next state
-     */
-    @Test
-    fun `passenger details visible and valid but payment is not`() {
-        val returnValue = checkoutPresenter.getBookingButtonState(
-            arePassengerDetailsValid = true,
-                                                                 )
-
-        assertEquals(returnValue, BookButtonState.NEXT)
-    }
-
-    /**
-     * Given:   The checkout is visible
-     * When:    The passenger details are invalid but payment is valid
-     * Then:    The button should be in next state
-     */
-    @Test
-    fun `passenger details are invalid but payment is valid`() {
-        val returnValue = checkoutPresenter.getBookingButtonState(
-            arePassengerDetailsValid = false,
-                                                                 )
-
-        assertEquals(returnValue, BookButtonState.NEXT)
-    }
-
-    /**
-     * Given:   The checkout is visible
-     * When:    The passenger details and payment is valid
-     * Then:    The button should be in book state
-     */
-    @Test
-    fun `passenger details and payment valid`() {
-        val returnValue = checkoutPresenter.getBookingButtonState(
-            arePassengerDetailsValid = true,
-                                                                 )
-
-        assertEquals(returnValue, BookButtonState.NEXT)
-    }
-
-    /**
      * Given:   The checkout is visible and CheckBox Terms&Conditions Required
      * When:    The passenger details and payment is valid but checkbox not checked
      * Then:    The button should be in next state
      */
     @Test
-    fun `passenger details and payment valid but checkbox not checked`() {
+    fun `passenger details valid but checkbox not checked`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
             isTermsCheckBoxValid = false
@@ -299,7 +257,7 @@ class CheckoutViewPresenterTests {
      * Then:    The button should be in book state
      */
     @Test
-    fun `passenger details and payment valid but checkbox is checked`() {
+    fun `passenger details valid and checkbox is checked`() {
         val returnValue = checkoutPresenter.getBookingButtonState(
             arePassengerDetailsValid = true,
             isTermsCheckBoxValid = true
