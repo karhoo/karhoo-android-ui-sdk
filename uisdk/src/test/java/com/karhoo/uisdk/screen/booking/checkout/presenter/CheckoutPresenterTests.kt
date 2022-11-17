@@ -66,7 +66,7 @@ class CheckoutPresenterTests {
     }
 
     @Test
-    fun `If payment is not valid and passenger details are not visible and invalid then button next`() {
+    fun `If passenger details are not visible and invalid then button next`() {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = false,
             arePassengerDetailsValid = false,
@@ -76,7 +76,7 @@ class CheckoutPresenterTests {
     }
 
     @Test
-    fun `If passenger details are not visible yet valid and payment is valid then we get book state`() {
+    fun `If passenger details are not visible yet valid then we get next state`() {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = false,
             arePassengerDetailsValid = true,
