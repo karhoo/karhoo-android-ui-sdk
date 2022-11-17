@@ -427,6 +427,5 @@
     <string name="kh_uisdk_wheelchair">Rollstuhl</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Möchten Sie fortfahren?</string>
     <string name="kh_uisdk_you_may_be_charged">Ihnen wird eine Stornierungsgebühr in Rechnung gestellt, die auf %s veranschlagt wird.\n\nMöchten Sie fortfahren?</string>
-    <!-- Adyen default "Pay" button -->
-    <string name="pay_button">Vorautorisierung</string>
+    <string name="pay_button_with_value">Transaktion autorisieren</string>
 </resources>

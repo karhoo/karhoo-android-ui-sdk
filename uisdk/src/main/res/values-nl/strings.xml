@@ -427,6 +427,5 @@
     <string name="kh_uisdk_wheelchair">Rolstoel</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Wilt u doorgaan?</string>
     <string name="kh_uisdk_you_may_be_charged">Er worden annuleringskosten in rekening gebracht die geschat worden op %s .\n\nWilt u doorgaan?</string>
-    <!-- Adyen default "Pay" button -->
-    <string name="pay_button">Pre-autoriseren</string>
+    <string name="pay_button_with_value">Transactie autoriseren</string>
 </resources>
