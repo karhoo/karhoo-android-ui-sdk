@@ -56,7 +56,7 @@ interface CheckoutViewContract {
 
         fun showLoading(show: Boolean)
 
-        fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
+        fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo, quote: Quote?)
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
@@ -136,7 +136,8 @@ interface CheckoutViewContract {
     }
 
     interface PrebookViewActions {
-        fun finishedBooking()
+        fun openRideDetails()
+        fun dismissedPrebookDialog()
     }
 
     interface BookingRequestViewWidget {

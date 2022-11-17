@@ -135,7 +135,7 @@ internal class CheckoutViewPresenter(
         val date = scheduledDate
         if (date != null) {
             KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
-            view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
+            view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo, quote)
         } else {
             KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)

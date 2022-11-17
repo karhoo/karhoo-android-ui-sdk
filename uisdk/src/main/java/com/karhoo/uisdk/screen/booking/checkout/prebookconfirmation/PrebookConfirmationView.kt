@@ -1,102 +1,112 @@
 package com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation
 
-import android.content.Context
-import android.util.AttributeSet
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.FrameLayout
-import androidx.core.content.ContextCompat.startActivity
-import com.karhoo.sdk.api.model.PickupType
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
-import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
-import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
-import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
-import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
+import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.DateUtil
+import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.bookingDateText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.bookingTimeText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.dropoffAddressText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.fareText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.fareTypeText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.meetingPointText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.pickupAddressText
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.view.pickupTypeText
 import org.joda.time.DateTime
-import java.util.Currency
+import java.util.*
 
-class PrebookConfirmationView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0)
-    : FrameLayout(context, attrs, defStyleAttr), ScheduledDateView {
+class PrebookConfirmationView(val quoteType: QuoteType?, val trip: TripInfo, val quote: Quote?) :
+    MasterBottomSheetFragment(), ScheduledDateView {
     private val scheduledDateViewBinder = ScheduledDateViewBinder()
     var actions: CheckoutViewContract.PrebookViewActions? = null
+    lateinit var pickUpAddressText: TextView
+    lateinit var dropOffAddressText: TextView
+    lateinit var rideConfirmedLogo: ImageView
+    lateinit var fareText: TextView
+    lateinit var fareTypeText: TextView
+    lateinit var bookingTimeText: TextView
+    lateinit var bookingDateText: TextView
+    lateinit var closeButton: ImageButton
 
-    init {
-        View.inflate(context, R.layout.uisdk_alert_prebook_confirmation, this)
-    }
 
-    fun bind(quoteType: QuoteType?, trip: TripInfo) {
-        pickupAddressText.text = trip.origin?.displayAddress
-        dropoffAddressText.text = trip.destination?.displayAddress
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.uisdk_alert_prebook_confirmation, container, false)
 
-        when (trip.meetingPoint?.pickupType) {
-            PickupType.DEFAULT,
-            PickupType.NOT_SET -> {
-                meetingPointText.visibility = View.INVISIBLE
-                pickupTypeText.visibility = View.INVISIBLE
-            }
-            else -> {
-                pickupTypeText.text =
-                    trip.meetingPoint?.pickupType?.toLocalisedString(context.applicationContext)
-                meetingPointText.text = trip.meetingPoint?.instructions.orEmpty()
-            }
-        }
+        pickUpAddressText = view.findViewById(R.id.pickupAddressText)
+        dropOffAddressText = view.findViewById(R.id.dropoffAddressText)
+        rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
+        fareText = view.findViewById(R.id.fareText)
+        fareTypeText = view.findViewById(R.id.fareTypeText)
+        bookingTimeText =  view.findViewById(R.id.bookingTimeText)
+        bookingDateText =  view.findViewById(R.id.bookingDateText)
+        closeButton =  view.findViewById(R.id.masterBottomSheetCloseDialog)
+
+        pickUpAddressText.text = trip.origin?.displayAddress
+        dropOffAddressText.text = trip.destination?.displayAddress
+
+        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
+            quote?.vehicle?.getCorrespondingLogoMapping(it)?.vehicleImagePNG
+        } ?: quote?.fleet?.logoUrl
+
+        PicassoLoader.loadImage(
+            requireContext(),
+            rideConfirmedLogo,
+            logoImageUrl,
+            R.drawable.uisdk_ic_quotes_logo_empty,
+            R.dimen.kh_uisdk_driver_photo_size,
+            R.integer.kh_uisdk_logo_radius
+        )
 
         scheduledDateViewBinder.bind(this, trip)
 
-        val currency = Currency.getInstance(trip.quote?.currency)
-        fareText.text = currency.formatted(trip.quote?.total.orZero())
+        fareText.text =
+            Currency.getInstance(trip.quote?.currency).formatted(trip.quote?.total.orZero())
 
-        fareTypeText.text = quoteType?.toLocalisedString(context.applicationContext).orEmpty()
+        fareTypeText.text = quoteType?.toLocalisedString(requireContext()).orEmpty()
 
-        buildAlert(trip)
-    }
+        setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))
+        setupButton(
+            view = view,
+            buttonId = R.id.prebookRideDetails,
+            text = getString(R.string.kh_uisdk_ride_details)
+        ) {
+            actions?.openRideDetails()
+        }
 
-    private fun buildAlert(tripInfo: TripInfo) {
-        val config = KarhooAlertDialogConfig(
-                view = this,
-                cancellable = false,
-                positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ride_details) { _, _ ->
-                    actions?.finishedBooking()
-                    startActivity(context,
-                                  RideDetailActivity.Builder.newBuilder().trip(tripInfo)
-                                      .build(context),
-                                  null)
-                },
-                negativeButton = KarhooAlertDialogAction(R.string.kh_uisdk_dismiss) { dialog, _ ->
-                    actions?.finishedBooking()
-                    dialog.dismiss()
-                    (dialog)
-                }
-                                            )
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        closeButton.setOnClickListener {
+            dismiss()
+            actions?.dismissedPrebookDialog()
+        }
+
+        return view
     }
 
     override fun displayDate(date: DateTime) {
-        bookingTimeText.text = DateUtil.getTimeFormat(context, date)
-        bookingDateText.text = DateUtil.getDateFormat(date)
+        bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), date)
+        bookingDateText.text = DateUtil.parseDateWithDay(date)
     }
 
     override fun displayNoDateAvailable() {
         // Do nothing
+    }
+
+
+    companion object {
+        const val TAG = "PrebookConfirmationView"
     }
 
 }

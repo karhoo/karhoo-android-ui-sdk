@@ -54,6 +54,7 @@
     <integer name="kh_uisdk_logo_radius">12</integer>
     <dimen name="kh_uisdk_logo_booking_status_radius">8dp</dimen>
     <dimen name="kh_uisdk_logo_width">64dp</dimen>
+    <dimen name="kh_uisdk_logo_width_prebook_confirmation">80dp</dimen>
     <dimen name="kh_uisdk_logo_height">68dp</dimen>
     <dimen name="kh_uisdk_rating_star_size">9dp</dimen>
     <dimen name="kh_uisdk_rating_star_viewport">9</dimen>
