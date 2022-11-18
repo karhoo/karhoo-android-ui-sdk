@@ -816,8 +816,6 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
         quotes {
             mediumSleep(10000)
 
-            scrollDownQuotesList()
-
             quotePriceIsCorrect("£8.41", 1)
         }
 

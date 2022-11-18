@@ -226,7 +226,7 @@ open abstract class BaseTestRobot {
 
     fun checkItemInList(listId: Int, position: Int, text: String) : ViewInteraction =
         onView(withId(listId))
-            .check(matches(atPosition(position, hasDescendant(withText(text)))))
+            .check(matches(hasDescendant(withText(text))))
 
     fun checkItemInList(listId: Int, text: String) : ViewInteraction =
         onView(withId(listId))
