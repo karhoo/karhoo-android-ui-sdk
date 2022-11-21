@@ -14,6 +14,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
+import com.karhoo.uisdk.screen.address.static.AddressStaticComponent
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.DateUtil
@@ -22,6 +23,7 @@ import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
+import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.*
 import org.joda.time.DateTime
 import java.util.*
 
@@ -46,8 +48,6 @@ class PrebookConfirmationView(val quoteType: QuoteType?, val trip: TripInfo, val
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_alert_prebook_confirmation, container, false)
 
-        pickUpAddressText = view.findViewById(R.id.pickupAddressText)
-        dropOffAddressText = view.findViewById(R.id.dropoffAddressText)
         rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
         fareText = view.findViewById(R.id.fareText)
         fareTypeText = view.findViewById(R.id.fareTypeText)
@@ -98,10 +98,12 @@ class PrebookConfirmationView(val quoteType: QuoteType?, val trip: TripInfo, val
     override fun displayDate(date: DateTime) {
         bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), date)
         bookingDateText.text = DateUtil.parseDateWithDay(date)
+
+        prebookAddressComponent.setup(pickup = trip.origin!!,destination = trip.destination!!, date, AddressStaticComponent.AddressComponentType.WITH_TIME)
     }
 
     override fun displayNoDateAvailable() {
-        // Do nothing
+        prebookAddressComponent.setup(pickup = trip.origin!!,destination = trip.destination!!, type = AddressStaticComponent.AddressComponentType.WITH_TIME)
     }
 
 

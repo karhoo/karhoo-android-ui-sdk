@@ -804,4 +804,29 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="KhStaticAddressComponentPrimary">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_prebook_address_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhStaticAddressComponentSecondary">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/kh_uisdk_text_prebook_address_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhStaticAddressComponentTime">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+
 </resources>
