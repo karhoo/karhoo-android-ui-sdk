@@ -105,9 +105,9 @@
     <color name="kh_uisdk_disabled">#E0E0E0</color>
     <color name="kh_uisdk_warning">#F6A705</color>
 
-    <color name="kh_uisdk_text_primary">#121212</color>
-    <color name="kh_uisdk_text_secondary">#383838</color>
-    <color name="kh_uisdk_label">#A0A0A0</color>
+    <color name="kh_uisdk_text_primary">#CECECE</color>
+    <color name="kh_uisdk_text_secondary">#CECECE</color>
+    <color name="kh_uisdk_label">#9E9E9E</color>
 
     <color name="kh_uisdk_background_primary">#FFFFFF</color>
     <color name="kh_uisdk_background1">#FAFAFA</color>
@@ -117,7 +117,7 @@
     <color name="kh_uisdk_background5">#DBDBDB</color>
     <color name="kh_uisdk_background6">#D9D9D9</color>
     <color name="kh_uisdk_background7">#D6D6D6</color>
-    <color name="kh_uisdk_bottom_sheet_background">#FFFFFF</color>
+    <color name="kh_uisdk_bottom_sheet_background">#252525</color>
 
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>
