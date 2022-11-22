@@ -490,7 +490,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun getDeviceLocale(): String {
-        return resources.getString(R.string.karhoo_uisdk_locale)
+        return resources.getString(R.string.kh_uisdk_locale)
     }
 
     override fun isTermsCheckBoxValid(): Boolean {

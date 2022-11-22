@@ -111,9 +111,9 @@
     <string name="kh_uisdk_email_hint">Email</string>
     <string name="kh_uisdk_email_info">Please do not delete this information as it helps us improve the app.</string>
     <string name="kh_uisdk_email_report_issue_message">Please use the space below to report a specific issue with your ride.</string>
-    <string name="kh_uisdk_enter_destination">Enter destination</string>
+    <string name="kh_uisdk_address_picker_enter_destination">Enter destination</string>
     <!-- Address Picker -->
-    <string name="kh_uisdk_enter_pickup">Enter pickup</string>
+    <string name="kh_uisdk_address_picker_enter_pickup">Enter pickup</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Erase address</string>
     <string name="kh_uisdk_error">Error</string>
@@ -293,12 +293,12 @@
     <string name="kh_uisdk_network_error">We seem to be having issues connecting to the network</string>
     <string name="kh_uisdk_new_ride">NEW RIDE</string>
     <string name="kh_uisdk_next">Next</string>
-    <string name="kh_uisdk_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
-    <string name="kh_uisdk_no_availability_subtitle">Please choose a different time</string>
-    <string name="kh_uisdk_no_availability_title">No availability for the requested time</string>
-    <string name="kh_uisdk_no_coverage_subtitle">Contact us to suggest news fleets</string>
-    <string name="kh_uisdk_no_coverage_title">No fleets in this area yet</string>
-    <string name="kh_uisdk_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
+    <string name="kh_uisdk_quotes_no_availability">We’re not live here yet! Get in touch if you have suggestions for local fleets.</string>
+    <string name="kh_uisdk_quotes_no_availability_subtitle">Please choose a different time</string>
+    <string name="kh_uisdk_quotes_no_availability_title">No availability for the requested time</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_subtitle">Contact us to suggest news fleets</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_title">No fleets in this area yet</string>
+    <string name="kh_uisdk_quotes_error_no_results_found">Apologies ASAP bookings are not currently available for this destination, however you can book in advance for your next trip!</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>
     <string name="kh_uisdk_offer_expired_text">Please select a new quote to continue with your booking</string>

@@ -46,7 +46,6 @@ class AdyenPaymentPresenter(
 ) : BasePresenter<PaymentDropInContract.Actions>(), PaymentDropInContract.Presenter,
     UserManager.OnUserPaymentChangedListener {
 
-    private var adyenKey: String = ""
     private var clientKey: String = ""
     private var quote: Quote? = null
     private var tripId: String = ""
@@ -205,29 +204,7 @@ class AdyenPaymentPresenter(
 
     override fun sdkInit(quote: Quote?, locale: Locale?) {
         this.quote = quote
-        paymentsService.getAdyenPublicKey().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        adyenKey = it.publicKey
-                        getPaymentMethods(locale)
-                    }
-                }
-                is Resource.Failure -> {
-                    logPaymentFailureEvent(
-                        result.error.internalMessage,
-                        0,
-                        quoteId = quote?.id
-                    )
-
-                    view?.showError(
-                        R.string.kh_uisdk_something_went_wrong,
-                        result.error
-                    )
-                }
-                //TODO Consider using returnErrorStringOrLogoutIfRequired
-            }
-        }
+        getPaymentMethods(locale)
     }
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {
@@ -267,7 +244,7 @@ class AdyenPaymentPresenter(
                     when (result) {
                         is Resource.Success -> {
                             result.data.let {
-                                view?.showPaymentUI(this.adyenKey, it, this.quote)
+                                view?.showPaymentUI(sdkToken = this.clientKey, paymentData = it, quote = this.quote)
                             }
                         }
                         is Resource.Failure -> {

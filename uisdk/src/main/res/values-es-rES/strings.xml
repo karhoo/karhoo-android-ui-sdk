@@ -111,9 +111,9 @@
     <string name="kh_uisdk_email_hint">Email</string>
     <string name="kh_uisdk_email_info">Por favor no elimines esta información ya que nos ayuda a mejorar la app.</string>
     <string name="kh_uisdk_email_report_issue_message">Por favor, deje sus comentarios sobre un tema específico en el espacio a continuación.</string>
-    <string name="kh_uisdk_enter_destination">¿Dónde vas?</string>
+    <string name="kh_uisdk_address_picker_enter_destination">¿Dónde vas?</string>
     <!-- Address Picker -->
-    <string name="kh_uisdk_enter_pickup">¿Dónde estás?</string>
+    <string name="kh_uisdk_address_picker_enter_pickup">¿Dónde estás?</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Borrar dirección</string>
     <string name="kh_uisdk_error">Error</string>
@@ -293,12 +293,12 @@
     <string name="kh_uisdk_network_error">Parece que tenemos problemas para conectarnos a la red</string>
     <string name="kh_uisdk_new_ride">NUEVO PASEO</string>
     <string name="kh_uisdk_next">Siguiente</string>
-    <string name="kh_uisdk_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
-    <string name="kh_uisdk_no_availability_subtitle">Por favor selecciona otra hora</string>
-    <string name="kh_uisdk_no_availability_title">Sin disponibilidad para la hora solicitada</string>
-    <string name="kh_uisdk_no_coverage_subtitle">Contáctenos para sugerir flotas nuevas</string>
-    <string name="kh_uisdk_no_coverage_title">Aún no hay flotas en esta área</string>
-    <string name="kh_uisdk_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
+    <string name="kh_uisdk_quotes_no_availability">¡Todavía no estamos operativos aquí! Ponte en contacto si conoces flotas locales</string>
+    <string name="kh_uisdk_quotes_no_availability_subtitle">Por favor selecciona otra hora</string>
+    <string name="kh_uisdk_quotes_no_availability_title">Sin disponibilidad para la hora solicitada</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_subtitle">Contáctenos para sugerir flotas nuevas</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_title">Aún no hay flotas en esta área</string>
+    <string name="kh_uisdk_quotes_error_no_results_found">Lo sentimos, la reserva instantánea no está disponible para este destino, pero puede reservar con antelación para su próximo viaje.</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
     <string name="kh_uisdk_offer_expired">Cotización caducada</string>
     <string name="kh_uisdk_offer_expired_text">Seleccione una nueva cotización para continuar con su reserva</string>

@@ -111,9 +111,9 @@
     <string name="kh_uisdk_email_hint">E-Mail</string>
     <string name="kh_uisdk_email_info">Verwijder alstublieft deze informatie niet, omdat dit ons helpt de app te verbeteren.</string>
     <string name="kh_uisdk_email_report_issue_message">Gebruik alstublieft de ruimte hieronder om een specifiek probleem van uw rit te melden.</string>
-    <string name="kh_uisdk_enter_destination">Voer bestemming in om een rit te reserveren</string>
+    <string name="kh_uisdk_address_picker_enter_destination">Voer bestemming in om een rit te reserveren</string>
     <!-- Address Picker -->
-    <string name="kh_uisdk_enter_pickup">Ophaallocatie</string>
+    <string name="kh_uisdk_address_picker_enter_pickup">Ophaallocatie</string>
     <!-- Address Picker -->
     <string name="kh_uisdk_erase_address">Wis adres</string>
     <string name="kh_uisdk_error">Fout</string>
@@ -293,12 +293,12 @@
     <string name="kh_uisdk_network_error">Het lijkt erop dat we problemen hebben met het verbinden met het netwerk</string>
     <string name="kh_uisdk_new_ride">NIEUWE RIT</string>
     <string name="kh_uisdk_next">Volgende</string>
-    <string name="kh_uisdk_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
-    <string name="kh_uisdk_no_availability_subtitle">Selecteer een ander tijdstip</string>
-    <string name="kh_uisdk_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
-    <string name="kh_uisdk_no_coverage_subtitle">Neem contact met ons op om nieuwsvloten voor te stellen</string>
-    <string name="kh_uisdk_no_coverage_title">Nog geen vloten in dit gebied</string>
-    <string name="kh_uisdk_no_results_found">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
+    <string name="kh_uisdk_quotes_no_availability">We zijn hier nog niet live! Neem contact met ons op als u suggesties heeft voor lokale vloten.</string>
+    <string name="kh_uisdk_quotes_no_availability_subtitle">Selecteer een ander tijdstip</string>
+    <string name="kh_uisdk_quotes_no_availability_title">Geen beschikbaarheid voor de gevraagde tijd</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_subtitle">Neem contact met ons op om nieuwsvloten voor te stellen</string>
+    <string name="kh_uisdk_quotes_error_no_coverage_title">Nog geen vloten in dit gebied</string>
+    <string name="kh_uisdk_quotes_error_no_results_found">Sorry, voor deze bestemming zijn reserveringen voor zeer korte termijn niet beschikbaar, u kunt wel reserveren voor uw volgende reis!</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
     <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
     <string name="kh_uisdk_offer_expired_text">Selecteer een nieuwe offerte om door te gaan met uw boeking</string>
