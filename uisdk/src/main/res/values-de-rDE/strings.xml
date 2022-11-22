@@ -326,9 +326,9 @@
     <string name="kh_uisdk_min">Min.</string>
     <string name="kh_uisdk_mins">Min.</string>
     <plurals name="kh_uisdk_minutes_plurals">
-        <item quantity="one">Minute</item>
-        <item quantity="other">Minute</item>
-        <item quantity="zero">Minute</item>
+        <item quantity="one">%d Minute</item>
+        <item quantity="other">%d Minute</item>
+        <item quantity="zero">%d Minute</item>
     </plurals>
     <string name="kh_uisdk_mobile_phone_number_hint">Nummer des Mobiltelefons</string>
     <string name="kh_uisdk_moto">Moto</string>
