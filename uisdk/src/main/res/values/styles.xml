@@ -809,6 +809,7 @@
         <item name="android:textColor">@color/kh_uisdk_text_prebook_address_primary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:maxLines">2</item>
+        <item name="fontWeight">400</item>
         <item name="android:ellipsize">end</item>
     </style>
 
@@ -817,6 +818,7 @@
         <item name="android:textColor">@color/kh_uisdk_text_prebook_address_secondary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:maxLines">2</item>
+        <item name="fontWeight">600</item>
         <item name="android:ellipsize">end</item>
     </style>
 

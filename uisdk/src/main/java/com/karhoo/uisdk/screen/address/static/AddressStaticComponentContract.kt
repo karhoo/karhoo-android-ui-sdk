@@ -1,13 +1,13 @@
 package com.karhoo.uisdk.screen.address.static
 
-import com.karhoo.sdk.api.model.TripLocationInfo
+import com.karhoo.sdk.api.model.LocationInfo
 import org.joda.time.DateTime
 
 interface AddressStaticComponentContract {
     interface View {
         fun setup(
-            pickup: TripLocationInfo,
-            destination: TripLocationInfo,
+            pickup: LocationInfo,
+            destination: LocationInfo,
             time: DateTime? = null,
             type: AddressStaticComponent.AddressComponentType
         )

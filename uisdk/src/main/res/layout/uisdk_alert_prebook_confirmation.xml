@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/uisdk_view_master_bottom_sheet_background"
     android:paddingBottom="@dimen/kh_uisdk_spacing_small">
 
@@ -45,9 +45,9 @@
         android:id="@+id/prebookAddressComponent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_margin_medium"
+        android:layout_marginStart="@dimen/kh_uisdk_margin_default"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_margin_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rideConfirmedLogo" />
 
