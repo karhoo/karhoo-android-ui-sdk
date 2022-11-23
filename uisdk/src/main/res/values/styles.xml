@@ -776,7 +776,7 @@
 
     <style name="KhPrebookTime">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
