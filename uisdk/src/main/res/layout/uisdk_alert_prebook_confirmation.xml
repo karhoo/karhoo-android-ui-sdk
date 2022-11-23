@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/kh_uisdk_bottom_sheet_background"
+    android:background="@drawable/uisdk_view_master_bottom_sheet_background"
     android:paddingBottom="@dimen/kh_uisdk_spacing_small">
 
     <LinearLayout
@@ -43,9 +43,9 @@
 
     <com.karhoo.uisdk.screen.address.static.AddressStaticComponent
         android:id="@+id/prebookAddressComponent"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_margin_large"
+        android:layout_marginStart="@dimen/kh_uisdk_margin_medium"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         app:layout_constraintStart_toStartOf="parent"

@@ -19,11 +19,11 @@ import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewCont
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.PicassoLoader
+import com.karhoo.uisdk.util.extension.convertToDateTime
 import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.karhoo.uisdk.util.formatted
-import kotlinx.android.synthetic.main.uisdk_alert_prebook_confirmation.*
 import org.joda.time.DateTime
 import java.util.*
 
@@ -31,8 +31,7 @@ class PrebookConfirmationView(val quoteType: QuoteType?, val trip: TripInfo, val
     MasterBottomSheetFragment(), ScheduledDateView {
     private val scheduledDateViewBinder = ScheduledDateViewBinder()
     var actions: CheckoutViewContract.PrebookViewActions? = null
-    lateinit var pickUpAddressText: TextView
-    lateinit var dropOffAddressText: TextView
+    lateinit var prebookAddressComponent: AddressStaticComponent
     lateinit var rideConfirmedLogo: ImageView
     lateinit var fareText: TextView
     lateinit var fareTypeText: TextView
@@ -54,9 +53,13 @@ class PrebookConfirmationView(val quoteType: QuoteType?, val trip: TripInfo, val
         bookingTimeText =  view.findViewById(R.id.bookingTimeText)
         bookingDateText =  view.findViewById(R.id.bookingDateText)
         closeButton =  view.findViewById(R.id.masterBottomSheetCloseDialog)
+        prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
 
-        pickUpAddressText.text = trip.origin?.displayAddress
-        dropOffAddressText.text = trip.destination?.displayAddress
+        prebookAddressComponent.setup(
+            trip.origin!!,
+            trip.destination!!,
+            trip.convertToDateTime(),
+            AddressStaticComponent.AddressComponentType.LIGHT)
 
         val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
             quote?.vehicle?.getCorrespondingLogoMapping(it)?.vehicleImagePNG

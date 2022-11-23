@@ -94,26 +94,27 @@
     <color name="kh_uisdk_loyalty_background">@color/kh_uisdk_background_primary</color>
 
     <!-- New Colors -->
-    <color name="kh_uisdk_primary">#18183F</color>
-    <color name="kh_uisdk_secondary">#FF0082</color>
-    <color name="kh_uisdk_accent">#2485C2</color>
+    <color name="kh_uisdk_primary">#6F769A</color>
+    <color name="kh_uisdk_secondary">#FF509C</color>
+    <color name="kh_uisdk_accent">#5BC0EB</color>
 <!--    <color name="kh_uisdk_accent_opacity50">#7F2485C2</color>-->
     <color name="kh_uisdk_accent_opacity50">#E1F4FC</color>
-    <color name="kh_uisdk_border">#EBEBEB</color>
-    <color name="kh_uisdk_error">#ED3A3A</color>
-    <color name="kh_uisdk_success">#12BE76</color>
-    <color name="kh_uisdk_disabled">#E0E0E0</color>
-    <color name="kh_uisdk_warning">#F6A705</color>
+    <color name="kh_uisdk_border">#2A2A2A</color>
+    <color name="kh_uisdk_error">#EB7577</color>
+    <color name="kh_uisdk_success">#56CA8E</color>
+    <color name="kh_uisdk_disabled">#484848</color>
+    <color name="kh_uisdk_warning">#FAF06E</color>
 
     <color name="kh_uisdk_text_primary">#CECECE</color>
     <color name="kh_uisdk_text_secondary">#CECECE</color>
     <color name="kh_uisdk_label">#9E9E9E</color>
 
-    <color name="kh_uisdk_background_primary">#FFFFFF</color>
-    <color name="kh_uisdk_background1">#FAFAFA</color>
-    <color name="kh_uisdk_background2">#F2F2F2</color>
-    <color name="kh_uisdk_background3">#E3E3E3</color>
-    <color name="kh_uisdk_background4">#E0E0E0</color>
+    <color name="kh_uisdk_background_primary">#121212</color>
+    <color name="kh_uisdk_background1">#121212</color>
+    <color name="kh_uisdk_background2">#232323</color>
+    <color name="kh_uisdk_background3">#252525</color>
+    <color name="kh_uisdk_background4">#2C2C2C</color>
+    <color name="kh_uisdk_background4_transparent">#C52C2C2C</color>
     <color name="kh_uisdk_background5">#DBDBDB</color>
     <color name="kh_uisdk_background6">#D9D9D9</color>
     <color name="kh_uisdk_background7">#D6D6D6</color>
