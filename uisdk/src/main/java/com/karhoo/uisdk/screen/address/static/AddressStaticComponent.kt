@@ -64,8 +64,7 @@ class AddressStaticComponent @JvmOverloads constructor(
             }
             AddressComponentType.WITH_TEXT -> {
                 staticAddressComponentTime.visibility = View.VISIBLE
-                staticAddressComponentTime.text =
-                    context.getText(R.string.kh_uisdk_static_address_component_now)
+                staticAddressComponentTime.text = text
             }
         }
     }
