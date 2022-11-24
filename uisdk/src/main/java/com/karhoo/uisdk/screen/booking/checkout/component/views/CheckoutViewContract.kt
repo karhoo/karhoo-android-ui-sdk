@@ -56,7 +56,12 @@ interface CheckoutViewContract {
 
         fun showLoading(show: Boolean)
 
-        fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo, quote: Quote?)
+        fun showPrebookConfirmationDialog(
+            quoteType: QuoteType?,
+            tripInfo: TripInfo?,
+            journeyDetails: JourneyDetails?,
+            quote: Quote?
+        )
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
@@ -133,6 +138,8 @@ interface CheckoutViewContract {
         fun setLoyaltyNonce(nonce: String)
 
         fun getCurrentQuote(): Quote?
+
+        fun getJourneyDetails(): JourneyDetails?
     }
 
     interface PrebookViewActions {

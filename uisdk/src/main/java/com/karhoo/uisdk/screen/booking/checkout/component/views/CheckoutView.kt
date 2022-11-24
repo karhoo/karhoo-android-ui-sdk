@@ -313,14 +313,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun showPrebookConfirmationDialog(
         quoteType: QuoteType?,
-        tripInfo: TripInfo,
+        tripInfo: TripInfo?,
+        journeyDetails: JourneyDetails?,
         quote: Quote?
     ) {
         hideSoftKeyboard()
 
-        if (tripInfo != null) {
+        if (journeyDetails != null) {
 
-            val prebookConfirmationView = PrebookConfirmationView(quoteType, tripInfo, quote)
+            val prebookConfirmationView = PrebookConfirmationView(quoteType, journeyDetails, quote)
             prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
                 override fun openRideDetails() {
                     val activity = context as Activity

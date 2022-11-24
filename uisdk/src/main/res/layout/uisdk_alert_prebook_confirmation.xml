@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/kh_uisdk_bottom_sheet_background"
+    android:layout_height="wrap_content"
+    android:background="@drawable/uisdk_view_master_bottom_sheet_background"
     android:paddingBottom="@dimen/kh_uisdk_spacing_small">
 
     <LinearLayout
         android:id="@+id/masterBottomLayout"
         android:layout_width="match_parent"
-        android:padding="@dimen/kh_uisdk_spacing_small"
         android:layout_height="wrap_content"
+        android:padding="@dimen/kh_uisdk_spacing_small"
         app:layout_constraintTop_toTopOf="parent">
 
         <include layout="@layout/fragment_master_bottom_sheet" />
@@ -41,66 +41,15 @@
         app:layout_constraintTop_toBottomOf="@+id/masterBottomLayout"
         app:srcCompat="@drawable/uisdk_ic_prebook_confirmed" />
 
-
-    <TextView
-        android:id="@+id/pickupAddressText"
-        android:layout_width="0dp"
+    <com.karhoo.uisdk.screen.address.static.AddressStaticComponent
+        android:id="@+id/prebookAddressComponent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_margin_large"
+        android:layout_marginStart="@dimen/kh_uisdk_margin_default"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/kh_uisdk_off_black"
-        android:textSize="@dimen/kh_uisdk_text_size_medium"
+        android:layout_marginEnd="@dimen/kh_uisdk_margin_default"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rideConfirmedLogo"
-        tools:text="Pickup Display Address" />
-
-    <TextView
-        android:id="@+id/dropoffAddressText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_margin_large"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/kh_uisdk_off_black"
-        android:textSize="@dimen/kh_uisdk_text_size_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickupAddressText"
-        tools:text="Dropoff Display Address" />
-
-    <ImageView
-        android:id="@+id/pickupIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-        app:layout_constraintBottom_toBottomOf="@+id/pickupAddressText"
-        app:layout_constraintEnd_toStartOf="@+id/pickupAddressText"
-        app:layout_constraintTop_toTopOf="@+id/pickupAddressText"
-        app:srcCompat="@drawable/kh_ic_prebook_pickup_icon" />
-
-    <ImageView
-        android:id="@+id/dropoffIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-        app:layout_constraintBottom_toBottomOf="@+id/dropoffAddressText"
-        app:layout_constraintEnd_toStartOf="@+id/dropoffAddressText"
-        app:layout_constraintTop_toTopOf="@+id/dropoffAddressText"
-        app:srcCompat="@drawable/kh_prebook_destination_icon" />
-
-    <View
-        android:id="@+id/pickupDropoffDivider"
-        android:layout_width="10dp"
-        android:layout_height="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginStart="22dp"
-        android:background="@drawable/uisdk_dashed_line_vertical"
-        app:layout_constraintBottom_toTopOf="@+id/dropoffIcon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickupIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/rideConfirmedLogo" />
 
     <TextView
         android:id="@+id/bookingTimeText"
@@ -112,7 +61,7 @@
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropoffAddressText"
+        app:layout_constraintTop_toBottomOf="@+id/prebookAddressComponent"
         tools:text="05:11 PM" />
 
     <TextView
@@ -149,7 +98,7 @@
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/verticalDivider"
-        app:layout_constraintTop_toBottomOf="@+id/dropoffAddressText"
+        app:layout_constraintTop_toBottomOf="@+id/prebookAddressComponent"
         tools:text="£19.99" />
 
     <TextView
