@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/staticAddressComponentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/kh_uisdk_spacing_small">
+
+    <View
+        android:id="@+id/pickupDropoffDivider"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:background="@drawable/uisdk_dashed_line_vertical"
+        android:gravity="center"
+        android:layerType="software"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
+        android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxxsmall"
+        app:layout_constraintStart_toStartOf="@+id/pickupIcon"
+        app:layout_constraintEnd_toEndOf="@+id/pickupIcon"
+        app:layout_constraintTop_toBottomOf="@+id/pickupIcon"
+        app:layout_constraintBottom_toTopOf="@+id/dropoffIcon" />
+
+
+    <ImageView
+        android:id="@+id/pickupIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupAddressTextSecondary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pickupAddressTextPrimary"
+        app:srcCompat="@drawable/kh_ic_prebook_pickup_icon" />
+
+
+    <TextView
+        android:id="@+id/pickupAddressTextPrimary"
+        style="@style/KhStaticAddressComponentPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small_intermediate"
+        app:layout_constraintEnd_toStartOf="@+id/staticAddressComponentTime"
+        app:layout_constraintStart_toEndOf="@+id/pickupIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="London City Airport, Hartmann Rd, London E16 2PX, United Kingdom" />
+
+    <TextView
+        android:id="@+id/pickupAddressTextSecondary"
+        style="@style/KhStaticAddressComponentSecondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small_intermediate"
+        app:layout_constraintEnd_toStartOf="@+id/staticAddressComponentTime"
+        app:layout_constraintStart_toEndOf="@+id/pickupIcon"
+        app:layout_constraintTop_toBottomOf="@+id/pickupAddressTextPrimary"
+        tools:text="London City Airport, Hartmann Rd, London E16 2PX, United Kingdom" />
+
+    <TextView
+        android:id="@+id/staticAddressComponentTime"
+        style="@style/KhStaticAddressComponentTime"
+        android:layout_width="96dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupAddressTextSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="04:40 PM" />
+
+
+    <ImageView
+        android:id="@+id/dropoffIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+        android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/destinationAddressTextSecondary"
+        app:layout_constraintTop_toBottomOf="@+id/pickupAddressTextSecondary"
+        app:srcCompat="@drawable/kh_prebook_destination_icon" />
+
+    <TextView
+        android:id="@+id/destinationAddressTextPrimary"
+        style="@style/KhStaticAddressComponentPrimary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small_intermediate"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+        app:layout_constraintEnd_toStartOf="@+id/staticAddressComponentTime"
+        app:layout_constraintStart_toEndOf="@+id/dropoffIcon"
+        app:layout_constraintTop_toBottomOf="@+id/pickupAddressTextSecondary"
+        tools:text="London City Airport, Hartmann Rd" />
+
+    <TextView
+        android:id="@+id/destinationAddressTextSecondary"
+        style="@style/KhStaticAddressComponentSecondary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small_intermediate"
+        app:layout_constraintEnd_toStartOf="@+id/staticAddressComponentTime"
+        app:layout_constraintStart_toEndOf="@+id/dropoffIcon"
+        app:layout_constraintTop_toBottomOf="@+id/destinationAddressTextPrimary"
+        tools:text="London City Airport, Hartmann Rd, London E16 2PX, United Kingdom" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

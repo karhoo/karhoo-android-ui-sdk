@@ -13,13 +13,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -32,7 +32,6 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
-import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
@@ -45,17 +44,14 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_IN
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.rides.RidesActivity
+import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.addressBarWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.bookingMapWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.toolbar
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.tripAllocationWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_nav_header_main.navigationHeaderIcon
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.locateMeButton
+import kotlinx.android.synthetic.main.uisdk_activity_base.*
+import kotlinx.android.synthetic.main.uisdk_activity_booking_content.*
+import kotlinx.android.synthetic.main.uisdk_activity_booking_main.*
+import kotlinx.android.synthetic.main.uisdk_nav_header_main.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_map.*
 import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
@@ -265,7 +261,18 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         when {
             resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {
                 if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
-                    showPrebookConfirmationDialog(data)
+                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+                    val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
+
+                    tripInfo?.let {
+                        ContextCompat.startActivity(
+                            this,
+                            RideDetailActivity.Builder.newBuilder().trip(tripInfo).build(this),
+                            null
+                        )
+                    }
+                } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY) == true) {
+                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 } else {
                     waitForTripAllocation()
                     tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
@@ -335,25 +342,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         bookingMapWidget.centreMapToPickupPin()
     }
 
-    private fun showPrebookConfirmationDialog(data: Intent?) {
-        val quoteType = data?.getSerializableExtra(CheckoutActivity
-                                                           .BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY) as QuoteType
-        val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity
-                                                                 .BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
-
-        if (tripInfo != null) {
-            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
-
-            val prebookConfirmationView = PrebookConfirmationView(this).apply {
-                bind(quoteType, tripInfo)
-            }
-            prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
-                override fun finishedBooking() {
-                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
-                }
-            }
-        }
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (!isGuest) {
