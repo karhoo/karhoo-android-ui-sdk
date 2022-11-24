@@ -1,4 +1,7 @@
-if (!System.env.JITPACK)
-    include ':app', ':uisdk'
+if (!System.env.JITPACK) {
+    include ':app', ':uisdk', ':nsdk'
+    project(':nsdk').projectDir = new File(rootDir, 'karhoo-android-sdk/sdk/')
+}
 else
     include ':uisdk'
+include ':nsdk'
