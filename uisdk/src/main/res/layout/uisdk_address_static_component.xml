@@ -75,6 +75,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/destinationAddressTextSecondary"
         app:layout_constraintTop_toBottomOf="@+id/pickupAddressTextSecondary"
         app:srcCompat="@drawable/kh_prebook_destination_icon" />
