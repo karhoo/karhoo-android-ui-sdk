@@ -236,6 +236,8 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
 
             scrollUpFilterScreen()
 
+            mediumSleep()
+
             checkFixedPriceTextVisible()
             checkEstimatedPriceTextVisible()
             checkFreeWaitingTimeTextVisible()
@@ -733,6 +735,8 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
             scrollDownQuotesList()
 
             quoteTitleIsCorrect("TestClassicTagsTitle")
+
+            mediumSleep(2000)
         }
 
         compareScreenshot(activity)
@@ -777,6 +781,8 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
             scrollDownQuotesList()
 
             quoteTitleIsCorrect("Executive")
+
+            mediumSleep(2000)
         }
 
         compareScreenshot(activity)
@@ -815,8 +821,6 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
 
         quotes {
             mediumSleep(10000)
-
-            scrollDownQuotesList()
 
             quotePriceIsCorrect("£8.41", 1)
         }
@@ -946,6 +950,8 @@ class QuotesScreenshotTests : ScreenshotTest<QuotesActivity>(QuotesActivity::cla
 
             scrollUpFilterScreen()
 
+            mediumSleep()
+            
             pressFlightTrackingFilter()
 
             mediumSleep()

@@ -622,12 +622,12 @@
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
-    <style name="KhQuoteListSortBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/KhQuoteListSortModalStyle</item>
+    <style name="KhMasterBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/KhMasterBottomSheetStyle</item>
     </style>
 
-    <style name="KhQuoteListSortModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/uisdk_view_quotes_sort_background</item>
+    <style name="KhMasterBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/uisdk_view_master_bottom_sheet_background</item>
     </style>
 
     <style name="KhQuoteListSortRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
@@ -641,14 +641,14 @@
         <item name="android:button">@drawable/kh_uisdk_quote_sort_radio_button</item>
     </style>
 
-    <style name="KhQuoteListSortTitle" parent="Widget.MaterialComponents.TextView">
+    <style name="KhMasterBottomSheetTitle" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
     </style>
 
-    <style name="KhQuoteListSortCloseButton" parent="Widget.AppCompat.ImageButton">
+    <style name="KhMasterBottomSheetCloseButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_xxxsmall</item>
@@ -712,6 +712,7 @@
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="android:gravity">end</item>
         <item name="android:textColor">@color/kh_uisdk_accent</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
     </style>
 
     <style name="KhFilterViewTitle">

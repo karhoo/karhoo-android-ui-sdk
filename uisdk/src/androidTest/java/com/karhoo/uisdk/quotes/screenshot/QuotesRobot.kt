@@ -60,7 +60,7 @@ class QuotesRobot : BaseTestRobot() {
     }
 
     fun clickXButton() {
-        clickButton(R.id.quotesSortByCloseDialog)
+        clickButton(R.id.masterBottomSheetCloseDialog)
     }
 
     fun clickSortBySaveButton(){
@@ -68,19 +68,19 @@ class QuotesRobot : BaseTestRobot() {
     }
 
     fun checkBottomSheetSortByTitle() {
-        viewIsVisible(R.id.quotesSortByTitle)
+        viewIsVisible(R.id.masterBottomSheetTitle)
     }
 
     fun checkBottomSheetSortByTitleIsNotVisible() {
-        viewDoesNotExist(R.id.quotesSortByTitle)
+        viewDoesNotExist(R.id.masterBottomSheetTitle)
     }
 
     fun checkBottomSheetFilterTitle() {
-        viewIsVisible(R.id.filterViewTitle)
+        viewIsVisible(R.id.masterBottomSheetTitle)
     }
 
     fun checkBottomSheetFilterTitleIsNotVisible() {
-        viewDoesNotExist(R.id.filterViewTitle)
+        viewDoesNotExist(R.id.masterBottomSheetTitle)
     }
 
     fun checkFilterButtonIsVisible() {
