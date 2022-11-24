@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 dependencies {
 
     api 'com.github.karhoo:karhoo-android-sdk:1.6.1-RC1'
-    api('com.adyen.checkout:drop-in:4.5.0')
+    api('com.adyen.checkout:drop-in:4.8.0')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
