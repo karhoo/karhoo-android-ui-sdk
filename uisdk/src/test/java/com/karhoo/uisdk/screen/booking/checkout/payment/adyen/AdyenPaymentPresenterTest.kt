@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.adyen.AdyenClientKey
+import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
@@ -50,13 +51,19 @@ class AdyenPaymentPresenterTest {
     private val paymentMethodsCall: Call<String> = mock()
     private val getAdyenClientKey: Call<AdyenClientKey> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
+    private val publicKeyCall: Call<AdyenPublicKey> = mock()
+    private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
 
     private lateinit var adyenPaymentPresenter: AdyenPaymentPresenter
 
     @Before
     fun setUp() {
+        whenever(paymentsService.getAdyenPublicKey())
+            .thenReturn(publicKeyCall)
+        doNothing().whenever(publicKeyCall).execute(publicKeyCaptor.capture())
+
         whenever(paymentsService.getAdyenPaymentMethods(any()))
-                .thenReturn(paymentMethodsCall)
+            .thenReturn(paymentMethodsCall)
         whenever(paymentsService.getAdyenClientKey())
             .thenReturn(getAdyenClientKey)
         doNothing().whenever(paymentMethodsCall).execute(paymentMethodsCaptor.capture())
@@ -71,6 +78,23 @@ class AdyenPaymentPresenterTest {
 
     /**
      * Given:   A request is made to change card
+     * When:    The public key retrieval fails
+     * Then:    Then an error is shown
+     */
+    @Test
+    fun `error shown when change card pressed and public key retrieval fails`() {
+        UnitTestUISDKConfig.setTokenAuthentication(context)
+        adyenPaymentPresenter.sdkInit(quote)
+
+        publicKeyCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
+
+        verify(paymentsService, never()).getAdyenPaymentMethods(any())
+        verify(paymentsService).getAdyenPublicKey()
+        verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
+    }
+
+    /**
+     * Given:   A request is made to change card
      * When:    The public key retrieval succeeds
      * And:     The payment methods retrieval fails
      * Then:    Then an error is shown
@@ -80,8 +104,10 @@ class AdyenPaymentPresenterTest {
         UnitTestUISDKConfig.setTokenAuthentication(context)
         adyenPaymentPresenter.sdkInit(quote)
 
+        publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
+        verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
         verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
@@ -99,10 +125,12 @@ class AdyenPaymentPresenterTest {
 
         adyenPaymentPresenter.sdkInit(quote)
 
+        publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Success(paymentData))
 
+        verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentDropInActions).showPaymentUI("", paymentData, quote)
+        verify(paymentDropInActions).showPaymentUI(adyenPublicKey.publicKey, paymentData, quote)
     }
 
     /**
@@ -143,9 +171,9 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown is activity result is not RESULT_OK or RESULT_CANCELLED`() {
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_CANCELED,
-                data = null)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_CANCELED,
+            data = null)
 
         verify(paymentDropInActions, never()).showPaymentFailureDialog()
     }
@@ -159,9 +187,9 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown is activity result is RESULT_OK but there is no data`() {
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = null)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = null)
 
         verify(paymentDropInActions).showPaymentFailureDialog()
     }
@@ -192,9 +220,9 @@ class AdyenPaymentPresenterTest {
         """.trimIndent()
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response)
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = data)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
 
         verify(paymentDropInActions).showPaymentFailureDialog(karhooErrorCaptor.capture())
         assertEquals(karhooErrorCaptor.firstValue.code, "KSDK00 Cancelled")
@@ -212,18 +240,18 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `card details updated as not set for unrecognised card type`() {
         val additionalData = JSONObject()
-                .put(CARD_SUMMARY, "1234")
-                .put(PAYMENT_METHOD, "")
+            .put(CARD_SUMMARY, "1234")
+            .put(PAYMENT_METHOD, "")
         val response = JSONObject()
-                .put(RESULT_CODE, AUTHORISED)
-                .put(MERCHANT_REFERENCE, TRIP_ID)
-                .put(ADDITIONAL_DATA, additionalData)
+            .put(RESULT_CODE, AUTHORISED)
+            .put(MERCHANT_REFERENCE, TRIP_ID)
+            .put(ADDITIONAL_DATA, additionalData)
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = data)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
 
         verify(userStore).savedPaymentInfo = paymentInfoCaptor.capture()
         assertEquals("1234", paymentInfoCaptor.firstValue.lastFour)
@@ -240,18 +268,18 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `card details and nonce updated for activity RESULT_OK and the result code is authorised`() {
         val additionalData = JSONObject()
-                .put(CARD_SUMMARY, "1234")
-                .put(PAYMENT_METHOD, "mc")
+            .put(CARD_SUMMARY, "1234")
+            .put(PAYMENT_METHOD, "mc")
         val response = JSONObject()
-                .put(RESULT_CODE, AUTHORISED)
-                .put(MERCHANT_REFERENCE, TRIP_ID)
-                .put(ADDITIONAL_DATA, additionalData)
+            .put(RESULT_CODE, AUTHORISED)
+            .put(MERCHANT_REFERENCE, TRIP_ID)
+            .put(ADDITIONAL_DATA, additionalData)
 
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(response.toString())
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = data)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
 
         verify(userStore).savedPaymentInfo = paymentInfoCaptor.capture()
         assertEquals("1234", paymentInfoCaptor.firstValue.lastFour)
@@ -300,26 +328,26 @@ class AdyenPaymentPresenterTest {
 
     private fun setConfig(handleBraintree: Boolean = false) {
         KarhooUISDKConfigurationProvider.setConfig(
-                configuration = UnitTestUISDKConfig(
-                        context = context,
-                        authenticationMethod = guestAuth,
-                        handleBraintree = handleBraintree))
+            configuration = UnitTestUISDKConfig(
+                context = context,
+                authenticationMethod = guestAuth,
+                handleBraintree = handleBraintree))
     }
 
     private fun setMockNonce() {
         val payload = JSONObject()
-                .put(RESULT_CODE, AUTHORISED)
-                .put(TRIP_ID_KEY, TRIP_ID).toString()
+            .put(RESULT_CODE, AUTHORISED)
+            .put(TRIP_ID_KEY, TRIP_ID).toString()
         whenever(data.getStringExtra(RESULT_KEY)).thenReturn(payload)
 
         adyenPaymentPresenter.handleActivityResult(
-                requestCode = DropIn.DROP_IN_REQUEST_CODE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = data)
+            requestCode = DropIn.DROP_IN_REQUEST_CODE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
     }
 
     companion object {
-//        private val adyenPublicKey: AdyenPublicKey = AdyenPublicKey("12345678")
+        private val adyenPublicKey: AdyenPublicKey = AdyenPublicKey("12345678")
         private val guestAuth: AuthenticationMethod.Guest = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")
         private const val ADDITIONAL_DATA = AdyenPaymentView.ADDITIONAL_DATA
         private const val AUTHORISED = AdyenPaymentView.AUTHORISED
