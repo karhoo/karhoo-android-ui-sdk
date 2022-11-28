@@ -85,18 +85,23 @@ class AdyenPaymentPresenter(
             Environment.TEST
         }
 
-        val googlePayConfig = GooglePayConfiguration.Builder(context, clientKey)
+        val key: String = if(userStore.paymentProvider?.provider?.version.equals("v68", ignoreCase = true))
+            clientKey
+        else
+            adyenKey
+
+        val googlePayConfig = GooglePayConfiguration.Builder(context, key)
             .setAmount(amount)
             .setEnvironment(environment)
             .setShopperLocale(Locale.getDefault())
             .build()
 
-        return DropInConfiguration.Builder(context, AdyenDropInService::class.java, clientKey)
+        return DropInConfiguration.Builder(context, AdyenDropInService::class.java, key)
             .setAmount(amount)
             .setEnvironment(environment)
             .addGooglePayConfiguration(googlePayConfig)
             .setShopperLocale(Locale.getDefault())
-            .addCardConfiguration(createCardConfig(context.applicationContext, clientKey))
+            .addCardConfiguration(createCardConfig(context.applicationContext, key))
             .build()
     }
 
@@ -205,29 +210,34 @@ class AdyenPaymentPresenter(
 
     override fun sdkInit(quote: Quote?, locale: Locale?) {
         this.quote = quote
-        paymentsService.getAdyenPublicKey().execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    result.data.let {
-                        adyenKey = it.publicKey
-                        getPaymentMethods(locale)
-                    }
-                }
-                is Resource.Failure -> {
-                    logPaymentFailureEvent(
-                        result.error.internalMessage,
-                        0,
-                        quoteId = quote?.id
-                    )
 
-                    view?.showError(
-                        R.string.kh_uisdk_something_went_wrong,
-                        result.error
-                    )
+        if(!userStore.paymentProvider?.provider?.version.equals("v68", ignoreCase = true)) {
+            paymentsService.getAdyenPublicKey().execute { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.let {
+                            adyenKey = it.publicKey
+                            getPaymentMethods(locale)
+                        }
+                    }
+                    is Resource.Failure -> {
+                        logPaymentFailureEvent(
+                            result.error.internalMessage,
+                            0,
+                            quoteId = quote?.id
+                        )
+
+                        view?.showError(
+                            R.string.kh_uisdk_something_went_wrong,
+                            result.error
+                        )
+                    }
+                    //TODO Consider using returnErrorStringOrLogoutIfRequired
                 }
-                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
+        else
+            getPaymentMethods(locale)
     }
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {
