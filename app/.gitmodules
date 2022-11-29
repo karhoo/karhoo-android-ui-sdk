@@ -1,4 +1,3 @@
 [submodule "karhoo-android-sdk"]
 	path = karhoo-android-sdk
 	url = https://github.com/karhoo/karhoo-android-sdk
-    branch = develop
