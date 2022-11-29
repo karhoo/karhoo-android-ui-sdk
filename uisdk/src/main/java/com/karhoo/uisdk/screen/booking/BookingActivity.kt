@@ -260,7 +260,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
             resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {
-                if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
+                if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY) == true) {
+                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+                } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
                     journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                     val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
@@ -271,9 +273,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             null
                         )
                     }
-                } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY) == true) {
-                    journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
-                } else {
+                }  else {
                     waitForTripAllocation()
                     tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
                 }

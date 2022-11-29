@@ -464,6 +464,8 @@
     <string name="kh_uisdk_wheelchair">sedia a rotelle</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Vuoi continuare?</string>
     <string name="kh_uisdk_you_may_be_charged">Ti verrà addebitata una penale di cancellazione stimata in %s .\n\nContinuare?</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s punti fedeltà verranno aggiunti al saldo del tuo account alla fine della corsa</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s punti fedeltà verranno detratti dal saldo del tuo account alla fine della corsa</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pre-autorizzare</string>
     <!-- Adyen default "Pay %s" button for checkout -->

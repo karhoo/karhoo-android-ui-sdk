@@ -464,6 +464,8 @@
     <string name="kh_uisdk_wheelchair">Wheelchair Accessible</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to proceed?</string>
     <string name="kh_uisdk_you_may_be_charged">You will be charged a cancellation fee estimated at %s.\n\nWould you like to proceed?</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s loyalty points will be added to your account balance at the end of the ride</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s loyalty points will be deducted from your account balance at the end of the ride</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pre-Authorize</string>
     <!-- Adyen default "Pay %s" button for checkout -->

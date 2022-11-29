@@ -464,6 +464,8 @@
     <string name="kh_uisdk_wheelchair">Accessible PMR</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Souhaitez-vous continuer?</string>
     <string name="kh_uisdk_you_may_be_charged">Des frais d\'annulation estimés à %s vont s\'appliquer.\n\nSouhaitez-vous continuer?</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s Des points de fidélité seront ajoutés au solde de votre compte à la fin de la course.</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s Les points de fidélité seront déduits du solde de votre compte à la fin de la course.</string>
     <!-- Adyen default "Pay" button -->
     <string name="pay_button">Pré-autoriser</string>
     <!-- Adyen default "Pay %s" button for checkout -->

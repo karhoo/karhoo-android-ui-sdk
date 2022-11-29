@@ -136,7 +136,5 @@
     <color name="bt_black">@color/kh_uisdk_text_primary</color>
 
     <color name="kh_uisdk_prebook_icon">@color/kh_uisdk_colorAccent</color>
-    <color name="kh_uisdk_text_prebook_address_secondary">#757575</color>
-    <color name="kh_uisdk_text_prebook_address_primary">#383838</color>
 
 </resources>
