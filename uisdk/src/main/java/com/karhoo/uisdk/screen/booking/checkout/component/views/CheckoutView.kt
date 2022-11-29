@@ -33,7 +33,10 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryCode
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDialingCode
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyContract
@@ -43,6 +46,7 @@ import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetail
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
@@ -52,20 +56,10 @@ import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.typeToLocalisedString
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutPassengerView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingCheckoutViewLayout
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestCommentsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestFlightDetailsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestLinearLayout
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestPriceWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestQuotesWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.bookingRequestTermsWidget
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.loyaltyView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.passengersDetailLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBox
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.*
 import org.joda.time.DateTime
-import java.util.Currency
-import java.util.HashMap
+import java.util.*
 
 @Suppress("TooManyFunctions")
 internal class CheckoutView @JvmOverloads constructor(context: Context,
@@ -322,16 +316,46 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         holdOpenForPaymentFlow = true
     }
 
-    override fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo) {
+    override fun showPrebookConfirmationDialog(
+        quoteType: QuoteType?,
+        tripInfo: TripInfo?,
+        journeyDetails: JourneyDetails?,
+        quote: Quote?
+    ) {
         hideSoftKeyboard()
 
-        val activity = context as Activity
-        val data = Intent().apply {
-            putExtra(BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY, tripInfo)
-            putExtra(BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY, quoteType)
+        if (journeyDetails != null) {
+
+            val prebookConfirmationView = PrebookConfirmationView(quoteType, journeyDetails, quote)
+            prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
+                override fun openRideDetails() {
+                    val activity = context as Activity
+                    val data = Intent().apply {
+                        putExtra(BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY, tripInfo)
+                        putExtra(BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY, quoteType)
+                        putExtra(BOOKING_CHECKOUT_PREBOOK_QUOTE_KEY, quote)
+                    }
+                    activity.setResult(Activity.RESULT_OK, data)
+                    activity.finish()
+                }
+
+                override fun dismissedPrebookDialog() {
+                    val activity = context as Activity
+
+                    val data = Intent().apply {
+                        putExtra(BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY, true)
+                    }
+
+                    activity.setResult(Activity.RESULT_OK, data)
+                    activity.finish()
+                }
+            }
+
+            (context as CheckoutActivity).supportFragmentManager.let {
+                prebookConfirmationView.show(it, PrebookConfirmationView.TAG)
+            }
+
         }
-        activity.setResult(Activity.RESULT_OK, data)
-        activity.finish()
     }
 
     override fun showLoading(show: Boolean) {
