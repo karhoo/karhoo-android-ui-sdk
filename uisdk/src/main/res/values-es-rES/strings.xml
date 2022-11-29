@@ -66,6 +66,7 @@
     <string name="kh_uisdk_booking_checkout_add_payment_method">Añadir método de pago</string>
     <string name="kh_uisdk_booking_checkout_passenger">Pasajero</string>
     <string name="kh_uisdk_booking_checkout_title">Caja</string>
+    <string name="kh_uisdk_booking_confirmation">Reserva confirmada</string>
     <string name="kh_uisdk_booking_details_error">Detalles de reserva inválidos</string>
     <!-- Trip Allocation -->
     <string name="kh_uisdk_booking_failed">Reserva fallida</string>
