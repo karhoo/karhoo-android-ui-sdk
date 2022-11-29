@@ -161,7 +161,6 @@ afterEvaluate {
 dependencies {
     implementation project(':nsdk')
 
-    implementation 'com.github.karhoo:karhoo-android-sdk:1.6.1-RC1'
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
     fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
