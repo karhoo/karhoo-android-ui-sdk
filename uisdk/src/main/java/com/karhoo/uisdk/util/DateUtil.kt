@@ -46,6 +46,10 @@ object DateUtil {
         return date.toLocalDateTime().toString("d MMM, yyyy")
     }
 
+    fun parseDateWithDay(date: DateTime): String {
+        return date.toLocalDateTime().toString("EEE, dd/MM/yyyy")
+    }
+
     fun parseSimpleDate(date: String): DateTime {
         return DateTime.parse(date, DateTimeFormat.forPattern("yyyy-MM-dd"))
     }
