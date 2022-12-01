@@ -7,12 +7,8 @@ import com.adyen.checkout.dropin.DropIn
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
-import com.karhoo.sdk.api.model.AuthenticationMethod
-import com.karhoo.sdk.api.model.CardType
-import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuotePrice
+import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.model.adyen.AdyenClientKey
-import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
@@ -42,6 +38,7 @@ class AdyenPaymentPresenterTest {
     private var data: Intent = mock()
     private var paymentsService: PaymentsService = mock()
     private var userStore: UserStore = mock()
+    private var paymentProvider: PaymentProvider = mock()
     private var quote: Quote = mock()
     private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var paymentDropInActions: PaymentDropInContract.Actions = mock()
@@ -51,17 +48,11 @@ class AdyenPaymentPresenterTest {
     private val paymentMethodsCall: Call<String> = mock()
     private val getAdyenClientKey: Call<AdyenClientKey> = mock()
     private val paymentMethodsCaptor = argumentCaptor<(Resource<String>) -> Unit>()
-    private val publicKeyCall: Call<AdyenPublicKey> = mock()
-    private val publicKeyCaptor = argumentCaptor<(Resource<AdyenPublicKey>) -> Unit>()
 
     private lateinit var adyenPaymentPresenter: AdyenPaymentPresenter
 
     @Before
     fun setUp() {
-        whenever(paymentsService.getAdyenPublicKey())
-            .thenReturn(publicKeyCall)
-        doNothing().whenever(publicKeyCall).execute(publicKeyCaptor.capture())
-
         whenever(paymentsService.getAdyenPaymentMethods(any()))
             .thenReturn(paymentMethodsCall)
         whenever(paymentsService.getAdyenClientKey())
@@ -78,23 +69,6 @@ class AdyenPaymentPresenterTest {
 
     /**
      * Given:   A request is made to change card
-     * When:    The public key retrieval fails
-     * Then:    Then an error is shown
-     */
-    @Test
-    fun `error shown when change card pressed and public key retrieval fails`() {
-        UnitTestUISDKConfig.setTokenAuthentication(context)
-        adyenPaymentPresenter.sdkInit(quote)
-
-        publicKeyCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
-
-        verify(paymentsService, never()).getAdyenPaymentMethods(any())
-        verify(paymentsService).getAdyenPublicKey()
-        verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
-    }
-
-    /**
-     * Given:   A request is made to change card
      * When:    The public key retrieval succeeds
      * And:     The payment methods retrieval fails
      * Then:    Then an error is shown
@@ -102,12 +76,14 @@ class AdyenPaymentPresenterTest {
     @Test
     fun `error shown when change card pressed and payment methods retrieval fails`() {
         UnitTestUISDKConfig.setTokenAuthentication(context)
+
+        val provider = Provider("Adyen", "v68")
+        whenever(userStore.paymentProvider).thenReturn(paymentProvider)
+        whenever(paymentProvider.provider).thenReturn(provider)
         adyenPaymentPresenter.sdkInit(quote)
 
-        publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Failure(KarhooError.InternalSDKError))
 
-        verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
         verify(paymentDropInActions).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.InternalSDKError)
     }
@@ -122,15 +98,15 @@ class AdyenPaymentPresenterTest {
     fun `payment view shown when change card pressed and payment methods retrieved successfully`() {
         val paymentData = "{paymentMethods: []}"
         setConfig()
-
+        val provider = Provider("Adyen", "v68")
+        whenever(userStore.paymentProvider).thenReturn(paymentProvider)
+        whenever(paymentProvider.provider).thenReturn(provider)
         adyenPaymentPresenter.sdkInit(quote)
 
-        publicKeyCaptor.firstValue.invoke(Resource.Success(adyenPublicKey))
         paymentMethodsCaptor.firstValue.invoke(Resource.Success(paymentData))
 
-        verify(paymentsService).getAdyenPublicKey()
         verify(paymentsService).getAdyenPaymentMethods(any())
-        verify(paymentDropInActions).showPaymentUI(adyenPublicKey.publicKey, paymentData, quote)
+        verify(paymentDropInActions).showPaymentUI("", paymentData, quote)
     }
 
     /**
@@ -347,7 +323,6 @@ class AdyenPaymentPresenterTest {
     }
 
     companion object {
-        private val adyenPublicKey: AdyenPublicKey = AdyenPublicKey("12345678")
         private val guestAuth: AuthenticationMethod.Guest = AuthenticationMethod.Guest("identifier", "referer", "guestOrganisationId")
         private const val ADDITIONAL_DATA = AdyenPaymentView.ADDITIONAL_DATA
         private const val AUTHORISED = AdyenPaymentView.AUTHORISED
@@ -361,3 +336,4 @@ class AdyenPaymentPresenterTest {
         private const val CLIENT_KEY = "test"
     }
 }
+

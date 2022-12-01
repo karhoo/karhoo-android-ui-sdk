@@ -12,6 +12,7 @@ interface LoyaltyContract {
         fun getCurrentMode(): LoyaltyMode
         fun set(loyaltyDataModel: LoyaltyViewDataModel, callback: ((Resource<LoyaltyStatus>) -> Unit?)? = null)
         fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit)
+        fun getPoints(): Int?
     }
 
     interface LoyaltyPresenterDelegate {
@@ -40,6 +41,7 @@ interface LoyaltyContract {
         fun getCurrentMode(): LoyaltyMode
         fun getLoyaltyStatus(callback: ((Resource<LoyaltyStatus>) -> Unit?)? = null)
         fun getLoyaltyPreAuthNonce(callback: (Resource<LoyaltyNonce>, LoyaltyStatus?) -> Unit)
+        fun getPoints(): Int?
     }
 
     interface LoyaltyViewDelegate {

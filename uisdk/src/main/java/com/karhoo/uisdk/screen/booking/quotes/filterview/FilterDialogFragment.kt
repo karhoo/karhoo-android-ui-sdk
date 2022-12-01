@@ -1,27 +1,21 @@
 package com.karhoo.uisdk.screen.booking.quotes.filterview
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.TextView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
 import com.karhoo.uisdk.base.view.LoadingButtonView
 
 
-class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.View {
+class FilterDialogFragment : MasterBottomSheetFragment(), FilterDialogContract.View {
 
     private lateinit var quotesFilterSave: LoadingButtonView
     var presenter = FilterDialogPresenter(this)
 
     private lateinit var filterViewResetFilters: TextView
-    private lateinit var filterViewTitleExit: ImageView
     private lateinit var filterViewPassengerNumberedFilter: NumberedFilterView
     private lateinit var filterViewLuggageNumberedFilter: NumberedFilterView
 
@@ -50,20 +44,16 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_view_filter, container, false)
 
-        quotesFilterSave = view.findViewById(R.id.quotesFilterSave)
-        quotesFilterSave.setOnClickListener {
+        setupHeader(view = view, title = getString(R.string.kh_uisdk_filter))
+        setupButton(view = view, buttonId = R.id.quotesFilterSave, text = getString(R.string.kh_uisdk_save)) {
             presenter.applyFilters()
-            dismiss()
         }
+
+        quotesFilterSave = view.findViewById(R.id.quotesFilterSave)
 
         filterViewResetFilters = view.findViewById(R.id.filterViewResetFilters)
         filterViewResetFilters.setOnClickListener {
             presenter.resetFilters()
-            dismiss()
-        }
-
-        filterViewTitleExit = view.findViewById(R.id.filterViewTitleExit)
-        filterViewTitleExit.setOnClickListener {
             dismiss()
         }
 
@@ -116,28 +106,6 @@ class FilterDialogFragment : BottomSheetDialogFragment(), FilterDialogContract.V
         filterChain.filters.add(vehicleExtrasFilter)
         filterChain.filters.add(vehicleEcoFilter)
         filterChain.filters.add(fleetCapabilitiesFilter)
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = BottomSheetDialog(requireContext(), theme)
-        dialog.setOnShowListener {
-
-            val bottomSheetDialog = it as BottomSheetDialog
-            val parentLayout =
-                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-            parentLayout?.let { layout ->
-                val behaviour = BottomSheetBehavior.from(layout)
-                setupFullHeight(layout)
-                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-        }
-        return dialog
-    }
-
-    private fun setupFullHeight(bottomSheet: View) {
-        val layoutParams = bottomSheet.layoutParams
-        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
-        bottomSheet.layoutParams = layoutParams
     }
 
     override fun createFilters(filterChain: FilterChain) {

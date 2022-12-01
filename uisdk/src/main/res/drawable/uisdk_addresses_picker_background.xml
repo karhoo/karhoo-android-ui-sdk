@@ -4,7 +4,7 @@
 
     <corners android:radius="8dp" />
 
-    <solid android:color="#EEFFFFFF" />
+    <solid android:color="@color/kh_uisdk_background1" />
 
     <stroke
         android:width="@dimen/kh_uisdk_divider_height"

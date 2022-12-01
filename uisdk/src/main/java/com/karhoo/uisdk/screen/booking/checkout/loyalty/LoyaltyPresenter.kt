@@ -278,4 +278,8 @@ class LoyaltyPresenter(
             else -> LoyaltyMode.ERROR_UNKNOWN
         }
     }
+
+    override fun getPoints(): Int? {
+        return earnedPoints ?: burnedPoints
+    }
 }
