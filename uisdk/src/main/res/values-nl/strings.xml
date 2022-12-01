@@ -109,6 +109,7 @@
     <string name="kh_uisdk_booking_checkout_add_payment_method">Betaling toevoegen</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passagier</string>
     <string name="kh_uisdk_booking_checkout_title">Uitchecken</string>
+    <string name="kh_uisdk_booking_confirmation">Boeking bevestigd</string>
     <string name="kh_uisdk_booking_details_error">Ongeldige boekingsgegevens</string>
     <string name="kh_uisdk_booking_failed">Boeking mislukt</string>
     <string name="kh_uisdk_booking_failed_body">Sorry, de vraag is groot. %1$s momenteel geen beschikbare chauffeurs.</string>
@@ -306,6 +307,8 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <string name="kh_uisdk_loyalty_balance_title">SALDO: %1$s PUNTEN</string>
     <string name="kh_uisdk_loyalty_info">Uw kaart is nodig om deze transactie te autoriseren in het geval dat de uiteindelijke prijs van de rit uw puntensaldo overschrijdt. Er worden geen kosten in rekening gebracht op uw account als uw loyaliteitspunten de volledige prijs dekken.</string>
+    <string name="kh_uisdk_loyalty_info_add_points">Aan het einde van de rit worden %s loyaliteitspunten toegevoegd aan uw accountsaldo</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s loyaliteitspunten worden aan het einde van de rit van uw accountsaldo afgetrokken</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Uw puntensaldo is onvoldoende</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">De huidige loyaliteitsmodus komt niet in aanmerking voor pre-autorisatie</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s loyaliteitspunten worden aan het einde van de rit toegevoegd aan uw accountsaldo</string>
@@ -496,6 +499,11 @@
     <string name="kh_uisdk_train_tracking">Trein volgen</string>
     <string name="kh_uisdk_trip_id">Reis-ID: %1$s</string>
     <string name="kh_uisdk_trip_id_label">Reis-ID</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Toevoegen aan agenda</string>
+    <string name="kh_uisdk_trip_summary_added_to_calendar">REIS TOEGEVOEGD AAN KALENDER</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Rijd naar %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Vluchtnummer</string>
+    <string name="kh_uisdk_trip_summary_train_number">Trein nummer</string>
     <string name="kh_uisdk_tripCancelledByDispatchAlertMessage">Uw boeking is geannuleerd. Neem contact met ons op voor meer informatie.</string>
     <string name="kh_uisdk_tripRideOptions">Ritopties</string>
     <string name="kh_uisdk_tripStatusCancelledByDispatch">Uw boeking is geannuleerd.</string>

@@ -109,6 +109,7 @@
     <string name="kh_uisdk_booking_checkout_add_payment_method">Zahlung hinzufügen</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passagier</string>
     <string name="kh_uisdk_booking_checkout_title">Zur Kasse</string>
+    <string name="kh_uisdk_booking_confirmation">Buchung Bestätigt</string>
     <string name="kh_uisdk_booking_details_error">Ungültige Buchungsdaten</string>
     <string name="kh_uisdk_booking_failed">Buchung fehlgeschlagen</string>
     <string name="kh_uisdk_booking_failed_body">Leider ist die Nachfrage hoch. %1$s hat keine verfügbaren Fahrer.</string>
@@ -306,6 +307,8 @@
     <string name="kh_uisdk_location_rationale_shown">STANDORT_RATIONAL_ANGEZEIGT</string>
     <string name="kh_uisdk_loyalty_balance_title">BILANTZ: %1$s PUNKTE</string>
     <string name="kh_uisdk_loyalty_info">Ihre Karte wird benötigt, um diese Transaktion zu autorisieren, falls der Endpreis der Fahrt Ihren Punktestand übersteigt. Ihr Konto wird nicht belastet, wenn Ihre Treuepunkte den gesamten Preis abdecken.</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s Die Treuepunkte werden am Ende der Fahrt Ihrem Konto gutgeschrieben.</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s Die Treuepunkte werden am Ende der Fahrt von Ihrem Kontostand abgezogen.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Ihr Punktesaldo ist unzureichend</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Der derzeitige Treuemodus kommt nicht für eine Vorabgenehmigung in Frage</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s Treuepunkte werden am Ende der Fahrt Ihrem Kontostand gutgeschrieben.</string>
@@ -496,6 +499,11 @@
     <string name="kh_uisdk_train_tracking">Zugverfolgung</string>
     <string name="kh_uisdk_trip_id">Reise-ID: %1$s</string>
     <string name="kh_uisdk_trip_id_label">Reise-ID</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Zum Kalender hinzufügen</string>
+    <string name="kh_uisdk_trip_summary_added_to_calendar">AUSFLUG ZUM KALENDER HINZUGEFÜGT</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Fahrt nach %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Flugnummer</string>
+    <string name="kh_uisdk_trip_summary_train_number">Zugnummer</string>
     <string name="kh_uisdk_tripCancelledByDispatchAlertMessage">Ihre Buchung wurde storniert. Bitte kontaktieren Sie uns für weitere Informationen.</string>
     <string name="kh_uisdk_tripRideOptions">Fahrten-Optionen</string>
     <string name="kh_uisdk_tripStatusCancelledByDispatch">Ihre Buchung wurde storniert.</string>

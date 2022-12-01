@@ -109,6 +109,7 @@
     <string name="kh_uisdk_booking_checkout_add_payment_method">Aggiungi pagamento</string>
     <string name="kh_uisdk_booking_checkout_passenger">Passeggeri</string>
     <string name="kh_uisdk_booking_checkout_title">Cassa</string>
+    <string name="kh_uisdk_booking_confirmation">Prenotazione confermata</string>
     <string name="kh_uisdk_booking_details_error">Dettagli della prenotazione non validi</string>
     <string name="kh_uisdk_booking_failed">Prenotazione fallita</string>
     <string name="kh_uisdk_booking_failed_body">Siamo spiacenti, la domanda è alta. %1$s non ha driver disponibili.</string>
@@ -306,6 +307,8 @@
     <string name="kh_uisdk_location_rationale_shown">LOCATION_RATIONAL_SHOWN</string>
     <string name="kh_uisdk_loyalty_balance_title">SALDO: %1$s PUNTI</string>
     <string name="kh_uisdk_loyalty_info">La tua carta è necessaria per autorizzare questa transazione nel caso in cui il prezzo finale della corsa superi il tuo saldo punti. Il tuo account non verrà addebitato se i tuoi punti fedeltà coprono l\'intero prezzo.</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s punti fedeltà verranno aggiunti al saldo del tuo account alla fine della corsa</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s punti fedeltà verranno detratti dal saldo del tuo account alla fine della corsa</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Il tuo saldo punti è insufficiente</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">L\'attuale modalità fedeltà non è idonea per la pre-autorizzazione</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s punti fedeltà verranno aggiunti al saldo del tuo account al termine della corsa</string>
@@ -496,6 +499,11 @@
     <string name="kh_uisdk_train_tracking">Monitoraggio del treno</string>
     <string name="kh_uisdk_trip_id">ID viaggio: %1$s</string>
     <string name="kh_uisdk_trip_id_label">ID viaggio</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Aggiungi al calendario</string>
+    <string name="kh_uisdk_trip_summary_added_to_calendar">VIAGGIO AGGIUNTO AL CALENDARIO</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Vai a %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Numero del volo</string>
+    <string name="kh_uisdk_trip_summary_train_number">Numero del treno</string>
     <string name="kh_uisdk_tripCancelledByDispatchAlertMessage">La tua prenotazione è stata cancellata. Vi preghiamo di contattarci per ulteriori informazioni.</string>
     <string name="kh_uisdk_tripRideOptions">Opzioni di corsa</string>
     <string name="kh_uisdk_tripStatusCancelledByDispatch">La tua prenotazione è stata cancellata.</string>
