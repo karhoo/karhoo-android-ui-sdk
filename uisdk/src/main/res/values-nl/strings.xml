@@ -429,10 +429,6 @@
     <string name="kh_uisdk_you_may_be_charged">Er worden annuleringskosten in rekening gebracht die geschat worden op %s .\n\nWilt u doorgaan?</string>
     <string name="kh_uisdk_loyalty_info_add_points">Aan het einde van de rit worden %s loyaliteitspunten toegevoegd aan uw accountsaldo</string>
     <string name="kh_uisdk_loyalty_info_remove_points">%s loyaliteitspunten worden aan het einde van de rit van uw accountsaldo afgetrokken</string>
-    <!-- Adyen default "Pay" button -->
-    <string name="pay_button">Pre-autoriseren</string>
-    <!-- Adyen default "Pay %s" button for checkout -->
-    <string name="pay_button_with_value">Pre-autoriseren %s</string>
     <string name="pay_button_with_value">Transactie autoriseren</string>
     <string name="kh_uisdk_booking_confirmation">Boeking bevestigd</string>
 </resources>
