@@ -158,4 +158,8 @@ class LoyaltyView @JvmOverloads constructor(
             loyaltyViewBalance.visibility = INVISIBLE
         }
     }
+
+    override fun getPoints(): Int? {
+        return presenter.getPoints()
+    }
 }

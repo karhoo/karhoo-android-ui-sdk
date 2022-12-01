@@ -427,6 +427,8 @@
     <string name="kh_uisdk_wheelchair">Silla de ruedas</string>
     <string name="kh_uisdk_would_you_like_to_proceed">¿Quiere continuar?</string>
     <string name="kh_uisdk_you_may_be_charged">Se le cargará una tasa de cancelación estimada en %s.\n\n¿Quiere continuar?</string>
+    <string name="kh_uisdk_loyalty_info_add_points">Se añadirán %s puntos de fidelidad al saldo de su cuenta al final del viaje</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">Se deducirán %s puntos de fidelidad del saldo de su cuenta al final del viaje.</string>
     <string name="pay_button_with_value">Autorizar transacción</string>
     <string name="kh_uisdk_booking_confirmation">Reserva confirmada</string>
 </resources>

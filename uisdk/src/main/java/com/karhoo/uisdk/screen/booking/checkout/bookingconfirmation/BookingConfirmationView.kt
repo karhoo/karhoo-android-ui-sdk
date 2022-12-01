@@ -1,9 +1,11 @@
-package com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation
+package com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation
 
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -15,6 +17,8 @@ import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
 import com.karhoo.uisdk.screen.address.static.AddressStaticComponent
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyStaticDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.util.DateUtil
@@ -25,14 +29,17 @@ import com.karhoo.uisdk.util.formatted
 import org.joda.time.DateTime
 import java.util.*
 
-class PrebookConfirmationView(
+class BookingConfirmationView(
     val quoteType: QuoteType?,
     val journeyDetails: JourneyDetails,
-    val quote: Quote?
+    val quote: Quote?,
+    private val loyaltyMode: LoyaltyMode,
+    private val loyaltyPoints: Int?
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
     var actions: CheckoutViewContract.PrebookViewActions? = null
     lateinit var prebookAddressComponent: AddressStaticComponent
+    lateinit var loyaltyStaticDetails: LoyaltyStaticDetails
     lateinit var rideConfirmedLogo: ImageView
     lateinit var fareText: TextView
     lateinit var fareTypeText: TextView
@@ -55,6 +62,7 @@ class PrebookConfirmationView(
         bookingDateText = view.findViewById(R.id.bookingDateText)
         closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
         prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
+        loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
 
         prebookAddressComponent.setup(
             journeyDetails.pickup!!,
@@ -87,6 +95,13 @@ class PrebookConfirmationView(
             }
 
         fareTypeText.text = quoteType?.toLocalisedString(requireContext()).orEmpty()
+
+        if(loyaltyMode == LoyaltyMode.NONE || loyaltyMode == LoyaltyMode.BURN || loyaltyMode == LoyaltyMode.EARN) {
+            loyaltyStaticDetails.setup(requireContext(), loyaltyMode, loyaltyPoints ?: 0)
+            loyaltyStaticDetails.visibility = VISIBLE
+        } else {
+            loyaltyStaticDetails.visibility = GONE
+        }
 
         setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))
         setupButton(

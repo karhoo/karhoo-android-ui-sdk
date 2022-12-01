@@ -46,7 +46,7 @@ import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetail
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
+import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
@@ -326,8 +326,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         if (journeyDetails != null) {
 
-            val prebookConfirmationView = PrebookConfirmationView(quoteType, journeyDetails, quote)
-            prebookConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
+            val bookingConfirmationView = BookingConfirmationView(quoteType, journeyDetails, quote, loyaltyView.getCurrentMode(), loyaltyView.getPoints())
+            bookingConfirmationView.actions = object : CheckoutViewContract.PrebookViewActions {
                 override fun openRideDetails() {
                     val activity = context as Activity
                     val data = Intent().apply {
@@ -343,6 +343,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     val activity = context as Activity
 
                     val data = Intent().apply {
+                        putExtra(BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY, tripInfo)
                         putExtra(BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY, true)
                     }
 
@@ -352,7 +353,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             }
 
             (context as CheckoutActivity).supportFragmentManager.let {
-                prebookConfirmationView.show(it, PrebookConfirmationView.TAG)
+                bookingConfirmationView.show(it, BookingConfirmationView.TAG)
             }
 
         }

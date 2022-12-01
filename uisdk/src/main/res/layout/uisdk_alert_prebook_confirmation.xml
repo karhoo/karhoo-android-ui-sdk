@@ -27,7 +27,7 @@
         android:translationX="20dp"
         app:layout_constraintEnd_toStartOf="@+id/rideConfirmedLogo"
         app:layout_constraintTop_toBottomOf="@+id/masterBottomLayout"
-        app:srcCompat="@drawable/kr_fi_check_circle" />
+        app:srcCompat="@drawable/kh_fi_check_circle" />
 
     <ImageView
         android:id="@+id/rideConfirmedLogo"
@@ -114,11 +114,22 @@
         app:layout_constraintTop_toBottomOf="@+id/fareText"
         tools:text="Estimated" />
 
+    <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyStaticDetails
+        android:id="@+id/loyaltyStaticDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+        android:layout_marginTop="@dimen/kh_uisdk_margin_default"
+        android:layout_marginEnd="@dimen/kh_uisdk_margin_default"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/fareTypeText"
+        tools:visibility="visible" />
+
     <com.karhoo.uisdk.base.view.LoadingButtonView
         android:id="@+id/prebookRideDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/kh_uisdk_margin_medium"
-        app:layout_constraintTop_toBottomOf="@+id/fareTypeText" />
+        app:layout_constraintTop_toBottomOf="@+id/loyaltyStaticDetails" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
