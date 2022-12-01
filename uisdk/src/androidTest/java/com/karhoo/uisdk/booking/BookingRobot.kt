@@ -522,7 +522,6 @@ class ResultRobot : BaseTestRobot() {
         viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         //        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
         viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_add_payment, R.id.cardNumberText)
     }
 
     fun paymentCardDetailsCheck() {

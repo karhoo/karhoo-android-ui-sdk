@@ -328,8 +328,10 @@
     </style>
 
     <style name="KhActionCellTitle">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="KhTextInputEditText">
@@ -344,7 +346,9 @@
 
     <style name="KhActionCellSubtitle">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
-        <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="KhPassengerViewTitle">

@@ -44,6 +44,7 @@ import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
+import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.checkout.prebookconfirmation.PrebookConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
@@ -82,11 +83,13 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private val flightInfo: String
         get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
 
+    private val bookingPaymentHandler = BookingPaymentHandler(context = context)
+
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
 
-        bookingRequestPaymentDetailsWidget.cardActions = this
-        bookingRequestPaymentDetailsWidget.paymentActions = this
+        bookingPaymentHandler.cardActions = this
+        bookingPaymentHandler.paymentActions = this
         bookingRequestTermsWidget.actions = this
         bookingRequestTermsWidget.checkBoxChangedCallback = ::termsAndConditionsCheckBoxCheckedChanged
 
@@ -131,6 +134,12 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
 
         showLoyaltyView(false)
+
+        if(KarhooUISDKConfigurationProvider.configuration.isExplicitTermsAndConditionsConsentRequired()) {
+            bookingRequestTermsWidget.khTermsAndConditionsCheckBox.setOnClickListener {
+                loadingButtonCallback.checkState()
+            }
+        }
     }
 
     override fun setListeners(loadingButtonCallback: CheckoutFragmentContract.LoadingButtonListener,
@@ -175,7 +184,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialiseChangeCard(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialiseChangeCard(quote = quote)
+        bookingPaymentHandler.initialiseChangeCard(quote = quote)
     }
 
     override fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?,
@@ -197,7 +206,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 passengerDetails = passengerDetails
                                     )
 
-        bookingRequestPaymentDetailsWidget.getPaymentProvider()
+        bookingPaymentHandler.getPaymentProvider()
 
     }
 
@@ -288,11 +297,11 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     presenter.onPaymentFailureDialogCancelled()
                     d.dismiss()
                 })
-        KarhooAlertDialogHelper(context).showAlertDialog(config)
+        KarhooAlertDialogHelper(context).showPaymentFailureDialog(config)
     }
 
     override fun handlePaymentDetailsUpdate() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isTermsCheckBoxValid()))
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {
@@ -301,10 +310,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun handleChangeCard() {
         presenter.handleChangeCard()
-    }
-
-    override fun handleViewVisibility(visibility: Int) {
-        bookingRequestPaymentDetailsWidget.visibility = visibility
     }
 
     override fun showPaymentUI() {
@@ -362,7 +367,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
-        bookingRequestPaymentDetailsWidget.bindPaymentDetails(savedPaymentInfo)
+        bookingPaymentHandler.bindPaymentDetails(savedPaymentInfo)
     }
 
     override fun threeDSecureNonce(threeDSNonce: String, tripId: String?) {
@@ -371,11 +376,11 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     override fun initialisePaymentProvider(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialisePaymentFlow(quote)
+        bookingPaymentHandler.initialisePaymentFlow(quote)
     }
 
     override fun initialiseGuestPayment(quote: Quote?) {
-        bookingRequestPaymentDetailsWidget.initialiseGuestPayment(quote)
+        bookingPaymentHandler.initialiseGuestPayment(quote)
     }
 
     override fun showWebView(url: String?) {
@@ -394,24 +399,28 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                   focusPhoneNumber = true
                                                  )
         } else {
-            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            bookingRequestPaymentDetailsWidget.onActivityResult(requestCode, resultCode, data)
+            bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
+            val paymentSuccess = bookingPaymentHandler.onActivityResult(requestCode, resultCode, data)
             loadingButtonCallback.onLoadingComplete()
+
+            if(paymentSuccess){
+                bookingListener.startBookingProcess()
+            }
         }
     }
 
     override fun startBooking() {
-        if (!presenter.isPaymentSet()) {
-            bookingRequestPaymentDetailsWidget.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
-            bookingRequestPaymentDetailsWidget.callOnClick()
-        }
-        else if(!isTermsCheckBoxValid()){
+        if(!isTermsCheckBoxValid()){
             loadingButtonCallback.onLoadingComplete()
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.buttonTintList = ColorStateList.valueOf(
                 ContextCompat.getColor(context, R.color.kh_uisdk_error))
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
+        }
+        else if (!presenter.isPaymentSet()) {
+            bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
+            bookingPaymentHandler.changeCard()
         }
         else {
             (bookingCheckoutViewLayout as View).hideSoftKeyboard()
@@ -423,21 +432,23 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingCheckoutPassengerView.setActionIcon(R.drawable.kh_uisdk_ic_passenger)
 
         passengerDetails?.let {
-            bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
-            bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_edit_passenger))
             passengersDetailLayout.setPassengerDetails(it)
 
         } ?: run {
-            bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
-            bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
-
             val countryCode = getDefaultCountryCode(context)
             passengersDetailLayout.setCountryFlag(countryCode,
-                                                  getDefaultCountryDialingCode(countryCode),
-                                                  false)
+                getDefaultCountryDialingCode(countryCode),
+                false)
         }
 
-        bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
+        if(arePassengerDetailsValid()){
+            bookingCheckoutPassengerView.setTitle(passengerDetails?.firstName + " " + passengerDetails?.lastName)
+            bookingCheckoutPassengerView.setSubtitle(passengerDetails?.phoneNumber.toString())
+        }
+        else{
+            bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
+            bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
+        }
     }
 
     /**
@@ -462,10 +473,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         passengersListener.onPassengerPageVisibilityChanged(show)
 
         loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
-
-        if (!show) {
-            bookingCheckoutPassengerView.setDottedBackground(!arePassengerDetailsValid())
-        }
     }
 
     override fun retrieveLoyaltyStatus() {
@@ -524,8 +531,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
-    override fun isPaymentMethodValid(): Boolean = bookingRequestPaymentDetailsWidget.hasValidPaymentType()
-
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE) {
             loyaltyView.getLoyaltyPreAuthNonce { result, loyaltyStatus ->
@@ -535,7 +540,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                         startBooking()
                     }
                     is Resource.Failure -> {
-                        if (result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.FailedToGenerateNonce.code) {
+                        if (result.error.code == CUSTOM_ERROR_PREFIX + KarhooError.ErrMissingBrowserInfo.code) {
                             //Start the booking even if the loyalty is in an error state
                             startBooking()
                             return@getLoyaltyPreAuthNonce
@@ -589,7 +594,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     }
 
     private fun termsAndConditionsCheckBoxCheckedChanged() {
-        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isPaymentMethodValid(), isTermsCheckBoxValid()))
+        loadingButtonCallback.setState(presenter.getBookingButtonState(arePassengerDetailsValid(), isTermsCheckBoxValid()))
     }
 
     companion object {
