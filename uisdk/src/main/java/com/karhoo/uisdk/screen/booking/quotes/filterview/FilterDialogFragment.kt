@@ -179,7 +179,7 @@ class FilterDialogFragment : MasterBottomSheetFragment(), FilterDialogContract.V
         filterViewServiceAgreementsMultiSelectCheckboxFilter.filter = serviceAgreementsFilter
         filterViewServiceAgreementsMultiSelectCheckboxFilter.choices =
             serviceAgreementsFilter.typeValues
-        filterViewServiceAgreementsMultiSelectCheckboxFilter.setTitle(getString(R.string.kh_uisdk_filter_cancellation_and_waiting_time))
+        filterViewServiceAgreementsMultiSelectCheckboxFilter.setTitle(getString(R.string.kh_uisdk_filter_service_agreements))
         filterViewServiceAgreementsMultiSelectCheckboxFilter.delegate = {
             presenter.callFilterChanged()
         }
