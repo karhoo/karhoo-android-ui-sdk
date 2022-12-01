@@ -90,6 +90,7 @@
     <dimen name="kh_uisdk_icon_size_medium">20dp</dimen>
     <dimen name="kh_uisdk_icon_size_large">32dp</dimen>
     <dimen name="kh_uisdk_address_icon_size_default">17dp</dimen>
+    <dimen name="kh_uisdk_checkout_icon_size_default">18dp</dimen>
 
     <!--Cancel Button-->
     <dimen name="kh_uisdk_cancel_button_width">180dp</dimen>

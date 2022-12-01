@@ -22,6 +22,8 @@ jobs:
       - FASTLANE_LANE_TEST: unit_tests
     steps:
       - checkout
+      - run: git submodule sync
+      - run: git submodule update --init
       - restore_cache:
           key: 1-gems-{{ checksum "Gemfile.lock" }}
       - run:

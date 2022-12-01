@@ -1,13 +1,10 @@
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 dependencies {
+    api project(':nsdk')
 
 //    api 'com.github.karhoo:karhoo-android-sdk:1.4.5'
-    api 'com.github.karhoo:karhoo-android-sdk:1.6.1-RC2'
     api 'com.braintreepayments.api:drop-in:5.2.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'

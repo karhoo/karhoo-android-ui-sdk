@@ -78,14 +78,9 @@ internal class CheckoutViewPresenter(
 
     override fun getBookingButtonState(
         arePassengerDetailsValid: Boolean,
-        isPaymentValid: Boolean,
         isTermsCheckBoxValid: Boolean
     ): BookButtonState {
-        return if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
-            BookButtonState.BOOK
-        } else {
-            BookButtonState.NEXT
-        }
+        return BookButtonState.NEXT
     }
 
     override fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {

@@ -14,7 +14,6 @@ import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewContract
 import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
-import com.karhoo.uisdk.screen.booking.quotes.category.CategoriesViewModel
 import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewGenericReason
 import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorViewContract
 import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.*
@@ -27,7 +26,6 @@ class QuotesRecyclerView @JvmOverloads constructor(
 
     private val quotesAdapter =
         QuotesAdapter(context)
-    private val presenter: QuotesRecyclerContract.Presenter = QuotesRecyclerPresenter(this)
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
 
@@ -198,13 +196,6 @@ class QuotesRecyclerView @JvmOverloads constructor(
         setListVisibility(!show)
         setQuotesLoaderVisibility(if (show) View.GONE else View.VISIBLE)
         quotesErrorView.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
-    override fun watchCategories(
-        lifecycleOwner: LifecycleOwner,
-        categoriesViewModel: CategoriesViewModel
-    ) {
-        categoriesViewModel.categories.observe(lifecycleOwner, presenter.watchCategories())
     }
 
     override fun watchQuoteListStatus(
