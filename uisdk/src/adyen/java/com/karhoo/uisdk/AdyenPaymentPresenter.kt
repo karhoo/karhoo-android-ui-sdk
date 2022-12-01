@@ -85,7 +85,11 @@ class AdyenPaymentPresenter(
             Environment.TEST
         }
 
-        val key: String = if(userStore.paymentProvider?.provider?.version.equals("v68", ignoreCase = true))
+        var version = 51
+        userStore.paymentProvider?.provider?.version?.let {
+            version = it.substring(1).toInt()
+        }
+        val key: String = if(version >= 68)
             clientKey
         else
             adyenKey
@@ -211,7 +215,12 @@ class AdyenPaymentPresenter(
     override fun sdkInit(quote: Quote?, locale: Locale?) {
         this.quote = quote
 
-        if(!userStore.paymentProvider?.provider?.version.equals("v68", ignoreCase = true)) {
+        var version = 51
+        userStore.paymentProvider?.provider?.version?.let {
+            version = it.substring(1).toInt()
+        }
+
+        if(version < 68) {
             paymentsService.getAdyenPublicKey().execute { result ->
                 when (result) {
                     is Resource.Success -> {
