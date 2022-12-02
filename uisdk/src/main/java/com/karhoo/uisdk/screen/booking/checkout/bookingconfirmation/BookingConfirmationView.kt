@@ -1,7 +1,9 @@
 package com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -29,6 +31,7 @@ import com.karhoo.uisdk.util.formatted
 import org.joda.time.DateTime
 import java.util.*
 
+
 class BookingConfirmationView(
     val quoteType: QuoteType?,
     val journeyDetails: JourneyDetails,
@@ -37,7 +40,7 @@ class BookingConfirmationView(
     private val loyaltyPoints: Int?
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
-    var actions: CheckoutViewContract.PrebookViewActions? = null
+    var actions: CheckoutViewContract.BookingConfirmationActions? = null
     lateinit var prebookAddressComponent: AddressStaticComponent
     lateinit var loyaltyStaticDetails: LoyaltyStaticDetails
     lateinit var rideConfirmedLogo: ImageView
@@ -45,6 +48,7 @@ class BookingConfirmationView(
     lateinit var fareTypeText: TextView
     lateinit var bookingTimeText: TextView
     lateinit var bookingDateText: TextView
+    lateinit var addToCalendar: TextView
     lateinit var closeButton: ImageButton
 
 
@@ -63,6 +67,7 @@ class BookingConfirmationView(
         closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
         prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
         loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
+        addToCalendar = view.findViewById(R.id.addToCalendar)
 
         prebookAddressComponent.setup(
             journeyDetails.pickup!!,
@@ -101,6 +106,21 @@ class BookingConfirmationView(
             loyaltyStaticDetails.visibility = VISIBLE
         } else {
             loyaltyStaticDetails.visibility = GONE
+        }
+
+        addToCalendar.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val intent = Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,  cal.timeInMillis)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.timeInMillis + 60 * 60 * 1000)
+                .putExtra(CalendarContract.Events.TITLE, "Yoga")
+                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
+
+            startActivity(intent)
         }
 
         setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))

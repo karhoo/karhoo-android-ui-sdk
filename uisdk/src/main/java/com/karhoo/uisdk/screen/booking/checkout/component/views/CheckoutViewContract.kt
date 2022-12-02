@@ -140,7 +140,7 @@ interface CheckoutViewContract {
         fun getJourneyDetails(): JourneyDetails?
     }
 
-    interface PrebookViewActions {
+    interface BookingConfirmationActions {
         fun openRideDetails()
         fun dismissedPrebookDialog()
     }
