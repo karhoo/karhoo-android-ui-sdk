@@ -431,4 +431,8 @@
     <string name="kh_uisdk_loyalty_info_remove_points">Se deducirán %s puntos de fidelidad del saldo de su cuenta al final del viaje.</string>
     <string name="pay_button_with_value">Autorizar transacción</string>
     <string name="kh_uisdk_booking_confirmation">Reserva confirmada</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Añadir al calendario</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Viaja a %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Número de vuelo</string>
+    <string name="kh_uisdk_trip_summary_train_number">Número de tren</string>
 </resources>

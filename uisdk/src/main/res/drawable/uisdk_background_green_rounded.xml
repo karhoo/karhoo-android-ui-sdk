@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <solid android:color="@color/kh_uisdk_success" />
-
-    <corners android:radius="@dimen/kh_uisdk_spacing_semi_small" />
-
-</shape>

@@ -431,4 +431,8 @@
     <string name="kh_uisdk_loyalty_info_remove_points">%s punti fedeltà verranno detratti dal saldo del tuo account alla fine della corsa</string>
     <string name="pay_button_with_value">Autorizza transazione</string>
     <string name="kh_uisdk_booking_confirmation">Prenotazione confermata</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Aggiungi al calendario</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Vai a %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Numero del volo</string>
+    <string name="kh_uisdk_trip_summary_train_number">Numero del treno</string>
 </resources>

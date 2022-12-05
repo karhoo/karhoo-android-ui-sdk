@@ -431,4 +431,8 @@
     <string name="kh_uisdk_loyalty_info_remove_points">%s Die Treuepunkte werden am Ende der Fahrt von Ihrem Kontostand abgezogen.</string>
     <string name="pay_button_with_value">Transaktion autorisieren</string>
     <string name="kh_uisdk_booking_confirmation">Buchung Bestätigt</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Zum Kalender hinzufügen</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Fahrt nach %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Flugnummer</string>
+    <string name="kh_uisdk_trip_summary_train_number">Zugnummer</string>
 </resources>

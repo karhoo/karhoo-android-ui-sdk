@@ -13,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
@@ -31,13 +30,13 @@ import com.karhoo.uisdk.util.formatted
 import org.joda.time.DateTime
 import java.util.*
 
-
 class BookingConfirmationView(
-    val quoteType: QuoteType?,
     val journeyDetails: JourneyDetails,
     val quote: Quote?,
     private val loyaltyMode: LoyaltyMode,
-    private val loyaltyPoints: Int?
+    private val loyaltyPoints: Int?,
+    private val flightNumber: String?,
+    private val trainNumber: String?
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
     var actions: CheckoutViewContract.BookingConfirmationActions? = null
@@ -57,7 +56,7 @@ class BookingConfirmationView(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.uisdk_alert_prebook_confirmation, container, false)
+        val view = inflater.inflate(R.layout.uisdk_booking_confirmation, container, false)
 
         rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
         fareText = view.findViewById(R.id.fareText)
@@ -99,28 +98,12 @@ class BookingConfirmationView(
                 Currency.getInstance(quote.price.currencyCode).formatted(it)
             }
 
-        fareTypeText.text = quoteType?.toLocalisedString(requireContext()).orEmpty()
+        fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
 
-        if(loyaltyMode == LoyaltyMode.NONE || loyaltyMode == LoyaltyMode.BURN || loyaltyMode == LoyaltyMode.EARN) {
-            loyaltyStaticDetails.setup(requireContext(), loyaltyMode, loyaltyPoints ?: 0)
-            loyaltyStaticDetails.visibility = VISIBLE
-        } else {
-            loyaltyStaticDetails.visibility = GONE
-        }
+        setupLoyaltyComponent()
 
         addToCalendar.setOnClickListener {
-            val cal = Calendar.getInstance()
-            val intent = Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,  cal.timeInMillis)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, cal.timeInMillis + 60 * 60 * 1000)
-                .putExtra(CalendarContract.Events.TITLE, "Yoga")
-                .putExtra(CalendarContract.Events.DESCRIPTION, "Group class")
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, "The gym")
-                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
-                .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com")
-
-            startActivity(intent)
+            addCalendarEvent()
         }
 
         setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))
@@ -166,8 +149,64 @@ class BookingConfirmationView(
         super.onCancel(dialog)
     }
 
+    private fun addCalendarEvent() {
+        var flightDescription: String? = null
+        flightNumber?.let {
+            flightDescription =
+                requireContext().getString(R.string.kh_uisdk_trip_summary_flight_number) + ": " + flightNumber
+        }
+
+        var trainDescription: String? = null
+        trainNumber?.let {
+            trainDescription =
+                requireContext().getString(R.string.kh_uisdk_trip_summary_train_number) + ": " + trainNumber
+        }
+
+        val pickup: String = journeyDetails.pickup!!.address.displayAddress
+        val dropOff: String = journeyDetails.destination!!.address.displayAddress
+
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, journeyDetails.date?.millis)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, journeyDetails.date?.millis?.plus(CALENDAR_HOUR))
+            .putExtra(
+                CalendarContract.Events.TITLE, String.format(
+                    requireContext().getString(R.string.kh_uisdk_trip_summary_calendar_event_title),
+                    journeyDetails.destination!!.address.displayAddress
+                )
+            )
+            .putExtra(
+                CalendarContract.Events.DESCRIPTION,
+                "$flightDescription \n $trainDescription \n $pickup \n $dropOff"
+            )
+            .putExtra(
+                CalendarContract.Events.EVENT_LOCATION,
+                pickup
+            )
+            .putExtra(
+                CalendarContract.Events.AVAILABILITY,
+                CalendarContract.Events.AVAILABILITY_BUSY
+            )
+            .putExtra(
+                CalendarContract.Events.HAS_ALARM,
+                1
+            )
+
+        startActivity(intent)
+    }
+
+    private fun setupLoyaltyComponent() {
+        if (loyaltyMode == LoyaltyMode.NONE || loyaltyMode == LoyaltyMode.BURN || loyaltyMode == LoyaltyMode.EARN) {
+            loyaltyStaticDetails.setup(requireContext(), loyaltyMode, loyaltyPoints ?: 0)
+            loyaltyStaticDetails.visibility = VISIBLE
+        } else {
+            loyaltyStaticDetails.visibility = GONE
+        }
+    }
+
     companion object {
         const val TAG = "PrebookConfirmationView"
+        const val CALENDAR_HOUR = 60 * 60 * 1000
     }
 
 }

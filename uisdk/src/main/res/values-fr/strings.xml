@@ -431,4 +431,8 @@
     <string name="kh_uisdk_loyalty_info_remove_points">%s Les points de fidélité seront déduits du solde de votre compte à la fin de la course.</string>
     <string name="pay_button_with_value">Autoriser la transaction</string>
     <string name="kh_uisdk_booking_confirmation">Course confirmée</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Ajouter au calendrier</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Rouler jusqu’à %s</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Numéro de vol</string>
+    <string name="kh_uisdk_trip_summary_train_number">Numéro de train</string>
 </resources>

@@ -326,7 +326,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
         if (journeyDetails != null) {
 
-            val bookingConfirmationView = BookingConfirmationView(quoteType, journeyDetails, quote, loyaltyView.getCurrentMode(), loyaltyView.getPoints())
+            val bookingConfirmationView = BookingConfirmationView(
+                journeyDetails,
+                quote,
+                loyaltyView.getCurrentMode(),
+                loyaltyView.getPoints(),
+                tripInfo?.flightNumber,
+                tripInfo?.trainNumber
+            )
+
             bookingConfirmationView.actions = object : CheckoutViewContract.BookingConfirmationActions {
                 override fun openRideDetails() {
                     val activity = context as Activity
