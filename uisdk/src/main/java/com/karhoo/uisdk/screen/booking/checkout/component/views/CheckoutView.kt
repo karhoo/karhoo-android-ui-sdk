@@ -329,10 +329,14 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             val bookingConfirmationView = BookingConfirmationView(
                 journeyDetails,
                 quote,
-                loyaltyView.getCurrentMode(),
-                loyaltyView.getPoints(),
                 tripInfo?.flightNumber,
                 tripInfo?.trainNumber
+            )
+
+            bookingConfirmationView.setLoyaltyProperties(
+                loyaltyView.visibility == VISIBLE,
+                loyaltyView.getCurrentMode(),
+                loyaltyView.getPoints()
             )
 
             bookingConfirmationView.actions = object : CheckoutViewContract.BookingConfirmationActions {

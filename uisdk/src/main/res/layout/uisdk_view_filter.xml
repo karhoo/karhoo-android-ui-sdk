@@ -25,7 +25,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <include layout="@layout/fragment_master_bottom_sheet" />
+                <include layout="@layout/uisdk_fragment_master_bottom_sheet" />
 
                 <TextView
                     android:id="@+id/filterViewResetFilters"

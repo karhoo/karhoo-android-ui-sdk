@@ -33,8 +33,6 @@ import java.util.*
 class BookingConfirmationView(
     val journeyDetails: JourneyDetails,
     val quote: Quote?,
-    private val loyaltyMode: LoyaltyMode,
-    private val loyaltyPoints: Int?,
     private val flightNumber: String?,
     private val trainNumber: String?
 ) :
@@ -49,6 +47,9 @@ class BookingConfirmationView(
     lateinit var bookingDateText: TextView
     lateinit var addToCalendar: TextView
     lateinit var closeButton: ImageButton
+    private lateinit var loyaltyMode: LoyaltyMode
+    private var loyaltyPoints: Int? = 0
+    private var loyaltyVisible: Boolean = false
 
 
     override fun onCreateView(
@@ -100,7 +101,7 @@ class BookingConfirmationView(
 
         fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
 
-        setupLoyaltyComponent()
+        setupLoyaltyComponent(loyaltyVisible, loyaltyMode, loyaltyPoints)
 
         addToCalendar.setOnClickListener {
             addCalendarEvent()
@@ -168,7 +169,10 @@ class BookingConfirmationView(
         val intent = Intent(Intent.ACTION_INSERT)
             .setData(CalendarContract.Events.CONTENT_URI)
             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, journeyDetails.date?.millis)
-            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, journeyDetails.date?.millis?.plus(CALENDAR_HOUR))
+            .putExtra(
+                CalendarContract.EXTRA_EVENT_END_TIME,
+                journeyDetails.date?.millis?.plus(CALENDAR_HOUR)
+            )
             .putExtra(
                 CalendarContract.Events.TITLE, String.format(
                     requireContext().getString(R.string.kh_uisdk_trip_summary_calendar_event_title),
@@ -195,13 +199,25 @@ class BookingConfirmationView(
         startActivity(intent)
     }
 
-    private fun setupLoyaltyComponent() {
-        if (loyaltyMode == LoyaltyMode.NONE || loyaltyMode == LoyaltyMode.BURN || loyaltyMode == LoyaltyMode.EARN) {
+    private fun setupLoyaltyComponent(
+        show: Boolean,
+        loyaltyMode: LoyaltyMode,
+        loyaltyPoints: Int?
+    ) {
+        val eligibleLoyalty =
+            loyaltyMode == LoyaltyMode.NONE || loyaltyMode == LoyaltyMode.BURN || loyaltyMode == LoyaltyMode.EARN
+        if (show && eligibleLoyalty) {
             loyaltyStaticDetails.setup(requireContext(), loyaltyMode, loyaltyPoints ?: 0)
             loyaltyStaticDetails.visibility = VISIBLE
         } else {
             loyaltyStaticDetails.visibility = GONE
         }
+    }
+
+    fun setLoyaltyProperties(visibile: Boolean, loyaltyMode: LoyaltyMode, loyaltyPoints: Int?) {
+        this.loyaltyMode = loyaltyMode
+        this.loyaltyPoints = loyaltyPoints
+        this.loyaltyVisible = visibile
     }
 
     companion object {
