@@ -150,13 +150,13 @@ class BookingConfirmationView(
     }
 
     private fun addCalendarEvent() {
-        var flightDescription: String? = null
+        var flightDescription: String = ""
         flightNumber?.let {
             flightDescription =
                 requireContext().getString(R.string.kh_uisdk_trip_summary_flight_number) + ": " + flightNumber
         }
 
-        var trainDescription: String? = null
+        var trainDescription: String = ""
         trainNumber?.let {
             trainDescription =
                 requireContext().getString(R.string.kh_uisdk_trip_summary_train_number) + ": " + trainNumber
