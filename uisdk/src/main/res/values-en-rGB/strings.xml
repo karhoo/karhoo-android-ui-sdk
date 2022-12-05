@@ -431,4 +431,8 @@
     <string name="kh_uisdk_loyalty_info_remove_points">%s loyalty points will be deducted from your account balance at the end of the ride</string>
     <string name="pay_button_with_value">Authorize transaction</string>
     <string name="kh_uisdk_booking_confirmation">Booking confirmed</string>
+    <string name="kh_uisdk_trip_summary_add_to_calendar">Add to calendar</string>
+    <string name="kh_uisdk_trip_summary_calendar_event_title">Ride to %s</string>
+    <string name="kh_uisdk_trip_summary_train_number">Train number</string>
+    <string name="kh_uisdk_trip_summary_flight_number">Flight number</string>
 </resources>
