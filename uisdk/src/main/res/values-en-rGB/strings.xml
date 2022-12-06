@@ -287,6 +287,12 @@
     <string name="kh_uisdk_KP003">Missing supply partner ID</string>
     <string name="kh_uisdk_KP004">UserID is not UUID</string>
     <string name="kh_uisdk_KP005">Browser information must be defined to enforce 3DS</string>
+    <string name="kh_uisdk_KP006">Return Url must be defined to enforce 3DS</string>
+    <string name="kh_uisdk_KP007">Missing trip ID</string>
+    <string name="kh_uisdk_KP008">Missing user</string>
+    <string name="kh_uisdk_KP009">Primary org is not registered</string>
+    <string name="kh_uisdk_KP010">Bad money amount</string>
+    <string name="kh_uisdk_KP011">Bad money split</string>
     <string name="kh_uisdk_label_and"> and to the</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Cancellation Policy</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Terms and Conditions</string>

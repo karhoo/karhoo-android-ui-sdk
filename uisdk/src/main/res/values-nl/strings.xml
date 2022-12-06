@@ -287,6 +287,12 @@
     <string name="kh_uisdk_KP003">Ontbrekende leveringspartner-ID</string>
     <string name="kh_uisdk_KP004">Gebruikers-ID is geen UUID</string>
     <string name="kh_uisdk_KP005">Browserinformatie moet worden gedefinieerd om 3DS af te dwingen</string>
+    <string name="kh_uisdk_KP006">De retour-URL moet worden gedefinieerd om 3DS af te dwingen</string>
+    <string name="kh_uisdk_KP007">Reis-ID ontbreekt</string>
+    <string name="kh_uisdk_KP008">Ontbrekende gebruiker</string>
+    <string name="kh_uisdk_KP009">Primaire organisatie is niet geregistreerd</string>
+    <string name="kh_uisdk_KP010">Slecht geldbedrag</string>
+    <string name="kh_uisdk_KP011">Slechte geldverdeling</string>
     <string name="kh_uisdk_label_and">en</string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Annuleringsvoorwaarden taxibedrijf</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Algemene gebruiksvoorwaarden taxibedrijf</string>
