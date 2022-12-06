@@ -163,8 +163,8 @@ class QuotesRecyclerView @JvmOverloads constructor(
     override fun showNoFleetsError(show: Boolean, isPrebook: Boolean) {
         showErrorView(
             show, ErrorViewGenericReason(
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_no_availability_title) else "",
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_no_availability_subtitle) else context.resources.getString(R.string.kh_uisdk_no_results_found),
+                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_title) else "",
+                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_subtitle) else context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_found),
                 R.drawable.kh_uisdk_ic_no_available_quotes
             )
         )
@@ -174,8 +174,8 @@ class QuotesRecyclerView @JvmOverloads constructor(
         if (show) {
             quotesErrorView.setupWithSpan(
                 ErrorViewGenericReason(
-                    context.resources.getString(R.string.kh_uisdk_no_coverage_title),
-                    context.resources.getString(R.string.kh_uisdk_no_coverage_subtitle),
+                    context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_title),
+                    context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle),
                     R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
