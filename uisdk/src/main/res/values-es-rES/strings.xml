@@ -287,6 +287,12 @@
     <string name="kh_uisdk_KP003">ID de socio de suministro faltante</string>
     <string name="kh_uisdk_KP004">ID de usuario no es UUID</string>
     <string name="kh_uisdk_KP005">La información del navegador debe estar definida para hacer cumplir 3DS</string>
+    <string name="kh_uisdk_KP006">La URL de devolución debe definirse para aplicar 3DS</string>
+    <string name="kh_uisdk_KP007">ID de viaje faltante</string>
+    <string name="kh_uisdk_KP008">Usuario perdido</string>
+    <string name="kh_uisdk_KP009">La organización principal no está registrada</string>
+    <string name="kh_uisdk_KP010">cantidad de dinero malo</string>
+    <string name="kh_uisdk_KP011">División de dinero malo</string>
     <string name="kh_uisdk_label_and"> y </string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">política de cancelación</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">condiciones generales</string>

@@ -287,6 +287,12 @@
     <string name="kh_uisdk_KP003">ID de partenaire d’approvisionnement manquant</string>
     <string name="kh_uisdk_KP004">UserID n’est pas UUID</string>
     <string name="kh_uisdk_KP005">Les informations du navigateur doivent être définies pour appliquer 3DS</string>
+    <string name="kh_uisdk_KP006">L’URL de retour doit être définie pour appliquer 3DS</string>
+    <string name="kh_uisdk_KP007">ID de voyage manquant</string>
+    <string name="kh_uisdk_KP008">Utilisateur manquant</string>
+    <string name="kh_uisdk_KP009">L’organisation principale n’est pas enregistrée</string>
+    <string name="kh_uisdk_KP010">Montant irrécouvrable</string>
+    <string name="kh_uisdk_KP011">Mauvais partage d’argent</string>
     <string name="kh_uisdk_label_and"> ainsi que leurs </string>
     <string name="kh_uisdk_label_fleet_cancellation_policy">Conditions d\'annulation</string>
     <string name="kh_uisdk_label_fleet_terms_and_conditions">Conditions générales d\'utilisation</string>
