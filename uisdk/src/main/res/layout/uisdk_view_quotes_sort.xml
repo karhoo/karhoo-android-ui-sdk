@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="@dimen/kh_uisdk_spacing_small">
 
-    <include layout="@layout/fragment_master_bottom_sheet" />
+    <include layout="@layout/uisdk_fragment_master_bottom_sheet" />
 
     <View
         android:layout_width="match_parent"

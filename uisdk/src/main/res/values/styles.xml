@@ -842,4 +842,15 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="KhAddToCalendar">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_accent</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:text">@string/kh_uisdk_trip_summary_add_to_calendar</item>
+        <item name="android:drawableLeft">@drawable/kh_uisdk_calendar</item>
+        <item name="android:drawablePadding">@dimen/kh_uisdk_spacing_small_intermediate</item>
+    </style>
+
 </resources>

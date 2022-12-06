@@ -14,7 +14,7 @@
         android:padding="@dimen/kh_uisdk_spacing_small"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/fragment_master_bottom_sheet" />
+        <include layout="@layout/uisdk_fragment_master_bottom_sheet" />
     </LinearLayout>
 
     <ImageView
@@ -34,6 +34,7 @@
         android:layout_width="@dimen/kh_uisdk_logo_width_prebook_confirmation"
         android:layout_height="@dimen/kh_uisdk_logo_height"
         android:layout_gravity="center"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_medium_small"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,9 +46,6 @@
         android:id="@+id/prebookAddressComponent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/kh_uisdk_margin_default"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginEnd="@dimen/kh_uisdk_margin_default"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rideConfirmedLogo" />
 
@@ -57,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_small_intermediate"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         app:layout_constraintEnd_toStartOf="@+id/verticalDivider"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_small_intermediate"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/verticalDivider"
@@ -119,17 +117,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-        android:layout_marginTop="@dimen/kh_uisdk_margin_default"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
         android:layout_marginEnd="@dimen/kh_uisdk_margin_default"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/fareTypeText"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/addToCalendar"
+        style="@style/KhAddToCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium"
+        android:gravity="center"
+        android:paddingStart="@dimen/kh_uisdk_spacing_xsmall"
+        android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_xsmall"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loyaltyStaticDetails" />
 
     <com.karhoo.uisdk.base.view.LoadingButtonView
         android:id="@+id/prebookRideDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/kh_uisdk_margin_medium"
-        app:layout_constraintTop_toBottomOf="@+id/loyaltyStaticDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/addToCalendar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
