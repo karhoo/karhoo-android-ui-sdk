@@ -392,4 +392,49 @@ class ServerRobot {
                                   useJson = useJson, delayInMillis = delayInMillis)
                                               .createResponse()))
     }
+
+    fun getAdyenPublicKeyResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockGetResponse(
+            code = code,
+            response = response,
+            endpoint = APITemplate.ADYEN_PUBLIC_KEY_METHOD,
+            delayInMillis = delayInMillis
+        )
+    }
+
+    fun getAdyenPaymentMethodsResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+            code = code,
+            response = response,
+            endpoint = APITemplate.ADYEN_PAYMENT_METHODS_METHOD,
+            delayInMillis = delayInMillis
+        )
+    }
+
+    fun getAdyenPaymentsResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+            code = code,
+            response = response,
+            endpoint = APITemplate.ADYEN_PAYMENTS_METHOD,
+            delayInMillis = delayInMillis
+        )
+    }
+
+    fun getAdyenPaymentsDetailsResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+            code = code,
+            response = response,
+            endpoint = APITemplate.ADYEN_PAYMENT_DETAILS,
+            delayInMillis = delayInMillis
+        )
+    }
+
+    fun getAdyenPaymentsDetailsWithVersionResponse(code: Int, response: Any, delayInMillis: Int = 0) {
+        mockPostResponse(
+            code = code,
+            response = response,
+            endpoint = APITemplate.ADYEN_PAYMENT_DETAILS_WITH_VERSION,
+            delayInMillis = delayInMillis
+        )
+    }
 }

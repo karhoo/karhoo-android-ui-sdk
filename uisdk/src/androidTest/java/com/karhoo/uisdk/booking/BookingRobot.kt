@@ -173,7 +173,7 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressAddPaymentField() {
-        clickButton(R.id.bookingRequestPaymentDetailsWidget)
+//        clickButton(R.id.bookingRequestPaymentDetailsWidget)
     }
 }
 
@@ -519,15 +519,15 @@ class ResultRobot : BaseTestRobot() {
 
     //TODO: FIX FOR CHECKOUT
     fun paymentEmptyDetailsCheckGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
+//        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         //        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
-        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
+//        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
     }
 
     fun paymentCardDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
+//        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
         textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingCheckoutView)
-        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
+//        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
         textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
@@ -615,7 +615,7 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun paymentFieldIsEnabled() {
-        buttonIsEnabled(R.id.bookingRequestPaymentDetailsWidget)
+//        buttonIsEnabled(R.id.bookingRequestPaymentDetailsWidget)
     }
 
     //TODO: FIX FOR CHECKOUT
@@ -660,6 +660,10 @@ class ResultRobot : BaseTestRobot() {
 
     fun checkAdyenWidgetIsShown() {
         textIsVisible(R.string.change_payment_method)
+    }
+
+    fun scrollUpBottomSheet() {
+
     }
 
 }
