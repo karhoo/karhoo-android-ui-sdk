@@ -424,7 +424,7 @@
     <string name="kh_uisdk_register">Registreren</string>
     <string name="kh_uisdk_report_issue">Probleem melden</string>
     <string name="kh_uisdk_request_car">BOEKING BEVESTIGEN</string>
-    <string name="kh_uisdK_request_received">Boeking ontvangen</string>
+    <string name="kh_uisdk_request_received">Boeking ontvangen</string>
     <string name="kh_uisdk_requested">Uw reis is aangevraagd met %s</string>
     <string name="kh_uisdk_requesting">Aanvragen</string>
     <string name="kh_uisdk_requesting_car">Rit boeken</string>

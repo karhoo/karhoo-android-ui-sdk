@@ -424,7 +424,7 @@
     <string name="kh_uisdk_register">Inscription</string>
     <string name="kh_uisdk_report_issue">Signaler un problème</string>
     <string name="kh_uisdk_request_car">VALIDER LA RÉSERVATION</string>
-    <string name="kh_uisdK_request_received">Commande reçue</string>
+    <string name="kh_uisdk_request_received">Commande reçue</string>
     <string name="kh_uisdk_requested">Votre course avec %s a été demandée</string>
     <string name="kh_uisdk_requesting">Demande en cours</string>
     <string name="kh_uisdk_requesting_car">Commande en cours</string>

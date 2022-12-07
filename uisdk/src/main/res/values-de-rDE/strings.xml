@@ -424,7 +424,7 @@
     <string name="kh_uisdk_register">Registrieren</string>
     <string name="kh_uisdk_report_issue">Ausgabe melden</string>
     <string name="kh_uisdk_request_car">BUCHUNG BESTÄTIGEN</string>
-    <string name="kh_uisdK_request_received">Erhaltene Buchung</string>
+    <string name="kh_uisdk_request_received">Erhaltene Buchung</string>
     <string name="kh_uisdk_requested">Ihre Reise wurde angefordert mit %s</string>
     <string name="kh_uisdk_requesting">Anfrage an</string>
     <string name="kh_uisdk_requesting_car">Fahrt buchen</string>
