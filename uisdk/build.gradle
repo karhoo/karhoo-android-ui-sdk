@@ -47,13 +47,9 @@ def getCurrentFlavor() {
 if (getCurrentFlavor().contains('adyen')) {
     println 'Building the -adyen flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-} else if (getCurrentFlavor().contains('braintree')) {
-//    println 'Building the -braintree flavour of the UISDK'
-//    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 } else if(getCurrentFlavor().contains('full')) {
     println 'Building the -full flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-//    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 }
 
 android {
@@ -97,10 +93,6 @@ android {
             dimension "paymentProvider"
             versionNameSuffix "-adyen"
         }
-//        braintree {
-//            dimension "paymentProvider"
-//            versionNameSuffix "-braintree"
-//        }
         full {
             dimension "paymentProvider"
             versionNameSuffix "-full"
@@ -111,9 +103,6 @@ android {
         adyen {
             java.srcDirs = ['src/main/java/', 'src/adyen/java']
         }
-//        braintree {
-//            java.srcDirs = ['src/main/java/', 'src/braintree/java']
-//        }
         full {
             java.srcDirs = ['src/main/java/', 'src/adyen/']
         }
@@ -140,12 +129,8 @@ afterEvaluate {
         if (variant.flavorName == "adyen") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
         }
-        if (variant.flavorName == "braintree") {
-//            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
-        }
         if (variant.flavorName == "full") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-//            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
         }
 
         if (variant.buildType.name != "release") { return }
@@ -162,7 +147,6 @@ dependencies {
     api project(':nsdk')
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
-//    fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
