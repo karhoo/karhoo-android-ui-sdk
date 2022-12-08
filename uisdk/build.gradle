@@ -159,7 +159,7 @@ afterEvaluate {
 }
 
 dependencies {
-//    api project(':nsdk')
+    api project(':nsdk')
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
 //    fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
