@@ -48,12 +48,12 @@ if (getCurrentFlavor().contains('adyen')) {
     println 'Building the -adyen flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
 } else if (getCurrentFlavor().contains('braintree')) {
-    println 'Building the -braintree flavour of the UISDK'
-    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+//    println 'Building the -braintree flavour of the UISDK'
+//    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 } else if(getCurrentFlavor().contains('full')) {
     println 'Building the -full flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+//    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 }
 
 android {
@@ -97,10 +97,10 @@ android {
             dimension "paymentProvider"
             versionNameSuffix "-adyen"
         }
-        braintree {
-            dimension "paymentProvider"
-            versionNameSuffix "-braintree"
-        }
+//        braintree {
+//            dimension "paymentProvider"
+//            versionNameSuffix "-braintree"
+//        }
         full {
             dimension "paymentProvider"
             versionNameSuffix "-full"
@@ -111,11 +111,11 @@ android {
         adyen {
             java.srcDirs = ['src/main/java/', 'src/adyen/java']
         }
-        braintree {
-            java.srcDirs = ['src/main/java/', 'src/braintree/java']
-        }
+//        braintree {
+//            java.srcDirs = ['src/main/java/', 'src/braintree/java']
+//        }
         full {
-            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/']
+            java.srcDirs = ['src/main/java/', 'src/adyen/']
         }
     }
 
@@ -141,11 +141,11 @@ afterEvaluate {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
         }
         if (variant.flavorName == "braintree") {
-            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+//            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
         }
         if (variant.flavorName == "full") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
+//            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
         }
 
         if (variant.buildType.name != "release") { return }
