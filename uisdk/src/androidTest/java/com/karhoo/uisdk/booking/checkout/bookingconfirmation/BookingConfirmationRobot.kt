@@ -51,4 +51,12 @@ class BookingConfirmationRobot: BaseTestRobot() {
     fun checkLoyaltyVisibility() {
         viewIsVisible(R.id.loyaltyStaticDetails)
     }
+
+    fun checkLoyaltyNotVisible() {
+        viewIsNotVisible(R.id.loyaltyStaticDetails)
+    }
+
+    fun addToCalendarVisibility() {
+        viewIsVisible(R.id.addToCalendar)
+    }
 }

@@ -615,7 +615,6 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun paymentFieldIsEnabled() {
-//        buttonIsEnabled(R.id.bookingRequestPaymentDetailsWidget)
     }
 
     //TODO: FIX FOR CHECKOUT
