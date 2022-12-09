@@ -167,7 +167,7 @@
     <string name="kh_uisdk_errors_force_update_message">Werk de app bij om door te gaan.</string>
     <string name="kh_uisdk_errors_force_update_title">Nieuwe versie beschikbaar</string>
     <string name="kh_uisdk_errors_get_user_fail">Er is een probleem opgetreden bij het ophalen van uw profiel.</string>
-    <string name="kh_uisdk_errors_missing_payment_SDK_Token">Probleem met het initialiseren van betalingen, neem contact op met de ondersteuning</string>
+    <string name="kh_uisdk_errors_missing_payment_sdk_token">Probleem met het initialiseren van betalingen, neem contact op met de ondersteuning</string>
     <string name="kh_uisdk_errors_prebooking_within_the_hour">Prebook kan niet binnen het huidige uur worden gemaakt.</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschatte aankomsttijd</string>
     <string name="kh_uisdk_estimated_fare">Geschatte prijs</string>
@@ -221,7 +221,7 @@
     <string name="kh_uisdk_flight_number">Vluchtnummer</string>
     <string name="kh_uisdk_flight_tracking">Vlucht volgen</string>
     <string name="kh_uisdk_forgotten_password">Vergeten wachtwoord?</string>
-    <string name="kh_uisdk_free_cancellation_ASAP">Gratis annulering tot %1$s na reserveren</string>
+    <string name="kh_uisdk_free_cancellation_asap">Gratis annulering tot %1$s na reserveren</string>
     <string name="kh_uisdk_got_it">BEGREPEN</string>
     <string name="kh_uisdk_gps_tracking">GPS-tracking</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Betalingsmethoden</string>
@@ -358,7 +358,7 @@
     <string name="kh_uisdk_pass_on_board">Je bent op weg. Veilige rit!</string>
     <string name="kh_uisdk_passenger_details">Passagiersgegevens</string>
     <string name="kh_uisdk_passenger_details_add_passenger">Passagier toevoegen</string>
-    <string name="kh_uisdk_passengerDetails_subtitle">Deze informatie zorgt voor een soepel verloop van uw rit.</string>
+    <string name="kh_uisdk_passenger_details_subtitle">Deze informatie zorgt voor een soepel verloop van uw rit.</string>
     <string name="kh_uisdk_passengers_max">%1$s maximum aantal passagiers</string>
     <string name="kh_uisdk_password_hint">Wachtwoord</string>
     <string name="kh_uisdk_past_rides_empty">U heeft nog geen ritten geboekt. Wij kunnen u helpen om van A naar B te komen</string>
