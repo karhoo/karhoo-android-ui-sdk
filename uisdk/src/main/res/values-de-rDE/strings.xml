@@ -167,7 +167,7 @@
     <string name="kh_uisdk_errors_force_update_message">Bitte aktualisieren Sie die App, um fortzufahren.</string>
     <string name="kh_uisdk_errors_force_update_title">Neue Version verfügbar</string>
     <string name="kh_uisdk_errors_get_user_fail">Es gab ein Problem beim Abrufen Ihres Profils.</string>
-    <string name="kh_uisdk_errors_missing_payment_SDK_Token">Problem mit der Initialisierung von Zahlungen, bitte kontaktieren Sie den Support</string>
+    <string name="kh_uisdk_errors_missing_payment_sdk_token">Problem mit der Initialisierung von Zahlungen, bitte kontaktieren Sie den Support</string>
     <string name="kh_uisdk_errors_prebooking_within_the_hour">Vormerkungen können nicht innerhalb der aktuellen Stunde vorgenommen werden.</string>
     <string name="kh_uisdk_estimated_arrival_time">Geschätzte Ankunftszeit</string>
     <string name="kh_uisdk_estimated_fare">Geschätzter Preis</string>
@@ -221,7 +221,7 @@
     <string name="kh_uisdk_flight_number">Flugnummer</string>
     <string name="kh_uisdk_flight_tracking">Flugverfolgung</string>
     <string name="kh_uisdk_forgotten_password">Haben Sie Ihr Passwort vergessen?</string>
-    <string name="kh_uisdk_free_cancellation_ASAP">Kostenlose Stornierung bis zu %1$s nach der Buchung</string>
+    <string name="kh_uisdk_free_cancellation_asap">Kostenlose Stornierung bis zu %1$s nach der Buchung</string>
     <string name="kh_uisdk_got_it">Ich hab\'s</string>
     <string name="kh_uisdk_gps_tracking">GPS-Ortung</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Zahlungsarten</string>
@@ -358,7 +358,7 @@
     <string name="kh_uisdk_pass_on_board">Sie sind auf dem Weg. Gute Fahrt!</string>
     <string name="kh_uisdk_passenger_details">Passagier-Details</string>
     <string name="kh_uisdk_passenger_details_add_passenger">Passagier hinzufügen</string>
-    <string name="kh_uisdk_passengerDetails_subtitle">Diese Informationen ermöglichen einen reibungslosen Ablauf Ihrer Fahrt.</string>
+    <string name="kh_uisdk_passenger_details_subtitle">Diese Informationen ermöglichen einen reibungslosen Ablauf Ihrer Fahrt.</string>
     <string name="kh_uisdk_passengers_max">%1$s Passagiere maximal</string>
     <string name="kh_uisdk_password_hint">Passwort</string>
     <string name="kh_uisdk_past_rides_empty">Sie haben noch keine Fahrten gebucht. Wir können Ihnen helfen, von A nach B zu kommen</string>

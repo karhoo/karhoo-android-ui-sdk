@@ -167,7 +167,7 @@
     <string name="kh_uisdk_errors_force_update_message">Actualiza la app para continuar</string>
     <string name="kh_uisdk_errors_force_update_title">Nueva versión disponible</string>
     <string name="kh_uisdk_errors_get_user_fail">Hubo un problema cargando tu perfil.</string>
-    <string name="kh_uisdk_errors_missing_payment_SDK_Token">Error al iniciar la configuración del pago</string>
+    <string name="kh_uisdk_errors_missing_payment_sdk_token">Error al iniciar la configuración del pago</string>
     <string name="kh_uisdk_errors_prebooking_within_the_hour">Reserva realizada para la misma hora</string>
     <string name="kh_uisdk_estimated_arrival_time">Hora de llegada estimada</string>
     <string name="kh_uisdk_estimated_fare">Precio estimado</string>
@@ -221,7 +221,7 @@
     <string name="kh_uisdk_flight_number">Número de vuelo (Opcional)</string>
     <string name="kh_uisdk_flight_tracking">Tracking del vuelo</string>
     <string name="kh_uisdk_forgotten_password">¿Olvidaste tu contraseña?</string>
-    <string name="kh_uisdk_free_cancellation_ASAP">Cancelación gratuita hasta %1$s minutos después de la reserva</string>
+    <string name="kh_uisdk_free_cancellation_asap">Cancelación gratuita hasta %1$s minutos después de la reserva</string>
     <string name="kh_uisdk_got_it">Entendido</string>
     <string name="kh_uisdk_gps_tracking">Seguimiento GPS</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Métodos de pago</string>
@@ -358,7 +358,7 @@
     <string name="kh_uisdk_pass_on_board">Ya estás de camino ¡Buen viaje!</string>
     <string name="kh_uisdk_passenger_details">Detalles del pasajero</string>
     <string name="kh_uisdk_passenger_details_add_passenger">Añadir pasajero</string>
-    <string name="kh_uisdk_passengerDetails_subtitle">Esta información permite el buen desarrollo de su carrera</string>
+    <string name="kh_uisdk_passenger_details_subtitle">Esta información permite el buen desarrollo de su carrera</string>
     <string name="kh_uisdk_passengers_max">Máximo %1$s pasajeros</string>
     <string name="kh_uisdk_password_hint">Contraseña</string>
     <string name="kh_uisdk_past_rides_empty">Aún no has reservado ningún viaje. Podemos ayudarte a ir de un lugar a otro.</string>

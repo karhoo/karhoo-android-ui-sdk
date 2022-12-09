@@ -167,7 +167,7 @@
     <string name="kh_uisdk_errors_force_update_message">Veuillez actualiser l\'application pour continuer</string>
     <string name="kh_uisdk_errors_force_update_title">Mise à jour de l\'application est requise</string>
     <string name="kh_uisdk_errors_get_user_fail">Impossible de charger le profil d\'utilisateur</string>
-    <string name="kh_uisdk_errors_missing_payment_SDK_Token">Erreur d\'initialisation du processus de paiement. Veuillez réessayer.</string>
+    <string name="kh_uisdk_errors_missing_payment_sdk_token">Erreur d\'initialisation du processus de paiement. Veuillez réessayer.</string>
     <string name="kh_uisdk_errors_prebooking_within_the_hour">L\'heure et date de la commande doit être supérieure à une heure</string>
     <string name="kh_uisdk_estimated_arrival_time">Proximité</string>
     <string name="kh_uisdk_estimated_fare">Prix estimé</string>
@@ -221,7 +221,7 @@
     <string name="kh_uisdk_flight_number">Numéro de vol (Optionnel)</string>
     <string name="kh_uisdk_flight_tracking">Suivi du n° de vol</string>
     <string name="kh_uisdk_forgotten_password">Mot de passe oublié?</string>
-    <string name="kh_uisdk_free_cancellation_ASAP">Annulation sans frais jusqu\'à %1$s après la réservation</string>
+    <string name="kh_uisdk_free_cancellation_asap">Annulation sans frais jusqu\'à %1$s après la réservation</string>
     <string name="kh_uisdk_got_it">OK</string>
     <string name="kh_uisdk_gps_tracking">Suivi GPS</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Méthodes de paiement</string>
@@ -358,7 +358,7 @@
     <string name="kh_uisdk_pass_on_board">Vous êtes en route. Faites un bon voyage.</string>
     <string name="kh_uisdk_passenger_details">Informations sur le passager</string>
     <string name="kh_uisdk_passenger_details_add_passenger">Ajouter passager</string>
-    <string name="kh_uisdk_passengerDetails_subtitle">Ces informations permettent le bon déroulement de votre course.</string>
+    <string name="kh_uisdk_passenger_details_subtitle">Ces informations permettent le bon déroulement de votre course.</string>
     <string name="kh_uisdk_passengers_max">%1$s passagers maximum</string>
     <string name="kh_uisdk_password_hint">Mot de passe</string>
     <string name="kh_uisdk_past_rides_empty">Vous n\'avez aucune réservation. Nous pouvons vous aider pour votre prochain trajet.</string>
