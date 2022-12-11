@@ -90,16 +90,18 @@ class BookingConfirmationView(
         )
 
         journeyDetails.date?.let {
-            bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), it)
             bookingDateText.text = DateUtil.parseDateWithDay(it)
+            bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), it)
+            bookingTimeText.contentDescription =
+                context?.getString(R.string.kh_uisdk_acc_pickup_time) + " " + bookingTimeText.text + " " + bookingDateText.text
         }
 
+        fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
         fareText.text =
             quote?.price?.highPrice?.let {
                 Currency.getInstance(quote.price.currencyCode).formatted(it)
             }
-
-        fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
+        fareText.contentDescription = fareTypeText.text as String + " " + fareText.text
 
         setupLoyaltyComponent(loyaltyVisible, loyaltyMode, loyaltyPoints)
 
@@ -115,6 +117,7 @@ class BookingConfirmationView(
         ) {
             actions?.openRideDetails()
         }
+        setupButtonContentDescription(R.id.prebookRideDetails, context?.getString(R.string.kh_uisdk_acc_ride_details) ?: "")
 
         closeButton.setOnClickListener {
             dismiss()

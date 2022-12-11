@@ -41,6 +41,10 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
+    fun setupButtonContentDescription(buttonId: Int, contentDescription: String) {
+        view?.findViewById<LoadingButtonView>(buttonId)?.contentDescription = contentDescription
+    }
+
     fun showFullScreen(manager: FragmentManager, tag: String?){
         fullScreen = true
         show(manager, tag)

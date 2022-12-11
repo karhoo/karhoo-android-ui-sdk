@@ -25,6 +25,7 @@
             style="@style/KhMasterBottomSheetCloseButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/kh_uisdk_acc_close_button"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
