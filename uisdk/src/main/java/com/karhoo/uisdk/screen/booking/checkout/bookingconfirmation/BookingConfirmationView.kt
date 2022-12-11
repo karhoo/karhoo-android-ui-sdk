@@ -60,12 +60,7 @@ class BookingConfirmationView(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_confirmation, container, false)
-
-        KarhooUISDK.analytics?.rideConfirmationScreenOpened(
-            date = journeyDetails.date!!.toDate(),
-            tripId = tripId,
-            quoteId = quote?.id
-        )
+        rideConfirmationScreenOpened()
 
         rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
         fareText = view.findViewById(R.id.fareText)
@@ -112,11 +107,7 @@ class BookingConfirmationView(
         setupLoyaltyComponent(loyaltyVisible, loyaltyMode, loyaltyPoints)
 
         addToCalendar.setOnClickListener {
-            KarhooUISDK.analytics?.rideConfirmationAddToCalendarSelected(
-                date = journeyDetails.date!!.toDate(),
-                tripId = tripId,
-                quoteId = quote?.id
-            )
+            rideConfirmationAddToCalendarSelected()
             addCalendarEvent()
         }
 
@@ -126,11 +117,7 @@ class BookingConfirmationView(
             buttonId = R.id.prebookRideDetails,
             text = getString(R.string.kh_uisdk_ride_details)
         ) {
-            KarhooUISDK.analytics?.rideConfirmationDetailsSelected(
-                date = journeyDetails.date!!.toDate(),
-                tripId = tripId,
-                quoteId = quote?.id
-            )
+            rideConfirmationDetailsSelected()
             actions?.openRideDetails()
         }
 
@@ -140,6 +127,30 @@ class BookingConfirmationView(
         }
 
         return view
+    }
+
+    private fun rideConfirmationScreenOpened(){
+        KarhooUISDK.analytics?.rideConfirmationScreenOpened(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationAddToCalendarSelected(){
+        KarhooUISDK.analytics?.rideConfirmationAddToCalendarSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationDetailsSelected(){
+        KarhooUISDK.analytics?.rideConfirmationDetailsSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
     }
 
     override fun displayDate(date: DateTime) {
