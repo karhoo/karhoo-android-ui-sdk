@@ -354,6 +354,36 @@ class KarhooAnalytics private constructor() : Analytics {
         // Event to be added soon
     }
 
+    override fun rideConfirmationScreenOpened(date: Date, tripId: String?, quoteId: String?) {
+        val builder = Payloader.Builder.builder.rideConfirmationScreenOpened(
+            date = date,
+            tripId = tripId,
+            quoteId = quoteId,
+        ).build()
+
+        AnalyticsManager.fireEvent(Event.RIDE_CONFIRMATION_SCREEN_OPENED, builder)
+    }
+
+    override fun rideConfirmationAddToCalendarSelected(date: Date, tripId: String?, quoteId: String?) {
+        val builder = Payloader.Builder.builder.rideConfirmationAddToCalendarSelected(
+            date = date,
+            tripId = tripId,
+            quoteId = quoteId,
+        ).build()
+
+        AnalyticsManager.fireEvent(Event.RIDE_CONFIRMATION_ADD_TO_CALENDAR_SELECTED, builder)
+    }
+
+    override fun rideConfirmationDetailsSelected(date: Date, tripId: String?, quoteId: String?) {
+        val builder = Payloader.Builder.builder.rideConfirmationDetailsSelected(
+            date = date,
+            tripId = tripId,
+            quoteId = quoteId,
+        ).build()
+
+        AnalyticsManager.fireEvent(Event.RIDE_CONFIRMATION_DETAILS_SELECTED, builder)
+    }
+
     private object Holder {
         val INSTANCE = KarhooAnalytics()
     }
