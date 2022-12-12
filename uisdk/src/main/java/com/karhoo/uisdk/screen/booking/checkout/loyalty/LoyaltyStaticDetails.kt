@@ -39,5 +39,8 @@ class LoyaltyStaticDetails @JvmOverloads constructor(
                 )
             }
         }
+
+        loyaltyStaticText.contentDescription =
+            context.getString(R.string.kh_uisdk_acc_loyalty_information) + " " + loyaltyStaticText.text
     }
 }
