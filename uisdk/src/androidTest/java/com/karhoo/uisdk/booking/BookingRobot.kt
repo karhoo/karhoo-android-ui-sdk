@@ -173,7 +173,6 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressAddPaymentField() {
-//        clickButton(R.id.bookingRequestPaymentDetailsWidget)
     }
 }
 
@@ -450,32 +449,6 @@ class ResultRobot : BaseTestRobot() {
         viewIsNotVisible(R.id.bookingQuoteCancellationText)
     }
 
-    fun fullCheckEmptyGuestDetailsPage() {
-        guestDetailsPageFleetCheck()
-        closeButtonIsEnabledGuestDetails()
-        guestDetailsPagePriceCheck()
-        passengerDetailsCheckGuestDetails()
-        paymentEmptyDetailsCheckGuestDetails()
-        termsGuestDetailsCheck()
-        checkoutAsGuestButtonIsDisabled()
-    }
-
-    fun guestBookingCheckCardDetails() {
-        paymentCardDetailsCheck()
-    }
-
-    fun guestDetailsPageFleetCheck() {
-        fleetLogoIsVisibleGuestDetails()
-        quoteNameVisibleGuestDetails()
-        capacityChecksGuestDetails()
-        categoryTextVisibleGuestDetails()
-    }
-
-    fun guestDetailsPagePriceCheck() {
-        ETATextIsVisibleGuestDetails(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
-        estimatedPriceTextIsVisibleGuestDetails(price = TestData.QUOTE.price.highPrice)
-    }
-
     fun ETATextIsVisibleGuestDetails(ETA: Int?) {
         viewIsVisibleIsDescendant(R.id.etaTypeText, R.id.bookingRequestPriceWidget)
         textIsVisibleIsDescendant(R.string.kh_uisdk_estimated_arrival_time, R.id.bookingRequestPriceWidget)
@@ -490,58 +463,8 @@ class ResultRobot : BaseTestRobot() {
         textIsVisibleIsDescendant(price, R.id.bookingRequestPriceWidget)
     }
 
-    fun passengerDetailsCheckGuestDetails() {
-        passengerDetailsTitleIsVisible()
-        passengerDetailsFieldsCheck()
-    }
-
-    //    TODO: FIX FOR CHECKOUT
     fun passengerDetailsTitleIsVisible() {
         textIsVisibleIsDescendant(R.string.kh_uisdk_passenger_details, R.id.bookingRequestPriceWidget)
-    }
-
-    fun passengerDetailsFieldsCheck() {
-        addCardButtonEnabled()
-        //TODO: FIX FOR CHECKOUT
-        //        viewIsVisibleIsDescendant(R.id.bookingRequestPassengerDetailsWidget, R.id.bookingRequestWidget)
-        //        viewIsVisibleIsDescendant(R.id.firstNameInput, R.id.bookingRequestPassengerDetailsWidget)
-        //        viewIsVisibleIsDescendant(R.id.lastNameInput, R.id.bookingRequestPassengerDetailsWidget)
-        //        viewIsVisibleIsDescendant(R.id.emailInput, R.id.bookingRequestPassengerDetailsWidget)
-        //        viewIsVisibleIsDescendant(R.id.countryCodeSpinner, R.id.bookingRequestPassengerDetailsWidget)
-        //        viewIsVisibleIsDescendant(R.id.mobileNumberInput, R.id.bookingRequestPassengerDetailsWidget)
-        //        viewIsVisibleIsDescendant(R.id.bookingCommentsInput, R.id.bookingRequestPassengerDetailsWidget)
-    }
-
-    //TODO: FIX FOR CHECKOUT
-    fun addCardButtonEnabled() {
-        //        buttonIsEnabledIsDescendant(R.id.paymentLayout, R.id.bookingRequestWidget)
-    }
-
-    //TODO: FIX FOR CHECKOUT
-    fun paymentEmptyDetailsCheckGuestDetails() {
-//        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
-        //        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
-//        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-    }
-
-    fun paymentCardDetailsCheck() {
-//        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingCheckoutView)
-//        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-        textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
-    }
-
-    //TODO: FIX FOR CHECKOUT
-    fun termsGuestDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestTermsWidget, R.id.bookingCheckoutView)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_booking_terms, R.id.bookingRequestTermsWidget)
-        //        textIsVisibleIsDescendant(R.string.kh_uisdk_label_terms_and_conditions, R.id.bookingRequestTermsWidget)
-        //        textIsVisibleIsDescendant(R.string.kh_uisdk_label_cancellation_policy, R.id.bookingRequestTermsWidget)
-    }
-
-    fun checkoutAsGuestButtonIsDisabled() {
-        bookButtonTextIsCheckoutGuest()
-        buttonIsDisabled(R.id.checkoutActionButton)
     }
 
     fun bookButtonTextIsCheckoutGuest() {
@@ -571,7 +494,6 @@ class ResultRobot : BaseTestRobot() {
         vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicle.vehicleClass)
         ETAIsVisible(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
         priceDetailsVisible(price = TestData.QUOTE.price.highPrice)
-        paymentFieldIsEnabled()
         termsCheck()
         bookButtonIsEnabled()
     }
@@ -612,9 +534,6 @@ class ResultRobot : BaseTestRobot() {
         if (price != null) {
             textIsVisibleIsDescendant(price, R.id.priceText)
         }
-    }
-
-    fun paymentFieldIsEnabled() {
     }
 
     //TODO: FIX FOR CHECKOUT
