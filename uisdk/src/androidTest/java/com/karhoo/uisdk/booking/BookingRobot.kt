@@ -173,7 +173,6 @@ class BookingRobot : BaseTestRobot() {
     }
 
     fun pressAddPaymentField() {
-        clickButton(R.id.bookingRequestPaymentDetailsWidget)
     }
 }
 
@@ -519,16 +518,9 @@ class ResultRobot : BaseTestRobot() {
 
     //TODO: FIX FOR CHECKOUT
     fun paymentEmptyDetailsCheckGuestDetails() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
-        //        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingRequestWidget)
-        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
     }
 
     fun paymentCardDetailsCheck() {
-        viewIsVisibleIsDescendant(R.id.bookingRequestPaymentDetailsWidget, R.id.bookingCheckoutView)
-        textIsVisibleIsDescendant(R.string.kh_uisdk_payment_details, R.id.bookingCheckoutView)
-        viewIsVisibleIsDescendant(R.id.cardLogoImage, R.id.bookingRequestPaymentDetailsWidget)
-        textStringIsVisibleIsDescendant(TestData.CARD_ENDING, R.id.cardNumberText)
     }
 
     //TODO: FIX FOR CHECKOUT
@@ -571,7 +563,6 @@ class ResultRobot : BaseTestRobot() {
         vehicleDetailsAreVisible(vehicle = TestData.QUOTE.vehicle.vehicleClass)
         ETAIsVisible(ETA = TestData.QUOTE.vehicle.vehicleQta.highMinutes)
         priceDetailsVisible(price = TestData.QUOTE.price.highPrice)
-        paymentFieldIsEnabled()
         termsCheck()
         bookButtonIsEnabled()
     }
@@ -612,10 +603,6 @@ class ResultRobot : BaseTestRobot() {
         if (price != null) {
             textIsVisibleIsDescendant(price, R.id.priceText)
         }
-    }
-
-    fun paymentFieldIsEnabled() {
-        buttonIsEnabled(R.id.bookingRequestPaymentDetailsWidget)
     }
 
     //TODO: FIX FOR CHECKOUT
