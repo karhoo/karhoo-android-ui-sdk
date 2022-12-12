@@ -14,6 +14,7 @@ class MockBookingConfirmationBaseActivity : BaseActivity() {
             intent.getParcelableExtra("SCREENSHOT_TEST_JOURNEY_DETAILS")!!,
             intent.getParcelableExtra("SCREENSHOT_TEST_QUOTE")!!,
             null,
+            null,
             null
         )
 

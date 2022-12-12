@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
@@ -127,6 +129,11 @@ class BookingConfirmationView(
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (dialog as? BottomSheetDialog)?.behavior?.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun rideConfirmationScreenOpened(){
