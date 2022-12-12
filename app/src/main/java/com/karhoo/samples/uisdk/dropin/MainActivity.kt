@@ -26,7 +26,6 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
-import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
         KarhooApi.paymentsService.getAdyenClientKey()
         adyenPaymentManager.paymentProviderView = AdyenPaymentView()
-        braintreePaymentManager.paymentProviderView = BraintreePaymentView()
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
