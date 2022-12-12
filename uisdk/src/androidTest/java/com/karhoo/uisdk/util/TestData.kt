@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName
 import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
+import org.joda.time.DateTime
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -178,6 +181,13 @@ class TestData {
                 vehicle = VEHICLE,
                 displayTripId = "A5TH-R27D",
                 meetingPoint = MEETING_POINT)
+
+        val JOURNEY_DETAILS = JourneyDetails(
+            pickup = TRIP_LOCATION_INFO_PICKUP.toSimpleLocationInfo(),
+            destination = TRIP_LOCATION_INFO_DROPOFF.toSimpleLocationInfo(),
+            date = DateTime(SCHEDULED_DATE)
+
+            )
 
         val TRIP_ARRIVED = TRIP.copy(tripState = TripStatus.ARRIVED)
 

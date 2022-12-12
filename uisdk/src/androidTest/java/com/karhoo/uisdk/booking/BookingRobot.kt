@@ -649,4 +649,8 @@ class ResultRobot : BaseTestRobot() {
         textIsVisible(R.string.change_payment_method)
     }
 
+    fun scrollUpBottomSheet() {
+
+    }
+
 }

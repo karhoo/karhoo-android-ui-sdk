@@ -35,4 +35,9 @@ abstract class ScreenshotTest<T : Activity>(private val clazz: Class<T>) :
         scenario = ActivityScenario.launch(intent)
         return scenario!!.waitForActivity()
     }
+
+    fun startActivity(remoteIntent: Intent): T {
+        scenario = ActivityScenario.launch(remoteIntent)
+        return scenario!!.waitForActivity()
+    }
 }

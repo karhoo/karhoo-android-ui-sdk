@@ -72,7 +72,7 @@ android {
         testInstrumentationRunner "com.karumi.shot.ShotTestRunner"
         vectorDrawables.useSupportLibrary = true
         missingDimensionStrategy 'paymentProvider', 'full'
-        testApplicationId "kh.test.id"
+        testApplicationId "com.karhoo.uisdk.test"
     }
 
     packagingOptions {
@@ -105,6 +105,10 @@ android {
             dimension "paymentProvider"
             versionNameSuffix "-full"
         }
+        debugTest {
+            dimension "paymentProvider"
+            versionNameSuffix "-test"
+        }
     }
 
     sourceSets {
@@ -116,6 +120,9 @@ android {
         }
         full {
             java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/']
+        }
+        debugTest {
+            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/', 'src/debug/java']
         }
     }
 

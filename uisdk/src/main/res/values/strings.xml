@@ -51,14 +51,6 @@
     <string name="kh_uisdk_address_picker_enter_pickup">Enter pickup location</string>
     <string name="kh_uisdk_address_picker_pickup_title">Pickup</string>
     <string name="kh_uisdk_address_picker_prebook">Book</string>
-    <string name="kh_uisdk_adyen_payment_error_02">The transaction was refused.</string>
-    <string name="kh_uisdk_adyen_payment_error_03">Referrals</string>
-    <string name="kh_uisdk_adyen_payment_error_04">The transaction did not go through due to an error that occurred on the acquirer\'s end</string>
-    <string name="kh_uisdk_adyen_payment_error_05">The card used for the transaction is blocked, therefore unusable</string>
-    <string name="kh_uisdk_adyen_payment_error_06">The card used for the transaction has expired. Therefore it is unusable</string>
-    <string name="kh_uisdk_adyen_payment_error_07">An amount mismatch occurred during the transaction process</string>
-    <string name="kh_uisdk_adyen_payment_error_08">The specified card number is incorrect or invalid</string>
-    <string name="kh_uisdk_adyen_payment_error_09">It is not possible to contact the shopper\'s bank to authorise the transaction</string>
     <string name="kh_uisdk_adyen_payment_error_10">The shopper\'s bank does not support or does not allow this type of transaction</string>
     <string name="kh_uisdk_adyen_payment_error_11">3D Secure authentication was not executed, or it did not execute successfully</string>
     <string name="kh_uisdk_adyen_payment_error_12">The card does not have enough money to cover the payable amount</string>
@@ -68,6 +60,7 @@
     <string name="kh_uisdk_adyen_payment_error_17">The specified PIN is incorrect or invalid.</string>
     <string name="kh_uisdk_adyen_payment_error_18">The shopper specified an incorrect PIN more that three times in a row.</string>
     <string name="kh_uisdk_adyen_payment_error_19">It is not possible to validate the specified PIN number.</string>
+    <string name="kh_uisdk_adyen_payment_error_2">The transaction was refused.</string>
     <string name="kh_uisdk_adyen_payment_error_20">The pre-authorisation risk checks resulted in a fraud score of 100 or more. Therefore, the transaction was flagged as fraudulent, and was refused.</string>
     <string name="kh_uisdk_adyen_payment_error_21">The transaction was not submitted correctly for processing.</string>
     <string name="kh_uisdk_adyen_payment_error_22">The sum of pre-authorisation and post-authorisation risk checks resulted in a fraud score of 100 or more. Therefore, the transaction was flagged as fraudulent, and was refused.</string>
@@ -78,6 +71,7 @@
     <string name="kh_uisdk_adyen_payment_error_27">Non Generic Error</string>
     <string name="kh_uisdk_adyen_payment_error_28">The withdrawal amount permitted for the shopper\'s card has exceeded.</string>
     <string name="kh_uisdk_adyen_payment_error_29">The number of withdrawals permitted for the shopper\'s card has exceeded.</string>
+    <string name="kh_uisdk_adyen_payment_error_3">Referrals</string>
     <string name="kh_uisdk_adyen_payment_error_31">Issuer reported the transaction as suspected fraud.</string>
     <string name="kh_uisdk_adyen_payment_error_32">The address data the shopper entered is incorrect.</string>
     <string name="kh_uisdk_adyen_payment_error_33">The shopper\'s bank requires the shopper to enter an online PIN.</string>
@@ -87,9 +81,15 @@
     <string name="kh_uisdk_adyen_payment_error_37">The shopper abandoned the transaction after they attempted a contactless payment and were prompted to try a different card entry method (PIN or swipe).</string>
     <string name="kh_uisdk_adyen_payment_error_38">The issuer declined the authentication exemption request and requires authentication for the transaction. Retry with 3D Secure.</string>
     <string name="kh_uisdk_adyen_payment_error_39">The issuer or the scheme wasn\'t able to communicate the outcome via RReq.</string>
+    <string name="kh_uisdk_adyen_payment_error_4">The transaction did not go through due to an error that occurred on the acquirer\'s end</string>
     <string name="kh_uisdk_adyen_payment_error_40">The payment network can\'t be reached. Retry the transaction with a different payment method.</string>
     <string name="kh_uisdk_adyen_payment_error_41">A PIN or signature is required. Retry the transaction.</string>
     <string name="kh_uisdk_adyen_payment_error_42">The 3D Secure authentication failed due to an issue at the card network or issuer. Retry the transaction, or retry the transaction with a different payment method.</string>
+    <string name="kh_uisdk_adyen_payment_error_5">The card used for the transaction is blocked, therefore unusable</string>
+    <string name="kh_uisdk_adyen_payment_error_6">The card used for the transaction has expired. Therefore it is unusable</string>
+    <string name="kh_uisdk_adyen_payment_error_7">An amount mismatch occurred during the transaction process</string>
+    <string name="kh_uisdk_adyen_payment_error_8">The specified card number is incorrect or invalid</string>
+    <string name="kh_uisdk_adyen_payment_error_9">It is not possible to contact the shopper\'s bank to authorise the transaction</string>
     <string name="kh_uisdk_airport_booking_message">Please enter a valid flight number</string>
     <string name="kh_uisdk_allocating_trip_one">Please wait whilst you\'re allocated a driver</string>
     <string name="kh_uisdk_allocating_trip_two">This may take a moment or two</string>

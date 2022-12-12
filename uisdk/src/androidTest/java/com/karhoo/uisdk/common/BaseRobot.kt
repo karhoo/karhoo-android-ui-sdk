@@ -172,6 +172,9 @@ open abstract class BaseTestRobot {
     fun textIsVisibleIsDescendant(text: Int, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
+    fun textIsVisibleInDescendant(text: String, resId: Int): ViewInteraction =
+        onView(allOf(withText(text), isDescendantOfA(withId(resId))))
+
     fun textStringIsVisibleIsDescendant(text: String, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
