@@ -537,4 +537,11 @@
     <string name="Text.Generic.Close">Sluiten</string>
     <string name="Text.SupportMailMessage.ReportIssueSubject">Probleem melden</string>
     <string name="Text.VehicleTag.Electric">Elektrisch</string>
+
+    <string name="kh_uisdk_acc_close_button">Sluit het scherm</string>
+    <string name="kh_uisdk_acc_destination_address">Bestemmingsadres</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informatie</string>
+    <string name="kh_uisdk_acc_pickup_address">Vertrek adres</string>
+    <string name="kh_uisdk_acc_pickup_time">Ophaal tijd</string>
+    <string name="kh_uisdk_acc_ride_details">Ga naar ritgegevens</string>
 </resources>

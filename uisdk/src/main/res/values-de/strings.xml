@@ -537,4 +537,11 @@
     <string name="Text.Generic.Close">Schließen</string>
     <string name="Text.SupportMailMessage.ReportIssueSubject">Ausgabe melden</string>
     <string name="Text.VehicleTag.Electric">Elektrisch</string>
+
+    <string name="kh_uisdk_acc_close_button">Schließen Sie den Bildschirm</string>
+    <string name="kh_uisdk_acc_destination_address">Zieladresse</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informationen</string>
+    <string name="kh_uisdk_acc_pickup_address">Adresse der Abreise</string>
+    <string name="kh_uisdk_acc_pickup_time">Uhrzeit der Abholung</string>
+    <string name="kh_uisdk_acc_ride_details">Zu den Details der Fahrt</string>
 </resources>
