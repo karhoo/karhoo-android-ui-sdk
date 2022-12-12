@@ -330,7 +330,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 journeyDetails,
                 quote,
                 tripInfo?.flightNumber,
-                tripInfo?.trainNumber
+                tripInfo?.trainNumber,
+                tripInfo?.tripId,
             )
 
             bookingConfirmationView.setLoyaltyProperties(

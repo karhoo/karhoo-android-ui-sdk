@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
@@ -34,7 +35,8 @@ class BookingConfirmationView(
     val journeyDetails: JourneyDetails,
     val quote: Quote?,
     private val flightNumber: String?,
-    private val trainNumber: String?
+    private val trainNumber: String?,
+    private val tripId: String?
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
     var actions: CheckoutViewContract.BookingConfirmationActions? = null
@@ -58,6 +60,7 @@ class BookingConfirmationView(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_confirmation, container, false)
+        rideConfirmationScreenOpened()
 
         rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
         fareText = view.findViewById(R.id.fareText)
@@ -104,6 +107,7 @@ class BookingConfirmationView(
         setupLoyaltyComponent(loyaltyVisible, loyaltyMode, loyaltyPoints)
 
         addToCalendar.setOnClickListener {
+            rideConfirmationAddToCalendarSelected()
             addCalendarEvent()
         }
 
@@ -113,6 +117,7 @@ class BookingConfirmationView(
             buttonId = R.id.prebookRideDetails,
             text = getString(R.string.kh_uisdk_ride_details)
         ) {
+            rideConfirmationDetailsSelected()
             actions?.openRideDetails()
         }
 
@@ -122,6 +127,30 @@ class BookingConfirmationView(
         }
 
         return view
+    }
+
+    private fun rideConfirmationScreenOpened(){
+        KarhooUISDK.analytics?.rideConfirmationScreenOpened(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationAddToCalendarSelected(){
+        KarhooUISDK.analytics?.rideConfirmationAddToCalendarSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationDetailsSelected(){
+        KarhooUISDK.analytics?.rideConfirmationDetailsSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
     }
 
     override fun displayDate(date: DateTime) {
