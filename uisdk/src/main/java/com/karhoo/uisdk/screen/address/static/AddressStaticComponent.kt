@@ -92,7 +92,11 @@ class AddressStaticComponent @JvmOverloads constructor(
             firstLine = firstLine.plus(it)
         }
 
-        firstAddressLine.text = firstLine
+        if(firstLine.isEmpty()){
+            firstAddressLine.text = address.displayAddress
+        }
+        else
+            firstAddressLine.text = firstLine
 
         if (address.city.isNotEmpty()) {
             secondLine = secondLine.plus(address.city)
@@ -113,7 +117,11 @@ class AddressStaticComponent @JvmOverloads constructor(
             secondLine = secondLine.plus(country)
         }
 
-        secondAddressLine.text = secondLine
+        if(secondLine.isNotEmpty())
+            secondAddressLine.text = secondLine
+        else{
+            secondAddressLine.visibility = View.GONE
+        }
     }
 
     enum class AddressComponentType {

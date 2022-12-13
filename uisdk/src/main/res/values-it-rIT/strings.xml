@@ -38,6 +38,12 @@
     <string name="K5002">Impossibile ottenere la disponibilità (nessuna disponibilità trovata nell\'area richiesta)</string>
     <string name="K5003">Impossibile ottenere la disponibilità (nessuna categoria trovata nell\'area richiesta)</string>
     <string name="kh_uisdk_about">Circa</string>
+    <string name="kh_uisdk_acc_close_button">Chiudi lo schermo</string>
+    <string name="kh_uisdk_acc_destination_address">Indirizzo di destinazione</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informazioni</string>
+    <string name="kh_uisdk_acc_pickup_address">Indirizzo di partenza</string>
+    <string name="kh_uisdk_acc_pickup_time">Orario di ritiro</string>
+    <string name="kh_uisdk_acc_ride_details">Vai ai dettagli della corsa</string>
     <string name="kh_uisdk_add_card">AGGIUNGI CARTA</string>
     <string name="kh_uisdk_add_comment_placeholder">Commenti aggiuntivi</string>
     <string name="kh_uisdk_add_flight_details">Numero del volo</string>

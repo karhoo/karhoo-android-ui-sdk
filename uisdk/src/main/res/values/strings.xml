@@ -38,6 +38,12 @@
     <string name="K5002">Could not get availability (no availability found within requested area)</string>
     <string name="K5003">Could not get availability (no categories found within requested area)</string>
     <string name="kh_uisdk_about">About</string>
+    <string name="kh_uisdk_acc_close_button">Close the screen</string>
+    <string name="kh_uisdk_acc_destination_address">Destination address</string>
+    <string name="kh_uisdk_acc_loyalty_information">Information</string>
+    <string name="kh_uisdk_acc_pickup_address">Departure address</string>
+    <string name="kh_uisdk_acc_pickup_time">Pick-up time</string>
+    <string name="kh_uisdk_acc_ride_details">Go to ride details</string>
     <string name="kh_uisdk_add_card">ADD CARD</string>
     <string name="kh_uisdk_add_comment_placeholder">Additional comments</string>
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
@@ -537,11 +543,4 @@
     <string name="Text.Generic.Close">Close</string>
     <string name="Text.SupportMailMessage.ReportIssueSubject">Report Issue</string>
     <string name="Text.VehicleTag.Electric">Electric</string>
-
-    <string name="kh_uisdk_acc_close_button">Close the screen</string>
-    <string name="kh_uisdk_acc_loyalty_information">Information</string>
-    <string name="kh_uisdk_acc_pickup_address">Departure address</string>
-    <string name="kh_uisdk_acc_destination_address">Destination address</string>
-    <string name="kh_uisdk_acc_pickup_time">Pick-up time</string>
-    <string name="kh_uisdk_acc_ride_details">Go to ride details</string>
 </resources>
