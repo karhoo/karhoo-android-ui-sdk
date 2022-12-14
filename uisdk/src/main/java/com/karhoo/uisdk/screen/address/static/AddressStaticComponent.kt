@@ -79,24 +79,9 @@ class AddressStaticComponent @JvmOverloads constructor(
     private fun setAddressLines(address: Address,
                                 firstAddressLine: TextView,
                                 secondAddressLine: TextView) {
-        var firstLine = ""
         var secondLine = ""
 
-        address.buildingNumber.let {
-            firstLine = firstLine.plus(it)
-        }
-        address.streetName.let {
-            if (firstLine.isNotEmpty()) {
-                firstLine = firstLine.plus(", ")
-            }
-            firstLine = firstLine.plus(it)
-        }
-
-        if(firstLine.isEmpty()){
-            firstAddressLine.text = address.displayAddress
-        }
-        else
-            firstAddressLine.text = firstLine
+        firstAddressLine.text = address.displayAddress
 
         if (address.city.isNotEmpty()) {
             secondLine = secondLine.plus(address.city)
