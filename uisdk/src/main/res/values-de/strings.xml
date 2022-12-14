@@ -38,6 +38,12 @@
     <string name="K5002">Keine Verfügbarkeit (keine Verfügbarkeit im gewünschten Bereich gefunden)</string>
     <string name="K5003">Keine Verfügbarkeit (keine Kategorien im gewünschten Bereich gefunden)</string>
     <string name="kh_uisdk_about">Über</string>
+    <string name="kh_uisdk_acc_close_button">Schließen Sie den Bildschirm</string>
+    <string name="kh_uisdk_acc_destination_address">Zieladresse</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informationen</string>
+    <string name="kh_uisdk_acc_pickup_address">Adresse der Abreise</string>
+    <string name="kh_uisdk_acc_pickup_time">Uhrzeit der Abholung</string>
+    <string name="kh_uisdk_acc_ride_details">Zu den Details der Fahrt</string>
     <string name="kh_uisdk_add_card">Karte hinzufügen</string>
     <string name="kh_uisdk_add_comment_placeholder">Zusätzliche Bemerkungen</string>
     <string name="kh_uisdk_add_flight_details">Flugnummer</string>
@@ -537,11 +543,4 @@
     <string name="Text.Generic.Close">Schließen</string>
     <string name="Text.SupportMailMessage.ReportIssueSubject">Ausgabe melden</string>
     <string name="Text.VehicleTag.Electric">Elektrisch</string>
-
-    <string name="kh_uisdk_acc_close_button">Schließen Sie den Bildschirm</string>
-    <string name="kh_uisdk_acc_destination_address">Zieladresse</string>
-    <string name="kh_uisdk_acc_loyalty_information">Informationen</string>
-    <string name="kh_uisdk_acc_pickup_address">Adresse der Abreise</string>
-    <string name="kh_uisdk_acc_pickup_time">Uhrzeit der Abholung</string>
-    <string name="kh_uisdk_acc_ride_details">Zu den Details der Fahrt</string>
 </resources>
