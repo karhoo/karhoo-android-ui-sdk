@@ -97,7 +97,7 @@ class BraintreePaymentPresenter(
         }
     }
 
-    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
             KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
             when (requestCode) {
@@ -118,9 +118,8 @@ class BraintreePaymentPresenter(
                     }
                 }
             }
-        } else if (requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE || requestCode == BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST) {
-            view?.refresh()
         }
+        return true
     }
 
     private fun handleChangeCardSuccess(braintreeSDKToken: String) {
@@ -235,7 +234,6 @@ class BraintreePaymentPresenter(
             val userInfo = SavedPaymentInfo(cardNumber, CardType.fromString(cardTypeLabel))
             userStore.savedPaymentInfo = userInfo
         }
-        view?.refresh()
     }
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {

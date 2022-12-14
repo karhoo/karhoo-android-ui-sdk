@@ -223,7 +223,7 @@ class LoyaltyPresenter(
             callback.invoke(
                 Resource.Failure(
                     KarhooError.fromCustomError(
-                        erCode = KarhooError.FailedToGenerateNonce.code,
+                        erCode = KarhooError.ErrMissingBrowserInfo.code,
                         erInternalMessage = loyaltyPresenterDelegate?.provideResources()
                             ?.getString(R.string.kh_uisdk_loyalty_not_eligible_for_pre_auth) ?: "",
                         erUserFriendlyMessage = loyaltyPresenterDelegate?.provideResources()
@@ -277,5 +277,9 @@ class LoyaltyPresenter(
             KarhooError.LoyaltyInternalError -> LoyaltyMode.ERROR_UNKNOWN
             else -> LoyaltyMode.ERROR_UNKNOWN
         }
+    }
+
+    override fun getPoints(): Int? {
+        return earnedPoints ?: burnedPoints
     }
 }

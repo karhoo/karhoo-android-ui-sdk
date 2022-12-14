@@ -26,7 +26,6 @@ class PreferencesRobot {
             successfulToken()
         }
 
-        KarhooApi.userService.logout()
         KarhooApi.userService.loginUser(UserLogin(
                 email = userInfo.email,
                 password = "testpassword")).execute { }

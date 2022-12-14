@@ -2,9 +2,9 @@ package com.karhoo.uisdk.common.testrunner
 
 import android.app.Application
 import android.content.Context
-import androidx.test.runner.AndroidJUnitRunner
+import com.karumi.shot.ShotTestRunner
 
-class UiSDKTestRunner : AndroidJUnitRunner() {
+class UiSDKTestRunner : ShotTestRunner() {
 
     override fun newApplication(cl: ClassLoader?, className: String?, context: Context?): Application {
         val applicationClassName = UiSDKApplication::class.java.name

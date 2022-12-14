@@ -6,6 +6,8 @@ import androidx.test.espresso.NoActivityResumedException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
+import com.adevinta.android.barista.rule.flaky.AllowFlaky
+import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
@@ -45,8 +47,6 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
-import com.schibsted.spain.barista.rule.flaky.AllowFlaky
-import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

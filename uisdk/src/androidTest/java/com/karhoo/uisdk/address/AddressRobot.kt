@@ -102,19 +102,19 @@ class ResultRobot : BaseTestRobot() {
     }
 
     fun checkAddressPickUpPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_address_picker_enter_pickup)
     }
 
     fun checkAddressDestinationPageIsShown() {
-        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_address_picker_enter_destination)
     }
 
     fun enterPickupHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_pickup)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_address_picker_enter_pickup)
     }
 
     fun enterDestinationHintIsVisible() {
-        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_enter_destination)
+        hintIsVisible(R.id.searchInput, R.string.kh_uisdk_address_picker_enter_destination)
     }
 
     fun clearAddressButtonIsNotClickable() {

@@ -16,6 +16,7 @@
     <dimen name="kh_uisdk_spacing_xlarge">64dp</dimen>
     <dimen name="kh_uisdk_spacing_xxlarge">72dp</dimen>
     <dimen name="kh_uisdk_spacing_xxxlarge">120dp</dimen>
+    <dimen name="kh_uisdk_spacing_x5small">5dp</dimen>
 
     <!-- standard text sizes -->
     <dimen name="kh_uisdk_text_size_xxxlarge">72sp</dimen>
@@ -54,6 +55,7 @@
     <integer name="kh_uisdk_logo_radius">12</integer>
     <dimen name="kh_uisdk_logo_booking_status_radius">8dp</dimen>
     <dimen name="kh_uisdk_logo_width">64dp</dimen>
+    <dimen name="kh_uisdk_logo_width_prebook_confirmation">80dp</dimen>
     <dimen name="kh_uisdk_logo_height">68dp</dimen>
     <dimen name="kh_uisdk_rating_star_size">9dp</dimen>
     <dimen name="kh_uisdk_rating_star_viewport">9</dimen>
@@ -89,6 +91,7 @@
     <dimen name="kh_uisdk_icon_size_medium">20dp</dimen>
     <dimen name="kh_uisdk_icon_size_large">32dp</dimen>
     <dimen name="kh_uisdk_address_icon_size_default">17dp</dimen>
+    <dimen name="kh_uisdk_checkout_icon_size_default">18dp</dimen>
 
     <!--Cancel Button-->
     <dimen name="kh_uisdk_cancel_button_width">180dp</dimen>

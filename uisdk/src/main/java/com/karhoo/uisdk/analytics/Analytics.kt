@@ -119,4 +119,10 @@ interface Analytics {
     fun cardAuthorisationSuccess(
         quoteId: String?
     )
+
+    fun rideConfirmationScreenOpened(date: Date, tripId: String?, quoteId: String?)
+
+    fun rideConfirmationAddToCalendarSelected(date: Date, tripId: String?, quoteId: String?)
+
+    fun rideConfirmationDetailsSelected(date: Date, tripId: String?, quoteId: String?)
 }

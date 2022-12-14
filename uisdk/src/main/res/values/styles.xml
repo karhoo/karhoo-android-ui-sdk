@@ -275,8 +275,8 @@
 
     <style name="KhBookingMapLocateMeButton">
         <item name="srcCompat">@drawable/uisdk_ic_location</item>
-        <item name="android:tint">@color/black</item>
-        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:tint">@color/kh_uisdk_text_primary</item>
+        <item name="android:backgroundTint">@color/kh_uisdk_background_primary</item>
         <item name="borderWidth">0dp</item>
     </style>
 
@@ -328,8 +328,10 @@
     </style>
 
     <style name="KhActionCellTitle">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="KhTextInputEditText">
@@ -344,7 +346,9 @@
 
     <style name="KhActionCellSubtitle">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xsmall</item>
-        <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">3</item>
     </style>
 
     <style name="KhPassengerViewTitle">
@@ -618,12 +622,12 @@
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
     </style>
 
-    <style name="KhQuoteListSortBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/KhQuoteListSortModalStyle</item>
+    <style name="KhMasterBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/KhMasterBottomSheetStyle</item>
     </style>
 
-    <style name="KhQuoteListSortModalStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/uisdk_view_quotes_sort_background</item>
+    <style name="KhMasterBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/uisdk_view_master_bottom_sheet_background</item>
     </style>
 
     <style name="KhQuoteListSortRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
@@ -637,14 +641,14 @@
         <item name="android:button">@drawable/kh_uisdk_quote_sort_radio_button</item>
     </style>
 
-    <style name="KhQuoteListSortTitle" parent="Widget.MaterialComponents.TextView">
+    <style name="KhMasterBottomSheetTitle" parent="Widget.MaterialComponents.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/textColor</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
     </style>
 
-    <style name="KhQuoteListSortCloseButton" parent="Widget.AppCompat.ImageButton">
+    <style name="KhMasterBottomSheetCloseButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_xxxsmall</item>
@@ -708,6 +712,7 @@
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="android:gravity">end</item>
         <item name="android:textColor">@color/kh_uisdk_accent</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
     </style>
 
     <style name="KhFilterViewTitle">
@@ -772,4 +777,80 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:indeterminateTint">@color/kh_uisdk_secondary</item>
     </style>
+
+    <style name="KhPrebookTime">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="KhPrebookDate">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="KhPrebookPrice">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="KhPrebookType">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="KhPrebookConfirmed">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="KhStaticAddressComponentPrimary">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="fontWeight">400</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhStaticAddressComponentSecondary">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="fontWeight">600</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhStaticAddressComponentTime">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhStaticLoyaltyView">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhAddToCalendar">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_accent</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:text">@string/kh_uisdk_trip_summary_add_to_calendar</item>
+        <item name="android:drawableLeft">@drawable/kh_uisdk_calendar</item>
+        <item name="android:drawablePadding">@dimen/kh_uisdk_spacing_small_intermediate</item>
+    </style>
+
 </resources>

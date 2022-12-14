@@ -21,7 +21,6 @@ import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.action.ViewActions.swipeRight
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
 import androidx.test.espresso.matcher.ViewMatchers.Visibility
 import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
@@ -36,47 +35,16 @@ import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withParent
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiObject
-import androidx.test.uiautomator.UiObjectNotFoundException
-import androidx.test.uiautomator.UiSelector
 import com.karhoo.samples.uisdk.dropin.common.matcher.RecyclerMatcher
 import com.karhoo.uisdk.R
-import com.schibsted.spain.barista.assertion.BaristaClickableAssertions.assertClickable
-import com.schibsted.spain.barista.assertion.BaristaClickableAssertions.assertNotClickable
-import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertDisabled
-import com.schibsted.spain.barista.assertion.BaristaEnabledAssertions.assertEnabled
-import com.schibsted.spain.barista.assertion.BaristaFocusedAssertions.assertFocused
-import com.schibsted.spain.barista.assertion.BaristaFocusedAssertions.assertNotFocused
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotDisplayed
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertNotExist
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.longClickOn
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
-import kotlin.jvm.Throws
 
 open class BaseTestRobot {
-
-    @Throws(UiObjectNotFoundException::class)
-    fun tapTurnOnGpsBtn() {
-        val allowGpsBtn: UiObject = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-                .findObject(UiSelector()
-                        .className("android.widget.Button").packageName("com.google.android.gms")
-                        .resourceId("android:id/button1")
-                        .clickable(true).checkable(false))
-        if (allowGpsBtn.exists() && allowGpsBtn.isEnabled) {
-            do {
-                allowGpsBtn.click()
-            } while (allowGpsBtn.exists())
-        }
-    }
 
     fun fillEditText(resId: Int, text: String): ViewInteraction =
             onView(withId(resId)).perform(replaceText(text), closeSoftKeyboard())
@@ -89,15 +57,11 @@ open class BaseTestRobot {
                     closeSoftKeyboard())
 
     fun clickButton(resId: Int) {
-        clickOn(resId)
+        onView(withId(resId)).perform(click())
     }
 
     fun clickButtonByString(text: String) {
-        clickOn(text)
-    }
-
-    fun longClickButton(resId: Int) {
-        longClickOn(resId)
+        onView(withText(text)).perform(click())
     }
 
     fun clickButtonByText(text: String): ViewInteraction = onView(withText(text)).perform((click()))
@@ -106,22 +70,6 @@ open class BaseTestRobot {
             onView(allOf(withText(text), isDescendantOfA(withId(resId)))).perform(click())
 
     fun clickButtonNotOnView(resId: Int): ViewInteraction = onData((withId(resId))).perform(click())
-
-    fun buttonIsEnabled(resId: Int) {
-        assertEnabled(resId)
-    }
-
-    fun buttonIsDisabled(resId: Int) {
-        assertDisabled(resId)
-    }
-
-    fun buttonIsClickable(resId: Int) {
-        assertClickable(resId)
-    }
-
-    fun buttonWithTextIsNotClickable(resId: Int) {
-        assertNotClickable(resId)
-    }
 
     fun dialogButtonByTextIsEnabled(text: Int): ViewInteraction =
             onView((withText(text))).inRoot(isDialog()).check(matches(isEnabled()))
@@ -145,37 +93,13 @@ open class BaseTestRobot {
         clickButton(resId)
     }
 
-    fun viewButtonByText(text: String) {
-        assertDisplayed(text)
-    }
-
     fun textView(resId: Int): ViewInteraction = onView(withId(resId))
-
-    fun textIsVisible(text: Int) {
-        assertDisplayed(text)
-    }
-
-    fun textIsNotVisible(text: Int) {
-        assertNotExist(text)
-    }
-
-    fun stringIsVisible(text: String) {
-        assertDisplayed(text)
-    }
 
     fun dialogTextIsVisible(text: Int) = onView(withText(text)).inRoot(isDialog()).check(matches(isDisplayed()))
 
     fun dialogTextIsVisibleString(text: String) = onView(withText(text)).inRoot(isDialog()).check(matches(isDisplayed()))
 
-    fun viewIsVisible(resId: Int) {
-        assertDisplayed(resId)
-    }
-
     fun viewDoesNotExist(resId: Int) = onView(withId(resId)).check(ViewAssertions.doesNotExist())
-
-    fun viewIsNotVisible(resId: Int) {
-        assertNotDisplayed(resId)
-    }
 
     fun stringIsNotDisplayed(text: String) = onView(withText(text)).check(matches(not(isDisplayed())))
 
@@ -207,14 +131,6 @@ open class BaseTestRobot {
             : ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
-    fun viewIsFocused(resId: Int) {
-        assertFocused(resId)
-    }
-
-    fun viewIsNotFocused(resId: Int) {
-        assertNotFocused(resId)
-    }
-
     fun matchText(viewInteraction: ViewInteraction, text: Int): ViewInteraction = viewInteraction
             .check(matches(withText(text)))
 
@@ -230,12 +146,6 @@ open class BaseTestRobot {
                 .inAdapterView(allOf(withId(listRes)))
                 .atPosition(position).perform(click())
     }
-
-    fun pressItemInList(listRes: Int, position: Int): ViewInteraction =
-            onView(withId(listRes))
-                    .perform(
-                            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(position, click())
-                            )
 
     fun checkListSize(listRes: Int, listSize: Int) {
         onView(withId(listRes)).check(RecyclerMatcher(listSize))

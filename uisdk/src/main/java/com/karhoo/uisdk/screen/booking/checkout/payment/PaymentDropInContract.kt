@@ -22,7 +22,7 @@ interface PaymentDropInContract {
 
         fun initialisePaymentFlow(quote: Quote?)
 
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
         fun setPassenger(passengerDetails: PassengerDetails?)
 
@@ -32,7 +32,7 @@ interface PaymentDropInContract {
     interface Presenter {
         var view: Actions?
 
-        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean
 
         fun getPaymentNonce(quote: Quote?)
 
@@ -53,8 +53,6 @@ interface PaymentDropInContract {
 
         fun handlePaymentDetailsUpdate()
 
-        fun updatePaymentViewVisbility(visibility: Int)
-
         fun initialiseChangeCard(quote: Quote?)
 
         fun initialiseGuestPayment(quote: Quote?)
@@ -66,8 +64,6 @@ interface PaymentDropInContract {
         fun showPaymentUI(sdkToken: String, paymentData: String? = null, quote: Quote? = null)
 
         fun threeDSecureNonce(sdkToken: String, nonce: String, amount: String)
-
-        fun refresh()
 
         fun showPaymentFailureDialog(error: KarhooError? = null)
 

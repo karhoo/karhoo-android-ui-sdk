@@ -25,10 +25,10 @@
         android:id="@+id/addressBarWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/marginBottom_10"
-        android:paddingBottom="@dimen/marginBottom_10"
-        android:paddingStart="@dimen/marginBottom"
-        android:paddingEnd="@dimen/marginBottom"
+        android:paddingTop="@dimen/kh_uisdk_spacing_semi_small"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_semi_small"
+        android:paddingStart="@dimen/kh_uisdk_spacing_x5small"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_x5small"
         />
 
     <include

@@ -26,13 +26,7 @@ dependencies {
     //... Other project dependencies
 
     //The -adyen dependency contains the Adyen integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.7.4'
-
-    //The -braintree dependency contains the Braintree integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-braintree:1.7.4'
-
-    //The -full dependency contains both payment providers and it's up to you which payment provider you shall use:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-full:1.7.4'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.8.0'
 
     //Note that only one dependency from the above three should be integrated into your project
 }
@@ -48,30 +42,31 @@ implementation 'com.github.karhoo:karhoo-android-ui-sdk:develop-SNAPSHOT'
 There are a few things the UI SDK needs to know before you can get started such as what environment to connect to, or what kind of authentication method to use.
 To configure the SDK you will need to provide an implementation of our KarhooUISDKConfiguration interface. This lets our SDK grab certain dependencies and configuration settings.
 
+
 ```kotlin
 class KarhooConfig(val context: Context): KarhooUISDKConfiguration {
-    override lateinit var paymentManager: PaymentManager
-    var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
+  override lateinit var paymentManager: PaymentManager
+  var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
 
-    override fun logo(): Drawable? {
-        return context.getDrawable(R.drawable.your-logo)
-    }
+  override fun logo(): Drawable? {
+    return context.getDrawable(R.drawable.your-logo)
+  }
 
-    override fun environment(): KarhooEnvironment {
-        return KarhooEnvironment.Sandbox()
-    }
+  override fun environment(): KarhooEnvironment {
+    return KarhooEnvironment.Sandbox()
+  }
 
-    override fun context(): Context {
-        return context
-    }
+  override fun context(): Context {
+    return context
+  }
 
-    override fun authenticationMethod(): AuthenticationMethod {
-        return AuthenticationMethod.KarhooUser()
-    }
+  override fun authenticationMethod(): AuthenticationMethod {
+    return AuthenticationMethod.KarhooUser()
+  }
 
-    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-            sdkAuthenticationRequired?.invoke(callback)
-    }
+  override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+    sdkAuthenticationRequired?.invoke(callback)
+  }
 }
 
 // Then set the payment provider and register the configuration in your Application file
@@ -88,7 +83,7 @@ paymentManager.paymentProviderView = BraintreePaymentView()
 // Later down the line
 val config = SDKConfig(context = this.applicationContext)
 config.sdkAuthenticationRequired = {
-    loginInBackground(it, yourToken)
+  loginInBackground(it, yourToken)
 }
 
 KarhooApi.setConfiguration(configuration = config)
@@ -96,31 +91,31 @@ KarhooApi.setConfiguration(configuration = config)
 // Implementing the token refresh flow
 private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
 private fun loginInBackground(callback: () -> Unit, token: String) {
-    if (!requestedAuthentication) {
-        Log.e(TAG, "Need an external authentication")
-        requestedAuthentication = true
-        deferredRequests.add(callback)
+  if (!requestedAuthentication) {
+    Log.e(TAG, "Need an external authentication")
+    requestedAuthentication = true
+    deferredRequests.add(callback)
 
-        GlobalScope.launch {
-        //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
-        //Then use that token to refresh the credentials inside the SDK
-          KarhooApi.authService.login(token).execute { result ->
-                 when (result) {
-                     is Resource.Success -> {
-                                 Log.e(TAG, "We got a new token from the back-end")
-                                 deferredRequests.map {
-                                     it.invoke()
-                                 }
-                                 deferredRequests.clear()
-                                 requestedAuthentication = false
-                             }
-                             is Resource.Failure -> toastErrorMessage(result.error)
-                         }
-                     }
-                 }
-    } else {
-        deferredRequests.add(callback)
+    GlobalScope.launch {
+      //Refresh your own access token in order to ensure a proper validity period for the Karhoo token
+      //Then use that token to refresh the credentials inside the SDK
+      KarhooApi.authService.login(token).execute { result ->
+        when (result) {
+          is Resource.Success -> {
+            Log.e(TAG, "We got a new token from the back-end")
+            deferredRequests.map {
+              it.invoke()
+            }
+            deferredRequests.clear()
+            requestedAuthentication = false
+          }
+          is Resource.Failure -> toastErrorMessage(result.error)
+        }
+      }
     }
+  } else {
+    deferredRequests.add(callback)
+  }
 }
 ```
 
@@ -168,17 +163,18 @@ When instantiating the Booking screen make sure the user has granted location pe
 <img
 alt="Booking screen"
 width="400px"
-src="https://files.readme.io/b28bcb0-android_quotes.jpg"
+src="https://files.readme.io/491a2aa-Screenshot_2022-11-02_at_10.19.00.png"
 />
 </a>
 </div>
 
 The booking screen can be launched in a classic way, via an Intent.
 Along the builder data we can find a few parameters that can be passed down:
- - "tripDetails" of type TripInfo which may contain the origin and destination in order for the addressView to be filled in
- - "outboundTripId" can be used when "rebooking" a trip
- - "initialLocation" should be passed if the user shouldn't wait for the GPS sensor to retrieve a location
-The below example launches a Booking Activity in a default state:
+- "tripDetails" of type TripInfo which may contain the origin and destination in order for the addressView to be filled in
+- "outboundTripId" can be used when "rebooking" a trip
+- "initialLocation" should be passed if the user shouldn't wait for the GPS sensor to retrieve a location
+- "passengerDetails" can be passed to pre-fill the passenger details in the checkout screen
+  The below example launches a Booking Activity in a default state:
 
 ```kotlin
 // launching for primary flow
@@ -203,46 +199,79 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
   super.onActivityResult(requestCode, resultCode, data)
 }
 ```
-#### Booking Details
+### Quotes List
+After selecting two addresses in the previous screen, the quotes list screen may be used to show up the results.
+<div align="center">
+<a href="https://karhoo.com">
+<img
+alt="Quote list screen"
+width="400px"
+src="https://files.readme.io/394bfd5-Screenshot_2022-11-02_at_11.07.08.png"
+/>
+</a>
+</div>
 
-The Booking Details screen contains the quote details after the user selects a quote. There are two states the Booking Details can be presented, one when the user is logged in and one with a guest user.
-When an authenticated user selects a quote, they are then taken to the booking details screen which enables them to add or update their payment details and make the booking.
-The Booking Details screen can be shown by adding a BookingRequestView into the layout of any activity or fragment
-
-```xml
-
-<com.karhoo.uisdk.screen.booking.booking.bookingrequest.BookingRequestView
-        android:id="@+id/bookingDetailsView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+```kotlin
+val builder = QuotesActivity.Builder()
+.restorePreviousData(restorePreviousData)
+.validityTimestamp(validityTimestamp)
+.bookingInfo(journeyDetails)   
+startActivityForResult(builder.build(this@BookingActivity), QUOTES_INFO_REQUEST_NUMBER)
 ```
 
-<div align="center">
-<a href="https://karhoo.com">
-<img
-alt="Booking screen"
-width="400px"
-src="https://files.readme.io/9d62cb1-Booking_Details_Screen.png"
-/>
-</a>
-</div>
-
-When a guest user selects a quote, they are then taken to the guest booking details screen which enables them to add their booking details i.e. first name, last name, email address, phone number and payment details. The Book Ride button is disabled until all mandatory fields have been completed.
+When the user selects a quote, they are then taken to the checkout details screen which enables them to add their booking details i.e. first name, last name, email address, phone number and payment details. The Book Ride button is disabled until all mandatory fields have been completed.
 
 <div align="center">
 <a href="https://karhoo.com">
 <img
-alt="Booking screen"
+alt="Checkout screen"
 width="400px"
-src="https://files.readme.io/e7cfdc6-Guest_Booking_Details.png"
+src="https://files.readme.io/848b44d-Screenshot_2022-10-31_at_20.54.08.png"
 />
 </a>
 </div>
 
+Here the user can check the T&Cs if they are required and must complete the passenger contact details in order to get to the next step.
+After everything is filled up correctly, the button will state "CONFIRM AND PAY" and then the Adyen/Braintree payment flow will start.
+If the payment is successful, the booking is created.
+
+Here is how it looks filled up
+
+<div align="center">
+<a href="https://karhoo.com">
+<img
+alt="Checkout screen filled"
+width="400px"
+src="https://files.readme.io/abbc1b2-Screenshot_2022-11-02_at_09.20.49.png"
+/>
+</a>
+</div>
+
+We also offer the possibility to enable the use of loyalty to earn and burn points on trips. Some extra development on your side is needed to enable this capability.
+
+<div align="center">
+<a href="https://karhoo.com">
+<img
+alt="Checkout screen with loyalty"
+width="400px"
+src="https://files.readme.io/d6379ba-Screenshot_2022-11-02_at_11.23.51.png"
+/>
+</a>
+</div>
+
+```kotlin
+// launching for primary flow
+val builder = CheckoutActivity.Builder()
+                            .quote(actions.quote)
+                            .bookingMetadata(bookingMetadata)
+                            .passengerDetails(passengerDetails)
+                            .comments(bookingComments)
+                            .bookingInfo(BookingInfo(pickup, destination, date))
+                            .currentValidityDeadlineTimestamp(ts)
+
+// launching for callback example
+startActivityForResult(builder.build(this), REQ_CODE_BOOKING_REQUEST_ACTIVITY)
+```
 #### Flight Number
 
 The flight number screen is launched if a user has after entered an address that is an Airport POI (Pick up or drop-off). It allows the user to enter a valid Flight Number, once confirmed the user is taken back to the Trip screen, the flight number is added to the trip object and can be passed on to the fleet for pick up accuracy. This flow is only applicable for authenticated users as guest users will be able to add their flight details on the details screen.
@@ -326,7 +355,6 @@ startActivity(intent)
 
 #### Ride Details
 The ride details screen provides a breakdown of the trip details for an upcoming or past ride. The user can track the ride by opening the Trip screen, cancel an upcoming ride, contact the driver of an upcoming ride.
-On past rides, the user will now be able to provide trip feedback on completed trips
 
 <div align="center">
 <a href="https://karhoo.com">
@@ -343,30 +371,6 @@ In order to launch the Rides screen, an intent for the RideDetailsActivity has t
 ```kotlin
 // launching example
 val intent = RideDetailsActivity.Builder.builder
- .trip(tripInfo)
-        .build(context)
-startActivity(intent)
-```
-
-#### Additional Feedback
-
-The Additional Feedback screen allows users to give more detailed feedback on their past rides than what the standard rating offers.
-
-<div align="center">
-<a href="https://karhoo.com">
-<img
-alt="Booking screen"
-width="400px"
-src="https://files.readme.io/2065c70-android_feedback.jpg"
-/>
-</a>
-</div>
-
-In order to launch the Additional Feedback screen, make an intent for the FeedbackActivity and provide the tripInfo.
-
-```kotlin
-// launching example
-val intent = FeedbackActivity.Builder.builder
  .trip(tripInfo)
         .build(context)
 startActivity(intent)
@@ -434,10 +438,10 @@ The demo app require that you add your own set of API keys:
 
 - Create a file in the app directory called `secure.properties` (this file should *NOT* be under version control to protect your API key)
 - Add the API keys and configurations to secure.properties. You can also take a look at the `secure.properties.template` as an example.
-    - [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
-    - Enable Firebase analytics/crashlytics and add config file to the project (google-service.json) (Optional)
-    - Add GUEST CHECKOUT configuration for your account in order to enable the guest checkout journey
-    - Add Staging environment configuration in order to be able to use Staging environment
+  - [Get a Maps API key](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+  - Enable Firebase analytics/crashlytics and add config file to the project (google-service.json) (Optional)
+  - Add GUEST CHECKOUT configuration for your account in order to enable the guest checkout journey
+  - Add Staging environment configuration in order to be able to use Staging environment
 - Update fabric API key in app/build.gradle
 - Build and run
 

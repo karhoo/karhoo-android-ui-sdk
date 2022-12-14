@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
+import com.adevinta.android.barista.rule.flaky.FlakyTestRule
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import com.github.tomakehurst.wiremock.junit.WireMockRule
 import com.karhoo.sdk.api.KarhooApi
@@ -42,8 +43,6 @@ import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES
 import com.karhoo.uisdk.util.TestSDKConfig
 import com.karhoo.uisdk.util.extension.toNormalizedLocale
-import com.schibsted.spain.barista.rule.flaky.AllowFlaky
-import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -413,7 +412,6 @@ class GuestBookingTests : Launch {
      * When:    I select the menu button
      * Then:    I can see the following options in the menu: Feedback, Help, About
      **/
-    @Ignore
     @Test
     fun checkMenuItemsGuestCheckout() {
         serverRobot {

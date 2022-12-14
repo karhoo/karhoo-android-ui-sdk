@@ -21,8 +21,6 @@ import com.karhoo.uisdk.util.TestData.Companion.SEARCH_AIRPORT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_GENERAL_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_INCORRECT_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.USER
-import com.schibsted.spain.barista.rule.flaky.AllowFlaky
-import com.schibsted.spain.barista.rule.flaky.FlakyTestRule
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -41,14 +39,12 @@ class AddressTests : Launch {
     @get:Rule
     var wireMockRule = WireMockRule(UiSDKTestConfig.PORT_NUMBER)
 
-    private var flakyRule = FlakyTestRule()
-
     @get:Rule
     val activityRule: ActivityTestRule<AddressActivity> =
             ActivityTestRule(AddressActivity::class.java, false, false)
 
     @get:Rule
-    var chain: RuleChain = RuleChain.outerRule(flakyRule)
+    var chain: RuleChain = RuleChain.outerRule(activityRule)
             .around(activityRule)
 
     @get:Rule
@@ -117,7 +113,6 @@ class AddressTests : Launch {
      * Then:    No results are shown
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun searchingForAnInvalidAddressReturnsNoResult() {
         serverRobot {
             addressListResponse(HTTP_NOT_FOUND, NO_ADDRESS_FOUND)
@@ -366,7 +361,6 @@ class AddressTests : Launch {
      * Then:    I can see the plane symbol next to the address
      **/
     @Test
-    @AllowFlaky(attempts = 3)
     fun airportSymbolCheckAddressSearch() {
         serverRobot {
             addressListResponse(HTTP_CREATED, PLACE_SEARCH_AIRPORT)

@@ -28,32 +28,17 @@ import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.RootMatchers.isDialog
-import androidx.test.espresso.matcher.ViewMatchers.Visibility
-import androidx.test.espresso.matcher.ViewMatchers.hasFocus
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isClickable
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.isEnabled
-import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
-import androidx.test.espresso.matcher.ViewMatchers.withHint
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withParent
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
-import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.matcher.RecyclerMatcher
 import com.karhoo.uisdk.common.matcher.withDrawable
-import com.karhoo.uisdk.util.extension.toNormalizedLocale
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not
@@ -66,10 +51,10 @@ import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 
-    @Throws(UiObjectNotFoundException::class)
     fun tapTurnOnGpsBtn() {
         val allowGpsBtn: UiObject = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-                .findObject(UiSelector()
+                .findObject(
+                    UiSelector()
                                     .className("android.widget.Button").packageName("com.google.android.gms")
                                     .resourceId("android:id/button1")
                                     .clickable(true).checkable(false))
@@ -168,6 +153,9 @@ open abstract class BaseTestRobot {
     fun viewIsVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(isDisplayed()))
 
+    fun checkboxIsChecked(resId: Int): ViewInteraction =
+        onView(withId(resId)).check(matches(isChecked()))
+
     fun viewIsNotVisible(resId: Int): ViewInteraction =
             onView(withId(resId)).check(matches(not(isDisplayed())))
 
@@ -178,8 +166,14 @@ open abstract class BaseTestRobot {
     fun viewIsVisibleWithIndex(text: Int, page: Int): ViewInteraction =
             onView(withIndex(withText(text), page)).check(matches(isDisplayed()))
 
+    fun viewIsVisibleWithText(text: Int): ViewInteraction =
+        onView(withText(text)).check(matches(isDisplayed()))
+
     fun textIsVisibleIsDescendant(text: Int, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
+
+    fun textIsVisibleInDescendant(text: String, resId: Int): ViewInteraction =
+        onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
     fun textStringIsVisibleIsDescendant(text: String, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
@@ -230,6 +224,17 @@ open abstract class BaseTestRobot {
                 .inAdapterView(allOf(withId(listRes)))
                 .atPosition(position).perform(click())
     }
+
+    fun checkItemInList(listId: Int, position: Int, text: String) : ViewInteraction =
+        onView(withId(listId))
+            .check(matches(hasDescendant(withText(text))))
+
+    fun checkItemInList(listId: Int, text: String) : ViewInteraction =
+        onView(withId(listId))
+            .check(matches(hasDescendant(withText(text))))
+
+    fun clickItemWithText(text: Int): ViewInteraction =
+        onView((withText(text))).perform(click())
 
     fun pressItemInList(listRes: Int, position: Int): ViewInteraction =
             onView(withId(listRes))
@@ -390,5 +395,8 @@ open abstract class BaseTestRobot {
 
     fun scrollUp(resId: Int): ViewInteraction =
             onView(withId(resId)).perform(ViewActions.swipeUp())
+
+    fun scrollDown(resId: Int): ViewInteraction =
+        onView(withId(resId)).perform(ViewActions.swipeDown())
 
 }

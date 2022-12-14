@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName
 import com.karhoo.sdk.api.model.*
 import com.karhoo.sdk.api.model.adyen.AdyenPublicKey
 import com.karhoo.sdk.api.network.request.QuoteQTA
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
+import org.joda.time.DateTime
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
@@ -74,7 +77,7 @@ class TestData {
 
         const val KARHOO_ID = "Karhoo ID"
 
-        const val PREBOOK_TIME_DATE = "2 Dec 2021, 20:00"
+        const val PREBOOK_TIME_DATE = "2 Dec 2021, 8:00pm"
 
         const val LATITUDE = 51.5166744
 
@@ -179,6 +182,13 @@ class TestData {
                 displayTripId = "A5TH-R27D",
                 meetingPoint = MEETING_POINT)
 
+        val JOURNEY_DETAILS = JourneyDetails(
+            pickup = TRIP_LOCATION_INFO_PICKUP.toSimpleLocationInfo(),
+            destination = TRIP_LOCATION_INFO_DROPOFF.toSimpleLocationInfo(),
+            date = DateTime(SCHEDULED_DATE)
+
+            )
+
         val TRIP_ARRIVED = TRIP.copy(tripState = TripStatus.ARRIVED)
 
         val TRIP_DER = TRIP.copy(tripState = TripStatus.DRIVER_EN_ROUTE)
@@ -225,7 +235,7 @@ class TestData {
 
         val QUOTE_VEHICLE = QuoteVehicle(vehicleClass = "Electric",
                                          vehicleQta = QuoteQTA(highMinutes = 30, lowMinutes = 1),
-                                         luggageCapacity = 2,
+                                         luggageCapacity = 2, vehicleType= "standard", vehicleTags= arrayListOf("taxi, hybrid"),
                                          passengerCapacity = 2)
 
         val CANCELLATION_AGREEMENT = ServiceAgreements(ServiceCancellation(CANCELLATION_TIME_BEFORE_PICKUP, 2))
@@ -722,13 +732,21 @@ class TestData {
                                                          logoUrl = "https://cdn.karhoo.com/d/images/logos/cc775eda-950d-4a77-aa83-172d487a4cbf.png",
                                                          description = "Some fleet description",
                                                          phoneNumber = "+447715364890",
+                                                         capabilities = arrayListOf("flight_tracking"),
                                                          termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
                                 pickupType = PickupType.NOT_SET,
-                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Taxi",
-                                                             vehicleQta = QuoteQTA(highMinutes =
-                                                                                   5, lowMinutes = 5),
-                                                             luggageCapacity = 2,
-                                                             passengerCapacity = 2)),
+                                vehicle = QUOTE_VEHICLE.copy(
+                                    vehicleClass = "Taxi",
+                                    vehicleQta = QuoteQTA(
+                                        highMinutes =
+                                        5, lowMinutes = 5
+                                    ),
+                                    luggageCapacity = 2,
+                                    vehicleTags= arrayListOf(),
+                                    vehicleType = "TestType",
+                                    passengerCapacity = 2
+                                )
+                        ),
                         QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
@@ -745,28 +763,41 @@ class TestData {
                                 vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
                                                              vehicleQta = QuoteQTA(highMinutes = 20,
                                                                                    lowMinutes = 20),
+                                                             vehicleTags= arrayListOf("hybrid", "electric", "taxi"),
+                                                                 vehicleType= "TestClassicTagsTitle",
                                                              luggageCapacity = 2,
                                                              passengerCapacity = 2)),
-                        QUOTE.copy(
-                                id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
-                                quoteSource = QuoteSource.FLEET,
-                                quoteType = QuoteType.ESTIMATED,
-                                price = QUOTE_PRICE.copy(highPrice = 2380, lowPrice = 2380,
-                                                         currencyCode = DEFAULT_CURRENCY),
-                                fleet = QUOTE_FLEET.copy(id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
-                                                         name = "Third Fleet",
-                                                         logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
-                                                         description = "Some fleet description",
-                                                         phoneNumber = "+442999999",
-                                                         termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"),
-                                pickupType = PickupType.NOT_SET,
-                                vehicle = QUOTE_VEHICLE.copy(vehicleClass = "Exec",
-                                                             vehicleQta = QuoteQTA(highMinutes = 15,
-                                                                                   lowMinutes =
-                                                                                   15),
-                                                             luggageCapacity = 2,
-                                                             passengerCapacity = 2)),
-                        QUOTE.copy(
+                    QUOTE.copy(
+                        id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
+                        quoteSource = QuoteSource.FLEET,
+                        quoteType = QuoteType.ESTIMATED,
+                        price = QUOTE_PRICE.copy(
+                            highPrice = 2380, lowPrice = 2380,
+                            currencyCode = DEFAULT_CURRENCY
+                        ),
+                        fleet = QUOTE_FLEET.copy(
+                            id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+                            name = "Third Fleet",
+                            logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
+                            description = "Some fleet description",
+                            phoneNumber = "+442999999",
+                            termsConditionsUrl = "https://karhoo.com/fleettcs/cdda3d54-2926-451f-b839-4201c9adc9f5"
+                        ),
+                        pickupType = PickupType.NOT_SET,
+                            vehicle = QUOTE_VEHICLE.copy(
+                                vehicleClass = "Exec",
+                                vehicleQta = QuoteQTA(
+                                    highMinutes = 15,
+                                    lowMinutes =
+                                    15
+                                ),
+                                vehicleTags = arrayListOf("executive"),
+                                vehicleType = "Executive",
+                                luggageCapacity = 2,
+                                passengerCapacity = 2
+                            )
+                        ),
+                    QUOTE.copy(
                                 id = "eb00db4d-44bb-11e9-bdab-0a580a04005f:NTlhMTVkYTctOGUyMy00NTRiLTliNDMtNzBlMmRmZDMwN2ZjO2V4ZWN1dGl2ZQ==",
                                 quoteSource = QuoteSource.FLEET,
                                 quoteType = QuoteType.ESTIMATED,
