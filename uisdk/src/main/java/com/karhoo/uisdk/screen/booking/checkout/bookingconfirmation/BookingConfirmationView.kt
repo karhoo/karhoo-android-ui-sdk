@@ -63,16 +63,7 @@ class BookingConfirmationView(
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_confirmation, container, false)
         rideConfirmationScreenOpened()
-
-        rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
-        fareText = view.findViewById(R.id.fareText)
-        fareTypeText = view.findViewById(R.id.fareTypeText)
-        bookingTimeText = view.findViewById(R.id.bookingTimeText)
-        bookingDateText = view.findViewById(R.id.bookingDateText)
-        closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
-        prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
-        loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
-        addToCalendar = view.findViewById(R.id.addToCalendar)
+        setupViews(view)
 
         prebookAddressComponent.setup(
             journeyDetails.pickup!!,
@@ -132,6 +123,18 @@ class BookingConfirmationView(
         }
 
         return view
+    }
+
+    private fun setupViews(view: View){
+        rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
+        fareText = view.findViewById(R.id.fareText)
+        fareTypeText = view.findViewById(R.id.fareTypeText)
+        bookingTimeText = view.findViewById(R.id.bookingTimeText)
+        bookingDateText = view.findViewById(R.id.bookingDateText)
+        closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
+        prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
+        loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
+        addToCalendar = view.findViewById(R.id.addToCalendar)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

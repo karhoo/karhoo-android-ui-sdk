@@ -38,6 +38,12 @@
     <string name="K5002">Impossible de trouver un devis (aucune flotte trouvée dans la zone demandée)</string>
     <string name="K5003">Impossible de trouver un devis (aucune catégorie trouvée dans la zone demandée)</string>
     <string name="kh_uisdk_about">À propos</string>
+    <string name="kh_uisdk_acc_close_button">Fermer l’écran</string>
+    <string name="kh_uisdk_acc_destination_address">Adresse de destination</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informations</string>
+    <string name="kh_uisdk_acc_pickup_address">Adresse de départ</string>
+    <string name="kh_uisdk_acc_pickup_time">Heure de prise en charge</string>
+    <string name="kh_uisdk_acc_ride_details">Aller aux détails du trajet</string>
     <string name="kh_uisdk_add_card">Ajouter une carte</string>
     <string name="kh_uisdk_add_comment_placeholder">Commentaires supplémentaires</string>
     <string name="kh_uisdk_add_flight_details">Numéro de vol (Optionnel)</string>
@@ -309,8 +315,8 @@
     <string name="kh_uisdk_location_rationale_shown">EXPLICATION_LOCATION_REQUETE</string>
     <string name="kh_uisdk_loyalty_balance_title">SOLDE: %1$s POINTS</string>
     <string name="kh_uisdk_loyalty_info">Votre carte est nécessaire pour autoriser cette transaction dans le cas où le prix final du trajet dépasse votre solde de points. Votre compte ne sera pas débité si vos points de fidélité couvrent la totalité du prix.</string>
-    <string name="kh_uisdk_loyalty_info_add_points">%s Des points de fidélité seront ajoutés au solde de votre compte à la fin de la course.</string>
-    <string name="kh_uisdk_loyalty_info_remove_points">%s Les points de fidélité seront déduits du solde de votre compte à la fin de la course.</string>
+    <string name="kh_uisdk_loyalty_info_add_points">%s points de fidélité seront ajoutés au solde de votre compte à la fin de la course.</string>
+    <string name="kh_uisdk_loyalty_info_remove_points">%s points de fidélité seront déduits du solde de votre compte à la fin de la course.</string>
     <string name="kh_uisdk_loyalty_insufficient_balance_for_loyalty_burn">Votre solde de points est insuffisant</string>
     <string name="kh_uisdk_loyalty_not_eligible_for_pre_auth">Le mode de fidélité actuel n’est pas éligible à la pré-autorisation</string>
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s points de fidélité seront ajoutés au solde de votre compte à la fin du trajet</string>

@@ -38,6 +38,12 @@
     <string name="K5002">Kon geen beschikbaarheid krijgen (geen beschikbaarheid gevonden in het gevraagde gebied)</string>
     <string name="K5003">Kon geen beschikbaarheid krijgen (geen categorieën gevonden binnen het gevraagde gebied)</string>
     <string name="kh_uisdk_about">Over</string>
+    <string name="kh_uisdk_acc_close_button">Sluit het scherm</string>
+    <string name="kh_uisdk_acc_destination_address">Bestemmingsadres</string>
+    <string name="kh_uisdk_acc_loyalty_information">Informatie</string>
+    <string name="kh_uisdk_acc_pickup_address">Vertrek adres</string>
+    <string name="kh_uisdk_acc_pickup_time">Ophaal tijd</string>
+    <string name="kh_uisdk_acc_ride_details">Ga naar ritgegevens</string>
     <string name="kh_uisdk_add_card">VOEG EEN KAART TOE</string>
     <string name="kh_uisdk_add_comment_placeholder">Aanvullende opmerkingen</string>
     <string name="kh_uisdk_add_flight_details">Vluchtnummer</string>
@@ -537,11 +543,4 @@
     <string name="Text.Generic.Close">Sluiten</string>
     <string name="Text.SupportMailMessage.ReportIssueSubject">Probleem melden</string>
     <string name="Text.VehicleTag.Electric">Elektrisch</string>
-
-    <string name="kh_uisdk_acc_close_button">Sluit het scherm</string>
-    <string name="kh_uisdk_acc_destination_address">Bestemmingsadres</string>
-    <string name="kh_uisdk_acc_loyalty_information">Informatie</string>
-    <string name="kh_uisdk_acc_pickup_address">Vertrek adres</string>
-    <string name="kh_uisdk_acc_pickup_time">Ophaal tijd</string>
-    <string name="kh_uisdk_acc_ride_details">Ga naar ritgegevens</string>
 </resources>

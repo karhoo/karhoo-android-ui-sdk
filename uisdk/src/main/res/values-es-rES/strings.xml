@@ -38,6 +38,12 @@
     <string name="K5002">Sin disponibilidad (no se encontró disponibilidad en el área solicitada)</string>
     <string name="K5003">Sin disponibilidad (no se encontraron categorías en el área solicitada)</string>
     <string name="kh_uisdk_about">Información</string>
+    <string name="kh_uisdk_acc_close_button">Cierra la pantalla</string>
+    <string name="kh_uisdk_acc_destination_address">Dirección de destino</string>
+    <string name="kh_uisdk_acc_loyalty_information">Información</string>
+    <string name="kh_uisdk_acc_pickup_address">dirección de salida</string>
+    <string name="kh_uisdk_acc_pickup_time">Hora de recogida</string>
+    <string name="kh_uisdk_acc_ride_details">Ir a los detalles del viaje</string>
     <string name="kh_uisdk_add_card">Agregar Pago</string>
     <string name="kh_uisdk_add_comment_placeholder">Additional comments</string>
     <string name="kh_uisdk_add_flight_details">Número de vuelo (Opcional)</string>
