@@ -37,6 +37,9 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
 
+    override fun useAddToCalendarFeature(): Boolean {
+        return true
+    }
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         sdkAuthenticationRequired?.invoke(callback)
     }

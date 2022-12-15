@@ -332,6 +332,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 tripInfo?.flightNumber,
                 tripInfo?.trainNumber,
                 tripInfo?.tripId,
+                KarhooUISDKConfigurationProvider.configuration.useAddToCalendarFeature()
             )
 
             bookingConfirmationView.setLoyaltyProperties(
