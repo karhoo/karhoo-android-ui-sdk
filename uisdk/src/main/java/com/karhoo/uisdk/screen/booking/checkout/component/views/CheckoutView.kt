@@ -83,6 +83,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private val flightInfo: String
         get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
 
+    private var useAddToCalendarFeature: Boolean = true
+
     private val bookingPaymentHandler = BookingPaymentHandler(context = context)
 
     init {
@@ -191,7 +193,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                     outboundTripId: String?,
                                     bookingMetadata: HashMap<String, String>?,
                                     passengerDetails: PassengerDetails?,
-                                    comments: String?) {
+                                    comments: String?,
+                                    useAddToCalendarFeature: Boolean) {
+        this.useAddToCalendarFeature = useAddToCalendarFeature
+
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         comments?.let {
@@ -332,6 +337,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 tripInfo?.flightNumber,
                 tripInfo?.trainNumber,
                 tripInfo?.tripId,
+                useAddToCalendarFeature
             )
 
             bookingConfirmationView.setLoyaltyProperties(

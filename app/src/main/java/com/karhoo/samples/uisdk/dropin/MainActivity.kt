@@ -280,6 +280,7 @@ class MainActivity : AppCompatActivity() {
         KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
+            .useAddToCalendarFeature(true)
         startActivity(builder.build(this))
         hideLoading()
     }

@@ -15,7 +15,8 @@ class MockBookingConfirmationBaseActivity : BaseActivity() {
             intent.getParcelableExtra("SCREENSHOT_TEST_QUOTE")!!,
             null,
             null,
-            null
+            null,
+            true
         )
 
         bookingConfirmationView.setLoyaltyProperties(

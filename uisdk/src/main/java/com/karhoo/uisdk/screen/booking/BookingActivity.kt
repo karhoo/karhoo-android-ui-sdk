@@ -382,6 +382,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 .quote(quote)
                 .outboundTripId(outboundTripId)
                 .bookingMetadata(bookingMetadata)
+                .useAddToCalendarFeature(intent.getBooleanExtra(Builder.EXTRA_USE_ADD_RIDE_TO_CALENDAR_FEATURE, true))
                 .journeyDetails(
                     JourneyDetails(
                         data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
@@ -403,7 +404,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             }
 
             val validityTimeStamp = data?.getLongExtra(
-                QuotesActivity.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
+                QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
             )
 
             validityTimeStamp?.let {
@@ -535,6 +536,12 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             return this
         }
 
+        fun useAddToCalendarFeature(useAddToCalendarFeature: Boolean): Builder {
+            extrasBundle.putBoolean(EXTRA_USE_ADD_RIDE_TO_CALENDAR_FEATURE, useAddToCalendarFeature)
+
+            return this
+        }
+
         /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
@@ -563,6 +570,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             const val EXTRA_COMMENTS = "booking::comments"
             const val EXTRA_META = "booking::meta"
             const val EXTRA_LOYALTY_INFO = "extraLoyaltyInfo"
+            const val EXTRA_USE_ADD_RIDE_TO_CALENDAR_FEATURE = "extraAddRideToCalendar"
 
             val builder: Builder
                 get() = Builder()

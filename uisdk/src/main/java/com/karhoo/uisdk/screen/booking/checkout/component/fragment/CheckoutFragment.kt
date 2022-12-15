@@ -21,6 +21,7 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_CANCELLED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_EXPIRED
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_USE_ADD_TO_CALENDAR_FEATURE
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
@@ -139,7 +140,8 @@ internal class CheckoutFragment : Fragment() {
                 CheckoutActivity
                     .BOOKING_CHECKOUT_PASSENGER_KEY
             ),
-            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
+            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY),
+            useAddToCalendarFeature = bundle.getBoolean(BOOKING_CHECKOUT_USE_ADD_TO_CALENDAR_FEATURE)
         )
 
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)

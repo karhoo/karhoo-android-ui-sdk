@@ -186,6 +186,16 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         }
 
         /**
+         * Sets whether the add to calendar feature should be visible
+         * when prebooking a ride
+         */
+        fun useAddToCalendarFeature(useAddToCalendarFeature: Boolean): Builder {
+            extrasBundle.putBoolean(BOOKING_CHECKOUT_USE_ADD_TO_CALENDAR_FEATURE, useAddToCalendarFeature)
+
+            return this
+        }
+
+        /**
          * Returns a launchable Intent to the configured booking activity with the given
          * builder parameters in the extras bundle
          */
@@ -210,6 +220,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         const val BOOKING_CHECKOUT_COMMENTS_KEY = "BOOKING_CHECKOUT_COMMENTS_KEY"
         const val BOOKING_CHECKOUT_LOYALTY_KEY = "BOOKING_CHECKOUT_LOYALTY_KEY"
         const val BOOKING_CHECKOUT_VALIDITY_KEY = "BOOKING_CHECKOUT_VALIDITY_KEY"
+        const val BOOKING_CHECKOUT_USE_ADD_TO_CALENDAR_FEATURE = "BOOKING_CHECKOUT_USE_ADD_TO_CALENDAR_FEATURE"
         const val BOOKING_CHECKOUT_CANCELLED = 11
         const val BOOKING_CHECKOUT_EXPIRED = 12
 

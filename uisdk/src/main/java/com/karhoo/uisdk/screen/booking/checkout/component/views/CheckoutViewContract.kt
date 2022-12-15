@@ -153,7 +153,8 @@ interface CheckoutViewContract {
             outboundTripId: String? = null,
             bookingMetadata: HashMap<String, String>?,
             passengerDetails: PassengerDetails? = null,
-            comments: String? = null)
+            comments: String? = null,
+            useAddToCalendarFeature: Boolean)
     }
 
     sealed class Event {
