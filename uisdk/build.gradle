@@ -131,8 +131,6 @@ android {
 
 afterEvaluate {
     android.libraryVariants.each { variant ->
-        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
-
         if (variant.flavorName == "adyen") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
         }
@@ -141,6 +139,10 @@ afterEvaluate {
         }
 
         if (variant.buildType.name != "release") { return }
+        if (variant.flavorName == "debugTest") { return }
+
+        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
+
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
