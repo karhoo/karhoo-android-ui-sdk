@@ -15,6 +15,7 @@ interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConf
 
     fun isExplicitTermsAndConditionsConsentRequired(): Boolean = false
 
+    fun useAddToCalendarFeature(): Boolean = true
 }
 
 internal object KarhooUISDKConfigurationProvider {
