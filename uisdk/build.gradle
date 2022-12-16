@@ -111,7 +111,7 @@ android {
             java.srcDirs = ['src/main/java/', 'src/adyen/']
         }
         debugTest {
-            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/', 'src/debug/java']
+            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/debug/java']
         }
     }
 
