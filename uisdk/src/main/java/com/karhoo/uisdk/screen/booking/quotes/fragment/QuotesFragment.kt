@@ -226,7 +226,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
 
     private fun showFilters() {
         activity?.supportFragmentManager?.let {
-            quotesFilterWidget.show(it, FilterDialogFragment.TAG)
+            quotesFilterWidget.showFullScreen(it, FilterDialogFragment.TAG)
         }
     }
 

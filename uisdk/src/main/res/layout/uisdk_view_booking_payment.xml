@@ -50,7 +50,6 @@
         style="@style/KhPaymentView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/kh_uisdk_booking_checkout_edit_passenger"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

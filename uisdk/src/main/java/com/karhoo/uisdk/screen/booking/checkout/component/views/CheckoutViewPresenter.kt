@@ -47,7 +47,7 @@ internal class CheckoutViewPresenter(
     private val userStore: UserStore
 ) : BasePresenter<CheckoutViewContract.View>(), CheckoutViewContract.Presenter, LifecycleObserver {
 
-    private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
+    var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
     private var bookingRequestStateViewModel: BookingRequestStateViewModel? = null
     private var destination: LocationInfo? = null
     private var origin: LocationInfo? = null
@@ -61,6 +61,13 @@ internal class CheckoutViewPresenter(
         attachView(view)
     }
 
+    override fun getJourneyDetails(): JourneyDetails? {
+        return JourneyDetails(
+            date = scheduledDate,
+            destination = destination,
+            pickup = origin)
+    }
+
     override fun setJourneyDetails(journeyDetails: JourneyDetails?) {
         journeyDetails?.let {
             scheduledDate = it.date
@@ -71,14 +78,9 @@ internal class CheckoutViewPresenter(
 
     override fun getBookingButtonState(
         arePassengerDetailsValid: Boolean,
-        isPaymentValid: Boolean,
         isTermsCheckBoxValid: Boolean
     ): BookButtonState {
-        return if (arePassengerDetailsValid && isPaymentValid && isTermsCheckBoxValid) {
-            BookButtonState.BOOK
-        } else {
-            BookButtonState.NEXT
-        }
+        return BookButtonState.NEXT
     }
 
     override fun watchJourneyDetails(journeyDetailsStateViewModel: JourneyDetailsStateViewModel): Observer<in JourneyDetails> {
@@ -135,7 +137,7 @@ internal class CheckoutViewPresenter(
         val date = scheduledDate
         if (date != null) {
             KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
-            view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo)
+            view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo, getJourneyDetails(), quote)
         } else {
             KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)

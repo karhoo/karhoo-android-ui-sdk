@@ -134,7 +134,7 @@ class KarhooFeedbackEmailComposer(
             details += "${versionUtil.appAndDeviceInfo()}\n"
             details += "Locale: ${
                 if (user.locale.isNotBlank()) user.locale else contextWeakRef.get()?.getString(R.string
-                                                                                          .karhoo_uisdk_locale)
+                                                                                          .kh_uisdk_locale)
             }\n"
             details += userInfo()
         }

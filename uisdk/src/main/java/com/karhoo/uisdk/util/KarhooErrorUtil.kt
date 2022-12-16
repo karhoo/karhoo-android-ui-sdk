@@ -60,11 +60,17 @@ fun returnErrorStringOrLogoutIfRequired(error: KarhooError): Int {
         KarhooError.CouldNotAuthenticate -> R.string.kh_uisdk_K6001
         KarhooError.OriginAndDestinationIdentical -> R.string.kh_uisdk_Q0001
         KarhooError.FailedToGetUserId -> R.string.kh_uisdk_P0001
-        KarhooError.CouldNotFindCustomer -> R.string.kh_uisdk_KP001
-        KarhooError.CouldNotInitailizeClient -> R.string.kh_uisdk_KP002
-        KarhooError.CouldNotFindDefaultPayment -> R.string.kh_uisdk_KP003
-        KarhooError.CouldNotFindDefaultCard -> R.string.kh_uisdk_KP004
-        KarhooError.FailedToGenerateNonce -> R.string.kh_uisdk_KP005
+        KarhooError.ErrDecodingBody -> R.string.kh_uisdk_KP001
+        KarhooError.ErrInvalidOrgID -> R.string.kh_uisdk_KP002
+        KarhooError.ErrMissingSupplyPartnerID -> R.string.kh_uisdk_KP003
+        KarhooError.ErrInvalidUserID -> R.string.kh_uisdk_KP004
+        KarhooError.ErrMissingBrowserInfo -> R.string.kh_uisdk_KP005
+        KarhooError.MissingReturnURL -> R.string.kh_uisdk_KP006
+        KarhooError.MissingTripID -> R.string.kh_uisdk_KP007
+        KarhooError.MissingUser -> R.string.kh_uisdk_KP008
+        KarhooError.UnknownOrgID -> R.string.kh_uisdk_KP009
+        KarhooError.BadMoney -> R.string.kh_uisdk_KP010
+        KarhooError.BadMoneySplit -> R.string.kh_uisdk_KP011
         KarhooError.FailedToCallMoneyService -> R.string.kh_uisdk_P0002
         KarhooError.LoyaltyNotAllowedToBurnPoints -> R.string.kh_uisdk_loyalty_pre_auth_not_allowed_to_burn
         KarhooError.LoyaltyIncomingPointsExceedBalance -> R.string.kh_uisdk_loyalty_pre_auth_not_enough_points

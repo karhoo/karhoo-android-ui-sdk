@@ -56,7 +56,12 @@ interface CheckoutViewContract {
 
         fun showLoading(show: Boolean)
 
-        fun showPrebookConfirmationDialog(quoteType: QuoteType?, tripInfo: TripInfo)
+        fun showPrebookConfirmationDialog(
+            quoteType: QuoteType?,
+            tripInfo: TripInfo?,
+            journeyDetails: JourneyDetails?,
+            quote: Quote?
+        )
 
         fun showUpdatedPaymentDetails(savedPaymentInfo: SavedPaymentInfo?)
 
@@ -72,8 +77,6 @@ interface CheckoutViewContract {
         fun showPassengerDetailsLayout(show: Boolean)
 
         fun arePassengerDetailsValid(): Boolean
-
-        fun isPaymentMethodValid(): Boolean
 
         fun clickedPassengerSaveButton()
 
@@ -125,7 +128,7 @@ interface CheckoutViewContract {
 
         fun consumeBackPressed(): Boolean
 
-        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isPaymentValid: Boolean, isTermsCheckBoxValid: Boolean = true):
+        fun getBookingButtonState(arePassengerDetailsValid: Boolean, isTermsCheckBoxValid: Boolean = true):
                 BookButtonState
 
         fun createLoyaltyViewResponse()
@@ -133,10 +136,13 @@ interface CheckoutViewContract {
         fun setLoyaltyNonce(nonce: String)
 
         fun getCurrentQuote(): Quote?
+
+        fun getJourneyDetails(): JourneyDetails?
     }
 
-    interface PrebookViewActions {
-        fun finishedBooking()
+    interface BookingConfirmationActions {
+        fun openRideDetails()
+        fun dismissedPrebookDialog()
     }
 
     interface BookingRequestViewWidget {
