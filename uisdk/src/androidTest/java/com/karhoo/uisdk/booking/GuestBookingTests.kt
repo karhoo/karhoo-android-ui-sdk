@@ -558,7 +558,6 @@ class GuestBookingTests : Launch {
             shortSleep()
         } result {
             fullCheckFilledGuestDetailsPage()
-            guestBookingCheckCardDetails()
         }
     }
 

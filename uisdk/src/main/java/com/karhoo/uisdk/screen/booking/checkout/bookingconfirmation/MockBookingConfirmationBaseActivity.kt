@@ -5,7 +5,7 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyMode
 
-class MockBookingConfirmationBaseActivity : BaseActivity() {
+internal class MockBookingConfirmationBaseActivity : BaseActivity() {
     override val layout: Int
         get() = R.layout.uisdk_mock_booking_confirmation_layout
 

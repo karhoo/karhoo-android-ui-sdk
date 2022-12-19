@@ -97,10 +97,6 @@ android {
             dimension "paymentProvider"
             versionNameSuffix "-full"
         }
-        debugTest {
-            dimension "paymentProvider"
-            versionNameSuffix "-test"
-        }
     }
 
     sourceSets {
@@ -109,9 +105,6 @@ android {
         }
         full {
             java.srcDirs = ['src/main/java/', 'src/adyen/']
-        }
-        debugTest {
-            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/debug/java']
         }
     }
 
@@ -139,7 +132,6 @@ afterEvaluate {
         }
 
         if (variant.buildType.name != "release") { return }
-        if (variant.flavorName == "debugTest") { return }
 
         println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
 
