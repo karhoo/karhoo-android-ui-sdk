@@ -144,6 +144,7 @@
     <string name="kh_uisdk_contact_driver">Llamar conductor</string>
     <string name="kh_uisdk_contact_fleet">Llamar a la flota</string>
     <string name="kh_uisdk_contact_us">Contacta con nosotros</string>
+    <string name="kh_uisdk_contact_us_link">https://taxibookermobile.zendesk.com/hc/es/requests/new</string>
     <string name="kh_uisdk_continue_journey">Continuar</string>
     <string name="kh_uisdk_could_not_load_trips">Imposible cargar viajes.</string>
     <string name="kh_uisdk_country_search">Buscar país/región</string>
@@ -181,6 +182,7 @@
     <string name="kh_uisdk_eta">Proximidad</string>
     <string name="kh_uisdk_exec">Ejecutivo</string>
     <string name="kh_uisdk_extra_capabilities">+%d</string>
+    <string name="kh_uisdk_faq_link">https://taxibookermobile.zendesk.com/hc/es</string>
     <string name="kh_uisdk_faretype_info_base">Tu tarifa final podría verse afectada\npor propinas, peajes, impuestos y otros cargos.</string>
     <string name="kh_uisdk_feedback">Sugerencias</string>
     <string name="kh_uisdk_feedback_email">support@karhoo.com</string>
