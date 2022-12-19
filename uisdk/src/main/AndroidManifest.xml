@@ -99,6 +99,14 @@
             android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".screen.booking.checkout.bookingconfirmation.MockBookingConfirmationBaseActivity"
+            android:label="@string/kh_uisdk_title_activity_address"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="true"
+            tools:replace="android:theme" />
 
         <service
             android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService"

@@ -18,6 +18,7 @@ import com.karhoo.uisdk.common.ScreenshotTest
 import com.karhoo.uisdk.common.preferences
 import com.karhoo.uisdk.common.serverRobot
 import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
+import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.MockBookingConfirmationBaseActivity
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.util.TestData
 import com.karhoo.uisdk.util.TestSDKConfig
@@ -33,7 +34,7 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class BookingConfirmationScreenshotTests :
+internal class BookingConfirmationScreenshotTests :
     ScreenshotTest<MockBookingConfirmationBaseActivity>(MockBookingConfirmationBaseActivity::class.java) {
 
     /**
