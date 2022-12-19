@@ -21,7 +21,7 @@ internal class MockBookingConfirmationBaseActivity : BaseActivity() {
         bookingConfirmationView.setLoyaltyProperties(
             intent.getBooleanExtra("SCREENSHOT_TEST_LOYALTY_VISIBILITY", false),
             LoyaltyMode.BURN,
-            10
+            LOYALTY_POINTS
         )
 
         bookingConfirmationView.actions = object : CheckoutViewContract.BookingConfirmationActions {
@@ -39,5 +39,9 @@ internal class MockBookingConfirmationBaseActivity : BaseActivity() {
         this.supportFragmentManager.let {
             bookingConfirmationView.show(it, BookingConfirmationView.TAG)
         }
+    }
+
+    companion object {
+        private const val LOYALTY_POINTS: Int = 10
     }
 }
