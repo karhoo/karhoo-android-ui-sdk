@@ -12,15 +12,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name="com.karhoo.uisdk.booking.checkout.bookingconfirmation.MockBookingConfirmationBaseActivity"
-            android:label="@string/kh_uisdk_title_activity_address"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="true"
-            tools:replace="android:theme" />
-
     </application>
 
 </manifest>

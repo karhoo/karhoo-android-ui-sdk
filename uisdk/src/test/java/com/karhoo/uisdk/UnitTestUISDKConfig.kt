@@ -6,7 +6,6 @@ import com.karhoo.sdk.analytics.AnalyticProvider
 import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 
 class UnitTestUISDKConfig(
@@ -67,7 +66,7 @@ class UnitTestUISDKConfig(
                     handleBraintree = false
                 }
             )
-            KarhooUISDKConfigurationProvider.configuration.paymentManager = BraintreePaymentManager()
+            KarhooUISDKConfigurationProvider.configuration.paymentManager = AdyenPaymentManager()
         }
 
         fun setTokenAuthentication(context: Context) {
