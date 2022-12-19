@@ -38,7 +38,8 @@ class BookingConfirmationView(
     val quote: Quote?,
     private val flightNumber: String?,
     private val trainNumber: String?,
-    private val tripId: String?
+    private val tripId: String?,
+    private val showAddRideToCalendar: Boolean = true
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
     var actions: CheckoutViewContract.BookingConfirmationActions? = null
@@ -105,6 +106,8 @@ class BookingConfirmationView(
             rideConfirmationAddToCalendarSelected()
             addCalendarEvent()
         }
+
+        addToCalendar.visibility = if(showAddRideToCalendar) VISIBLE else GONE
 
         setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))
         setupButton(

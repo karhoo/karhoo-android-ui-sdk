@@ -60,7 +60,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 2
-        versionName "1.7.4"
+        versionName "1.8.0"
         buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
         // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
@@ -111,7 +111,7 @@ android {
             java.srcDirs = ['src/main/java/', 'src/adyen/']
         }
         debugTest {
-            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/', 'src/debug/java']
+            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/debug/java']
         }
     }
 
@@ -131,8 +131,6 @@ android {
 
 afterEvaluate {
     android.libraryVariants.each { variant ->
-        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
-
         if (variant.flavorName == "adyen") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
         }
@@ -141,11 +139,15 @@ afterEvaluate {
         }
 
         if (variant.buildType.name != "release") { return }
+        if (variant.flavorName == "debugTest") { return }
+
+        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
+
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
             artifactId "uisdk-${variant.flavorName}"
-            version '1.7.4'
+            version '1.8.0'
         }
     }
 }
