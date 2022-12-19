@@ -266,7 +266,7 @@ class AdyenPaymentPresenter(
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
             .setEnvironment(environment)
-            .setShowStorePaymentField(false)
+            .setShowStorePaymentField(true)
             .build()
     }
 

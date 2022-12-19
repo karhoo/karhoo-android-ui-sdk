@@ -128,6 +128,7 @@ class AdyenDropInServicePresenter(
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)
         request.put(SUPPLY_PARTNER_ID, getSupplyPartnerId())
+        request.put(CONSENT_MODE_SUPPORTED, true)
 
         return request.toString()
     }
@@ -159,6 +160,7 @@ class AdyenDropInServicePresenter(
         const val SUPPLY_PARTNER_ID = "supply_partner_id"
         const val RETURN_URL = "returnUrl"
         const val TRIP_ID = "trip_id"
+        const val CONSENT_MODE_SUPPORTED = "consent_mode_supported"
         const val ACCEPT_HEADER_VALUE =
             "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
     }
