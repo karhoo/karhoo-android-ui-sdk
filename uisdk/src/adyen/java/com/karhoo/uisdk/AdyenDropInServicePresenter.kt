@@ -117,7 +117,7 @@ class AdyenDropInServicePresenter(
         payload.put(CHANNEL, ANDROID)
 
         val additionalData = JSONObject()
-        additionalData.put(ALLOW_3DS, ALLOW_3DS_TRUE)
+//        additionalData.put(ALLOW_3DS, ALLOW_3DS_TRUE)
         payload.put(ADDITIONAL_DATA, additionalData)
 
         val browserInfo = JSONObject()
