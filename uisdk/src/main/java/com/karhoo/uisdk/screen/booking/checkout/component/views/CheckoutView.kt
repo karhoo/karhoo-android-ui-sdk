@@ -479,6 +479,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
      */
     override fun showPassengerDetailsLayout(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
+        this.buttonContainer.visibility = if (!show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         fillInPassengerDetails(passengersDetailLayout.getPassengerDetails())

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/kh_uisdk_background1"
     android:orientation="vertical"
-    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
-    android:background="@color/kh_uisdk_background_primary">
+    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/bookingCheckoutViewLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/uisdk_white_rounded_top_background"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true"
-        android:isScrollContainer="true">
+        android:fillViewport="true">
 
         <LinearLayout
             android:id="@+id/bookingRequestLinearLayout"
@@ -37,7 +36,8 @@
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small" />
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+                android:visibility="gone"/>
 
             <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
                 android:id="@+id/loyaltyView"
@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small" />
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,13 +108,49 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/kh_uisdk_checkout_bottom_layout"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.4">
+
+                <TextView
+                    android:id="@+id/pricingTypeText"
+                    style="@style/KhBookingPriceMeteredText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Metered"/>
+            </LinearLayout>
+
+            <com.karhoo.uisdk.base.view.LoadingButtonView
+                android:id="@+id/checkoutActionButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_margin="@dimen/kh_uisdk_spacing_small"
+                android:visibility="visible"
+                android:layout_weight="0.6"/>
+        </LinearLayout>
+    </RelativeLayout>
 
     <com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsView
         android:id="@+id/passengersDetailLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bookingCheckoutViewLayout"
+        android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible" />
-</RelativeLayout>
+        tools:visibility="gone" />
+</LinearLayout>
