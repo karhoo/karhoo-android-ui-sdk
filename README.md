@@ -26,7 +26,7 @@ dependencies {
     //... Other project dependencies
 
     //The -adyen dependency contains the Adyen integration:
-    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.8.0'
+    implementation 'com.github.karhoo.karhoo-android-ui-sdk:uisdk-adyen:1.8.1'
 
     //Note that only one dependency from the above three should be integrated into your project
 }
