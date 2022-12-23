@@ -207,7 +207,7 @@
     <string name="kh_uisdk_filter_luggages">Liczba sztuk bagażu</string>
     <string name="kh_uisdk_filter_luxury">Luksusowe</string>
     <string name="kh_uisdk_filter_moto">Motocykl</string>
-    <string name="kh_uisdk_filter_page_results">Zobacz – liczba wszystkich wyników: %s</string>
+    <string name="kh_uisdk_filter_page_results">Zobacz – liczba wyników: %s</string>
     <string name="kh_uisdk_filter_passengers">Pasażer</string>
     <string name="kh_uisdk_filter_quote_types">Rodzaje ofert</string>
     <string name="kh_uisdk_filter_service_agreements">Anulowanie i czas oczekiwania</string>
