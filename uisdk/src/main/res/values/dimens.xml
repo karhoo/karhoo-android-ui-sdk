@@ -16,6 +16,7 @@
     <dimen name="kh_uisdk_spacing_xlarge">64dp</dimen>
     <dimen name="kh_uisdk_spacing_xxlarge">72dp</dimen>
     <dimen name="kh_uisdk_spacing_xxxlarge">120dp</dimen>
+    <dimen name="kh_uisdk_spacing_x5small">5dp</dimen>
 
     <!-- standard text sizes -->
     <dimen name="kh_uisdk_text_size_xxxlarge">72sp</dimen>

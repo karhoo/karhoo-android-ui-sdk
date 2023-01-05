@@ -29,7 +29,6 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP_REQUESTED
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_REQUESTED_DETAILS
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_REQUESTED
 import com.karhoo.uisdk.util.TestData.Companion.USER
-import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -60,7 +59,6 @@ class RideDetailTests : Launch {
      * Then:    The correct error message is displayed
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun rideDetailSnackbarErrorCheck() {
         serverRobot {
             successfulToken()

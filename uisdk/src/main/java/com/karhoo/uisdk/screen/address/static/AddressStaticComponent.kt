@@ -38,10 +38,17 @@ class AddressStaticComponent @JvmOverloads constructor(
 
     private fun setPickupAddress(pickup: Address) {
         setAddressLines(pickup, pickupAddressTextPrimary, pickupAddressTextSecondary)
+
+        pickupAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_pickup_address) +
+        " " + pickupAddressTextPrimary.text + " " + pickupAddressTextSecondary.text
     }
 
     private fun setDestinationAddress(destination: Address) {
         setAddressLines(destination, destinationAddressTextPrimary, destinationAddressTextSecondary)
+
+
+        destinationAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_destination_address) +
+                " " + destinationAddressTextPrimary.text + " " + destinationAddressTextSecondary.text
     }
 
     override fun setType(type: AddressComponentType, text: String?, time: DateTime?) {
@@ -72,20 +79,9 @@ class AddressStaticComponent @JvmOverloads constructor(
     private fun setAddressLines(address: Address,
                                 firstAddressLine: TextView,
                                 secondAddressLine: TextView) {
-        var firstLine = ""
         var secondLine = ""
 
-        address.buildingNumber.let {
-            firstLine = firstLine.plus(it)
-        }
-        address.streetName.let {
-            if (firstLine.isNotEmpty()) {
-                firstLine = firstLine.plus(", ")
-            }
-            firstLine = firstLine.plus(it)
-        }
-
-        firstAddressLine.text = firstLine
+        firstAddressLine.text = address.displayAddress
 
         if (address.city.isNotEmpty()) {
             secondLine = secondLine.plus(address.city)
@@ -106,7 +102,11 @@ class AddressStaticComponent @JvmOverloads constructor(
             secondLine = secondLine.plus(country)
         }
 
-        secondAddressLine.text = secondLine
+        if(secondLine.isNotEmpty())
+            secondAddressLine.text = secondLine
+        else{
+            secondAddressLine.visibility = View.GONE
+        }
     }
 
     enum class AddressComponentType {

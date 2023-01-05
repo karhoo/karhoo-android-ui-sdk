@@ -47,13 +47,9 @@ def getCurrentFlavor() {
 if (getCurrentFlavor().contains('adyen')) {
     println 'Building the -adyen flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-} else if (getCurrentFlavor().contains('braintree')) {
-    println 'Building the -braintree flavour of the UISDK'
-    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 } else if(getCurrentFlavor().contains('full')) {
     println 'Building the -full flavour of the UISDK'
     apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-    apply from: "$rootDir/uisdk/src/braintree/build.gradle"
 }
 
 android {
@@ -64,7 +60,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 2
-        versionName "1.7.4"
+        versionName "1.8.1"
         buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
         // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
@@ -72,7 +68,7 @@ android {
         testInstrumentationRunner "com.karumi.shot.ShotTestRunner"
         vectorDrawables.useSupportLibrary = true
         missingDimensionStrategy 'paymentProvider', 'full'
-        testApplicationId "kh.test.id"
+        testApplicationId "com.karhoo.uisdk.test"
     }
 
     packagingOptions {
@@ -97,10 +93,6 @@ android {
             dimension "paymentProvider"
             versionNameSuffix "-adyen"
         }
-        braintree {
-            dimension "paymentProvider"
-            versionNameSuffix "-braintree"
-        }
         full {
             dimension "paymentProvider"
             versionNameSuffix "-full"
@@ -111,11 +103,8 @@ android {
         adyen {
             java.srcDirs = ['src/main/java/', 'src/adyen/java']
         }
-        braintree {
-            java.srcDirs = ['src/main/java/', 'src/braintree/java']
-        }
         full {
-            java.srcDirs = ['src/main/java/', 'src/adyen/', 'src/braintree/']
+            java.srcDirs = ['src/main/java/', 'src/adyen/']
         }
     }
 
@@ -135,25 +124,22 @@ android {
 
 afterEvaluate {
     android.libraryVariants.each { variant ->
-        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
-
         if (variant.flavorName == "adyen") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
         }
-        if (variant.flavorName == "braintree") {
-            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
-        }
         if (variant.flavorName == "full") {
             apply from: "$rootDir/uisdk/src/adyen/build.gradle"
-            apply from: "$rootDir/uisdk/src/braintree/build.gradle"
         }
 
         if (variant.buildType.name != "release") { return }
+
+        println 'Publishing library variant ' + variant.buildType.name + variant.flavorName
+
         publishing.publications.create(variant.name, MavenPublication) {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
             artifactId "uisdk-${variant.flavorName}"
-            version '1.7.4'
+            version '1.8.1'
         }
     }
 }
@@ -162,7 +148,6 @@ dependencies {
     api project(':nsdk')
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
-    fullCompileOnly('com.braintreepayments.api:drop-in:5.2.1')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
@@ -192,5 +177,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test:rules:1.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation('com.schibsted.spain:barista:3.2.0')
+    androidTestImplementation('com.adevinta.android:barista:4.2.0') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }

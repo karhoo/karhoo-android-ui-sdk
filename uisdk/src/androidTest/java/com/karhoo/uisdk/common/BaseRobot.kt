@@ -32,15 +32,13 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
-import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.matcher.RecyclerMatcher
 import com.karhoo.uisdk.common.matcher.withDrawable
-import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions
-import com.schibsted.spain.barista.interaction.BaristaClickInteractions.clickOn
-import com.schibsted.spain.barista.internal.matcher.HelperMatchers.atPosition
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
 import org.hamcrest.CoreMatchers.not
@@ -53,10 +51,10 @@ import kotlin.jvm.Throws
 
 open abstract class BaseTestRobot {
 
-    @Throws(UiObjectNotFoundException::class)
     fun tapTurnOnGpsBtn() {
         val allowGpsBtn: UiObject = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-                .findObject(UiSelector()
+                .findObject(
+                    UiSelector()
                                     .className("android.widget.Button").packageName("com.google.android.gms")
                                     .resourceId("android:id/button1")
                                     .clickable(true).checkable(false))
@@ -173,6 +171,9 @@ open abstract class BaseTestRobot {
 
     fun textIsVisibleIsDescendant(text: Int, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))
+
+    fun textIsVisibleInDescendant(text: String, resId: Int): ViewInteraction =
+        onView(allOf(withText(text), isDescendantOfA(withId(resId))))
 
     fun textStringIsVisibleIsDescendant(text: String, resId: Int): ViewInteraction =
             onView(allOf(withText(text), isDescendantOfA(withId(resId))))

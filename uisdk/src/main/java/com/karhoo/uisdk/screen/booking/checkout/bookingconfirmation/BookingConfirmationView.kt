@@ -12,7 +12,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.karhoo.sdk.api.model.Quote
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateView
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
@@ -34,7 +37,9 @@ class BookingConfirmationView(
     val journeyDetails: JourneyDetails,
     val quote: Quote?,
     private val flightNumber: String?,
-    private val trainNumber: String?
+    private val trainNumber: String?,
+    private val tripId: String?,
+    private val showAddRideToCalendar: Boolean = true
 ) :
     MasterBottomSheetFragment(), ScheduledDateView {
     var actions: CheckoutViewContract.BookingConfirmationActions? = null
@@ -58,16 +63,8 @@ class BookingConfirmationView(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.uisdk_booking_confirmation, container, false)
-
-        rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
-        fareText = view.findViewById(R.id.fareText)
-        fareTypeText = view.findViewById(R.id.fareTypeText)
-        bookingTimeText = view.findViewById(R.id.bookingTimeText)
-        bookingDateText = view.findViewById(R.id.bookingDateText)
-        closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
-        prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
-        loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
-        addToCalendar = view.findViewById(R.id.addToCalendar)
+        rideConfirmationScreenOpened()
+        setupViews(view)
 
         prebookAddressComponent.setup(
             journeyDetails.pickup!!,
@@ -90,22 +87,27 @@ class BookingConfirmationView(
         )
 
         journeyDetails.date?.let {
-            bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), it)
             bookingDateText.text = DateUtil.parseDateWithDay(it)
+            bookingTimeText.text = DateUtil.getTimeFormat(requireContext(), it)
+            bookingTimeText.contentDescription =
+                context?.getString(R.string.kh_uisdk_acc_pickup_time) + " " + bookingTimeText.text + " " + bookingDateText.text
         }
 
+        fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
         fareText.text =
             quote?.price?.highPrice?.let {
                 Currency.getInstance(quote.price.currencyCode).formatted(it)
             }
-
-        fareTypeText.text = quote?.quoteType?.toLocalisedString(requireContext()).orEmpty()
+        fareText.contentDescription = fareTypeText.text as String + " " + fareText.text
 
         setupLoyaltyComponent(loyaltyVisible, loyaltyMode, loyaltyPoints)
 
         addToCalendar.setOnClickListener {
+            rideConfirmationAddToCalendarSelected()
             addCalendarEvent()
         }
+
+        addToCalendar.visibility = if(showAddRideToCalendar) VISIBLE else GONE
 
         setupHeader(view = view, title = getString(R.string.kh_uisdk_booking_confirmation))
         setupButton(
@@ -113,8 +115,10 @@ class BookingConfirmationView(
             buttonId = R.id.prebookRideDetails,
             text = getString(R.string.kh_uisdk_ride_details)
         ) {
+            rideConfirmationDetailsSelected()
             actions?.openRideDetails()
         }
+        setupButtonContentDescription(R.id.prebookRideDetails, context?.getString(R.string.kh_uisdk_acc_ride_details) ?: "")
 
         closeButton.setOnClickListener {
             dismiss()
@@ -122,6 +126,47 @@ class BookingConfirmationView(
         }
 
         return view
+    }
+
+    private fun setupViews(view: View){
+        rideConfirmedLogo = view.findViewById(R.id.rideConfirmedLogo)
+        fareText = view.findViewById(R.id.fareText)
+        fareTypeText = view.findViewById(R.id.fareTypeText)
+        bookingTimeText = view.findViewById(R.id.bookingTimeText)
+        bookingDateText = view.findViewById(R.id.bookingDateText)
+        closeButton = view.findViewById(R.id.masterBottomSheetCloseDialog)
+        prebookAddressComponent = view.findViewById(R.id.prebookAddressComponent)
+        loyaltyStaticDetails = view.findViewById(R.id.loyaltyStaticDetails)
+        addToCalendar = view.findViewById(R.id.addToCalendar)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (dialog as? BottomSheetDialog)?.behavior?.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun rideConfirmationScreenOpened(){
+        KarhooUISDK.analytics?.rideConfirmationScreenOpened(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationAddToCalendarSelected(){
+        KarhooUISDK.analytics?.rideConfirmationAddToCalendarSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
+    }
+
+    private fun rideConfirmationDetailsSelected(){
+        KarhooUISDK.analytics?.rideConfirmationDetailsSelected(
+            date = journeyDetails.date!!.toDate(),
+            tripId = tripId,
+            quoteId = quote?.id
+        )
     }
 
     override fun displayDate(date: DateTime) {

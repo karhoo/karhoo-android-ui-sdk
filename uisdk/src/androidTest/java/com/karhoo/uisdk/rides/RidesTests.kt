@@ -34,7 +34,6 @@ import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_HISTORY_EMPTY
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
-import com.schibsted.spain.barista.rule.flaky.AllowFlaky
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
@@ -139,7 +138,6 @@ class RidesTests : Launch {
      * Then:    The ride status is "cancelled"
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun cancelledStatusOnCancelledByDriverPastRide() {
         serverRobot {
             successfulToken()
@@ -264,7 +262,6 @@ class RidesTests : Launch {
      * Then:    I cannot see the pickup type on the upcoming ride
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun airportMeetingPointNotVisibleOnDropoffUpcoming() {
         serverRobot {
             successfulToken()
@@ -456,7 +453,6 @@ class RidesTests : Launch {
     Cancelled Price, cancelled status.
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun prebookCancelledByUserShowsCorrectStatus() {
         serverRobot {
             successfulToken()
@@ -478,7 +474,6 @@ class RidesTests : Launch {
     number, contact driver (or fleet), track driver button, addresses
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun fullCheckRideInProgressDetailsOnRideScreen() {
         serverRobot {
             successfulToken()
@@ -538,7 +533,6 @@ class RidesTests : Launch {
      * Then:    I am returned to the ride screen.
      **/
     @Test
-    @AllowFlaky(attempts = 5)
     fun userNavigatesFromRideDetailsToUpcomingRidesScreen() {
         serverRobot {
             successfulToken()

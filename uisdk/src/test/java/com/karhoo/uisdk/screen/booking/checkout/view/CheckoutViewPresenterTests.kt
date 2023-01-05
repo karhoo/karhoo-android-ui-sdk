@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.checkout.view
 
 import android.content.Context
-import com.braintreepayments.api.models.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -75,7 +74,6 @@ class CheckoutViewPresenterTests {
     private val flightInfo = "AA123"
 
     private val analytics: Analytics = mock()
-    private val braintreePaymentNonce: PaymentMethodNonce = mock()
     private val context: Context = mock()
     private val flightDetails: FlightDetails = mock()
     private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel = mock()
@@ -322,9 +320,6 @@ class CheckoutViewPresenterTests {
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
-        whenever(braintreePaymentNonce.nonce).thenReturn("")
-        whenever(braintreePaymentNonce.description).thenReturn("desc")
-        whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price.currencyCode).thenReturn("GBP")
         whenever(quote.price.highPrice).thenReturn(10)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
@@ -402,9 +397,6 @@ class CheckoutViewPresenterTests {
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(origin, destination, null))
 
-        whenever(braintreePaymentNonce.nonce).thenReturn("")
-        whenever(braintreePaymentNonce.description).thenReturn("desc")
-        whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.fleet).thenReturn(fleet)
@@ -431,9 +423,6 @@ class CheckoutViewPresenterTests {
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(locationDetails, locationDetails, null))
 
-        whenever(braintreePaymentNonce.nonce).thenReturn("")
-        whenever(braintreePaymentNonce.description).thenReturn("desc")
-        whenever(braintreePaymentNonce.typeLabel).thenReturn("VISA")
         whenever(quote.price).thenReturn(price)
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.fleet).thenReturn(fleet)
