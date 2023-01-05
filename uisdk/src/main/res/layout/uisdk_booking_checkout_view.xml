@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
                 android:paddingStart="@dimen/kh_uisdk_spacing_small"
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
                 android:paddingEnd="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceView
@@ -37,7 +38,7 @@
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
                 android:id="@+id/loyaltyView"
@@ -46,7 +47,8 @@
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
-                />
+                android:visibility="visible"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,42 +112,37 @@
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/buttonContainer"
+    <LinearLayout
+        android:id="@+id/bottomSectionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/kh_uisdk_checkout_bottom_layout"
-        android:layout_alignParentBottom="true">
+        android:layout_gravity="bottom"
+        android:background="@drawable/kh_uisdk_checkout_bottom_layout">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.karhoo.uisdk.screen.booking.checkout.component.views.BottomPriceView
+            android:id="@+id/bottomPriceView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:layout_margin="@dimen/kh_uisdk_spacing_small"
+            android:layout_weight="0.3"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.4">
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="0dp"/>
 
-                <TextView
-                    android:id="@+id/pricingTypeText"
-                    style="@style/KhBookingPriceMeteredText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Metered"/>
-            </LinearLayout>
-
-            <com.karhoo.uisdk.base.view.LoadingButtonView
-                android:id="@+id/checkoutActionButton"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_margin="@dimen/kh_uisdk_spacing_small"
-                android:visibility="visible"
-                android:layout_weight="0.6"/>
-        </LinearLayout>
-    </RelativeLayout>
+        <com.karhoo.uisdk.base.view.LoadingButtonView
+            android:id="@+id/checkoutActionButton"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="55dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+            android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+            android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+            android:visibility="visible" />
+    </LinearLayout>
 
     <com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsView
         android:id="@+id/passengersDetailLayout"

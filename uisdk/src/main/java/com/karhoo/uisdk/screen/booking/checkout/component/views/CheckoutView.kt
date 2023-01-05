@@ -229,6 +229,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindPriceAndEta(quote: Quote, card: String) {
         val currency = Currency.getInstance(quote.price.currencyCode)
 
+        bottomPriceView.bindViews(quote, currency)
         bookingRequestPriceWidget?.bindViews(quote,
                                              context.getString(R.string.kh_uisdk_estimated_arrival_time),
                                              currency)
@@ -481,7 +482,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
      */
     override fun showPassengerDetailsLayout(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
-        this.buttonContainer.visibility = if (!show) VISIBLE else GONE
+        this.bottomSectionContainer.visibility = if (!show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         fillInPassengerDetails(passengersDetailLayout.getPassengerDetails())

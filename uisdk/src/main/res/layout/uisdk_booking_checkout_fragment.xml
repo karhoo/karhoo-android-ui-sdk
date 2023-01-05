@@ -9,8 +9,7 @@
     <com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
         android:id="@+id/bookingCheckoutView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 

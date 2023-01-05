@@ -8,7 +8,7 @@ fun QuoteType.toLocalisedString(context: Context): String {
     return when (this) {
         QuoteType.FIXED -> context.getString(R.string.kh_uisdk_fixed_fare)
         QuoteType.ESTIMATED -> context.getString(R.string.kh_uisdk_estimated_fare)
-        QuoteType.METERED -> context.getString(R.string.kh_uisdk_metered)
+        QuoteType.METERED -> context.getString(R.string.kh_uisdk_metered) + " " + context.getString(R.string.kh_uisdk_price)
     }
 }
 

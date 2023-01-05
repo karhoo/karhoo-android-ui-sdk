@@ -73,9 +73,9 @@ internal class CheckoutFragment : Fragment() {
             override fun checkState() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
-                        false, checkoutView
-                            .arePassengerDetailsValid(),
-                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+                        false,
+                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
             }

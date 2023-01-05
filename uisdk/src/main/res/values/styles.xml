@@ -439,7 +439,7 @@
     </style>
 
     <style name="KhBookingPriceValueText">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
@@ -448,8 +448,8 @@
     </style>
 
     <style name="KhBookingPriceLabelText">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
         <item name="android:gravity">center</item>
         <item name="fontWeight">600</item>
         <item name="lineHeight">20dp</item>
