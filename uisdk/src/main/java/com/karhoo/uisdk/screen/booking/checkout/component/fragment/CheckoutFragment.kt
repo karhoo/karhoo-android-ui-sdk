@@ -36,6 +36,7 @@ import java.util.HashMap
 
 internal class CheckoutFragment : Fragment() {
     private lateinit var checkoutActionButton: LoadingButtonView
+    private lateinit var passengerActionButton: LoadingButtonView
     private lateinit var checkoutView: CheckoutView
     private lateinit var presenter: CheckoutPresenter
     private var expirationJob: Job? = null
@@ -50,6 +51,7 @@ internal class CheckoutFragment : Fragment() {
         presenter = CheckoutPresenter()
 
         checkoutActionButton = view.findViewById(R.id.checkoutActionButton)
+        passengerActionButton = view.findViewById(R.id.passengerActionButton)
         checkoutActionButton.onLoadingComplete()
 
         checkoutView = view.findViewById(R.id.bookingCheckoutView)
@@ -89,8 +91,8 @@ internal class CheckoutFragment : Fragment() {
             override fun onPassengerPageVisibilityChanged(visible: Boolean) {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
-                        visible, checkoutView
-                            .arePassengerDetailsValid(),
+                        visible,
+                        checkoutView.arePassengerDetailsValid(),
                         isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
@@ -167,7 +169,8 @@ internal class CheckoutFragment : Fragment() {
 
         }
 
-        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+        passengerActionButton.setText(getString(R.string.kh_uisdk_save))
+        passengerActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
                 if (checkoutView.isPassengerDetailsViewVisible()) {
                     if (checkoutView.arePassengerDetailsValid()) {
@@ -175,15 +178,19 @@ internal class CheckoutFragment : Fragment() {
                         checkoutView.showPassengerDetailsLayout(false)
                         checkoutActionButton.onLoadingComplete()
                     }
+                }
+            }
+        }
+
+        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+            override fun onLoadingButtonClick() {
+                if (!checkoutView.arePassengerDetailsValid()) {
+                    checkoutView.showPassengerDetailsLayout(true)
+                    checkoutActionButton.onLoadingComplete()
                 } else {
-                    if (!checkoutView.arePassengerDetailsValid()) {
-                        checkoutView.showPassengerDetailsLayout(true)
-                        checkoutActionButton.onLoadingComplete()
-                    } else {
-                        if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
-                            //Skip the loyalty flow, start the booking one directly
-                            checkoutView.startBooking()
-                        }
+                    if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
+                        //Skip the loyalty flow, start the booking one directly
+                        checkoutView.startBooking()
                     }
                 }
             }

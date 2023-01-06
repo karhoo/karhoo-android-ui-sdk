@@ -176,7 +176,7 @@
 
 
         <com.karhoo.uisdk.base.view.LoadingButtonView
-            android:id="@+id/checkoutActionButton"
+            android:id="@+id/passengerActionButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
