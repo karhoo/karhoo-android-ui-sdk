@@ -131,7 +131,6 @@ internal class CheckoutFragment : Fragment() {
                 dialog.show(it, CheckoutCommentBottomSheet.TAG)
             }
         }
-
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(
             quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
