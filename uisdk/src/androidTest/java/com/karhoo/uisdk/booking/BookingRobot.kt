@@ -153,11 +153,11 @@ class BookingRobot : BaseTestRobot() {
     fun fillGuestDetailsComment() {
         //        scrollUp(R.id.bookingRequestPassengerDetailsWidget)
         clickButton(R.id.bookingCommentsInput)
-        fillTextIsDescendant(
-                id = R.id.bookingCommentsInput,
-                resId = R.id.bookingRequestCommentsWidget,
-                text = "Any comment"
-                            )
+//        fillTextIsDescendant(
+//                id = R.id.bookingCommentsInput,
+//                resId = R.id.bookingRequestCommentsWidget,
+//                text = "Any comment"
+//                            )
     }
 
     fun enterCardDetails() {

@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Bestemming toevoegen</string>
     <string name="kh_uisdk_address_picker_enter_destination">Bestemming invoeren</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Ophaallocatie invoeren</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Oppakken</string>
     <string name="kh_uisdk_address_picker_prebook">RESERVEER</string>
     <string name="kh_uisdk_adyen_payment_error_10">De bank van de klant ondersteunt dit type transactie niet of staat dit niet toe</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Passagier</string>
     <string name="kh_uisdk_booking_checkout_title">Afrekenen</string>
     <string name="kh_uisdk_booking_confirmation">Boeking bevestigd</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Ga naar ritgegevens</string>
     <string name="kh_uisdk_booking_details_error">Ongeldige boekingsgegevens</string>
     <string name="kh_uisdk_booking_failed">Boeking mislukt</string>
     <string name="kh_uisdk_booking_failed_body">Het is erg druk op dit moment. %1$s heeft geen chauffeurs beschikbaar.</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Kaart</string>
     <string name="kh_uisdk_checked">Gecontroleerd</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Voeg een vluchtnummer toe</string>
+    <string name="kh_uisdk_checkout_airport_title">Vluchtnummer</string>
     <string name="kh_uisdk_checkout_as_guest">RIT BOEKEN</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Opmerking voor uw chauffeur</string>
+    <string name="kh_uisdk_checkout_comments_title">Opmerkingen</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Voeg een treinnummer toe</string>
+    <string name="kh_uisdk_checkout_train_title">Trein nummer</string>
+    <string name="kh_uisdk_close_the_screen">Sluit het scherm</string>
     <string name="kh_uisdk_completed">We hopen dat uw rit naar wens was</string>
     <string name="kh_uisdk_confirmed">Uw rit met %s is bevestigd</string>
     <string name="kh_uisdk_contact">CONTACT</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">Land/regio zoeken</string>
     <string name="kh_uisdk_current_location">Huidige locatie opvragen</string>
     <string name="kh_uisdk_date">Datum</string>
+    <string name="kh_uisdk_destination">Bestemming</string>
     <string name="kh_uisdk_destination_book_error">Je moet een bestemming selecteren om een rit te boeken</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Er zijn problemen met het annuleren van uw rit. Neem contact op met de ritaanbieder.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Problemen met annuleren</string>
@@ -243,6 +253,7 @@
     <string name="kh_uisdk_hours_plural.other">%d uur</string>
     <string name="kh_uisdk_hours_plural.zero">%d uur</string>
     <string name="kh_uisdk_info">Info</string>
+    <string name="kh_uisdk_information">Informatie</string>
     <string name="kh_uisdk_initialised">rit wordt geïnitialiseerd</string>
     <string name="kh_uisdk_invalid_email">Ongeldig e‑mailadres</string>
     <string name="kh_uisdk_invalid_empty_field">Gegevens niet compleet</string>
@@ -386,6 +397,7 @@
     <string name="kh_uisdk_pending">In behandeling</string>
     <string name="kh_uisdk_permission_rationale_location">Schakel locatierechten in op uw apparaat zodat we uw locatie kunnen bepalen</string>
     <string name="kh_uisdk_permissions">TOESTEMMING</string>
+    <string name="kh_uisdk_pick_up">Raap op</string>
     <string name="kh_uisdk_pickup_time">Ophaaltijd</string>
     <string name="kh_uisdk_pickup_type_curbside">Buiten</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet &amp; greet</string>

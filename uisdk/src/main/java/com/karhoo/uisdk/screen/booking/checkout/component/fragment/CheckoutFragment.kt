@@ -22,6 +22,7 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_EXPIRED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
+import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
@@ -125,6 +126,11 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.performClick()
             }
         })
+        checkoutView.commentsListener = { dialog ->
+            activity?.supportFragmentManager?.let {
+                dialog.show(it, CheckoutCommentBottomSheet.TAG)
+            }
+        }
 
         val bundle = arguments as Bundle
         checkoutView.showBookingRequest(

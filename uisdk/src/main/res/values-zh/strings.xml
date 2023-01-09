@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">添加目的地</string>
     <string name="kh_uisdk_address_picker_enter_destination">输入目的地</string>
     <string name="kh_uisdk_address_picker_enter_pickup">输入上车地点</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">拾起</string>
     <string name="kh_uisdk_address_picker_prebook">预订</string>
     <string name="kh_uisdk_adyen_payment_error_10">购物者的银行不支持或不允许此类交易</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">乘客</string>
     <string name="kh_uisdk_booking_checkout_title">结账</string>
     <string name="kh_uisdk_booking_confirmation">预订确认</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">前往乘车详情</string>
     <string name="kh_uisdk_booking_details_error">无效的预订详情</string>
     <string name="kh_uisdk_booking_failed">预订失败</string>
     <string name="kh_uisdk_booking_failed_body">抱歉，当前需求量很大。%1$s 没有可用的司机。</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">卡片</string>
     <string name="kh_uisdk_checked">已检查</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">添加航班号</string>
+    <string name="kh_uisdk_checkout_airport_title">航班号</string>
     <string name="kh_uisdk_checkout_as_guest">预订行程</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">评论你的司机</string>
+    <string name="kh_uisdk_checkout_comments_title">评论</string>
+    <string name="kh_uisdk_checkout_train_subtitle">添加车次</string>
+    <string name="kh_uisdk_checkout_train_title">车次</string>
+    <string name="kh_uisdk_close_the_screen">关闭屏幕</string>
     <string name="kh_uisdk_completed">我们希望您旅途愉快</string>
     <string name="kh_uisdk_confirmed">您的 %s 行程已确认</string>
     <string name="kh_uisdk_contact">联系</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">搜索国家/地区</string>
     <string name="kh_uisdk_current_location">获取当前位置</string>
     <string name="kh_uisdk_date">日期</string>
+    <string name="kh_uisdk_destination">目的地</string>
     <string name="kh_uisdk_destination_book_error">您必须选择目的地方可预订行程</string>
     <string name="kh_uisdk_difficulties_cancelling_message">我们在取消您的行程时遇到问题。请联系行程提供商。</string>
     <string name="kh_uisdk_difficulties_cancelling_title">取消时遇到困难</string>
@@ -242,6 +252,7 @@
     <string name="kh_uisdk_hours_plural.other">%d 小时</string>
     <string name="kh_uisdk_hours_plural.zero">%d小时</string>
     <string name="kh_uisdk_info">信息</string>
+    <string name="kh_uisdk_information">信息</string>
     <string name="kh_uisdk_initialised">正在初始化您的行程</string>
     <string name="kh_uisdk_invalid_email">无效电子邮件</string>
     <string name="kh_uisdk_invalid_empty_field">缺少信息</string>
@@ -384,6 +395,7 @@
     <string name="kh_uisdk_pending">待处理</string>
     <string name="kh_uisdk_permission_rationale_location">为了帮助我们找到您，请在您的设备上启用定位权限</string>
     <string name="kh_uisdk_permissions">权限</string>
+    <string name="kh_uisdk_pick_up">捡起</string>
     <string name="kh_uisdk_pickup_time">上车时间</string>
     <string name="kh_uisdk_pickup_type_curbside">路边</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">见面和问候</string>

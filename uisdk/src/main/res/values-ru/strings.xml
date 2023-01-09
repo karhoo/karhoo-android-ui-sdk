@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Добавить пункт назначения</string>
     <string name="kh_uisdk_address_picker_enter_destination">Введите пункт назначения</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Введите место посадки</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Посадка</string>
     <string name="kh_uisdk_address_picker_prebook">Забронировать</string>
     <string name="kh_uisdk_adyen_payment_error_10">Банк покупателя не поддерживает или не разрешает этот тип транзакции</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Пассажир</string>
     <string name="kh_uisdk_booking_checkout_title">Совершить покупку</string>
     <string name="kh_uisdk_booking_confirmation">Бронирование подтверждено</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Перейти к подробностям поездки</string>
     <string name="kh_uisdk_booking_details_error">Неверные данные бронирования</string>
     <string name="kh_uisdk_booking_failed">Ошибка при бронировании</string>
     <string name="kh_uisdk_booking_failed_body">Период высокого спроса на машины. У %1$s нет свободных водителей.</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Карта</string>
     <string name="kh_uisdk_checked">Проверено</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Добавить номер рейса</string>
+    <string name="kh_uisdk_checkout_airport_title">Номер рейса</string>
     <string name="kh_uisdk_checkout_as_guest">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Комментарий для вашего водителя</string>
+    <string name="kh_uisdk_checkout_comments_title">Комментировать</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Добавить номер поезда</string>
+    <string name="kh_uisdk_checkout_train_title">Номер поезда</string>
+    <string name="kh_uisdk_close_the_screen">Закрыть экран</string>
     <string name="kh_uisdk_completed">Надеемся, вам понравилась ваша поездка!</string>
     <string name="kh_uisdk_confirmed">Ваша поездка с %s подтверждена</string>
     <string name="kh_uisdk_contact">СВЯЗАТЬСЯ</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">Страна/регион поиска</string>
     <string name="kh_uisdk_current_location">Получить актуальную геолокацию</string>
     <string name="kh_uisdk_date">Дата</string>
+    <string name="kh_uisdk_destination">Назначения</string>
     <string name="kh_uisdk_destination_book_error">Выберите пункт назначения, чтобы забронировать поездку</string>
     <string name="kh_uisdk_difficulties_cancelling_message">У нас возникли проблемы с отменой поездки. Пожалуйста, свяжитесь с перевозчиком.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Трудности с отменой</string>
@@ -245,6 +255,7 @@
     <string name="kh_uisdk_hours_plural.other">%d часов</string>
     <string name="kh_uisdk_hours_plural.zero">%d часов</string>
     <string name="kh_uisdk_info">Информация</string>
+    <string name="kh_uisdk_information">Информация</string>
     <string name="kh_uisdk_initialised">Karhoo инициализирует вашу поездку</string>
     <string name="kh_uisdk_invalid_email">Неверный адрес электронной почты</string>
     <string name="kh_uisdk_invalid_empty_field">Недостающая информация</string>
@@ -390,6 +401,7 @@
     <string name="kh_uisdk_pending">В ожидании</string>
     <string name="kh_uisdk_permission_rationale_location">Чтобы помочь нам найти вас, разрешите доступ к геолокации на вашем мобильном устройстве</string>
     <string name="kh_uisdk_permissions">РАЗРЕШЕНИЯ</string>
+    <string name="kh_uisdk_pick_up">Подбирать</string>
     <string name="kh_uisdk_pickup_time">Время посадки</string>
     <string name="kh_uisdk_pickup_type_curbside">У тротуара</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Встретить в зале прилета</string>

@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">เพิ่มตำแหน่งปลายทาง</string>
     <string name="kh_uisdk_address_picker_enter_destination">ป้อนตำแหน่งปลายทาง</string>
     <string name="kh_uisdk_address_picker_enter_pickup">ป้อนสถานที่รับ</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">ไปรับ</string>
     <string name="kh_uisdk_address_picker_prebook">จอง</string>
     <string name="kh_uisdk_adyen_payment_error_10">ธนาคารของนักช้อปไม่รองรับหรือไม่อนุญาตให้ทำธุรกรรมประเภทนี้</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">ผู้โดยสาร</string>
     <string name="kh_uisdk_booking_checkout_title">ชำระเงิน</string>
     <string name="kh_uisdk_booking_confirmation">ยืนยันการจองแล้ว</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">ไปที่รายละเอียดการขี่</string>
     <string name="kh_uisdk_booking_details_error">รายละเอียดการจองไม่ถูกต้อง</string>
     <string name="kh_uisdk_booking_failed">การจองไม่สำเร็จ</string>
     <string name="kh_uisdk_booking_failed_body">ขออภัย ขณะนี้มีความต้องการสูง ทำให้ %1$s ไม่มีคนขับที่พร้อมให้บริการ</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">บัตร</string>
     <string name="kh_uisdk_checked">เลือกแล้ว</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">เพิ่มหมายเลขเที่ยวบิน</string>
+    <string name="kh_uisdk_checkout_airport_title">เที่ยวบินหมายเลข</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
+    <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
+    <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
+    <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
+    <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>
     <string name="kh_uisdk_completed">เราหวังว่าคุณพอใจกับการเดินทางของคุณ</string>
     <string name="kh_uisdk_confirmed">การเดินทางของคุณกับ %s ได้รับการยืนยันแล้ว</string>
     <string name="kh_uisdk_contact">การติดต่อ</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">ค้นหาประเทศ/ภูมิภาค</string>
     <string name="kh_uisdk_current_location">ดูตำแหน่งปัจจุบัน</string>
     <string name="kh_uisdk_date">วันที่</string>
+    <string name="kh_uisdk_destination">ปลายทาง</string>
     <string name="kh_uisdk_destination_book_error">คุณต้องเลือกตำแหน่งปลายทางก่อนจองการเดินทาง</string>
     <string name="kh_uisdk_difficulties_cancelling_message">เราประสบปัญหาในการยกเลิกการเดินทางของคุณ โปรดติดต่อผู้ให้บริการโดยสาร</string>
     <string name="kh_uisdk_difficulties_cancelling_title">เกิดปัญหาในการยกเลิก</string>
@@ -242,6 +252,7 @@
     <string name="kh_uisdk_hours_plural.other">%d ชั่วโมง</string>
     <string name="kh_uisdk_hours_plural.zero">%d ชั่วโมง</string>
     <string name="kh_uisdk_info">ข้อมูล</string>
+    <string name="kh_uisdk_information">รายละเอียดคนขับ</string>
     <string name="kh_uisdk_initialised">กำลังเริ่มต้นการเดินทางของคุณ</string>
     <string name="kh_uisdk_invalid_email">อีเมลไม่ถูกต้อง</string>
     <string name="kh_uisdk_invalid_empty_field">ไม่มีข้อมูล</string>
@@ -384,6 +395,7 @@
     <string name="kh_uisdk_pending">อยู่ระหว่างดำเนินการ</string>
     <string name="kh_uisdk_permission_rationale_location">โปรดเปิดใช้สิทธิ์เข้าถึงตําแหน่งบนอุปกรณ์ของคุณเพื่อช่วยให้เราระบุตำแหน่งของคุณได้</string>
     <string name="kh_uisdk_permissions">สิทธิ์</string>
+    <string name="kh_uisdk_pick_up">หยิบ</string>
     <string name="kh_uisdk_pickup_time">เวลารับ</string>
     <string name="kh_uisdk_pickup_type_curbside">รออยู่นอกอาคาร</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">รอรับภายในอาคาร</string>

@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">行き先を追加</string>
     <string name="kh_uisdk_address_picker_enter_destination">目的地を入力してください</string>
     <string name="kh_uisdk_address_picker_enter_pickup">お迎えの場所を入力してください</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">選び出す</string>
     <string name="kh_uisdk_address_picker_prebook">予約</string>
     <string name="kh_uisdk_adyen_payment_error_10">買い物客の銀行がこの種の取引をサポートしていない、または許可していない</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">ご乗車のお客様</string>
     <string name="kh_uisdk_booking_checkout_title">チェックアウト</string>
     <string name="kh_uisdk_booking_confirmation">予約確定済み</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">乗車の詳細に移動</string>
     <string name="kh_uisdk_booking_details_error">予約の詳細が無効です</string>
     <string name="kh_uisdk_booking_failed">予約に失敗しました</string>
     <string name="kh_uisdk_booking_failed_body">あいにく、現在大変混み合っています。%1$sにはドライバーの空きがありません。</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">カード</string>
     <string name="kh_uisdk_checked">チェック済み</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">フライト番号を追加</string>
+    <string name="kh_uisdk_checkout_airport_title">フライトナンバー</string>
     <string name="kh_uisdk_checkout_as_guest">乗車サービスを予約する</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">ドライバーへのコメント</string>
+    <string name="kh_uisdk_checkout_comments_title">コメント</string>
+    <string name="kh_uisdk_checkout_train_subtitle">列車番号を追加</string>
+    <string name="kh_uisdk_checkout_train_title">列車番号</string>
+    <string name="kh_uisdk_close_the_screen">画面を閉じる</string>
     <string name="kh_uisdk_completed">ご利用ありがとうございました</string>
     <string name="kh_uisdk_confirmed">%sの乗車サービスを確定しました</string>
     <string name="kh_uisdk_contact">お問い合わせ</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">国/地域を検索</string>
     <string name="kh_uisdk_current_location">現在地を取得</string>
     <string name="kh_uisdk_date">日付</string>
+    <string name="kh_uisdk_destination">先</string>
     <string name="kh_uisdk_destination_book_error">乗車サービスを予約するには目的地を選択してください</string>
     <string name="kh_uisdk_difficulties_cancelling_message">乗車サービスのキャンセルで問題が発生しています。業者にお問い合わせください。</string>
     <string name="kh_uisdk_difficulties_cancelling_title">キャンセルができません</string>
@@ -242,6 +252,7 @@
     <string name="kh_uisdk_hours_plural.other">%d時間</string>
     <string name="kh_uisdk_hours_plural.zero">%d時間</string>
     <string name="kh_uisdk_info">情報</string>
+    <string name="kh_uisdk_information">ドライバーの情報</string>
     <string name="kh_uisdk_initialised">乗車サービスを初期化中です</string>
     <string name="kh_uisdk_invalid_email">メールアドレスが無効です</string>
     <string name="kh_uisdk_invalid_empty_field">情報が足りません</string>
@@ -384,6 +395,7 @@
     <string name="kh_uisdk_pending">保留中</string>
     <string name="kh_uisdk_permission_rationale_location">地図上でお客様を特定するために、ご利用のデバイスで位置情報を有効にしてください</string>
     <string name="kh_uisdk_permissions">許可</string>
+    <string name="kh_uisdk_pick_up">拾う</string>
     <string name="kh_uisdk_pickup_time">お迎え時刻</string>
     <string name="kh_uisdk_pickup_type_curbside">ドライバーが車外で待機</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">空港で出迎え</string>

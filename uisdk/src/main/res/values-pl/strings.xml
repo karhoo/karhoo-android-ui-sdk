@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Dodaj cel</string>
     <string name="kh_uisdk_address_picker_enter_destination">Wprowadź cel</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Wprowadź punkt odbioru</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Miejsce odbioru</string>
     <string name="kh_uisdk_address_picker_prebook">Rezerwuj</string>
     <string name="kh_uisdk_adyen_payment_error_10">Bank kupującego nie obsługuje lub nie dopuszcza tego typu transakcji</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Pasażer</string>
     <string name="kh_uisdk_booking_checkout_title">Opłać</string>
     <string name="kh_uisdk_booking_confirmation">Rezerwacja potwierdzona</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Przejdź do szczegółów przejazdu</string>
     <string name="kh_uisdk_booking_details_error">Nieprawidłowe szczegóły rezerwacji</string>
     <string name="kh_uisdk_booking_failed">Rezerwacja nie powiodła się</string>
     <string name="kh_uisdk_booking_failed_body">Przepraszamy, jest duże zapotrzebowanie. %1$s nie ma dostępnych kierowców.</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Karta</string>
     <string name="kh_uisdk_checked">Sprawdzony</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Dodaj numer lotu</string>
+    <string name="kh_uisdk_checkout_airport_title">Numer lotu</string>
     <string name="kh_uisdk_checkout_as_guest">ZAREZERWUJ PRZEJAZD</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Komentarz dla Twojego kierowcy</string>
+    <string name="kh_uisdk_checkout_comments_title">Komentarz</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Dodaj numer pociągu</string>
+    <string name="kh_uisdk_checkout_train_title">Numer pociągu</string>
+    <string name="kh_uisdk_close_the_screen">Zamknij ekran</string>
     <string name="kh_uisdk_completed">Mamy nadzieję, że przejazd był udany</string>
     <string name="kh_uisdk_confirmed">Twój przejazd został potwierdzony przez %s</string>
     <string name="kh_uisdk_contact">KONTAKT</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">Wyszukaj kraj/region</string>
     <string name="kh_uisdk_current_location">Moja lokalizacja</string>
     <string name="kh_uisdk_date">Data</string>
+    <string name="kh_uisdk_destination">Cel</string>
     <string name="kh_uisdk_destination_book_error">Musisz wybrać miejsce docelowe, aby zarezerwować przejazd</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Mamy problemy z anulowaniem przejazdu. Skontaktuj się z przewoźnikiem.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Problemy z anulowaniem</string>
@@ -245,6 +255,7 @@
     <string name="kh_uisdk_hours_plural.other">%d godzin(y)</string>
     <string name="kh_uisdk_hours_plural.zero">%d godzin</string>
     <string name="kh_uisdk_info">Informacje</string>
+    <string name="kh_uisdk_information">Informacje</string>
     <string name="kh_uisdk_initialised">Karhoo inicjuje Twoją podróż</string>
     <string name="kh_uisdk_invalid_email">Niepoprawny email</string>
     <string name="kh_uisdk_invalid_empty_field">Brakujące informacje</string>
@@ -338,7 +349,7 @@
     <string name="kh_uisdk_loyalty_use_points_title">Wykorzystaj punkty</string>
     <string name="kh_uisdk_map_selector">Ustaw lokalizację pinezki na mapie</string>
     <string name="kh_uisdk_meeting_point">Miejsce spotkania</string>
-    <string name="kh_uisdk_metered">Na podstawie taksometru</string>
+    <string name="kh_uisdk_metered">Cena na podstawie taksometru</string>
     <string name="kh_uisdk_min">min</string>
     <string name="kh_uisdk_mins">min</string>
     <plurals name="kh_uisdk_minutes_plurals">
@@ -390,6 +401,7 @@
     <string name="kh_uisdk_pending">W trakcie realizacji</string>
     <string name="kh_uisdk_permission_rationale_location">Włącz usługi lokalizacyjne na swoim urządzeniu, abyśmy mogli Cię znaleźć</string>
     <string name="kh_uisdk_permissions">UPRAWNIENIA</string>
+    <string name="kh_uisdk_pick_up">Pick-up</string>
     <string name="kh_uisdk_pickup_time">Godzina odbioru</string>
     <string name="kh_uisdk_pickup_type_curbside">Na zewnątrz</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">W hali przylotów</string>

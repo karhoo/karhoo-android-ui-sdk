@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Añadir dirección de destino</string>
     <string name="kh_uisdk_address_picker_enter_destination">¿Dónde desea ir?</string>
     <string name="kh_uisdk_address_picker_enter_pickup">¿Dónde se encuentra?</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Punto de partida</string>
     <string name="kh_uisdk_address_picker_prebook">Reservar</string>
     <string name="kh_uisdk_adyen_payment_error_10">El banco del comprador no admite o no permite este tipo de transacción</string>
@@ -116,6 +117,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Pasajero</string>
     <string name="kh_uisdk_booking_checkout_title">Página de pago</string>
     <string name="kh_uisdk_booking_confirmation">Reserva confirmada</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Ir a los detalles del viaje</string>
     <string name="kh_uisdk_booking_details_error">Detalles de reserva no válidos</string>
     <string name="kh_uisdk_booking_failed">Reserva fallida</string>
     <string name="kh_uisdk_booking_failed_body">Lo sentimos, hay una alta demanda y %1 no tiene conductores disponibles en este momento.</string>
@@ -137,7 +139,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Tarjeta</string>
     <string name="kh_uisdk_checked">Comprobado</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Agregar un número de vuelo</string>
+    <string name="kh_uisdk_checkout_airport_title">Número de vuelo</string>
     <string name="kh_uisdk_checkout_as_guest">RESERVAR VIAJE</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Comenta para tu conductor</string>
+    <string name="kh_uisdk_checkout_comments_title">Comentario</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Añadir un número de tren</string>
+    <string name="kh_uisdk_checkout_train_title">Número de tren</string>
+    <string name="kh_uisdk_close_the_screen">Cierra la pantalla</string>
     <string name="kh_uisdk_completed">Esperamos que haya disfrutado del viaje</string>
     <string name="kh_uisdk_confirmed">Su viaje con %s ha sido confirmado</string>
     <string name="kh_uisdk_contact">CONTACTO</string>
@@ -150,6 +159,7 @@
     <string name="kh_uisdk_country_search">Buscar país/región</string>
     <string name="kh_uisdk_current_location">Seleccionar ubicación actual</string>
     <string name="kh_uisdk_date">Fecha</string>
+    <string name="kh_uisdk_destination">Destino</string>
     <string name="kh_uisdk_destination_book_error">Seleccione un destino para hacer una reserva</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Estamos experimentando dificultades al cancelar su viaje. Por favor, llame a la flota.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Dificultades para cancelar</string>
@@ -243,6 +253,7 @@
     <string name="kh_uisdk_hours_plural.other">%d hora</string>
     <string name="kh_uisdk_hours_plural.zero">%d hora</string>
     <string name="kh_uisdk_info">Info</string>
+    <string name="kh_uisdk_information">Información</string>
     <string name="kh_uisdk_initialised">iniciando su viaje</string>
     <string name="kh_uisdk_invalid_email">Email no válido</string>
     <string name="kh_uisdk_invalid_empty_field">Falta información</string>
@@ -386,6 +397,7 @@
     <string name="kh_uisdk_pending">Pendiente</string>
     <string name="kh_uisdk_permission_rationale_location">Para que podamos encontrarle, active los permisos de ubicación del dispositivo.</string>
     <string name="kh_uisdk_permissions">PERMISOS</string>
+    <string name="kh_uisdk_pick_up">Levantar</string>
     <string name="kh_uisdk_pickup_time">Hora de recogida</string>
     <string name="kh_uisdk_pickup_type_curbside">Recogida fuera</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Recibimiento en el interior</string>
