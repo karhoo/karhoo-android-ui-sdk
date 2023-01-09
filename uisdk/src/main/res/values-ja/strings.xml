@@ -109,6 +109,7 @@
     <string name="kh_uisdk_base">基本料金</string>
     <string name="kh_uisdk_base_fare_explanation">最終的な金額は、チップ、通行料、税金、その他の料金により変わる場合があります。</string>
     <string name="kh_uisdk_book_now">確定して支払う</string>
+    <string name="kh_uisdk_book_pay">支払い</string>
     <string name="kh_uisdk_book_return_ride">帰りの乗車サービスを予約</string>
     <string name="kh_uisdk_booking_car">乗車サービスを予約する</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">乗客の情報を追加する</string>

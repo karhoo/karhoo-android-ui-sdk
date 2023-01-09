@@ -109,6 +109,7 @@
     <string name="kh_uisdk_base">ค่าโดยสารพื้นฐาน</string>
     <string name="kh_uisdk_base_fare_explanation">ค่าโดยสารสุดท้ายของคุณอาจได้รับผลกระทบจากค่าทิป ค่าผ่านทาง ภาษี และค่าใช้จ่ายอื่นๆ</string>
     <string name="kh_uisdk_book_now">ยืนยันและชำระเงิน</string>
+    <string name="kh_uisdk_book_pay">การชำระเงิน</string>
     <string name="kh_uisdk_book_return_ride">จองการเดินทางขากลับ</string>
     <string name="kh_uisdk_booking_car">จองการเดินทาง</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">เพิ่มรายละเอียดผู้โดยสาร</string>
