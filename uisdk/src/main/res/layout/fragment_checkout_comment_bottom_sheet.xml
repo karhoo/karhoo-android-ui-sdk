@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:minLines="3"
             android:maxLines="3"
+            android:gravity="top|start"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
