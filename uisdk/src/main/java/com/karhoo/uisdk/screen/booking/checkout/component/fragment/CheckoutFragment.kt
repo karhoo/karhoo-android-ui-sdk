@@ -111,16 +111,7 @@ internal class CheckoutFragment : Fragment() {
             }
 
             override fun onTripBooked(tripInfo: TripInfo?) {
-                val intent = Intent()
-                val data = Bundle()
-                data.putParcelable(BOOKING_CHECKOUT_TRIP_INFO_KEY, tripInfo)
-
-                intent.putExtras(data)
-
-                activity?.setResult(RESULT_OK, intent)
-                activity?.finish()
-
-                KarhooAvailability.pauseUpdates()
+                finishCheckout(tripInfo)
             }
 
             override fun startBookingProcess() {
@@ -129,20 +120,7 @@ internal class CheckoutFragment : Fragment() {
         })
 
         val bundle = arguments as Bundle
-        checkoutView.showBookingRequest(
-            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
-            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-            bookingMetadata = bundle.getSerializable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_METADATA_KEY
-            ) as HashMap<String, String>?,
-            passengerDetails = bundle.getParcelable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_PASSENGER_KEY
-            ),
-            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
-        )
+        showBookingRequest(bundle)
 
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
 
@@ -262,6 +240,36 @@ internal class CheckoutFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         checkoutView.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun finishCheckout(tripInfo: TripInfo?) {
+        val intent = Intent()
+        val data = Bundle()
+        data.putParcelable(BOOKING_CHECKOUT_TRIP_INFO_KEY, tripInfo)
+
+        intent.putExtras(data)
+
+        activity?.setResult(RESULT_OK, intent)
+        activity?.finish()
+
+        KarhooAvailability.pauseUpdates()
+    }
+
+    private fun showBookingRequest(bundle: Bundle) {
+        checkoutView.showBookingRequest(
+            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
+            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+            bookingMetadata = bundle.getSerializable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_METADATA_KEY
+            ) as HashMap<String, String>?,
+            passengerDetails = bundle.getParcelable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_PASSENGER_KEY
+            ),
+            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
+        )
     }
 
     companion object {
