@@ -53,6 +53,83 @@ internal class CheckoutFragment : Fragment() {
         checkoutActionButton = view.findViewById(R.id.checkoutActionButton)
         checkoutActionButton.onLoadingComplete()
 
+        setupCheckoutView(view)
+
+        val bundle = arguments as Bundle
+        checkoutView.showBookingRequest(
+            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
+            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+            bookingMetadata = bundle.getSerializable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_METADATA_KEY
+            ) as HashMap<String, String>?,
+            passengerDetails = bundle.getParcelable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_PASSENGER_KEY
+            ),
+            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
+        )
+
+        val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
+
+        if (validityTimestamp > 0) {
+            val milisUntilInvalid = presenter.getValidMilisPeriod(validityTimestamp)
+
+            expirationJob = GlobalScope.launch {
+                delay(milisUntilInvalid)
+
+                activity?.runOnUiThread {
+                    if (isAdded) {
+                        val config = KarhooAlertDialogConfig(
+                            titleResId = R.string.kh_uisdk_offer_expired,
+                            messageResId = R.string.kh_uisdk_offer_expired_text,
+                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
+                                this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
+                                this@CheckoutFragment.activity?.finish()
+                            })
+
+                        context?.let { KarhooAlertDialogHelper(it).showAlertDialog(config) }
+                    }
+                }
+            }
+
+        }
+
+        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+            override fun onLoadingButtonClick() {
+                if (checkoutView.isPassengerDetailsViewVisible()) {
+                    if (checkoutView.arePassengerDetailsValid()) {
+                        checkoutView.clickedPassengerSaveButton()
+                        checkoutView.showPassengerDetailsLayout(false)
+                        checkoutActionButton.onLoadingComplete()
+                    }
+                } else {
+                    if (!checkoutView.arePassengerDetailsValid()) {
+                        checkoutView.showPassengerDetailsLayout(true)
+                        checkoutActionButton.onLoadingComplete()
+                    } else {
+                        if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
+                            //Skip the loyalty flow, start the booking one directly
+                            checkoutView.startBooking()
+                        }
+                    }
+                }
+            }
+        }
+
+        checkoutActionButton.setText(
+            presenter.getBookButtonState(
+                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+            )
+                .resId
+        )
+
+        return view
+    }
+
+    private fun setupCheckoutView(view: View){
         checkoutView = view.findViewById(R.id.bookingCheckoutView)
         checkoutView.setListeners(object : CheckoutFragmentContract.LoadingButtonListener {
             override fun onLoadingComplete() {
@@ -131,78 +208,6 @@ internal class CheckoutFragment : Fragment() {
                 dialog.show(it, CheckoutCommentBottomSheet.TAG)
             }
         }
-        val bundle = arguments as Bundle
-        checkoutView.showBookingRequest(
-            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
-            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-            bookingMetadata = bundle.getSerializable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_METADATA_KEY
-            ) as HashMap<String, String>?,
-            passengerDetails = bundle.getParcelable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_PASSENGER_KEY
-            ),
-            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
-        )
-
-        val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
-
-        if (validityTimestamp > 0) {
-            val milisUntilInvalid = presenter.getValidMilisPeriod(validityTimestamp)
-
-            expirationJob = GlobalScope.launch {
-                delay(milisUntilInvalid)
-
-                activity?.runOnUiThread {
-                    if (isAdded) {
-                        val config = KarhooAlertDialogConfig(
-                            titleResId = R.string.kh_uisdk_offer_expired,
-                            messageResId = R.string.kh_uisdk_offer_expired_text,
-                            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { _, _ ->
-                                this@CheckoutFragment.activity?.setResult(BOOKING_CHECKOUT_EXPIRED)
-                                this@CheckoutFragment.activity?.finish()
-                            })
-
-                        context?.let { KarhooAlertDialogHelper(it).showAlertDialog(config) }
-                    }
-                }
-            }
-
-        }
-
-        checkoutActionButton.actions = object : LoadingButtonView.Actions {
-            override fun onLoadingButtonClick() {
-                if (checkoutView.isPassengerDetailsViewVisible()) {
-                    if (checkoutView.arePassengerDetailsValid()) {
-                        checkoutView.clickedPassengerSaveButton()
-                        checkoutView.showPassengerDetailsLayout(false)
-                        checkoutActionButton.onLoadingComplete()
-                    }
-                } else {
-                    if (!checkoutView.arePassengerDetailsValid()) {
-                        checkoutView.showPassengerDetailsLayout(true)
-                        checkoutActionButton.onLoadingComplete()
-                    } else {
-                        if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
-                            //Skip the loyalty flow, start the booking one directly
-                            checkoutView.startBooking()
-                        }
-                    }
-                }
-            }
-        }
-
-        checkoutActionButton.setText(
-            presenter.getBookButtonState(
-                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
-                isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
-            )
-                .resId
-        )
-
-        return view
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
