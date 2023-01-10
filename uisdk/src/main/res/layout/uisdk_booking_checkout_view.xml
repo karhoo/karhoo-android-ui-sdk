@@ -95,10 +95,7 @@
                 android:id="@+id/bookingRequestTermsWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small" />
+                android:layout_margin="@dimen/kh_uisdk_spacing_small"/>
 
             <com.karhoo.uisdk.screen.booking.checkout.legalnotice.LegalNoticeView
                 android:id="@+id/checkoutLegalNoticeView"
