@@ -3,9 +3,13 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.fragment.app.FragmentActivity
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.*
+import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceText
+import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceTypeText
 import java.util.*
 
 class BottomPriceView @JvmOverloads constructor(
@@ -33,6 +37,13 @@ class BottomPriceView @JvmOverloads constructor(
     ) {
         presenter.formatPriceText(quote, currency)
         presenter.formatPriceType(quote, context)
+
+        priceLayout?.setOnClickListener {
+            (context as FragmentActivity).supportFragmentManager.let {
+                val bottomPriceViewSheet = BottomPriceViewSheet(quote.quoteType)
+                bottomPriceViewSheet.show(it, QuotesSortView.TAG)
+            }
+        }
     }
 
     override fun setPriceText(price: String) {

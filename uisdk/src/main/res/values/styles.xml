@@ -842,6 +842,13 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="KhBottomSheetPriceView">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
     <style name="KhAddToCalendar">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:textColor">@color/kh_uisdk_accent</item>
