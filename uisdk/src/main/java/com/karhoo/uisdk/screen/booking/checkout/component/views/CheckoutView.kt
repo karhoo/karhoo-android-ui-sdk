@@ -220,6 +220,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
 
+        bottomPriceView.bindViews(quote, currency)
         bookingRequestPriceWidget.bindPrebook(quote,
                                               time,
                                               DateUtil.getDateFormat(date),
