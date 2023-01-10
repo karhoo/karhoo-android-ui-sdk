@@ -396,6 +396,7 @@
     <string name="kh_uisdk_prebook_picker_title">Hora de recolha</string>
     <string name="kh_uisdk_prebook_timezone_title">A reserva será efetuada no horário local</string>
     <string name="kh_uisdk_price">Preço</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Detalhes do preço</string>
     <string name="kh_uisdk_price_info_text_estimated">Esta frota oferece táxis não regulamentados. A cotação é uma estimativa baseada em fatores como tempo e distância total. Para mais informações, consulte os Termos e Condições da frota.</string>
     <string name="kh_uisdk_price_info_text_fixed">Esta frota cobra uma tarifa fixa. A tarifa final pode ser afetada por custos extras como portagens ou atrasos. Para mais informações, consulte os Termos e Condições da frota.</string>
     <string name="kh_uisdk_price_info_text_metered">Esta frota oferece táxis regulamentados com taxímetro. A cotação é uma estimativa baseada em fatores como tempo e distância total.</string>

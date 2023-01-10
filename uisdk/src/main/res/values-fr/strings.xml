@@ -396,6 +396,7 @@
     <string name="kh_uisdk_prebook_picker_title">Heure de départ</string>
     <string name="kh_uisdk_prebook_timezone_title">La réservation se fait à l’heure locale</string>
     <string name="kh_uisdk_price">Prix</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Détails des prix</string>
     <string name="kh_uisdk_price_info_text_estimated">Les taxis de ce prestataire ne sont pas réglementés. L’offre est une estimation reposant sur les caractéristiques de la course (distance, temps, etc.). Consultez les conditions générales du prestataire pour plus d\'informations.</string>
     <string name="kh_uisdk_price_info_text_fixed">Ce prestataire applique un tarif forfaitaire. Le tarif final peut être affecté par des extras (péages, retard, etc.), consultez les conditions générales du prestataire pour en savoir plus.</string>
     <string name="kh_uisdk_price_info_text_metered">Les taxis de ce prestataire sont équipés d’un compteur et sont réglementés. L’offre est une estimation reposant sur les caractéristiques de la course (distance, temps, etc.).</string>
