@@ -91,6 +91,8 @@ interface CheckoutViewContract {
         fun getDeviceLocale(): String
 
         fun isTermsCheckBoxValid(): Boolean
+
+        fun bindAddresses(journeyDetails: JourneyDetails)
     }
 
     interface Presenter {

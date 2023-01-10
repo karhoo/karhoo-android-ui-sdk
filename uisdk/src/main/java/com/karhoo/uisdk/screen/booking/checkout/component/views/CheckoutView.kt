@@ -33,6 +33,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryCode
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDialingCode
+import com.karhoo.uisdk.screen.address.static.AddressStaticComponent
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
@@ -59,6 +60,7 @@ import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.*
 import org.joda.time.DateTime
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("TooManyFunctions")
@@ -205,6 +207,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 bookingMetadata = bookingMetadata,
                 passengerDetails = passengerDetails
                                     )
+
+        if (journeyDetails != null) {
+            bindAddresses(journeyDetails)
+        }
 
         bookingPaymentHandler.getPaymentProvider()
 
@@ -468,6 +474,35 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         }
     }
 
+    override fun bindAddresses(journeyDetails: JourneyDetails) {
+        checkoutAddressComponent.setup(
+            pickup = journeyDetails.pickup!!,
+            destination = journeyDetails.destination!!,
+            time = journeyDetails.date,
+            type = AddressStaticComponent.AddressComponentType.NORMAL
+        )
+
+        journeyDetails.date?.let {
+            checkoutDateText.text = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+                    .format(it.toDate())
+                    .uppercase(Locale.getDefault())
+
+            checkoutAddressComponent.setType(
+                AddressStaticComponent.AddressComponentType.WITH_TIME,
+                time = it
+            )
+        } ?: run {
+            checkoutDateText.text = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
+                .format(DateTime().toDate())
+                .uppercase(Locale.getDefault())
+
+            checkoutAddressComponent.setType(
+                AddressStaticComponent.AddressComponentType.WITH_TEXT,
+                context.getString(R.string.kh_uisdk_address_component)
+            )
+        }
+    }
+
     /**
      * The user clicked to save the current passenger details
      */
@@ -617,5 +652,6 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
     companion object {
         private const val CUSTOM_ERROR_PREFIX = "KSDK00 "
+        private const val DATE_FORMAT = "EEEE, dd MMMM yyyy"
     }
 }

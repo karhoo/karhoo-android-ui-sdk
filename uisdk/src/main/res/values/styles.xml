@@ -842,6 +842,14 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="KhCheckoutDateText">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+        <item name="android:textColor">@color/kh_uisdk_primary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:maxLines">2</item>
+        <item name="fontWeight">700</item>
+    </style>
+
     <style name="KhBottomSheetPriceView">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
