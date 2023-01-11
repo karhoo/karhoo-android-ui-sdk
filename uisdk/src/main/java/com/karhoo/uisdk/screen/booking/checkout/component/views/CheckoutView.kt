@@ -50,7 +50,6 @@ import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfi
 import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
-import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
