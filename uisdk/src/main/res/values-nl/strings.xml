@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Kaart</string>
     <string name="kh_uisdk_checked">Gecontroleerd</string>
+    <string name="kh_uisdk_checkout_airport_example">bijv. AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Voeg een vluchtnummer toe</string>
     <string name="kh_uisdk_checkout_airport_title">Vluchtnummer</string>
     <string name="kh_uisdk_checkout_as_guest">RIT BOEKEN</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Opmerking voor uw chauffeur</string>
     <string name="kh_uisdk_checkout_comments_title">Opmerkingen</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Alleen letters en cijfers zijn toegestaan</string>
+    <string name="kh_uisdk_checkout_train_example">bijvoorbeeld 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Voeg een treinnummer toe</string>
     <string name="kh_uisdk_checkout_train_title">Trein nummer</string>
     <string name="kh_uisdk_close_the_screen">Sluit het scherm</string>
@@ -375,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Er is niets beschikbaar in deze categorie. Kies een andere categorie.</string>
     <string name="kh_uisdk_no_trips">Geen ritten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
+    <string name="kh_uisdk_now">nu</string>
     <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
     <string name="kh_uisdk_offer_expired_text">Selecteer een nieuwe offerte om door te gaan met boeken</string>
     <string name="kh_uisdk_ok">OK</string>

@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">卡片</string>
     <string name="kh_uisdk_checked">已检查</string>
+    <string name="kh_uisdk_checkout_airport_example">例如AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">添加航班号</string>
     <string name="kh_uisdk_checkout_airport_title">航班号</string>
     <string name="kh_uisdk_checkout_as_guest">预订行程</string>
     <string name="kh_uisdk_checkout_comments_subtitle">评论你的司机</string>
     <string name="kh_uisdk_checkout_comments_title">评论</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">只允许字母和数字</string>
+    <string name="kh_uisdk_checkout_train_example">例如 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">添加车次</string>
     <string name="kh_uisdk_checkout_train_title">车次</string>
     <string name="kh_uisdk_close_the_screen">关闭屏幕</string>
@@ -373,6 +376,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">抱歉，此类别没有可用服务。 请选择其他类别。</string>
     <string name="kh_uisdk_no_trips">没有游乐设施</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">无效 SSL 证书</string>
+    <string name="kh_uisdk_now">现在</string>
     <string name="kh_uisdk_offer_expired">报价已过期</string>
     <string name="kh_uisdk_offer_expired_text">请选择一个新报价以继续您的预订</string>
     <string name="kh_uisdk_ok">好</string>

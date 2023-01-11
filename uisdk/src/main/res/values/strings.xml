@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Card</string>
     <string name="kh_uisdk_checked">Checked</string>
+    <string name="kh_uisdk_checkout_airport_example">e.g AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Add a flight number</string>
     <string name="kh_uisdk_checkout_airport_title">Flight number</string>
     <string name="kh_uisdk_checkout_as_guest">Book a ride</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Comment for your driver</string>
     <string name="kh_uisdk_checkout_comments_title">Comment</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Only letters and numbers are allowed</string>
+    <string name="kh_uisdk_checkout_train_example">e.g 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Add a train number</string>
     <string name="kh_uisdk_checkout_train_title">Train number</string>
     <string name="kh_uisdk_close_the_screen">Close the screen</string>
@@ -375,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Sorry, there’s no availability for this category. Please choose another category.</string>
     <string name="kh_uisdk_no_trips">No rides</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
+    <string name="kh_uisdk_now">now</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>
     <string name="kh_uisdk_offer_expired_text">Please select a new quote to continue your booking</string>
     <string name="kh_uisdk_ok">Ok</string>
@@ -408,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Pickup time</string>
     <string name="kh_uisdk_prebook_timezone_title">Bookings are made in local time</string>
     <string name="kh_uisdk_price">Price</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Price Details</string>
     <string name="kh_uisdk_price_info_text_estimated">This ride provider offers non-regulated taxis. The quote is an estimate based on factors such as the time and total distance. For more information, please check the ride provider\'s Terms and Conditions.</string>
     <string name="kh_uisdk_price_info_text_fixed">This ride provider charges a flat fare. The final fare may be subject to additional charges such as tolls or delays. For more information, please check the ride provider\'s Terms and Conditions.</string>
     <string name="kh_uisdk_price_info_text_metered">This ride provider offers regulated, metered taxis. The quote is an estimate based on factors such as the time and total distance.</string>
@@ -490,7 +495,6 @@
     <string name="kh_uisdk_something_went_wrong">Something went wrong</string>
     <string name="kh_uisdk_something_went_wrong_select_another_quote">Sorry, something went wrong. Please try again or select another quote.</string>
     <string name="kh_uisdk_sort_by">Sort by</string>
-    <string name="kh_uisdk_price_bottom_sheet_title">Price Details</string>
     <string name="kh_uisdk_staging_link">https://agent-portal.stg.karhoo.net/follow/</string>
     <string name="kh_uisdk_star_excellent">Excellent</string>
     <string name="kh_uisdk_star_fair">Fair</string>

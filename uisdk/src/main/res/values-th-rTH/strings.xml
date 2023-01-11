@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">บัตร</string>
     <string name="kh_uisdk_checked">เลือกแล้ว</string>
+    <string name="kh_uisdk_checkout_airport_example">เช่น AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">เพิ่มหมายเลขเที่ยวบิน</string>
     <string name="kh_uisdk_checkout_airport_title">เที่ยวบินหมายเลข</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
     <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
     <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">อนุญาตเฉพาะตัวอักษรและตัวเลขเท่านั้น</string>
+    <string name="kh_uisdk_checkout_train_example">เช่น 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
     <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
     <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>
@@ -373,6 +376,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">ขออภัย ไม่สามารถหายานพาหนะที่พร้อมให้บริการในหมวดหมู่นี้ได้ โปรดเลือกหมวดหมู่อื่น</string>
     <string name="kh_uisdk_no_trips">ไม่มีการเดินทาง</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">ใบรับรอง SSL ไม่ถูกต้อง</string>
+    <string name="kh_uisdk_now">ตอนนี้</string>
     <string name="kh_uisdk_offer_expired">ราคาหมดอายุแล้ว</string>
     <string name="kh_uisdk_offer_expired_text">โปรดเลือกราคาใหม่เพื่อทำการจองของคุณต่อ</string>
     <string name="kh_uisdk_ok">ตกลง</string>

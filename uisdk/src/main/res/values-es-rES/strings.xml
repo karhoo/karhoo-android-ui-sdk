@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Tarjeta</string>
     <string name="kh_uisdk_checked">Comprobado</string>
+    <string name="kh_uisdk_checkout_airport_example">por ejemplo, AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Agregar un número de vuelo</string>
     <string name="kh_uisdk_checkout_airport_title">Número de vuelo</string>
     <string name="kh_uisdk_checkout_as_guest">RESERVAR VIAJE</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Comenta para tu conductor</string>
     <string name="kh_uisdk_checkout_comments_title">Comentario</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Solo se permiten letras y números.</string>
+    <string name="kh_uisdk_checkout_train_example">por ejemplo, 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Añadir un número de tren</string>
     <string name="kh_uisdk_checkout_train_title">Número de tren</string>
     <string name="kh_uisdk_close_the_screen">Cierra la pantalla</string>
@@ -375,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">No hay disponibilidad en la categoría solicitada. Seleccione otra categoría.</string>
     <string name="kh_uisdk_no_trips">Sin reservas</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
+    <string name="kh_uisdk_now">ahora</string>
     <string name="kh_uisdk_offer_expired">Estimación expirada</string>
     <string name="kh_uisdk_offer_expired_text">Seleccione una nueva estimación para continuar con la reserva</string>
     <string name="kh_uisdk_ok">OK</string>

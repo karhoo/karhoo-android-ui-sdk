@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Carta</string>
     <string name="kh_uisdk_checked">Visualizzata</string>
+    <string name="kh_uisdk_checkout_airport_example">ad esempio AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Aggiungi un numero di volo</string>
     <string name="kh_uisdk_checkout_airport_title">Numero del volo</string>
     <string name="kh_uisdk_checkout_as_guest">PRENOTA CORSA</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Commenta per il tuo autista</string>
     <string name="kh_uisdk_checkout_comments_title">Commento</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Sono consentiti solo lettere e numeri</string>
+    <string name="kh_uisdk_checkout_train_example">ad esempio 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Aggiungi un numero di treno</string>
     <string name="kh_uisdk_checkout_train_title">Numero del treno</string>
     <string name="kh_uisdk_close_the_screen">Chiudi lo schermo</string>
@@ -375,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Siamo spiacenti, non c’è disponibilità per questa categoria. Scegli un\'altra categoria.</string>
     <string name="kh_uisdk_no_trips">Nessuna corsa</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
+    <string name="kh_uisdk_now">adesso</string>
     <string name="kh_uisdk_offer_expired">Preventivo scaduto</string>
     <string name="kh_uisdk_offer_expired_text">Seleziona un nuovo preventivo per continuare con la prenotazione</string>
     <string name="kh_uisdk_ok">OK</string>

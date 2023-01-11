@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Cartão</string>
     <string name="kh_uisdk_checked">Verificado</string>
+    <string name="kh_uisdk_checkout_airport_example">e.g. AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Acrescentar um número de voo</string>
     <string name="kh_uisdk_checkout_airport_title">Número de voo</string>
     <string name="kh_uisdk_checkout_as_guest">RESERVAR VIAGEM</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Comentário para o seu motorista</string>
     <string name="kh_uisdk_checkout_comments_title">Comentário</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Só são permitidas letras e números</string>
+    <string name="kh_uisdk_checkout_train_example">e.g. 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Adicionar um número de comboio</string>
     <string name="kh_uisdk_checkout_train_title">Número do comboio</string>
     <string name="kh_uisdk_close_the_screen">Fechar o ecrã</string>
@@ -375,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Lamentamos, não há disponibilidade para esta categoria. Escolha outra categoria.</string>
     <string name="kh_uisdk_no_trips">Sem viagens</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL inválido</string>
+    <string name="kh_uisdk_now">agora</string>
     <string name="kh_uisdk_offer_expired">Cotação vencida</string>
     <string name="kh_uisdk_offer_expired_text">Selecione uma nova cotação para continuar com a sua reserva</string>
     <string name="kh_uisdk_ok">OK</string>

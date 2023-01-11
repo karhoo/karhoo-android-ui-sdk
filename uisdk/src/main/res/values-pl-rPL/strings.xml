@@ -140,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Karta</string>
     <string name="kh_uisdk_checked">Sprawdzony</string>
+    <string name="kh_uisdk_checkout_airport_example">np. AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Dodaj numer lotu</string>
     <string name="kh_uisdk_checkout_airport_title">Numer lotu</string>
     <string name="kh_uisdk_checkout_as_guest">ZAREZERWUJ PRZEJAZD</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Komentarz dla Twojego kierowcy</string>
     <string name="kh_uisdk_checkout_comments_title">Komentarz</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Dozwolone są tylko litery i cyfry</string>
+    <string name="kh_uisdk_checkout_train_example">np. 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Dodaj numer pociągu</string>
     <string name="kh_uisdk_checkout_train_title">Numer pociągu</string>
     <string name="kh_uisdk_close_the_screen">Zamknij ekran</string>
@@ -379,6 +382,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Przykro nam. Brak ofert dla tej kategorii. Wybierz inną kategorię.</string>
     <string name="kh_uisdk_no_trips">Brak przejazdów</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Nieprawidłowy certyfikat SSL</string>
+    <string name="kh_uisdk_now">teraz</string>
     <string name="kh_uisdk_offer_expired">Oferta wygasła</string>
     <string name="kh_uisdk_offer_expired_text">Wybierz nową ofertę, aby kontynuować rezerwację</string>
     <string name="kh_uisdk_ok">OK</string>
