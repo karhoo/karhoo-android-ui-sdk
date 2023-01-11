@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Tarifa base</string>
     <string name="kh_uisdk_base_fare_explanation">La tarifa final puede verse afectada por propinas, peajes, impuestos y otros cargos.</string>
     <string name="kh_uisdk_book_now">CONFIRMAR Y PAGAR</string>
+    <string name="kh_uisdk_book_pay">Preste</string>
     <string name="kh_uisdk_book_return_ride">Reservar viaje de vuelta</string>
     <string name="kh_uisdk_booking_car">RESERVAR VIAJE</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Añadir detalles del pasajero</string>
@@ -407,6 +408,7 @@
     <string name="kh_uisdk_prebook_picker_title">Hora de recogida</string>
     <string name="kh_uisdk_prebook_timezone_title">La reserva se realizará en hora local</string>
     <string name="kh_uisdk_price">Tarifa</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Detalles de precio</string>
     <string name="kh_uisdk_price_info_text_estimated">Esta flota ofrece taxis no regulados. La estimación se basa en varios factores del viaje, como la distancia y el tiempo. Para más información, consulte los Términos y condiciones de la flota.</string>
     <string name="kh_uisdk_price_info_text_fixed">Esta flota cobra una tarifa plana. La tarifa final puede tener cargos extra, como por peajes o retrasos. Para más información, consulte los Términos y condiciones de la flota.</string>
     <string name="kh_uisdk_price_info_text_metered">Esta flota ofrece taxis con taxímetro regulado. La estimación se basa en varios factores del viaje, como la distancia y el tiempo.</string>

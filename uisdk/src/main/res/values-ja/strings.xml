@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">基本料金</string>
     <string name="kh_uisdk_base_fare_explanation">最終的な金額は、チップ、通行料、税金、その他の料金により変わる場合があります。</string>
     <string name="kh_uisdk_book_now">確定して支払う</string>
+    <string name="kh_uisdk_book_pay">支払い</string>
     <string name="kh_uisdk_book_return_ride">帰りの乗車サービスを予約</string>
     <string name="kh_uisdk_booking_car">乗車サービスを予約する</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">乗客の情報を追加する</string>
@@ -405,6 +406,7 @@
     <string name="kh_uisdk_prebook_picker_title">お迎え時刻</string>
     <string name="kh_uisdk_prebook_timezone_title">予約は現地時間で行われます</string>
     <string name="kh_uisdk_price">料金</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">価格の詳細</string>
     <string name="kh_uisdk_price_info_text_estimated">この乗車サービス業者は規制対象外のタクシーです。見積もりは、時間や総距離などから算出される概算です。詳しくは、乗車サービス業者の利用条件を参照してください。</string>
     <string name="kh_uisdk_price_info_text_fixed">この乗車サービス業者は定額料金です。最終的な金額は、通行料や遅延などの追加料金によって変わる場合があります。詳しくは、乗車サービス業者の利用条件を参照してください。</string>
     <string name="kh_uisdk_price_info_text_metered">この乗車サービス業者は規制対象のメーター制タクシーです。見積もりは、時間や総距離などから算出される概算です。</string>

@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">基本车费</string>
     <string name="kh_uisdk_base_fare_explanation">您的最终车费可能受到小费、通行费、税费和其他费用的影响。</string>
     <string name="kh_uisdk_book_now">确认并支付</string>
+    <string name="kh_uisdk_book_pay">工资</string>
     <string name="kh_uisdk_book_return_ride">预订返回行程</string>
     <string name="kh_uisdk_booking_car">预订行程</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">添加乘客详情</string>
@@ -405,6 +406,7 @@
     <string name="kh_uisdk_prebook_picker_title">上车时间</string>
     <string name="kh_uisdk_prebook_timezone_title">预订以当地时间进行</string>
     <string name="kh_uisdk_price">价格</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">价格详情</string>
     <string name="kh_uisdk_price_info_text_estimated">该行程提供商提供不受管制的出租车。报价是基于距离、时间等因素的预估。请参阅行程提供商的条款和条件了解更多信息。</string>
     <string name="kh_uisdk_price_info_text_fixed">该行程提供商收取固定车费。最终车费可能会受到通行费、延误等额外费用的影响，请查看行程提供商的条款和条件。</string>
     <string name="kh_uisdk_price_info_text_metered">该行程提供商提供受管制的计程出租车。报价是基于距离、时间等因素的预估。</string>

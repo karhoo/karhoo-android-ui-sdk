@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Basistarif</string>
     <string name="kh_uisdk_base_fare_explanation">Ihr Endpreis kann durch Trinkgelder, Mautgebühren, Steuern und andere Gebühren beeinflusst werden.</string>
     <string name="kh_uisdk_book_now">BESTÄTIGEN UND BEZAHLEN</string>
+    <string name="kh_uisdk_book_pay">Bezahlen</string>
     <string name="kh_uisdk_book_return_ride">Rückfahrt buchen</string>
     <string name="kh_uisdk_booking_car">FAHRT BUCHEN</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Fahrgastdaten hinzufügen</string>
@@ -407,6 +408,7 @@
     <string name="kh_uisdk_prebook_picker_title">Abholzeit</string>
     <string name="kh_uisdk_prebook_timezone_title">Die Buchung wird in Ortszeit vorgenommen</string>
     <string name="kh_uisdk_price">Preis</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Preis Details</string>
     <string name="kh_uisdk_price_info_text_estimated">Diese Flotte bietet nicht regulierte Taxis. Das Angebot ist eine Schätzung auf der Grundlage der Fahrtfaktoren (Entfernung, Zeit usw.). Weitere Informationen entnehmen Sie bitte den Allgemeinen Geschäftsbedingungen der Flotte.</string>
     <string name="kh_uisdk_price_info_text_fixed">Diese Flotte berechnet einen Pauschaltarif. Der Endpreis kann durch Extras (Mautgebühren, Verspätungen usw.) beeinflusst werden. Bitte prüfen Sie die Allgemeinen Geschäftsbedingungen der Flotte.</string>
     <string name="kh_uisdk_price_info_text_metered">Diese Flotte bietet regulierte Taxis mit Taxameter. Das Angebot ist eine Schätzung auf der Grundlage der Fahrtfaktoren (Entfernung, Zeit usw.).</string>
