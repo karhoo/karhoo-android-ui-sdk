@@ -25,6 +25,7 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
@@ -206,6 +207,11 @@ internal class CheckoutFragment : Fragment() {
         checkoutView.commentsListener = { dialog ->
             activity?.supportFragmentManager?.let {
                 dialog.show(it, CheckoutCommentBottomSheet.TAG)
+            }
+        }
+        checkoutView.travelDetailsListener = { dialog ->
+            activity?.supportFragmentManager?.let {
+                dialog.show(it, CheckoutTravelDetailsBottomSheet.TAG)
             }
         }
     }

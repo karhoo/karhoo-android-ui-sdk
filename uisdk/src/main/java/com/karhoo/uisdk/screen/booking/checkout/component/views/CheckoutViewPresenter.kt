@@ -205,7 +205,8 @@ internal class CheckoutViewPresenter(
         tripId: String?,
         passengerDetails: PassengerDetails?,
         comments: String,
-        flightInfo: String
+        flightInfo: String,
+        trainInfo: String?
     ) {
         val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
@@ -229,6 +230,7 @@ internal class CheckoutViewPresenter(
             TripBooking(
                 comments = comments,
                 flightNumber = flight,
+                trainNumber = trainInfo,
                 meta = metadata,
                 nonce = identifier,
                 quoteId = quote?.id.orEmpty(),
@@ -300,12 +302,6 @@ internal class CheckoutViewPresenter(
             KarhooUISDK.analytics?.checkoutOpened(quote = quote)
             this.outboundTripId = outboundTripId
             handleBookingType(quote)
-            when (origin?.poiType) {
-                Poi.ENRICHED -> {
-                    view?.displayFlightDetailsField(origin?.details?.type)
-                }
-                else -> view?.displayFlightDetailsField(null)
-            }
             view?.setCapacityAndCapabilities(
                 createCapabilityByType(
                     quote.fleet.capabilities,

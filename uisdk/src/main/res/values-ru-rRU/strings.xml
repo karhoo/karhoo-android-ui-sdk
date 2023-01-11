@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Базовый тариф</string>
     <string name="kh_uisdk_base_fare_explanation">Окончательный тариф может зависеть от чаевых, налогов, дорожных и других сборов.</string>
     <string name="kh_uisdk_book_now">ПОДТВЕРДИТЬ И ОПЛАТИТЬ</string>
+    <string name="kh_uisdk_book_pay">платить</string>
     <string name="kh_uisdk_book_return_ride">Забронировать поездку обратно</string>
     <string name="kh_uisdk_booking_car">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Добавить информацию о пассажире</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Карта</string>
     <string name="kh_uisdk_checked">Проверено</string>
+    <string name="kh_uisdk_checkout_airport_example">например AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Добавить номер рейса</string>
     <string name="kh_uisdk_checkout_airport_title">Номер рейса</string>
     <string name="kh_uisdk_checkout_as_guest">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Комментарий для вашего водителя</string>
     <string name="kh_uisdk_checkout_comments_title">Комментировать</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Допускаются только буквы и цифры</string>
+    <string name="kh_uisdk_checkout_train_example">например 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Добавить номер поезда</string>
     <string name="kh_uisdk_checkout_train_title">Номер поезда</string>
     <string name="kh_uisdk_close_the_screen">Закрыть экран</string>

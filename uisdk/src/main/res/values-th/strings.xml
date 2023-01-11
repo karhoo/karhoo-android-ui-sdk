@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">ค่าโดยสารพื้นฐาน</string>
     <string name="kh_uisdk_base_fare_explanation">ค่าโดยสารสุดท้ายของคุณอาจได้รับผลกระทบจากค่าทิป ค่าผ่านทาง ภาษี และค่าใช้จ่ายอื่นๆ</string>
     <string name="kh_uisdk_book_now">ยืนยันและชำระเงิน</string>
+    <string name="kh_uisdk_book_pay">การชำระเงิน</string>
     <string name="kh_uisdk_book_return_ride">จองการเดินทางขากลับ</string>
     <string name="kh_uisdk_booking_car">จองการเดินทาง</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">เพิ่มรายละเอียดผู้โดยสาร</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">บัตร</string>
     <string name="kh_uisdk_checked">เลือกแล้ว</string>
+    <string name="kh_uisdk_checkout_airport_example">เช่น AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">เพิ่มหมายเลขเที่ยวบิน</string>
     <string name="kh_uisdk_checkout_airport_title">เที่ยวบินหมายเลข</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
     <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
     <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">อนุญาตเฉพาะตัวอักษรและตัวเลขเท่านั้น</string>
+    <string name="kh_uisdk_checkout_train_example">เช่น 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
     <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
     <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>

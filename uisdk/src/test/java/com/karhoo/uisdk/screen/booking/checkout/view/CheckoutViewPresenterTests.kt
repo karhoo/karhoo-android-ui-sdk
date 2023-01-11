@@ -378,7 +378,6 @@ class CheckoutViewPresenterTests {
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
 
         verify(view).displayFlightDetailsField(origin.details.type)
-        verify(view, never()).populateFlightDetailsField(anyString())
     }
 
     /**

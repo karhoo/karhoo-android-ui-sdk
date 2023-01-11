@@ -98,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small" />
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/paymentHeader"

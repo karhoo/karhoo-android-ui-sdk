@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">基本料金</string>
     <string name="kh_uisdk_base_fare_explanation">最終的な金額は、チップ、通行料、税金、その他の料金により変わる場合があります。</string>
     <string name="kh_uisdk_book_now">確定して支払う</string>
+    <string name="kh_uisdk_book_pay">支払い</string>
     <string name="kh_uisdk_book_return_ride">帰りの乗車サービスを予約</string>
     <string name="kh_uisdk_booking_car">乗車サービスを予約する</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">乗客の情報を追加する</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">カード</string>
     <string name="kh_uisdk_checked">チェック済み</string>
+    <string name="kh_uisdk_checkout_airport_example">例: AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">フライト番号を追加</string>
     <string name="kh_uisdk_checkout_airport_title">フライトナンバー</string>
     <string name="kh_uisdk_checkout_as_guest">乗車サービスを予約する</string>
     <string name="kh_uisdk_checkout_comments_subtitle">ドライバーへのコメント</string>
     <string name="kh_uisdk_checkout_comments_title">コメント</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">文字と数字のみを使用できます</string>
+    <string name="kh_uisdk_checkout_train_example">例: 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">列車番号を追加</string>
     <string name="kh_uisdk_checkout_train_title">列車番号</string>
     <string name="kh_uisdk_close_the_screen">画面を閉じる</string>

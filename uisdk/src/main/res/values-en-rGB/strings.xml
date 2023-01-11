@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Base fare</string>
     <string name="kh_uisdk_base_fare_explanation">Your final fare might be affected by tips, tolls, taxes, and other charges.</string>
     <string name="kh_uisdk_book_now">Confirm and pay</string>
+    <string name="kh_uisdk_book_pay">Pay</string>
     <string name="kh_uisdk_book_return_ride">Book return ride</string>
     <string name="kh_uisdk_booking_car">Book a ride</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Add passenger details</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Card</string>
     <string name="kh_uisdk_checked">Checked</string>
+    <string name="kh_uisdk_checkout_airport_example">e.g AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Add a flight number</string>
     <string name="kh_uisdk_checkout_airport_title">Flight number</string>
     <string name="kh_uisdk_checkout_as_guest">Book a ride</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Comment for your driver</string>
     <string name="kh_uisdk_checkout_comments_title">Comment</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Only letters and numbers are allowed</string>
+    <string name="kh_uisdk_checkout_train_example">e.g 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Add a train number</string>
     <string name="kh_uisdk_checkout_train_title">Train number</string>
     <string name="kh_uisdk_close_the_screen">Close the screen</string>

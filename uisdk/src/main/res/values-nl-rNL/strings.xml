@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Basistarief</string>
     <string name="kh_uisdk_base_fare_explanation">Uw uiteindelijke tarief hangt af van fooi, tolgeld, belastingen en andere heffingen.</string>
     <string name="kh_uisdk_book_now">BEVESTIGEN EN BETALEN</string>
+    <string name="kh_uisdk_book_pay">Betalen</string>
     <string name="kh_uisdk_book_return_ride">Retourrit boeken</string>
     <string name="kh_uisdk_booking_car">RIT BOEKEN</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Gegevens passagier toevoegen</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Kaart</string>
     <string name="kh_uisdk_checked">Gecontroleerd</string>
+    <string name="kh_uisdk_checkout_airport_example">bijv. AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Voeg een vluchtnummer toe</string>
     <string name="kh_uisdk_checkout_airport_title">Vluchtnummer</string>
     <string name="kh_uisdk_checkout_as_guest">RIT BOEKEN</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Opmerking voor uw chauffeur</string>
     <string name="kh_uisdk_checkout_comments_title">Opmerkingen</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Alleen letters en cijfers zijn toegestaan</string>
+    <string name="kh_uisdk_checkout_train_example">bijvoorbeeld 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Voeg een treinnummer toe</string>
     <string name="kh_uisdk_checkout_train_title">Trein nummer</string>
     <string name="kh_uisdk_close_the_screen">Sluit het scherm</string>

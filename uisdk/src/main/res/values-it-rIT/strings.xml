@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Tariffa base</string>
     <string name="kh_uisdk_base_fare_explanation">La tua tariffa finale potrebbe essere influenzata da mance, pedaggi, tasse e altri costi.</string>
     <string name="kh_uisdk_book_now">CONFERMA E PAGA</string>
+    <string name="kh_uisdk_book_pay">Pagare</string>
     <string name="kh_uisdk_book_return_ride">Prenota corsa di ritorno</string>
     <string name="kh_uisdk_booking_car">PRENOTA CORSA</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi dettagli passeggero</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Carta</string>
     <string name="kh_uisdk_checked">Visualizzata</string>
+    <string name="kh_uisdk_checkout_airport_example">ad esempio AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Aggiungi un numero di volo</string>
     <string name="kh_uisdk_checkout_airport_title">Numero del volo</string>
     <string name="kh_uisdk_checkout_as_guest">PRENOTA CORSA</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Commenta per il tuo autista</string>
     <string name="kh_uisdk_checkout_comments_title">Commento</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Sono consentiti solo lettere e numeri</string>
+    <string name="kh_uisdk_checkout_train_example">ad esempio 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Aggiungi un numero di treno</string>
     <string name="kh_uisdk_checkout_train_title">Numero del treno</string>
     <string name="kh_uisdk_close_the_screen">Chiudi lo schermo</string>

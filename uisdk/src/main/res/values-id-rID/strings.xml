@@ -110,6 +110,7 @@
     <string name="kh_uisdk_base">Tarif dasar</string>
     <string name="kh_uisdk_base_fare_explanation">Tarif akhir Anda mungkin dipengaruhi oleh tip, tol, pajak, dan biaya lainnya.</string>
     <string name="kh_uisdk_book_now">KONFIRMASI DAN BAYAR</string>
+    <string name="kh_uisdk_book_pay">Bayar</string>
     <string name="kh_uisdk_book_return_ride">Pesan perjalanan pulang</string>
     <string name="kh_uisdk_booking_car">PESAN PERJALANAN</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Tambahkan detail penumpang</string>
@@ -139,11 +140,14 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Kartu</string>
     <string name="kh_uisdk_checked">Dicentang</string>
+    <string name="kh_uisdk_checkout_airport_example">misalnya AF009</string>
     <string name="kh_uisdk_checkout_airport_subtitle">Tambahkan nomor penerbangan</string>
     <string name="kh_uisdk_checkout_airport_title">Nomor penerbangan</string>
     <string name="kh_uisdk_checkout_as_guest">PESAN PERJALANAN</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Komentar untuk pengemudi Anda</string>
     <string name="kh_uisdk_checkout_comments_title">Komentar</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Hanya huruf dan angka yang diperbolehkan</string>
+    <string name="kh_uisdk_checkout_train_example">misalnya 6809</string>
     <string name="kh_uisdk_checkout_train_subtitle">Tambahkan nomor kereta</string>
     <string name="kh_uisdk_checkout_train_title">Nomor kereta</string>
     <string name="kh_uisdk_close_the_screen">Tutup layar</string>

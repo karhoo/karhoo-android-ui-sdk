@@ -32,8 +32,6 @@ interface CheckoutViewContract {
 
         fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean)
 
-        fun displayFlightDetailsField(poiType: PoiType?)
-
         fun initialiseChangeCard(quote: Quote? = null)
 
         fun initialiseGuestPayment(quote: Quote?)
@@ -43,8 +41,6 @@ interface CheckoutViewContract {
         fun onError(error: KarhooError?)
 
         fun onTripBookedSuccessfully(tripInfo: TripInfo)
-
-        fun populateFlightDetailsField(flightNumber: String?)
 
         fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle)
 
@@ -108,7 +104,8 @@ interface CheckoutViewContract {
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
                                        passengerDetails: PassengerDetails? = null,
                                        comments: String,
-                                       flightInfo: String)
+                                       flightInfo: String,
+                                       trainInfo: String? = null)
 
         fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)

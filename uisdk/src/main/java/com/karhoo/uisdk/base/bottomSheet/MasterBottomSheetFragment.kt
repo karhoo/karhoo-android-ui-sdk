@@ -35,8 +35,10 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
         button.apply {
             setText(text)
             setOnClickListener {
-                callback?.invoke {  }
-                dismiss()
+                if(button.isButtonEnabled()){
+                    callback?.invoke {  }
+                    dismiss()
+                }
             }
         }
     }
