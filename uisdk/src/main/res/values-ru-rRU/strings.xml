@@ -109,6 +109,7 @@
     <string name="kh_uisdk_base">Базовый тариф</string>
     <string name="kh_uisdk_base_fare_explanation">Окончательный тариф может зависеть от чаевых, налогов, дорожных и других сборов.</string>
     <string name="kh_uisdk_book_now">ПОДТВЕРДИТЬ И ОПЛАТИТЬ</string>
+    <string name="kh_uisdk_book_pay">платить</string>
     <string name="kh_uisdk_book_return_ride">Забронировать поездку обратно</string>
     <string name="kh_uisdk_booking_car">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Добавить информацию о пассажире</string>
@@ -399,6 +400,7 @@
     <string name="kh_uisdk_prebook_picker_title">Время посадки</string>
     <string name="kh_uisdk_prebook_timezone_title">Бронирования совершаются по местному времени</string>
     <string name="kh_uisdk_price">Цена</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Подробная информация о цене</string>
     <string name="kh_uisdk_price_info_text_estimated">Этот перевозчик не является лицензированным такси. Приблизительная сумма, рассчитанная на основе суммы факторов: время, расстояние и т. д. Пожалуйста, ознакомьтесь с Условиями и положениями перевозчика для получения дополнительной информации.</string>
     <string name="kh_uisdk_price_info_text_fixed">Этот перевозчик взимает фиксированную плату за проезд. На окончательный тариф могут повлиять дополнительные услуги (пошлины, задержки и т. д.). Пожалуйста, ознакомьтесь с Условиями и положениями перевозчика.</string>
     <string name="kh_uisdk_price_info_text_metered">Перевозчик предоставляет лицензированные такси со счетчиком. Приблизительная сумма, рассчитанная на основе суммы факторов: время, расстояние и т. д.</string>

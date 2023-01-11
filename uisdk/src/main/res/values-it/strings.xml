@@ -109,6 +109,7 @@
     <string name="kh_uisdk_base">Tariffa base</string>
     <string name="kh_uisdk_base_fare_explanation">La tua tariffa finale potrebbe essere influenzata da mance, pedaggi, tasse e altri costi.</string>
     <string name="kh_uisdk_book_now">CONFERMA E PAGA</string>
+    <string name="kh_uisdk_book_pay">Pagare</string>
     <string name="kh_uisdk_book_return_ride">Prenota corsa di ritorno</string>
     <string name="kh_uisdk_booking_car">PRENOTA CORSA</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi dettagli passeggero</string>
@@ -395,6 +396,7 @@
     <string name="kh_uisdk_prebook_picker_title">Orario di prelievo</string>
     <string name="kh_uisdk_prebook_timezone_title">Le prenotazioni sono effettuate nell’orario locale</string>
     <string name="kh_uisdk_price">Prezzo</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Dettagli sui prezzi</string>
     <string name="kh_uisdk_price_info_text_estimated">Questa flotta offre taxi non regolamentati. Il preventivo è una stima basata su fattori come tempo e distanza totale. Per ulteriori informazioni, controlla i Termini e Condizioni della flotta.</string>
     <string name="kh_uisdk_price_info_text_fixed">Questa flotta addebita una tariffa fissa. La tariffa finale può essere influenzata da costi extra legati ad esempio a pedaggi o ritardi. Per ulteriori informazioni, controlla i Termini e Condizioni della flotta.</string>
     <string name="kh_uisdk_price_info_text_metered">Questa flotta offre taxi con tassametro regolamentati. Il preventivo è una stima basata su fattori come tempo e distanza totale.</string>

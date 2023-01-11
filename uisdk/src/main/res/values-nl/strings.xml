@@ -109,6 +109,7 @@
     <string name="kh_uisdk_base">Basistarief</string>
     <string name="kh_uisdk_base_fare_explanation">Uw uiteindelijke tarief hangt af van fooi, tolgeld, belastingen en andere heffingen.</string>
     <string name="kh_uisdk_book_now">BEVESTIGEN EN BETALEN</string>
+    <string name="kh_uisdk_book_pay">Betalen</string>
     <string name="kh_uisdk_book_return_ride">Retourrit boeken</string>
     <string name="kh_uisdk_booking_car">RIT BOEKEN</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Gegevens passagier toevoegen</string>
@@ -395,6 +396,7 @@
     <string name="kh_uisdk_prebook_picker_title">Ophaaltijd</string>
     <string name="kh_uisdk_prebook_timezone_title">Ritten worden geboekt op de lokale tijd</string>
     <string name="kh_uisdk_price">Prijs</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Prijsdetails</string>
     <string name="kh_uisdk_price_info_text_estimated">Deze ritaanbieder heeft niet-gereguleerde taxi\'s. De offerte is een schatting op basis van factoren zoals tijd en totale afstand. Raadpleeg de algemene voorwaarden van de ritaanbieder voor meer informatie.</string>
     <string name="kh_uisdk_price_info_text_fixed">Deze ritaanbieder rekent een vast tarief. Het uiteindelijke tarief hangt af van eventuele extra kosten, bijvoorbeeld voor tolgeld of vertraging. Raadpleeg de algemene voorwaarden van de ritaanbieder voor meer informatie.</string>
     <string name="kh_uisdk_price_info_text_metered">Deze ritaanbieder werkt met gereguleerde taxi\'s met een taximeter. De offerte is een schatting op basis van factoren zoals tijd en totale afstand.</string>
