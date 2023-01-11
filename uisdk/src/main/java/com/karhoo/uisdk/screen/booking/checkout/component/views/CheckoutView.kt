@@ -79,7 +79,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private lateinit var webViewListener: CheckoutFragmentContract.WebViewListener
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
     private lateinit var bookingListener: CheckoutFragmentContract.BookingListener
-    var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
+    override var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
 
     private var bookingComments: String = ""
 
@@ -124,7 +124,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingCheckoutTravelDetailsView.setOnClickListener {
             showTravelDetailsDialog()
         }
-        bindTravelDetails()
+        presenter.identifyTravelDetails(isPrebook)
 
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
@@ -238,7 +238,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                               DateUtil.getDateFormat(date),
                                               currency)
 
-        bindTravelDetails()
+        presenter.identifyTravelDetails(isPrebook)
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
@@ -508,24 +508,23 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         commentsListener?.invoke(commentBottomSheet)
     }
 
-    private fun bindTravelDetails(){
-        val capabilities = presenter.getCurrentQuote()?.fleet?.capabilities
-        if(isPrebook){
-            if(capabilities?.any { x -> x == CapabilityAdapter.FLIGHT_TRACKING } == true && (presenter.getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT)){
+    override fun bindTravelDetails(poiType: PoiType?){
+        when(poiType){
+            PoiType.AIRPORT -> {
                 bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_airport)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_airport_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
             }
-            if(capabilities?.any { x -> x == CapabilityAdapter.TRAIN_TRACKING } == true && (presenter.getJourneyDetails()?.pickup?.details?.type == PoiType.TRAIN_STATION)){
+            PoiType.TRAIN_STATION -> {
                 bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_train)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_train_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
             }
-        }
-        else{
-            bookingCheckoutTravelDetailsLayout.visibility = GONE
+            else -> {
+                bookingCheckoutTravelDetailsLayout.visibility = GONE
+            }
         }
     }
 
