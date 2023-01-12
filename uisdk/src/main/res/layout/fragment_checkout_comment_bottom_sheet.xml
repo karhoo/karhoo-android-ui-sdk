@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/kh_uisdk_spacing_small">
 
@@ -13,7 +12,6 @@
         android:id="@+id/textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:endIconMode="clear_text"
         android:hint="@string/kh_uisdk_checkout_comments_title"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small">
 

@@ -14,13 +14,19 @@ class CheckoutCommentBottomSheet : MasterBottomSheetFragment() {
     var initialComments: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_checkout_comment_bottom_sheet, container, false)
+        val view =
+            inflater.inflate(R.layout.fragment_checkout_comment_bottom_sheet, container, false)
         setupHeader(view = view, title = getString(R.string.kh_uisdk_checkout_comments_title))
-        setupButton(view = view, buttonId = R.id.checkoutCommentsSave, text = getString(R.string.kh_uisdk_save)) {
+        setupButton(
+            view = view,
+            buttonId = R.id.checkoutCommentsSave,
+            text = getString(R.string.kh_uisdk_save)
+        ) {
             checkoutCommentsEditText.text?.let { onCommentsChanged?.invoke(it.toString()) }
         }
         return view

@@ -513,19 +513,19 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindTravelDetails(poiType: PoiType?){
         when(poiType){
             PoiType.AIRPORT -> {
-                bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_airport)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_airport_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
             }
             PoiType.TRAIN_STATION -> {
-                bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_train)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_train_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
             }
             else -> {
-                bookingCheckoutTravelDetailsLayout.visibility = GONE
+                bookingCheckoutTravelDetailsView.visibility = GONE
             }
         }
     }

@@ -149,17 +149,6 @@ class BookingRobot : BaseTestRobot() {
         clickButton(R.id.checkoutActionButton)
     }
 
-    //TODO: FIX FOR CHECKOUT
-    fun fillGuestDetailsComment() {
-        //        scrollUp(R.id.bookingRequestPassengerDetailsWidget)
-        clickButton(R.id.bookingCommentsInput)
-//        fillTextIsDescendant(
-//                id = R.id.bookingCommentsInput,
-//                resId = R.id.bookingRequestCommentsWidget,
-//                text = "Any comment"
-//                            )
-    }
-
     fun enterCardDetails() {
         clickOnAddCard()
     }
