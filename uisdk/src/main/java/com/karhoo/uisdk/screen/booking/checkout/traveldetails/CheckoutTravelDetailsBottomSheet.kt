@@ -42,12 +42,13 @@ class CheckoutTravelDetailsBottomSheet : MasterBottomSheetFragment() {
             checkoutTravelDetailsTextField.hint = getString(R.string.kh_uisdk_checkout_train_title)
             checkoutTravelDetailsTextField.placeholderText = getString(R.string.kh_uisdk_checkout_train_example)
         }
+        checkoutTravelDetailsSave.enableButton(false)
 
         initialValue?.let {
             checkoutTravelDetailsEditText.setText(it)
+            checkoutTravelDetailsSave.enableButton(true)
         }
 
-        checkoutTravelDetailsSave.enableButton(false)
         checkoutTravelDetailsEditText.addTextChangedListener {
             if(!checkString(it.toString())){
                 checkoutTravelDetailsSave.enableButton(false)

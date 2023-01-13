@@ -15,6 +15,7 @@ import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomShe
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
+import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -89,9 +90,11 @@ interface CheckoutViewContract {
 
         fun isTermsCheckBoxValid(): Boolean
 
-        fun bindTravelDetails(poiType: PoiType?)
+        fun bindTravelDetails(poiType: PoiType?, travelDetails: String?)
 
         var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?
+
+        var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)?
     }
 
     interface Presenter {

@@ -51,7 +51,6 @@ import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomShe
 import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
-import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.VehicleTags
@@ -81,7 +80,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
     private lateinit var bookingListener: CheckoutFragmentContract.BookingListener
     override var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
-    var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)? = null
+    override var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)? = null
 
     private var bookingComments: String = ""
 
@@ -499,7 +498,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         commentsListener?.invoke(commentBottomSheet)
     }
 
-    override fun bindTravelDetails(poiType: PoiType?){
+    override fun bindTravelDetails(poiType: PoiType?, travelDetails: String?){
         when(poiType){
             PoiType.AIRPORT -> {
                 bookingCheckoutTravelDetailsView.visibility = VISIBLE
@@ -509,7 +508,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
                 travelDetails?.let {
                     flightInfo = it
-                    bookingCheckoutTravelDetailsView.setSubtitle(it)
+                    if(it.isNotEmpty())
+                        bookingCheckoutTravelDetailsView.setSubtitle(it)
+                    else
+                        bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
                 }
             }
             PoiType.TRAIN_STATION -> {
@@ -520,7 +522,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
                 travelDetails?.let {
                     trainInfo = it
-                    bookingCheckoutTravelDetailsView.setSubtitle(it)
+                    if(it.isNotEmpty())
+                        bookingCheckoutTravelDetailsView.setSubtitle(it)
+                    else
+                        bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
                 }
             }
             else -> {
@@ -533,13 +538,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         val travelDetailsBottomSheet = CheckoutTravelDetailsBottomSheet().apply {
             isFlight = presenter.getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT
             onValueChanged = {
-                bindTravelDetails(it)
+                bindTravelDetails(if(isFlight) PoiType.AIRPORT else PoiType.TRAIN_STATION, it)
             }
             flightInfo.isNotEmpty().let {
-                initialValue = flightInfo
+                if(it)
+                    initialValue = flightInfo
             }
             trainInfo.isNotEmpty().let {
-                initialValue = trainInfo
+                if(it)
+                    initialValue = trainInfo
             }
         }
         travelDetailsListener?.invoke(travelDetailsBottomSheet)

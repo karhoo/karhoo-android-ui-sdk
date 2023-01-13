@@ -8,7 +8,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
@@ -432,13 +431,13 @@ internal class CheckoutViewPresenter(
         val capabilities = getCurrentQuote()?.fleet?.capabilities
         if (isPrebook) {
             if (capabilities?.contains(CapabilityAdapter.FLIGHT_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT)) {
-                view?.bindTravelDetails(PoiType.AIRPORT)
+                view?.bindTravelDetails(PoiType.AIRPORT, null)
             }
             if (capabilities?.contains(CapabilityAdapter.TRAIN_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.TRAIN_STATION)) {
-                view?.bindTravelDetails(PoiType.TRAIN_STATION)
+                view?.bindTravelDetails(PoiType.TRAIN_STATION, null)
             }
         } else {
-            view?.bindTravelDetails(null)
+            view?.bindTravelDetails(null, null)
         }
     }
 
