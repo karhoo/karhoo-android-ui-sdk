@@ -50,22 +50,24 @@
                 android:visibility="visible"
                 tools:visibility="gone" />
 
-            <LinearLayout
+            <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
+                android:id="@+id/bookingCheckoutPassengerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small" />
+
+            <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
+                android:id="@+id/bookingCheckoutTravelDetailsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:orientation="horizontal">
+             />
 
-                <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
-                    android:id="@+id/bookingCheckoutPassengerView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <com.karhoo.uisdk.screen.booking.checkout.comment.BookingOptionalInfoView
-                android:id="@+id/bookingRequestFlightDetailsWidget"
+            <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
+                android:id="@+id/bookingCheckoutCommentView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
@@ -73,7 +75,7 @@
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.comment.BookingOptionalInfoView
-                android:id="@+id/bookingRequestCommentsWidget"
+                android:id="@+id/bookingRequestFlightDetailsWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"

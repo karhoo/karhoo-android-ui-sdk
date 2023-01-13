@@ -19,12 +19,16 @@ class QuotesErrorViewPresenter : QuotesErrorViewContract.Presenter {
         linkColor: Int
     ): SpannableString {
         val spannableString = SpannableString(baseText)
-        spannableString.setSpan(
-            createClickableSpan(linkColor),
-            baseText.indexOf(keyword),
-            baseText.indexOf(keyword) + keyword.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
+        try{
+            spannableString.setSpan(
+                createClickableSpan(linkColor),
+                baseText.indexOf(keyword),
+                baseText.indexOf(keyword) + keyword.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
 
         return spannableString
     }

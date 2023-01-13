@@ -624,6 +624,8 @@
 
     <style name="KhMasterBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/KhMasterBottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
     </style>
 
     <style name="KhMasterBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
