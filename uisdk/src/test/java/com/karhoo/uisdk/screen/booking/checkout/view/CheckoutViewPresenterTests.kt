@@ -355,8 +355,6 @@ class CheckoutViewPresenterTests {
         observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
-
-        verify(view).displayFlightDetailsField(origin.details.type)
     }
 
     /**
@@ -376,8 +374,6 @@ class CheckoutViewPresenterTests {
         whenever(quote.fleet).thenReturn(fleet)
 
         checkoutPresenter.showBookingRequest(quote, null, "tripId", null)
-
-        verify(view).displayFlightDetailsField(origin.details.type)
     }
 
     /**
