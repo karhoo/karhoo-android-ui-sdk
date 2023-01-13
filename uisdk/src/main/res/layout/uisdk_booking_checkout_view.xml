@@ -25,9 +25,9 @@
                 android:id="@+id/checkoutDateText"
                 style="@style/KhCheckoutDateText"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:layout_height="wrap_content"
                 tools:text="TUESDAY, 26 JULY 2022" />
 
             <com.karhoo.uisdk.screen.address.static.AddressStaticComponent
@@ -133,12 +133,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/kh_uisdk_spacing_small"
-            android:layout_weight="0.3" />
+            android:layout_weight="0.6" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="0.2" />
 
         <com.karhoo.uisdk.base.view.LoadingButtonView
             android:id="@+id/checkoutActionButton"
