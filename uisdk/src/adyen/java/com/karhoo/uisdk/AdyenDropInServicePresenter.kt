@@ -8,6 +8,7 @@ import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.BuildConfig
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.util.ANDROID
 import org.json.JSONObject
@@ -128,6 +129,7 @@ class AdyenDropInServicePresenter(
         val request = JSONObject()
         request.put(PAYMENTS_PAYLOAD, payload)
         request.put(SUPPLY_PARTNER_ID, getSupplyPartnerId())
+        request.put(CONSENT_MODE_SUPPORTED, !KarhooUISDKConfigurationProvider.isGuest())
 
         return request.toString()
     }
@@ -159,6 +161,7 @@ class AdyenDropInServicePresenter(
         const val SUPPLY_PARTNER_ID = "supply_partner_id"
         const val RETURN_URL = "returnUrl"
         const val TRIP_ID = "trip_id"
+        const val CONSENT_MODE_SUPPORTED = "consent_mode_supported"
         const val ACCEPT_HEADER_VALUE =
             "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
     }

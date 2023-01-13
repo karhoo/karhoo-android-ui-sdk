@@ -378,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Er is niets beschikbaar in deze categorie. Kies een andere categorie.</string>
     <string name="kh_uisdk_no_trips">Geen ritten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ongeldig SSL-certificaat</string>
+    <string name="kh_uisdk_now">nu</string>
     <string name="kh_uisdk_offer_expired">Offerte verlopen</string>
     <string name="kh_uisdk_offer_expired_text">Selecteer een nieuwe offerte om door te gaan met boeken</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -411,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Ophaaltijd</string>
     <string name="kh_uisdk_prebook_timezone_title">Ritten worden geboekt op de lokale tijd</string>
     <string name="kh_uisdk_price">Prijs</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Prijsdetails</string>
     <string name="kh_uisdk_price_info_text_estimated">Deze ritaanbieder heeft niet-gereguleerde taxi\'s. De offerte is een schatting op basis van factoren zoals tijd en totale afstand. Raadpleeg de algemene voorwaarden van de ritaanbieder voor meer informatie.</string>
     <string name="kh_uisdk_price_info_text_fixed">Deze ritaanbieder rekent een vast tarief. Het uiteindelijke tarief hangt af van eventuele extra kosten, bijvoorbeeld voor tolgeld of vertraging. Raadpleeg de algemene voorwaarden van de ritaanbieder voor meer informatie.</string>
     <string name="kh_uisdk_price_info_text_metered">Deze ritaanbieder werkt met gereguleerde taxi\'s met een taximeter. De offerte is een schatting op basis van factoren zoals tijd en totale afstand.</string>

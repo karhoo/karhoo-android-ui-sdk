@@ -1,9 +1,12 @@
 package com.karhoo.uisdk.base.bottomSheet
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
@@ -13,15 +16,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.view.LoadingButtonView
 
-
 open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var fullScreen: Boolean = false
 
-    fun setupHeader(view: View, title: String){
+    fun setupHeader(view: View, title: String) {
         val closeDialogButton = view.findViewById<ImageButton>(R.id.masterBottomSheetCloseDialog)
         closeDialogButton?.apply {
-            setOnClickListener { dismiss() }
+            setOnClickListener {
+                hideKeyboardFrom(context, this)
+                dismiss()
+            }
         }
 
         val titleView = view.findViewById<TextView>(R.id.masterBottomSheetTitle)
@@ -30,13 +35,19 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    fun setupButton(view: View, buttonId: Int, text: String, callback: ((() -> Unit) -> Unit)? = null){
+    fun setupButton(
+        view: View,
+        buttonId: Int,
+        text: String,
+        callback: ((() -> Unit) -> Unit)? = null
+    ) {
         val button = view.findViewById<LoadingButtonView>(buttonId)
         button.apply {
             setText(text)
             setOnClickListener {
                 if(button.isButtonEnabled()){
                     callback?.invoke {  }
+                    hideKeyboardFrom(context, this)
                     dismiss()
                 }
             }
@@ -47,7 +58,7 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
         view?.findViewById<LoadingButtonView>(buttonId)?.contentDescription = contentDescription
     }
 
-    fun showFullScreen(manager: FragmentManager, tag: String?){
+    fun showFullScreen(manager: FragmentManager, tag: String?) {
         fullScreen = true
         show(manager, tag)
     }
@@ -57,28 +68,30 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        if(fullScreen){
-            val dialog = BottomSheetDialog(requireContext(), theme)
-            dialog.setOnShowListener {
-
-                val bottomSheetDialog = it as BottomSheetDialog
-                val parentLayout =
-                    bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-                parentLayout?.let { layout ->
-                    val behaviour = BottomSheetBehavior.from(layout)
+        val dialog = BottomSheetDialog(requireContext(), theme)
+        dialog.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            val parentLayout =
+                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+            parentLayout?.let { layout ->
+                val behaviour = BottomSheetBehavior.from(layout)
+                if (fullScreen)
                     setupFullHeight(layout)
-                    behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-                }
+                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
             }
-            return dialog
         }
-        else
-            return super.onCreateDialog(savedInstanceState)
+        return dialog
     }
 
     private fun setupFullHeight(bottomSheet: View) {
         val layoutParams = bottomSheet.layoutParams
         layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT
         bottomSheet.layoutParams = layoutParams
+    }
+
+    open fun hideKeyboardFrom(context: Context, view: View) {
+        val imm: InputMethodManager =
+            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/priceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/priceTypeText"
+            style="@style/KhBookingPriceLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="METERED PRICE:" />
+
+        <TextView
+            android:id="@+id/priceText"
+            style="@style/KhBookingPriceValueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/kh_uisdk_spacing_xxsmall"
+            app:drawableEndCompat="@drawable/uisdk_ic_help"
+            app:drawableTint="@color/kh_uisdk_text_primary"
+            tools:text="£15.50" />
+    </LinearLayout>
+</LinearLayout>

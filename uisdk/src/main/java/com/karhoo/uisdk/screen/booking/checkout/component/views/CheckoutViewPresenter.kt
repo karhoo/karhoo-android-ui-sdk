@@ -13,6 +13,7 @@ import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.sdk.api.model.PoiType
 import com.karhoo.sdk.api.network.request.Luggage
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.request.Passengers
@@ -65,7 +66,8 @@ internal class CheckoutViewPresenter(
         return JourneyDetails(
             date = scheduledDate,
             destination = destination,
-            pickup = origin)
+            pickup = origin
+        )
     }
 
     override fun setJourneyDetails(journeyDetails: JourneyDetails?) {
@@ -137,7 +139,12 @@ internal class CheckoutViewPresenter(
         val date = scheduledDate
         if (date != null) {
             KarhooUISDK.analytics?.tripPrebookConfirmation(tripInfo)
-            view?.showPrebookConfirmationDialog(quote?.quoteType, tripInfo, getJourneyDetails(), quote)
+            view?.showPrebookConfirmationDialog(
+                quote?.quoteType,
+                tripInfo,
+                getJourneyDetails(),
+                quote
+            )
         } else {
             KarhooUISDK.analytics?.paymentSucceed()
             view?.onTripBookedSuccessfully(tripInfo)
@@ -418,6 +425,20 @@ internal class CheckoutViewPresenter(
                     )
                 }
             }
+        }
+    }
+
+    override fun identifyTravelDetails(isPrebook: Boolean) {
+        val capabilities = getCurrentQuote()?.fleet?.capabilities
+        if (isPrebook) {
+            if (capabilities?.contains(CapabilityAdapter.FLIGHT_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT)) {
+                view?.bindTravelDetails(PoiType.AIRPORT)
+            }
+            if (capabilities?.contains(CapabilityAdapter.TRAIN_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.TRAIN_STATION)) {
+                view?.bindTravelDetails(PoiType.TRAIN_STATION)
+            }
+        } else {
+            view?.bindTravelDetails(null)
         }
     }
 

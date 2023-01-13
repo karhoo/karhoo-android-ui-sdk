@@ -382,6 +382,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Przykro nam. Brak ofert dla tej kategorii. Wybierz inną kategorię.</string>
     <string name="kh_uisdk_no_trips">Brak przejazdów</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Nieprawidłowy certyfikat SSL</string>
+    <string name="kh_uisdk_now">teraz</string>
     <string name="kh_uisdk_offer_expired">Oferta wygasła</string>
     <string name="kh_uisdk_offer_expired_text">Wybierz nową ofertę, aby kontynuować rezerwację</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -415,6 +416,7 @@
     <string name="kh_uisdk_prebook_picker_title">Godzina odbioru</string>
     <string name="kh_uisdk_prebook_timezone_title">Rezerwacja zostanie dokonana w czasie lokalnym</string>
     <string name="kh_uisdk_price">Cena</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Cena Szczegóły</string>
     <string name="kh_uisdk_price_info_text_estimated">Ten przewoźnik nie oferuje licencjonowanych przejazdów. Wycena jest szacunkową kwotą opartą na czynnikach podróży (odległość, czas itp.). Aby uzyskać więcej informacji, zapoznaj się z Regulaminem przewoźnika.</string>
     <string name="kh_uisdk_price_info_text_fixed">Ten przewoźnik pobiera opłatę ryczałtową. Na ostateczną cenę mogą mieć wpływ dodatkowe opłaty, np. opłaty drogowe, opłaty za opóźnienia itp. Więcej informacji można znaleźć w Regulaminie przewoźnika.</string>
     <string name="kh_uisdk_price_info_text_metered">Ten przewoźnik oferuje licencjonowane przejazdy rozliczane na podstawie taksometru. Wycena jest szacunkową kwotą opartą na czynnikach podróży (odległość, czas itp.).</string>

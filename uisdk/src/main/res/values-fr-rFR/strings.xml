@@ -123,7 +123,7 @@
     <string name="kh_uisdk_booking_failed">La réservation a échoué</string>
     <string name="kh_uisdk_booking_failed_body">Désolé, la demande est forte en ce moment : aucun chauffeur n’est disponible chez %1$s.</string>
     <string name="kh_uisdk_booking_failed_body_no_fleet_name">Désolé, la demande est forte en ce moment : aucun chauffeur n’est disponible chez le prestataire sélectionné.</string>
-    <string name="kh_uisdk_booking_terms">En effectuant une réservation, vous acceptez les %2$s and %3$s de %1$s ainsi que les %3$s | %5$s de %4$s.</string>
+    <string name="kh_uisdk_booking_terms">En effectuant une réservation, vous acceptez les %1$s et la %2$s, ainsi que la %5$s et les %4$s de %3$s</string>
     <string name="kh_uisdk_booking_terms_and_conditions">Conditions d\'utilisation</string>
     <string name="kh_uisdk_bookings">Réservations</string>
     <string name="kh_uisdk_call">Appeler le chauffeur</string>
@@ -378,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Désolé, aucun véhicule disponible dans cette catégorie. Sélectionnez une autre catégorie.</string>
     <string name="kh_uisdk_no_trips">Aucune réservation</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
+    <string name="kh_uisdk_now">Maintenant</string>
     <string name="kh_uisdk_offer_expired">Offre expirée</string>
     <string name="kh_uisdk_offer_expired_text">Sélectionnez une nouvelle offre pour poursuivre le véhicule</string>
     <string name="kh_uisdk_ok">Ok</string>
@@ -411,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Heure de départ</string>
     <string name="kh_uisdk_prebook_timezone_title">La réservation se fait à l’heure locale</string>
     <string name="kh_uisdk_price">Prix</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Détails des prix</string>
     <string name="kh_uisdk_price_info_text_estimated">Les taxis de ce prestataire ne sont pas réglementés. L’offre est une estimation reposant sur les caractéristiques de la course (distance, temps, etc.). Consultez les conditions générales du prestataire pour plus d\'informations.</string>
     <string name="kh_uisdk_price_info_text_fixed">Ce prestataire applique un tarif forfaitaire. Le tarif final peut être affecté par des extras (péages, retard, etc.), consultez les conditions générales du prestataire pour en savoir plus.</string>
     <string name="kh_uisdk_price_info_text_metered">Les taxis de ce prestataire sont équipés d’un compteur et sont réglementés. L’offre est une estimation reposant sur les caractéristiques de la course (distance, temps, etc.).</string>

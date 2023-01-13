@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
@@ -87,6 +88,10 @@ interface CheckoutViewContract {
         fun getDeviceLocale(): String
 
         fun isTermsCheckBoxValid(): Boolean
+
+        fun bindTravelDetails(poiType: PoiType?)
+
+        var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?
     }
 
     interface Presenter {
@@ -135,6 +140,8 @@ interface CheckoutViewContract {
         fun getCurrentQuote(): Quote?
 
         fun getJourneyDetails(): JourneyDetails?
+
+        fun identifyTravelDetails(isPrebook: Boolean)
     }
 
     interface BookingConfirmationActions {

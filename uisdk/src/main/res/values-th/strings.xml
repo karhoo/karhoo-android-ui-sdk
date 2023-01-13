@@ -376,6 +376,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">ขออภัย ไม่สามารถหายานพาหนะที่พร้อมให้บริการในหมวดหมู่นี้ได้ โปรดเลือกหมวดหมู่อื่น</string>
     <string name="kh_uisdk_no_trips">ไม่มีการเดินทาง</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">ใบรับรอง SSL ไม่ถูกต้อง</string>
+    <string name="kh_uisdk_now">ตอนนี้</string>
     <string name="kh_uisdk_offer_expired">ราคาหมดอายุแล้ว</string>
     <string name="kh_uisdk_offer_expired_text">โปรดเลือกราคาใหม่เพื่อทำการจองของคุณต่อ</string>
     <string name="kh_uisdk_ok">ตกลง</string>
@@ -409,6 +410,7 @@
     <string name="kh_uisdk_prebook_picker_title">เวลารับ</string>
     <string name="kh_uisdk_prebook_timezone_title">การจองจะดำเนินการตามเวลาท้องถิ่น</string>
     <string name="kh_uisdk_price">ราคา</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">รายละเอียดราคา</string>
     <string name="kh_uisdk_price_info_text_estimated">ผู้ให้บริการโดยสารนี้ให้บริการรถแท็กซี่ที่ไม่มีการควบคุม ราคาที่เสนอเป็นการประมาณค่าตามปัจจัยต่างๆ เช่น เวลาและระยะทางรวม โปรดตรวจสอบข้อกำหนดและเงื่อนไขของผู้ให้บริการโดยสารเพื่อดูข้อมูลเพิ่มเติม</string>
     <string name="kh_uisdk_price_info_text_fixed">ผู้ให้บริการโดยสารนี้คิดค่าโดยสารแบบคงที่ ค่าโดยสารสุดท้ายอาจได้รับผลกระทบจากค่าบริการพิเศษ เช่น ค่าผ่านทางหรือความล่าช้า โปรดตรวจสอบข้อกำหนดและเงื่อนไขของผู้ให้บริการโดยสารเพื่อดูข้อมูลเพิ่มเติม</string>
     <string name="kh_uisdk_price_info_text_metered">ผู้ให้บริการโดยสารนี้ให้บริการรถแท็กซี่มิเตอร์ที่มีการควบคุม ราคาที่เสนอเป็นการประมาณค่าตามปัจจัยต่างๆ เช่น เวลาและระยะทางรวม</string>

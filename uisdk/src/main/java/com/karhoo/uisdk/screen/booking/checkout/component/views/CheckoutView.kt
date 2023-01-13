@@ -80,7 +80,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private lateinit var webViewListener: CheckoutFragmentContract.WebViewListener
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
     private lateinit var bookingListener: CheckoutFragmentContract.BookingListener
-    var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
+    override var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
     var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)? = null
 
     private var bookingComments: String = ""
@@ -124,7 +124,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingCheckoutTravelDetailsView.setOnClickListener {
             showTravelDetailsDialog()
         }
-        bindTravelDetails(null)
+        presenter.identifyTravelDetails(isPrebook)
 
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
@@ -233,17 +233,20 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
         isPrebook = true
+
+        bottomPriceView.bindViews(quote, currency)
         bookingRequestPriceWidget.bindPrebook(quote,
                                               time,
                                               DateUtil.getDateFormat(date),
                                               currency)
 
-        bindTravelDetails(null)
+        presenter.identifyTravelDetails(isPrebook)
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
         val currency = Currency.getInstance(quote.price.currencyCode)
 
+        bottomPriceView.bindViews(quote, currency)
         bookingRequestPriceWidget?.bindViews(quote,
                                              context.getString(R.string.kh_uisdk_estimated_arrival_time),
                                              currency)
@@ -496,11 +499,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         commentsListener?.invoke(commentBottomSheet)
     }
 
-    private fun bindTravelDetails(travelDetails: String?){
-        val capabilities = presenter.getCurrentQuote()?.fleet?.capabilities
-        if(isPrebook){
-            if(capabilities?.any { x -> x == CapabilityAdapter.FLIGHT_TRACKING } == true && (presenter.getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT)){
-                bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
+    override fun bindTravelDetails(poiType: PoiType?){
+        when(poiType){
+            PoiType.AIRPORT -> {
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_airport)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_airport_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
@@ -510,8 +512,8 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     bookingCheckoutTravelDetailsView.setSubtitle(it)
                 }
             }
-            if(capabilities?.any { x -> x == CapabilityAdapter.TRAIN_TRACKING } == true && (presenter.getJourneyDetails()?.pickup?.details?.type == PoiType.TRAIN_STATION)){
-                bookingCheckoutTravelDetailsLayout.visibility = VISIBLE
+            PoiType.TRAIN_STATION -> {
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
                 bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_train)
                 bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_train_title))
                 bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
@@ -521,9 +523,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                     bookingCheckoutTravelDetailsView.setSubtitle(it)
                 }
             }
-        }
-        else{
-            bookingCheckoutTravelDetailsLayout.visibility = GONE
+            else -> {
+                bookingCheckoutTravelDetailsView.visibility = GONE
+            }
         }
     }
 
@@ -558,6 +560,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
      */
     override fun showPassengerDetailsLayout(show: Boolean) {
         this.passengersDetailLayout.visibility = if (show) VISIBLE else GONE
+        this.bottomSectionContainer.visibility = if (!show) VISIBLE else GONE
         bookingCheckoutViewLayout.visibility = if (show) GONE else VISIBLE
 
         fillInPassengerDetails(passengersDetailLayout.getPassengerDetails())

@@ -378,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Es gibt keine Verfügbarkeit für diese Kategorie. Bitte wählen Sie eine andere Kategorie.</string>
     <string name="kh_uisdk_no_trips">Keine Fahrten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
+    <string name="kh_uisdk_now">jetzt</string>
     <string name="kh_uisdk_offer_expired">Angebot abgelaufen</string>
     <string name="kh_uisdk_offer_expired_text">Bitte wählen Sie ein neues Angebot aus, um mit Ihrer Buchung fortzufahren</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -411,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Abholzeit</string>
     <string name="kh_uisdk_prebook_timezone_title">Die Buchung wird in Ortszeit vorgenommen</string>
     <string name="kh_uisdk_price">Preis</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Preis Details</string>
     <string name="kh_uisdk_price_info_text_estimated">Diese Flotte bietet nicht regulierte Taxis. Das Angebot ist eine Schätzung auf der Grundlage der Fahrtfaktoren (Entfernung, Zeit usw.). Weitere Informationen entnehmen Sie bitte den Allgemeinen Geschäftsbedingungen der Flotte.</string>
     <string name="kh_uisdk_price_info_text_fixed">Diese Flotte berechnet einen Pauschaltarif. Der Endpreis kann durch Extras (Mautgebühren, Verspätungen usw.) beeinflusst werden. Bitte prüfen Sie die Allgemeinen Geschäftsbedingungen der Flotte.</string>
     <string name="kh_uisdk_price_info_text_metered">Diese Flotte bietet regulierte Taxis mit Taxameter. Das Angebot ist eine Schätzung auf der Grundlage der Fahrtfaktoren (Entfernung, Zeit usw.).</string>

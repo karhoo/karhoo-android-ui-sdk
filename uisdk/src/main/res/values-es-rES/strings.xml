@@ -378,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">No hay disponibilidad en la categoría solicitada. Seleccione otra categoría.</string>
     <string name="kh_uisdk_no_trips">Sin reservas</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificado SSL no válido</string>
+    <string name="kh_uisdk_now">ahora</string>
     <string name="kh_uisdk_offer_expired">Estimación expirada</string>
     <string name="kh_uisdk_offer_expired_text">Seleccione una nueva estimación para continuar con la reserva</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -411,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Hora de recogida</string>
     <string name="kh_uisdk_prebook_timezone_title">La reserva se realizará en hora local</string>
     <string name="kh_uisdk_price">Tarifa</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Detalles de precio</string>
     <string name="kh_uisdk_price_info_text_estimated">Esta flota ofrece taxis no regulados. La estimación se basa en varios factores del viaje, como la distancia y el tiempo. Para más información, consulte los Términos y condiciones de la flota.</string>
     <string name="kh_uisdk_price_info_text_fixed">Esta flota cobra una tarifa plana. La tarifa final puede tener cargos extra, como por peajes o retrasos. Para más información, consulte los Términos y condiciones de la flota.</string>
     <string name="kh_uisdk_price_info_text_metered">Esta flota ofrece taxis con taxímetro regulado. La estimación se basa en varios factores del viaje, como la distancia y el tiempo.</string>
