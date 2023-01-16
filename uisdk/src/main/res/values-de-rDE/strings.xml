@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Ziel hinzufügen</string>
     <string name="kh_uisdk_address_picker_enter_destination">Ziel eingeben</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Abholort eingeben</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Abholung</string>
     <string name="kh_uisdk_address_picker_prebook">Buchen Sie</string>
     <string name="kh_uisdk_adyen_payment_error_10">Die Bank des Käufers unterstützt diese Art von Transaktion nicht oder erlaubt sie nicht.</string>
@@ -117,6 +118,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Fahrgast</string>
     <string name="kh_uisdk_booking_checkout_title">Zur Kasse</string>
     <string name="kh_uisdk_booking_confirmation">Buchung bestätigt</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Zu den Details der Fahrt</string>
     <string name="kh_uisdk_booking_details_error">Ungültige Buchungsdetails</string>
     <string name="kh_uisdk_booking_failed">Buchung fehlgeschlagen</string>
     <string name="kh_uisdk_booking_failed_body">Die Nachfrage ist im Moment sehr hoch. %1$s hat keine verfügbaren Fahrer.</string>
@@ -138,7 +140,17 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Karte</string>
     <string name="kh_uisdk_checked">Geprüft</string>
+    <string name="kh_uisdk_checkout_airport_example">z.B. AF009</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Eine Flugnummer hinzufügen</string>
+    <string name="kh_uisdk_checkout_airport_title">Flugnummer</string>
     <string name="kh_uisdk_checkout_as_guest">FAHRT BUCHEN</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Kommentar für Ihren Fahrer</string>
+    <string name="kh_uisdk_checkout_comments_title">Kommentar</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Nur Buchstaben und Zahlen sind erlaubt</string>
+    <string name="kh_uisdk_checkout_train_example">z.B. 6809</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Eine Zugnummer hinzufügen</string>
+    <string name="kh_uisdk_checkout_train_title">Zugnummer</string>
+    <string name="kh_uisdk_close_the_screen">Schließen Sie den Bildschirm</string>
     <string name="kh_uisdk_completed">Wir hoffen, Sie haben Ihre Fahrt genossen</string>
     <string name="kh_uisdk_confirmed">Ihre Fahrt mit %s wurde bestätigt</string>
     <string name="kh_uisdk_contact">KONTAKT</string>
@@ -151,6 +163,7 @@
     <string name="kh_uisdk_country_search">Land/Region suchen</string>
     <string name="kh_uisdk_current_location">Aktuellen Standort ermitteln</string>
     <string name="kh_uisdk_date">Datum</string>
+    <string name="kh_uisdk_destination">Zielort</string>
     <string name="kh_uisdk_destination_book_error">Sie müssen ein Ziel auswählen, um eine Fahrt zu buchen</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Wir haben Probleme, Ihre Fahrt zu stornieren. Bitte kontaktieren Sie die Flotte.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Schwierigkeiten bei der Stornierung</string>
@@ -244,6 +257,7 @@
     <string name="kh_uisdk_hours_plural.other">%d Stunde</string>
     <string name="kh_uisdk_hours_plural.zero">%d Stunde</string>
     <string name="kh_uisdk_info">Info</string>
+    <string name="kh_uisdk_information">Informationen</string>
     <string name="kh_uisdk_initialised">Karhoo initiiert Ihre Fahrt</string>
     <string name="kh_uisdk_invalid_email">Ungültige E-Mail-Adresse</string>
     <string name="kh_uisdk_invalid_empty_field">Fehlende Informationen</string>
@@ -364,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Es gibt keine Verfügbarkeit für diese Kategorie. Bitte wählen Sie eine andere Kategorie.</string>
     <string name="kh_uisdk_no_trips">Keine Fahrten</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Ungültiges SSL-Zertifikat</string>
+    <string name="kh_uisdk_now">jetzt</string>
     <string name="kh_uisdk_offer_expired">Angebot abgelaufen</string>
     <string name="kh_uisdk_offer_expired_text">Bitte wählen Sie ein neues Angebot aus, um mit Ihrer Buchung fortzufahren</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -387,6 +402,7 @@
     <string name="kh_uisdk_pending">Ausstehend</string>
     <string name="kh_uisdk_permission_rationale_location">Um Sie auf der Karte lokalisieren zu können, benötigen wir den Standort Ihres Geräts. Bitte aktivieren Sie die Berechtigungen zur Standortermittlung</string>
     <string name="kh_uisdk_permissions">BERECHTIGUNGEN</string>
+    <string name="kh_uisdk_pick_up">Abholung</string>
     <string name="kh_uisdk_pickup_time">Abholzeit</string>
     <string name="kh_uisdk_pickup_type_curbside">Bordsteinkante</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and Greet</string>

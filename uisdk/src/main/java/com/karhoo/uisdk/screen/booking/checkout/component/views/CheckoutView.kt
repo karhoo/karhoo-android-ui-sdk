@@ -48,6 +48,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentContract
 import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfirmationView
+import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.service.preference.KarhooPreferenceStore
@@ -70,6 +71,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                                                                                BookingPaymentContract.PaymentViewActions, BookingPaymentContract.PaymentActions,
                                                                                CheckoutViewContract.BookingRequestViewWidget, WebViewActions {
     private var isGuest: Boolean = false
+    private var isPrebook: Boolean = false
 
     private var holdOpenForPaymentFlow = false
 
@@ -78,9 +80,9 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     private lateinit var webViewListener: CheckoutFragmentContract.WebViewListener
     private lateinit var passengersListener: CheckoutFragmentContract.PassengersListener
     private lateinit var bookingListener: CheckoutFragmentContract.BookingListener
+    override var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)? = null
 
-    private val bookingComments: String
-        get() = bookingRequestCommentsWidget.getBookingOptionalInfo()
+    private var bookingComments: String = ""
 
     private val flightInfo: String
         get() = bookingRequestFlightDetailsWidget.getBookingOptionalInfo()
@@ -114,6 +116,16 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         bookingCheckoutPassengerView.setOnClickListener {
             showPassengerDetailsLayout(true)
         }
+
+        bookingCheckoutCommentView.setOnClickListener {
+            showCommentsDialog()
+        }
+        bindComments(null)
+
+        bookingCheckoutTravelDetailsView.setOnClickListener {
+            showTravelDetailsDialog()
+        }
+        presenter.identifyTravelDetails(isPrebook)
 
         passengersDetailLayout.validationCallback = object : PassengerDetailsContract.Validator {
             override fun onFieldsValidated(validated: Boolean) {
@@ -197,7 +209,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
         loadingButtonCallback.onLoadingComplete()
         bookingCheckoutViewLayout.visibility = View.VISIBLE
         comments?.let {
-            bookingRequestCommentsWidget.setBookingOptionalInfo(comments)
+            bindComments(it)
         }
 
         presenter.showBookingRequest(
@@ -225,12 +237,15 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindPrebook(quote: Quote, card: String, date: DateTime) {
         val time = DateUtil.getTimeFormat(context, date)
         val currency = Currency.getInstance(quote.price.currencyCode)
+        isPrebook = true
 
         bottomPriceView.bindViews(quote, currency)
         bookingRequestPriceWidget.bindPrebook(quote,
                                               time,
                                               DateUtil.getDateFormat(date),
                                               currency)
+
+        presenter.identifyTravelDetails(isPrebook)
     }
 
     override fun bindPriceAndEta(quote: Quote, card: String) {
@@ -501,6 +516,57 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
                 context.getString(R.string.kh_uisdk_address_component)
             )
         }
+    }
+
+    private fun bindComments(comments: String?){
+        bookingCheckoutCommentView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_comments)
+
+        bookingCheckoutCommentView.setTitle(context.getString(R.string.kh_uisdk_checkout_comments_title))
+        comments?.let {
+            bookingComments = it
+            if(it.isEmpty())
+                bookingCheckoutCommentView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_comments_subtitle))
+            else
+                bookingCheckoutCommentView.setSubtitle(it)
+        }?: kotlin.run {
+            bookingCheckoutCommentView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_comments_subtitle))
+        }
+    }
+
+    private fun showCommentsDialog(){
+        val commentBottomSheet = CheckoutCommentBottomSheet().apply {
+            onCommentsChanged = {
+                bindComments(it)
+            }
+            bookingComments.isNotEmpty().let {
+                initialComments = bookingComments
+            }
+        }
+        commentsListener?.invoke(commentBottomSheet)
+    }
+
+    override fun bindTravelDetails(poiType: PoiType?){
+        when(poiType){
+            PoiType.AIRPORT -> {
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
+                bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_airport)
+                bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_airport_title))
+                bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
+            }
+            PoiType.TRAIN_STATION -> {
+                bookingCheckoutTravelDetailsView.visibility = VISIBLE
+                bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_train)
+                bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_train_title))
+                bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
+            }
+            else -> {
+                bookingCheckoutTravelDetailsView.visibility = GONE
+            }
+        }
+    }
+
+    private fun showTravelDetailsDialog(){
+        //To be implemented
     }
 
     /**

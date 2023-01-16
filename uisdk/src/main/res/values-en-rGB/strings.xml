@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Add destination</string>
     <string name="kh_uisdk_address_picker_enter_destination">Enter destination</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Enter pickup location</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Pickup</string>
     <string name="kh_uisdk_address_picker_prebook">Book</string>
     <string name="kh_uisdk_adyen_payment_error_10">The shopper\'s bank does not support or does not allow this type of transaction</string>
@@ -117,6 +118,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Passenger</string>
     <string name="kh_uisdk_booking_checkout_title">Checkout</string>
     <string name="kh_uisdk_booking_confirmation">Booking confirmed</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Go to ride details</string>
     <string name="kh_uisdk_booking_details_error">Invalid booking details</string>
     <string name="kh_uisdk_booking_failed">Booking failed</string>
     <string name="kh_uisdk_booking_failed_body">Sorry, demand is high at the moment and %1$s doesn’t have any drivers available.</string>
@@ -138,7 +140,17 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Card</string>
     <string name="kh_uisdk_checked">Checked</string>
+    <string name="kh_uisdk_checkout_airport_example">e.g AF009</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Add a flight number</string>
+    <string name="kh_uisdk_checkout_airport_title">Flight number</string>
     <string name="kh_uisdk_checkout_as_guest">Book a ride</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Comment for your driver</string>
+    <string name="kh_uisdk_checkout_comments_title">Comment</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Only letters and numbers are allowed</string>
+    <string name="kh_uisdk_checkout_train_example">e.g 6809</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Add a train number</string>
+    <string name="kh_uisdk_checkout_train_title">Train number</string>
+    <string name="kh_uisdk_close_the_screen">Close the screen</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your ride</string>
     <string name="kh_uisdk_confirmed">Your ride with %s has been confirmed</string>
     <string name="kh_uisdk_contact">Contact</string>
@@ -151,6 +163,7 @@
     <string name="kh_uisdk_country_search">Search country/region</string>
     <string name="kh_uisdk_current_location">Get current location</string>
     <string name="kh_uisdk_date">Date</string>
+    <string name="kh_uisdk_destination">Destination</string>
     <string name="kh_uisdk_destination_book_error">You must select a destination to book a ride</string>
     <string name="kh_uisdk_difficulties_cancelling_message">We’re having an issue cancelling your ride. Please contact the ride provider.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Difficulties cancelling</string>
@@ -244,6 +257,7 @@
     <string name="kh_uisdk_hours_plural.other">%d hours</string>
     <string name="kh_uisdk_hours_plural.zero">%d hour</string>
     <string name="kh_uisdk_info">Info</string>
+    <string name="kh_uisdk_information">Information</string>
     <string name="kh_uisdk_initialised">Initialising your trip</string>
     <string name="kh_uisdk_invalid_email">Invalid email</string>
     <string name="kh_uisdk_invalid_empty_field">Missing information</string>
@@ -337,7 +351,7 @@
     <string name="kh_uisdk_loyalty_use_points_title">Use your Reward points</string>
     <string name="kh_uisdk_map_selector">Drop pin on map</string>
     <string name="kh_uisdk_meeting_point">Meeting point</string>
-    <string name="kh_uisdk_metered">Metered</string>
+    <string name="kh_uisdk_metered">Metered price</string>
     <string name="kh_uisdk_min">min</string>
     <string name="kh_uisdk_mins">mins</string>
     <plurals name="kh_uisdk_minutes_plurals">
@@ -347,7 +361,7 @@
     </plurals>
     <string name="kh_uisdk_minutes_plurals.one">%d minute</string>
     <string name="kh_uisdk_minutes_plurals.other">%d minutes</string>
-    <string name="kh_uisdk_minutes_plurals.zero">%d minute</string>
+    <string name="kh_uisdk_minutes_plurals.zero">%d minutes</string>
     <string name="kh_uisdk_mobile_phone_number_hint">Mobile phone number</string>
     <string name="kh_uisdk_moto">Motorcycle</string>
     <string name="kh_uisdk_mpv">MPV</string>
@@ -364,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Sorry, there’s no availability for this category. Please choose another category.</string>
     <string name="kh_uisdk_no_trips">No rides</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Invalid SSL certificate</string>
+    <string name="kh_uisdk_now">now</string>
     <string name="kh_uisdk_offer_expired">Quote expired</string>
     <string name="kh_uisdk_offer_expired_text">Please select a new quote to continue your booking</string>
     <string name="kh_uisdk_ok">Ok</string>
@@ -387,6 +402,7 @@
     <string name="kh_uisdk_pending">Pending</string>
     <string name="kh_uisdk_permission_rationale_location">To help us find you, please enable location permissions on your device</string>
     <string name="kh_uisdk_permissions">Permissions</string>
+    <string name="kh_uisdk_pick_up">Pick-up</string>
     <string name="kh_uisdk_pickup_time">Pickup time</string>
     <string name="kh_uisdk_pickup_type_curbside">Kerbside</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and greet</string>
