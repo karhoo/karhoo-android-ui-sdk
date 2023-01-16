@@ -49,7 +49,6 @@
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>
     <string name="kh_uisdk_additional_comments">Additional comments (child seat, wheelchair, etc.)</string>
     <string name="kh_uisdk_address_drop_off">Drop off</string>
-    <string name="kh_uisdk_address_component">NOW</string>
     <string name="kh_uisdk_address_pick_up">Pickup</string>
     <string name="kh_uisdk_address_picker_add_pickup">Add pickup</string>
     <string name="kh_uisdk_address_picker_destination_title">Destination</string>

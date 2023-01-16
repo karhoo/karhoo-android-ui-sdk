@@ -513,7 +513,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
 
             checkoutAddressComponent.setType(
                 AddressStaticComponent.AddressComponentType.WITH_TEXT,
-                context.getString(R.string.kh_uisdk_address_component)
+                context.getString(R.string.kh_uisdk_now)
             )
         }
     }
