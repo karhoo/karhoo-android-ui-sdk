@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/kh_uisdk_spacing_small">
+
+    <include layout="@layout/uisdk_fragment_master_bottom_sheet" />
+
+    <TextView
+        android:id="@+id/checkoutTravelDetailsSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_small_intermediate"
+        android:textColor="@color/textColor"
+        android:textSize="12sp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/KhTextInputLayoutStyle"
+        android:id="@+id/checkoutTravelDetailsTextField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:endIconMode="clear_text"
+        android:hint="@string/kh_uisdk_checkout_airport_title"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/kh_uisdk_error"
+        app:boxStrokeErrorColor="@color/kh_uisdk_error"
+        app:errorIconTint="@color/kh_uisdk_error"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/checkoutTravelDetailsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:gravity="top|start"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.karhoo.uisdk.base.view.LoadingButtonView
+        android:id="@+id/checkoutTravelDetailsSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_margin_medium"
+        />
+</LinearLayout>

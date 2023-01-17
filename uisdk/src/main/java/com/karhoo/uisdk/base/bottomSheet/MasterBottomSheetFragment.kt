@@ -45,9 +45,11 @@ open class MasterBottomSheetFragment : BottomSheetDialogFragment() {
         button.apply {
             setText(text)
             setOnClickListener {
-                callback?.invoke { }
-                hideKeyboardFrom(context, this)
-                dismiss()
+                if(button.isButtonEnabled()){
+                    callback?.invoke {  }
+                    hideKeyboardFrom(context, this)
+                    dismiss()
+                }
             }
         }
     }
