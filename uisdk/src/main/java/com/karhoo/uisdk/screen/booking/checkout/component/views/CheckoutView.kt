@@ -501,36 +501,31 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
     override fun bindTravelDetails(poiType: PoiType?, travelDetails: String?){
         when(poiType){
             PoiType.AIRPORT -> {
-                bookingCheckoutTravelDetailsView.visibility = VISIBLE
-                bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_airport)
-                bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_airport_title))
-                bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
-
-                travelDetails?.let {
-                    flightInfo = it
-                    if(it.isNotEmpty())
-                        bookingCheckoutTravelDetailsView.setSubtitle(it)
-                    else
-                        bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_airport_subtitle))
-                }
+                setTravelDetailsView(true, travelDetails)
             }
             PoiType.TRAIN_STATION -> {
-                bookingCheckoutTravelDetailsView.visibility = VISIBLE
-                bookingCheckoutTravelDetailsView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_train)
-                bookingCheckoutTravelDetailsView.setTitle(context.getString(R.string.kh_uisdk_checkout_train_title))
-                bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
-
-                travelDetails?.let {
-                    trainInfo = it
-                    if(it.isNotEmpty())
-                        bookingCheckoutTravelDetailsView.setSubtitle(it)
-                    else
-                        bookingCheckoutTravelDetailsView.setSubtitle(context.getString(R.string.kh_uisdk_checkout_train_subtitle))
-                }
+                setTravelDetailsView(false, travelDetails)
             }
             else -> {
                 bookingCheckoutTravelDetailsView.visibility = GONE
             }
+        }
+    }
+
+    private fun setTravelDetailsView(isAirport: Boolean, travelDetails: String?){
+        bookingCheckoutTravelDetailsView.visibility = VISIBLE
+        bookingCheckoutTravelDetailsView.setActionIcon(if(isAirport) R.drawable.kh_uisdk_ic_checkout_airport else R.drawable.kh_uisdk_ic_checkout_train)
+        bookingCheckoutTravelDetailsView.setTitle(if(isAirport) context.getString(R.string.kh_uisdk_checkout_airport_title) else context.getString(R.string.kh_uisdk_checkout_train_title))
+        bookingCheckoutTravelDetailsView.setSubtitle(if(isAirport) context.getString(R.string.kh_uisdk_checkout_airport_subtitle) else context.getString(R.string.kh_uisdk_checkout_train_subtitle))
+
+        travelDetails?.let {
+            flightInfo = if(isAirport) it else ""
+            trainInfo = if(!isAirport) it else ""
+
+            if(it.isNotEmpty())
+                bookingCheckoutTravelDetailsView.setSubtitle(it)
+            else
+                bookingCheckoutTravelDetailsView.setSubtitle(if(isAirport) context.getString(R.string.kh_uisdk_checkout_airport_subtitle) else context.getString(R.string.kh_uisdk_checkout_train_subtitle))
         }
     }
 
@@ -540,14 +535,10 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             onValueChanged = {
                 bindTravelDetails(if(isFlight) PoiType.AIRPORT else PoiType.TRAIN_STATION, it)
             }
-            flightInfo.isNotEmpty().let {
-                if(it)
-                    initialValue = flightInfo
-            }
-            trainInfo.isNotEmpty().let {
-                if(it)
-                    initialValue = trainInfo
-            }
+            if(flightInfo.isNotEmpty())
+                initialValue = flightInfo
+            if(trainInfo.isNotEmpty())
+                initialValue = trainInfo
         }
         travelDetailsListener?.invoke(travelDetailsBottomSheet)
     }
