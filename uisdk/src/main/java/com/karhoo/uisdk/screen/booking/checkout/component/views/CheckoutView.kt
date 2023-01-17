@@ -443,6 +443,7 @@ internal class CheckoutView @JvmOverloads constructor(context: Context,
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
+            bookingCheckoutViewLayout.smoothScrollTo(0, bookingRequestTermsWidget.bottom)
         }
         else if (!presenter.isPaymentSet()) {
             bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
