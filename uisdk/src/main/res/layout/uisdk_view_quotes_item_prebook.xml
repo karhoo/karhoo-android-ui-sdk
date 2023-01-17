@@ -54,14 +54,15 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_semi_small"
                 android:orientation="vertical"
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
                 android:paddingEnd="@dimen/kh_uisdk_spacing_x6small">
 
                 <TextView
                     android:id="@+id/categoryText"
                     style="@style/QuotesFontTitleTextAppearance"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium"

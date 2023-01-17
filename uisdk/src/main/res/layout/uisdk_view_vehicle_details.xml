@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="false">
+    android:background="@color/kh_uisdk_background_primary"
+    android:clickable="false"
+    android:padding="@dimen/kh_uisdk_spacing_small">
 
     <ImageView
         android:id="@+id/logoImage"
@@ -16,7 +18,7 @@
         tools:src="@drawable/uisdk_ic_profile" />
 
     <TextView
-        android:id="@+id/quoteNameText"
+        android:id="@+id/vehicleType"
         style="@style/KhBookingQuotesViewFleetTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,33 +26,38 @@
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xxsmall"
         android:ellipsize="end"
         android:maxLines="2"
-        app:layout_constraintEnd_toStartOf="@id/capacityWidget"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/logoImage"
         app:layout_constraintTop_toTopOf="@+id/logoImage"
         tools:text="Karhoo" />
 
-    <TextView
-        android:id="@+id/categoryText"
-        style="@style/KhBookingQuotesViewFleetType"
+    <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
+        android:id="@+id/capacityWidget"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
-        android:maxLines="1"
-        app:layout_constraintStart_toStartOf="@id/quoteNameText"
-        app:layout_constraintTop_toBottomOf="@id/quoteNameText"
-        tools:text="Berline" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+        app:layout_constraintStart_toStartOf="@id/vehicleType"
+        app:layout_constraintTop_toBottomOf="@id/vehicleType" />
+
+    <ImageView
+        android:id="@+id/vehicleLogo"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/uisdk_ic_help"
+        app:layout_constraintBottom_toBottomOf="@id/vehicleFleet"
+        app:layout_constraintStart_toStartOf="@id/capacityWidget"
+        app:layout_constraintTop_toTopOf="@id/vehicleFleet" />
 
     <TextView
-        android:id="@+id/vehicleTags"
+        android:id="@+id/vehicleFleet"
         style="@style/KhBookingQuotesViewFleetType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
-        app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
-        app:layout_constraintStart_toStartOf="@id/categoryText"
-        app:layout_constraintTop_toBottomOf="@id/categoryText"
-        tools:text="Electric Child Seat +3" />
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+        app:layout_constraintStart_toEndOf="@+id/vehicleLogo"
+        app:layout_constraintTop_toBottomOf="@id/capacityWidget"
+        tools:text="Alpha taxi" />
 
     <TextView
         android:id="@+id/bookingQuoteCancellationText"
@@ -61,8 +68,9 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="2"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
         app:layout_constraintEnd_toStartOf="@id/quoteLearnMoreContainer"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/logoImage"
         app:layout_constraintTop_toBottomOf="@id/logoImage"
         tools:text="Free cancellation up to " />
 
@@ -70,12 +78,13 @@
         android:id="@+id/quoteLearnMoreContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
-        android:paddingStart="@dimen/kh_uisdk_spacing_small"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xxxsmall"
         android:orientation="horizontal"
+        android:paddingStart="@dimen/kh_uisdk_spacing_small"
+        android:paddingBottom="@dimen/kh_uisdk_spacing_small"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryText">
+        app:layout_constraintTop_toBottomOf="@id/vehicleType">
 
         <TextView
             android:id="@+id/quoteLearnMore"
@@ -96,35 +105,5 @@
             android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
             android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall" />
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/expandedCapacityList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/bookingQuoteCancellationText"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/fleetDescription"
-        style="@style/KhBookingQuotesViewFleetDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/expandedCapacityList"
-        tools:text="This is a fleet description and it's purpose is to show the description of a fleet. This is part of the Karhoo UI SDK "
-        tools:visibility="visible" />
-
-    <com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
-        android:id="@+id/capacityWidget"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
