@@ -93,7 +93,9 @@ internal class CheckoutFragment : Fragment() {
                     if (checkoutView.arePassengerDetailsValid()) {
                         checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetailsLayout(false)
-                        checkoutActionButton.onLoadingComplete()
+                        passengerActionButton.onLoadingComplete()
+                    } else {
+                        passengerActionButton.onLoadingComplete()
                     }
                 }
             }

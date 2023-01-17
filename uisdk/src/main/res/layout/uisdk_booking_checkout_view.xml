@@ -21,23 +21,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/checkoutDateText"
+                style="@style/KhCheckoutDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+                tools:text="TUESDAY, 26 JULY 2022" />
+
+            <com.karhoo.uisdk.screen.address.static.AddressStaticComponent
+                android:id="@+id/checkoutAddressComponent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesView
                 android:id="@+id/bookingRequestQuotesWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
-                android:paddingStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+                android:paddingStart="@dimen/kh_uisdk_spacing_small"
                 android:paddingEnd="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceView
                 android:id="@+id/bookingRequestPriceWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+                android:layout_margin="@dimen/kh_uisdk_spacing_small"
                 android:visibility="gone" />
 
             <com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
@@ -89,7 +100,7 @@
                 android:id="@+id/bookingRequestTermsWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/kh_uisdk_spacing_small"/>
+                android:layout_margin="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.legalnotice.LegalNoticeView
                 android:id="@+id/checkoutLegalNoticeView"
@@ -115,23 +126,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/kh_uisdk_spacing_small"
-            android:layout_weight="0.3"/>
+            android:layout_weight="0.6" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="0dp"/>
 
         <com.karhoo.uisdk.base.view.LoadingButtonView
             android:id="@+id/checkoutActionButton"
             android:layout_width="0dp"
-            android:layout_weight="0.4"
             android:layout_height="55dp"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
             android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
             android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
+            android:layout_weight="0.4"
             android:visibility="visible" />
     </LinearLayout>
 

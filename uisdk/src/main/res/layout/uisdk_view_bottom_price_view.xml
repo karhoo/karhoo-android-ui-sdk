@@ -17,6 +17,7 @@
             style="@style/KhBookingPriceLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="start"
             tools:text="METERED PRICE:" />
 
         <TextView
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/kh_uisdk_spacing_xxsmall"
+            android:gravity="start"
             app:drawableEndCompat="@drawable/uisdk_ic_help"
             app:drawableTint="@color/kh_uisdk_text_primary"
             tools:text="£15.50" />
