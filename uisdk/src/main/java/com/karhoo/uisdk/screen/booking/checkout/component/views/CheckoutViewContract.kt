@@ -15,6 +15,7 @@ import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomShe
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonState
 import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragmentContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
+import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -33,8 +34,6 @@ interface CheckoutViewContract {
 
         fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean)
 
-        fun displayFlightDetailsField(poiType: PoiType?)
-
         fun initialiseChangeCard(quote: Quote? = null)
 
         fun initialiseGuestPayment(quote: Quote?)
@@ -44,8 +43,6 @@ interface CheckoutViewContract {
         fun onError(error: KarhooError?)
 
         fun onTripBookedSuccessfully(tripInfo: TripInfo)
-
-        fun populateFlightDetailsField(flightNumber: String?)
 
         fun setCapacityAndCapabilities(capabilities: List<Capability>, vehicle: QuoteVehicle)
 
@@ -93,11 +90,13 @@ interface CheckoutViewContract {
 
         fun isTermsCheckBoxValid(): Boolean
 
+        fun bindTravelDetails(poiType: PoiType?, travelDetails: String?)
+
         fun bindAddresses(journeyDetails: JourneyDetails)
 
-        fun bindTravelDetails(poiType: PoiType?)
-
         var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?
+
+        var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)?
     }
 
     interface Presenter {
@@ -115,7 +114,8 @@ interface CheckoutViewContract {
         fun passBackPaymentIdentifiers(identifier: String, tripId: String? = null,
                                        passengerDetails: PassengerDetails? = null,
                                        comments: String,
-                                       flightInfo: String)
+                                       flightInfo: String,
+                                       trainInfo: String? = null)
 
         fun showBookingRequest(quote: Quote, journeyDetails: JourneyDetails?, outboundTripId: String? = null, bookingMetadata:
         HashMap<String, String>? = null, passengerDetails: PassengerDetails? = null)

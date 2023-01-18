@@ -8,7 +8,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Poi
 import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
@@ -212,7 +211,8 @@ internal class CheckoutViewPresenter(
         tripId: String?,
         passengerDetails: PassengerDetails?,
         comments: String,
-        flightInfo: String
+        flightInfo: String,
+        trainInfo: String?
     ) {
         val passenger = passengerDetails ?: getPassengerDetailsFromUserStore()
 
@@ -236,6 +236,7 @@ internal class CheckoutViewPresenter(
             TripBooking(
                 comments = comments,
                 flightNumber = flight,
+                trainNumber = trainInfo,
                 meta = metadata,
                 nonce = identifier,
                 quoteId = quote?.id.orEmpty(),
@@ -307,12 +308,6 @@ internal class CheckoutViewPresenter(
             KarhooUISDK.analytics?.checkoutOpened(quote = quote)
             this.outboundTripId = outboundTripId
             handleBookingType(quote)
-            when (origin?.poiType) {
-                Poi.ENRICHED -> {
-                    view?.displayFlightDetailsField(origin?.details?.type)
-                }
-                else -> view?.displayFlightDetailsField(null)
-            }
             view?.setCapacityAndCapabilities(
                 createCapabilityByType(
                     quote.fleet.capabilities,
@@ -436,13 +431,13 @@ internal class CheckoutViewPresenter(
         val capabilities = getCurrentQuote()?.fleet?.capabilities
         if (isPrebook) {
             if (capabilities?.contains(CapabilityAdapter.FLIGHT_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.AIRPORT)) {
-                view?.bindTravelDetails(PoiType.AIRPORT)
+                view?.bindTravelDetails(PoiType.AIRPORT, null)
             }
             if (capabilities?.contains(CapabilityAdapter.TRAIN_TRACKING) == true && (getJourneyDetails()?.pickup?.details?.type == PoiType.TRAIN_STATION)) {
-                view?.bindTravelDetails(PoiType.TRAIN_STATION)
+                view?.bindTravelDetails(PoiType.TRAIN_STATION, null)
             }
         } else {
-            view?.bindTravelDetails(null)
+            view?.bindTravelDetails(null, null)
         }
     }
 

@@ -52,6 +52,10 @@ class LoadingButtonView @JvmOverloads constructor(context: Context,
         bookingButtonLayout.isEnabled = enable
     }
 
+    fun isButtonEnabled(): Boolean {
+        return bookingButtonLayout.isEnabled
+    }
+
     interface Actions {
         fun onLoadingButtonClick()
     }
