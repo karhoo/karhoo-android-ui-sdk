@@ -91,7 +91,7 @@ interface CheckoutViewContract {
         fun isTermsCheckBoxValid(): Boolean
 
         fun bindTravelDetails(poiType: PoiType?, travelDetails: String?)
-        
+
         fun bindAddresses(journeyDetails: JourneyDetails)
 
         var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?

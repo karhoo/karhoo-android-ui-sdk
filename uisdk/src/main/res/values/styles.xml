@@ -848,6 +848,7 @@
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:background">@color/kh_uisdk_background2</item>
         <item name="android:maxLines">2</item>
     </style>
 
