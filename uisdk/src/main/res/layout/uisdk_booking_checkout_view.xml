@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/kh_uisdk_background1"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/kh_uisdk_spacing_xsmall">
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/bookingCheckoutViewLayout"
@@ -24,10 +23,12 @@
             <TextView
                 android:id="@+id/checkoutDateText"
                 style="@style/KhCheckoutDateText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+                android:background="@color/kh_uisdk_background_primary"
+                android:paddingStart="@dimen/kh_uisdk_spacing_small"
+                android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+                android:paddingEnd="@dimen/kh_uisdk_spacing_small"
                 tools:text="TUESDAY, 26 JULY 2022" />
 
             <com.karhoo.uisdk.screen.address.static.AddressStaticComponent
@@ -35,14 +36,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesView
+            <com.karhoo.uisdk.screen.booking.checkout.quotes.BookingVehicleDetailsView
                 android:id="@+id/bookingRequestQuotesWidget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
-                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small"
-                android:paddingStart="@dimen/kh_uisdk_spacing_small"
-                android:paddingEnd="@dimen/kh_uisdk_spacing_small" />
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.component.views.BookingPriceView
                 android:id="@+id/bookingRequestPriceWidget"
@@ -74,8 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
-                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-             />
+                android:layout_marginEnd="@dimen/kh_uisdk_spacing_small" />
 
             <com.karhoo.uisdk.screen.booking.checkout.component.views.ActionCellView
                 android:id="@+id/bookingCheckoutCommentView"

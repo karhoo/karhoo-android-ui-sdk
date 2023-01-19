@@ -146,7 +146,8 @@
     <dimen name="kh_uisdk_flight_details_line_spacing">4sp</dimen>
     <dimen name="kh_uisdk_quotes_logo_size">72dp</dimen>
     <dimen name="kh_uisdk_quote_action_view_size">24dp</dimen>
-    <dimen name="kh_uisdk_capacity_image_size">24dp</dimen>
+    <dimen name="kh_uisdk_capacity_image_size">16dp</dimen>
+    <dimen name="kh_uisdk_capacity_image_size_small">16dp</dimen>
 
     <!--Grid spacing-->
     <dimen name="kh_uisdk_spacing_grid_row">12dp</dimen>

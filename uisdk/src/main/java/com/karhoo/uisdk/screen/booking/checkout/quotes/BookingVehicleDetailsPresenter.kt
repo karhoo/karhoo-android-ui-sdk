@@ -11,7 +11,7 @@ import com.karhoo.uisdk.util.VehicleTags
 import com.karhoo.uisdk.util.extension.getCancellationText
 import java.util.Locale
 
-class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP.Presenter {
+class BookingVehicleDetailsPresenter(val view: BookingVehicleDetailsMVP.View) : BookingVehicleDetailsMVP.Presenter {
     override fun checkCancellationSLAMinutes(context: Context, serviceCancellation: ServiceCancellation?, isPrebook: Boolean) {
         val text = serviceCancellation?.getCancellationText(context, isPrebook)
 
@@ -21,10 +21,6 @@ class BookingQuotesPresenter(val view: BookingQuotesMVP.View) : BookingQuotesMVP
             view.setCancellationText(text)
             view.showCancellationText(true)
         }
-    }
-
-    override fun capitalizeCategory(category: String) {
-        view.setCategoryText(category.capitalize(Locale.getDefault()))
     }
 
     override fun createTagsString(tags: List<VehicleTags>, resources: Resources, shortVersion: Boolean): Spannable {

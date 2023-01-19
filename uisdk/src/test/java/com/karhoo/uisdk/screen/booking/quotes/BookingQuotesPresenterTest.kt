@@ -3,8 +3,8 @@ package com.karhoo.uisdk.screen.booking.quotes
 import android.content.Context
 import android.content.res.Resources
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesMVP
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesPresenter
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingVehicleDetailsMVP
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingVehicleDetailsPresenter
 import com.karhoo.uisdk.screen.booking.quotes.mocks.BookingQuotesViewMock
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest
 import com.karhoo.uisdk.screen.rides.upcoming.card.UpcomingRideCardPresenterTest.Companion.TEST_CANCELLATION_DRIVER_EN_ROUTE_TEXT
@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class BookingQuotesPresenterTest {
     private val view: BookingQuotesViewMock = BookingQuotesViewMock()
-    private val presenter: BookingQuotesMVP.Presenter = BookingQuotesPresenter(view)
+    private val presenter: BookingVehicleDetailsMVP.Presenter = BookingVehicleDetailsPresenter(view)
     private val testContext: Context = mock()
     private var resources: Resources = mock()
 
@@ -38,13 +38,6 @@ class BookingQuotesPresenterTest {
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_start)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_START)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_before_pickup_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_BEFORE_PICKUP_END)
         whenever(testContext.getString(R.string.kh_uisdk_quote_cancellation_after_booking_ending)).thenReturn(ServiceCancellationExtTests.TEST_CANCELLATION_TEXT_AFTER_BOOKING_END)
-    }
-
-    @Test
-    fun `When receiving a vehicle category, it's name is capitalized`() {
-        presenter.capitalizeCategory(TEST_STRING)
-
-        assertEquals(view.catgText, TEST_STRING[0].toUpperCase() + TEST_STRING.substring(1))
     }
 
     @Test
