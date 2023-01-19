@@ -474,7 +474,9 @@ internal class CheckoutView @JvmOverloads constructor(
             val shake: Animation = AnimationUtils.loadAnimation(context, R.anim.uisdk_shake_control)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.startAnimation(shake)
             bookingRequestTermsWidget.khTermsAndConditionsCheckBox.requestFocus()
-        } else if (!presenter.isPaymentSet()) {
+            bookingCheckoutViewLayout.smoothScrollTo(0, bookingRequestTermsWidget.bottom)
+        }
+        else if (!presenter.isPaymentSet()) {
             bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             bookingPaymentHandler.changeCard()
         } else {
