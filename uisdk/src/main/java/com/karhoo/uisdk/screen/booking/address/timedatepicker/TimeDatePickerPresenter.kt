@@ -19,7 +19,13 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
 
     private val timezone: DateTimeZone
-        get() = DateTimeZone.forID(journeyDetailsStateViewModel?.currentState?.pickup?.timezone.orEmpty())
+    get() {
+        return try {
+            DateTimeZone.forID(journeyDetailsStateViewModel?.currentState?.pickup?.timezone.orEmpty())
+        } catch(e: IllegalArgumentException) {
+            DateTimeZone.forID(TIMEZONE_DEFAULT_EUROPE)
+        }
+    }
 
     private val nowPlusOneHour: DateTime
         get() = DateTime.now(timezone).plusMinutes(MAX_MINUTES)
@@ -165,6 +171,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         const val TIME_ROUND_TO_FIVE = 5
         const val OURS_IN_DAY = 24
         const val OURS_IN_DAY_MINUS_ONE = OURS_IN_DAY - 1
+        const val TIMEZONE_DEFAULT_EUROPE = "Europe/Paris"
     }
 
 }
