@@ -63,10 +63,12 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
                                                      .DestinationAddressEvent(destinationLocationInfo))
     }
 
-    override fun dateSet(date: DateTime) {
+    override fun dateSet(date: DateTime?) {
         journeyDetailsStateViewModel?.process(AddressBarViewContract.AddressBarEvent.BookingDateEvent(date))
-        if (!scheduledDateInvalid()) {
+        if (!scheduledDateInvalid() && date != null) {
             view?.displayPrebookTime(date)
+        } else {
+            view?.resetDateField()
         }
     }
 

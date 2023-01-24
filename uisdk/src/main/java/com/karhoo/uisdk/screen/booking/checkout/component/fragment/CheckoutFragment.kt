@@ -28,6 +28,8 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DROPOFF_ADDRESS
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import kotlinx.coroutines.GlobalScope
@@ -238,6 +240,14 @@ internal class CheckoutFragment : Fragment() {
             intent.putExtra(
                 QUOTES_SELECTED_DATE,
                 arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.date
+            )
+            intent.putExtra(
+                QUOTES_PICKUP_ADDRESS,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.pickup
+            )
+            intent.putExtra(
+                QUOTES_DROPOFF_ADDRESS,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.destination
             )
             KarhooAvailability.pauseUpdates(fromBackButton = true)
             activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)
