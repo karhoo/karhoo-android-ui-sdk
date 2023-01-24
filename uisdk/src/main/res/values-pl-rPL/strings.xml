@@ -127,7 +127,7 @@
     <string name="kh_uisdk_booking_terms_and_conditions">Warunki użytkowania</string>
     <string name="kh_uisdk_bookings">Rezerwacje</string>
     <string name="kh_uisdk_call">POŁĄCZ Z KIEROWCĄ</string>
-    <string name="kh_uisdk_cancel">ANULUJ</string>
+    <string name="kh_uisdk_cancel">Anuluj</string>
     <string name="kh_uisdk_cancel_ride">Anuluj przejazd</string>
     <string name="kh_uisdk_cancel_ride_successful">Anulowanie Twojego przejazdu powiodło się</string>
     <string name="kh_uisdk_cancel_ride_successful_message">Twój przejazd został anulowany.</string>
@@ -243,7 +243,7 @@
     <string name="kh_uisdk_flight_number">Numer lotu (opcjonalnie)</string>
     <string name="kh_uisdk_flight_tracking">Śledzenie lotu</string>
     <string name="kh_uisdk_forgotten_password">Nie pamiętasz hasła?</string>
-    <string name="kh_uisdk_free_cancellation_asap">Bezpłatna anulacja do %1$s po dokonaniu rezerwacji</string>
+    <string name="kh_uisdk_free_cancellation_asap">Bezpłatne anulowanie do %1$s po dokonaniu rezerwacji</string>
     <string name="kh_uisdk_got_it">ROZUMIEM</string>
     <string name="kh_uisdk_gps_tracking">Śledzenie GPS</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Metody płatności</string>
@@ -498,7 +498,7 @@
     <string name="kh_uisdk_signup_pending_message">Powiadomimy Cię e-mailem, gdy Twoja prośba zostanie przetworzona.</string>
     <string name="kh_uisdk_something_went_wrong">Ups! Coś poszło nie tak</string>
     <string name="kh_uisdk_something_went_wrong_select_another_quote">Przykro nam, coś poszło nie tak. Spróbuj ponownie lub wybierz inną ofertę.</string>
-    <string name="kh_uisdk_sort_by">Sortuj według</string>
+    <string name="kh_uisdk_sort_by">Sortuj</string>
     <string name="kh_uisdk_staging_link">https://agent-portal.stg.karhoo.net/follow/</string>
     <string name="kh_uisdk_star_excellent">Doskonale</string>
     <string name="kh_uisdk_star_fair">Średnio</string>
