@@ -402,7 +402,7 @@
     <string name="kh_uisdk_pending">En attente</string>
     <string name="kh_uisdk_permission_rationale_location">Activez le service de localisation pour nous aider à vous trouver</string>
     <string name="kh_uisdk_permissions">Autorisations</string>
-    <string name="kh_uisdk_pick_up">Pick-up</string>
+    <string name="kh_uisdk_pick_up">Adresse de départ</string>
     <string name="kh_uisdk_pickup_time">Heure de départ</string>
     <string name="kh_uisdk_pickup_type_curbside">Prise en charge à l\'extérieur</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Accueil pancarte</string>
