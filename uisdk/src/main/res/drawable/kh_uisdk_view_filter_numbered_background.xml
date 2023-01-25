@@ -16,7 +16,7 @@
 
         <path
             android:pathData="M0.5 0.5V52.5H343.5V0.5"
-            android:fillColor="@color/kh_uisdk_background_primary"
+            android:fillColor="@color/kh_uisdk_background2"
             />
 
     </group>

@@ -4,5 +4,5 @@
         android:width="1dp"
         android:color="@color/kh_uisdk_border"/>
     <corners android:radius="@dimen/kh_uisdk_quote_item_corner_radius" />
-    <solid android:color="@color/kh_uisdk_background_primary" />
+    <solid android:color="@color/kh_uisdk_background2" />
 </shape>

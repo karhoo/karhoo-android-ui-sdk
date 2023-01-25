@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:textColor="@color/textColor"
+        android:textColor="@color/kh_uisdk_text_primary"
         android:textSize="12sp"
         />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         app:endIconMode="clear_text"
         android:hint="@string/kh_uisdk_checkout_airport_title"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small"
         app:errorEnabled="true"
         app:errorTextColor="@color/kh_uisdk_error"
         app:boxStrokeErrorColor="@color/kh_uisdk_error"
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:gravity="top|start"
+            android:textColor="@color/kh_uisdk_text_primary"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
