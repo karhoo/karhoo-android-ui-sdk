@@ -342,7 +342,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s points Reward seront ajoutés à votre compte à la fin de la course</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Désolé, vous ne pouvez utiliser vos points Reward</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Votre solde de points Reward n\'est pas suffisant pour payer cette course</string>
-    <string name="kh_uisdk_loyalty_separator">Ou</string>
+    <string name="kh_uisdk_loyalty_separator">OU</string>
     <string name="kh_uisdk_loyalty_title">Points Reward</string>
     <string name="kh_uisdk_loyalty_unknown_error">Une erreur s’est produite. Pour gagner ou utiliser des points Reward, merci de réessayer plus tard.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Désolé, cette devise n\'est pas prise en charge.</string>
@@ -402,7 +402,7 @@
     <string name="kh_uisdk_pending">En attente</string>
     <string name="kh_uisdk_permission_rationale_location">Activez le service de localisation pour nous aider à vous trouver</string>
     <string name="kh_uisdk_permissions">Autorisations</string>
-    <string name="kh_uisdk_pick_up">Pick-up</string>
+    <string name="kh_uisdk_pick_up">Adresse de départ</string>
     <string name="kh_uisdk_pickup_time">Heure de départ</string>
     <string name="kh_uisdk_pickup_type_curbside">Prise en charge à l\'extérieur</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Accueil pancarte</string>

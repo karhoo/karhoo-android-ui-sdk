@@ -342,7 +342,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Aan het eind van deze rit worden er %1$s Reward-punten aan uw saldo toegevoegd</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">U kunt geen punten gebruiken</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Uw puntensaldo is niet voldoende om deze rit te betalen</string>
-    <string name="kh_uisdk_loyalty_separator">Of</string>
+    <string name="kh_uisdk_loyalty_separator">OF</string>
     <string name="kh_uisdk_loyalty_title">Reward-punten</string>
     <string name="kh_uisdk_loyalty_unknown_error">Er is een fout opgetreden. Probeer later opnieuw om Reward-punten te verdienen of te gebruiken.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Fout: deze valuta wordt niet ondersteund</string>

@@ -342,7 +342,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s Treuepunkte werden Ihnen am Ende der Fahrt gutgeschrieben</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Sie können keine Punkte verwenden</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Ihr Guthaben reicht nicht aus, um diese Fahrt mit Punkten zu bezahlen</string>
-    <string name="kh_uisdk_loyalty_separator">Oder</string>
+    <string name="kh_uisdk_loyalty_separator">ODER</string>
     <string name="kh_uisdk_loyalty_title">Prämienpunkte</string>
     <string name="kh_uisdk_loyalty_unknown_error">Ein Fehler ist aufgetreten. Um Treuepunkte zu sammeln oder zu verwenden, versuchen Sie es bitte später noch einmal.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Fehler: Die Währung wird nicht unterstützt</string>

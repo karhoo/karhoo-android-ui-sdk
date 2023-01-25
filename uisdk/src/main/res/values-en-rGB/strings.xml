@@ -342,7 +342,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">%1$s Reward points will be added to your balance at the end of this ride</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Sorry, you’re not able to use Reward points</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Your balance is too low to pay with Reward points for this ride</string>
-    <string name="kh_uisdk_loyalty_separator">Or</string>
+    <string name="kh_uisdk_loyalty_separator">OR</string>
     <string name="kh_uisdk_loyalty_title">Reward points</string>
     <string name="kh_uisdk_loyalty_unknown_error">An error has occurred. To earn or use Reward points, please try again later.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Sorry, this currency is not supported.</string>

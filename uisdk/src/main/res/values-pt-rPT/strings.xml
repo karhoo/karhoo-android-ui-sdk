@@ -342,7 +342,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Serão adicionados %1$s pontos Reward ao seu saldo no final desta viagem</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Lamentamos, não está autorizado a utilizar pontos Reward</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">O seu saldo de pontos Reward não é suficiente para pagar esta viagem</string>
-    <string name="kh_uisdk_loyalty_separator">Ou</string>
+    <string name="kh_uisdk_loyalty_separator">OU</string>
     <string name="kh_uisdk_loyalty_title">Pontos Reward</string>
     <string name="kh_uisdk_loyalty_unknown_error">Ocorreu um erro. Para ganhar ou utilizar pontos Reward, tente novamente mais tarde.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Erro: moeda não suportada</string>
