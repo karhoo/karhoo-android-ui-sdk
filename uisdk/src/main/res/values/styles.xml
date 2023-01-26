@@ -314,12 +314,12 @@
 
     <style name="KhBookingQuotesViewFleetType">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_secondary_text</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetCancellation">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetDescription">
@@ -736,6 +736,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>

@@ -2,8 +2,8 @@
     android:shape="rectangle">
     <gradient
         android:angle="0"
-        android:endColor="@color/kh_uisdk_ButtonEnabledColor"
-        android:startColor="@color/kh_uisdk_ButtonEnabledColor"
+        android:endColor="@color/kh_uisdk_secondary"
+        android:startColor="@color/kh_uisdk_secondary"
         android:type="linear" />
     <corners android:radius="12dp" />
 </shape>

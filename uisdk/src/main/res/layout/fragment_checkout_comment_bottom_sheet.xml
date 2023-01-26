@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/kh_uisdk_checkout_comments_title"
-        android:layout_marginTop="@dimen/kh_uisdk_spacing_medium_small">
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/checkoutCommentsEditText"
@@ -22,6 +22,7 @@
             android:minLines="3"
             android:maxLines="3"
             android:gravity="top|start"
+            android:textColor="@color/kh_uisdk_text_primary"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

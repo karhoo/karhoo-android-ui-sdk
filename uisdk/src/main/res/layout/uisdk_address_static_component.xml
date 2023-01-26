@@ -5,7 +5,7 @@
     android:id="@+id/staticAddressComponentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/kh_uisdk_background_primary"
+    android:background="@color/kh_uisdk_background2"
     android:padding="@dimen/kh_uisdk_spacing_small">
 
     <View
