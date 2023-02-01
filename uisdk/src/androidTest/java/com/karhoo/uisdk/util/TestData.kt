@@ -120,6 +120,13 @@ class TestData {
                 timezone = "Europe/London",
                 poiType = Poi.NOT_SET)
 
+        val TRIP_LOCATION_INFO_PICKUP_ = TripLocationInfo(
+            displayAddress = "Otopeni Terminal 7",
+            position = TRIP_POSITION_PICKUP,
+            placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
+            timezone = "Europe/London",
+            poiType = Poi.ENRICHED)
+
         val PRICE = Price(
                 total = 3550,
                 currency = DEFAULT_CURRENCY)
@@ -222,7 +229,7 @@ class TestData {
          */
         val QUOTE_LIST_ID_ASAP = QuoteId(quoteId = "eb00db4d-44bb-11e9-bdab-0a580a04005f")
 
-        val QUOTE_PRICE = QuotePrice(currencyCode = "DEFAULT_CURRENCY",
+        val QUOTE_PRICE = QuotePrice(currencyCode = DEFAULT_CURRENCY,
                                      highPrice = 577,
                                      lowPrice = 577)
 
