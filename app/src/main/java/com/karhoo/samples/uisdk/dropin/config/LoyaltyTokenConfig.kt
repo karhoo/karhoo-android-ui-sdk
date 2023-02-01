@@ -43,5 +43,9 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         sdkAuthenticationRequired?.invoke(callback)
     }
+
+    override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
+        return true
+    }
 }
 

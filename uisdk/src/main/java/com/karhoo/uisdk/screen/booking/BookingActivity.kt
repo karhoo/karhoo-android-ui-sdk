@@ -295,7 +295,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
                 startQuoteListActivity(
                     restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED,
-                    validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0)
+                    validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0),
+                    restoredJourneyData = extractJourneyDetails(data)
                 )
             }
             resultCode == QUOTES_CANCELLED -> {
@@ -311,6 +312,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun extractJourneyDetails(data: Intent?): JourneyDetails {
+        return JourneyDetails(
+            data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
+            data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: journeyDetailsStateViewModel.currentState.destination,
+            data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime?
+        )
     }
 
     override fun onBackPressed() {
@@ -382,13 +391,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 .quote(quote)
                 .outboundTripId(outboundTripId)
                 .bookingMetadata(bookingMetadata)
-                .journeyDetails(
-                    JourneyDetails(
-                        data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
-                        data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: journeyDetailsStateViewModel.currentState.destination,
-                        data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime ?: journeyDetailsStateViewModel.currentState.date
-                    )
-                )
+                .journeyDetails(extractJourneyDetails(data))
 
             passengerDetails?.let {
                 builder.passengerDetails(it)
@@ -416,8 +419,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null) {
-        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(journeyDetailsStateViewModel.viewStates().value)
+    private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null, restoredJourneyData: JourneyDetails? = null) {
+        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(restoredJourneyData ?: journeyDetailsStateViewModel.viewStates().value)
         validityTimestamp?.let {
             builder.validityTimestamp(validityTimestamp)
         }

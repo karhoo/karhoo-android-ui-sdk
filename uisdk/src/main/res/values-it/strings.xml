@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Aggiungi destinazione</string>
     <string name="kh_uisdk_address_picker_enter_destination">Inserisci destinazione</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Inserisci luogo del prelievo</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Raccogliere</string>
     <string name="kh_uisdk_address_picker_prebook">Libro</string>
     <string name="kh_uisdk_adyen_payment_error_10">La banca dell\'acquirente non supporta o non consente questo tipo di transazione</string>
@@ -109,6 +110,7 @@
     <string name="kh_uisdk_base">Tariffa base</string>
     <string name="kh_uisdk_base_fare_explanation">La tua tariffa finale potrebbe essere influenzata da mance, pedaggi, tasse e altri costi.</string>
     <string name="kh_uisdk_book_now">CONFERMA E PAGA</string>
+    <string name="kh_uisdk_book_pay">Pagare</string>
     <string name="kh_uisdk_book_return_ride">Prenota corsa di ritorno</string>
     <string name="kh_uisdk_booking_car">PRENOTA CORSA</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Aggiungi dettagli passeggero</string>
@@ -116,6 +118,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Passeggero</string>
     <string name="kh_uisdk_booking_checkout_title">Checkout</string>
     <string name="kh_uisdk_booking_confirmation">Prenotazione confermata</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Vai ai dettagli della corsa</string>
     <string name="kh_uisdk_booking_details_error">Dettagli della prenotazione non validi</string>
     <string name="kh_uisdk_booking_failed">Prenotazione non riuscita</string>
     <string name="kh_uisdk_booking_failed_body">Siamo spiacenti, la domanda è alta al momento e %1$s non ha conducenti disponibili.</string>
@@ -137,7 +140,17 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Carta</string>
     <string name="kh_uisdk_checked">Visualizzata</string>
+    <string name="kh_uisdk_checkout_airport_example">ad esempio AF009</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Aggiungi un numero di volo</string>
+    <string name="kh_uisdk_checkout_airport_title">Numero del volo</string>
     <string name="kh_uisdk_checkout_as_guest">PRENOTA CORSA</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Commenta per il tuo autista</string>
+    <string name="kh_uisdk_checkout_comments_title">Commento</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Sono consentiti solo lettere e numeri</string>
+    <string name="kh_uisdk_checkout_train_example">ad esempio 6809</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Aggiungi un numero di treno</string>
+    <string name="kh_uisdk_checkout_train_title">Numero del treno</string>
+    <string name="kh_uisdk_close_the_screen">Chiudi lo schermo</string>
     <string name="kh_uisdk_completed">Speriamo che la tua corsa sia stata piacevole</string>
     <string name="kh_uisdk_confirmed">La tua corsa con %s è stata confermata</string>
     <string name="kh_uisdk_contact">CONTATTO</string>
@@ -150,6 +163,7 @@
     <string name="kh_uisdk_country_search">Cerca paese/regione</string>
     <string name="kh_uisdk_current_location">Ottieni posizione attuale</string>
     <string name="kh_uisdk_date">Data</string>
+    <string name="kh_uisdk_destination">Destinazione</string>
     <string name="kh_uisdk_destination_book_error">Devi selezionare una destinazione per prenotare una corsa</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Stiamo riscontrando un problema con la cancellazione della tua corsa. Contatta la flotta.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Difficoltà di cancellazione</string>
@@ -243,6 +257,7 @@
     <string name="kh_uisdk_hours_plural.other">%d ora</string>
     <string name="kh_uisdk_hours_plural.zero">%d ora</string>
     <string name="kh_uisdk_info">Informazioni</string>
+    <string name="kh_uisdk_information">Informazioni</string>
     <string name="kh_uisdk_initialised">stiamo iniziando il tuo viaggio</string>
     <string name="kh_uisdk_invalid_email">E-mail non valida</string>
     <string name="kh_uisdk_invalid_empty_field">Informazioni mancanti</string>
@@ -363,6 +378,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Siamo spiacenti, non c’è disponibilità per questa categoria. Scegli un\'altra categoria.</string>
     <string name="kh_uisdk_no_trips">Nessuna corsa</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificato SSL non valido</string>
+    <string name="kh_uisdk_now">adesso</string>
     <string name="kh_uisdk_offer_expired">Preventivo scaduto</string>
     <string name="kh_uisdk_offer_expired_text">Seleziona un nuovo preventivo per continuare con la prenotazione</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -386,6 +402,7 @@
     <string name="kh_uisdk_pending">In sospeso</string>
     <string name="kh_uisdk_permission_rationale_location">Per farci capire dove sei, abilita le autorizzazioni per la posizione sul tuo dispositivo</string>
     <string name="kh_uisdk_permissions">PERMESSI</string>
+    <string name="kh_uisdk_pick_up">Raccogliere</string>
     <string name="kh_uisdk_pickup_time">Orario di prelievo</string>
     <string name="kh_uisdk_pickup_type_curbside">Attesa all’esterno</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">Meet and greet</string>
@@ -395,6 +412,7 @@
     <string name="kh_uisdk_prebook_picker_title">Orario di prelievo</string>
     <string name="kh_uisdk_prebook_timezone_title">Le prenotazioni sono effettuate nell’orario locale</string>
     <string name="kh_uisdk_price">Prezzo</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Dettagli sui prezzi</string>
     <string name="kh_uisdk_price_info_text_estimated">Questa flotta offre taxi non regolamentati. Il preventivo è una stima basata su fattori come tempo e distanza totale. Per ulteriori informazioni, controlla i Termini e Condizioni della flotta.</string>
     <string name="kh_uisdk_price_info_text_fixed">Questa flotta addebita una tariffa fissa. La tariffa finale può essere influenzata da costi extra legati ad esempio a pedaggi o ritardi. Per ulteriori informazioni, controlla i Termini e Condizioni della flotta.</string>
     <string name="kh_uisdk_price_info_text_metered">Questa flotta offre taxi con tassametro regolamentati. Il preventivo è una stima basata su fattori come tempo e distanza totale.</string>

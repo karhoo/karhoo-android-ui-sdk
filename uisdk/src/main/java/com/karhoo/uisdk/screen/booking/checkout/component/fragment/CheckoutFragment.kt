@@ -22,10 +22,14 @@ import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKI
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_ERROR_DATA
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_EXPIRED
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_TRIP_INFO_KEY
+import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutView
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
+import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DROPOFF_ADDRESS
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import kotlinx.coroutines.GlobalScope
@@ -36,6 +40,7 @@ import java.util.HashMap
 
 internal class CheckoutFragment : Fragment() {
     private lateinit var checkoutActionButton: LoadingButtonView
+    private lateinit var passengerActionButton: LoadingButtonView
     private lateinit var checkoutView: CheckoutView
     private lateinit var presenter: CheckoutPresenter
     private var expirationJob: Job? = null
@@ -50,97 +55,13 @@ internal class CheckoutFragment : Fragment() {
         presenter = CheckoutPresenter()
 
         checkoutActionButton = view.findViewById(R.id.checkoutActionButton)
+        passengerActionButton = view.findViewById(R.id.passengerActionButton)
         checkoutActionButton.onLoadingComplete()
 
-        checkoutView = view.findViewById(R.id.bookingCheckoutView)
-        checkoutView.setListeners(object : CheckoutFragmentContract.LoadingButtonListener {
-            override fun onLoadingComplete() {
-                checkoutActionButton.onLoadingComplete()
-            }
-
-            override fun showLoading() {
-                checkoutActionButton.showLoading()
-            }
-
-            override fun enableButton(enable: Boolean) {
-                checkoutActionButton.enableButton(enable)
-            }
-
-            override fun setState(bookButtonState: BookButtonState) {
-                checkoutActionButton.setText(bookButtonState.resId)
-            }
-
-            override fun checkState() {
-                checkoutActionButton.setText(
-                    presenter.getBookButtonState(
-                        false, checkoutView
-                            .arePassengerDetailsValid(),
-                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
-                    ).resId
-                )
-            }
-        }, object : CheckoutFragmentContract.WebViewListener {
-            override fun showWebViewOnPress(url: String?) {
-                if (activity is WebViewActions) {
-                    (activity as WebViewActions).showWebView(url)
-                }
-            }
-        }, object : CheckoutFragmentContract.PassengersListener {
-            override fun onPassengerPageVisibilityChanged(visible: Boolean) {
-                checkoutActionButton.setText(
-                    presenter.getBookButtonState(
-                        visible, checkoutView
-                            .arePassengerDetailsValid(),
-                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
-                    ).resId
-                )
-            }
-
-            override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
-                presenter.savePassenger(passengerDetails)
-            }
-        }, object : CheckoutFragmentContract.BookingListener {
-            override fun onBookingFailed(error: KarhooError?) {
-                val intent = Intent()
-                intent.putExtra(BOOKING_CHECKOUT_ERROR_DATA, error)
-
-                activity?.setResult(RESULT_CANCELED, intent)
-                activity?.finish()
-            }
-
-            override fun onTripBooked(tripInfo: TripInfo?) {
-                val intent = Intent()
-                val data = Bundle()
-                data.putParcelable(BOOKING_CHECKOUT_TRIP_INFO_KEY, tripInfo)
-
-                intent.putExtras(data)
-
-                activity?.setResult(RESULT_OK, intent)
-                activity?.finish()
-
-                KarhooAvailability.pauseUpdates()
-            }
-
-            override fun startBookingProcess() {
-                checkoutActionButton.performClick()
-            }
-        })
+        setupCheckoutView(view)
 
         val bundle = arguments as Bundle
-        checkoutView.showBookingRequest(
-            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
-            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
-            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
-            bookingMetadata = bundle.getSerializable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_METADATA_KEY
-            ) as HashMap<String, String>?,
-            passengerDetails = bundle.getParcelable(
-                CheckoutActivity
-                    .BOOKING_CHECKOUT_PASSENGER_KEY
-            ),
-            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
-        )
+        showBookingRequest(bundle)
 
         val validityTimestamp = bundle.getLong(CheckoutActivity.BOOKING_CHECKOUT_VALIDITY_KEY)
 
@@ -167,23 +88,30 @@ internal class CheckoutFragment : Fragment() {
 
         }
 
-        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+        passengerActionButton.setText(getString(R.string.kh_uisdk_save))
+        passengerActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
                 if (checkoutView.isPassengerDetailsViewVisible()) {
                     if (checkoutView.arePassengerDetailsValid()) {
                         checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetailsLayout(false)
-                        checkoutActionButton.onLoadingComplete()
-                    }
-                } else {
-                    if (!checkoutView.arePassengerDetailsValid()) {
-                        checkoutView.showPassengerDetailsLayout(true)
-                        checkoutActionButton.onLoadingComplete()
+                        passengerActionButton.onLoadingComplete()
                     } else {
-                        if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
-                            //Skip the loyalty flow, start the booking one directly
-                            checkoutView.startBooking()
-                        }
+                        passengerActionButton.onLoadingComplete()
+                    }
+                }
+            }
+        }
+
+        checkoutActionButton.actions = object : LoadingButtonView.Actions {
+            override fun onLoadingButtonClick() {
+                if (!checkoutView.arePassengerDetailsValid()) {
+                    checkoutView.showPassengerDetailsLayout(true)
+                    checkoutActionButton.onLoadingComplete()
+                } else {
+                    if (!checkoutView.checkLoyaltyEligiblityAndStartPreAuth()) {
+                        //Skip the loyalty flow, start the booking one directly
+                        checkoutView.startBooking()
                     }
                 }
             }
@@ -198,6 +126,83 @@ internal class CheckoutFragment : Fragment() {
         )
 
         return view
+    }
+
+    private fun setupCheckoutView(view: View){
+        checkoutView = view.findViewById(R.id.bookingCheckoutView)
+        checkoutView.setListeners(object : CheckoutFragmentContract.LoadingButtonListener {
+            override fun onLoadingComplete() {
+                checkoutActionButton.onLoadingComplete()
+            }
+
+            override fun showLoading() {
+                checkoutActionButton.showLoading()
+            }
+
+            override fun enableButton(enable: Boolean) {
+                checkoutActionButton.enableButton(enable)
+            }
+
+            override fun setState(bookButtonState: BookButtonState) {
+                checkoutActionButton.setText(bookButtonState.resId)
+            }
+
+            override fun checkState() {
+                checkoutActionButton.setText(
+                    presenter.getBookButtonState(
+                        false,
+                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.isTermsCheckBoxValid()
+                    ).resId
+                )
+            }
+        }, object : CheckoutFragmentContract.WebViewListener {
+            override fun showWebViewOnPress(url: String?) {
+                if (activity is WebViewActions) {
+                    (activity as WebViewActions).showWebView(url)
+                }
+            }
+        }, object : CheckoutFragmentContract.PassengersListener {
+            override fun onPassengerPageVisibilityChanged(visible: Boolean) {
+                checkoutActionButton.setText(
+                    presenter.getBookButtonState(
+                        visible,
+                        checkoutView.arePassengerDetailsValid(),
+                        isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
+                    ).resId
+                )
+            }
+
+            override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
+                presenter.savePassenger(passengerDetails)
+            }
+        }, object : CheckoutFragmentContract.BookingListener {
+            override fun onBookingFailed(error: KarhooError?) {
+                val intent = Intent()
+                intent.putExtra(BOOKING_CHECKOUT_ERROR_DATA, error)
+
+                activity?.setResult(RESULT_CANCELED, intent)
+                activity?.finish()
+            }
+
+            override fun onTripBooked(tripInfo: TripInfo?) {
+                finishCheckout(tripInfo)
+            }
+
+            override fun startBookingProcess() {
+                checkoutActionButton.performClick()
+            }
+        })
+        checkoutView.commentsListener = { dialog ->
+            activity?.supportFragmentManager?.let {
+                dialog.show(it, CheckoutCommentBottomSheet.TAG)
+            }
+        }
+        checkoutView.travelDetailsListener = { dialog ->
+            activity?.supportFragmentManager?.let {
+                dialog.show(it, CheckoutTravelDetailsBottomSheet.TAG)
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -236,6 +241,14 @@ internal class CheckoutFragment : Fragment() {
                 QUOTES_SELECTED_DATE,
                 arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.date
             )
+            intent.putExtra(
+                QUOTES_PICKUP_ADDRESS,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.pickup
+            )
+            intent.putExtra(
+                QUOTES_DROPOFF_ADDRESS,
+                arguments?.getParcelable<JourneyDetails>(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY)?.destination
+            )
             KarhooAvailability.pauseUpdates(fromBackButton = true)
             activity?.setResult(BOOKING_CHECKOUT_CANCELLED, intent)
             activity?.finish()
@@ -255,6 +268,36 @@ internal class CheckoutFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         checkoutView.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun finishCheckout(tripInfo: TripInfo?) {
+        val intent = Intent()
+        val data = Bundle()
+        data.putParcelable(BOOKING_CHECKOUT_TRIP_INFO_KEY, tripInfo)
+
+        intent.putExtras(data)
+
+        activity?.setResult(RESULT_OK, intent)
+        activity?.finish()
+
+        KarhooAvailability.pauseUpdates()
+    }
+
+    private fun showBookingRequest(bundle: Bundle) {
+        checkoutView.showBookingRequest(
+            quote = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_QUOTE_KEY)!!,
+            journeyDetails = bundle.getParcelable(CheckoutActivity.BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY),
+            outboundTripId = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_OUTBOUND_TRIP_ID_KEY),
+            bookingMetadata = bundle.getSerializable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_METADATA_KEY
+            ) as HashMap<String, String>?,
+            passengerDetails = bundle.getParcelable(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_PASSENGER_KEY
+            ),
+            comments = bundle.getString(CheckoutActivity.BOOKING_CHECKOUT_COMMENTS_KEY)
+        )
     }
 
     companion object {

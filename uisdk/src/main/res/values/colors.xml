@@ -44,7 +44,7 @@
     <color name="kh_uisdk_dark_grey">@color/kh_uisdk_text_secondary</color>
     <color name="kh_uisdk_med_grey">@color/kh_uisdk_label</color>
     <color name="kh_uisdk_silver">@color/kh_uisdk_label</color>
-    <color name="kh_uisdk_light_grey">@color/kh_uisdk_background5</color>
+    <color name="kh_uisdk_light_grey">@color/kh_uisdk_label</color>
     <color name="kh_uisdk_lightish_grey">@color/kh_uisdk_background2</color>
     <color name="kh_uisdk_lighter_grey">@color/kh_uisdk_background3</color>
     <color name="kh_uisdk_off_white">@color/kh_uisdk_background1</color>
@@ -81,7 +81,6 @@
     <color name="kh_uisdk_lightGrey">#bab9b5</color>
 
     <color name="kh_uisdk_ButtonDisabledColor">#66181447</color>
-    <color name="kh_uisdk_ButtonEnabledColor">@color/kh_uisdk_secondary</color>
     <color name="kh_uisdk_TimePickerTitleBackgroundColor">@color/kh_uisdk_primary</color>
     <color name="kh_uisdk_TimePickerTitleTextColor">@color/kh_uisdk_opacity_off_white_time_picker
     </color>
@@ -109,15 +108,12 @@
     <color name="kh_uisdk_text_secondary">#383838</color>
     <color name="kh_uisdk_label">#757575</color>
 
-    <color name="kh_uisdk_background_primary">#FFFFFF</color>
+    <color name="kh_uisdk_background_primary">#FAFAFA</color>
     <color name="kh_uisdk_background1">#FAFAFA</color>
-    <color name="kh_uisdk_background2">#F2F2F2</color>
-    <color name="kh_uisdk_background3">#E3E3E3</color>
+    <color name="kh_uisdk_background2">#FFFFFF</color>
+    <color name="kh_uisdk_background3">#F2F2F2</color>
     <color name="kh_uisdk_background4">#E5E5E5</color>
     <color name="kh_uisdk_background4_transparent">#C5E5E5E5</color>
-    <color name="kh_uisdk_background5">#DBDBDB</color>
-    <color name="kh_uisdk_background6">#D9D9D9</color>
-    <color name="kh_uisdk_background7">#D6D6D6</color>
 
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>

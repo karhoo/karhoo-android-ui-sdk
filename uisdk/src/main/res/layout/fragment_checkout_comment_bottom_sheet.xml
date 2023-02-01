@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/kh_uisdk_spacing_small">
+
+    <include layout="@layout/uisdk_fragment_master_bottom_sheet" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/KhTextInputLayoutStyle"
+        android:id="@+id/textField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/kh_uisdk_checkout_comments_title"
+        android:layout_marginTop="@dimen/kh_uisdk_spacing_semi_small">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/checkoutCommentsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:maxLines="3"
+            android:gravity="top|start"
+            android:textColor="@color/kh_uisdk_text_primary"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.karhoo.uisdk.base.view.LoadingButtonView
+        android:id="@+id/checkoutCommentsSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/kh_uisdk_margin_medium" />
+</LinearLayout>

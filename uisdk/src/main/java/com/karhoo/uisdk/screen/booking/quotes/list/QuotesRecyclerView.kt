@@ -175,7 +175,7 @@ class QuotesRecyclerView @JvmOverloads constructor(
             quotesErrorView.setupWithSpan(
                 ErrorViewGenericReason(
                     context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_title),
-                    context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle),
+                    String.format(context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle), context.resources.getString(R.string.kh_uisdk_contact_us)),
                     R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {

@@ -1,17 +1,15 @@
 package com.karhoo.uisdk.screen.booking.quotes.mocks
 
 import android.graphics.drawable.Drawable
-import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesMVP
-import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingVehicleDetailsMVP
 
-class BookingQuotesViewMock: BookingQuotesMVP.View {
+class BookingQuotesViewMock: BookingVehicleDetailsMVP.View {
     var cancellationMinutesText: String? = null
     var capacityLuggage: Int? = null
     var capacityPeople: Int? = null
     var catgText: String? = null
     var showCancellation: Boolean? = null
     var getDrawableResourceCalled = false
-    var setCapabilitiesCalled = false
 
     override fun setCancellationText(text: String) {
         this.cancellationMinutesText = text
@@ -22,10 +20,6 @@ class BookingQuotesViewMock: BookingQuotesMVP.View {
         this.capacityPeople = people
     }
 
-    override fun setCategoryText(text: String) {
-        this.catgText = text
-    }
-
     override fun showCancellationText(show: Boolean) {
         this.showCancellation = show
     }
@@ -33,9 +27,5 @@ class BookingQuotesViewMock: BookingQuotesMVP.View {
     override fun getDrawableResource(id: Int): Drawable? {
         this.getDrawableResourceCalled = true
         return null
-    }
-
-    override fun setCapabilities(capabilities: List<Capability>) {
-        setCapabilitiesCalled = true
     }
 }

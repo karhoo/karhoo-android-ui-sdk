@@ -2,6 +2,7 @@ package com.karhoo.uisdk.base.dialog
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.core.text.isDigitsOnly
 import com.karhoo.uisdk.R
 
 class KarhooAlertDialogHelper(val context: Context) {
@@ -61,8 +62,12 @@ class KarhooAlertDialogHelper(val context: Context) {
             message = context.getString(config.messageResId)
         }
         config.karhooError?.let { error ->
-            if(error.userFriendlyMessage.toInt() != -1)
-                message = "$message [${context.getString(error.userFriendlyMessage.toInt())}]"
+            message =
+                if (error.userFriendlyMessage.isDigitsOnly() && error.userFriendlyMessage.toInt() != -1) {
+                    "$message [${context.getString(error.userFriendlyMessage.toInt())}]"
+                } else {
+                    "$message [${error.userFriendlyMessage}]"
+                }
         }
         return message
     }

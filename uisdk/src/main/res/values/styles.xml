@@ -314,12 +314,12 @@
 
     <style name="KhBookingQuotesViewFleetType">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_secondary_text</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetCancellation">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_label</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetDescription">
@@ -449,7 +449,7 @@
 
     <style name="KhBookingPriceLabelText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
         <item name="android:gravity">center</item>
         <item name="fontWeight">600</item>
         <item name="lineHeight">20dp</item>
@@ -624,6 +624,8 @@
 
     <style name="KhMasterBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/KhMasterBottomSheetStyle</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateHidden</item>
     </style>
 
     <style name="KhMasterBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
@@ -734,6 +736,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
@@ -811,7 +814,7 @@
     <style name="KhStaticAddressComponentPrimary">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:maxLines">2</item>
         <item name="fontWeight">400</item>
         <item name="android:ellipsize">end</item>
@@ -828,8 +831,8 @@
 
     <style name="KhStaticAddressComponentTime">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
@@ -839,6 +842,20 @@
         <item name="android:textColor">@color/kh_uisdk_primary</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="KhCheckoutDateText">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:background">@color/kh_uisdk_background2</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="KhBottomSheetPriceView">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:ellipsize">end</item>
     </style>
 
