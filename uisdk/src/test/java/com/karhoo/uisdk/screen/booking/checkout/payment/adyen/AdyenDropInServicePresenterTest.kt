@@ -6,6 +6,7 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.sdk.call.Call
+import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.ACCEPT_HEADER
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.ADDITIONAL_DATA
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenDropInServicePresenter.Companion.ALLOW_3DS
@@ -66,6 +67,8 @@ class AdyenDropInServicePresenterTest {
 
         whenever(paymentsService.getAdyenPaymentDetails(any())).thenReturn(paymentsDetailsCall)
         doNothing().whenever(paymentsDetailsCall).execute(paymentsDetailsCaptor.capture())
+
+        UnitTestUISDKConfig.setGuestAuthentication(context)
 
         presenter = AdyenDropInServicePresenter(context, service, paymentsService, dropInRepository)
     }

@@ -76,12 +76,13 @@ class CheckoutPresenterTests {
     }
 
     @Test
-    fun `If passenger details are not visible yet valid then we get next state`() {
+    fun `If passenger details are valid then we get pay state`() {
         val buttonState = presenter.getBookButtonState(
             isPassengerDetailsVisible = false,
             arePassengerDetailsValid = true,
+            isTermsCheckBoxValid = true
                                                       )
 
-        Assert.assertEquals(BookButtonState.NEXT, buttonState)
+        Assert.assertEquals(BookButtonState.PAY, buttonState)
     }
 }

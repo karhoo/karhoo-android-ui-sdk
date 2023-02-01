@@ -5,6 +5,7 @@
     android:id="@+id/staticAddressComponentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/kh_uisdk_background2"
     android:padding="@dimen/kh_uisdk_spacing_small">
 
     <View
@@ -59,9 +60,10 @@
     <TextView
         android:id="@+id/staticAddressComponentTime"
         style="@style/KhStaticAddressComponentTime"
-        android:layout_width="96dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
+        android:paddingStart="@dimen/kh_uisdk_spacing_medium_small"
         app:layout_constraintBottom_toBottomOf="@+id/pickupAddressTextSecondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

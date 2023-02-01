@@ -9,9 +9,8 @@
     <ImageView
         android:id="@+id/passengerIcon"
         android:layout_width="@dimen/kh_uisdk_capacity_image_size"
-        android:layout_height="@dimen/kh_uisdk_capacity_image_size"
-        android:layout_margin="4dp"
-        android:background="@drawable/kh_uisdk_gray_circle"
+        android:layout_height="@dimen/kh_uisdk_capacity_image_size_small"
+        android:background="@drawable/kh_uisdk_capacity_background"
         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,22 +20,23 @@
     <TextView
         android:id="@+id/peopleCapacityText"
         style="@style/Text.Black"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:background="@drawable/kh_uisdk_capacities_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/kh_uisdk_capacity_background"
         android:gravity="center"
         android:textSize="12sp"
-        android:translationX="-8dp"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_xxxsmall"
+        app:layout_constraintBottom_toBottomOf="@+id/passengerIcon"
         app:layout_constraintStart_toEndOf="@+id/passengerIcon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/passengerIcon"
         tools:text="4" />
 
     <ImageView
         android:id="@+id/briefcaseIcon"
         android:layout_width="@dimen/kh_uisdk_capacity_image_size"
-        android:layout_height="@dimen/kh_uisdk_capacity_image_size"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/kh_uisdk_gray_circle"
+        android:layout_height="@dimen/kh_uisdk_capacity_image_size_small"
+        android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+        android:background="@drawable/kh_uisdk_capacity_background"
         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toEndOf="@+id/peopleCapacityText"
@@ -46,16 +46,17 @@
     <TextView
         android:id="@+id/luggageCapacityText"
         style="@style/Text.Black"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:background="@drawable/kh_uisdk_capacities_circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/kh_uisdk_capacity_background"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
         android:textSize="12sp"
-        android:translationX="-8dp"
+        android:paddingEnd="@dimen/kh_uisdk_spacing_xxxsmall"
+        app:layout_constraintBottom_toBottomOf="@+id/briefcaseIcon"
         app:layout_constraintStart_toEndOf="@+id/briefcaseIcon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/briefcaseIcon"
         tools:text="2" />
 
     <TextView
@@ -63,8 +64,7 @@
         style="@style/Text.Black"
         android:layout_width="@dimen/kh_uisdk_capacity_image_size"
         android:layout_height="@dimen/kh_uisdk_capacity_image_size"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/kh_uisdk_gray_circle"
+        android:background="@drawable/kh_uisdk_capacity_background"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
@@ -74,6 +74,6 @@
         app:layout_constraintStart_toEndOf="@+id/luggageCapacityText"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="+2"
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

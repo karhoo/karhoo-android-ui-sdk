@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">Dodaj cel</string>
     <string name="kh_uisdk_address_picker_enter_destination">Wprowadź cel</string>
     <string name="kh_uisdk_address_picker_enter_pickup">Wprowadź punkt odbioru</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">Miejsce odbioru</string>
     <string name="kh_uisdk_address_picker_prebook">Rezerwuj</string>
     <string name="kh_uisdk_adyen_payment_error_10">Bank kupującego nie obsługuje lub nie dopuszcza tego typu transakcji</string>
@@ -109,6 +110,7 @@
     <string name="kh_uisdk_base">Opłata podstawowa</string>
     <string name="kh_uisdk_base_fare_explanation">Na ostateczną opłatę mogą mieć wpływ napiwki, opłaty drogowe, podatki i inne opłaty.</string>
     <string name="kh_uisdk_book_now">POTWIERDŹ I ZAPŁAĆ</string>
+    <string name="kh_uisdk_book_pay">Płacić</string>
     <string name="kh_uisdk_book_return_ride">Zarezerwuj przejazd powrotny</string>
     <string name="kh_uisdk_booking_car">ZAREZERWUJ PRZEJAZD</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">Dodaj dane pasażerów</string>
@@ -116,6 +118,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">Pasażer</string>
     <string name="kh_uisdk_booking_checkout_title">Opłać</string>
     <string name="kh_uisdk_booking_confirmation">Rezerwacja potwierdzona</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">Przejdź do szczegółów przejazdu</string>
     <string name="kh_uisdk_booking_details_error">Nieprawidłowe szczegóły rezerwacji</string>
     <string name="kh_uisdk_booking_failed">Rezerwacja nie powiodła się</string>
     <string name="kh_uisdk_booking_failed_body">Przepraszamy, jest duże zapotrzebowanie. %1$s nie ma dostępnych kierowców.</string>
@@ -124,7 +127,7 @@
     <string name="kh_uisdk_booking_terms_and_conditions">Warunki użytkowania</string>
     <string name="kh_uisdk_bookings">Rezerwacje</string>
     <string name="kh_uisdk_call">POŁĄCZ Z KIEROWCĄ</string>
-    <string name="kh_uisdk_cancel">ANULUJ</string>
+    <string name="kh_uisdk_cancel">Anuluj</string>
     <string name="kh_uisdk_cancel_ride">Anuluj przejazd</string>
     <string name="kh_uisdk_cancel_ride_successful">Anulowanie Twojego przejazdu powiodło się</string>
     <string name="kh_uisdk_cancel_ride_successful_message">Twój przejazd został anulowany.</string>
@@ -137,7 +140,17 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">Karta</string>
     <string name="kh_uisdk_checked">Sprawdzony</string>
+    <string name="kh_uisdk_checkout_airport_example">np. AF009</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Dodaj numer lotu</string>
+    <string name="kh_uisdk_checkout_airport_title">Numer lotu</string>
     <string name="kh_uisdk_checkout_as_guest">ZAREZERWUJ PRZEJAZD</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Komentarz dla Twojego kierowcy</string>
+    <string name="kh_uisdk_checkout_comments_title">Komentarz</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Dozwolone są tylko litery i cyfry</string>
+    <string name="kh_uisdk_checkout_train_example">np. 6809</string>
+    <string name="kh_uisdk_checkout_train_subtitle">Dodaj numer pociągu</string>
+    <string name="kh_uisdk_checkout_train_title">Numer pociągu</string>
+    <string name="kh_uisdk_close_the_screen">Zamknij ekran</string>
     <string name="kh_uisdk_completed">Mamy nadzieję, że przejazd był udany</string>
     <string name="kh_uisdk_confirmed">Twój przejazd został potwierdzony przez %s</string>
     <string name="kh_uisdk_contact">KONTAKT</string>
@@ -150,6 +163,7 @@
     <string name="kh_uisdk_country_search">Wyszukaj kraj/region</string>
     <string name="kh_uisdk_current_location">Moja lokalizacja</string>
     <string name="kh_uisdk_date">Data</string>
+    <string name="kh_uisdk_destination">Cel</string>
     <string name="kh_uisdk_destination_book_error">Musisz wybrać miejsce docelowe, aby zarezerwować przejazd</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Mamy problemy z anulowaniem przejazdu. Skontaktuj się z przewoźnikiem.</string>
     <string name="kh_uisdk_difficulties_cancelling_title">Problemy z anulowaniem</string>
@@ -229,7 +243,7 @@
     <string name="kh_uisdk_flight_number">Numer lotu (opcjonalnie)</string>
     <string name="kh_uisdk_flight_tracking">Śledzenie lotu</string>
     <string name="kh_uisdk_forgotten_password">Nie pamiętasz hasła?</string>
-    <string name="kh_uisdk_free_cancellation_asap">Bezpłatna anulacja do %1$s po dokonaniu rezerwacji</string>
+    <string name="kh_uisdk_free_cancellation_asap">Bezpłatne anulowanie do %1$s po dokonaniu rezerwacji</string>
     <string name="kh_uisdk_got_it">ROZUMIEM</string>
     <string name="kh_uisdk_gps_tracking">Śledzenie GPS</string>
     <string name="kh_uisdk_guest_checkout_payment_details_title">Metody płatności</string>
@@ -245,6 +259,7 @@
     <string name="kh_uisdk_hours_plural.other">%d godzin(y)</string>
     <string name="kh_uisdk_hours_plural.zero">%d godzin</string>
     <string name="kh_uisdk_info">Informacje</string>
+    <string name="kh_uisdk_information">Informacje</string>
     <string name="kh_uisdk_initialised">Karhoo inicjuje Twoją podróż</string>
     <string name="kh_uisdk_invalid_email">Niepoprawny email</string>
     <string name="kh_uisdk_invalid_empty_field">Brakujące informacje</string>
@@ -329,7 +344,7 @@
     <string name="kh_uisdk_loyalty_points_earned_for_trip">Liczba punktów lojalnościowych, które zostaną dodane do Twojego konta po zakończeniu przejazdu: %1$s</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_allowed_to_burn">Przykro nam, nie możesz wykorzystać punktów Reward</string>
     <string name="kh_uisdk_loyalty_pre_auth_not_enough_points">Masz niewystarczającą liczbę punktów na opłacenie tego przejazdu</string>
-    <string name="kh_uisdk_loyalty_separator">Lub</string>
+    <string name="kh_uisdk_loyalty_separator">LUB</string>
     <string name="kh_uisdk_loyalty_title">Punktów Reward</string>
     <string name="kh_uisdk_loyalty_unknown_error">Wystąpił błąd. Aby zdobyć lub wykorzystać punkty lojalnościowe, spróbuj ponownie za chwilę.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Wystąpił błąd: wybrana waluta jest niedostępna</string>
@@ -338,7 +353,7 @@
     <string name="kh_uisdk_loyalty_use_points_title">Wykorzystaj punkty</string>
     <string name="kh_uisdk_map_selector">Ustaw lokalizację pinezki na mapie</string>
     <string name="kh_uisdk_meeting_point">Miejsce spotkania</string>
-    <string name="kh_uisdk_metered">Na podstawie taksometru</string>
+    <string name="kh_uisdk_metered">Cena na podstawie taksometru</string>
     <string name="kh_uisdk_min">min</string>
     <string name="kh_uisdk_mins">min</string>
     <plurals name="kh_uisdk_minutes_plurals">
@@ -367,6 +382,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Przykro nam. Brak ofert dla tej kategorii. Wybierz inną kategorię.</string>
     <string name="kh_uisdk_no_trips">Brak przejazdów</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Nieprawidłowy certyfikat SSL</string>
+    <string name="kh_uisdk_now">teraz</string>
     <string name="kh_uisdk_offer_expired">Oferta wygasła</string>
     <string name="kh_uisdk_offer_expired_text">Wybierz nową ofertę, aby kontynuować rezerwację</string>
     <string name="kh_uisdk_ok">OK</string>
@@ -390,6 +406,7 @@
     <string name="kh_uisdk_pending">W trakcie realizacji</string>
     <string name="kh_uisdk_permission_rationale_location">Włącz usługi lokalizacyjne na swoim urządzeniu, abyśmy mogli Cię znaleźć</string>
     <string name="kh_uisdk_permissions">UPRAWNIENIA</string>
+    <string name="kh_uisdk_pick_up">Pick-up</string>
     <string name="kh_uisdk_pickup_time">Godzina odbioru</string>
     <string name="kh_uisdk_pickup_type_curbside">Na zewnątrz</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">W hali przylotów</string>
@@ -399,6 +416,7 @@
     <string name="kh_uisdk_prebook_picker_title">Godzina odbioru</string>
     <string name="kh_uisdk_prebook_timezone_title">Rezerwacja zostanie dokonana w czasie lokalnym</string>
     <string name="kh_uisdk_price">Cena</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">Cena Szczegóły</string>
     <string name="kh_uisdk_price_info_text_estimated">Ten przewoźnik nie oferuje licencjonowanych przejazdów. Wycena jest szacunkową kwotą opartą na czynnikach podróży (odległość, czas itp.). Aby uzyskać więcej informacji, zapoznaj się z Regulaminem przewoźnika.</string>
     <string name="kh_uisdk_price_info_text_fixed">Ten przewoźnik pobiera opłatę ryczałtową. Na ostateczną cenę mogą mieć wpływ dodatkowe opłaty, np. opłaty drogowe, opłaty za opóźnienia itp. Więcej informacji można znaleźć w Regulaminie przewoźnika.</string>
     <string name="kh_uisdk_price_info_text_metered">Ten przewoźnik oferuje licencjonowane przejazdy rozliczane na podstawie taksometru. Wycena jest szacunkową kwotą opartą na czynnikach podróży (odległość, czas itp.).</string>
@@ -480,7 +498,7 @@
     <string name="kh_uisdk_signup_pending_message">Powiadomimy Cię e-mailem, gdy Twoja prośba zostanie przetworzona.</string>
     <string name="kh_uisdk_something_went_wrong">Ups! Coś poszło nie tak</string>
     <string name="kh_uisdk_something_went_wrong_select_another_quote">Przykro nam, coś poszło nie tak. Spróbuj ponownie lub wybierz inną ofertę.</string>
-    <string name="kh_uisdk_sort_by">Sortuj według</string>
+    <string name="kh_uisdk_sort_by">Sortuj</string>
     <string name="kh_uisdk_staging_link">https://agent-portal.stg.karhoo.net/follow/</string>
     <string name="kh_uisdk_star_excellent">Doskonale</string>
     <string name="kh_uisdk_star_fair">Średnio</string>

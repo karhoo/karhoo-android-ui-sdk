@@ -55,6 +55,7 @@
     <string name="kh_uisdk_address_picker_dropoff_booking">เพิ่มตำแหน่งปลายทาง</string>
     <string name="kh_uisdk_address_picker_enter_destination">ป้อนตำแหน่งปลายทาง</string>
     <string name="kh_uisdk_address_picker_enter_pickup">ป้อนสถานที่รับ</string>
+    <!-- depricated -->
     <string name="kh_uisdk_address_picker_pickup_title">ไปรับ</string>
     <string name="kh_uisdk_address_picker_prebook">จอง</string>
     <string name="kh_uisdk_adyen_payment_error_10">ธนาคารของนักช้อปไม่รองรับหรือไม่อนุญาตให้ทำธุรกรรมประเภทนี้</string>
@@ -109,6 +110,7 @@
     <string name="kh_uisdk_base">ค่าโดยสารพื้นฐาน</string>
     <string name="kh_uisdk_base_fare_explanation">ค่าโดยสารสุดท้ายของคุณอาจได้รับผลกระทบจากค่าทิป ค่าผ่านทาง ภาษี และค่าใช้จ่ายอื่นๆ</string>
     <string name="kh_uisdk_book_now">ยืนยันและชำระเงิน</string>
+    <string name="kh_uisdk_book_pay">การชำระเงิน</string>
     <string name="kh_uisdk_book_return_ride">จองการเดินทางขากลับ</string>
     <string name="kh_uisdk_booking_car">จองการเดินทาง</string>
     <string name="kh_uisdk_booking_checkout_add_passenger">เพิ่มรายละเอียดผู้โดยสาร</string>
@@ -116,6 +118,7 @@
     <string name="kh_uisdk_booking_checkout_passenger">ผู้โดยสาร</string>
     <string name="kh_uisdk_booking_checkout_title">ชำระเงิน</string>
     <string name="kh_uisdk_booking_confirmation">ยืนยันการจองแล้ว</string>
+    <string name="kh_uisdk_booking_confirmation_go_to_ride_details">ไปที่รายละเอียดการขี่</string>
     <string name="kh_uisdk_booking_details_error">รายละเอียดการจองไม่ถูกต้อง</string>
     <string name="kh_uisdk_booking_failed">การจองไม่สำเร็จ</string>
     <string name="kh_uisdk_booking_failed_body">ขออภัย ขณะนี้มีความต้องการสูง ทำให้ %1$s ไม่มีคนขับที่พร้อมให้บริการ</string>
@@ -137,7 +140,17 @@
     <string name="kh_uisdk_capacity">%s</string>
     <string name="kh_uisdk_card">บัตร</string>
     <string name="kh_uisdk_checked">เลือกแล้ว</string>
+    <string name="kh_uisdk_checkout_airport_example">เช่น AF009</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">เพิ่มหมายเลขเที่ยวบิน</string>
+    <string name="kh_uisdk_checkout_airport_title">เที่ยวบินหมายเลข</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
+    <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
+    <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">อนุญาตเฉพาะตัวอักษรและตัวเลขเท่านั้น</string>
+    <string name="kh_uisdk_checkout_train_example">เช่น 6809</string>
+    <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
+    <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
+    <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>
     <string name="kh_uisdk_completed">เราหวังว่าคุณพอใจกับการเดินทางของคุณ</string>
     <string name="kh_uisdk_confirmed">การเดินทางของคุณกับ %s ได้รับการยืนยันแล้ว</string>
     <string name="kh_uisdk_contact">การติดต่อ</string>
@@ -150,6 +163,7 @@
     <string name="kh_uisdk_country_search">ค้นหาประเทศ/ภูมิภาค</string>
     <string name="kh_uisdk_current_location">ดูตำแหน่งปัจจุบัน</string>
     <string name="kh_uisdk_date">วันที่</string>
+    <string name="kh_uisdk_destination">ปลายทาง</string>
     <string name="kh_uisdk_destination_book_error">คุณต้องเลือกตำแหน่งปลายทางก่อนจองการเดินทาง</string>
     <string name="kh_uisdk_difficulties_cancelling_message">เราประสบปัญหาในการยกเลิกการเดินทางของคุณ โปรดติดต่อผู้ให้บริการโดยสาร</string>
     <string name="kh_uisdk_difficulties_cancelling_title">เกิดปัญหาในการยกเลิก</string>
@@ -242,6 +256,7 @@
     <string name="kh_uisdk_hours_plural.other">%d ชั่วโมง</string>
     <string name="kh_uisdk_hours_plural.zero">%d ชั่วโมง</string>
     <string name="kh_uisdk_info">ข้อมูล</string>
+    <string name="kh_uisdk_information">รายละเอียดคนขับ</string>
     <string name="kh_uisdk_initialised">กำลังเริ่มต้นการเดินทางของคุณ</string>
     <string name="kh_uisdk_invalid_email">อีเมลไม่ถูกต้อง</string>
     <string name="kh_uisdk_invalid_empty_field">ไม่มีข้อมูล</string>
@@ -361,6 +376,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">ขออภัย ไม่สามารถหายานพาหนะที่พร้อมให้บริการในหมวดหมู่นี้ได้ โปรดเลือกหมวดหมู่อื่น</string>
     <string name="kh_uisdk_no_trips">ไม่มีการเดินทาง</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">ใบรับรอง SSL ไม่ถูกต้อง</string>
+    <string name="kh_uisdk_now">ตอนนี้</string>
     <string name="kh_uisdk_offer_expired">ราคาหมดอายุแล้ว</string>
     <string name="kh_uisdk_offer_expired_text">โปรดเลือกราคาใหม่เพื่อทำการจองของคุณต่อ</string>
     <string name="kh_uisdk_ok">ตกลง</string>
@@ -384,6 +400,7 @@
     <string name="kh_uisdk_pending">อยู่ระหว่างดำเนินการ</string>
     <string name="kh_uisdk_permission_rationale_location">โปรดเปิดใช้สิทธิ์เข้าถึงตําแหน่งบนอุปกรณ์ของคุณเพื่อช่วยให้เราระบุตำแหน่งของคุณได้</string>
     <string name="kh_uisdk_permissions">สิทธิ์</string>
+    <string name="kh_uisdk_pick_up">หยิบ</string>
     <string name="kh_uisdk_pickup_time">เวลารับ</string>
     <string name="kh_uisdk_pickup_type_curbside">รออยู่นอกอาคาร</string>
     <string name="kh_uisdk_pickup_type_meet_and_greet">รอรับภายในอาคาร</string>
@@ -393,6 +410,7 @@
     <string name="kh_uisdk_prebook_picker_title">เวลารับ</string>
     <string name="kh_uisdk_prebook_timezone_title">การจองจะดำเนินการตามเวลาท้องถิ่น</string>
     <string name="kh_uisdk_price">ราคา</string>
+    <string name="kh_uisdk_price_bottom_sheet_title">รายละเอียดราคา</string>
     <string name="kh_uisdk_price_info_text_estimated">ผู้ให้บริการโดยสารนี้ให้บริการรถแท็กซี่ที่ไม่มีการควบคุม ราคาที่เสนอเป็นการประมาณค่าตามปัจจัยต่างๆ เช่น เวลาและระยะทางรวม โปรดตรวจสอบข้อกำหนดและเงื่อนไขของผู้ให้บริการโดยสารเพื่อดูข้อมูลเพิ่มเติม</string>
     <string name="kh_uisdk_price_info_text_fixed">ผู้ให้บริการโดยสารนี้คิดค่าโดยสารแบบคงที่ ค่าโดยสารสุดท้ายอาจได้รับผลกระทบจากค่าบริการพิเศษ เช่น ค่าผ่านทางหรือความล่าช้า โปรดตรวจสอบข้อกำหนดและเงื่อนไขของผู้ให้บริการโดยสารเพื่อดูข้อมูลเพิ่มเติม</string>
     <string name="kh_uisdk_price_info_text_metered">ผู้ให้บริการโดยสารนี้ให้บริการรถแท็กซี่มิเตอร์ที่มีการควบคุม ราคาที่เสนอเป็นการประมาณค่าตามปัจจัยต่างๆ เช่น เวลาและระยะทางรวม</string>

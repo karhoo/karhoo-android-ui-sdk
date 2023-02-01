@@ -6,6 +6,7 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_filter_multi_select_checkbox.view.filterViewItemTitle
 import kotlinx.android.synthetic.main.uisdk_view_filter_multi_select_checkbox.view.filterViewItemCheckboxGroup
@@ -28,6 +29,7 @@ class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
             value.forEach { data ->
                 val box = CheckBox(ContextThemeWrapper(context, R.style.KhFilterViewCheckBox))
                 box.text = data.text
+                box.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
                 if(filter?.selectedTypes?.map { it.fixedTag }?.contains(data.fixedTag) == true)
                     box.isChecked = true
 
