@@ -535,7 +535,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun checkFlightTrackingWidgetTitleVisible() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_FLIGHT_TRACKING, journeyDetails = JOURNEY_DETAILS_AIRPORT)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_FLIGHT_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_AIRPORT
+        )
 
         checkoutRobot {
             checkAirportViewTitle()
@@ -552,7 +555,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun checkFlightTrackingWidgetSubtitleVisible() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_FLIGHT_TRACKING, journeyDetails = JOURNEY_DETAILS_AIRPORT)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_FLIGHT_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_AIRPORT
+        )
 
         checkoutRobot {
             checkAirportViewSubtitle()
@@ -569,7 +575,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun checkFlightTrackingWidgetOpensUp() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_FLIGHT_TRACKING, journeyDetails = JOURNEY_DETAILS_AIRPORT)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_FLIGHT_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_AIRPORT
+        )
 
         checkoutRobot {
             checkAirportViewSubtitle()
@@ -588,7 +597,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun fillFlightAllowSave() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_FLIGHT_TRACKING, journeyDetails = JOURNEY_DETAILS_AIRPORT)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_FLIGHT_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_AIRPORT
+        )
 
         checkoutRobot {
             checkAirportViewSubtitle()
@@ -611,7 +623,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun checkTrainWidgetTitleVisible() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_TRAIN_TRACKING, journeyDetails = JOURNEY_DETAILS_TRAIN)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
 
         checkoutRobot {
             checkTrainTrackingViewTitle()
@@ -628,7 +643,10 @@ internal class CheckoutScreenshotTests :
      **/
     @Test
     fun checkTrainTrackingWidgetOpensUp() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_TRAIN_TRACKING, journeyDetails = JOURNEY_DETAILS_TRAIN)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
 
         checkoutRobot {
             checkTrainTrackingViewTitle()
@@ -642,12 +660,78 @@ internal class CheckoutScreenshotTests :
 
     /**
      * Given:   The checkout opens up
+     * When:    The user presses on the price details question mark
+     * Then:    The price details bottom sheet is shown
+     **/
+    @Test
+    fun checkPriceDetailsBottomSheet() {
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
+
+        checkoutRobot {
+            clickOnPriceDetailsIcon()
+            checkPriceDetailsText()
+            shortSleep()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The checkout opens up
+     * When:    The user scrolls down
+     * Then:    Then he sees the legal notice
+     **/
+    @Test
+    fun legalNoticeIsVisible() {
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
+
+        checkoutRobot {
+            scrollUpCheckout()
+            shortSleep(50000)
+            checkLegalNoticeText()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The checkout opens up
+     * When:    The user scrolls down
+     * Then:    Then he sees the terms and conditions
+     **/
+    @Test
+    fun termsAndConditionsVisible() {
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
+
+        checkoutRobot {
+            scrollUpCheckout()
+            checkTermsText()
+            shortSleep()
+        }
+
+        compareScreenshot(activity)
+    }
+
+    /**
+     * Given:   The checkout opens up
      * When:    The user presses on the train tracking widget and fills in the data
      * Then:    The train tracking number can be saved
      **/
     @Test
     fun fillTrainTrackingDetails() {
-        val activity = startCheckoutActivity(quote = QUOTE_WITH_TRAIN_TRACKING, journeyDetails = JOURNEY_DETAILS_TRAIN)
+        val activity = startCheckoutActivity(
+            quote = QUOTE_WITH_TRAIN_TRACKING,
+            journeyDetails = JOURNEY_DETAILS_TRAIN
+        )
 
         checkoutRobot {
             shortSleep()
@@ -711,20 +795,21 @@ internal class CheckoutScreenshotTests :
             phoneNumber = "12064512559 "
         )
 
-        private val JOURNEY_DETAILS_AIRPORT = BookingConfirmationScreenshotTests.journeyDetails.copy(
-            date = DateTime(BookingConfirmationScreenshotTests.SCHEDULED_DATE),
-            pickup =  BookingConfirmationScreenshotTests.journeyDetails.pickup?.copy(
-                details = PoiDetails(
-                    "OTOPENI",
-                    "TERMINAL 9",
-                    PoiType.AIRPORT
+        private val JOURNEY_DETAILS_AIRPORT =
+            BookingConfirmationScreenshotTests.journeyDetails.copy(
+                date = DateTime(BookingConfirmationScreenshotTests.SCHEDULED_DATE),
+                pickup = BookingConfirmationScreenshotTests.journeyDetails.pickup?.copy(
+                    details = PoiDetails(
+                        "OTOPENI",
+                        "TERMINAL 9",
+                        PoiType.AIRPORT
+                    )
                 )
             )
-        )
 
         private val JOURNEY_DETAILS_TRAIN = BookingConfirmationScreenshotTests.journeyDetails.copy(
             date = DateTime(BookingConfirmationScreenshotTests.SCHEDULED_DATE),
-            pickup =  BookingConfirmationScreenshotTests.journeyDetails.pickup?.copy(
+            pickup = BookingConfirmationScreenshotTests.journeyDetails.pickup?.copy(
                 details = PoiDetails(
                     "GARE DU NORD",
                     "TERMINAL 9",

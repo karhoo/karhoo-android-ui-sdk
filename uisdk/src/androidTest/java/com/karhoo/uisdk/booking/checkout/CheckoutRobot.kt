@@ -163,6 +163,26 @@ class CheckoutRobot : BaseTestRobot() {
         clickButton(R.id.checkoutTravelDetailsSave)
     }
 
+    fun checkPriceDetailsText() {
+        stringIsVisible("Price Details")
+    }
+
+    fun clickOnPriceDetailsIcon() {
+        clickButton(R.id.priceLayout)
+    }
+
+    fun checkLegalNoticeText() {
+        subStringIsVisible("The data collected is electronically")
+    }
+
+    fun checkTermsText() {
+        subStringIsVisible("By making a booking you agree")
+    }
+
+    fun scrollUpCheckout() {
+        scrollUp(R.id.bookingCheckoutViewLayout)
+    }
+
     fun checkLoyaltyVisibility() {
         viewIsVisible(R.id.loyaltyStaticDetails)
     }
