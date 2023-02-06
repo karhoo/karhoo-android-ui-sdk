@@ -39,10 +39,10 @@ internal class CheckoutScreenshotTests :
 
     /**
      * In order to generate locally screenshots, you need to use the -Precord argument
-     * gradlew fulldebugexecuteScreenshotTests -Precord -Pandroid.testInstrumentationRunnerArguments.class=com.karhoo.uisdk.booking.checkout.CheckoutScreenshotTests
+     * gradlew fulldebugexecuteScreenshotTests -Pandroid.testInstrumentationRunnerArguments.class=com.karhoo.uisdk.booking.checkout.CheckoutScreenshotTests
      *
      * When you want to compare the screenshots after some UI changes, just run
-     * gradlew fulldebugexecuteScreenshotTests -Pandroid.testInstrumentationRunnerArguments.class=com.karhoouisdk.booking.checkout.CheckoutScreenshotTests
+     * gradlew fulldebugexecuteScreenshotTests -Pandroid.testInstrumentationRunnerArguments.class=com.karhoo.uisdk.booking.checkout.CheckoutScreenshotTests
      *
      * In order to run all screenshot tests, remove the -P argument following the gradle task
      * gradlew fulldebugexecuteScreenshotTests
