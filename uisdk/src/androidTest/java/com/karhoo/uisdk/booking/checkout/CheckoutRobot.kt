@@ -173,7 +173,7 @@ class CheckoutRobot : BaseTestRobot() {
     }
 
     fun checkLegalNoticeText() {
-        subStringIsVisible("The data collected is electronically")
+        viewIsVisible(R.id.legalNoticeText)
     }
 
     fun checkTermsText() {
