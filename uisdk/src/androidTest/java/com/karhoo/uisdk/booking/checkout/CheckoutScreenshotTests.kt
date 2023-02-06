@@ -693,7 +693,7 @@ internal class CheckoutScreenshotTests :
 
         checkoutRobot {
             scrollUpCheckout()
-            shortSleep(50000)
+            shortSleep()
             checkLegalNoticeText()
         }
 
@@ -714,6 +714,7 @@ internal class CheckoutScreenshotTests :
 
         checkoutRobot {
             scrollUpCheckout()
+            shortSleep()
             checkTermsText()
             shortSleep()
         }
