@@ -693,7 +693,7 @@ internal class CheckoutScreenshotTests :
 
         checkoutRobot {
             scrollUpCheckout()
-            shortSleep()
+            mediumSleep()
             checkLegalNoticeText()
         }
 
