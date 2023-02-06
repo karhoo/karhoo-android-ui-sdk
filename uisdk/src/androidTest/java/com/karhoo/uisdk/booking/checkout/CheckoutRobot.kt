@@ -2,6 +2,7 @@ package com.karhoo.uisdk.booking.checkout
 
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.common.BaseTestRobot
+import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.*
 
 fun checkoutRobot(func: CheckoutRobot.() -> Unit) = CheckoutRobot().apply { func() }
 
@@ -176,7 +177,7 @@ class CheckoutRobot : BaseTestRobot() {
     }
 
     fun checkTermsText() {
-        subStringIsVisible("By making a booking you agree")
+        subStringIsVisible(R.id.khTermsAndConditionsText, "By making a booking you agree")
     }
 
     fun scrollUpCheckout() {

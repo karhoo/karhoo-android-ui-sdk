@@ -139,6 +139,8 @@ open abstract class BaseTestRobot {
 
     fun subStringIsVisible(text: String) = onView(withSubstring(text)).check(matches(isDisplayed()))
 
+    fun subStringIsVisible(viewId: Int, text: String) = onView(withId(viewId)).check(matches(isDisplayed()))
+
     fun stringIsNotVisible(text: String) = onView(withText(text)).check(doesNotExist())
 
     fun stringIsNotDisplayed(text: String) = onView(withText(text)).check(matches(not(isDisplayed())))
