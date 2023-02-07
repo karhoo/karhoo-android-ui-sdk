@@ -3,12 +3,10 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
-import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.LocationInfo
-import com.karhoo.sdk.api.model.Price
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.TripInfo
@@ -33,8 +31,6 @@ import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatu
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.Capability
 import com.karhoo.uisdk.screen.booking.quotes.extendedcapabilities.CapabilityAdapter
 import com.karhoo.uisdk.service.preference.PreferenceStore
-import com.karhoo.uisdk.util.extension.orZero
-import com.karhoo.uisdk.util.extension.toTripLocationDetails
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import org.joda.time.DateTime
 import java.util.Date
@@ -122,15 +118,6 @@ internal class CheckoutViewPresenter(
 
     override fun isPaymentSet(): Boolean {
         return userStore.savedPaymentInfo != null
-    }
-
-    private fun currentTripInfo(): TripInfo {
-        return TripInfo(
-            origin = origin?.toTripLocationDetails(),
-            destination = destination?.toTripLocationDetails(),
-            dateScheduled = Date(scheduledDate?.millis.orZero()),
-            quote = Price(total = quote?.price?.highPrice.orZero())
-        )
     }
 
     private fun onTripBookSuccess(tripInfo: TripInfo) {
@@ -386,7 +373,7 @@ internal class CheckoutViewPresenter(
     }
 
     override fun createLoyaltyViewResponse() {
-        val loyaltyId = KarhooApi.userStore.paymentProvider?.loyalty?.id
+        val loyaltyId = userStore.paymentProvider?.loyalty?.id
         if (!loyaltyId.isNullOrEmpty()) {
             view?.showLoyaltyView(
                 show = true,
