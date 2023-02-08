@@ -94,6 +94,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setHomeActionContentDescription(getString(R.string.kh_uisdk_close_the_screen))
+
         if (KarhooUISDK.menuHandler == null) {
             supportActionBar?.let {
                 it.setDisplayHomeAsUpEnabled(true)

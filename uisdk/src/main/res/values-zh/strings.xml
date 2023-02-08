@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">添加车次</string>
     <string name="kh_uisdk_checkout_train_title">车次</string>
     <string name="kh_uisdk_close_the_screen">关闭屏幕</string>
+    <string name="kh_uisdk_delete_destination_address">删除目标地址</string>
     <string name="kh_uisdk_completed">我们希望您旅途愉快</string>
     <string name="kh_uisdk_confirmed">您的 %s 行程已确认</string>
     <string name="kh_uisdk_contact">联系</string>

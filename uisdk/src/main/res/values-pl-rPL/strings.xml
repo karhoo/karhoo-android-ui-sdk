@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">Dodaj numer pociągu</string>
     <string name="kh_uisdk_checkout_train_title">Numer pociągu</string>
     <string name="kh_uisdk_close_the_screen">Zamknij ekran</string>
+    <string name="kh_uisdk_delete_destination_address">Usuń adres docelowy</string>
     <string name="kh_uisdk_completed">Mamy nadzieję, że przejazd był udany</string>
     <string name="kh_uisdk_confirmed">Twój przejazd został potwierdzony przez %s</string>
     <string name="kh_uisdk_contact">KONTAKT</string>

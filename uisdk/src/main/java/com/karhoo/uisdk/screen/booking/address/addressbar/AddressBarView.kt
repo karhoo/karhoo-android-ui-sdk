@@ -59,6 +59,7 @@ class AddressBarView
         clearDateTimeButtonIcon.setOnClickListener { timeDatePresenter.clearScheduledTimeClicked() }
         dropOffLabel.setOnClickListener { addressPresenter.dropOffAddressClicked() }
         clearDestinationButtonIcon.setOnClickListener { addressPresenter.clearDestinationClicked() }
+        clearDestinationButtonIcon.contentDescription = context.getString(R.string.kh_uisdk_delete_destination_address)
         flipButtonIcon.setOnClickListener { addressPresenter.flipAddressesClicked(); }
     }
 

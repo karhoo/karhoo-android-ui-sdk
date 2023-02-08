@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">列車番号を追加</string>
     <string name="kh_uisdk_checkout_train_title">列車番号</string>
     <string name="kh_uisdk_close_the_screen">画面を閉じる</string>
+    <string name="kh_uisdk_delete_destination_address">宛先アドレスを削除</string>
     <string name="kh_uisdk_completed">ご利用ありがとうございました</string>
     <string name="kh_uisdk_confirmed">%sの乗車サービスを確定しました</string>
     <string name="kh_uisdk_contact">お問い合わせ</string>

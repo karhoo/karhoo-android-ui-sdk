@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">Add a train number</string>
     <string name="kh_uisdk_checkout_train_title">Train number</string>
     <string name="kh_uisdk_close_the_screen">Close the screen</string>
+    <string name="kh_uisdk_delete_destination_address">Delete destination address</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your ride</string>
     <string name="kh_uisdk_confirmed">Your ride with %s has been confirmed</string>
     <string name="kh_uisdk_contact">Contact</string>

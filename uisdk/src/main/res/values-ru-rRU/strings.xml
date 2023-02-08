@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">Добавить номер поезда</string>
     <string name="kh_uisdk_checkout_train_title">Номер поезда</string>
     <string name="kh_uisdk_close_the_screen">Закрыть экран</string>
+    <string name="kh_uisdk_delete_destination_address">Удалить адрес назначения</string>
     <string name="kh_uisdk_completed">Надеемся, вам понравилась ваша поездка!</string>
     <string name="kh_uisdk_confirmed">Ваша поездка с %s подтверждена</string>
     <string name="kh_uisdk_contact">СВЯЗАТЬСЯ</string>

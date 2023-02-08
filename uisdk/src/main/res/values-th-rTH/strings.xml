@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
     <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
     <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>
+    <string name="kh_uisdk_delete_destination_address">ลบที่อยู่ปลายทาง</string>
     <string name="kh_uisdk_completed">เราหวังว่าคุณพอใจกับการเดินทางของคุณ</string>
     <string name="kh_uisdk_confirmed">การเดินทางของคุณกับ %s ได้รับการยืนยันแล้ว</string>
     <string name="kh_uisdk_contact">การติดต่อ</string>
