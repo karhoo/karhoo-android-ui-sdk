@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">Aggiungi un numero di treno</string>
     <string name="kh_uisdk_checkout_train_title">Numero del treno</string>
     <string name="kh_uisdk_close_the_screen">Chiudi lo schermo</string>
+    <string name="kh_uisdk_delete_destination_address">Elimina indirizzo di destinazione</string>
     <string name="kh_uisdk_completed">Speriamo che la tua corsa sia stata piacevole</string>
     <string name="kh_uisdk_confirmed">La tua corsa con %s è stata confermata</string>
     <string name="kh_uisdk_contact">CONTATTO</string>

@@ -151,6 +151,7 @@
     <string name="kh_uisdk_checkout_train_subtitle">Tambahkan nomor kereta</string>
     <string name="kh_uisdk_checkout_train_title">Nomor kereta</string>
     <string name="kh_uisdk_close_the_screen">Tutup layar</string>
+    <string name="kh_uisdk_delete_destination_address">Hapus alamat tujuan</string>
     <string name="kh_uisdk_completed">Kami harap Anda menikmati perjalanan Anda</string>
     <string name="kh_uisdk_confirmed">Perjalanan Anda telah dikonfirmasi dengan %s</string>
     <string name="kh_uisdk_contact">KONTAK</string>
