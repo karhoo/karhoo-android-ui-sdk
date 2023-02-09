@@ -309,7 +309,7 @@
     <style name="KhBookingQuotesViewFleetTitle">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large17</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetType">
@@ -526,7 +526,7 @@
     </style>
 
     <style name="KhLoyaltyTitleText">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_large17</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
         <item name="android:textColor">@color/kh_uisdk_text_primary</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
@@ -536,7 +536,7 @@
     </style>
 
     <style name="KhLoyaltySubtitleText">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/kh_uisdk_secondary_text</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxsmall</item>
         <item name="fontWeight">600</item>
