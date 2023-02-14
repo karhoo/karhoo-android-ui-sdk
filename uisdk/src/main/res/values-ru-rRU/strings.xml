@@ -141,7 +141,7 @@
     <string name="kh_uisdk_card">Карта</string>
     <string name="kh_uisdk_checked">Проверено</string>
     <string name="kh_uisdk_checkout_airport_example">например AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">Добавить номер рейса</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Водитель будет рядом даже в случае задержки</string>
     <string name="kh_uisdk_checkout_airport_title">Номер рейса</string>
     <string name="kh_uisdk_checkout_as_guest">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Комментарий для вашего водителя</string>
@@ -151,7 +151,6 @@
     <string name="kh_uisdk_checkout_train_subtitle">Добавить номер поезда</string>
     <string name="kh_uisdk_checkout_train_title">Номер поезда</string>
     <string name="kh_uisdk_close_the_screen">Закрыть экран</string>
-    <string name="kh_uisdk_delete_destination_address">Удалить адрес назначения</string>
     <string name="kh_uisdk_completed">Надеемся, вам понравилась ваша поездка!</string>
     <string name="kh_uisdk_confirmed">Ваша поездка с %s подтверждена</string>
     <string name="kh_uisdk_contact">СВЯЗАТЬСЯ</string>
@@ -164,6 +163,7 @@
     <string name="kh_uisdk_country_search">Страна/регион поиска</string>
     <string name="kh_uisdk_current_location">Получить актуальную геолокацию</string>
     <string name="kh_uisdk_date">Дата</string>
+    <string name="kh_uisdk_delete_destination_address">Удалить адрес назначения</string>
     <string name="kh_uisdk_destination">Назначения</string>
     <string name="kh_uisdk_destination_book_error">Выберите пункт назначения, чтобы забронировать поездку</string>
     <string name="kh_uisdk_difficulties_cancelling_message">У нас возникли проблемы с отменой поездки. Пожалуйста, свяжитесь с перевозчиком.</string>
@@ -350,7 +350,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">Произошла ошибка. Чтобы заработать или использовать баллы лояльности, попробуйте снова.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Произошла ошибка: оплата в этой валюте невозможна</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">Вы можете использовать баллы лояльности для оплаты поездки</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">"Использовать %s баллов лояльности для оплаты %s %s "</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Использовать %3$s аллов лояльности для оплаты %1$s %2$s</string>
     <string name="kh_uisdk_loyalty_use_points_title">Используйте свои баллы</string>
     <string name="kh_uisdk_map_selector">Установить актуальную геолокацию на карте</string>
     <string name="kh_uisdk_meeting_point">Место встречи</string>

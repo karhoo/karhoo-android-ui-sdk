@@ -141,7 +141,7 @@
     <string name="kh_uisdk_card">Kaart</string>
     <string name="kh_uisdk_checked">Gecontroleerd</string>
     <string name="kh_uisdk_checkout_airport_example">bijv. AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">Voeg een vluchtnummer toe</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Ook bij vertragingen is er een chauffeur aanwezig</string>
     <string name="kh_uisdk_checkout_airport_title">Vluchtnummer</string>
     <string name="kh_uisdk_checkout_as_guest">RIT BOEKEN</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Opmerking voor uw chauffeur</string>
@@ -151,7 +151,6 @@
     <string name="kh_uisdk_checkout_train_subtitle">Voeg een treinnummer toe</string>
     <string name="kh_uisdk_checkout_train_title">Trein nummer</string>
     <string name="kh_uisdk_close_the_screen">Sluit het scherm</string>
-    <string name="kh_uisdk_delete_destination_address">Bestemmingsadres verwijderen</string>
     <string name="kh_uisdk_completed">We hopen dat uw rit naar wens was</string>
     <string name="kh_uisdk_confirmed">Uw rit met %s is bevestigd</string>
     <string name="kh_uisdk_contact">CONTACT</string>
@@ -164,6 +163,7 @@
     <string name="kh_uisdk_country_search">Land/regio zoeken</string>
     <string name="kh_uisdk_current_location">Huidige locatie opvragen</string>
     <string name="kh_uisdk_date">Datum</string>
+    <string name="kh_uisdk_delete_destination_address">Bestemmingsadres verwijderen</string>
     <string name="kh_uisdk_destination">Bestemming</string>
     <string name="kh_uisdk_destination_book_error">Je moet een bestemming selecteren om een rit te boeken</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Er zijn problemen met het annuleren van uw rit. Neem contact op met de ritaanbieder.</string>
@@ -348,7 +348,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">Er is een fout opgetreden. Probeer later opnieuw om Reward-punten te verdienen of te gebruiken.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Fout: deze valuta wordt niet ondersteund</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">U kunt Reward-punten gebruiken om deze rit te betalen</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Gebruik %s Reward-punten om %s %s te betalen</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Gebruik %3$s Reward-punten om %1$s %2$s te betalen</string>
     <string name="kh_uisdk_loyalty_use_points_title">Gebruik je Reward-punten</string>
     <string name="kh_uisdk_map_selector">Speld op de kaart zetten</string>
     <string name="kh_uisdk_meeting_point">Ontmoetingspunt</string>

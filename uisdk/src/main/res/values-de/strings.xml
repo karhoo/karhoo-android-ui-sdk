@@ -151,7 +151,6 @@
     <string name="kh_uisdk_checkout_train_subtitle">Eine Zugnummer hinzufügen</string>
     <string name="kh_uisdk_checkout_train_title">Zugnummer</string>
     <string name="kh_uisdk_close_the_screen">Schließen Sie den Bildschirm</string>
-    <string name="kh_uisdk_delete_destination_address">Zieladresse löschen</string>
     <string name="kh_uisdk_completed">Wir hoffen, Sie haben Ihre Fahrt genossen</string>
     <string name="kh_uisdk_confirmed">Ihre Fahrt mit %s wurde bestätigt</string>
     <string name="kh_uisdk_contact">KONTAKT</string>
@@ -164,6 +163,7 @@
     <string name="kh_uisdk_country_search">Land/Region suchen</string>
     <string name="kh_uisdk_current_location">Aktuellen Standort ermitteln</string>
     <string name="kh_uisdk_date">Datum</string>
+    <string name="kh_uisdk_delete_destination_address">Zieladresse löschen</string>
     <string name="kh_uisdk_destination">Zielort</string>
     <string name="kh_uisdk_destination_book_error">Sie müssen ein Ziel auswählen, um eine Fahrt zu buchen</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Wir haben Probleme, Ihre Fahrt zu stornieren. Bitte kontaktieren Sie die Flotte.</string>

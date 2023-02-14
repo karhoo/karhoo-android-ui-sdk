@@ -141,7 +141,7 @@
     <string name="kh_uisdk_card">Cartão</string>
     <string name="kh_uisdk_checked">Verificado</string>
     <string name="kh_uisdk_checkout_airport_example">e.g. AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">Acrescentar um número de voo</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">Um condutor estará presente mesmo em caso de atrasos</string>
     <string name="kh_uisdk_checkout_airport_title">Número de voo</string>
     <string name="kh_uisdk_checkout_as_guest">RESERVAR VIAGEM</string>
     <string name="kh_uisdk_checkout_comments_subtitle">Comentário para o seu motorista</string>
@@ -151,7 +151,6 @@
     <string name="kh_uisdk_checkout_train_subtitle">Adicionar um número de comboio</string>
     <string name="kh_uisdk_checkout_train_title">Número do comboio</string>
     <string name="kh_uisdk_close_the_screen">Fechar o ecrã</string>
-    <string name="kh_uisdk_delete_destination_address">Apagar endereço de destino</string>
     <string name="kh_uisdk_completed">Esperamos que tenha gostado da sua viagem</string>
     <string name="kh_uisdk_confirmed">Sua viagem com %s foi confirmada</string>
     <string name="kh_uisdk_contact">CONTATO</string>
@@ -164,6 +163,7 @@
     <string name="kh_uisdk_country_search">Pesquisar país/região</string>
     <string name="kh_uisdk_current_location">Selecionar localização atual</string>
     <string name="kh_uisdk_date">Data</string>
+    <string name="kh_uisdk_delete_destination_address">Apagar endereço de destino</string>
     <string name="kh_uisdk_destination">Destino</string>
     <string name="kh_uisdk_destination_book_error">Selecione um destino para reservar uma viagem</string>
     <string name="kh_uisdk_difficulties_cancelling_message">Estamos com dificuldades para cancelar sua viagem. Entre em contato com a frota.</string>
@@ -348,7 +348,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">Ocorreu um erro. Para ganhar ou usar pontos Reward, tente novamente mais tarde.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Erro: moeda não suportada</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">Você pode usar seus pontos Reward para pagar esta viagem</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Utilize %s pontos Reward para pagar %s %s</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Utilize %3$s pontos Reward para pagar %1$s %2$s</string>
     <string name="kh_uisdk_loyalty_use_points_title">Use seus pontos Reward</string>
     <string name="kh_uisdk_map_selector">Definir localização no mapa</string>
     <string name="kh_uisdk_meeting_point">Ponto de encontro</string>
