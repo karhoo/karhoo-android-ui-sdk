@@ -116,7 +116,7 @@ object KarhooAvailability : AvailabilityProvider {
                             ),
                             locale.toNormalizedLocale()
                         )
-                        .observable().apply { subscribe(observer) }
+                        .observable().apply { subscribe(observer, 1000) }
                 }
             }
         }
@@ -126,7 +126,7 @@ object KarhooAvailability : AvailabilityProvider {
         vehiclesObserver?.let { vehiclesObservable?.apply { unsubscribe(it) } }
         vehiclesJob?.cancel()
         availableVehicles = mutableMapOf()
-        currentAvailableQuotes()
+        markActiveCategories()
         updateFleets(mutableListOf())
         this.journeyDetails = null
     }
@@ -229,21 +229,6 @@ object KarhooAvailability : AvailabilityProvider {
         cancelVehicleCallback()
     }
 
-    private fun handleVehicleValidity(vehicles: QuoteList) {
-        refreshDelay = when {
-            vehicles.validity == -1 -> 0
-            vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(
-                VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
-            )
-            else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
-        }
-
-        vehiclesJob = GlobalScope.launch {
-            delay(refreshDelay)
-            vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
-        }
-    }
-
     private fun handleVehiclePolling(vehicles: QuoteList) {
         if (vehicles.status == QuoteStatus.COMPLETED) {
             running = false
@@ -253,8 +238,21 @@ object KarhooAvailability : AvailabilityProvider {
                     it
                 )
             }
+
             cancelVehicleCallback()
-            handleVehicleValidity(vehicles)
+
+            refreshDelay = when {
+                vehicles.validity == -1 -> 0
+                vehicles.validity >= VALIDITY_DEFAULT_INTERVAL -> vehicles.validity.times(
+                    VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
+                )
+                else -> VALIDITY_DEFAULT_INTERVAL.times(VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR)
+            }
+
+            vehiclesJob = GlobalScope.launch {
+                delay(refreshDelay)
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 1000) }
+            }
         }
         lastDataRetrieved = vehicles
 
@@ -278,7 +276,7 @@ object KarhooAvailability : AvailabilityProvider {
             availabilityHandler?.get()?.hasAvailability = true
             availableVehicles = vehicles.categories
 
-            currentAvailableQuotes()
+            markActiveCategories()
             filterVehicles(vehicles)
         }
 
@@ -287,7 +285,7 @@ object KarhooAvailability : AvailabilityProvider {
         }
     }
 
-    private fun currentAvailableQuotes() {
+    private fun markActiveCategories() {
         val activeCategories = HashMap<String, Boolean>()
         availableVehicles.forEach {
             it.value.forEach { activeCategories[it.id!!] = true }
@@ -307,7 +305,7 @@ object KarhooAvailability : AvailabilityProvider {
     override fun resumeUpdates() {
         if (!running) {
             vehiclesJob = GlobalScope.launch {
-                vehiclesObserver?.let { vehiclesObservable?.subscribe(it) }
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 1000) }
             }
 
             running = true
