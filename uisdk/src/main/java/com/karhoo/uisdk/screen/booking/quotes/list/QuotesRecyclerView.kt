@@ -54,7 +54,28 @@ class QuotesRecyclerView @JvmOverloads constructor(
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        quotesAdapter.items = quoteList
+        var hasNewQuotes = false
+
+
+        if(quoteList.size != quotesAdapter.items.size) {
+            hasNewQuotes = true
+        } else {
+            quoteList.forEach { newQuote ->
+                if(quotesAdapter.items.find {
+                    it.id == newQuote.id
+                } == null) {
+                    hasNewQuotes = true
+
+                    return@forEach
+                }
+            }
+        }
+
+        if (hasNewQuotes) {
+            quotesAdapter.items = quoteList
+            quotesListRecycler.scheduleLayoutAnimation()
+        }
+
         if (quotesAdapter.itemCount > 0) {
             setQuotesLoaderVisibility(View.GONE)
         }
@@ -163,8 +184,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
     override fun showNoFleetsError(show: Boolean, isPrebook: Boolean) {
         showErrorView(
             show, ErrorViewGenericReason(
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_title) else "",
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_subtitle) else context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_found),
+                if (isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_title) else "",
+                if (isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_subtitle) else context.resources.getString(
+                    R.string.kh_uisdk_quotes_error_no_results_found
+                ),
                 R.drawable.kh_uisdk_ic_no_available_quotes
             )
         )
@@ -175,7 +198,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
             quotesErrorView.setupWithSpan(
                 ErrorViewGenericReason(
                     context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_title),
-                    String.format(context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle), context.resources.getString(R.string.kh_uisdk_contact_us)),
+                    String.format(
+                        context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle),
+                        context.resources.getString(R.string.kh_uisdk_contact_us)
+                    ),
                     R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {
