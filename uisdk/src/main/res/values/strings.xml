@@ -106,7 +106,7 @@
     <string name="kh_uisdk_arrival">Arrival</string>
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_back">Back</string>
-    <string name="kh_uisdk_baggage_max">%d piece(s) luggage max</string>
+    <string name="kh_uisdk_baggage_max">%d piece(s) of luggage max</string>
     <string name="kh_uisdk_base">Base fare</string>
     <string name="kh_uisdk_base_fare_explanation">Your final fare might be affected by tips, tolls, taxes, and other charges.</string>
     <string name="kh_uisdk_book_now">Confirm and pay</string>
@@ -219,7 +219,7 @@
     <string name="kh_uisdk_filter_free_waiting_time">Free waiting time</string>
     <string name="kh_uisdk_filter_gps_tracking">GPS tracking</string>
     <string name="kh_uisdk_filter_hybrid">Hybrid</string>
-    <string name="kh_uisdk_filter_luggages">Piece(s) luggage</string>
+    <string name="kh_uisdk_filter_luggages">Piece(s) of luggage</string>
     <string name="kh_uisdk_filter_luxury">Luxury</string>
     <string name="kh_uisdk_filter_moto">Motorcycle</string>
     <string name="kh_uisdk_filter_page_results">View all %s search results</string>

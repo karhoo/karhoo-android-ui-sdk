@@ -348,7 +348,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">Si è verificato un errore. Per guadagnare o utilizzare punti Reward, riprova più tardi.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Errore: questa valuta non è supportata</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">Puoi usare punti Reward per pagare questa corsa</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Usa  %3$s punti Reward per pagare %1$s  %2$s</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Usa %3$s punti Reward per pagare %1$s %2$s</string>
     <string name="kh_uisdk_loyalty_use_points_title">Usa i tuoi punti Reward</string>
     <string name="kh_uisdk_map_selector">Posiziona il segnaposto sulla mappa</string>
     <string name="kh_uisdk_meeting_point">Punto d\'incontro</string>
