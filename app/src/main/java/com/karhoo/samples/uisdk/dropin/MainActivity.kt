@@ -24,6 +24,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
 import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
@@ -32,6 +33,7 @@ import android.util.Log
 import android.widget.CheckBox
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
+import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.sdk.analytics.AnalyticsManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -40,6 +42,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loadingProgressBar: View
+    private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
     private val notificationsId = "notifications_enabled"
@@ -115,7 +118,20 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
+            config.paymentManager = braintreePaymentManager
+            config.sdkAuthenticationRequired = { callback ->
+                Log.e(TAG, "Need an external authentication")
 
+                if (username != null && password != null) {
+                    KarhooApi.userService.logout()
+                    loginUser(username!!, password!!, goToBooking = false, callback)
+                }
+            }
+
+            KarhooUISDK.apply {
+                setConfiguration(config)
+            }
+            showLoginInputDialog()
         }
 
         val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
@@ -169,12 +185,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
-
+        config.paymentManager = braintreePaymentManager
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BRAINTREE_AUTH_TOKEN)
+        }
+        KarhooUISDK.apply {
+            setConfiguration(config)
+        }
     }
 
     private fun applyBraintreeGuestConfig() {
         val config = BraintreeGuestConfig(applicationContext)
+        config.paymentManager = braintreePaymentManager
 
+        KarhooUISDK.apply {
+            setConfiguration(config)
+        }
     }
 
     private fun applyAdyenTokenExchangeConfig() {
