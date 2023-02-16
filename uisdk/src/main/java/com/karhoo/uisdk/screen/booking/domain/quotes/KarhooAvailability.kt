@@ -49,7 +49,7 @@ object KarhooAvailability : AvailabilityProvider {
     private var refreshDelay: Long = 0
     private var running: Boolean = false
     private var journeyDetails: JourneyDetails? = null
-    private const val SHORT_POLL_MILLIS = 1000L
+    private const val SHORT_POLL_MILLIS = 1500L
 
     private lateinit var observer: androidx.lifecycle.Observer<JourneyDetails>
     private var vehiclesJob: Job? = null

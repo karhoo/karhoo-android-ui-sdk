@@ -48,15 +48,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quotesListRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_small"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
-        android:layoutAnimation="@anim/layout_animation"
+        android:layoutAnimation="@anim/kh_uisdk_quotes_item_animation"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/kh_uisdk_quotes_padding_bottom"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quotesTaxesAndFeesLabel" />
 

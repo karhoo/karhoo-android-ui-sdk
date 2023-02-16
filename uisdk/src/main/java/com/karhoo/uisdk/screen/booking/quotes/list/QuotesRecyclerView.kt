@@ -54,26 +54,20 @@ class QuotesRecyclerView @JvmOverloads constructor(
     }
 
     override fun updateList(quoteList: List<Quote>) {
-        var hasNewQuotes = false
+        var hasNewQuotes = quoteList.size != quotesAdapter.itemCount
+        val newQuoteIds: ArrayList<String?> = arrayListOf()
 
+        quoteList.forEach { newQuote ->
+            if (quotesAdapter.items.find { it.id == newQuote.id } == null) {
+                hasNewQuotes = true
 
-        if(quoteList.size != quotesAdapter.items.size) {
-            hasNewQuotes = true
-        } else {
-            quoteList.forEach { newQuote ->
-                if(quotesAdapter.items.find {
-                    it.id == newQuote.id
-                } == null) {
-                    hasNewQuotes = true
-
-                    return@forEach
-                }
+                newQuote.id?.let { newQuoteIds.add(it) }
             }
         }
 
         if (hasNewQuotes) {
-            quotesAdapter.items = quoteList
-            quotesListRecycler.scheduleLayoutAnimation()
+            quotesAdapter.refreshItemsAndAnimateNewOnes(quoteList, newQuoteIds)
+            quotesListRecycler.scrollToPosition(0)
         }
 
         if (quotesAdapter.itemCount > 0) {
