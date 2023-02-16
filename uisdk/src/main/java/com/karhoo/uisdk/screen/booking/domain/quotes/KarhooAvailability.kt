@@ -49,6 +49,7 @@ object KarhooAvailability : AvailabilityProvider {
     private var refreshDelay: Long = 0
     private var running: Boolean = false
     private var journeyDetails: JourneyDetails? = null
+    private const val SHORT_POLL_MILLIS = 1000L
 
     private lateinit var observer: androidx.lifecycle.Observer<JourneyDetails>
     private var vehiclesJob: Job? = null
@@ -116,7 +117,7 @@ object KarhooAvailability : AvailabilityProvider {
                             ),
                             locale.toNormalizedLocale()
                         )
-                        .observable().apply { subscribe(observer, 1000) }
+                        .observable().apply { subscribe(observer, SHORT_POLL_MILLIS) }
                 }
             }
         }
@@ -251,7 +252,7 @@ object KarhooAvailability : AvailabilityProvider {
 
             vehiclesJob = GlobalScope.launch {
                 delay(refreshDelay)
-                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 1000) }
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, SHORT_POLL_MILLIS) }
             }
         }
         lastDataRetrieved = vehicles
@@ -305,7 +306,7 @@ object KarhooAvailability : AvailabilityProvider {
     override fun resumeUpdates() {
         if (!running) {
             vehiclesJob = GlobalScope.launch {
-                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, 1000) }
+                vehiclesObserver?.let { vehiclesObservable?.subscribe(it, SHORT_POLL_MILLIS) }
             }
 
             running = true
