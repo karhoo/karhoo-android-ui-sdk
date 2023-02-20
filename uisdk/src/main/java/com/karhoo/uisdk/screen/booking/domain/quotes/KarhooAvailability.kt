@@ -17,6 +17,9 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragmentContract
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
+import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter
+import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter.Companion.EXECUTIVE
+import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter.Companion.LUXURY
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_DEFAULT_INTERVAL
 import com.karhoo.uisdk.util.ViewsConstants.VALIDITY_SECONDS_TO_MILLISECONDS_FACTOR
 import com.karhoo.uisdk.util.extension.toNormalizedLocale
@@ -196,6 +199,16 @@ object KarhooAvailability : AvailabilityProvider {
         override fun onValueChanged(value: Resource<QuoteList>) {
             when (value) {
                 is Resource.Success -> {
+                    value.data.categories.values.forEach {
+                        it.map { quote ->
+                            if (!quote.vehicle.vehicleTags.contains(EXECUTIVE) &&
+                                !quote.vehicle.vehicleTags.contains(LUXURY)
+                            ) {
+                                quote.vehicle.vehicleTags.add(VehicleClassFilter.NORMAL)
+                            }
+                        }
+                    }
+
                     quoteListPoolingStatusListener?.changedStatus(value.data.status)
                     handleVehiclePolling(value.data)
                     if (!shouldRunInBackground) {

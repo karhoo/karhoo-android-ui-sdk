@@ -227,6 +227,10 @@ class FilterDialogFragment : MasterBottomSheetFragment(), FilterDialogContract.V
                         icon = R.drawable.kh_uisdk_ic_star_empty
                         fixedTag = VehicleClassFilter.LUXURY
                     })
+                    add(MultiSelectData(resources.getString(R.string.kh_uisdk_filter_standard)).apply {
+                        icon = R.drawable.kh_uisdk_ic_standard
+                        fixedTag = VehicleClassFilter.NORMAL
+                    })
                 }
             }
         filterViewVehicleClassMultiSelectChipsFilter.filter = vehicleClassFilter

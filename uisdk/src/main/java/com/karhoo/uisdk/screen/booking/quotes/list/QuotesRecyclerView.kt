@@ -53,25 +53,33 @@ class QuotesRecyclerView @JvmOverloads constructor(
         quotesAdapter.setSelectedSortMethod(sortMethod)
     }
 
-    override fun updateList(quoteList: List<Quote>) {
-        var hasNewQuotes = quoteList.size != quotesAdapter.itemCount
-        val newQuoteIds: ArrayList<String?> = arrayListOf()
+    override fun updateList(quoteList: List<Quote>, refreshAll: Boolean) {
+        if(refreshAll) {
+            quotesAdapter.items = quoteList
 
-        quoteList.forEach { newQuote ->
-            if (quotesAdapter.items.find { it.id == newQuote.id } == null) {
-                hasNewQuotes = true
-
-                newQuote.id?.let { newQuoteIds.add(it) }
+            if (quotesAdapter.itemCount > 0) {
+                setQuotesLoaderVisibility(View.GONE)
             }
-        }
+        } else {
+            var hasNewQuotes = quoteList.size != quotesAdapter.itemCount
+            val newQuoteIds: ArrayList<String?> = arrayListOf()
 
-        if (hasNewQuotes) {
-            quotesAdapter.refreshItemsAndAnimateNewOnes(quoteList, newQuoteIds)
-            quotesListRecycler.scrollToPosition(0)
-        }
+            quoteList.forEach { newQuote ->
+                if (quotesAdapter.items.find { it.id == newQuote.id } == null) {
+                    hasNewQuotes = true
 
-        if (quotesAdapter.itemCount > 0) {
-            setQuotesLoaderVisibility(View.GONE)
+                    newQuote.id?.let { newQuoteIds.add(it) }
+                }
+            }
+
+            if (hasNewQuotes) {
+                quotesAdapter.refreshItemsAndAnimateNewOnes(quoteList, newQuoteIds)
+                quotesListRecycler.scrollToPosition(0)
+            }
+
+            if (quotesAdapter.itemCount > 0) {
+                setQuotesLoaderVisibility(View.GONE)
+            }
         }
     }
 

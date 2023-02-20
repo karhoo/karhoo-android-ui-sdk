@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
+import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.formatted
@@ -103,12 +104,12 @@ class QuotesListItemView @JvmOverloads constructor(
     }
 
     private fun setCategoryText(vehicle: QuoteVehicle) {
-        val luxuryTag = "luxury"
-        val executiveTag = "executive"
-        var textToDisplay = if (vehicle.vehicleTags.contains(executiveTag)) {
+        var textToDisplay = if (vehicle.vehicleTags.contains(VehicleClassFilter.EXECUTIVE)) {
             resources.getString(R.string.kh_uisdk_filter_executive)
-        } else if (vehicle.vehicleTags.contains(luxuryTag)) {
+        } else if (vehicle.vehicleTags.contains(VehicleClassFilter.LUXURY)) {
             resources.getString(R.string.kh_uisdk_filter_luxury)
+        } else if (vehicle.vehicleTags.contains(VehicleClassFilter.NORMAL)) {
+            resources.getString(R.string.kh_uisdk_filter_standard)
         } else {
             "${vehicle.vehicleType}"
         }

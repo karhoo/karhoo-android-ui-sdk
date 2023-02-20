@@ -16,5 +16,6 @@ class VehicleClassFilter(selectedTypes: ArrayList<MultiSelectData>) : MultiSelec
     companion object {
         const val EXECUTIVE = "executive"
         const val LUXURY = "luxury"
+        const val NORMAL = "normal"
     }
 }
