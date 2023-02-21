@@ -56,10 +56,6 @@ class QuotesRecyclerView @JvmOverloads constructor(
     override fun updateList(quoteList: List<Quote>, refreshAll: Boolean) {
         if(refreshAll) {
             quotesAdapter.items = quoteList
-
-            if (quotesAdapter.itemCount > 0) {
-                setQuotesLoaderVisibility(View.GONE)
-            }
         } else {
             var hasNewQuotes = quoteList.size != quotesAdapter.itemCount
             val newQuoteIds: ArrayList<String?> = arrayListOf()
@@ -76,10 +72,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
                 quotesAdapter.refreshItemsAndAnimateNewOnes(quoteList, newQuoteIds)
                 quotesListRecycler.scrollToPosition(0)
             }
+        }
 
-            if (quotesAdapter.itemCount > 0) {
-                setQuotesLoaderVisibility(View.GONE)
-            }
+        if (quotesAdapter.itemCount > 0) {
+            setQuotesLoaderVisibility(View.GONE)
         }
     }
 
