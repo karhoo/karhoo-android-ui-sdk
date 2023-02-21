@@ -53,6 +53,7 @@ class QuotesRecyclerView @JvmOverloads constructor(
         quotesAdapter.setSelectedSortMethod(sortMethod)
     }
 
+    @Suppress("NestedBlockDepth")
     override fun updateList(quoteList: List<Quote>, refreshAll: Boolean) {
         if(refreshAll) {
             quotesAdapter.items = quoteList
