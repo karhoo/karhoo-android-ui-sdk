@@ -106,7 +106,7 @@
     <string name="kh_uisdk_arrival">Arrival</string>
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
     <string name="kh_uisdk_back">Back</string>
-    <string name="kh_uisdk_baggage_max">%d piece(s) luggage max</string>
+    <string name="kh_uisdk_baggage_max">%d piece(s) of luggage max</string>
     <string name="kh_uisdk_base">Base fare</string>
     <string name="kh_uisdk_base_fare_explanation">Your final fare might be affected by tips, tolls, taxes, and other charges.</string>
     <string name="kh_uisdk_book_now">Confirm and pay</string>
@@ -141,17 +141,16 @@
     <string name="kh_uisdk_card">Card</string>
     <string name="kh_uisdk_checked">Checked</string>
     <string name="kh_uisdk_checkout_airport_example">e.g AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">Add a flight number</string>
-    <string name="kh_uisdk_checkout_airport_title">Flight number</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">A driver will be waiting for you even if the flight is delayed.</string>
+    <string name="kh_uisdk_checkout_airport_title">Add a flight number</string>
     <string name="kh_uisdk_checkout_as_guest">Book a ride</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Comment for your driver</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Child seat, wheelchair access needed, etc.</string>
     <string name="kh_uisdk_checkout_comments_title">Comment</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Only letters and numbers are allowed</string>
     <string name="kh_uisdk_checkout_train_example">e.g 6809</string>
-    <string name="kh_uisdk_checkout_train_subtitle">Add a train number</string>
-    <string name="kh_uisdk_checkout_train_title">Train number</string>
+    <string name="kh_uisdk_checkout_train_subtitle">A driver will wait for you even if the train is delayed.</string>
+    <string name="kh_uisdk_checkout_train_title">Add a train number</string>
     <string name="kh_uisdk_close_the_screen">Close the screen</string>
-    <string name="kh_uisdk_delete_destination_address">Delete destination address</string>
     <string name="kh_uisdk_completed">We hope you enjoyed your ride</string>
     <string name="kh_uisdk_confirmed">Your ride with %s has been confirmed</string>
     <string name="kh_uisdk_contact">Contact</string>
@@ -164,6 +163,7 @@
     <string name="kh_uisdk_country_search">Search country/region</string>
     <string name="kh_uisdk_current_location">Get current location</string>
     <string name="kh_uisdk_date">Date</string>
+    <string name="kh_uisdk_delete_destination_address">Delete destination address</string>
     <string name="kh_uisdk_destination">Destination</string>
     <string name="kh_uisdk_destination_book_error">You must select a destination to book a ride</string>
     <string name="kh_uisdk_difficulties_cancelling_message">We’re having an issue cancelling your ride. Please contact the ride provider.</string>
@@ -219,7 +219,7 @@
     <string name="kh_uisdk_filter_free_waiting_time">Free waiting time</string>
     <string name="kh_uisdk_filter_gps_tracking">GPS tracking</string>
     <string name="kh_uisdk_filter_hybrid">Hybrid</string>
-    <string name="kh_uisdk_filter_luggages">Piece(s) luggage</string>
+    <string name="kh_uisdk_filter_luggages">Piece(s) of luggage</string>
     <string name="kh_uisdk_filter_luxury">Luxury</string>
     <string name="kh_uisdk_filter_moto">Motorcycle</string>
     <string name="kh_uisdk_filter_page_results">View all %s search results</string>
@@ -348,7 +348,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">An error has occurred. To earn or use Reward points, please try again later.</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">Sorry, this currency is not supported.</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">You can use Reward points to pay for this ride</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Use %s Reward points to pay %s %s</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">Use %3$s Reward points to pay %1$s %2$s</string>
     <string name="kh_uisdk_loyalty_use_points_title">Use your Reward points</string>
     <string name="kh_uisdk_map_selector">Drop pin on map</string>
     <string name="kh_uisdk_meeting_point">Meeting point</string>
