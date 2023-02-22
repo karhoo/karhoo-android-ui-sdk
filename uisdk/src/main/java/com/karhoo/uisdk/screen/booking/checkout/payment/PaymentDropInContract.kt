@@ -45,6 +45,8 @@ interface PaymentDropInContract {
         fun getDropInConfig(context: Context, sdkToken: String): Any
 
         fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int = 0, lastFourDigits: String? = null, quoteId: String? = null)
+
+        fun quotePriceToAmount(quote: Quote?): String
     }
 
     interface Actions {
@@ -68,5 +70,7 @@ interface PaymentDropInContract {
         fun showPaymentFailureDialog(error: KarhooError? = null)
 
         fun threeDSecureNonce(threeDSNonce: String, tripId: String? = null)
+
+        fun showLoadingButton(loading: Boolean)
     }
 }

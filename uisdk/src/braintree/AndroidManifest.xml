@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name="com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Transparent"
+            />
+    </application>
+</manifest>

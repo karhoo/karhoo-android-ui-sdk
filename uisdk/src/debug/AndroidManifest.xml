@@ -20,6 +20,12 @@
             android:windowSoftInputMode="adjustResize"
             android:exported="true"
             tools:replace="android:theme" />
+
+        <activity
+            android:name="com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Transparent"
+            />
     </application>
 
 </manifest>

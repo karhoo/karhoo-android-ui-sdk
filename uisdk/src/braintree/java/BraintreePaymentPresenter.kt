@@ -3,9 +3,10 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.braintree
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.dropin.DropInResult
+import com.braintreepayments.api.DropInRequest
+import com.braintreepayments.api.DropInResult
 import com.karhoo.sdk.api.KarhooApi
+import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
 import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
@@ -57,7 +58,7 @@ class BraintreePaymentPresenter(
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
-        return DropInRequest().clientToken(sdkToken)
+        return DropInRequest()
     }
 
     private fun getNonce(braintreeSDKToken: String, amount: String) {
@@ -99,24 +100,32 @@ class BraintreePaymentPresenter(
 
     override fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (resultCode == AppCompatActivity.RESULT_OK && data != null) {
-            KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
-            when (requestCode) {
-                BraintreePaymentView.REQ_CODE_BRAINTREE -> {
-                    val braintreeResult =
-                        data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    setNonce(braintreeResult?.paymentMethodNonce?.nonce.orEmpty())
-                }
-                BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
-                    val braintreeResult =
-                        data.getParcelableExtra<DropInResult>(DropInResult.EXTRA_DROP_IN_RESULT)
-                    braintreeResult?.paymentMethodNonce?.let {
-                        this.nonce = it.nonce
-                        updateCardDetails(
-                            cardNumber = it.description,
-                            cardTypeLabel = it.typeLabel
-                        )
+            if (data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT)) {
+                KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
+                val braintreeResult =
+                    data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT)
+                view?.showLoadingButton(true)
+
+                when (requestCode) {
+                    BraintreePaymentView.REQ_CODE_BRAINTREE -> {
+                        setNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
+                    }
+                    BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
+                        braintreeResult?.paymentMethodNonce?.let {
+                            this.nonce = it.string
+                            updateCardDetails(
+                                cardNumber = braintreeResult.paymentDescription,
+                                cardTypeLabel = braintreeResult.paymentMethodType?.name
+                            )
+                        }
+                        setNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
                     }
                 }
+            } else if (data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR)) {
+                val exception =
+                    data.getSerializableExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR) as KarhooError
+                view?.showError(R.string.kh_uisdk_something_went_wrong, exception)
+                view?.showLoadingButton(false)
             }
         }
         return true
@@ -170,18 +179,17 @@ class BraintreePaymentPresenter(
             organisationId = user.organisations.first().id,
             nonce = braintreeSDKNonce
         )
+
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
-                    //TODO Check if this is already handled by the onSavedPayment method
-                    view?.updatePaymentDetails(userStore.savedPaymentInfo)
-                    view?.handlePaymentDetailsUpdate()
+                    view?.threeDSecureNonce(braintreeSDKNonce)
                 }
                 is Resource.Failure -> {
+                    view?.showLoadingButton(false)
                     logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
-                //TODO Consider using returnErrorStringOrLogoutIfRequired
             }
         }
     }
@@ -194,9 +202,14 @@ class BraintreePaymentPresenter(
         }
     }
 
-    private fun quotePriceToAmount(quote: Quote?): String {
-        val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
-        return currency.intToPriceNoSymbol(quote?.price?.highPrice.orZero())
+    override fun quotePriceToAmount(quote: Quote?): String {
+        quote?.let {
+            val currency = Currency.getInstance(it.price.currencyCode?.trim())
+            return currency.intToPriceNoSymbol(it.price.highPrice.orZero())
+        } ?: kotlin.run {
+            val currency = Currency.getInstance(this.quote?.price?.currencyCode?.trim())
+            return currency.intToPriceNoSymbol(this.quote?.price?.highPrice.orZero())
+        }
     }
 
     override fun sdkInit(quote: Quote?, locale: Locale?) {
@@ -215,7 +228,12 @@ class BraintreePaymentPresenter(
         }
     }
 
-    override fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int, lastFourDigits: String?, quoteId: String?) {
+    override fun logPaymentFailureEvent(
+        refusalReason: String,
+        refusalReasonCode: Int,
+        lastFourDigits: String?,
+        quoteId: String?
+    ) {
         KarhooUISDKConfigurationProvider.configuration.paymentManager.paymentProviderView?.javaClass?.simpleName?.let {
             KarhooUISDK.analytics?.cardAuthorisationFailure(
                 quoteId = quoteId,

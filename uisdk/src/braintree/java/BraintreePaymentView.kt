@@ -3,15 +3,8 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.braintree
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import com.braintreepayments.api.BraintreeFragment
-import com.braintreepayments.api.ThreeDSecure
-import com.braintreepayments.api.dropin.DropInRequest
-import com.braintreepayments.api.interfaces.BraintreeErrorListener
-import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener
-import com.braintreepayments.api.models.PaymentMethodNonce
-import com.braintreepayments.api.models.ThreeDSecureRequest
-import com.karhoo.sdk.api.KarhooError
+import com.braintreepayments.api.DropInRequest
+import com.braintreepayments.api.ThreeDSecureRequest
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
@@ -28,29 +21,22 @@ class BraintreePaymentView : PaymentDropInContract.View {
     }
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
-        val braintreeFragment = BraintreeFragment.newInstance(context as AppCompatActivity, sdkToken)
+        actions?.showLoadingButton(true)
 
-        braintreeFragment.addListener(object : PaymentMethodNonceCreatedListener {
-            override fun onPaymentMethodNonceCreated(paymentMethodNonce: PaymentMethodNonce?) {
-                actions?.threeDSecureNonce(paymentMethodNonce?.nonce.orEmpty())
-            }
-        })
-
-        braintreeFragment.addListener(
-                object : BraintreeErrorListener {
-                    override fun onError(error: Exception?) {
-                        actions?.showPaymentFailureDialog(KarhooError.fromThrowable(error))
-                    }
-                })
-
-        val threeDSecureRequest = ThreeDSecureRequest()
-                .nonce(nonce)
-                .amount(amount)
-                .versionRequested(ThreeDSecureRequest.VERSION_2)
-        ThreeDSecure.performVerification(braintreeFragment, threeDSecureRequest)
-        { request, lookup ->
-            ThreeDSecure.continuePerformVerification(braintreeFragment, request, lookup)
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
+                DropInRequest
+        val threeDSecureRequest = ThreeDSecureRequest().apply {
+            this.nonce = nonce
+            this.amount = presenter?.quotePriceToAmount(null)
+            this.versionRequested = ThreeDSecureRequest.VERSION_2
         }
+        dropInRequest.threeDSecureRequest = threeDSecureRequest
+        val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
+
+        val builder = BraintreePaymentActivity.Builder()
+            .dropInRequest(dropInRequest)
+            .sdkToken(sdkToken)
+        (context as Activity).startActivityForResult(builder.build(context), requestCode)
     }
 
     override fun initialiseChangeCard(quote: Quote?, locale: Locale?) {
@@ -70,10 +56,21 @@ class BraintreePaymentView : PaymentDropInContract.View {
     }
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
+        actions?.showLoadingButton(true)
+
         val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
                 DropInRequest
+        val threeDSecureRequest = ThreeDSecureRequest().apply {
+            this.amount = presenter?.quotePriceToAmount(quote)
+            this.versionRequested = ThreeDSecureRequest.VERSION_2
+        }
+        dropInRequest.threeDSecureRequest = threeDSecureRequest
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
-        (context as Activity).startActivityForResult(dropInRequest.getIntent(context), requestCode)
+
+        val builder = BraintreePaymentActivity.Builder()
+            .dropInRequest(dropInRequest)
+            .sdkToken(sdkToken)
+        (context as Activity).startActivityForResult(builder.build(context), requestCode)
     }
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {

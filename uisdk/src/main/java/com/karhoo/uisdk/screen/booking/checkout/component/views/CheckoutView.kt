@@ -456,7 +456,7 @@ internal class CheckoutView @JvmOverloads constructor(
             bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             val paymentSuccess =
                 bookingPaymentHandler.onActivityResult(requestCode, resultCode, data)
-            loadingButtonCallback.onLoadingComplete()
+//            loadingButtonCallback.onLoadingComplete()
 
             if (paymentSuccess) {
                 bookingListener.startBookingProcess()
@@ -637,6 +637,10 @@ internal class CheckoutView @JvmOverloads constructor(
 
     override fun retrieveLoyaltyStatus() {
         presenter.createLoyaltyViewResponse()
+    }
+
+    override fun showLoadingButton(loading: Boolean) {
+        showLoading(loading)
     }
 
     override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {

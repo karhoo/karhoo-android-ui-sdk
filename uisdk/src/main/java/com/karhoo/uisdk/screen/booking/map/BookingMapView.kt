@@ -127,7 +127,8 @@ class BookingMapView @JvmOverloads constructor(
     fun centreMapToPickupPin() {
         googleMap?.let {
             it.setPadding(0, 0, 0, 0)
-            it.animateCamera(CameraUpdateFactory.newLatLngZoom(origin, MAP_DEFAULT_ZOOM))
+            origin?.let { it1 -> CameraUpdateFactory.newLatLngZoom(it1, MAP_DEFAULT_ZOOM) }
+                ?.let { it2 -> it.animateCamera(it2) }
         }
     }
 
