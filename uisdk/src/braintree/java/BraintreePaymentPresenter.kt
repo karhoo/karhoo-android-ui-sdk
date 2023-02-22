@@ -186,7 +186,6 @@ class BraintreePaymentPresenter(
                     view?.threeDSecureNonce(braintreeSDKNonce)
                 }
                 is Resource.Failure -> {
-                    view?.showLoadingButton(false)
                     logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
                     view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
                 }
