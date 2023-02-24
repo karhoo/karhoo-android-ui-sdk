@@ -183,6 +183,8 @@ class BraintreePaymentPresenter(
         paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
             when (result) {
                 is Resource.Success -> {
+                    view?.updatePaymentDetails(userStore.savedPaymentInfo)
+                    view?.handlePaymentDetailsUpdate()
                     view?.threeDSecureNonce(braintreeSDKNonce)
                 }
                 is Resource.Failure -> {
