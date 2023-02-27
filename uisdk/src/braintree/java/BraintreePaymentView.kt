@@ -27,7 +27,7 @@ class BraintreePaymentView : PaymentDropInContract.View {
                 DropInRequest
         val threeDSecureRequest = ThreeDSecureRequest().apply {
             this.nonce = nonce
-            this.amount = presenter?.quotePriceToAmount(null)
+            this.amount = amount
             this.versionRequested = ThreeDSecureRequest.VERSION_2
         }
         dropInRequest.threeDSecureRequest = threeDSecureRequest

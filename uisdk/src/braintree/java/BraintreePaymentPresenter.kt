@@ -185,7 +185,7 @@ class BraintreePaymentPresenter(
                 is Resource.Success -> {
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
-                    view?.threeDSecureNonce(braintreeSDKNonce)
+                    view?.threeDSecureNonce(result.data.nonce)
                 }
                 is Resource.Failure -> {
                     logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
