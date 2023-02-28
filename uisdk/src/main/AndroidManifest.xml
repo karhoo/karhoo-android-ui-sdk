@@ -12,21 +12,21 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-<!--        <activity-->
-<!--            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"-->
-<!--            android:label="@string/kh_uisdk_title_activity_threedsecure"-->
-<!--            android:launchMode="singleTask"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW" />-->
+        <activity
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:label="@string/kh_uisdk_title_activity_threedsecure"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-<!--                <category android:name="android.intent.category.DEFAULT" />-->
-<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-<!--                <data android:scheme="${applicationId}.braintree" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+                <data android:scheme="${applicationId}.braintree" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.karhoo.uisdk.screen.address.AddressActivity"
             android:label="@string/kh_uisdk_title_activity_address"
