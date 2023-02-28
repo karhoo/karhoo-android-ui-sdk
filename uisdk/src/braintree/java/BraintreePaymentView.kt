@@ -31,6 +31,9 @@ class BraintreePaymentView : PaymentDropInContract.View {
             this.versionRequested = ThreeDSecureRequest.VERSION_2
         }
         dropInRequest.threeDSecureRequest = threeDSecureRequest
+        dropInRequest.vaultCardDefaultValue = true
+        dropInRequest.isVaultManagerEnabled = true
+
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
 
         val builder = BraintreePaymentActivity.Builder()
@@ -65,6 +68,8 @@ class BraintreePaymentView : PaymentDropInContract.View {
             this.versionRequested = ThreeDSecureRequest.VERSION_2
         }
         dropInRequest.threeDSecureRequest = threeDSecureRequest
+        dropInRequest.vaultCardDefaultValue = true
+        dropInRequest.isVaultManagerEnabled = true
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
 
         val builder = BraintreePaymentActivity.Builder()

@@ -108,7 +108,7 @@ class BraintreePaymentPresenter(
 
                 when (requestCode) {
                     BraintreePaymentView.REQ_CODE_BRAINTREE -> {
-                        setNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
+                        view?.threeDSecureNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
                     }
                     BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST -> {
                         braintreeResult?.paymentMethodNonce?.let {
@@ -118,7 +118,7 @@ class BraintreePaymentPresenter(
                                 cardTypeLabel = braintreeResult.paymentMethodType?.name
                             )
                         }
-                        setNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
+                        view?.threeDSecureNonce(braintreeResult?.paymentMethodNonce?.string.orEmpty())
                     }
                 }
             } else if (data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR)) {
@@ -185,7 +185,6 @@ class BraintreePaymentPresenter(
                 is Resource.Success -> {
                     view?.updatePaymentDetails(userStore.savedPaymentInfo)
                     view?.handlePaymentDetailsUpdate()
-                    view?.threeDSecureNonce(result.data.nonce)
                 }
                 is Resource.Failure -> {
                     logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
