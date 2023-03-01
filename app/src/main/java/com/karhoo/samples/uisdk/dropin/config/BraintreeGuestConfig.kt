@@ -39,6 +39,10 @@ class BraintreeGuestConfig(private val context: Context) : KarhooUISDKConfigurat
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
 
+    override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
+        return false
+    }
+
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         //Do nothing
     }

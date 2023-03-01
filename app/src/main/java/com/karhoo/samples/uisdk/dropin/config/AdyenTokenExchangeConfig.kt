@@ -44,7 +44,7 @@ class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfig
     }
 
     override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
-        return true
+        return false
     }
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {

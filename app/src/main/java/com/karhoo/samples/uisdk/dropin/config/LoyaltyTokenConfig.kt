@@ -40,12 +40,13 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
     override fun useAddToCalendarFeature(): Boolean {
         return true
     }
-    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
-        sdkAuthenticationRequired?.invoke(callback)
-    }
 
     override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
         return true
+    }
+
+    override suspend fun requireSDKAuthentication(callback: () -> Unit) {
+        sdkAuthenticationRequired?.invoke(callback)
     }
 }
 
