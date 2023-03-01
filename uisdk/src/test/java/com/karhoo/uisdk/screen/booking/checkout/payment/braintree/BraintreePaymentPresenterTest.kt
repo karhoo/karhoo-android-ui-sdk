@@ -3,7 +3,6 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.braintree
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import com.braintreepayments.api.DropInPaymentMethod
 import com.braintreepayments.api.DropInResult
 import com.braintreepayments.api.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
