@@ -31,6 +31,7 @@ import kotlin.system.exitProcess
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import android.widget.CheckBox
+import androidx.appcompat.app.AppCompatDelegate
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
     private val notificationsId = "notifications_enabled"
+    val darkModeId = "darkMode_enabled"
     private var requestedAuthentication = false
     private var username: String? = null
     private var password: String? = null
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         sharedPrefs = this?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         KarhooApi.userService.logout()
 
@@ -136,6 +139,9 @@ class MainActivity : AppCompatActivity() {
 
         val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
         checkbox.setChecked(getCurrentNotificationStatus())
+
+        val checkbox2 = findViewById<CheckBox>(R.id.darkmode_checkbox)
+        checkbox2.isChecked = getCurrentDarkModeStatus()
     }
 
     private fun showLoginInputDialog() {
@@ -189,6 +195,7 @@ class MainActivity : AppCompatActivity() {
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BRAINTREE_AUTH_TOKEN)
         }
+        config.forceDarkMode = getCurrentDarkModeStatus()
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -209,6 +216,7 @@ class MainActivity : AppCompatActivity() {
         config.sdkAuthenticationRequired = {
             loginInBackground(it, ADYEN_AUTH_TOKEN)
         }
+        config.forceDarkMode = getCurrentDarkModeStatus()
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -221,6 +229,7 @@ class MainActivity : AppCompatActivity() {
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
         }
+        config.forceDarkMode = getCurrentDarkModeStatus()
 
         KarhooUISDK.apply {
             setConfiguration(config)
@@ -308,14 +317,36 @@ class MainActivity : AppCompatActivity() {
         toggleNotificationStatus()
     }
 
+    fun onDarkModeCheckboxClicked(view: View) {
+        view
+        setDarkModeStatus(!getCurrentDarkModeStatus())
+    }
+
     private fun getCurrentNotificationStatus(): Boolean {
         return sharedPrefs.getBoolean(notificationsId, false)
+    }
+
+    private fun getCurrentDarkModeStatus(): Boolean {
+        return sharedPrefs.getBoolean(darkModeId, false)
     }
 
     private fun setNotificationStatus(value: Boolean) {
         with(sharedPrefs.edit()) {
             putBoolean(notificationsId, value)
             apply()
+        }
+    }
+
+    private fun setDarkModeStatus(value: Boolean) {
+        with(sharedPrefs.edit()) {
+            putBoolean(darkModeId, value)
+            apply()
+        }
+        if(value){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
