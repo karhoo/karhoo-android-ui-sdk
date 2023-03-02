@@ -52,5 +52,7 @@ interface BookingPaymentContract {
         fun threeDSecureNonce(threeDSNonce: String, tripId: String?)
 
         fun retrieveLoyaltyStatus()
+
+        fun showLoadingButton(loading: Boolean)
     }
 }

@@ -94,6 +94,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         setSupportActionBar(toolbar)
+
+        supportActionBar?.setHomeActionContentDescription(getString(R.string.kh_uisdk_close_the_screen))
+
         if (KarhooUISDK.menuHandler == null) {
             supportActionBar?.let {
                 it.setDisplayHomeAsUpEnabled(true)
@@ -573,7 +576,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     companion object {
-        private const val REQ_CODE_BRAINTREE = 301
+        const val REQ_CODE_BRAINTREE = 301
         private const val REQ_CODE_BOOKING_REQUEST_ACTIVITY = 304
         private const val REQ_CODE_BRAINTREE_GUEST = 302
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001

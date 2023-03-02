@@ -55,8 +55,8 @@
                 android:id="@+id/loyaltyViewSeparatorLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/kh_uisdk_margin_small"
-                android:layout_marginBottom="@dimen/kh_uisdk_margin_small"
+                android:layout_marginTop="@dimen/kh_uisdk_spacing_xsmall"
+                android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

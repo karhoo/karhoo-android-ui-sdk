@@ -141,15 +141,15 @@
     <string name="kh_uisdk_card">卡片</string>
     <string name="kh_uisdk_checked">已检查</string>
     <string name="kh_uisdk_checkout_airport_example">例如AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">添加航班号</string>
-    <string name="kh_uisdk_checkout_airport_title">航班号</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">即使航班延误，也会有司机等着你。</string>
+    <string name="kh_uisdk_checkout_airport_title">添加一个航班号</string>
     <string name="kh_uisdk_checkout_as_guest">预订行程</string>
     <string name="kh_uisdk_checkout_comments_subtitle">评论你的司机</string>
     <string name="kh_uisdk_checkout_comments_title">评论</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">只允许字母和数字</string>
     <string name="kh_uisdk_checkout_train_example">例如 6809</string>
-    <string name="kh_uisdk_checkout_train_subtitle">添加车次</string>
-    <string name="kh_uisdk_checkout_train_title">车次</string>
+    <string name="kh_uisdk_checkout_train_subtitle">即使火车晚点，司机也会等你。</string>
+    <string name="kh_uisdk_checkout_train_title">添加一个火车号码</string>
     <string name="kh_uisdk_close_the_screen">关闭屏幕</string>
     <string name="kh_uisdk_completed">我们希望您旅途愉快</string>
     <string name="kh_uisdk_confirmed">您的 %s 行程已确认</string>
@@ -163,6 +163,7 @@
     <string name="kh_uisdk_country_search">搜索国家/地区</string>
     <string name="kh_uisdk_current_location">获取当前位置</string>
     <string name="kh_uisdk_date">日期</string>
+    <string name="kh_uisdk_delete_destination_address">删除目标地址</string>
     <string name="kh_uisdk_destination">目的地</string>
     <string name="kh_uisdk_destination_book_error">您必须选择目的地方可预订行程</string>
     <string name="kh_uisdk_difficulties_cancelling_message">我们在取消您的行程时遇到问题。请联系行程提供商。</string>

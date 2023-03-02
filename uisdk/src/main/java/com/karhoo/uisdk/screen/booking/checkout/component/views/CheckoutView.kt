@@ -34,6 +34,7 @@ import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryCode
 import com.karhoo.uisdk.base.view.countrycodes.CountryUtils.getDefaultCountryDialingCode
 import com.karhoo.uisdk.screen.address.static.AddressStaticComponent
+import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_KEY
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity.Companion.BOOKING_CHECKOUT_PREBOOK_QUOTE_TYPE_KEY
@@ -456,7 +457,8 @@ internal class CheckoutView @JvmOverloads constructor(
             bookingPaymentHandler.setPassengerDetails(passengersDetailLayout.getPassengerDetails())
             val paymentSuccess =
                 bookingPaymentHandler.onActivityResult(requestCode, resultCode, data)
-            loadingButtonCallback.onLoadingComplete()
+            if (requestCode != BookingActivity.REQ_CODE_BRAINTREE)
+                loadingButtonCallback.onLoadingComplete()
 
             if (paymentSuccess) {
                 bookingListener.startBookingProcess()
@@ -637,6 +639,10 @@ internal class CheckoutView @JvmOverloads constructor(
 
     override fun retrieveLoyaltyStatus() {
         presenter.createLoyaltyViewResponse()
+    }
+
+    override fun showLoadingButton(loading: Boolean) {
+        showLoading(loading)
     }
 
     override fun showLoyaltyView(show: Boolean, loyaltyViewDataModel: LoyaltyViewDataModel?) {

@@ -19,6 +19,7 @@ import com.karhoo.uisdk.screen.booking.checkout.component.fragment.BookButtonSta
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewPresenter.Companion.TRIP_ID
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyViewDataModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
@@ -45,31 +46,13 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.junit.MockitoJUnitRunner
+import java.text.SimpleDateFormat
+import java.util.*
 
 @RunWith(MockitoJUnitRunner.Silent::class)
 class CheckoutViewPresenterTests {
-
-    private val vehicleAttributes: QuoteVehicle = QuoteVehicle(passengerCapacity = 2,
-            luggageCapacity = 2)
-    private val trip: TripInfo = TripInfo(
-            tripId = "tripId1234",
-            origin = TripLocationInfo(placeId = "placeId1234"),
-            destination = TripLocationInfo(placeId = "placeId4321"))
-    private val price: QuotePrice = QuotePrice(highPrice = 10, currencyCode = "GBP")
-    private val fleet: Fleet = Fleet(null, null, null, null, null, null, null)
-    private val userDetails: UserInfo = UserInfo(firstName = "David",
-            lastName = "Smith",
-            email = "test.test@test.test",
-            phoneNumber = "+441234 56789",
-            userId = "123",
-            locale = "en-GB",
-            organisations = listOf(Organisation(id = "organisation_id", name = "Organisation", roles = listOf("PERMISSION_ONE", "PERMISSION_TWO"))))
-    private val passengerDetails: PassengerDetails = PassengerDetails(firstName = "David",
-            lastName = "Smith",
-            email = "test.test@test.test",
-            phoneNumber = "+441234 56789",
-            locale = "en-GB")
     private val bookingComment = "Booking Comments"
     private val flightInfo = "AA123"
 
@@ -106,8 +89,10 @@ class CheckoutViewPresenterTests {
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
-        checkoutPresenter = CheckoutViewPresenter(view, analytics, preferenceStore, tripsService,
-                userStore)
+        checkoutPresenter = CheckoutViewPresenter(
+            view, analytics, preferenceStore, tripsService,
+            userStore
+        )
     }
 
     /**
@@ -152,10 +137,14 @@ class CheckoutViewPresenterTests {
 
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError(null)
-        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+        verify(bookingRequestStateViewModel).process(
+            CheckoutViewContract
                 .Event
-                .BookingError(R.string
-                        .kh_uisdk_destination_book_error, null))
+                .BookingError(
+                    R.string
+                        .kh_uisdk_destination_book_error, null
+                )
+        )
     }
 
     /**
@@ -174,10 +163,14 @@ class CheckoutViewPresenterTests {
 
         verify(view, never()).bindPriceAndEta(quote, "")
         verify(view).onError(null)
-        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+        verify(bookingRequestStateViewModel).process(
+            CheckoutViewContract
                 .Event
-                .BookingError(R.string
-                        .kh_uisdk_origin_book_error, null))
+                .BookingError(
+                    R.string
+                        .kh_uisdk_origin_book_error, null
+                )
+        )
     }
 
     /**
@@ -200,7 +193,14 @@ class CheckoutViewPresenterTests {
 
         verify(view).showUpdatedPaymentDetails(savedPaymentInfo)
         verify(userStore).savedPaymentInfo
-        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(
+            arrayListOf(
+                Capability(
+                    CapabilityAdapter.PASSENGERS_MAX,
+                    2
+                ), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)
+            ), vehicleAttributes
+        )
         verify(view).bindPriceAndEta(quote, "")
     }
 
@@ -280,7 +280,14 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
-        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(
+            arrayListOf(
+                Capability(
+                    CapabilityAdapter.PASSENGERS_MAX,
+                    2
+                ), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)
+            ), vehicleAttributes
+        )
         verify(view).bindEta(quote, "")
     }
 
@@ -301,7 +308,14 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.showBookingRequest(quote, null, null, null)
 
-        verify(view).setCapacityAndCapabilities(arrayListOf(Capability(CapabilityAdapter.PASSENGERS_MAX, 2), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)), vehicleAttributes)
+        verify(view).setCapacityAndCapabilities(
+            arrayListOf(
+                Capability(
+                    CapabilityAdapter.PASSENGERS_MAX,
+                    2
+                ), Capability(CapabilityAdapter.BAGGAGE_MAX, 2)
+            ), vehicleAttributes
+        )
         verify(view).bindPrebook(quote, "", scheduledDate)
     }
 
@@ -315,7 +329,8 @@ class CheckoutViewPresenterTests {
     fun `guest booking for airport origin with flight details triggers payment`() {
         setGuestUser()
 
-        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
+        val origin =
+            LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(origin, locationDetails, null))
@@ -344,8 +359,12 @@ class CheckoutViewPresenterTests {
      **/
     @Test
     fun `display and populate flight number field when pickup address has airport POI`() {
-        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-        PoiType.AIRPORT))
+        val origin = LocationInfo(
+            poiType = Poi.ENRICHED, details = PoiDetails(
+                type =
+                PoiType.AIRPORT
+            )
+        )
         whenever(flightDetails.flightNumber).thenReturn("flight number")
         whenever(quote.vehicle).thenReturn(vehicleAttributes)
         whenever(quote.price).thenReturn(price)
@@ -364,8 +383,12 @@ class CheckoutViewPresenterTests {
      **/
     @Test
     fun `display flight number field when pickup address has airport POI`() {
-        val origin = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type =
-        PoiType.AIRPORT))
+        val origin = LocationInfo(
+            poiType = Poi.ENRICHED, details = PoiDetails(
+                type =
+                PoiType.AIRPORT
+            )
+        )
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(origin, locationDetails, null))
 
@@ -387,7 +410,8 @@ class CheckoutViewPresenterTests {
         setGuestUser()
 
         val origin = LocationInfo(poiType = Poi.NOT_SET)
-        val destination = LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
+        val destination =
+            LocationInfo(poiType = Poi.ENRICHED, details = PoiDetails(type = PoiType.AIRPORT))
 
         val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
         observer.onChanged(JourneyDetails(origin, destination, null))
@@ -443,15 +467,19 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails,
-                bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER, null, passengerDetails,
+            bookingComment, flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
 
         verify(view).onError(any())
-        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+        verify(bookingRequestStateViewModel).process(
+            CheckoutViewContract
                 .Event
-                .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError))
+                .BookingError(R.string.kh_uisdk_K0001, KarhooError.GeneralRequestError)
+        )
     }
 
     /**
@@ -467,16 +495,22 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails =
-        passengerDetails, comments = bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER, null, passengerDetails =
+            passengerDetails, comments = bookingComment, flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.InvalidRequestPayload))
 
         verify(view).onError(any())
-        verify(bookingRequestStateViewModel).process(CheckoutViewContract
+        verify(bookingRequestStateViewModel).process(
+            CheckoutViewContract
                 .Event
-                .BookingError(R.string
-                        .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload))
+                .BookingError(
+                    R.string
+                        .kh_uisdk_booking_details_error, KarhooError.InvalidRequestPayload
+                )
+        )
     }
 
     /**
@@ -488,7 +522,13 @@ class CheckoutViewPresenterTests {
     fun `book trip CouldNotBookPaymentPreAuthFailed failure shows payment dialog`() {
         whenever(tripsService.book(any())).thenReturn(tripCall)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER,
+            null,
+            passengerDetails,
+            bookingComment,
+            flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Failure(KarhooError.CouldNotBookPaymentPreAuthFailed))
 
@@ -531,8 +571,10 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER, IDENTIFIER, passengerDetails,
+            bookingComment, flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -554,11 +596,18 @@ class CheckoutViewPresenterTests {
         val map = hashMapOf<String, String>()
         map[BOOKING__META_MAP_KEY] = BOOKING__META_MAP_VALUE
 
-        checkoutPresenter.showBookingRequest(quote, outboundTripId = null, bookingMetadata = map, journeyDetails = null)
+        checkoutPresenter.showBookingRequest(
+            quote,
+            outboundTripId = null,
+            bookingMetadata = map,
+            journeyDetails = null
+        )
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, IDENTIFIER, passengerDetails,
-                bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER, IDENTIFIER, passengerDetails,
+            bookingComment, flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -583,7 +632,13 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER,
+            null,
+            passengerDetails,
+            bookingComment,
+            flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
@@ -606,14 +661,22 @@ class CheckoutViewPresenterTests {
 
         checkoutPresenter.watchBookingRequest(bookingRequestStateViewModel)
 
-        checkoutPresenter.passBackPaymentIdentifiers(IDENTIFIER, null, passengerDetails, bookingComment, flightInfo)
+        checkoutPresenter.passBackPaymentIdentifiers(
+            IDENTIFIER,
+            null,
+            passengerDetails,
+            bookingComment,
+            flightInfo
+        )
 
         tripCaptor.firstValue.invoke(Resource.Success(trip))
 
         verify(preferenceStore).lastTrip = trip
         verify(view).onTripBookedSuccessfully(trip)
-        verify(bookingRequestStateViewModel).process(CheckoutViewContract
-                .Event.BookingSuccess(trip))
+        verify(bookingRequestStateViewModel).process(
+            CheckoutViewContract
+                .Event.BookingSuccess(trip)
+        )
     }
 
     /**
@@ -742,6 +805,143 @@ class CheckoutViewPresenterTests {
         verify(userStore, never()).removeCurrentUser()
     }
 
+
+    @Test
+    fun `Bind travel details is not triggered with any POI type due to ride being ASAP`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.fleet).thenReturn(TEST_FLEET)
+
+        checkoutPresenter.identifyTravelDetails(false)
+
+        verify(view).bindTravelDetails(null, null)
+    }
+
+    @Test
+    fun `Bind travel details is not triggered at all due to ride being PREBOOK but fleet not having capabillities`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.fleet).thenReturn(TEST_FLEET)
+
+        checkoutPresenter.identifyTravelDetails(true)
+
+        verify(view, never()).bindTravelDetails(any(), any())
+    }
+
+    @Test
+    fun `Bind travel details is not triggered at all due to ride being PREBOOK but fleet having capabillities as null`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.price.highPrice).thenReturn(150)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(TEST_FLEET)
+
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, DateTime.now()))
+
+        checkoutPresenter.showBookingRequest(quote, JOURNEY_DETAILS, null, null)
+
+        checkoutPresenter.identifyTravelDetails(true)
+
+        verify(view, never()).bindTravelDetails(any(), any())
+    }
+
+    @Test
+    fun `Bind travel details is not triggered at all due to ride being PREBOOK but quote having journey details as null`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.price.highPrice).thenReturn(150)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(TEST_FLEET_WITH_FLIGHT_TRACKING)
+
+        val observer = checkoutPresenter.watchJourneyDetails(journeyDetailsStateViewModel)
+        observer.onChanged(JourneyDetails(locationDetails, locationDetails, DateTime.now()))
+
+        checkoutPresenter.showBookingRequest(quote, null, null, null)
+
+        checkoutPresenter.identifyTravelDetails(true)
+
+        verify(view, never()).bindTravelDetails(any(), any())
+    }
+
+    @Test
+    fun `Bind travel details is triggered correctly when fleet has flight_tracking`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.price.highPrice).thenReturn(150)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(TEST_FLEET_WITH_FLIGHT_TRACKING)
+
+        checkoutPresenter.showBookingRequest(quote, JOURNEY_DETAILS_AIRPORT, null, null)
+
+        checkoutPresenter.identifyTravelDetails(true)
+
+        verify(view).bindTravelDetails(PoiType.AIRPORT, null)
+    }
+
+    @Test
+    fun `Bind travel details is triggered correctly when fleet has train_tracking_tracking`() {
+        setAuthenticatedUser()
+        userStore.paymentProvider = PaymentProvider(Provider(id = ADYEN), null)
+
+        whenever(quote.price.highPrice).thenReturn(150)
+        whenever(quote.vehicle).thenReturn(vehicleAttributes)
+        whenever(quote.price).thenReturn(price)
+        whenever(quote.fleet).thenReturn(TEST_FLEET_WITH_TRAIN_TRACKING)
+
+        checkoutPresenter.showBookingRequest(quote, JOURNEY_DETAILS_TRAIN, null, null)
+        checkoutPresenter.identifyTravelDetails(true)
+
+        verify(view).bindTravelDetails(PoiType.TRAIN_STATION, null)
+    }
+
+    @Test
+    fun `When providing a loyalty ID, the loyalty view is shown`() {
+        setAuthenticatedUser()
+        val paymentProvider = PaymentProvider(Provider(id = ADYEN), LoyaltyProgramme(
+            LOYALTY_PROGRAMME_ID,
+            LOYALTY_PROGRAMME_NAME
+        ))
+        whenever(userStore.paymentProvider).thenReturn(paymentProvider)
+
+        checkoutPresenter.createLoyaltyViewResponse()
+        verify(view).showLoyaltyView(eq(true), any())
+    }
+
+    @Test
+    fun `When providing a null loyalty ID, the loyalty view is not shown`() {
+        setAuthenticatedUser()
+        val paymentProvider = PaymentProvider(Provider(id = ADYEN), LoyaltyProgramme(
+            null,
+            LOYALTY_PROGRAMME_NAME
+        ))
+        whenever(userStore.paymentProvider).thenReturn(paymentProvider)
+
+        checkoutPresenter.createLoyaltyViewResponse()
+        verify(view).showLoyaltyView(false, null)
+    }
+
+    @Test
+    fun `When providing a loyalty ID, the loyalty view is shown and the correct LoyaltyViewDataModel is returned`() {
+        setAuthenticatedUser()
+        val paymentProvider = PaymentProvider(Provider(id = ADYEN), LoyaltyProgramme(
+            LOYALTY_PROGRAMME_ID,
+            LOYALTY_PROGRAMME_NAME
+        ))
+        whenever(userStore.paymentProvider).thenReturn(paymentProvider)
+
+        checkoutPresenter.createLoyaltyViewResponse()
+        verify(view).showLoyaltyView(eq(true), eq(LoyaltyViewDataModel(LOYALTY_PROGRAMME_ID, "", 0.0)))
+    }
+
     private fun setGuestUser() {
         whenever(userStore.currentUser).thenReturn(UserInfo())
         setGuestAuthentication(context)
@@ -761,5 +961,124 @@ class CheckoutViewPresenterTests {
         private const val IDENTIFIER = "3dsNonceOrTripId"
         private const val BOOKING__META_MAP_KEY = "map_key"
         private const val BOOKING__META_MAP_VALUE = "map_value"
+        private val TEST_FLEET = Fleet(
+            id = "52123bd9-cc98-4b8d-a98a-122446d69e79",
+            name = "iCabbi [Sandbox]",
+            logoUrl = "https://cdn.karhoo.com/d/images/logos/52123bd9-cc98-4b8d-a98a-122446d69e79.png",
+            description = "Some fleet description",
+            phoneNumber = "+447904839920",
+            termsConditionsUrl = "http://www.google.com"
+        )
+        private val TEST_FLEET_WITH_TRAIN_TRACKING = TEST_FLEET.copy(
+            capabilities = arrayListOf("train_tracking")
+        )
+        private val TEST_FLEET_WITH_FLIGHT_TRACKING = TEST_FLEET.copy(
+            capabilities = arrayListOf("flight_tracking")
+        )
+        private fun getDate(dateScheduled: String): Date {
+            val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm").apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
+            return formatter.parse(dateScheduled)
+        }
+        private val TRIP_POSITION_PICKUP = Position(
+            latitude = 51.523766,
+            longitude = -0.1375291
+        )
+
+        private val TRIP_POSITION_DROPOFF = Position(
+            latitude = 51.514432,
+            longitude = -0.1585557
+        )
+        private val TRIP_LOCATION_INFO_PICKUP = LocationInfo(
+            address = Address(
+                displayAddress = "221B Baker St, Marylebone, London NW1 6XE, UK",
+                buildingNumber = "221B",
+                streetName = "Baker St",
+                city = "Marleybone",
+                postalCode = "NW1 6XE",
+                region = "London",
+                countryCode = "UK"
+            ),
+            position = TRIP_POSITION_PICKUP,
+            placeId = "ChIJEYJiM88adkgR4SKDqHd2XUQ",
+            timezone = "Europe/London",
+            poiType = Poi.NOT_SET
+        )
+        private val TRIP_LOCATION_INFO_DROPOFF = LocationInfo(
+            address = Address(
+                displayAddress = "368 Oxford St, London W1D 1LU, UK",
+                buildingNumber = "368",
+                streetName = "Oxford St",
+                city = "London",
+                postalCode = "W1D 1LU",
+                countryCode = "UK"
+            ),
+            position = TRIP_POSITION_DROPOFF,
+            placeId = "ChIJyWu2IisbdkgRHIRWuD0ANfM",
+            timezone = "Europe/London",
+            poiType = Poi.NOT_SET
+        )
+        private val SCHEDULED_DATE = getDate("2019-07-31T12:35:00Z")
+        private val JOURNEY_DETAILS = JourneyDetails(
+            TRIP_LOCATION_INFO_PICKUP,
+            TRIP_LOCATION_INFO_DROPOFF,
+            DateTime(SCHEDULED_DATE)
+        )
+        private val JOURNEY_DETAILS_AIRPORT = JOURNEY_DETAILS.copy(
+            date = DateTime(SCHEDULED_DATE),
+            pickup = JOURNEY_DETAILS.pickup?.copy(
+                details = PoiDetails(
+                    "OTOPENI",
+                    "TERMINAL 9",
+                    PoiType.AIRPORT
+                )
+            )
+        )
+        private val JOURNEY_DETAILS_TRAIN = JOURNEY_DETAILS.copy(
+            date = DateTime(SCHEDULED_DATE),
+            pickup = JOURNEY_DETAILS.pickup?.copy(
+                details = PoiDetails(
+                    "GARE DU NORD",
+                    "TERMINAL 9",
+                    PoiType.TRAIN_STATION
+                )
+            )
+        )
+        private val vehicleAttributes: QuoteVehicle = QuoteVehicle(
+            passengerCapacity = 2,
+            luggageCapacity = 2
+        )
+        private val trip: TripInfo = TripInfo(
+            tripId = "tripId1234",
+            origin = TripLocationInfo(placeId = "placeId1234"),
+            destination = TripLocationInfo(placeId = "placeId4321")
+        )
+        private val price: QuotePrice = QuotePrice(highPrice = 10, currencyCode = "GBP")
+        private val fleet: Fleet = Fleet(null, null, null, null, null, null, null)
+        private val userDetails: UserInfo = UserInfo(
+            firstName = "David",
+            lastName = "Smith",
+            email = "test.test@test.test",
+            phoneNumber = "+441234 56789",
+            userId = "123",
+            locale = "en-GB",
+            organisations = listOf(
+                Organisation(
+                    id = "organisation_id",
+                    name = "Organisation",
+                    roles = listOf("PERMISSION_ONE", "PERMISSION_TWO")
+                )
+            )
+        )
+        private val passengerDetails: PassengerDetails = PassengerDetails(
+            firstName = "David",
+            lastName = "Smith",
+            email = "test.test@test.test",
+            phoneNumber = "+441234 56789",
+            locale = "en-GB"
+        )
+        private const val LOYALTY_PROGRAMME_ID = "TEST_PROGRAM"
+        private const val LOYALTY_PROGRAMME_NAME = "TEST_PROGRAM_NAME"
     }
 }

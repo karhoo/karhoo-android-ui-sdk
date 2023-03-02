@@ -574,7 +574,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>
+<!--        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>-->
         <item name="colorPrimary">@color/kh_uisdk_primary</item>
         <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
         <item name="colorAccent">@color/kh_uisdk_accent</item>
@@ -612,5 +612,12 @@
         <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
-
+    <style name="Theme.Transparent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>

@@ -8,7 +8,6 @@ import com.adyen.checkout.components.model.payments.Amount
 import com.adyen.checkout.core.api.Environment
 import com.adyen.checkout.dropin.DropIn
 import com.adyen.checkout.dropin.DropInConfiguration
-import com.adyen.checkout.dropin.DropInResult
 import com.adyen.checkout.googlepay.GooglePayConfiguration
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooEnvironment
@@ -327,7 +326,7 @@ class AdyenPaymentPresenter(
         }
     }
 
-    private fun quotePriceToAmount(quote: Quote?): String {
+    override fun quotePriceToAmount(quote: Quote?): String {
         val currency = Currency.getInstance(quote?.price?.currencyCode?.trim())
         return currency.intToPriceNoSymbol(quote?.price?.highPrice.orZero())
     }

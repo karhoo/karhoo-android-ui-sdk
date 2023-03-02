@@ -23,7 +23,9 @@
     <dimen name="kh_uisdk_text_size_xxlarge">24sp</dimen>
     <dimen name="kh_uisdk_text_size_xlarge">22sp</dimen>
     <dimen name="kh_uisdk_text_size_large">18sp</dimen>
+    <dimen name="kh_uisdk_text_size_large17">17sp</dimen>
     <dimen name="kh_uisdk_text_size_medium">16sp</dimen>
+    <dimen name="kh_uisdk_text_size_medium15">15sp</dimen>
     <dimen name="kh_uisdk_text_size_small_medium">14sp</dimen>
     <dimen name="kh_uisdk_text_size_small">12sp</dimen>
     <dimen name="kh_uisdk_text_size_xsmall">10sp</dimen>

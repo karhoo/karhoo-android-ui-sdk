@@ -141,15 +141,15 @@
     <string name="kh_uisdk_card">บัตร</string>
     <string name="kh_uisdk_checked">เลือกแล้ว</string>
     <string name="kh_uisdk_checkout_airport_example">เช่น AF009</string>
-    <string name="kh_uisdk_checkout_airport_subtitle">เพิ่มหมายเลขเที่ยวบิน</string>
-    <string name="kh_uisdk_checkout_airport_title">เที่ยวบินหมายเลข</string>
+    <string name="kh_uisdk_checkout_airport_subtitle">พนักงานขับรถจะรอคุณแม้ว่าเที่ยวบินจะล่าช้าก็ตาม</string>
+    <string name="kh_uisdk_checkout_airport_title">เพิ่มหมายเลขเที่ยวบิน</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
     <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
     <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">อนุญาตเฉพาะตัวอักษรและตัวเลขเท่านั้น</string>
     <string name="kh_uisdk_checkout_train_example">เช่น 6809</string>
-    <string name="kh_uisdk_checkout_train_subtitle">เพิ่มหมายเลขรถไฟ</string>
-    <string name="kh_uisdk_checkout_train_title">หมายเลขรถไฟ</string>
+    <string name="kh_uisdk_checkout_train_subtitle">พนักงานขับรถจะรอคุณแม้ว่ารถไฟจะล่าช้าก็ตาม</string>
+    <string name="kh_uisdk_checkout_train_title">เพิ่มหมายเลขรถไฟ</string>
     <string name="kh_uisdk_close_the_screen">ปิดหน้าจอ</string>
     <string name="kh_uisdk_completed">เราหวังว่าคุณพอใจกับการเดินทางของคุณ</string>
     <string name="kh_uisdk_confirmed">การเดินทางของคุณกับ %s ได้รับการยืนยันแล้ว</string>
@@ -163,6 +163,7 @@
     <string name="kh_uisdk_country_search">ค้นหาประเทศ/ภูมิภาค</string>
     <string name="kh_uisdk_current_location">ดูตำแหน่งปัจจุบัน</string>
     <string name="kh_uisdk_date">วันที่</string>
+    <string name="kh_uisdk_delete_destination_address">ลบที่อยู่ปลายทาง</string>
     <string name="kh_uisdk_destination">ปลายทาง</string>
     <string name="kh_uisdk_destination_book_error">คุณต้องเลือกตำแหน่งปลายทางก่อนจองการเดินทาง</string>
     <string name="kh_uisdk_difficulties_cancelling_message">เราประสบปัญหาในการยกเลิกการเดินทางของคุณ โปรดติดต่อผู้ให้บริการโดยสาร</string>
@@ -346,7 +347,7 @@
     <string name="kh_uisdk_loyalty_unknown_error">เกิดข้อผิดพลาดขึ้น โปรดลองอีกครั้งในภายหลังหากต้องการรับหรือใช้คะแนนสะสม</string>
     <string name="kh_uisdk_loyalty_unsupported_currency">ข้อผิดพลาด: ไม่รองรับสกุลเงินนี้</string>
     <string name="kh_uisdk_loyalty_use_points_off_subtitle">คุณสามารถใช้คะแนนสะสมเพื่อชำระค่าโดยสารนี้ได้</string>
-    <string name="kh_uisdk_loyalty_use_points_on_subtitle">ใช้คะแนนสะสม %s คะแนนเพื่อชำระ %s %s</string>
+    <string name="kh_uisdk_loyalty_use_points_on_subtitle">ใช้คะแนนสะสม %3$s คะแนนเพื่อชำระ %1$s %2$s</string>
     <string name="kh_uisdk_loyalty_use_points_title">ใช้คะแนนของคุณ</string>
     <string name="kh_uisdk_map_selector">วางหมุดบนแผนที่</string>
     <string name="kh_uisdk_meeting_point">จุดนัดพบ</string>
