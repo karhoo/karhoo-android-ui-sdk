@@ -96,6 +96,10 @@ class BookingPaymentHandler @JvmOverloads constructor(
         paymentActions?.showPaymentFailureDialog(null, error)
     }
 
+    override fun showLoadingButton(loading: Boolean) {
+        paymentActions?.showLoadingButton(loading)
+    }
+
     override fun updatePaymentDetails(savedPaymentInfo: SavedPaymentInfo?) {
         bindPaymentDetails(savedPaymentInfo)
     }
