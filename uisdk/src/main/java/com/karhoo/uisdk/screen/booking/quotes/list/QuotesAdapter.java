@@ -59,4 +59,30 @@ public class QuotesAdapter extends BaseRecyclerAdapter<Quote, QuotesListItemView
         super.setItems(items);
     }
 
+    public void refreshItemsAndAnimateNewOnes(List<Quote> allQuotes, List<String> newQuoteIds) {
+        switch (sortMethod) {
+            case ETA:
+                Collections.sort(allQuotes, new QtaSort());
+                break;
+            case PRICE:
+                Collections.sort(allQuotes, new PriceSort());
+                break;
+        }
+
+        super.setItemsWithoutRefreshing(allQuotes);
+
+        // In case the list is empty, then refresh it to delete the potential previous shown items
+        if(allQuotes.size() == 0) {
+            notifyDataSetChanged();
+        } else {
+            for (int i = 0; i < allQuotes.size(); i++) {
+                if (newQuoteIds.contains(allQuotes.get(i).getId())) {
+                    notifyItemInserted(i);
+                }
+            }
+        }
+
+
+    }
+
 }

@@ -39,6 +39,10 @@ class AdyenGuestConfig(private val context: Context) : KarhooUISDKConfiguration 
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
 
+    override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
+        return false
+    }
+
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         //Do nothing
     }

@@ -11,7 +11,7 @@ interface QuotesRecyclerContract {
 
         fun setSortMethod(sortMethod: SortMethod)
 
-        fun updateList(quoteList: List<Quote>)
+        fun updateList(quoteList: List<Quote>, refreshAll: Boolean = false)
 
         fun prebook(isPrebook: Boolean)
 

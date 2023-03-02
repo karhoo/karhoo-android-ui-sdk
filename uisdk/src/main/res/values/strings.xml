@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Authorise transaction</string>
     <string name="adyen.submitButton.formatted">Authorise transaction</string>
+    <string name="bt_add_card" translatable="false">@string/adyen.submitButton</string>
     <string name="continue_button">Next</string>
     <string name="K0001">General request error</string>
     <string name="K0002">Invalid request payload</string>

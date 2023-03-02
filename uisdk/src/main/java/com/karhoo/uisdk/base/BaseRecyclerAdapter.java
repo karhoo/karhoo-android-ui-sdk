@@ -46,6 +46,12 @@ public abstract class BaseRecyclerAdapter<T, V extends View> extends RecyclerVie
         }
     }
 
+    public void setItemsWithoutRefreshing(List<T> items) {
+        if (items != null) {
+            this.items = items;
+        }
+    }
+
     public OnRecyclerItemClickListener<T> getItemClickListener() {
         return itemClickListener;
     }

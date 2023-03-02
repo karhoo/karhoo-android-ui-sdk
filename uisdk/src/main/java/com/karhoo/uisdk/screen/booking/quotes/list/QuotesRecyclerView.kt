@@ -53,8 +53,28 @@ class QuotesRecyclerView @JvmOverloads constructor(
         quotesAdapter.setSelectedSortMethod(sortMethod)
     }
 
-    override fun updateList(quoteList: List<Quote>) {
-        quotesAdapter.items = quoteList
+    @Suppress("NestedBlockDepth")
+    override fun updateList(quoteList: List<Quote>, refreshAll: Boolean) {
+        if(refreshAll) {
+            quotesAdapter.items = quoteList
+        } else {
+            var hasNewQuotes = quoteList.size != quotesAdapter.itemCount
+            val newQuoteIds: ArrayList<String?> = arrayListOf()
+
+            quoteList.forEach { newQuote ->
+                if (quotesAdapter.items.find { it.id == newQuote.id } == null) {
+                    hasNewQuotes = true
+
+                    newQuote.id?.let { newQuoteIds.add(it) }
+                }
+            }
+
+            if (hasNewQuotes) {
+                quotesAdapter.refreshItemsAndAnimateNewOnes(quoteList, newQuoteIds)
+                quotesListRecycler.scrollToPosition(0)
+            }
+        }
+
         if (quotesAdapter.itemCount > 0) {
             setQuotesLoaderVisibility(View.GONE)
         }
@@ -163,8 +183,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
     override fun showNoFleetsError(show: Boolean, isPrebook: Boolean) {
         showErrorView(
             show, ErrorViewGenericReason(
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_title) else "",
-                if(isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_subtitle) else context.resources.getString(R.string.kh_uisdk_quotes_error_no_results_found),
+                if (isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_title) else "",
+                if (isPrebook) context.resources.getString(R.string.kh_uisdk_quotes_no_availability_subtitle) else context.resources.getString(
+                    R.string.kh_uisdk_quotes_error_no_results_found
+                ),
                 R.drawable.kh_uisdk_ic_no_available_quotes
             )
         )
@@ -175,7 +197,10 @@ class QuotesRecyclerView @JvmOverloads constructor(
             quotesErrorView.setupWithSpan(
                 ErrorViewGenericReason(
                     context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_title),
-                    String.format(context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle), context.resources.getString(R.string.kh_uisdk_contact_us)),
+                    String.format(
+                        context.resources.getString(R.string.kh_uisdk_quotes_error_no_coverage_subtitle),
+                        context.resources.getString(R.string.kh_uisdk_contact_us)
+                    ),
                     R.drawable.kh_uisdk_ic_no_available_quotes
                 ),
                 object : QuotesErrorViewContract.QuotesErrorViewDelegate {

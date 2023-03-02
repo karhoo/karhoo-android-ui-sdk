@@ -274,7 +274,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
     override fun updateList(quoteList: List<Quote>) {
         if (quotesFilterWidget.isVisible)
             quotesFilterWidget.updateVehicleNumber()
-        quotesRecyclerView.updateList(quoteList)
+        quotesRecyclerView.updateList(quoteList, filterChain.filters.any { it.isFilterApplied == true })
         nrOfResults.postValue(quoteList.size)
     }
 
