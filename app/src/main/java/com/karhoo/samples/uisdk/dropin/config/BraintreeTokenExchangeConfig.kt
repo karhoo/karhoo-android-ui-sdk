@@ -43,6 +43,10 @@ class BraintreeTokenExchangeConfig(private val context: Context) : KarhooUISDKCo
         return ContextCompat.getDrawable(context, R.mipmap.ic_launcher)
     }
 
+    override fun isExplicitTermsAndConditionsConsentRequired(): Boolean {
+        return false
+    }
+
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         sdkAuthenticationRequired?.invoke(callback)
     }
