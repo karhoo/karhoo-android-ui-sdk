@@ -141,6 +141,7 @@ class BraintreePaymentPresenter(
                         it.cardType.toString().toLowerCase(Locale.getDefault()).capitalize()
                     )
                 }
+                KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
             } else {
                 setNonce(braintreeSDKToken)
             }
