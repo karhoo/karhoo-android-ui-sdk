@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">取引の承認</string>
     <string name="adyen.submitButton.formatted">取引の承認</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">次</string>
     <string name="K0001">一般的なリクエストエラー</string>
     <string name="K0002">無効なリクエストペイロード</string>

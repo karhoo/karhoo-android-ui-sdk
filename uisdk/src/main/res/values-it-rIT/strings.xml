@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Pre-autorizzare</string>
     <string name="adyen.submitButton.formatted">Pre-autorizza %s</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Successivo</string>
     <string name="K0001">Errore di richiesta generale</string>
     <string name="K0002">Payload della richiesta non valido</string>

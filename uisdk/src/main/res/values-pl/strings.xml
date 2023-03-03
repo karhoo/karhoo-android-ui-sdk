@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Autoryzacja transakcji</string>
     <string name="adyen.submitButton.formatted">Autoryzacja transakcji</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Dalej</string>
     <string name="K0001">Ogólny błąd zapytania</string>
     <string name="K0002">Nieprawidłowe zapytanie</string>

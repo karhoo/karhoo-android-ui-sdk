@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Otorisasi transaksi</string>
     <string name="adyen.submitButton.formatted">Otorisasi transaksi</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Berikutnya</string>
     <string name="K0001">Kesalahan permintaan umum</string>
     <string name="K0002">Payload permintaan tidak valid</string>

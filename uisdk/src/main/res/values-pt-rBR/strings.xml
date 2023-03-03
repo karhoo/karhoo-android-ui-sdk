@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Autorizar a transacção</string>
     <string name="adyen.submitButton.formatted">Autorizar a transacção</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Próximo</string>
     <string name="K0001">Erro geral</string>
     <string name="K0002">Pedido inválido de carga útil</string>

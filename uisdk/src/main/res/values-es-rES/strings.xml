@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">preautorizar</string>
     <string name="adyen.submitButton.formatted">Preautorizar %s</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Siguiente</string>
     <string name="K0001">Error general</string>
     <string name="K0002">Petición de solicitud no válida</string>
