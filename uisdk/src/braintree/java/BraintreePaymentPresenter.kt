@@ -126,6 +126,7 @@ class BraintreePaymentPresenter(
                     data.getSerializableExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR) as KarhooError
                 view?.showError(R.string.kh_uisdk_something_went_wrong, exception)
                 view?.showLoadingButton(false)
+                logPaymentFailureEvent(exception.internalMessage, quoteId = quote?.id)
             }
         }
         return true
@@ -141,7 +142,6 @@ class BraintreePaymentPresenter(
                         it.cardType.toString().toLowerCase(Locale.getDefault()).capitalize()
                     )
                 }
-                KarhooUISDK.analytics?.cardAuthorisationSuccess(quoteId = quote?.id)
             } else {
                 setNonce(braintreeSDKToken)
             }
