@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">Авторизовать транзакцию</string>
     <string name="adyen.submitButton.formatted">Авторизовать транзакцию</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Дальше</string>
     <string name="K0001">Общая ошибка запроса</string>
     <string name="K0002">Недопустимая полезная нагрузка запроса</string>

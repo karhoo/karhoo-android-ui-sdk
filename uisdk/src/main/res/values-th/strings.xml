@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">อนุมัติธุรกรรม</string>
     <string name="adyen.submitButton.formatted">อนุมัติธุรกรรม</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">ถัดไป</string>
     <string name="K0001">ข้อผิดพลาดทั่วไปเกี่ยวกับคำขอ</string>
     <string name="K0002">เพย์โหลดคำขอไม่ถูกต้อง</string>

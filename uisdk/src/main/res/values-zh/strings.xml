@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">授权交易</string>
     <string name="adyen.submitButton.formatted">授权交易</string>
+    <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">下一个</string>
     <string name="K0001">一般请求错误</string>
     <string name="K0002">无效的请求负载</string>
