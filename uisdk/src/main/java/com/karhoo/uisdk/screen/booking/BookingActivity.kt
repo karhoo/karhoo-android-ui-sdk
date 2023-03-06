@@ -12,6 +12,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -76,6 +77,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         get() = R.layout.uisdk_activity_booking_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(KarhooUISDKConfigurationProvider.configuration.forceDarkMode()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+        else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         window.allowEnterTransitionOverlap = true
         super.onCreate(savedInstanceState)
 

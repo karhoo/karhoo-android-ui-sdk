@@ -15,6 +15,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
     var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
+    var forceDarkMode = false
 
     override fun context(): Context {
         return context
@@ -47,6 +48,10 @@ class LoyaltyTokenConfig(private val context: Context) : KarhooUISDKConfiguratio
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         sdkAuthenticationRequired?.invoke(callback)
+    }
+
+    override fun forceDarkMode(): Boolean {
+        return forceDarkMode
     }
 }
 

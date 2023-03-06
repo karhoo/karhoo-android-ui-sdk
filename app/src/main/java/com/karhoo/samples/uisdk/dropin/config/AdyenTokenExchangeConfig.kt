@@ -15,6 +15,7 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
 class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
     var sdkAuthenticationRequired: ((callback: () -> Unit) -> Unit)? = null
+    var forceDarkMode = false
 
     override fun context(): Context {
         return context
@@ -49,5 +50,9 @@ class AdyenTokenExchangeConfig(private val context: Context) : KarhooUISDKConfig
 
     override suspend fun requireSDKAuthentication(callback: () -> Unit) {
         sdkAuthenticationRequired?.invoke(callback)
+    }
+
+    override fun forceDarkMode(): Boolean {
+        return forceDarkMode
     }
 }
