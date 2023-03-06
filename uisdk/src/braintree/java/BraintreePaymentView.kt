@@ -33,6 +33,7 @@ class BraintreePaymentView : PaymentDropInContract.View {
         dropInRequest.threeDSecureRequest = threeDSecureRequest
         dropInRequest.vaultCardDefaultValue = true
         dropInRequest.isVaultManagerEnabled = true
+        dropInRequest.allowVaultCardOverride = true
 
         val requestCode = if (isGuest()) REQ_CODE_BRAINTREE_GUEST else REQ_CODE_BRAINTREE
 
