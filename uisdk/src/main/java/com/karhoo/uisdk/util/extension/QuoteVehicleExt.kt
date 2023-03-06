@@ -5,6 +5,7 @@ import com.karhoo.sdk.api.model.QuoteVehicle
 import com.karhoo.sdk.api.model.VehicleMapping
 import com.karhoo.sdk.api.model.VehicleMappings
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleTypeFilter
 
 fun QuoteVehicle.typeToLocalisedString(context: Context): String? {
     return when (this.vehicleType?.uppercase()) {
@@ -25,6 +26,18 @@ fun QuoteVehicle.getCorrespondingLogoMapping(vehicleMappings: VehicleMappings): 
         it.vehicleType.equals(this.vehicleType) &&
                 (it.vehicleTags?.size == this.vehicleTags.size
                         && it.vehicleTags?.toSet() == this.vehicleTags.toSet())
+    }
+
+    /**
+     * If the vehicleType is MOTO, then select the vehicleMapping with the vehicle type MOTO
+     * since MOTOs cannot have any associated tags (Executive, Luxury, Taxi, etc)
+     */
+    if (this.vehicleType.equals(VehicleTypeFilter.MOTO)) {
+        specificMapping = vehicleMappings.mappings?.firstOrNull {
+            it.vehicleType.equals(this.vehicleType)
+        }
+
+        return specificMapping
     }
 
     /**
