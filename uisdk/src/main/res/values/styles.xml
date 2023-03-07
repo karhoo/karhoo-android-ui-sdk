@@ -589,6 +589,8 @@
     <style name="KhLegalNoticeLabel">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:inputType">textMultiLine</item>
     </style>
 
     <style name="KhLegalNoticeIcon">
