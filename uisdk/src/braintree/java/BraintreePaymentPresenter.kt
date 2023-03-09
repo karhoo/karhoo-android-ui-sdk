@@ -264,4 +264,8 @@ class BraintreePaymentPresenter(
     override fun setPassenger(passengerDetails: PassengerDetails?) {
         this.passengerDetails = passengerDetails
     }
+
+    fun getNonceForTesting(): String?{
+        return this.nonce
+    }
 }

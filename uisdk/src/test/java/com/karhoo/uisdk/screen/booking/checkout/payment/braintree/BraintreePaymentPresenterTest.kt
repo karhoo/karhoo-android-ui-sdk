@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.booking.checkout.payment.braintree
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.braintreepayments.api.DropInPaymentMethod
 import com.braintreepayments.api.DropInResult
 import com.braintreepayments.api.PaymentMethodNonce
 import com.karhoo.sdk.api.KarhooError
@@ -45,14 +46,11 @@ class BraintreePaymentPresenterTest {
     private var dropInResult: DropInResult = mock()
     private var paymentMethodNonce: PaymentMethodNonce = mock()
     private var paymentsService: PaymentsService = mock()
-    private var savedPaymentInfo: SavedPaymentInfo = mock()
     private var userStore: UserStore = mock()
     private var paymentView: PaymentDropInContract.Actions = mock()
     private var quote: Quote = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
-    private val addPaymentCall: Call<PaymentsNonce> = mock()
-    private val addPaymentCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
     private val getNonceCall: Call<PaymentsNonce> = mock()
     private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
 
@@ -73,10 +71,6 @@ class BraintreePaymentPresenterTest {
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
 
         doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
-
-//        whenever(paymentsService.addPaymentMethod(any()))
-//                .thenReturn(addPaymentCall)
-//        doNothing().whenever(addPaymentCall).execute(addPaymentCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
         whenever(quote.price).thenReturn(price)
@@ -409,29 +403,90 @@ class BraintreePaymentPresenterTest {
      * When:    The result is RESULT_OK
      * And:     There is data
      * And:     It is a guest Braintree user request
-     * Then:    The card details are update
+     * Then:    The card details are not updated anymore
      */
     @Test
-    fun `card details updated for activity result RESULT_OK for guest Braintree user`() {
-//        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//                .thenReturn(dropInResult)
-//        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//                .thenReturn(true)
-//
-//        whenever(dropInResult.paymentMethodNonce).thenReturn(paymentMethodNonce)
-//        whenever(paymentMethodNonce.string).thenReturn(BRAINTREE_SDK_TOKEN)
-//        whenever(dropInResult.paymentDescription).thenReturn(CARD_ENDING)
-//        whenever(dropInResult.paymentMethodType).thenReturn(DropInPaymentMethod.MASTERCARD)
-//
-//        braintreePaymentPresenter.handleActivityResult(
-//                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
-//                resultCode = AppCompatActivity.RESULT_OK,
-//                data = data)
-//
-//        verify(paymentsService, only()).addPaymentMethod(any())
-//        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
-//        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
-//        assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
+    fun `card details not updated anymore for activity result RESULT_OK for guest Braintree user`() {
+        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+                .thenReturn(dropInResult)
+        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+                .thenReturn(true)
+
+        whenever(dropInResult.paymentMethodNonce).thenReturn(paymentMethodNonce)
+        whenever(paymentMethodNonce.string).thenReturn(BRAINTREE_SDK_TOKEN)
+        whenever(dropInResult.paymentDescription).thenReturn(CARD_ENDING)
+        whenever(dropInResult.paymentMethodType).thenReturn(DropInPaymentMethod.MASTERCARD)
+
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
+        assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is data
+     * And:     It is a guest Braintree user request
+     * Then:    The booking succeeds
+     */
+    @Test
+    fun `payment succeeds for activity result RESULT_OK for guest Braintree user`() {
+        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(dropInResult)
+        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(true)
+
+        whenever(dropInResult.paymentMethodNonce).thenReturn(paymentMethodNonce)
+        whenever(paymentMethodNonce.string).thenReturn(BRAINTREE_SDK_TOKEN)
+        whenever(dropInResult.paymentDescription).thenReturn(CARD_ENDING)
+        whenever(dropInResult.paymentMethodType).thenReturn(DropInPaymentMethod.MASTERCARD)
+
+        braintreePaymentPresenter.handleActivityResult(
+            requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+        verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
+        assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
+        assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
+
+        assertEquals(braintreePaymentPresenter.getNonceForTesting(), dropInResult.paymentMethodNonce?.string)
+    }
+
+    /**
+     * Given:   An activity result is handled
+     * When:    The result is RESULT_OK
+     * And:     There is data
+     * And:     It is a token Braintree user request
+     * Then:    The booking succeeds
+     */
+    @Test
+    fun `payment succeeds for activity result RESULT_OK for token Braintree user`() {
+        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(dropInResult)
+        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(true)
+
+        whenever(dropInResult.paymentMethodNonce).thenReturn(paymentMethodNonce)
+        whenever(paymentMethodNonce.string).thenReturn(BRAINTREE_SDK_TOKEN)
+
+        setAuthenticatedUser()
+
+        braintreePaymentPresenter.handleActivityResult(
+            requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+            resultCode = AppCompatActivity.RESULT_OK,
+            data = data)
+
+        verify(paymentsService, never()).addPaymentMethod(any())
+
+        verify(paymentView).threeDSecureNonce(dropInResult.paymentMethodNonce!!.string)
     }
 
     /**
@@ -442,68 +497,18 @@ class BraintreePaymentPresenterTest {
      * Then:    The add payment method call is made
      */
     @Test
-    fun `add payment call is made if result if RESULT_OK for logged in Braintree user`() {
-//        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(dropInResult)
-//        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(true)
-//
-//        braintreePaymentPresenter.handleActivityResult(
-//                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-//                resultCode = AppCompatActivity.RESULT_OK,
-//                data = data)
-//
-//        verify(paymentsService).addPaymentMethod(any())
-    }
+    fun `add payment call is not made anymore if result is RESULT_OK for logged in Braintree user`() {
+        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(dropInResult)
+        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
+            .thenReturn(true)
 
-    /**
-     * Given:   An activity result is handled
-     * When:    The add payment method call is made
-     * And:     The call fails
-     * Then:    An error is shown
-     */
-    @Test
-    fun `error shown if the add payment call fails`() {
-//        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(dropInResult)
-//        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(true)
-//
-//        braintreePaymentPresenter.handleActivityResult(
-//                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-//                resultCode = AppCompatActivity.RESULT_OK,
-//                data = data)
-//
-//        addPaymentCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-//
-//        verify(paymentsService).addPaymentMethod(any())
-//        verify(paymentView).showError(R.string.kh_uisdk_something_went_wrong, KarhooError.GeneralRequestError)
-    }
+        braintreePaymentPresenter.handleActivityResult(
+                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
+                resultCode = AppCompatActivity.RESULT_OK,
+                data = data)
 
-    /**
-     * Given:   An activity result is handled
-     * When:    The add payment method call is made
-     * And:     The call succeeds
-     * Then:    The payment details are updated
-     */
-    @Test
-    fun `payment details are updated if the add payment call succeeds`() {
-//        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(dropInResult)
-//        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-//            .thenReturn(true)
-//        whenever(userStore.savedPaymentInfo).thenReturn(savedPaymentInfo)
-//
-//        braintreePaymentPresenter.handleActivityResult(
-//                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-//                resultCode = AppCompatActivity.RESULT_OK,
-//                data = data)
-//
-//        addPaymentCaptor.firstValue.invoke(Resource.Success(paymentsNonce))
-//
-//        verify(paymentsService).addPaymentMethod(any())
-//        verify(paymentView).updatePaymentDetails(savedPaymentInfo)
-//        verify(paymentView).handlePaymentDetailsUpdate()
+        verify(paymentsService, never()).addPaymentMethod(any())
     }
 
     private fun setAuthenticatedUser() {
