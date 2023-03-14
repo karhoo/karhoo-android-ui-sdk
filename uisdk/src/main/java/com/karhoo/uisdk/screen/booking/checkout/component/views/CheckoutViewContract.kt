@@ -92,7 +92,7 @@ interface CheckoutViewContract {
 
         fun bindTravelDetails(poiType: PoiType?, travelDetails: String?)
 
-        fun bindAddresses(journeyDetails: JourneyDetails)
+        fun bindAddresses(journeyDetails: JourneyDetails, quote: Quote)
 
         var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?
 
