@@ -228,7 +228,7 @@ internal class CheckoutView @JvmOverloads constructor(
         )
 
         if (journeyDetails != null) {
-            bindAddresses(journeyDetails)
+            bindAddresses(journeyDetails, quote)
         }
 
         bookingPaymentHandler.getPaymentProvider()
@@ -511,7 +511,7 @@ internal class CheckoutView @JvmOverloads constructor(
         }
     }
 
-    override fun bindAddresses(journeyDetails: JourneyDetails) {
+    override fun bindAddresses(journeyDetails: JourneyDetails, quote: Quote) {
         checkoutAddressComponent.setup(
             pickup = journeyDetails.pickup!!,
             destination = journeyDetails.destination!!,
@@ -533,9 +533,11 @@ internal class CheckoutView @JvmOverloads constructor(
                 .format(DateTime().toDate())
                 .uppercase(Locale.getDefault())
 
+            val eta = String.format("%s %s", quote.vehicle.vehicleQta.highMinutes, context.getString(R.string.kh_uisdk_min))
+
             checkoutAddressComponent.setType(
                 AddressStaticComponent.AddressComponentType.WITH_TEXT,
-                context.getString(R.string.kh_uisdk_now).uppercase(Locale.getDefault())
+                eta.uppercase(Locale.getDefault())
             )
         }
     }
