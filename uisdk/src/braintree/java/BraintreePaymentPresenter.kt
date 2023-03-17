@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.api.DropInRequest
 import com.braintreepayments.api.DropInResult
+import com.braintreepayments.cardform.view.CardForm.FIELD_REQUIRED
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -58,7 +59,12 @@ class BraintreePaymentPresenter(
     }
 
     override fun getDropInConfig(context: Context, sdkToken: String): Any {
-        return DropInRequest()
+        return DropInRequest().apply {
+            vaultCardDefaultValue = true
+            isVaultManagerEnabled = true
+            allowVaultCardOverride = true
+            cardholderNameStatus = FIELD_REQUIRED
+        }
     }
 
     private fun getNonce(braintreeSDKToken: String, amount: String) {
@@ -257,5 +263,9 @@ class BraintreePaymentPresenter(
 
     override fun setPassenger(passengerDetails: PassengerDetails?) {
         this.passengerDetails = passengerDetails
+    }
+
+    fun getNonceForTesting(): String?{
+        return this.nonce
     }
 }
