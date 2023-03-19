@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="adyen.submitButton">Vorautorisieren</string>
-    <string name="adyen.submitButton.formatted">Vorautorisieren %s</string>
+    <string name="adyen.submitButton">VORAUTORISIEREN</string>
+    <string name="adyen.submitButton.formatted">VORAUTORISIEREN %s</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Weiter</string>
     <string name="K0001">Allgemeiner Anfragefehler</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">ALTERNATIVE AUSWÄHLEN</string>
     <string name="kh_uisdk_arrival">Ankunft</string>
     <string name="kh_uisdk_arrived">Ihr %s-Fahrer ist angekommen</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ASAP-Buchungen sind an Ihrer Abholadresse nicht möglich</string>
     <string name="kh_uisdk_back">Zurück</string>
     <string name="kh_uisdk_baggage_max">Max. %d Gepäckstück(e)</string>
     <string name="kh_uisdk_base">Basistarif</string>
@@ -327,6 +329,7 @@
     <string name="kh_uisdk_last_name_hint">Nachname</string>
     <string name="kh_uisdk_last_trip_id">Letzte Fahrten-ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Letzte Fahrten-ID: Noch nicht festgelegt</string>
+    <string name="kh_uisdk_later">Später</string>
     <string name="kh_uisdk_legal_notice_label">Rechtliche Hinweise</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -555,7 +558,7 @@
     <string name="kh_uisdk_vehicle_bus">Kleinbus</string>
     <string name="kh_uisdk_vehicle_moto">Motorrad</string>
     <string name="kh_uisdk_vehicle_mpv">Großraum</string>
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
+    <string name="kh_uisdk_vehicle_standard">Sedan</string>
     <string name="kh_uisdk_wheelchair">Rollstuhlgerecht</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Möchten Sie fortfahren?</string>
     <string name="kh_uisdk_yes">Ja</string>

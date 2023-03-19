@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="adyen.submitButton">Autoryzacja transakcji</string>
-    <string name="adyen.submitButton.formatted">Autoryzacja transakcji</string>
+    <string name="adyen.submitButton">AUTORYZACJA TRANSAKCJI</string>
+    <string name="adyen.submitButton.formatted">AUTORYZACJA TRANSAKCJI</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Dalej</string>
     <string name="K0001">Ogólny błąd zapytania</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">WYBIERZ INNĄ OFERTĘ</string>
     <string name="kh_uisdk_arrival">Miejsce spotkania</string>
     <string name="kh_uisdk_arrived">Twój kierowca %s jest na miejscu</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Rezerwacje ASAP nie są dostępne pod adresem odbioru.</string>
     <string name="kh_uisdk_back">Wróć</string>
     <string name="kh_uisdk_baggage_max">Maksymalna liczba sztuk bagażu: %d</string>
     <string name="kh_uisdk_base">Opłata podstawowa</string>
@@ -329,6 +331,7 @@
     <string name="kh_uisdk_last_name_hint">Nazwisko</string>
     <string name="kh_uisdk_last_trip_id">Nr ostatniego przejazdu: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Nr ostatniego przejazdu: jeszcze niedostępny</string>
+    <string name="kh_uisdk_later">Później</string>
     <string name="kh_uisdk_legal_notice_label">Nota prawna</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -559,7 +562,7 @@
     <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Motocykl</string>
     <string name="kh_uisdk_vehicle_mpv">MPV</string>
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
+    <string name="kh_uisdk_vehicle_standard">Sedan</string>
     <string name="kh_uisdk_wheelchair">Przystosowany do wózków inwalidzkich</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Czy chcesz kontynuować?</string>
     <string name="kh_uisdk_yes">Tak</string>

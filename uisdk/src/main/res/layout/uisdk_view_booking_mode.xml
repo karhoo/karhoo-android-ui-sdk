@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/kh_uisdk_background2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/nowActionButton"
+            style="@style/KhNowActionButtonContainer">
+
+            <TextView
+                style="@style/KhNowActionButtonText"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scheduleActionButton"
+            style="@style/KhScheduleActionButtonContainer">
+
+            <TextView
+                style="@style/KhScheduleActionButtonText"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

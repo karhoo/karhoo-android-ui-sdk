@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">授权交易</string>
     <string name="adyen.submitButton.formatted">授权交易</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">下一个</string>
     <string name="K0001">一般请求错误</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">选择其他</string>
     <string name="kh_uisdk_arrival">到达</string>
     <string name="kh_uisdk_arrived">您的 %s 司机已到达</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">您的上车地址无法进行 ASAP 预订</string>
     <string name="kh_uisdk_back">返回</string>
     <string name="kh_uisdk_baggage_max">最多 %d 件行李</string>
     <string name="kh_uisdk_base">基本车费</string>
@@ -326,6 +328,7 @@
     <string name="kh_uisdk_last_name_hint">姓氏</string>
     <string name="kh_uisdk_last_trip_id">上次行程编号：%1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">上次行程编号：尚未设置</string>
+    <string name="kh_uisdk_later">之后</string>
     <string name="kh_uisdk_legal_notice_label">法律声明</string>
     <string name="kh_uisdk_legal_notice_link">zh-CN</string>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -553,7 +556,7 @@
     <string name="kh_uisdk_vehicle_bus">小型巴士</string>
     <string name="kh_uisdk_vehicle_moto">摩托车</string>
     <string name="kh_uisdk_vehicle_mpv">多功能车</string>
-    <string name="kh_uisdk_vehicle_standard">标准</string>
+    <string name="kh_uisdk_vehicle_standard">轿车</string>
     <string name="kh_uisdk_wheelchair">轮椅无障碍</string>
     <string name="kh_uisdk_would_you_like_to_proceed">您要继续吗？</string>
     <string name="kh_uisdk_yes">是</string>

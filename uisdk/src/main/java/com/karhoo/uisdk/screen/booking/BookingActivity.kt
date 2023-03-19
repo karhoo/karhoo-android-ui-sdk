@@ -121,6 +121,15 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
 
         KarhooUISDK.analytics?.bookingScreenOpened()
+        bookingModeWidget.callbackToStartQuoteList = {
+            journeyDetailsStateViewModel.let {
+                if(it.currentState.pickup != null && it.currentState.destination != null){
+                    startQuoteListActivity(false)
+                }
+                else
+                    bookingModeWidget.setIsAllowedToBook(false)
+            }
+        }
     }
 
     override fun onResume() {
@@ -294,7 +303,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                     AddressCodes.DESTINATION -> {
                         addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                        startQuoteListActivity(restorePreviousData = false)
+                        bookingModeWidget.setIsAllowedToBook(true)
                     }
                 }
             }

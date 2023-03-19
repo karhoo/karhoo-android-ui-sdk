@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="adyen.submitButton">Authorise transaction</string>
-    <string name="adyen.submitButton.formatted">Authorise transaction</string>
+    <string name="adyen.submitButton">AUTHORISE TRANSACTION</string>
+    <string name="adyen.submitButton.formatted">AUTHORISE TRANSACTION</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Next</string>
     <string name="K0001">General request error</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">"Select an alternative "</string>
     <string name="kh_uisdk_arrival">Arrival</string>
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ASAP bookings are not available at your pick up address</string>
     <string name="kh_uisdk_back">Back</string>
     <string name="kh_uisdk_baggage_max">%d piece(s) of luggage max</string>
     <string name="kh_uisdk_base">Base fare</string>
@@ -327,6 +329,7 @@
     <string name="kh_uisdk_last_name_hint">Last name</string>
     <string name="kh_uisdk_last_trip_id">Last ride ID: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Last ride ID: not yet set</string>
+    <string name="kh_uisdk_later">Later</string>
     <string name="kh_uisdk_legal_notice_label">Legal notice</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -555,7 +558,7 @@
     <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Motorcycle</string>
     <string name="kh_uisdk_vehicle_mpv">MPV</string>
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
+    <string name="kh_uisdk_vehicle_standard">Saloon</string>
     <string name="kh_uisdk_wheelchair">Wheelchair accessible</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Would you like to continue?</string>
     <string name="kh_uisdk_yes">Yes</string>

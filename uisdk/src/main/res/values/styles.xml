@@ -880,4 +880,47 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="KhNowActionButtonContainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginBottom">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:background">@drawable/uisdk_gradient_enabled_secondary</item>
+    </style>
+
+    <style name="KhNowActionButtonText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/kh_uisdk_secondary</item>
+        <item name="android:text">@string/kh_uisdk_now</item>
+    </style>
+
+    <style name="KhScheduleActionButtonContainer">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginBottom">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:background">@drawable/uisdk_gradient_enabled</item>
+    </style>
+
+    <style name="KhScheduleActionButtonText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/kh_uisdk_background2</item>
+        <item name="android:text">@string/kh_uisdk_later</item>
+    </style>
 </resources>
