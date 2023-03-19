@@ -1,13 +1,7 @@
 package com.karhoo.uisdk.screen.booking.map
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import com.karhoo.uisdk.R
 import kotlinx.android.synthetic.main.uisdk_view_booking_mode.view.*

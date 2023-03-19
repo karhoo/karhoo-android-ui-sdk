@@ -8,6 +8,6 @@ interface BookingModeMVP {
     }
 
     interface View {
-
+        //not used yet
     }
 }
