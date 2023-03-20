@@ -9,6 +9,7 @@ import com.adyen.checkout.dropin.DropInConfiguration
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import org.json.JSONObject
@@ -56,7 +57,8 @@ class AdyenPaymentView : PaymentDropInContract.View {
         val paymentMethods = PaymentMethodsApiResponse.SERIALIZER.deserialize(payments)
 
         try {
-            val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken) as DropInConfiguration
+            val allowToSaveCard = !KarhooUISDKConfigurationProvider.isGuest()
+            val dropInConfiguration: DropInConfiguration = presenter?.getDropInConfig(context, sdkToken, allowToSaveCard) as DropInConfiguration
 
             cacheSupplyPartnerId(context, quote)
 
