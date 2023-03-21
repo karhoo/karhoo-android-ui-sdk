@@ -10,7 +10,6 @@ class BookingModeView @JvmOverloads constructor(context: Context,
                                                 attrs: AttributeSet? = null)
     : LinearLayout(context, attrs), BookingModeMVP.View {
 
-    private val disabledOpacity = 0.4F
     private val presenter: BookingModeMVP.Presenter = BookingModePresenter(this)
     var callbackToStartQuoteList: ((isPrebook: Boolean) -> Unit)? = null
     init {
@@ -40,5 +39,9 @@ class BookingModeView @JvmOverloads constructor(context: Context,
             nowActionButton.alpha = 1F
             scheduleActionButton.alpha = 1F
         }
+    }
+
+    companion object {
+        private const val disabledOpacity = 0.4F
     }
 }
