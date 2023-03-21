@@ -126,8 +126,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 if(it.currentState.pickup != null && it.currentState.destination != null){
                     startQuoteListActivity(false)
                 }
-                else
-                    bookingModeWidget.setIsAllowedToBook(false)
             }
         }
     }
@@ -256,6 +254,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             when (actions) {
                 is AddressBarViewContract.AddressBarActions.ShowAddressActivity ->
                     startActivityForResult(actions.intent, actions.addressCode)
+                is AddressBarViewContract.AddressBarActions.AddressChanged -> {
+                    bookingModeWidget.setIsAllowedToBook(journeyDetailsStateViewModel.currentState.pickup != null && journeyDetailsStateViewModel.currentState.destination != null)
+                }
             }
         }
     }
@@ -303,7 +304,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                     AddressCodes.DESTINATION -> {
                         addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                        bookingModeWidget.setIsAllowedToBook(true)
                     }
                 }
             }
