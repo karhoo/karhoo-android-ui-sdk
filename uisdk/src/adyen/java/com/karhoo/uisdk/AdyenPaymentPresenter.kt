@@ -71,7 +71,7 @@ class AdyenPaymentPresenter(
             }
         }
 
-    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+    override fun getDropInConfig(context: Context, sdkToken: String, allowToSaveCard: Boolean): Any {
         val amount = Amount()
         amount.currency = quote?.price?.currencyCode ?: DEFAULT_CURRENCY
         amount.value = quote?.price?.highPrice.orZero()
@@ -104,7 +104,7 @@ class AdyenPaymentPresenter(
             .setEnvironment(environment)
             .addGooglePayConfiguration(googlePayConfig)
             .setShopperLocale(Locale.getDefault())
-            .addCardConfiguration(createCardConfig(context.applicationContext, key))
+            .addCardConfiguration(createCardConfig(context.applicationContext, key, allowToSaveCard))
             .build()
     }
 
@@ -252,7 +252,7 @@ class AdyenPaymentPresenter(
         this.passengerDetails = passengerDetails
     }
 
-    private fun createCardConfig(context: Context, publicKey: String): CardConfiguration {
+    private fun createCardConfig(context: Context, publicKey: String, allowToSaveCard: Boolean): CardConfiguration {
         val environment = if (KarhooUISDKConfigurationProvider.configuration.environment() is
                     KarhooEnvironment.Production
         ) {
@@ -265,7 +265,7 @@ class AdyenPaymentPresenter(
             .setShopperLocale(Locale.getDefault())
             .setHolderNameRequired(true)
             .setEnvironment(environment)
-            .setShowStorePaymentField(!KarhooUISDKConfigurationProvider.isGuest())
+            .setShowStorePaymentField(allowToSaveCard)
             .build()
     }
 

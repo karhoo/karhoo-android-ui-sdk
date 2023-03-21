@@ -58,11 +58,19 @@ class BraintreePaymentPresenter(
         )
     }
 
-    override fun getDropInConfig(context: Context, sdkToken: String): Any {
+    override fun getDropInConfig(
+        context: Context,
+        sdkToken: String,
+        allowToSaveCard: Boolean
+    ): Any {
         return DropInRequest().apply {
-            vaultCardDefaultValue = true
-            isVaultManagerEnabled = true
-            allowVaultCardOverride = true
+            if (allowToSaveCard) {
+                vaultCardDefaultValue = true
+                allowVaultCardOverride = true
+            } else {
+                vaultCardDefaultValue = false
+                allowVaultCardOverride = false
+            }
             cardholderNameStatus = FIELD_REQUIRED
         }
     }

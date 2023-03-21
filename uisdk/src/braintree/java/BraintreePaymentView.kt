@@ -23,7 +23,7 @@ class BraintreePaymentView : PaymentDropInContract.View {
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         actions?.showLoadingButton(true)
 
-        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, true) as
                 DropInRequest
         val threeDSecureRequest = ThreeDSecureRequest().apply {
             this.nonce = nonce
@@ -59,7 +59,7 @@ class BraintreePaymentView : PaymentDropInContract.View {
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
         actions?.showLoadingButton(true)
 
-        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken) as
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, false) as
                 DropInRequest
         val threeDSecureRequest = ThreeDSecureRequest().apply {
             this.amount = presenter?.quotePriceToAmount(quote)

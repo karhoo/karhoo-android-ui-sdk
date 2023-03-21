@@ -42,7 +42,7 @@ interface PaymentDropInContract {
 
         fun sdkInit(quote: Quote?, locale: Locale? = null)
 
-        fun getDropInConfig(context: Context, sdkToken: String): Any
+        fun getDropInConfig(context: Context, sdkToken: String, allowToSaveCard: Boolean): Any
 
         fun logPaymentFailureEvent(refusalReason: String, refusalReasonCode: Int = 0, lastFourDigits: String? = null, quoteId: String? = null)
 
