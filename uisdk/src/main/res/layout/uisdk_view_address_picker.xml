@@ -96,6 +96,7 @@
         android:layout_marginStart="@dimen/kh_uisdk_margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/dropoffLayout"
         app:layout_constraintTop_toBottomOf="@id/guidelineCentre">
 
