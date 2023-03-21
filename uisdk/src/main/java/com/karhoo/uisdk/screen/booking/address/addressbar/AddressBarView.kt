@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.flipButtonI
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.pickupLabel
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.scheduledIcon
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeDivider
+import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeLayout
 import org.joda.time.DateTime
 import java.util.Calendar
 
@@ -117,6 +118,9 @@ class AddressBarView
         dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
     }
 
+    fun showPrebookIcon(visible: Boolean){
+        dateTimeLayout.visibility = if (visible) View.VISIBLE else View.GONE
+    }
     override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
         timeDatePresenter.dateSelected(year, month, dayOfMonth)
     }

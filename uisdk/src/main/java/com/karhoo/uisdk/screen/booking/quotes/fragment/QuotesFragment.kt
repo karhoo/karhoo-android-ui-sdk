@@ -137,6 +137,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         initProgressBar()
 
         showFilteringWidgets(true)
+        addressBarWidget.showPrebookIcon(true)
 
         return view
     }
