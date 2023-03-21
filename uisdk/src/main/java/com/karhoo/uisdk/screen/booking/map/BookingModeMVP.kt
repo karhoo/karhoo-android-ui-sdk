@@ -8,6 +8,7 @@ interface BookingModeMVP {
     }
 
     interface View {
-        //not used yet
+
+        fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String)
     }
 }

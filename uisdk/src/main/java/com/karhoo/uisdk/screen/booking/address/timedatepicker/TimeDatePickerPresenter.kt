@@ -92,7 +92,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
     private fun oneHourAhead(minuteRoundingHourExtra: Int): Int {
         val currentHour = nowDateTime.hourOfDay
-        var oneHourAheadOfCurrentHour = minuteRoundingHourExtra + currentHour + 1
+        var oneHourAheadOfCurrentHour = minuteRoundingHourExtra + currentHour + 2
         if (oneHourAheadOfCurrentHour > OURS_IN_DAY_MINUS_ONE) {
             oneHourAheadOfCurrentHour -= OURS_IN_DAY
         }
