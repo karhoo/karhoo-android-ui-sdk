@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="adyen.submitButton">Pre-autorizzare</string>
-    <string name="adyen.submitButton.formatted">Pre-autorizza %s</string>
+    <string name="adyen.submitButton">PRE-AUTORIZZARE</string>
+    <string name="adyen.submitButton.formatted">PRE-AUTORIZZA %s</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Successivo</string>
     <string name="K0001">Errore di richiesta generale</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">SELEZIONA UN’ALTERNATIVA</string>
     <string name="kh_uisdk_arrival">Arrivo</string>
     <string name="kh_uisdk_arrived">Il tuo conducente %s è arrivato</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Le prenotazioni ASAP non sono disponibili al tuo indirizzo di ritiro</string>
     <string name="kh_uisdk_back">Indietro</string>
     <string name="kh_uisdk_baggage_max">Max %d bagagli/o</string>
     <string name="kh_uisdk_base">Tariffa base</string>
@@ -327,6 +329,7 @@
     <string name="kh_uisdk_last_name_hint">Cognome</string>
     <string name="kh_uisdk_last_trip_id">ID ultima corsa: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">ID ultima corsa: non ancora impostato</string>
+    <string name="kh_uisdk_later">Più tardi</string>
     <string name="kh_uisdk_legal_notice_label">Note legali</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -555,7 +558,7 @@
     <string name="kh_uisdk_vehicle_bus">Minibus</string>
     <string name="kh_uisdk_vehicle_moto">Moto</string>
     <string name="kh_uisdk_vehicle_mpv">Multiposto</string>
-    <string name="kh_uisdk_vehicle_standard">Standard</string>
+    <string name="kh_uisdk_vehicle_standard">Berlina</string>
     <string name="kh_uisdk_wheelchair">Accessibile per sedia a rotelle</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Vuoi procedere?</string>
     <string name="kh_uisdk_yes">Sì</string>

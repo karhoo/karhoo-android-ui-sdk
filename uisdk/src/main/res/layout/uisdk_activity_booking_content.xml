@@ -12,8 +12,18 @@
         style="@style/KhBookingMapViewStyle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bookingModeWidget"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.karhoo.uisdk.screen.booking.map.BookingModeView
+        android:id="@+id/bookingModeWidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/bookingMapWidget"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

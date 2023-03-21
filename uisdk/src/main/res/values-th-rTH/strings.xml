@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">อนุมัติธุรกรรม</string>
     <string name="adyen.submitButton.formatted">อนุมัติธุรกรรม</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">ถัดไป</string>
     <string name="K0001">ข้อผิดพลาดทั่วไปเกี่ยวกับคำขอ</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">เลือกตัวเลือกอื่น</string>
     <string name="kh_uisdk_arrival">การมาถึง</string>
     <string name="kh_uisdk_arrived">คนขับ %s ของคุณมาถึงแล้ว</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ไม่สามารถจอง ASAP ได้ตามที่อยู่สำหรับรับของคุณ</string>
     <string name="kh_uisdk_back">กลับ</string>
     <string name="kh_uisdk_baggage_max">สัมภาระสูงสุด %d ชิ้น</string>
     <string name="kh_uisdk_base">ค่าโดยสารพื้นฐาน</string>
@@ -326,6 +328,7 @@
     <string name="kh_uisdk_last_name_hint">นามสกุล</string>
     <string name="kh_uisdk_last_trip_id">รหัสการเดินทางล่าสุด: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">รหัสการเดินทางล่าสุด: ยังไม่ได้ตั้งค่า</string>
+    <string name="kh_uisdk_later">ในภายหลัง</string>
     <string name="kh_uisdk_legal_notice_label">ประกาศทางกฎหมาย</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>

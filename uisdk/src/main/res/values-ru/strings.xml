@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="adyen.submitButton">Авторизовать транзакцию</string>
-    <string name="adyen.submitButton.formatted">Авторизовать транзакцию</string>
+    <string name="adyen.submitButton">АВТОРИЗОВАТЬ ТРАНЗАКЦИЮ</string>
+    <string name="adyen.submitButton.formatted">АВТОРИЗОВАТЬ ТРАНЗАКЦИЮ</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">Дальше</string>
     <string name="K0001">Общая ошибка запроса</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">ВЫБРАТЬ АЛЬТЕРНАТИВУ</string>
     <string name="kh_uisdk_arrival">Прибытие</string>
     <string name="kh_uisdk_arrived">Ваш водитель %s прибыл</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Заказы ASAP недоступны по вашему адресу получения</string>
     <string name="kh_uisdk_back">Назад</string>
     <string name="kh_uisdk_baggage_max">Максимум %d багажа</string>
     <string name="kh_uisdk_base">Базовый тариф</string>
@@ -329,6 +331,7 @@
     <string name="kh_uisdk_last_name_hint">Фамилия</string>
     <string name="kh_uisdk_last_trip_id">Идентификатор последней поездки: %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Идентификатор последней поездки: еще не установлен</string>
+    <string name="kh_uisdk_later">Позже</string>
     <string name="kh_uisdk_legal_notice_label">Официальное уведомление</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -559,7 +562,7 @@
     <string name="kh_uisdk_vehicle_bus">Микроавтобус</string>
     <string name="kh_uisdk_vehicle_moto">Мотоцикл</string>
     <string name="kh_uisdk_vehicle_mpv">Универсал</string>
-    <string name="kh_uisdk_vehicle_standard">Стандарт</string>
+    <string name="kh_uisdk_vehicle_standard">Седан</string>
     <string name="kh_uisdk_wheelchair">Доступен для инвалидной коляски</string>
     <string name="kh_uisdk_would_you_like_to_proceed">Хотите продолжить?</string>
     <string name="kh_uisdk_yes">Да</string>

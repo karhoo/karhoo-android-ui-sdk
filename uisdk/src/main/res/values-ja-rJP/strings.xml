@@ -2,6 +2,7 @@
 <resources>
     <string name="adyen.submitButton">取引の承認</string>
     <string name="adyen.submitButton.formatted">取引の承認</string>
+    <!-- Keep it as it is - DO NOT TRANSLATE IT -->
     <string name="bt_add_card">@string/adyen.submitButton</string>
     <string name="continue_button">次</string>
     <string name="K0001">一般的なリクエストエラー</string>
@@ -106,6 +107,7 @@
     <string name="kh_uisdk_alternative">別の選択肢を選ぶ</string>
     <string name="kh_uisdk_arrival">到着</string>
     <string name="kh_uisdk_arrived">%sのドライバーが到着しました</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ASAP の予約は、ピックアップ先の住所ではご利用いただけません</string>
     <string name="kh_uisdk_back">戻る</string>
     <string name="kh_uisdk_baggage_max">荷物：%d個まで</string>
     <string name="kh_uisdk_base">基本料金</string>
@@ -326,6 +328,7 @@
     <string name="kh_uisdk_last_name_hint">姓</string>
     <string name="kh_uisdk_last_trip_id">前回の乗車サービスID：%1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">前回の乗車サービスID：まだ設定されていません</string>
+    <string name="kh_uisdk_later">後で</string>
     <string name="kh_uisdk_legal_notice_label">法的通知</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -553,7 +556,7 @@
     <string name="kh_uisdk_vehicle_bus">ミニバス</string>
     <string name="kh_uisdk_vehicle_moto">バイク</string>
     <string name="kh_uisdk_vehicle_mpv">ミニバン</string>
-    <string name="kh_uisdk_vehicle_standard">スタンダード</string>
+    <string name="kh_uisdk_vehicle_standard">セダン</string>
     <string name="kh_uisdk_wheelchair">車いす利用可</string>
     <string name="kh_uisdk_would_you_like_to_proceed">続行しますか？</string>
     <string name="kh_uisdk_yes">はい</string>
