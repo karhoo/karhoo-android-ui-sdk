@@ -21,7 +21,7 @@ import java.util.Date
 import java.util.TimeZone
 import java.util.Calendar
 class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
-                              private val analytics: Analytics?)
+                              val analytics: Analytics?)
     : BasePresenter<TimeDatePickerMVP.View>(), TimeDatePickerMVP.Presenter, OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
 
     private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
@@ -88,7 +88,8 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         }
     }
 
-    private fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
+    var forUnitTests: Boolean = false
+    fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
         val calendar = Calendar.getInstance()
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
@@ -99,15 +100,16 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                 previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
                 previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
             ).apply {
-                datePicker.minDate = minDate
-                datePicker.maxDate = maxDate
+                datePicker?.minDate = minDate
+                datePicker?.maxDate = maxDate
             }
-            datePicker.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
+            if(!forUnitTests)
+                datePicker.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
             datePicker.show()
         }
     }
 
-    private fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
+    fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
             val dialog = TimePickerDialog(it.getContext(),
@@ -116,7 +118,8 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                 previousSelectedDate?.hourOfDay ?: hour,
                 previousSelectedDate?.minuteOfHour ?: minute,
                 DateFormat.is24HourFormat(it.getContext()))
-            dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
+            if(!forUnitTests)
+                dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
             dialog.show()
         }
     }
