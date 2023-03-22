@@ -8,6 +8,7 @@ interface BookingModeMVP {
     }
 
     interface View {
-        //not used yet
+        fun enableNowButton(enable: Boolean)
+        fun enableScheduleButton(enable: Boolean)
     }
 }

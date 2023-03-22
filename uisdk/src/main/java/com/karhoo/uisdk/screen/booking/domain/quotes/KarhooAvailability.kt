@@ -1,14 +1,17 @@
 package com.karhoo.uisdk.screen.booking.domain.quotes
 
 import androidx.lifecycle.LifecycleOwner
+import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteId
 import com.karhoo.sdk.api.model.QuoteList
 import com.karhoo.sdk.api.model.QuoteStatus
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.QuotesSearch
 import com.karhoo.sdk.api.network.observable.Observable
 import com.karhoo.sdk.api.network.observable.Observer
+import com.karhoo.sdk.api.network.request.CoverageRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.analytics.Analytics
@@ -334,4 +337,28 @@ object KarhooAvailability : AvailabilityProvider {
             }
         }
     }
+
+    override fun checkCoverage(locationInfo: LocationInfo?, dateScheduled: String?, callback: (Boolean) -> Unit) {
+        if(!this::quotesService.isInitialized) {
+            this.quotesService = KarhooApi.quotesService
+        }
+
+        quotesService.checkCoverage(
+            CoverageRequest(
+                latitude = locationInfo?.position?.latitude.toString(),
+                longitude = locationInfo?.position?.longitude.toString(),
+                dateScheduled = dateScheduled
+            )
+        ).execute {
+            when (it) {
+                is Resource.Success -> {
+                    callback(it.data.coverage)
+                }
+                is Resource.Failure -> {
+                    callback(false)
+                }
+            }
+        }
+    }
+
 }

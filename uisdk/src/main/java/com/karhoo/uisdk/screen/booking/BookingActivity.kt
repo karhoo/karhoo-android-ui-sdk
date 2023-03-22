@@ -38,6 +38,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
+import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_CANCELLED
@@ -53,18 +54,29 @@ import kotlinx.android.synthetic.main.uisdk_activity_booking_content.*
 import kotlinx.android.synthetic.main.uisdk_activity_booking_main.*
 import kotlinx.android.synthetic.main.uisdk_nav_header_main.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_map.*
+import kotlinx.android.synthetic.main.uisdk_view_booking_mode.*
 import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
-                        TripAllocationContract.Actions {
+    TripAllocationContract.Actions {
 
-    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy { ViewModelProvider(this).get(JourneyDetailsStateViewModel::class.java) }
-    private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy { ViewModelProvider(this).get(BookingRequestStateViewModel::class.java) }
+    private val journeyDetailsStateViewModel: JourneyDetailsStateViewModel by lazy {
+        ViewModelProvider(
+            this
+        ).get(JourneyDetailsStateViewModel::class.java)
+    }
+    private val bookingRequestStateViewModel: BookingRequestStateViewModel by lazy {
+        ViewModelProvider(
+            this
+        ).get(BookingRequestStateViewModel::class.java)
+    }
 
     private var quote: Quote? = null
 
-    private var tripDetails: TripInfo? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
-    private var outboundTripId: String? = null // field can be removed if we remove usage of the BaseActivity "lifecycle"
+    private var tripDetails: TripInfo? =
+        null // field can be removed if we remove usage of the BaseActivity "lifecycle"
+    private var outboundTripId: String? =
+        null // field can be removed if we remove usage of the BaseActivity "lifecycle"
     private var journeyInfo: JourneyInfo? = null
     private var passengerDetails: PassengerDetails? = null
     private var loyaltyInfo: LoyaltyInfo? = null
@@ -77,10 +89,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         get() = R.layout.uisdk_activity_booking_main
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(KarhooUISDKConfigurationProvider.configuration.forceDarkMode()){
+        if (KarhooUISDKConfigurationProvider.configuration.forceDarkMode()) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-        else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
@@ -88,7 +99,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         super.onCreate(savedInstanceState)
 
         savedInstanceState?.let {
-            if(it[JOURNEY_INFO] != null) {
+            if (it[JOURNEY_INFO] != null) {
                 val journeyDetails = it[JOURNEY_INFO] as JourneyDetails
                 journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
@@ -115,15 +126,17 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             supportActionBar?.let { navigationDrawerWidget.setToggleToolbar(toolbar, it) }
         }
 
-        bookingMapWidget.onCreate(savedInstanceState, this, journeyDetailsStateViewModel,
-                                  tripDetails?.destination == null, journeyInfo != null)
+        bookingMapWidget.onCreate(
+            savedInstanceState, this, journeyDetailsStateViewModel,
+            tripDetails?.destination == null, journeyInfo != null
+        )
 
         bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
 
         KarhooUISDK.analytics?.bookingScreenOpened()
         bookingModeWidget.callbackToStartQuoteList = {
             journeyDetailsStateViewModel.let {
-                if(it.currentState.pickup != null && it.currentState.destination != null){
+                if (it.currentState.pickup != null && it.currentState.destination != null) {
                     startQuoteListActivity(false)
                 }
             }
@@ -138,12 +151,12 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun setNavHeaderImage() {
         Handler().postDelayed({
-                                  KarhooUISDKConfigurationProvider.configuration.logo()?.let {
-                                      navigationHeaderIcon?.setImageDrawable(it)
-                                  } ?: run {
-                                      navigationHeaderIcon?.setImageDrawable(getDrawable(R.drawable.uisdk_karhoo_wordmark))
-                                  }
-                              }, NAVIGATION_ICON_DELAY)
+            KarhooUISDKConfigurationProvider.configuration.logo()?.let {
+                navigationHeaderIcon?.setImageDrawable(it)
+            } ?: run {
+                navigationHeaderIcon?.setImageDrawable(getDrawable(R.drawable.uisdk_karhoo_wordmark))
+            }
+        }, NAVIGATION_ICON_DELAY)
     }
 
     private fun setWatchers() {
@@ -171,17 +184,25 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         extras?.let { extras ->
             tripDetails = extras.get(Builder.EXTRA_TRIP_DETAILS) as TripInfo?
             tripDetails?.let {
-                journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
-                                                            .AsapBookingEvent(it.origin?.toSimpleLocationInfo(), it.destination?.toSimpleLocationInfo()))
+                journeyDetailsStateViewModel.process(
+                    AddressBarViewContract.AddressBarEvent
+                        .AsapBookingEvent(
+                            it.origin?.toSimpleLocationInfo(),
+                            it.destination?.toSimpleLocationInfo()
+                        )
+                )
             }
             outboundTripId = extras.getString(Builder.EXTRA_OUTBOUND_TRIP_ID, null)
             val initialLocation = extras.getParcelable<Location>(Builder.EXTRA_INITIAL_LOCATION)
-            initialLocation?.let { bookingMapWidget.initialLocation = LatLng(it.latitude, it.longitude) }
+            initialLocation?.let {
+                bookingMapWidget.initialLocation = LatLng(it.latitude, it.longitude)
+            }
             journeyInfo = extras.getParcelable(Builder.EXTRA_JOURNEY_INFO)
             passengerDetails = extras.getParcelable(Builder.EXTRA_PASSENGER_DETAILS)
             bookingComments = extras.getString(Builder.EXTRA_COMMENTS)
             loyaltyInfo = extras.getParcelable(Builder.EXTRA_LOYALTY_INFO)
-            val injectedBookingMetadata = extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
+            val injectedBookingMetadata =
+                extras.getSerializable(Builder.EXTRA_META) as? HashMap<String, String>
             injectedBookingMetadata?.let {
                 bookingMetadata?.putAll(it)
             }
@@ -191,9 +212,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun initialiseViews() {
         isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
-        addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
-        tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
-                                                       bookingRequestStateViewModel)
+        addressBarWidget.watchJourneyDetailsState(
+            this@BookingActivity,
+            journeyDetailsStateViewModel
+        )
+        tripAllocationWidget.watchBookingRequestStatus(
+            this@BookingActivity,
+            bookingRequestStateViewModel
+        )
     }
 
     override fun bindViews() {
@@ -209,10 +235,14 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             if (isLocateMeEnabled(this)) {
                 bookingMapWidget.locateUser()
             } else {
-                ActivityCompat.requestPermissions(this,
-                                                  arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                                                          Manifest.permission.ACCESS_COARSE_LOCATION),
-                                                  MY_PERMISSIONS_REQUEST_LOCATION)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    MY_PERMISSIONS_REQUEST_LOCATION
+                )
             }
         }
 
@@ -222,15 +252,20 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>, grantResults: IntArray
+    ) {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_LOCATION -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     bookingMapWidget.locationPermissionGranted()
                 } else {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest
-                                    .permission.ACCESS_FINE_LOCATION)) {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                            this, Manifest
+                                .permission.ACCESS_FINE_LOCATION
+                        )
+                    ) {
                         showLocationLock()
                     }
                 }
@@ -252,10 +287,22 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
         return Observer { actions ->
             when (actions) {
-                is AddressBarViewContract.AddressBarActions.ShowAddressActivity ->
+                is AddressBarViewContract.AddressBarActions.ShowAddressActivity -> {
                     startActivityForResult(actions.intent, actions.addressCode)
+                }
+
                 is AddressBarViewContract.AddressBarActions.AddressChanged -> {
-                    bookingModeWidget.setIsAllowedToBook(journeyDetailsStateViewModel.currentState.pickup != null && journeyDetailsStateViewModel.currentState.destination != null)
+                    if (journeyDetailsStateViewModel.currentState.pickup != null &&
+                        journeyDetailsStateViewModel.currentState.destination != null
+                    ) {
+
+                        KarhooAvailability.checkCoverage(actions.address) { hasCoverage ->
+                            bookingModeWidget.enableNowButton(hasCoverage)
+                            bookingModeWidget.enableScheduleButton(true)
+                        }
+                    }
+
+
                 }
             }
         }
@@ -336,8 +383,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun extractJourneyDetails(data: Intent?): JourneyDetails {
         return JourneyDetails(
-            data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS) ?: journeyDetailsStateViewModel.currentState.pickup,
-            data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS) ?: journeyDetailsStateViewModel.currentState.destination,
+            data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS)
+                ?: journeyDetailsStateViewModel.currentState.pickup,
+            data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+                ?: journeyDetailsStateViewModel.currentState.destination,
             data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime?
         )
     }
@@ -350,8 +399,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
         // if destination set we clear it, close the quotes list and return
         if (journeyDetailsStateViewModel.currentState.destination != null) {
-            journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent
-                                                        .DestinationAddressEvent(null))
+            journeyDetailsStateViewModel.process(
+                AddressBarViewContract.AddressBarEvent
+                    .DestinationAddressEvent(null)
+            )
             return
         }
         if (navigationDrawerWidget.closeIfOpen()) {
@@ -386,9 +437,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 true
             }
             R.id.booking_action_rides -> {
-                startActivity(RidesActivity.Builder.builder
-                    .passengerDetails(passengerDetails)
-                    .build(this))
+                startActivity(
+                    RidesActivity.Builder.builder
+                        .passengerDetails(passengerDetails)
+                        .build(this)
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -439,8 +492,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
     }
 
-    private fun startQuoteListActivity(restorePreviousData: Boolean, validityTimestamp: Long? = null, restoredJourneyData: JourneyDetails? = null) {
-        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData).bookingInfo(restoredJourneyData ?: journeyDetailsStateViewModel.viewStates().value)
+    private fun startQuoteListActivity(
+        restorePreviousData: Boolean,
+        validityTimestamp: Long? = null,
+        restoredJourneyData: JourneyDetails? = null
+    ) {
+        val builder = QuotesActivity.Builder().restorePreviousData(restorePreviousData)
+            .bookingInfo(restoredJourneyData ?: journeyDetailsStateViewModel.viewStates().value)
         validityTimestamp?.let {
             builder.validityTimestamp(validityTimestamp)
         }
@@ -449,7 +507,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun parseDataFromIntent(data: Intent?) {
         val pickup = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_PICKUP_ADDRESS)
-        val destination = data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
+        val destination =
+            data?.getParcelableExtra<LocationInfo>(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
         val date = data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime
 
         pickup?.let {
@@ -466,7 +525,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
         val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
         val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
-        if(bookingMetadata == null) {
+        if (bookingMetadata == null) {
             bookingMetadata = HashMap()
         }
         bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
@@ -572,9 +631,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
          * builder parameters in the extras bundle, when the intent is being started
          * with startActivityForResult()
          */
-        fun buildForOnActivityResultCallback(context: Context): Intent = Intent(context, KarhooUISDK.Routing.booking).apply {
-            putExtras(extrasBundle)
-        }
+        fun buildForOnActivityResultCallback(context: Context): Intent =
+            Intent(context, KarhooUISDK.Routing.booking).apply {
+                putExtras(extrasBundle)
+            }
 
         companion object {
 
