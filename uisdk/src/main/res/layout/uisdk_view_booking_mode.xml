@@ -1,8 +1,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/kh_uisdk_background2">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/kh_uisdk_background2"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/loyaltyInfoLayout"
+        style="@style/KhBookingCoverageInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/loyaltyInfoText"
+            style="@style/KhBookingCoverageInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
+            android:layout_marginEnd="@dimen/kh_uisdk_spacing_small"
+            android:text="@string/kh_uisdk_asap_no_coverage_warning" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,17 +34,14 @@
             android:id="@+id/nowActionButton"
             style="@style/KhNowActionButtonContainer">
 
-            <TextView
-                style="@style/KhNowActionButtonText"
-                />
+            <TextView style="@style/KhNowActionButtonText" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/scheduleActionButton"
             style="@style/KhScheduleActionButtonContainer">
 
-            <TextView
-                style="@style/KhScheduleActionButtonText"/>
+            <TextView style="@style/KhScheduleActionButtonText" />
         </LinearLayout>
 
     </LinearLayout>
