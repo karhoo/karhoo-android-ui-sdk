@@ -923,4 +923,25 @@
         <item name="android:textColor">@color/kh_uisdk_background2</item>
         <item name="android:text">@string/kh_uisdk_later</item>
     </style>
+
+    <style name="KhBookingCoverageInfo">
+        <item name="android:background">@drawable/uisdk_background_eta_price_view_rounded</item>
+        <item name="android:backgroundTint">@color/kh_uisdk_disabled</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_small</item>
+        <item name="android:layout_marginBottom">@dimen/kh_uisdk_spacing_small</item>
+    </style>
+
+    <style name="KhBookingCoverageInfoText">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawableLeft">@drawable/kh_ic_info</item>
+        <item name="android:drawablePadding">@dimen/kh_uisdk_spacing_xxxsmall</item>
+        <item name="fontWeight">400</item>
+        <item name="lineHeight">15dp</item>
+    </style>
+
 </resources>

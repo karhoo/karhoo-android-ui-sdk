@@ -95,6 +95,7 @@
     <!-- New Colors -->
     <color name="kh_uisdk_primary">#18183F</color>
     <color name="kh_uisdk_secondary">#FF0082</color>
+    <color name="kh_uisdk_secondary_disabled">#C5FF0082</color>
     <color name="kh_uisdk_accent">#1A70C1</color>
 <!--    <color name="kh_uisdk_accent_opacity50">#7F2485C2</color>-->
     <color name="kh_uisdk_accent_opacity50">#E1F4FC</color>

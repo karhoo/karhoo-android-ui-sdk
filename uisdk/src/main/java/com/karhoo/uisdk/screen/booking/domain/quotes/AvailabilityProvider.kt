@@ -5,6 +5,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterChain
 import androidx.lifecycle.LifecycleOwner
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.service.quotes.QuotesService
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import java.util.*
@@ -36,6 +37,8 @@ interface AvailabilityProvider {
               shouldRestoreData: Boolean = false)
 
     fun getExistingFilterChain(): FilterChain?
+
+    fun checkCoverage(locationInfo: LocationInfo?, dateScheduled: String? = null, callback: (Boolean) -> Unit)
 }
 
 interface AvailabilityHandler {
