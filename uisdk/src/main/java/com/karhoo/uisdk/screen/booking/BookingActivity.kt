@@ -297,11 +297,15 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
                         KarhooAvailability.checkCoverage(actions.address) { hasCoverage ->
                             bookingModeWidget.enableNowButton(hasCoverage)
+                            bookingModeWidget.showNoCoverageText(hasCoverage)
                             bookingModeWidget.enableScheduleButton(true)
                         }
                     }
-
-
+                    else{
+                        bookingModeWidget.showNoCoverageText(true)
+                        bookingModeWidget.enableNowButton(enable = false)
+                        bookingModeWidget.enableScheduleButton(false)
+                    }
                 }
             }
         }

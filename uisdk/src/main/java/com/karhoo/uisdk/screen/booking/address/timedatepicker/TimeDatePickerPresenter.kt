@@ -1,8 +1,16 @@
 package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.TimePickerDialog
+import android.text.format.DateFormat
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.lifecycle.Observer
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
+import com.karhoo.uisdk.screen.booking.address.TimePickerTitleView
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
@@ -11,10 +19,10 @@ import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
 import java.util.Date
 import java.util.TimeZone
-
+import java.util.Calendar
 class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                               private val analytics: Analytics?)
-    : BasePresenter<TimeDatePickerMVP.View>(), TimeDatePickerMVP.Presenter {
+    : BasePresenter<TimeDatePickerMVP.View>(), TimeDatePickerMVP.Presenter, OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
 
     private var journeyDetailsStateViewModel: JourneyDetailsStateViewModel? = null
 
@@ -41,7 +49,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         journeyDetailsStateViewModel?.currentState?.pickup?.let {
             analytics?.prebookOpened()
             val nowPlusOneYear = DateTime.now(timezone).plusYears(1)
-            view?.displayDatePicker(
+            displayDatePicker(
                     minDate = nowPlusOneHour.millis,
                     maxDate = nowPlusOneYear.millis,
                     timeZone = getTimezoneDisplayName(it.timezone))
@@ -76,7 +84,40 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
             day = dayOfMonth
 
             val oneHourAheadOfCurrentHour = oneHourAhead(minuteRoundingHourExtra)
-            view?.displayTimePicker(oneHourAheadOfCurrentHour, minutesRoundedToNearestFive, localisedTimeZone)
+            displayTimePicker(oneHourAheadOfCurrentHour, minutesRoundedToNearestFive, localisedTimeZone)
+        }
+    }
+
+    private fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
+        val calendar = Calendar.getInstance()
+        val previousSelectedDate = getPreviousSelectedDateTime()
+        view?.let {
+            val datePicker = DatePickerDialog(it.getContext(),
+                R.style.DialogTheme,
+                this,
+                previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
+                previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
+                previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
+            ).apply {
+                datePicker.minDate = minDate
+                datePicker.maxDate = maxDate
+            }
+            datePicker.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
+            datePicker.show()
+        }
+    }
+
+    private fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
+        val previousSelectedDate = getPreviousSelectedDateTime()
+        view?.let {
+            val dialog = TimePickerDialog(it.getContext(),
+                R.style.DialogTheme,
+                this,
+                previousSelectedDate?.hourOfDay ?: hour,
+                previousSelectedDate?.minuteOfHour ?: minute,
+                DateFormat.is24HourFormat(it.getContext()))
+            dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
+            dialog.show()
         }
     }
 
@@ -92,7 +133,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
     private fun oneHourAhead(minuteRoundingHourExtra: Int): Int {
         val currentHour = nowDateTime.hourOfDay
-        var oneHourAheadOfCurrentHour = minuteRoundingHourExtra + currentHour + 2
+        var oneHourAheadOfCurrentHour = minuteRoundingHourExtra + currentHour + HOURS_TO_BE_ADDED
         if (oneHourAheadOfCurrentHour > OURS_IN_DAY_MINUS_ONE) {
             oneHourAheadOfCurrentHour -= OURS_IN_DAY
         }
@@ -159,6 +200,13 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         return journeyDetailsStateViewModel?.currentState?.date
     }
 
+    override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
+        dateSelected(year, month, dayOfMonth)
+    }
+
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
+        timeSelected(hourOfDay, minute)
+    }
     private companion object {
 
         var year: Int = 0
@@ -172,6 +220,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         const val OURS_IN_DAY = 24
         const val OURS_IN_DAY_MINUS_ONE = OURS_IN_DAY - 1
         const val TIMEZONE_DEFAULT_EUROPE = "Europe/Paris"
+        const val HOURS_TO_BE_ADDED = 2
     }
 
 }

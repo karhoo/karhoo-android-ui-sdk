@@ -1,15 +1,10 @@
 package com.karhoo.uisdk.screen.booking.address.addressbar
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.text.format.DateFormat
 import android.util.AttributeSet
 import android.view.View
-import android.widget.DatePicker
 import android.widget.LinearLayout
-import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -18,7 +13,6 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
-import com.karhoo.uisdk.screen.booking.address.TimePickerTitleView
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
@@ -38,13 +32,11 @@ import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.scheduledIc
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeDivider
 import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeLayout
 import org.joda.time.DateTime
-import java.util.Calendar
 
 class AddressBarView
 @JvmOverloads constructor(context: Context,
                           attrs: AttributeSet? = null)
     : LinearLayout(context, attrs), AddressBarMVP.View,
-      DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
       TimeDatePickerMVP.View, AddressBarViewContract.Widget {
 
     private val addressPresenter: AddressBarMVP.Presenter = AddressBarPresenter(this, KarhooUISDK.analytics)
@@ -62,35 +54,6 @@ class AddressBarView
         clearDestinationButtonIcon.setOnClickListener { addressPresenter.clearDestinationClicked() }
         clearDestinationButtonIcon.contentDescription = context.getString(R.string.kh_uisdk_delete_destination_address)
         flipButtonIcon.setOnClickListener { addressPresenter.flipAddressesClicked(); }
-    }
-
-    override fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
-        val calendar = Calendar.getInstance()
-        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
-        val datePicker = DatePickerDialog(context,
-                                          R.style.DialogTheme,
-                                          this,
-                                     previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
-                               previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
-                               previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
-        ).apply {
-            datePicker.minDate = minDate
-            datePicker.maxDate = maxDate
-        }
-        datePicker.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
-        datePicker.show()
-    }
-
-    override fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
-        val previousSelectedDate = timeDatePresenter.getPreviousSelectedDateTime()
-        val dialog = TimePickerDialog(context,
-            R.style.DialogTheme,
-            this,
-            previousSelectedDate?.hourOfDay ?: hour,
-            previousSelectedDate?.minuteOfHour ?: minute,
-            DateFormat.is24HourFormat(context))
-        dialog.setCustomTitle(TimePickerTitleView(context).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
-        dialog.show()
     }
 
     override fun displayPrebookTime(time: DateTime) {
@@ -120,13 +83,6 @@ class AddressBarView
 
     fun showPrebookIcon(visible: Boolean){
         dateTimeLayout.visibility = if (visible) View.VISIBLE else View.GONE
-    }
-    override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
-        timeDatePresenter.dateSelected(year, month, dayOfMonth)
-    }
-
-    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
-        timeDatePresenter.timeSelected(hourOfDay, minute)
     }
 
     override fun setPickupAddress(displayAddress: String) {
