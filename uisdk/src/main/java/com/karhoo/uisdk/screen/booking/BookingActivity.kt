@@ -134,9 +134,12 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         bookingMetadata = KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
 
         KarhooUISDK.analytics?.bookingScreenOpened()
-        bookingModeWidget.callbackToStartQuoteList = {
+        bookingModeWidget.callbackToStartQuoteList = { isPrebook ->
             journeyDetailsStateViewModel.let {
-                if (it.currentState.pickup != null && it.currentState.destination != null) {
+                if(it.currentState.pickup != null && it.currentState.destination != null){
+                    if(!isPrebook){
+                        it.currentState.date = null
+                    }
                     startQuoteListActivity(false)
                 }
             }
@@ -212,14 +215,10 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun initialiseViews() {
         isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
-        addressBarWidget.watchJourneyDetailsState(
-            this@BookingActivity,
-            journeyDetailsStateViewModel
-        )
-        tripAllocationWidget.watchBookingRequestStatus(
-            this@BookingActivity,
-            bookingRequestStateViewModel
-        )
+        addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
+        bookingModeWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
+        tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
+                                                       bookingRequestStateViewModel)
     }
 
     override fun bindViews() {
@@ -298,11 +297,15 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
                         KarhooAvailability.checkCoverage(actions.address) { hasCoverage ->
                             bookingModeWidget.enableNowButton(hasCoverage)
+                            bookingModeWidget.showNoCoverageText(hasCoverage)
                             bookingModeWidget.enableScheduleButton(true)
                         }
                     }
-
-
+                    else{
+                        bookingModeWidget.showNoCoverageText(true)
+                        bookingModeWidget.enableNowButton(enable = false)
+                        bookingModeWidget.enableScheduleButton(false)
+                    }
                 }
             }
         }
@@ -417,6 +420,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private fun waitForTripAllocation() {
         addressBarWidget.visibility = View.INVISIBLE
         toolbar.visibility = View.INVISIBLE
+        bookingModeWidget.visibility = View.GONE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         bookingMapWidget.centreMapToPickupPin()
@@ -451,6 +455,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onBookingCancelledOrFinished() {
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
+        bookingModeWidget.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
         journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)

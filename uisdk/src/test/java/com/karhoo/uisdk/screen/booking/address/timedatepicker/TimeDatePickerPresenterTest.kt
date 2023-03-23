@@ -1,20 +1,13 @@
 package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.capture
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.firstValue
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.secondValue
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import junit.framework.Assert.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.DateTime
@@ -26,7 +19,11 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.ArgumentCaptor
 import org.mockito.Captor
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.Mockito.CALLS_REAL_METHODS
 import org.mockito.junit.MockitoJUnitRunner
+
 
 @RunWith(MockitoJUnitRunner::class)
 class TimeDatePickerPresenterTest {
@@ -39,6 +36,9 @@ class TimeDatePickerPresenterTest {
 
     private val view: TimeDatePickerMVP.View = mock()
     private val analytics: Analytics = mock()
+
+    @Mock
+    val context: Context = mock()
 
     @Captor
     private lateinit var intArgumentCaptor: ArgumentCaptor<Int>
@@ -54,8 +54,12 @@ class TimeDatePickerPresenterTest {
     @Before
     fun setUp() {
         DateTimeZone.setDefault(timezoneAmsterdam)
-        timePickerPresenter = TimeDatePickerPresenter(view, analytics)
+        timePickerPresenter = Mockito.mock(TimeDatePickerPresenter(view, analytics)::class.java, CALLS_REAL_METHODS)
+        whenever(timePickerPresenter.analytics).thenReturn(analytics)
+        whenever(timePickerPresenter.view).thenReturn(view)
         timePickerPresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+        whenever(view.getContext()).thenReturn(context)
+        timePickerPresenter.forUnitTests = true
     }
 
     /**
@@ -90,8 +94,9 @@ class TimeDatePickerPresenterTest {
     fun `when the date picker is clicked the view is passes the timezone name`() {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
+
         timePickerPresenter.datePickerClicked()
-        verify(view).displayDatePicker(any(), any(), any())
+        verify(timePickerPresenter).displayDatePicker(any(), any(), any())
     }
 
     /**
@@ -102,7 +107,7 @@ class TimeDatePickerPresenterTest {
     @Test
     fun `no call made to display date picker when pickup isnt set`() {
         timePickerPresenter.datePickerClicked()
-        verify(view, never()).displayDatePicker(any(), any(), any())
+        verify(timePickerPresenter, never()).displayDatePicker(any(), any(), any())
     }
 
     /**
@@ -119,7 +124,7 @@ class TimeDatePickerPresenterTest {
 
         timePickerPresenter.datePickerClicked()
 
-        verify(view).displayDatePicker(capture(longArgumentCaptor), capture(longArgumentCaptor), any())
+        verify(timePickerPresenter).displayDatePicker(capture(longArgumentCaptor), capture(longArgumentCaptor), any())
 
         val oneHourAhead = now.plusMinutes(59)
         val twoHoursAhead = now.plusHours(2)
@@ -155,7 +160,7 @@ class TimeDatePickerPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
-        verify(view).displayTimePicker(any(), any(), any())
+        verify(timePickerPresenter).displayTimePicker(any(), any(), any())
     }
 
     /**
@@ -168,7 +173,7 @@ class TimeDatePickerPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
-        verify(view).displayTimePicker(any(), any(), eq("GMT"))
+        verify(timePickerPresenter).displayTimePicker(any(), any(), eq("GMT"))
     }
 
     /**
@@ -183,7 +188,7 @@ class TimeDatePickerPresenterTest {
 
         timePickerPresenter.dateSelected(1, 1, 1)
 
-        verify(view).displayTimePicker(
+        verify(timePickerPresenter).displayTimePicker(
                 capture(intArgumentCaptor),
                 any(),
                 any())
@@ -203,7 +208,7 @@ class TimeDatePickerPresenterTest {
 
         timePickerPresenter.dateSelected(1, 1, 1)
 
-        verify(view).displayTimePicker(
+        verify(timePickerPresenter).displayTimePicker(
                 capture(intArgumentCaptor),
                 any(),
                 any())

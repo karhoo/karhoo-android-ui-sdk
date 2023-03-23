@@ -3,15 +3,24 @@ package com.karhoo.uisdk.screen.booking.map
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import androidx.lifecycle.LifecycleOwner
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
+import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import kotlinx.android.synthetic.main.uisdk_view_booking_mode.view.*
+import org.joda.time.DateTime
 
 class BookingModeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
-) : LinearLayout(context, attrs), BookingModeMVP.View {
+) : LinearLayout(context, attrs), BookingModeMVP.View, TimeDatePickerMVP.View {
 
     private val presenter: BookingModeMVP.Presenter = BookingModePresenter(this)
+    private val timeDatePresenter: TimeDatePickerMVP.Presenter =
+        TimeDatePickerPresenter(this, KarhooUISDK.analytics)
+
     var callbackToStartQuoteList: ((isPrebook: Boolean) -> Unit)? = null
 
     init {
@@ -22,7 +31,7 @@ class BookingModeView @JvmOverloads constructor(
         }
 
         scheduleActionButton.setOnClickListener {
-            callbackToStartQuoteList?.invoke(true)
+            timeDatePresenter.datePickerClicked()
         }
 
         nowActionButton.alpha = disabledOpacity
@@ -32,13 +41,35 @@ class BookingModeView @JvmOverloads constructor(
     override fun enableNowButton(enable: Boolean) {
         nowActionButton.alpha = if (enable) 1F else disabledOpacity
         nowActionButton.isEnabled = enable
+    }
 
-        loyaltyInfoLayout.visibility = if (enable) GONE else VISIBLE
+    override fun showNoCoverageText(hasCoverage: Boolean) {
+        loyaltyInfoLayout.visibility = if (hasCoverage) GONE else VISIBLE
     }
 
     override fun enableScheduleButton(enable: Boolean) {
         scheduleActionButton.alpha = if (enable) 1F else disabledOpacity
         scheduleActionButton.isEnabled = enable
+    }
+
+    override fun displayPrebookTime(time: DateTime) {
+        callbackToStartQuoteList?.invoke(true)
+    }
+
+    override fun hideDateViews() {
+        // no need to hide anything
+    }
+
+    fun watchJourneyDetailsState(
+        lifecycleOwner: LifecycleOwner,
+        journeyDetailsStateViewModel: JourneyDetailsStateViewModel
+    ) {
+        journeyDetailsStateViewModel.viewStates().apply {
+            observe(
+                lifecycleOwner,
+                timeDatePresenter.subscribeToJourneyDetails(journeyDetailsStateViewModel)
+            )
+        }
     }
 
     companion object {

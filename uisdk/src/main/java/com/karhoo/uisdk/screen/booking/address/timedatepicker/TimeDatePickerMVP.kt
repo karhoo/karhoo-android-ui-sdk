@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
+import android.content.Context
 import androidx.lifecycle.Observer
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
@@ -23,15 +24,11 @@ interface TimeDatePickerMVP {
     }
 
     interface View {
-
-        fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String)
-
-        fun displayTimePicker(hour: Int, minute: Int, timeZone: String)
-
         fun displayPrebookTime(time: DateTime)
 
         fun hideDateViews()
 
+        fun getContext(): Context
     }
 
 }
