@@ -182,31 +182,8 @@ class BraintreePaymentPresenter(
     }
 
     private fun setNonce(braintreeSDKNonce: String) {
-        val user = userStore.currentUser
-        val addPaymentRequest = AddPaymentRequest(
-            payer =
-            Payer(
-                id = user.userId,
-                email = user.email,
-                firstName = user.firstName,
-                lastName = user.lastName
-            ),
-            organisationId = user.organisations.first().id,
-            nonce = braintreeSDKNonce
-        )
-
-        paymentsService.addPaymentMethod(addPaymentRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> {
-                    view?.updatePaymentDetails(userStore.savedPaymentInfo)
-                    view?.handlePaymentDetailsUpdate()
-                }
-                is Resource.Failure -> {
-                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
-                    view?.showError(R.string.kh_uisdk_something_went_wrong, result.error)
-                }
-            }
-        }
+        view?.updatePaymentDetails(userStore.savedPaymentInfo)
+        view?.handlePaymentDetailsUpdate()
     }
 
     private fun passBackThreeDSecureNonce(nonce: String, amount: String) {
