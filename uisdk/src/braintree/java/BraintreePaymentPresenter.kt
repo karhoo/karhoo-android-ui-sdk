@@ -71,7 +71,6 @@ class BraintreePaymentPresenter(
                 vaultCardDefaultValue = false
                 allowVaultCardOverride = false
             }
-            cardholderNameStatus = FIELD_REQUIRED
         }
     }
 
