@@ -79,8 +79,6 @@ class BookingModeView @JvmOverloads constructor(
             animating = true
         }
 
-        Logger.error("matei", "show " + show)
-
         if (show) {
             this@BookingModeView.visibility = VISIBLE
 
@@ -90,7 +88,6 @@ class BookingModeView @JvmOverloads constructor(
                     .apply {
                         setAnimationListener(object : SimpleAnimationListener() {
                             override fun onAnimationEnd(animation: Animation) {
-                                Logger.error("matei", "onAnimationEnd")
                                 this@BookingModeView.visibility = VISIBLE
 
                                 animating = false

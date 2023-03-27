@@ -303,9 +303,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 }
 
                 is AddressBarViewContract.AddressBarActions.AddressChanged -> {
-                    Logger.error("matei", "" + actions.addressCode)
-                    Logger.error("matei", "" + actions.address)
-
                     if(actions.address == null) {
                         validateCoverage()
                         return@Observer
