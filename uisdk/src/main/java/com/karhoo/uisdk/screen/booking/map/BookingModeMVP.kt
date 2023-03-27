@@ -10,7 +10,7 @@ interface BookingModeMVP {
     interface View {
         fun enableNowButton(enable: Boolean)
         fun enableScheduleButton(enable: Boolean)
-
         fun showNoCoverageText(hasCoverage: Boolean)
+        fun show(show: Boolean, cb: (() -> Unit)? = null)
     }
 }

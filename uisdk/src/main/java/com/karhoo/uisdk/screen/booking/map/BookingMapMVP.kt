@@ -39,7 +39,7 @@ interface BookingMapMVP {
 
         fun updateMapViewForQuotesListVisibilityCollapsed()
 
-        fun updateMapViewForQuotesListVisibilityExpanded()
+        fun updateMapViewForQuotesListVisibilityExpanded(bottomMargin: Int)
     }
 
     interface Presenter {

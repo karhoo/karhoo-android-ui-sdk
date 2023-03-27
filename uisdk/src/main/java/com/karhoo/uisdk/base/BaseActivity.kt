@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.base
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
@@ -140,8 +139,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
             messageResId = stringId,
             karhooError = karhooError,
             cancellable = true,
-            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok,
-                DialogInterface.OnClickListener { dialog, _ -> dialog.cancel() })
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { dialog, _ -> dialog.cancel() }
         )
         KarhooAlertDialogHelper(this).showAlertDialog(config)
     }
