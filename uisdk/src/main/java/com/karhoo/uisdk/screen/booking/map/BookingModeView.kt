@@ -12,7 +12,6 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import com.karhoo.uisdk.util.Logger
 import kotlinx.android.synthetic.main.uisdk_view_booking_mode.view.*
 import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.*
 import org.joda.time.DateTime

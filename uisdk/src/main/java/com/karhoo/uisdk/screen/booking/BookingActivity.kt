@@ -47,7 +47,6 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
-import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
 import kotlinx.android.synthetic.main.uisdk_activity_base.*
