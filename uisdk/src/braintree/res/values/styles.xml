@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/kh_uisdk_primary</item>
         <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
@@ -565,19 +565,6 @@
         <item name="colorAccent">@color/kh_uisdk_accent</item>
         <item name="titleTextColor">@color/kh_uisdk_background_primary</item>
         <item name="colorError">@color/kh_uisdk_error</item>
-    </style>
-
-    <style name="bt_drop_in_activity_theme" parent="Theme.AppCompat.NoActionBar">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/kh_uisdk_transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
-<!--        <item name="android:windowAnimationStyle">@style/bt_fade_activity_animation</item>-->
-        <item name="colorPrimary">@color/kh_uisdk_primary</item>
-        <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
-        <item name="colorAccent">@color/kh_uisdk_accent</item>
     </style>
 
     <style name="bt_base_textview">
