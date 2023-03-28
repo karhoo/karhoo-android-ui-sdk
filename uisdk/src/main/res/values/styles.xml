@@ -900,6 +900,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/kh_uisdk_secondary</item>
         <item name="android:text">@string/kh_uisdk_now</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="KhScheduleActionButtonContainer">
@@ -922,6 +923,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/kh_uisdk_background2</item>
         <item name="android:text">@string/kh_uisdk_later</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="KhBookingCoverageInfo">
