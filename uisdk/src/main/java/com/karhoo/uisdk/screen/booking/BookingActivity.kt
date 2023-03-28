@@ -136,8 +136,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         KarhooUISDK.analytics?.bookingScreenOpened()
         bookingModeWidget.callbackToStartQuoteList = { isPrebook ->
             journeyDetailsStateViewModel.let {
-                if(it.currentState.pickup != null && it.currentState.destination != null){
-                    if(!isPrebook){
+                if (it.currentState.pickup != null && it.currentState.destination != null) {
+                    if (!isPrebook) {
                         it.currentState.date = null
                     }
                     startQuoteListActivity(false)
@@ -215,10 +215,18 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun initialiseViews() {
         isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
-        addressBarWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
-        bookingModeWidget.watchJourneyDetailsState(this@BookingActivity, journeyDetailsStateViewModel)
-        tripAllocationWidget.watchBookingRequestStatus(this@BookingActivity,
-                                                       bookingRequestStateViewModel)
+        addressBarWidget.watchJourneyDetailsState(
+            this@BookingActivity,
+            journeyDetailsStateViewModel
+        )
+        bookingModeWidget.watchJourneyDetailsState(
+            this@BookingActivity,
+            journeyDetailsStateViewModel
+        )
+        tripAllocationWidget.watchBookingRequestStatus(
+            this@BookingActivity,
+            bookingRequestStateViewModel
+        )
     }
 
     override fun bindViews() {
@@ -283,6 +291,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         bookingRequestStateViewModel.viewActions().observe(this, bindToBookingRequestOutputs())
     }
 
+    private var hasPickupCoverage: Boolean = false
+    private var hasDestinationCoverage: Boolean = false
+
     private fun bindToAddressBarOutputs(): Observer<in AddressBarViewContract.AddressBarActions> {
         return Observer { actions ->
             when (actions) {
@@ -291,23 +302,47 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 }
 
                 is AddressBarViewContract.AddressBarActions.AddressChanged -> {
-                    if (journeyDetailsStateViewModel.currentState.pickup != null &&
-                        journeyDetailsStateViewModel.currentState.destination != null
-                    ) {
+                    if(actions.address == null) {
+                        validateCoverage()
+                        return@Observer
+                    }
 
+                    if (actions.addressCode == AddressCodes.PICKUP) {
                         KarhooAvailability.checkCoverage(actions.address) { hasCoverage ->
-                            bookingModeWidget.enableNowButton(hasCoverage)
-                            bookingModeWidget.showNoCoverageText(hasCoverage)
-                            bookingModeWidget.enableScheduleButton(true)
+                            hasPickupCoverage = hasCoverage
+
+                            validateCoverage()
                         }
                     }
-                    else{
-                        bookingModeWidget.showNoCoverageText(true)
-                        bookingModeWidget.enableNowButton(enable = false)
-                        bookingModeWidget.enableScheduleButton(false)
+
+                    if (actions.addressCode == AddressCodes.DESTINATION) {
+                        KarhooAvailability.checkCoverage(actions.address) { hasCoverage ->
+                            hasDestinationCoverage = hasCoverage
+
+                            validateCoverage()
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun validateCoverage() {
+        if (journeyDetailsStateViewModel.currentState.pickup != null &&
+            journeyDetailsStateViewModel.currentState.destination != null) {
+
+            val hasCoverage = hasPickupCoverage || hasDestinationCoverage
+
+            bookingModeWidget.enableNowButton(hasCoverage)
+            bookingModeWidget.showNoCoverageText(hasCoverage)
+            bookingModeWidget.enableScheduleButton(true)
+            bookingMapWidget.updateMapViewForQuotesListVisibilityExpanded(bookingModeWidget.height)
+
+            bookingModeWidget.show(true)
+        } else {
+            bookingMapWidget.updateMapViewForQuotesListVisibilityCollapsed()
+
+            bookingModeWidget.show(false)
         }
     }
 

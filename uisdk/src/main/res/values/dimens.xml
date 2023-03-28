@@ -44,7 +44,7 @@
     <dimen name="kh_uisdk_button_register_height">48dp</dimen>
 
     <!-- height of collapsible pane -->
-    <dimen name="kh_uisdk_collapsible_panel_collapsed_height">340dp</dimen>
+    <dimen name="kh_uisdk_collapsible_panel_collapsed_height">0dp</dimen>
     <dimen name="kh_uisdk_collapsible_pane_expanded_height">420dp</dimen>
     <dimen name="kh_uisdk_collapsible_panel_collapsed_trip_contact">105dp</dimen>
     <dimen name="kh_uisdk_collapsible_panel_collapsed_trip_info">225dp</dimen>

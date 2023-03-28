@@ -61,13 +61,9 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 @Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    @AttrRes defStyleAttr: Int = 0
-                                              ) : FrameLayout(context, attrs, defStyleAttr),
-                                                  GoogleMap.OnCameraIdleListener,
-                                                  GoogleMap.OnCameraMoveStartedListener,
-                                                  BookingMapMVP.View, LifecycleObserver {
+    context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr), GoogleMap.OnCameraIdleListener,
+    GoogleMap.OnCameraMoveStartedListener, BookingMapMVP.View, LifecycleObserver {
 
     private var isDeepLink: Boolean = false
     var initialLocation: LatLng? = null
@@ -76,8 +72,9 @@ class BookingMapView @JvmOverloads constructor(
     private var presenter: BookingMapMVP.Presenter = BookingMapPresenter(
         this,
         PickupOnlyPresenter(KarhooApi.addressService),
-        PickupDropoffPresenter(), KarhooUISDK.analytics
-                                                                        )
+        PickupDropoffPresenter(),
+        KarhooUISDK.analytics
+    )
 
     private val locationProvider: LocationProvider =
         LocationProvider(context, KarhooUISDK.karhooApi.addressService)
@@ -101,26 +98,20 @@ class BookingMapView @JvmOverloads constructor(
     }
 
     private fun getCustomisationParameters(
-        context: Context,
-        attr: AttributeSet?,
-        defStyleAttr: Int
-                                          ) {
+        context: Context, attr: AttributeSet?, defStyleAttr: Int
+    ) {
         val typedArray = context.obtainStyledAttributes(
-            attr, R.styleable.BookingMapView,
-            defStyleAttr, R.style.KhBookingMapViewStyle
-                                                       )
+            attr, R.styleable.BookingMapView, defStyleAttr, R.style.KhBookingMapViewStyle
+        )
         pickupPinRes = typedArray.getResourceId(
-            R.styleable.BookingMapView_mapPickupPin, R.drawable
-                .uisdk_ic_pickup_pin
-                                               )
+            R.styleable.BookingMapView_mapPickupPin, R.drawable.uisdk_ic_pickup_pin
+        )
         dropOffPinRes = typedArray.getResourceId(
-            R.styleable.BookingMapView_mapDropOffPin, R
-                .drawable.uisdk_ic_dropoff_pin
-                                                )
+            R.styleable.BookingMapView_mapDropOffPin, R.drawable.uisdk_ic_dropoff_pin
+        )
         curvedLineColour = typedArray.getResourceId(
-            R.styleable.BookingMapView_curvedLineColor, R
-                .color.kh_uisdk_primary_blue
-                                                   )
+            R.styleable.BookingMapView_curvedLineColor, R.color.kh_uisdk_primary_blue
+        )
         typedArray.recycle()
     }
 
@@ -136,20 +127,18 @@ class BookingMapView @JvmOverloads constructor(
         zoomMapToOriginAndDestination(
             origin = Position(origin?.latitude.orZero(), origin?.longitude.orZero()),
             destination = Position(destination?.latitude.orZero(), destination?.longitude.orZero())
-                                     )
+        )
     }
 
     override fun zoomMapToOriginAndDestination(origin: Position, destination: Position?) {
         googleMap?.let {
             it.setPadding(
-                0, 0,
-                0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom)
-                         )
+                0, 0, 0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom)
+            )
             val destinationLatLng = destination?.let {
                 LatLng(
-                    destination.latitude, destination
-                        .longitude
-                      )
+                    destination.latitude, destination.longitude
+                )
             }
             zoomMapToMarkers(LatLng(origin.latitude, origin.longitude), destinationLatLng)
         }
@@ -188,7 +177,7 @@ class BookingMapView @JvmOverloads constructor(
         }
     }
 
-    private fun handleInitialLocation(){
+    private fun handleInitialLocation() {
         when {
             initialLocation != null -> {
                 zoom(initialLocation)
@@ -210,17 +199,13 @@ class BookingMapView @JvmOverloads constructor(
         if (position != null) {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(position, MAP_DEFAULT_ZOOM)
             googleMap?.animateCamera(
-                cameraUpdate,
-                resources.getInteger(R.integer.kh_uisdk_map_anim_duration),
-                null
+                cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null
             )
         } else {
             val cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                 LatLng(
-                    MAP_DEFAULT_LOCATION_LATITUDE,
-                    MAP_DEFAULT_LOCATION_LONGITUDE
-                ),
-                MAP_DEFAULT_NO_PERMISSIONS_ZOOM
+                    MAP_DEFAULT_LOCATION_LATITUDE, MAP_DEFAULT_LOCATION_LONGITUDE
+                ), MAP_DEFAULT_NO_PERMISSIONS_ZOOM
             )
             googleMap?.moveCamera(cameraUpdate)
         }
@@ -230,10 +215,8 @@ class BookingMapView @JvmOverloads constructor(
         position?.let {
             val cameraUpdate = CameraUpdateFactory.newLatLng(it)
             googleMap?.animateCamera(
-                cameraUpdate,
-                resources.getInteger(R.integer.kh_uisdk_map_anim_duration),
-                null
-                                    )
+                cameraUpdate, resources.getInteger(R.integer.kh_uisdk_map_anim_duration), null
+            )
         }
     }
 
@@ -260,23 +243,17 @@ class BookingMapView @JvmOverloads constructor(
                 googleMap.setMaxZoomPreference(BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE)
                 addPinToMap(destination, dropOffPinRes, R.string.kh_uisdk_address_drop_off)
                 googleMap.showShadowedPolyLine(
-                    origin,
-                    destination,
-                    ContextCompat.getColor(
-                        context,
-                        R.color.kh_uisdk_transparent_black_map
-                                          )
-                                              )
+                    origin, destination, ContextCompat.getColor(
+                        context, R.color.kh_uisdk_transparent_black_map
+                    )
+                )
                 googleMap.showCurvedPolyline(
-                    origin,
-                    destination,
-                    ContextCompat.getColor(context, curvedLineColour)
-                                            )
+                    origin, destination, ContextCompat.getColor(context, curvedLineColour)
+                )
 
-            }
-                ?: googleMap.setMaxZoomPreference(
-                    BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT
-                                                 )
+            } ?: googleMap.setMaxZoomPreference(
+                BOOKING_MAP_PICKUP_MARKER_MAX_ZOOM_PREFERENCE_DEFAULT
+            )
             pickupPinIcon.visibility = View.GONE
             zoomMapToMarkers(origin, destination)
 
@@ -289,11 +266,8 @@ class BookingMapView @JvmOverloads constructor(
         if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
             MapUtil.bitmapDescriptorFromVector(context, markerIcon)?.let {
                 val marker = googleMap?.addMarker(
-                    MarkerOptions()
-                        .draggable(false)
-                        .icon(it)
-                        .position(latLng)
-                                                 )
+                    MarkerOptions().draggable(false).icon(it).position(latLng)
+                )
                 marker?.title = context.getString(title)
             }
         }
@@ -337,7 +311,7 @@ class BookingMapView @JvmOverloads constructor(
         journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
         shouldReverseGeolocate: Boolean = true,
         isDeepLink: Boolean = false
-                ) {
+    ) {
         this.isDeepLink = isDeepLink
         this.shouldReverseGeolocate = if (isLocateMeEnabled) shouldReverseGeolocate else false
         bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
@@ -384,9 +358,10 @@ class BookingMapView @JvmOverloads constructor(
                         }
                         try {
                             journeyDetailsStateViewModel?.process(
-                                AddressBarViewContract.AddressBarEvent
-                                    .PickUpAddressEvent(locationInfo)
-                                                                )
+                                AddressBarViewContract.AddressBarEvent.PickUpAddressEvent(
+                                        locationInfo
+                                    )
+                            )
 
                         } catch (exception: NoObserverAttachedException) {
                             // seems the callback fired after viewModel no longer has observers
@@ -406,14 +381,13 @@ class BookingMapView @JvmOverloads constructor(
                             priority = SnackbarPriority.HIGH,
                             action = snackbarAction,
                             text = resources.getString(R.string.kh_uisdk_location_disabled)
-                                      )
-                                )
+                        )
+                    )
                 }
 
                 override fun onLocationInfoUnavailable(
-                    errorMessage: String,
-                    karhooError: KarhooError?
-                                                      ) {
+                    errorMessage: String, karhooError: KarhooError?
+                ) {
                     showSnackbar(SnackbarConfig(text = errorMessage, karhooError = karhooError))
                 }
 
@@ -439,9 +413,8 @@ class BookingMapView @JvmOverloads constructor(
     //endregion
 
     private fun bindViewToJourneyDetails(
-        lifecycleOwner: LifecycleOwner,
-        journeyDetailsStateViewModel: JourneyDetailsStateViewModel
-                                       ) {
+        lifecycleOwner: LifecycleOwner, journeyDetailsStateViewModel: JourneyDetailsStateViewModel
+    ) {
         presenter.watchJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         this.journeyDetailsStateViewModel = journeyDetailsStateViewModel
     }
@@ -473,41 +446,22 @@ class BookingMapView @JvmOverloads constructor(
 
     //region Map Padding
 
-    fun setNoBottomPadding() {
-        googleMap?.setPadding(0, 0, 0, 0)
-        recentreMapIfDestinationIsNull()
-        showLocationButton(true)
-
-        animateLocateMeButton(
-            R.dimen.kh_uisdk_spacing_small,
-            R.integer.kh_uisdk_animation_duration_slide_out_or_in_quotes
-                             )
-    }
-
-    fun setDefaultPadding() {
-        googleMap?.setPadding(
-            0, 0,
-            0, resources.getDimensionPixelSize(R.dimen.kh_uisdk_map_padding_bottom)
-                             )
-
-        showLocationButton(false)
-    }
-
-    private fun animateLocateMeButton(bottomMarginRes: Int, durationRes: Int) {
+    private fun animateLocateMeButton(bottomMargin: Int, durationRes: Int) {
 
         val constraintSet = ConstraintSet()
         constraintSet.clone(bookingMapLayout)
         constraintSet.setMargin(
-            R.id.locateMeButton, ConstraintSet.BOTTOM, resources
-                .getDimension(bottomMarginRes).toInt()
-                               )
+            R.id.locateMeButton,
+            ConstraintSet.BOTTOM,
+            bottomMargin
+        )
         constraintSet.applyTo(bookingMapLayout)
 
         val transition = AutoTransition()
         transition.duration = resources.getInteger(durationRes).toLong()
         TransitionManager.beginDelayedTransition(
             bookingMapLayout, transition
-                                                )
+        )
     }
 
     //endregion
@@ -553,16 +507,24 @@ class BookingMapView @JvmOverloads constructor(
 
     override fun updateMapViewForQuotesListVisibilityCollapsed() {
         animateLocateMeButton(
-            R.dimen.kh_uisdk_quote_list_height,
-            R.integer.kh_uisdk_animation_duration_slide_out_or_in
-                             )
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                MAP_DEFAULT_ZOOM,
+                resources.displayMetrics
+            ).toInt(),
+            R.integer.kh_uisdk_animation_duration_shared_element
+        )
     }
 
-    override fun updateMapViewForQuotesListVisibilityExpanded() {
+    override fun updateMapViewForQuotesListVisibilityExpanded(bottomMargin: Int) {
         animateLocateMeButton(
-            R.dimen.kh_uisdk_collapsible_pane_expanded_height,
-            R.integer.kh_uisdk_animation_duration_slide_out_or_in
-                             )
+            bottomMargin + TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                MAP_DEFAULT_ZOOM,
+                resources.displayMetrics
+            ).toInt(),
+            R.integer.kh_uisdk_animation_duration_shared_element
+        )
     }
 
     companion object {
