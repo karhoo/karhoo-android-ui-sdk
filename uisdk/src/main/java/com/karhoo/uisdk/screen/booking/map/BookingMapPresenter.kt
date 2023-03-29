@@ -47,7 +47,7 @@ internal class BookingMapPresenter(view: BookingMapMVP.View, private val pickupO
             } else if (currentJourneyDetails?.pickup != null && currentJourneyDetails?.destination == null) {
                 if (mainPresenter !== pickupOnlyPresenter) {
                     mainPresenter = pickupOnlyPresenter
-                    setPickupLocation(currentJourneyDetails?.pickup)
+//                    setPickupLocation(currentJourneyDetails?.pickup)
                 }
                 moveToMarker(currentJourneyDetails?.pickup, currentJourneyDetails?.destination)
             } else if (!mapMoving && currentJourneyDetails?.pickup == null) {

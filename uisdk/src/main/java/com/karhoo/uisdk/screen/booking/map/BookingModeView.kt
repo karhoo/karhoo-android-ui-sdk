@@ -2,14 +2,18 @@ package com.karhoo.uisdk.screen.booking.map
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import kotlinx.android.synthetic.main.uisdk_view_booking_mode.view.*
+import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.*
 import org.joda.time.DateTime
 
 class BookingModeView @JvmOverloads constructor(
@@ -22,6 +26,7 @@ class BookingModeView @JvmOverloads constructor(
         TimeDatePickerPresenter(this, KarhooUISDK.analytics)
 
     var callbackToStartQuoteList: ((isPrebook: Boolean) -> Unit)? = null
+    private var animating: Boolean = false
 
     init {
         inflate(context, R.layout.uisdk_view_booking_mode, this)
@@ -58,6 +63,55 @@ class BookingModeView @JvmOverloads constructor(
 
     override fun hideDateViews() {
         // no need to hide anything
+    }
+
+    override fun show(show: Boolean, cb: (() -> Unit)?) {
+        if(visibility == VISIBLE && show) {
+            return
+        }
+
+        if(visibility == INVISIBLE && !show) {
+            return
+        }
+
+        if(!animating) {
+            animating = true
+        }
+
+        if (show) {
+            this@BookingModeView.visibility = VISIBLE
+
+            val slideUpAnimation =
+                AnimationUtils
+                    .loadAnimation(context, R.anim.kh_slide_up)
+                    .apply {
+                        setAnimationListener(object : SimpleAnimationListener() {
+                            override fun onAnimationEnd(animation: Animation) {
+                                this@BookingModeView.visibility = VISIBLE
+
+                                animating = false
+
+                                cb?.invoke()
+                            }
+                        })
+                    }
+            this.startAnimation(slideUpAnimation)
+        } else {
+            val slideDownAnimation =
+                AnimationUtils
+                    .loadAnimation(context, R.anim.kh_slide_down)
+                    .apply {
+                        setAnimationListener(object : SimpleAnimationListener() {
+                            override fun onAnimationEnd(animation: Animation) {
+                                this@BookingModeView.visibility = INVISIBLE
+
+                                animating = false
+                                cb?.invoke()
+                            }
+                        })
+                    }
+            this.startAnimation(slideDownAnimation)
+        }
     }
 
     fun watchJourneyDetailsState(

@@ -7,6 +7,7 @@ import com.braintreepayments.api.DropInRequest
 import com.braintreepayments.api.ThreeDSecureRequest
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
 import com.karhoo.uisdk.util.extension.isGuest
 import java.util.Locale
@@ -22,8 +23,9 @@ class BraintreePaymentView : PaymentDropInContract.View {
 
     override fun handleThreeDSecure(context: Context, sdkToken: String, nonce: String, amount: String) {
         actions?.showLoadingButton(true)
+        val isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
-        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, true) as
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, !isGuest) as
                 DropInRequest
         val threeDSecureRequest = ThreeDSecureRequest().apply {
             this.nonce = nonce
@@ -58,8 +60,8 @@ class BraintreePaymentView : PaymentDropInContract.View {
 
     override fun showPaymentDropInUI(context: Context, sdkToken: String, paymentData: String?, quote: Quote?) {
         actions?.showLoadingButton(true)
-
-        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, false) as
+    val isGuest = KarhooUISDKConfigurationProvider.isGuest()
+        val dropInRequest: DropInRequest = presenter?.getDropInConfig(context, sdkToken, !isGuest) as
                 DropInRequest
         val threeDSecureRequest = ThreeDSecureRequest().apply {
             this.amount = presenter?.quotePriceToAmount(quote)

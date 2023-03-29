@@ -43,8 +43,6 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var loadingProgressBar: View
-    private var braintreePaymentManager: BraintreePaymentManager = BraintreePaymentManager()
-    private var adyenPaymentManager: AdyenPaymentManager = AdyenPaymentManager()
     private lateinit var sharedPrefs: SharedPreferences
     private val notificationsId = "notifications_enabled"
     val darkModeId = "darkMode_enabled"
@@ -74,8 +72,6 @@ class MainActivity : AppCompatActivity() {
         KarhooApi.userService.logout()
 
         KarhooApi.paymentsService.getAdyenClientKey()
-        adyenPaymentManager.paymentProviderView = AdyenPaymentView()
-        braintreePaymentManager.paymentProviderView = BraintreePaymentView()
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
@@ -83,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             showLoading()
 
             applyBraintreeGuestConfig()
+            KarhooApi.userService.logout()
 
             goToBooking()
         }
@@ -121,7 +118,8 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
-            config.paymentManager = braintreePaymentManager
+            config.paymentManager = createBraintreeManager()
+
             config.sdkAuthenticationRequired = { callback ->
                 Log.e(TAG, "Need an external authentication")
 
@@ -189,9 +187,20 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    private fun createBraintreeManager(): BraintreePaymentManager{
+        return BraintreePaymentManager().apply {
+            this.paymentProviderView = BraintreePaymentView()
+        }
+    }
+
+    private fun createAdyenManager(): AdyenPaymentManager{
+        return AdyenPaymentManager().apply {
+            this.paymentProviderView = AdyenPaymentView()
+        }
+    }
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
-        config.paymentManager = braintreePaymentManager
+        config.paymentManager = createBraintreeManager()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BRAINTREE_AUTH_TOKEN)
         }
@@ -203,8 +212,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeGuestConfig() {
         val config = BraintreeGuestConfig(applicationContext)
-        config.paymentManager = braintreePaymentManager
-
+        config.paymentManager = createBraintreeManager()
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -212,7 +220,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
-        config.paymentManager = adyenPaymentManager
+        config.paymentManager = createAdyenManager()
+        KarhooApi.userService.logout()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, ADYEN_AUTH_TOKEN)
         }
@@ -225,7 +234,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
-        config.paymentManager = adyenPaymentManager
+        config.paymentManager = createAdyenManager()
+        KarhooApi.userService.logout()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
         }
@@ -270,7 +280,8 @@ class MainActivity : AppCompatActivity() {
             applicationContext
         )
 
-        config.paymentManager = adyenPaymentManager
+        config.paymentManager = createAdyenManager()
+        KarhooApi.userService.logout()
         KarhooUISDK.apply {
             setConfiguration(config)
         }

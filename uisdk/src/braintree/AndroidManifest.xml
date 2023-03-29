@@ -3,7 +3,7 @@
     <application>
         <activity
             android:name="com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentActivity"
-            android:exported="false"
+            android:exported="true"
             android:theme="@style/Theme.Transparent"
             />
     </application>
