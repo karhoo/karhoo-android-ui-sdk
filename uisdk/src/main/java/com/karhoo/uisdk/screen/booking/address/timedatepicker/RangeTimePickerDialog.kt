@@ -15,10 +15,10 @@ class RangeTimePickerDialog(
     is24HourView: Boolean
 ) :
     TimePickerDialog(context, themeResId, callBack, currentHour, currentMinute, is24HourView) {
-    private var minHour = -1
-    private var minMinute = -1
-    private var maxHour = 25
-    private var maxMinute = 25
+    private var minHour = DEFAULT_MIN_HOUR
+    private var minMinute = DEFAULT_MIN_HOUR
+    private var maxHour = DEFAULT_MAX_HOUR
+    private var maxMinute = DEFAULT_MAX_HOUR
     private val calendar = Calendar.getInstance()
     private val dateFormat: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT)
 
@@ -65,5 +65,10 @@ class RangeTimePickerDialog(
         calendar[Calendar.MINUTE] = minute
         val title = dateFormat.format(calendar.time)
         setTitle(title)
+    }
+
+    private companion object {
+        private const val DEFAULT_MIN_HOUR = -1
+        private const val DEFAULT_MAX_HOUR = 25
     }
 }
