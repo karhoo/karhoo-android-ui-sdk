@@ -8,39 +8,20 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/legalNoticeLabelContainer"
+    <TextView
+        android:id="@+id/legalNoticeLabel"
+        style="@style/KhLegalNoticeLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
-
-        <TextView
-            android:id="@+id/legalNoticeLabel"
-            style="@style/KhLegalNoticeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|end"
-            android:text="@string/kh_uisdk_legal_notice_label" />
-
-        <ImageView
-            android:id="@+id/legalNoticeIcon"
-            style="@style/KhLegalNoticeIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/legalNoticeLabel"
-            android:layout_alignTop="@+id/legalNoticeLabel"
-            android:layout_alignBottom="@+id/legalNoticeLabel"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/kh_uisdk_spacing_xxxsmall"
-            android:paddingTop="@dimen/kh_uisdk_spacing_xxxsmall" />
-    </RelativeLayout>
+        android:gravity="center_vertical|end"
+        android:text="@string/kh_uisdk_legal_notice_label" />
 
     <TextView
         android:id="@+id/legalNoticeText"
         style="@style/KhBookingLegalNoticeText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/legalNoticeLabelContainer"
+        android:layout_below="@+id/legalNoticeLabel"
         android:layout_marginTop="@dimen/kh_uisdk_margin_small"
         android:linksClickable="true" />
 </RelativeLayout>
