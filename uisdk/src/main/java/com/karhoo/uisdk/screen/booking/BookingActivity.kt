@@ -375,11 +375,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                         data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
                     tripInfo?.let {
-                        ContextCompat.startActivity(
-                            this,
-                            RideDetailActivity.Builder.newBuilder().trip(tripInfo).build(this),
-                            null
-                        )
+                        ContextCompat.startActivity(this, RideDetailActivity.Builder.newBuilder().trip(tripInfo).build(this), null)
                     }
                 } else {
                     waitForTripAllocation()
@@ -388,19 +384,12 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             }
             resultCode == RESULT_OK -> {
                 when (requestCode) {
-                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(
-                        requestCode,
-                        resultCode,
-                        data
-                    )
-                    AddressCodes.DESTINATION -> {
-                        addressBarWidget.onActivityResult(requestCode, resultCode, data)
-                    }
+                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                    AddressCodes.DESTINATION -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
             resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
                 parseDataFromIntent(data)
-
                 startCheckoutActivity(data)
             }
             resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
