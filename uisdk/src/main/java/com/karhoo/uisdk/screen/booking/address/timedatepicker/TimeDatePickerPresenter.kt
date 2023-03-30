@@ -112,7 +112,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
     fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
-            val dialog = TimePickerDialog(it.getContext(),
+            val dialog = RangeTimePickerDialog(it.getContext(),
                 R.style.DialogTheme,
                 this,
                 previousSelectedDate?.hourOfDay ?: hour,
@@ -120,6 +120,8 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                 DateFormat.is24HourFormat(it.getContext()))
             if(!forUnitTests)
                 dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
+
+            dialog.setMin(nowPlusOneHour.hourOfDay, nowPlusOneHour.minuteOfHour)
             dialog.show()
         }
     }
@@ -223,7 +225,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         const val OURS_IN_DAY = 24
         const val OURS_IN_DAY_MINUS_ONE = OURS_IN_DAY - 1
         const val TIMEZONE_DEFAULT_EUROPE = "Europe/Paris"
-        const val HOURS_TO_BE_ADDED = 2
+        const val HOURS_TO_BE_ADDED = 1
     }
 
 }
