@@ -302,7 +302,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                 }
 
                 is AddressBarViewContract.AddressBarActions.AddressChanged -> {
-                    if(actions.address == null) {
+                    if (actions.address == null) {
                         validateCoverage()
                         return@Observer
                     }
@@ -329,7 +329,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
 
     private fun validateCoverage() {
         if (journeyDetailsStateViewModel.currentState.pickup != null &&
-            journeyDetailsStateViewModel.currentState.destination != null) {
+            journeyDetailsStateViewModel.currentState.destination != null
+        ) {
 
             val hasCoverage = hasPickupCoverage || hasDestinationCoverage
 
@@ -370,7 +371,8 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
                     journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
-                    val tripInfo = data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
+                    val tripInfo =
+                        data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
                     tripInfo?.let {
                         ContextCompat.startActivity(
@@ -379,14 +381,18 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                             null
                         )
                     }
-                }  else {
+                } else {
                     waitForTripAllocation()
                     tripAllocationWidget.onActivityResult(requestCode, resultCode, data)
                 }
             }
             resultCode == RESULT_OK -> {
                 when (requestCode) {
-                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
+                    AddressCodes.PICKUP -> addressBarWidget.onActivityResult(
+                        requestCode,
+                        resultCode,
+                        data
+                    )
                     AddressCodes.DESTINATION -> {
                         addressBarWidget.onActivityResult(requestCode, resultCode, data)
                     }
@@ -400,12 +406,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED || resultCode == CheckoutActivity.BOOKING_CHECKOUT_EXPIRED -> {
                 startQuoteListActivity(
                     restorePreviousData = resultCode == CheckoutActivity.BOOKING_CHECKOUT_CANCELLED,
-                    validityTimestamp = data?.getLongExtra(QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0),
+                    validityTimestamp = data?.getLongExtra(
+                        QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP,
+                        0
+                    ),
                     restoredJourneyData = extractJourneyDetails(data)
                 )
             }
             resultCode == QUOTES_CANCELLED -> {
-                val journeyDetails = data?.getParcelableExtra(Builder.EXTRA_JOURNEY_INFO) as JourneyDetails?
+                val journeyDetails =
+                    data?.getParcelableExtra(Builder.EXTRA_JOURNEY_INFO) as JourneyDetails?
                 journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
                         .PrebookBookingEvent(
@@ -590,16 +600,6 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
         }
 
         /**
-         * By passing journey info into the Booking activity it will automatically prefill the origin
-         * destination and date of the desired trip. This will only use the details available inside
-         * the [JourneyInfo] object.
-         */
-        fun journeyInfo(journeyInfo: JourneyInfo): Builder {
-            extrasBundle.putParcelable(EXTRA_JOURNEY_INFO, journeyInfo)
-            return this
-        }
-
-        /**
          * By passing passenger details into the Booking activity it will automatically prefill the
          * passenger details of the desired trip. This will only use the details available inside
          * the [PassengerDetails] object.
@@ -635,6 +635,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             initialLocation?.let {
                 extrasBundle.putParcelable(EXTRA_INITIAL_LOCATION, it)
             }
+            return this
+        }
+
+        /**
+         * By passing journey info into the Booking activity it will automatically prefill the origin
+         * destination and date of the desired trip. This will only use the details available inside
+         * the [JourneyInfo] object.
+         */
+        fun journeyInfo(journeyInfo: JourneyInfo): Builder {
+            extrasBundle.putParcelable(EXTRA_JOURNEY_INFO, journeyInfo)
             return this
         }
 
