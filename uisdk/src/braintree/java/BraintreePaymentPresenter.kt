@@ -76,25 +76,7 @@ class BraintreePaymentPresenter(
 
     private fun getNonce(braintreeSDKToken: String, amount: String) {
         this.braintreeSDKToken = braintreeSDKToken
-        val user = userStore.currentUser
-        val nonceRequest = NonceRequest(
-            payer = Payer(
-                id = user.userId,
-                email = user.email,
-                firstName = user.firstName,
-                lastName = user.lastName
-            ),
-            organisationId = user.organisations.first().id
-        )
-        paymentsService.getNonce(nonceRequest).execute { result ->
-            when (result) {
-                is Resource.Success -> passBackThreeDSecureNonce(result.data.nonce, amount)
-                is Resource.Failure -> {
-                    logPaymentFailureEvent(result.error.internalMessage, quoteId = quote?.id)
-                    view?.showPaymentFailureDialog(result.error)
-                }
-            }
-        }
+        passBackThreeDSecureNonce("", amount)
     }
 
     override fun getPaymentNonce(quote: Quote?) {
@@ -140,6 +122,9 @@ class BraintreePaymentPresenter(
                 view?.showError(R.string.kh_uisdk_something_went_wrong, exception)
                 view?.showLoadingButton(false)
                 logPaymentFailureEvent(exception.internalMessage, quoteId = quote?.id)
+            }
+            else if (data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT_USER_CANCELLED_ERROR)) {
+                view?.showLoadingButton(false)
             }
         }
         return true
