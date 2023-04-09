@@ -251,8 +251,8 @@ class CheckoutViewPresenterTests {
 
     /**
      * Given:   The checkout is visible and CheckBox Terms&Conditions Required
-     * When:    The passenger details and payment is valid but checkbox is checked
-     * Then:    The button should be in book state
+     * When:    The passenger details and payment is valid and checkbox is checked
+     * Then:    The button should be in pay state
      */
     @Test
     fun `passenger details valid and checkbox is checked`() {
@@ -261,7 +261,7 @@ class CheckoutViewPresenterTests {
             isTermsCheckBoxValid = true
         )
 
-        assertEquals(returnValue, BookButtonState.NEXT)
+        assertEquals(returnValue, BookButtonState.PAY)
     }
 
     /**
