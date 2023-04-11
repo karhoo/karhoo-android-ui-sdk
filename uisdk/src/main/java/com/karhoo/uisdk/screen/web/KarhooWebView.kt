@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -33,6 +34,14 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
     init {
         View.inflate(context, R.layout.uisdk_view_web, this)
 
+        (context as AppCompatActivity).setSupportActionBar(khWebViewToolbar)
+        khWebViewToolbar.setNavigationOnClickListener {
+            (context as AppCompatActivity).onBackPressed()
+        }
+        (context as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (context as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        (context as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
+
         if (!isInEditMode) {
             webView.apply {
                 settings.apply {
@@ -46,7 +55,6 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
                 isDrawingCacheEnabled = true
                 webViewClient = KarhooWebViewClient()
             }
-            khWebViewToolbar.setNavigationOnClickListener { hide() }
         }
     }
 
