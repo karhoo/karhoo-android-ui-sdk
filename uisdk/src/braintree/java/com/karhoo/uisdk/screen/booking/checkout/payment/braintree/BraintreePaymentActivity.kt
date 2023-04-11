@@ -54,10 +54,10 @@ class BraintreePaymentActivity : BaseActivity(), DropInListener {
     override fun onDropInFailure(error: Exception) {
         finishActivity(if (isGuest()) BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST else BraintreePaymentView.REQ_CODE_BRAINTREE)
         setResult(RESULT_OK, Intent().apply {
-            if(error !is UserCanceledException)
-                putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
-            else
+            if(error is UserCanceledException)
                 putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_USER_CANCELLED_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
+            else
+                putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
         })
         finish()
     }
