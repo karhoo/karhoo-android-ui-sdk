@@ -6,15 +6,16 @@
     android:background="@color/kh_uisdk_greyish_white"
     android:orientation="vertical">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/khWebViewToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/kh_uisdk_secondary"
-        android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:popupTheme="@style/ThemeOverlay.AppCompat"
-        app:theme="@style/AppTheme.Toolbar" />
+        app:contentInsetLeft="@dimen/kh_uisdk_spacing_xlarge"
+        app:contentInsetStart="@dimen/kh_uisdk_spacing_xlarge"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/AppTheme.Toolbar"/>
 
     <FrameLayout
         android:layout_width="match_parent"
