@@ -7,6 +7,7 @@ import com.braintreepayments.api.DropInClient
 import com.braintreepayments.api.DropInListener
 import com.braintreepayments.api.DropInRequest
 import com.braintreepayments.api.DropInResult
+import com.braintreepayments.api.UserCanceledException
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
@@ -53,7 +54,10 @@ class BraintreePaymentActivity : BaseActivity(), DropInListener {
     override fun onDropInFailure(error: Exception) {
         finishActivity(if (isGuest()) BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST else BraintreePaymentView.REQ_CODE_BRAINTREE)
         setResult(RESULT_OK, Intent().apply {
-            putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
+            if(error is UserCanceledException)
+                putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_USER_CANCELLED_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
+            else
+                putExtra(BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR, KarhooError.fromCustomError("", error.message!!, error.localizedMessage!!))
         })
         finish()
     }
@@ -85,5 +89,6 @@ class BraintreePaymentActivity : BaseActivity(), DropInListener {
         const val BRAINTREE_ACTIVITY_DROP_IN_REQUEST = "BRAINTREE_ACTIVITY_DROP_IN_REQUEST"
         const val BRAINTREE_ACTIVITY_DROP_IN_RESULT = "BRAINTREE_ACTIVITY_DROP_IN_RESULT"
         const val BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR = "BRAINTREE_ACTIVITY_DROP_IN_RESULT_ERROR"
+        const val BRAINTREE_ACTIVITY_DROP_IN_RESULT_USER_CANCELLED_ERROR = "BRAINTREE_ACTIVITY_DROP_IN_RESULT_USER_CANCELLED_ERROR"
     }
 }

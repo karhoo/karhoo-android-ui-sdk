@@ -25,7 +25,6 @@ import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.UnitTestUISDKConfig
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentDropInContract
-import com.karhoo.uisdk.util.DEFAULT_CURRENCY
 import com.nhaarman.mockitokotlin2.*
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -51,8 +50,6 @@ class BraintreePaymentPresenterTest {
     private var quote: Quote = mock()
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
-    private val getNonceCall: Call<PaymentsNonce> = mock()
-    private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
 
     @Captor
     private lateinit var paymentInfoCaptor: ArgumentCaptor<SavedPaymentInfo>
@@ -69,8 +66,6 @@ class BraintreePaymentPresenterTest {
         whenever(paymentsService.initialisePaymentSDK(any()))
                 .thenReturn(sdkInitCall)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
-
-        doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
 
         whenever(userStore.currentUser).thenReturn(userDetails)
         whenever(quote.price).thenReturn(price)
@@ -263,31 +258,6 @@ class BraintreePaymentPresenterTest {
      * Given:   Book trip flow is initiated
      * And:     The user is logged in
      * When:    SDK Init returns success
-     * And:     Get Nonce returns failure
-     * Then:    Show payment dialog
-     */
-    @Test
-    fun `logged in user get nonce failure shows payment dialog`() {
-        setAuthenticatedUser()
-        UnitTestUISDKConfig.setKarhooAuthentication(context)
-        val price = QuotePrice(currencyCode = DEFAULT_CURRENCY, highPrice =
-        EXPECTED_AMOUNT_AS_STRING.toInt())
-        whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
-        whenever(quote.price).thenReturn(price)
-
-        braintreePaymentPresenter.getPaymentNonce(quote)
-
-        sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
-        getNonceCaptor.firstValue.invoke(Resource.Failure(KarhooError.GeneralRequestError))
-
-        verify(paymentView).showPaymentFailureDialog(KarhooError.GeneralRequestError)
-    }
-
-    /**
-     * Given:   Book trip flow is initiated
-     * And:     The user is logged in
-     * When:    SDK Init returns success
      * And:     Get nonce returns success
      * Then:    Three D Secure the nonce
      */
@@ -296,14 +266,12 @@ class BraintreePaymentPresenterTest {
         setAuthenticatedUser()
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
 
         braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
-        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
 
-        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, paymentsNonce.nonce, "1.00")
+        verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN, "", "1.00")
     }
 
     /**
@@ -320,12 +288,10 @@ class BraintreePaymentPresenterTest {
                                                                                        authenticationMethod = AuthenticationMethod.KarhooUser(), handleBraintree = true))
 
         whenever(paymentsService.initialisePaymentSDK(any())).thenReturn(sdkInitCall)
-        whenever(paymentsService.getNonce(any())).thenReturn(getNonceCall)
 
         braintreePaymentPresenter.getPaymentNonce(quote)
 
         sdkInitCaptor.firstValue.invoke(Resource.Success(BraintreeSDKToken(BRAINTREE_SDK_TOKEN)))
-        getNonceCaptor.firstValue.invoke(Resource.Success(PaymentsNonce(paymentsNonce.nonce, CardType.VISA)))
 
         verify(paymentView).threeDSecureNonce(BRAINTREE_SDK_TOKEN)
     }
