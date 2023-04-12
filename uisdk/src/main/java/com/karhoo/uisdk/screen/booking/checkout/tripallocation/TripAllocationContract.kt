@@ -1,6 +1,5 @@
 package com.karhoo.uisdk.screen.booking.checkout.tripallocation
 
-import android.content.Intent
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 
