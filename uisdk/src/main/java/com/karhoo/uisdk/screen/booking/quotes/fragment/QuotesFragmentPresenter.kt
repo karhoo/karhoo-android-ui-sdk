@@ -51,7 +51,9 @@ internal class QuotesFragmentPresenter(view: QuotesFragmentContract.View, privat
 
     override fun sortMethodChanged(sortMethod: SortMethod) {
         view?.setSortMethod(sortMethod)
-        updateList()
+        dataModel?.quotes?.let { quotes ->
+            view?.updateListForSorting(quotes)
+        }
     }
 
     private fun updateList() {

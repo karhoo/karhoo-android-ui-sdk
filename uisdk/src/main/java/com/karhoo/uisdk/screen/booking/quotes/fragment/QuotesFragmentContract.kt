@@ -20,6 +20,8 @@ interface QuotesFragmentContract {
 
         fun updateList(quoteList: List<Quote>)
 
+        fun updateListForSorting(quoteList: List<Quote>)
+
         fun setSortMethod(sortMethod: SortMethod)
 
         fun prebook(isPrebook: Boolean)
