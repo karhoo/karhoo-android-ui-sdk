@@ -502,9 +502,9 @@ internal class CheckoutView @JvmOverloads constructor(
             )
         }
 
-        if (arePassengerDetailsValid()) {
-            bookingCheckoutPassengerView.setTitle(passengerDetails?.firstName + " " + passengerDetails?.lastName)
-            bookingCheckoutPassengerView.setSubtitle(passengerDetails?.phoneNumber.toString())
+        if (arePassengerDetailsValid() && passengerDetails != null) {
+            bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
+            bookingCheckoutPassengerView.setSubtitle(passengerDetails.phoneNumber.toString())
         } else {
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
