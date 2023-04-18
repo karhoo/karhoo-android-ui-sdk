@@ -26,6 +26,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.util.EventLogger
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -70,6 +71,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
             networkReceiver = NetworkReceiver(this)
             registerReceiver(networkReceiver, networkReceiver?.intentFilter)
         }
+        EventLogger.startTimer()
     }
 
     override fun onPause() {
@@ -78,6 +80,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
             unregisterReceiver(networkReceiver)
             networkReceiver = null
         }
+        EventLogger.stopTimer()
     }
 
     override fun onBackPressed() {
