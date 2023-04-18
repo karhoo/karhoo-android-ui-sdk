@@ -279,6 +279,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         nrOfResults.postValue(quoteList.size)
     }
 
+    override fun updateListForSorting(quoteList: List<Quote>) {
+        quotesRecyclerView.updateList(quoteList, true)
+    }
+
     override fun setListVisibility(pickup: LocationInfo?, destination: LocationInfo?) {
         quotesRecyclerView.setListVisibility(pickup != null && destination != null)
     }
