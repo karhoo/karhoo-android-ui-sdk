@@ -66,6 +66,10 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
                                                   email = email, phoneNumber = mobilePhoneNumber)
     }
 
+    override fun removePassengerDetails() {
+        passengerDetails = null
+    }
+
     override fun getCountryCode(context: Context): String {
         val phoneNumberWithoutCountryCode = removeCountryCodeFromPhoneNumber(passengerDetails?.phoneNumber, context.resources)
         val storedPhoneNumber = removeCountryCodeFromPhoneNumber(view?.retrievePassengerFromSharedPrefs()?.phoneNumber, context.resources)
@@ -136,6 +140,11 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
             layout.isErrorEnabled = false
             layout.error = null
         }
+    }
+
+    override fun resetFieldValidation(layout: TextInputLayout) {
+        layout.isErrorEnabled = false
+        layout.error = null
     }
 
     override fun setCountryCode(countryCode: String) {

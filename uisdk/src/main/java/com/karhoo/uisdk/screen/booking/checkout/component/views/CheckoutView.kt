@@ -770,6 +770,20 @@ internal class CheckoutView @JvmOverloads constructor(
         )
     }
 
+    override fun clearPassengerDetails() {
+        val countryCode = getDefaultCountryCode(context)
+        passengersDetailLayout.setCountryFlag(
+            countryCode,
+            getDefaultCountryDialingCode(countryCode),
+            false
+        )
+        passengersDetailLayout.clearPassengerDetails()
+    }
+
+    override fun forceValidation() {
+        passengersDetailLayout.forceValidation()
+    }
+
     companion object {
         private const val CUSTOM_ERROR_PREFIX = "KSDK00 "
         private const val DATE_FORMAT = "EEEE, dd MMMM yyyy"

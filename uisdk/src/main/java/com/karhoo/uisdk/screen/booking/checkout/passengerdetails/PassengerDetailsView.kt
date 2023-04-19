@@ -275,6 +275,24 @@ class PassengerDetailsView @JvmOverloads constructor(
         }
     }
 
+    override fun clearPassengerDetails() {
+        firstNameInput.setText("")
+        lastNameInput.setText("")
+        emailInput.setText("")
+        mobileNumberInput.setText("")
+
+        presenter.resetFieldValidation(firstNameLayout)
+        presenter.resetFieldValidation(lastNameLayout)
+        presenter.resetFieldValidation(emailLayout)
+        presenter.resetFieldValidation(mobileNumberLayout)
+
+        presenter.removePassengerDetails()
+    }
+
+    override fun forceValidation() {
+        validateAll()
+    }
+
 
     companion object {
         private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
