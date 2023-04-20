@@ -209,9 +209,10 @@ internal class CheckoutFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putParcelable(
             PASSENGER_DETAILS,
-            if (presenter.passengerDetails != null) presenter.passengerDetails else checkoutView.getPassengerDetails()
+            presenter.passengerDetails
         )
         outState.putParcelable(SAVED_PAYMENT_INFO, KarhooApi.userStore.savedPaymentInfo)
+        outState.putBoolean(PASSENGER_DETAILS_VISIBLE, checkoutView.isPassengerDetailsViewVisible())
         checkoutView.onPause()
     }
 
@@ -222,6 +223,10 @@ internal class CheckoutFragment : Fragment() {
                 val passDetails = it[PASSENGER_DETAILS] as PassengerDetails
                 checkoutView.bindPassenger(passDetails)
             }
+            if(it.getBoolean(PASSENGER_DETAILS_VISIBLE)){
+               checkoutView.showPassengerDetailsLayout(show = true)
+            }
+
 //            if(it[SAVED_PAYMENT_INFO] != null){
 //                val paymentInfo = it[SAVED_PAYMENT_INFO] as SavedPaymentInfo?
 //                KarhooApi.userStore.savedPaymentInfo = paymentInfo
@@ -303,6 +308,7 @@ internal class CheckoutFragment : Fragment() {
     companion object {
         private const val PASSENGER_DETAILS = "PASSENGER_DETAILS"
         private const val SAVED_PAYMENT_INFO = "SAVED_PAYMENT_INFO"
+        private const val PASSENGER_DETAILS_VISIBLE = "PASSENGER_DETAILS_VISIBLE"
 
         fun newInstance(arguments: Bundle): CheckoutFragment {
             val fragment = CheckoutFragment()
