@@ -107,7 +107,7 @@
     <string name="kh_uisdk_alternative">WYBIERZ INNĄ OFERTĘ</string>
     <string name="kh_uisdk_arrival">Miejsce spotkania</string>
     <string name="kh_uisdk_arrived">Twój kierowca %s jest na miejscu</string>
-    <string name="kh_uisdk_asap_no_coverage_warning">Rezerwacje ASAP nie są dostępne pod adresem odbioru.</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Rezerwacje ASAP nie są dostępne dla wybranych adresów</string>
     <string name="kh_uisdk_back">Wróć</string>
     <string name="kh_uisdk_baggage_max">Maksymalna liczba sztuk bagażu: %d</string>
     <string name="kh_uisdk_base">Opłata podstawowa</string>
@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Kierowca będzie czekał na Ciebie nawet jeśli lot będzie opóźniony.</string>
     <string name="kh_uisdk_checkout_airport_title">Dodaj numer lotu</string>
     <string name="kh_uisdk_checkout_as_guest">ZAREZERWUJ PRZEJAZD</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Komentarz dla Twojego kierowcy</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Na przykład: fotelik dziecięcy, potrzebny dostęp do wózka inwalidzkiego itp.</string>
     <string name="kh_uisdk_checkout_comments_title">Komentarz</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Dozwolone są tylko litery i cyfry</string>
     <string name="kh_uisdk_checkout_train_example">np. 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Wprowadź cel</string>
     <string name="kh_uisdk_erase_address">Usuń adres</string>
     <string name="kh_uisdk_error">Błąd</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">Wprowadzony e-mail lub hasło jest nieprawidłowe</string>
     <string name="kh_uisdk_errors_cant_send_email">Przykro nam, nie można wysłać wiadomości e-mail. Najpierw skonfiguruj aplikację do obsługi poczty.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Numer lotu</string>

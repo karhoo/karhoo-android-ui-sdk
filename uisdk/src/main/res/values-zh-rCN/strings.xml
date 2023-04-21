@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">即使航班延误，也会有司机等着你。</string>
     <string name="kh_uisdk_checkout_airport_title">添加一个航班号</string>
     <string name="kh_uisdk_checkout_as_guest">预订行程</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">评论你的司机</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">例如：儿童座椅、需要轮椅通道等。</string>
     <string name="kh_uisdk_checkout_comments_title">评论</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">只允许字母和数字</string>
     <string name="kh_uisdk_checkout_train_example">例如 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">输入目的地</string>
     <string name="kh_uisdk_erase_address">删除地址</string>
     <string name="kh_uisdk_error">错误</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">您输入的电子邮件或密码不正确</string>
     <string name="kh_uisdk_errors_cant_send_email">抱歉，无法发送电子邮件。请您首先配置电子邮件应用程序。</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">航班号</string>

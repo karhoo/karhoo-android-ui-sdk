@@ -107,7 +107,7 @@
     <string name="kh_uisdk_alternative">ALTERNATIVE AUSWÄHLEN</string>
     <string name="kh_uisdk_arrival">Ankunft</string>
     <string name="kh_uisdk_arrived">Ihr %s-Fahrer ist angekommen</string>
-    <string name="kh_uisdk_asap_no_coverage_warning">ASAP-Buchungen sind an Ihrer Abholadresse nicht möglich</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ASAP-Buchungen sind für die ausgewählten Adressen nicht verfügbar</string>
     <string name="kh_uisdk_back">Zurück</string>
     <string name="kh_uisdk_baggage_max">Max. %d Gepäckstück(e)</string>
     <string name="kh_uisdk_base">Basistarif</string>
@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Ein Fahrer wird auf Sie warten, auch wenn der Flug Verspätung hat.</string>
     <string name="kh_uisdk_checkout_airport_title">Eine Flugnummer hinzufügen</string>
     <string name="kh_uisdk_checkout_as_guest">FAHRT BUCHEN</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Kommentar für Ihren Fahrer</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Zum Beispiel: Kindersitz, Zugang für Rollstuhlfahrer erforderlich usw.</string>
     <string name="kh_uisdk_checkout_comments_title">Kommentar</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Nur Buchstaben und Zahlen sind erlaubt</string>
     <string name="kh_uisdk_checkout_train_example">z.B. 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Ziel eingeben</string>
     <string name="kh_uisdk_erase_address">Adresse löschen</string>
     <string name="kh_uisdk_error">Fehler</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">Die eingegebene E-Mail oder das eingegebene Passwort sind falsch.</string>
     <string name="kh_uisdk_errors_cant_send_email">Die E-Mail kann nicht versendet werden. Konfigurieren Sie zuerst die Mail-App.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Flugnummer</string>

@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Een chauffeur zal op u wachten, zelfs als de vlucht vertraagd is.</string>
     <string name="kh_uisdk_checkout_airport_title">Een vluchtnummer toevoegen</string>
     <string name="kh_uisdk_checkout_as_guest">RIT BOEKEN</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Opmerking voor uw chauffeur</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Bijvoorbeeld: kinderzitje, rolstoel nodig, enz.</string>
     <string name="kh_uisdk_checkout_comments_title">Opmerkingen</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Alleen letters en cijfers zijn toegestaan</string>
     <string name="kh_uisdk_checkout_train_example">bijvoorbeeld 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Bestemming invoeren</string>
     <string name="kh_uisdk_erase_address">Adres wissen</string>
     <string name="kh_uisdk_error">Fout</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">Het e-mailadres of wachtwoord dat je hebt ingevoerd, is onjuist</string>
     <string name="kh_uisdk_errors_cant_send_email">De e‑mail kan niet worden verstuurd. Configureer eerst uw e‑mailapp.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Vluchtnummer</string>
