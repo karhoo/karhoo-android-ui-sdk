@@ -332,7 +332,7 @@ internal class CheckoutView @JvmOverloads constructor(
     override fun handlePaymentDetailsUpdate() {
         loadingButtonCallback.setState(
             presenter.getBookingButtonState(
-                arePassengerDetailsValid(),
+                arePassengerDetailFieldsValid(),
                 isTermsCheckBoxValid()
             )
         )
@@ -502,7 +502,7 @@ internal class CheckoutView @JvmOverloads constructor(
             )
         }
 
-        if (arePassengerDetailsValid() && passengerDetails != null) {
+        if (arePassengerDetailFieldsValid() && passengerDetails != null) {
             bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
             bookingCheckoutPassengerView.setSubtitle(passengerDetails.phoneNumber.toString())
         } else {
@@ -636,7 +636,7 @@ internal class CheckoutView @JvmOverloads constructor(
 
         passengersListener.onPassengerPageVisibilityChanged(show)
 
-        loadingButtonCallback.enableButton(if (show) arePassengerDetailsValid() else true)
+        loadingButtonCallback.enableButton(if (show) arePassengerDetailFieldsValid() else true)
     }
 
     override fun retrieveLoyaltyStatus() {
@@ -697,7 +697,7 @@ internal class CheckoutView @JvmOverloads constructor(
     override fun isPassengerDetailsViewVisible(): Boolean = passengersDetailLayout.visibility ==
             VISIBLE
 
-    override fun arePassengerDetailsValid(): Boolean = passengersDetailLayout.areFieldsValid()
+    override fun arePassengerDetailFieldsValid(): Boolean = passengersDetailLayout.areFieldsValid()
 
     override fun checkLoyaltyEligiblityAndStartPreAuth(): Boolean {
         return if (loyaltyView.visibility == VISIBLE) {
@@ -764,7 +764,7 @@ internal class CheckoutView @JvmOverloads constructor(
     private fun termsAndConditionsCheckBoxCheckedChanged() {
         loadingButtonCallback.setState(
             presenter.getBookingButtonState(
-                arePassengerDetailsValid(),
+                arePassengerDetailFieldsValid(),
                 isTermsCheckBoxValid()
             )
         )

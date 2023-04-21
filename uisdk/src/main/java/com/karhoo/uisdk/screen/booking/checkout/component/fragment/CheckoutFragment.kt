@@ -92,7 +92,7 @@ internal class CheckoutFragment : Fragment() {
         passengerActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
                 if (checkoutView.isPassengerDetailsViewVisible()) {
-                    if (checkoutView.arePassengerDetailsValid()) {
+                    if (checkoutView.arePassengerDetailFieldsValid()) {
                         checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetailsLayout(false)
                         passengerActionButton.onLoadingComplete()
@@ -105,7 +105,7 @@ internal class CheckoutFragment : Fragment() {
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
-                if (!checkoutView.arePassengerDetailsValid()) {
+                if (!checkoutView.arePassengerDetailFieldsValid()) {
                     checkoutView.showPassengerDetailsLayout(true)
                     checkoutActionButton.onLoadingComplete()
                 } else {
@@ -119,7 +119,7 @@ internal class CheckoutFragment : Fragment() {
 
         checkoutActionButton.setText(
             presenter.getBookButtonState(
-                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                arePassengerDetailsValid = checkoutView.arePassengerDetailFieldsValid(),
                 isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
             )
                 .resId
@@ -151,7 +151,7 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
                         false,
-                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.arePassengerDetailFieldsValid(),
                         checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
@@ -167,7 +167,7 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
                         visible,
-                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.arePassengerDetailFieldsValid(),
                         isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
