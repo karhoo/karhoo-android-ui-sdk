@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">飛行機が遅れても運転手が待っています。</string>
     <string name="kh_uisdk_checkout_airport_title">フライトナンバーを追加する</string>
     <string name="kh_uisdk_checkout_as_guest">乗車サービスを予約する</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">ドライバーへのコメント</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">例：チャイルドシート、車椅子での移動が必要など。</string>
     <string name="kh_uisdk_checkout_comments_title">コメント</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">文字と数字のみを使用できます</string>
     <string name="kh_uisdk_checkout_train_example">例: 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">目的地を入力してください</string>
     <string name="kh_uisdk_erase_address">住所を消去する</string>
     <string name="kh_uisdk_error">エラー</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">入力したメールアドレスまたはパスワードが正しくありません</string>
     <string name="kh_uisdk_errors_cant_send_email">メールを送信できません。最初にメールアプリを設定してください。</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">便名</string>

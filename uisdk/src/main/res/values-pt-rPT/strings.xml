@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Um motorista estará à sua espera, mesmo que o voo se atrase.</string>
     <string name="kh_uisdk_checkout_airport_title">Acrescentar um número de voo</string>
     <string name="kh_uisdk_checkout_as_guest">RESERVAR VIAGEM</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Comentário para o seu motorista</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Por exemplo: cadeira de criança, acesso de cadeira de rodas necessário, etc.</string>
     <string name="kh_uisdk_checkout_comments_title">Comentário</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Só são permitidas letras e números</string>
     <string name="kh_uisdk_checkout_train_example">e.g. 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Inserir endereço de destino</string>
     <string name="kh_uisdk_erase_address">Eliminar endereço</string>
     <string name="kh_uisdk_error">Erro</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">O e-mail ou senha que você digitou está incorreto</string>
     <string name="kh_uisdk_errors_cant_send_email">Lamentamos, não é possível enviar o e-mail. Configure primeiro a sua aplicação de e-mail.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Número do voo</string>

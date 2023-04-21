@@ -107,7 +107,7 @@
     <string name="kh_uisdk_alternative">Autre options</string>
     <string name="kh_uisdk_arrival">Arrivée</string>
     <string name="kh_uisdk_arrived">Votre chauffeur %s est arrivé</string>
-    <string name="kh_uisdk_asap_no_coverage_warning">Les réservations ASAP ne sont pas disponibles à votre adresse de prise en charge</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Les réservations immédiates ne sont pas disponibles pour les adresses sélectionnées</string>
     <string name="kh_uisdk_back">Retour</string>
     <string name="kh_uisdk_baggage_max">%d bagage(s) max</string>
     <string name="kh_uisdk_base">Prix de base</string>
@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Un chauffeur vous attendra même si le vol est retardé.</string>
     <string name="kh_uisdk_checkout_airport_title">Ajouter un numéro de vol</string>
     <string name="kh_uisdk_checkout_as_guest">Réserver une course</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Siège bébé, PMR, etc.</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Par exemple: siège bébé, PMR, etc.</string>
     <string name="kh_uisdk_checkout_comments_title">Commentaire</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Seules les lettres et les chiffres sont autorisés</string>
     <string name="kh_uisdk_checkout_train_example">p. ex. 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Ajouter une destination</string>
     <string name="kh_uisdk_erase_address">Effacer l’adresse</string>
     <string name="kh_uisdk_error">Erreur</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">L’adresse e-mail ou le mot de passe que vous avez entré est incorrect</string>
     <string name="kh_uisdk_errors_cant_send_email">Désolé, l’e-mail ne peut être envoyé. Configurez votre appli de messagerie sur votre téléphone.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Numéro de vol</string>
@@ -329,7 +330,7 @@
     <string name="kh_uisdk_last_name_hint">Nom de famille</string>
     <string name="kh_uisdk_last_trip_id">Référence de votre dernière course : %1$s</string>
     <string name="kh_uisdk_last_trip_id_not_set">Référence de votre dernière course : pas encore définie</string>
-    <string name="kh_uisdk_later">Par la suite</string>
+    <string name="kh_uisdk_later">Plus tard</string>
     <string name="kh_uisdk_legal_notice_label">Mentions légales</string>
     <string name="kh_uisdk_legal_notice_link"/>
     <string name="kh_uisdk_legal_notice_text"/>
@@ -383,7 +384,7 @@
     <string name="kh_uisdk_no_quotes_in_selected_category">Désolé, aucun véhicule disponible dans cette catégorie. Sélectionnez une autre catégorie.</string>
     <string name="kh_uisdk_no_trips">Aucune réservation</string>
     <string name="kh_uisdk_notification_error_ssl_cert_invalid">Certificat SSL invalide</string>
-    <string name="kh_uisdk_now">Maintenant</string>
+    <string name="kh_uisdk_now">maintenant</string>
     <string name="kh_uisdk_offer_expired">Offre expirée</string>
     <string name="kh_uisdk_offer_expired_text">Sélectionnez une nouvelle offre pour poursuivre le véhicule</string>
     <string name="kh_uisdk_ok">Ok</string>
@@ -448,7 +449,7 @@
     <string name="kh_uisdk_quotes_error_no_coverage_title">Nous n\'avons pas encore de véhicules dans cette zone</string>
     <string name="kh_uisdk_quotes_error_no_results_after_filter_subtitle">Essayez d’autres filtres.</string>
     <string name="kh_uisdk_quotes_error_no_results_after_filter_title">Aucun résultat associé à ces filtres.</string>
-    <string name="kh_uisdk_quotes_error_no_results_found">Désolé, la réservation spontanée n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage !</string>
+    <string name="kh_uisdk_quotes_error_no_results_found">Désolé, la réservation immédiate n\'est pas disponible sur cette destination, mais vous pouvez réserver à l\'avance pour votre prochain voyage !</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_subtitle">Les adresses de destination et de départ semblent similaires</string>
     <string name="kh_uisdk_quotes_error_similar_addresses_title">Les adresses de destination et de départ semblent similaires</string>
     <string name="kh_uisdk_quotes_no_availability">Nous n’avons pas encore de partenaire dans cette zone.</string>

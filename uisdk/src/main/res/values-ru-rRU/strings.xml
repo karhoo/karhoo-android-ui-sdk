@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Водитель будет ждать вас даже в случае задержки рейса.</string>
     <string name="kh_uisdk_checkout_airport_title">Добавить номер рейса</string>
     <string name="kh_uisdk_checkout_as_guest">ЗАБРОНИРОВАТЬ ПОЕЗДКУ</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Комментарий для вашего водителя</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Например: детское кресло, необходим доступ для инвалидной коляски и т.д.</string>
     <string name="kh_uisdk_checkout_comments_title">Комментировать</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Допускаются только буквы и цифры</string>
     <string name="kh_uisdk_checkout_train_example">например 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Введите пункт назначения</string>
     <string name="kh_uisdk_erase_address">Удалить адрес</string>
     <string name="kh_uisdk_error">Ошибка</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">Электронная почта или пароль, которые вы ввели, неверны</string>
     <string name="kh_uisdk_errors_cant_send_email">Не удается отправить электронное сообщение. Сначала настройте почтовое приложение.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Номер рейса</string>

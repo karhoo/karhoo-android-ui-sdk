@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">พนักงานขับรถจะรอคุณแม้ว่าเที่ยวบินจะล่าช้าก็ตาม</string>
     <string name="kh_uisdk_checkout_airport_title">เพิ่มหมายเลขเที่ยวบิน</string>
     <string name="kh_uisdk_checkout_as_guest">จองการเดินทาง</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">ความคิดเห็นสำหรับไดรเวอร์ของคุณ</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">ตัวอย่างเช่น: ที่นั่งสำหรับเด็ก, ต้องใช้เก้าอี้รถเข็น ฯลฯ</string>
     <string name="kh_uisdk_checkout_comments_title">ความเห็น</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">อนุญาตเฉพาะตัวอักษรและตัวเลขเท่านั้น</string>
     <string name="kh_uisdk_checkout_train_example">เช่น 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">ป้อนตำแหน่งปลายทาง</string>
     <string name="kh_uisdk_erase_address">ลบที่อยู่</string>
     <string name="kh_uisdk_error">ความผิดพลาด</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">อีเมลหรือรหัสผ่านที่คุณป้อนไม่ถูกต้อง</string>
     <string name="kh_uisdk_errors_cant_send_email">ขออภัย ไม่สามารถส่งอีเมลได้ โปรดกำหนดค่าแอปเมลของคุณก่อน</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">หมายเลขเที่ยวบิน</string>
