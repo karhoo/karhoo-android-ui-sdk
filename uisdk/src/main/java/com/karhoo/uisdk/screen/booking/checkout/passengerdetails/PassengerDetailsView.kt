@@ -275,22 +275,18 @@ class PassengerDetailsView @JvmOverloads constructor(
         }
     }
 
-    override fun clearPassengerDetails() {
-        firstNameInput.setText("")
-        lastNameInput.setText("")
-        emailInput.setText("")
-        mobileNumberInput.setText("")
+    override fun revertPassengerDetails() {
+        val passengerDetails = getPassengerDetails()
+        passengerDetails?.let {
+            bindPassengerDetails(it)
+        } ?: run {
+            firstNameInput.setText("")
+            lastNameInput.setText("")
+            emailInput.setText("")
+            mobileNumberInput.setText("")
 
-        presenter.resetFieldValidation(firstNameLayout)
-        presenter.resetFieldValidation(lastNameLayout)
-        presenter.resetFieldValidation(emailLayout)
-        presenter.resetFieldValidation(mobileNumberLayout)
-
-        presenter.removePassengerDetails()
-    }
-
-    override fun forceValidation() {
-        validateAll()
+            validationCallback?.onFieldsValidated(true)
+        }
     }
 
 

@@ -191,10 +191,7 @@ internal class CheckoutViewPresenter(
     override fun consumeBackPressed(): Boolean {
         return if (view?.isPassengerDetailsViewVisible() == true) {
             view?.showPassengerDetailsLayout(false)
-            view?.forceValidation()
-            if(view?.arePassengerDetailsValid() == false){
-                view?.clearPassengerDetails()
-            }
+            view?.revertPassengerDetails()
             true
         } else {
             false
