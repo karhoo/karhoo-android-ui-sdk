@@ -36,6 +36,8 @@ interface PassengerDetailsContract {
         fun retrievePassengerFromSharedPrefs(): PassengerDetails?
 
         fun retrieveCountryCodeFromSharedPrefs(): String?
+
+        fun revertPassengerDetails()
     }
 
     interface Presenter {

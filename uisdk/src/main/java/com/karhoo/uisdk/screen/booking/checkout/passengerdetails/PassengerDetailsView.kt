@@ -275,6 +275,20 @@ class PassengerDetailsView @JvmOverloads constructor(
         }
     }
 
+    override fun revertPassengerDetails() {
+        val passengerDetails = getPassengerDetails()
+        passengerDetails?.let {
+            bindPassengerDetails(it)
+        } ?: run {
+            firstNameInput.setText("")
+            lastNameInput.setText("")
+            emailInput.setText("")
+            mobileNumberInput.setText("")
+
+            validationCallback?.onFieldsValidated(true)
+        }
+    }
+
 
     companion object {
         private const val PASSENGER_DETAILS_SHARED_PREFS = "PASSENGER_DETAILS_SHARED_PREFS"
