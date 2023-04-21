@@ -56,8 +56,6 @@ interface PassengerDetailsContract {
         fun updatePassengerDetails(firstName: String, lastName: String, email: String,
                                    mobilePhoneNumber: String)
 
-        fun removePassengerDetails()
-
         fun validateMobileNumber(code: String, number: String): String
 
         fun getCountryCode(context: Context): String
@@ -68,8 +66,6 @@ interface PassengerDetailsContract {
                 layout: TextInputLayout,
                 showError: Boolean,
                 validator: SelfValidatingTextLayout.Validator)
-
-        fun resetFieldValidation(layout: TextInputLayout)
 
         fun formatPhoneNumber(phoneNumber: String, countryCode: String): String
 
