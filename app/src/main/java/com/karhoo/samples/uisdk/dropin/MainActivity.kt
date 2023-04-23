@@ -23,10 +23,10 @@ import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.screen.booking.BookingActivity
-import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
-import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
-import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
+//import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+//import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
+//import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
+//import com.karhoo.uisdk.screen.booking.checkout.payment.braintree.BraintreePaymentView
 import kotlin.system.exitProcess
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.bookTripButtonLogin).setOnClickListener {
             val config = KarhooConfig(applicationContext)
-            config.paymentManager = createBraintreeManager()
+//            config.paymentManager = createBraintreeManager()
 
             config.sdkAuthenticationRequired = { callback ->
                 Log.e(TAG, "Need an external authentication")
@@ -187,20 +187,20 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun createBraintreeManager(): BraintreePaymentManager{
-        return BraintreePaymentManager().apply {
-            this.paymentProviderView = BraintreePaymentView()
-        }
-    }
-
-    private fun createAdyenManager(): AdyenPaymentManager{
-        return AdyenPaymentManager().apply {
-            this.paymentProviderView = AdyenPaymentView()
-        }
-    }
+//    private fun createBraintreeManager(): BraintreePaymentManager{
+//        return BraintreePaymentManager().apply {
+//            this.paymentProviderView = BraintreePaymentView()
+//        }
+//    }
+//
+//    private fun createAdyenManager(): AdyenPaymentManager{
+//        return AdyenPaymentManager().apply {
+//            this.paymentProviderView = AdyenPaymentView()
+//        }
+//    }
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
-        config.paymentManager = createBraintreeManager()
+//        config.paymentManager = createBraintreeManager()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BRAINTREE_AUTH_TOKEN)
         }
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyBraintreeGuestConfig() {
         val config = BraintreeGuestConfig(applicationContext)
-        config.paymentManager = createBraintreeManager()
+//        config.paymentManager = createBraintreeManager()
         KarhooUISDK.apply {
             setConfiguration(config)
         }
@@ -220,7 +220,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyAdyenTokenExchangeConfig() {
         val config = AdyenTokenExchangeConfig(applicationContext)
-        config.paymentManager = createAdyenManager()
+//        config.paymentManager = createAdyenManager()
         KarhooApi.userService.logout()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, ADYEN_AUTH_TOKEN)
@@ -234,7 +234,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
-        config.paymentManager = createAdyenManager()
+//        config.paymentManager = createAdyenManager()
         KarhooApi.userService.logout()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
@@ -280,7 +280,7 @@ class MainActivity : AppCompatActivity() {
             applicationContext
         )
 
-        config.paymentManager = createAdyenManager()
+//        config.paymentManager = createAdyenManager()
         KarhooApi.userService.logout()
         KarhooUISDK.apply {
             setConfiguration(config)
