@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 dependencies {
-    api project(':nsdk')
+    api 'com.github.karhoo:karhoo-android-sdk:1.8.0'
 
     api('com.adyen.checkout:drop-in:4.8.0')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

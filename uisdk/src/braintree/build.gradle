@@ -2,7 +2,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 dependencies {
-    api project(':nsdk')
+    api 'com.github.karhoo:karhoo-android-sdk:1.8.0'
+
 
 //    api 'com.github.karhoo:karhoo-android-sdk:1.4.5'
     api 'com.braintreepayments.api:drop-in:6.8.0'
