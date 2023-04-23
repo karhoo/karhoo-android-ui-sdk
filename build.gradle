@@ -3,6 +3,7 @@
 buildscript {
     ext.kotlin_version = '1.5.21'
     repositories {
+        maven { url "https://jitpack.io" }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -51,6 +52,7 @@ plugins {
 
 allprojects {
     repositories {
+        maven { url "https://jitpack.io" }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
