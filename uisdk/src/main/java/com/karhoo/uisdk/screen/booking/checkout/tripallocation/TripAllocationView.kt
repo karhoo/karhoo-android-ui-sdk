@@ -23,6 +23,7 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStatus
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
@@ -58,6 +59,16 @@ class TripAllocationView @JvmOverloads constructor(
 
     override fun onActivityResult(tripInfo: TripInfo) {
         waitForAllocation(tripInfo)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val tripInfo = data?.getParcelableExtra<TripInfo>(
+            CheckoutActivity
+                .BOOKING_CHECKOUT_TRIP_INFO_KEY
+        )
+        if (tripInfo != null) {
+            waitForAllocation(tripInfo)
+        }
     }
 
     private fun waitForAllocation(trip: TripInfo) {

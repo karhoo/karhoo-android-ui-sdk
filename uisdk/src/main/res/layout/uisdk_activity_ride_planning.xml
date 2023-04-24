@@ -15,8 +15,19 @@
         android:fitsSystemWindows="false"
         tools:openDrawer="start">
 
-        <include
-            layout="@layout/uisdk_activity_booking_content"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AppTheme.TransparentActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.karhoo.uisdk.screen.rideplanning.RidePlanningView
+            android:id="@+id/ride_planning_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationWidget"

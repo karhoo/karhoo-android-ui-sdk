@@ -156,6 +156,7 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
         RidePlanningStorage.bookingRequestStateViewModel.viewActions().observe(view.getViewModelStoreOwner() as LifecycleOwner, view.checkoutObserver)
     }
 
+    //TODO should refactor/split this this
     override fun parseDataFromActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
             resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {

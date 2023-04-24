@@ -305,14 +305,31 @@ class BookingMapView @JvmOverloads constructor(
         googleMap?.clear()
     }
 
-    //region map lifecycle
+    //TODO Remove this after switching to RidePlanningActivity
+    fun onCreate(
+        bundle: Bundle?,
+        lifecycleOwner: LifecycleOwner,
+        journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
+        shouldReverseGeolocate: Boolean = true,
+        isDeepLink: Boolean = false
+    ) {
+        this.isDeepLink = isDeepLink
+        this.shouldReverseGeolocate = if (isLocateMeEnabled) shouldReverseGeolocate else false
+        bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
+        mapView.onCreate(bundle)
+        mapView.getMapAsync { googleMap ->
+            this.googleMap = googleMap
+            setupMap()
+        }
+    }
+
     fun onCreate(
         bundle: Bundle?,
         lifecycleOwner: LifecycleOwner,
         journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
     ) {
         this.isDeepLink = RidePlanningStorage.journeyInfo != null
-        this.shouldReverseGeolocate = if (isLocateMeEnabled) RidePlanningStorage.tripDetails?.destination == null else false
+        this.shouldReverseGeolocate = if (isLocateMeEnabled) RidePlanningStorage.tripDetails == null else false
         bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         mapView.onCreate(bundle)
         mapView.getMapAsync { googleMap ->

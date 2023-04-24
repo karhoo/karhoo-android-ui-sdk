@@ -2,7 +2,6 @@ package com.karhoo.uisdk.booking.adyen
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.test.espresso.NoActivityResumedException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
@@ -20,7 +19,6 @@ import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.ADYEN
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import com.karhoo.uisdk.util.TestData.Companion.ADYEN_PROVIDER
@@ -38,13 +36,11 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.LAST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS_EXTRA
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_STATUS_DER
-import com.karhoo.uisdk.util.TestData.Companion.USER_INFO_ADYEN
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP
 import com.karhoo.uisdk.util.TestData.Companion.setUserInfo
 import org.junit.After

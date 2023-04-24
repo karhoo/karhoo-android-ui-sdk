@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.checkout.tripallocation
 
+import android.content.Intent
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 
@@ -31,6 +32,9 @@ interface TripAllocationContract {
 
     interface Widget {
         fun onActivityResult(tripInfo: TripInfo)
+
+        //TODO Remove this after switching to the RidePlanningActivity
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     }
 
     interface Actions {
