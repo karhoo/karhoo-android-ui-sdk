@@ -49,13 +49,10 @@ object KarhooUISDK {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
         KarhooApi.setConfiguration(configuration)
 
-        cacheVehicleMappings()
-
-        FeatureFlagsProvider.retrieveFeatureFlags()
-    }
-
-    private fun cacheVehicleMappings() {
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
         VehicleMappingsProvider.retrieveVehicleMappings()
+
+        FeatureFlagsProvider.setup(KarhooApi.configService)
+        FeatureFlagsProvider.retrieveFeatureFlags()
     }
 }

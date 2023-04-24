@@ -1,16 +1,16 @@
 package com.karhoo.uisdk.util
 
 import com.karhoo.sdk.api.KarhooEnvironment
-import com.karhoo.sdk.api.model.FeatureFlags
+import com.karhoo.sdk.api.model.FeatureFlag
 import com.karhoo.sdk.api.network.request.FeatureFlagsRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.config.ConfigService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 
 object FeatureFlagsProvider {
-    private val FEATURE_FLAGS_PROD_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-sdk/master/feature_flag.json"
+    private val FEATURE_FLAGS_PROD_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/MOB-4738/feature_flag.json"
     private val FEATURE_FLAGS_DEV_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-sdk/develop/feature_flag.json"
-    private var featureFlags: FeatureFlags? = null
+    private var featureFlags: List<FeatureFlag>? = null
     private lateinit var configService: ConfigService
 
     fun setup(configService: ConfigService) {
@@ -18,7 +18,7 @@ object FeatureFlagsProvider {
         retrieveFeatureFlags()
     }
 
-    fun retrieveFeatureFlags(callback: ((FeatureFlags?) -> Unit)? = null) {
+    fun retrieveFeatureFlags(callback: ((List<FeatureFlag>?) -> Unit)? = null) {
         if (featureFlags == null) {
             val url = if(KarhooUISDKConfigurationProvider.configuration.environment() is KarhooEnvironment.Production) {
                 FEATURE_FLAGS_PROD_URL
@@ -42,7 +42,7 @@ object FeatureFlagsProvider {
         }
     }
 
-    fun getFeatureFlags(): FeatureFlags? {
+    fun getFeatureFlags(): List<FeatureFlag>? {
         return featureFlags
     }
 
