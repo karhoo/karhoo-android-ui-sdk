@@ -160,8 +160,7 @@ afterEvaluate {
 }
 
 dependencies {
-    api 'com.github.karhoo:karhoo-android-sdk:1.8.0'
-
+    api project(':nsdk')
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
     fullCompileOnly('com.braintreepayments.api:drop-in:6.8.0')
