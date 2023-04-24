@@ -11,24 +11,24 @@ import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 
 class RidePlanningCoordinator(var activity: Activity) {
     fun startCheckoutActivity(data: Intent?, journeyDetails: JourneyDetails) {
-        RidePlanningStorage.quote = data?.getParcelableExtra(QuotesActivity.QUOTES_SELECTED_QUOTE_KEY)
+        BookingStorage.quote = data?.getParcelableExtra(QuotesActivity.QUOTES_SELECTED_QUOTE_KEY)
 
-        RidePlanningStorage.quote?.let { quote ->
+        BookingStorage.quote?.let { quote ->
             val builder = CheckoutActivity.Builder()
                 .quote(quote)
-                .outboundTripId(RidePlanningStorage.outboundTripId)
-                .bookingMetadata(RidePlanningStorage.bookingMetadata)
+                .outboundTripId(BookingStorage.outboundTripId)
+                .bookingMetadata(BookingStorage.bookingMetadata)
                 .journeyDetails(journeyDetails)
 
-            RidePlanningStorage.passengerDetails?.let {
+            BookingStorage.passengerDetails?.let {
                 builder.passengerDetails(it)
             }
 
-            RidePlanningStorage.bookingComments?.let {
+            BookingStorage.bookingComments?.let {
                 builder.comments(it)
             }
 
-            RidePlanningStorage.loyaltyInfo?.let {
+            BookingStorage.loyaltyInfo?.let {
                 builder.loyaltyInfo(it)
             }
 

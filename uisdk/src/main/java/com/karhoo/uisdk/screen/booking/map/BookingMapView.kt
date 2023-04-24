@@ -46,7 +46,7 @@ import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationInfoListener
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
-import com.karhoo.uisdk.screen.rideplanning.RidePlanningStorage
+import com.karhoo.uisdk.screen.rideplanning.BookingStorage
 import com.karhoo.uisdk.util.MapUtil
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_CAMERA_ZOOM_WIDTH_PADDING
 import com.karhoo.uisdk.util.ViewsConstants.BOOKING_MAP_DESTINATION_MARKER_MAX_ZOOM_PREFERENCE
@@ -328,8 +328,8 @@ class BookingMapView @JvmOverloads constructor(
         lifecycleOwner: LifecycleOwner,
         journeyDetailsStateViewModel: JourneyDetailsStateViewModel,
     ) {
-        this.isDeepLink = RidePlanningStorage.journeyInfo != null
-        this.shouldReverseGeolocate = if (isLocateMeEnabled) RidePlanningStorage.tripDetails == null else false
+        this.isDeepLink = BookingStorage.journeyInfo != null
+        this.shouldReverseGeolocate = if (isLocateMeEnabled) BookingStorage.tripDetails == null else false
         bindViewToJourneyDetails(lifecycleOwner, journeyDetailsStateViewModel)
         mapView.onCreate(bundle)
         mapView.getMapAsync { googleMap ->

@@ -8,7 +8,7 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewMod
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 
-object RidePlanningStorage {
+object BookingStorage {
     var quote: Quote? = null
     var tripDetails: TripInfo? = null
     var outboundTripId: String? = null

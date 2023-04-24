@@ -43,22 +43,22 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
 
         parseSavedInstanceState(bundle)
 
-        RidePlanningStorage.bookingMetadata =  KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
+        BookingStorage.bookingMetadata =  KarhooUISDKConfigurationProvider.configuration.bookingMetadata()
 
         KarhooUISDK.analytics?.bookingScreenOpened()
 
-        RidePlanningStorage.tripDetails?.let {
+        BookingStorage.tripDetails?.let {
             if (it.origin != null && it.destination != null) {
-                ridePlanningCoordinator.startQuoteListActivity(false, null, RidePlanningStorage.journeyDetailsStateViewModel.viewStates().value)
+                ridePlanningCoordinator.startQuoteListActivity(false, null, BookingStorage.journeyDetailsStateViewModel.viewStates().value)
             }
         }
 
-        RidePlanningStorage.tripDetails = null
+        BookingStorage.tripDetails = null
 
-        RidePlanningStorage.journeyDetailsStateViewModel = ViewModelProvider(
+        BookingStorage.journeyDetailsStateViewModel = ViewModelProvider(
             view.getViewModelStoreOwner()
         ).get(JourneyDetailsStateViewModel::class.java)
-        RidePlanningStorage.bookingRequestStateViewModel = ViewModelProvider(
+        BookingStorage.bookingRequestStateViewModel = ViewModelProvider(
             view.getViewModelStoreOwner()
         ).get(BookingRequestStateViewModel::class.java)
     }
@@ -67,7 +67,7 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
         bundle?.let {
             if (it[JOURNEY_INFO] != null) {
                 val journeyDetails = it[JOURNEY_INFO] as JourneyDetails
-                RidePlanningStorage.journeyDetailsStateViewModel.process(
+                BookingStorage.journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
                         .PrebookBookingEvent(
                             journeyDetails.pickup,
@@ -80,14 +80,14 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
     }
 
     override fun saveInstanceState(bundle: Bundle) {
-        bundle.putParcelable(JOURNEY_INFO, RidePlanningStorage.journeyDetailsStateViewModel.currentState)
+        bundle.putParcelable(JOURNEY_INFO, BookingStorage.journeyDetailsStateViewModel.currentState)
     }
 
     override fun parseExtrasBundle(extras: Bundle?) {
         if(extras != null) {
-            RidePlanningStorage.tripDetails = extras.get(BookingActivity.Builder.EXTRA_TRIP_DETAILS) as TripInfo?
-            RidePlanningStorage.tripDetails?.let {
-                RidePlanningStorage.journeyDetailsStateViewModel.process(
+            BookingStorage.tripDetails = extras.get(BookingActivity.Builder.EXTRA_TRIP_DETAILS) as TripInfo?
+            BookingStorage.tripDetails?.let {
+                BookingStorage.journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
                         .AsapBookingEvent(
                             it.origin?.toSimpleLocationInfo(),
@@ -95,21 +95,21 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
                         )
                 )
             }
-            RidePlanningStorage.outboundTripId = extras.getString(BookingActivity.Builder.EXTRA_OUTBOUND_TRIP_ID, null)
+            BookingStorage.outboundTripId = extras.getString(BookingActivity.Builder.EXTRA_OUTBOUND_TRIP_ID, null)
 
             val initialLocation = extras.getParcelable<Location>(BookingActivity.Builder.EXTRA_INITIAL_LOCATION)
             initialLocation?.let {
                 view.setMapLocation(LatLng(it.latitude, it.longitude))
             }
 
-            RidePlanningStorage.journeyInfo = extras.getParcelable(BookingActivity.Builder.EXTRA_JOURNEY_INFO)
-            RidePlanningStorage.passengerDetails = extras.getParcelable(BookingActivity.Builder.EXTRA_PASSENGER_DETAILS)
-            RidePlanningStorage.bookingComments = extras.getString(BookingActivity.Builder.EXTRA_COMMENTS)
-            RidePlanningStorage.loyaltyInfo = extras.getParcelable(BookingActivity.Builder.EXTRA_LOYALTY_INFO)
+            BookingStorage.journeyInfo = extras.getParcelable(BookingActivity.Builder.EXTRA_JOURNEY_INFO)
+            BookingStorage.passengerDetails = extras.getParcelable(BookingActivity.Builder.EXTRA_PASSENGER_DETAILS)
+            BookingStorage.bookingComments = extras.getString(BookingActivity.Builder.EXTRA_COMMENTS)
+            BookingStorage.loyaltyInfo = extras.getParcelable(BookingActivity.Builder.EXTRA_LOYALTY_INFO)
 
             val injectedBookingMetadata = extras.getSerializable(BookingActivity.Builder.EXTRA_META) as? HashMap<String, String>
             injectedBookingMetadata?.let {
-                RidePlanningStorage.bookingMetadata?.putAll(it)
+                BookingStorage.bookingMetadata?.putAll(it)
             }
         }
     }
@@ -152,8 +152,8 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
     }
 
     override fun initializeListeners() {
-        RidePlanningStorage.journeyDetailsStateViewModel.viewActions().observe(view.getViewModelStoreOwner() as LifecycleOwner, bindToAddressBarOutputs())
-        RidePlanningStorage.bookingRequestStateViewModel.viewActions().observe(view.getViewModelStoreOwner() as LifecycleOwner, view.checkoutObserver)
+        BookingStorage.journeyDetailsStateViewModel.viewActions().observe(view.getViewModelStoreOwner() as LifecycleOwner, bindToAddressBarOutputs())
+        BookingStorage.bookingRequestStateViewModel.viewActions().observe(view.getViewModelStoreOwner() as LifecycleOwner, view.checkoutObserver)
     }
 
     //TODO should refactor/split this this
@@ -161,9 +161,9 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
         when {
             resultCode == Activity.RESULT_OK && requestCode == REQ_CODE_BOOKING_REQUEST_ACTIVITY -> {
                 if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_SKIP_RIDE_DETAILS_KEY) == true) {
-                    RidePlanningStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+                    BookingStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
-                    RidePlanningStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+                    BookingStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
 
 
                     val tripInfo =
@@ -204,7 +204,7 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
                 val journeyDetails =
                     data?.getParcelableExtra(BookingActivity.Builder.EXTRA_JOURNEY_INFO) as JourneyDetails?
 
-                RidePlanningStorage.journeyDetailsStateViewModel.process(
+                BookingStorage.journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
                         .PrebookBookingEvent(
                             journeyDetails?.pickup,
@@ -217,12 +217,12 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
     }
 
     override fun onBookingModeSelected(isPrebook: Boolean) {
-        RidePlanningStorage.journeyDetailsStateViewModel.let {
+        BookingStorage.journeyDetailsStateViewModel.let {
             if (it.currentState.pickup != null && it.currentState.destination != null) {
                 if (!isPrebook) {
                     it.currentState.date = null
                 }
-                ridePlanningCoordinator.startQuoteListActivity(false, null, RidePlanningStorage.journeyDetailsStateViewModel.viewStates().value)
+                ridePlanningCoordinator.startQuoteListActivity(false, null, BookingStorage.journeyDetailsStateViewModel.viewStates().value)
             }
         }
     }
@@ -236,20 +236,20 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
 
         val passengerNumber = data?.getIntExtra(QuotesActivity.PASSENGER_NUMBER, 1)
         val luggage = data?.getIntExtra(QuotesActivity.LUGGAGE, 0)
-        if (RidePlanningStorage.bookingMetadata == null) {
-            RidePlanningStorage.bookingMetadata = HashMap()
+        if (BookingStorage.bookingMetadata == null) {
+            BookingStorage.bookingMetadata = HashMap()
         }
 
-        RidePlanningStorage.bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
-        RidePlanningStorage.bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
+        BookingStorage.bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+        BookingStorage.bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
     }
 
     private fun extractJourneyDetails(data: Intent?): JourneyDetails {
         return JourneyDetails(
             data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS)
-                ?: RidePlanningStorage.journeyDetailsStateViewModel.currentState.pickup,
+                ?: BookingStorage.journeyDetailsStateViewModel.currentState.pickup,
             data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS)
-                ?: RidePlanningStorage.journeyDetailsStateViewModel.currentState.destination,
+                ?: BookingStorage.journeyDetailsStateViewModel.currentState.destination,
             data?.getSerializableExtra(QuotesActivity.QUOTES_SELECTED_DATE) as? DateTime?
         )
     }
@@ -263,8 +263,8 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
                 }
 
                 is AddressBarViewContract.AddressBarActions.AddressChanged -> {
-                    val hasAddresses = RidePlanningStorage.journeyDetailsStateViewModel.currentState.pickup != null &&
-                            RidePlanningStorage.journeyDetailsStateViewModel.currentState.destination != null
+                    val hasAddresses = BookingStorage.journeyDetailsStateViewModel.currentState.pickup != null &&
+                            BookingStorage.journeyDetailsStateViewModel.currentState.destination != null
 
                     if (actions.address == null) {
                         view.validateCoverage(hasAddresses, hasPickupCoverage || hasDestinationCoverage)

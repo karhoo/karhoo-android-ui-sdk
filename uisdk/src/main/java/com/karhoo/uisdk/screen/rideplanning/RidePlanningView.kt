@@ -52,32 +52,32 @@ class RidePlanningView @JvmOverloads constructor(
 
         addressBarWidget.watchJourneyDetailsState(
             viewModelStoreOwner as LifecycleOwner,
-            RidePlanningStorage.journeyDetailsStateViewModel
+            BookingStorage.journeyDetailsStateViewModel
         )
         bookingModeWidget.watchJourneyDetailsState(
             viewModelStoreOwner as LifecycleOwner,
-            RidePlanningStorage.journeyDetailsStateViewModel
+            BookingStorage.journeyDetailsStateViewModel
         )
         tripAllocationWidget.watchBookingRequestStatus(
             viewModelStoreOwner as LifecycleOwner,
-            RidePlanningStorage.bookingRequestStateViewModel
+            BookingStorage.bookingRequestStateViewModel
         )
 
         bookingMapWidget.onCreate(
             savedInstanceState,
             viewModelStoreOwner,
-            RidePlanningStorage.journeyDetailsStateViewModel
+            BookingStorage.journeyDetailsStateViewModel
         )
 
         bookingModeWidget.callbackToStartQuoteList = { isPrebook ->
             this.presenter.onBookingModeSelected(isPrebook)
         }
 
-        addressBarWidget.bindTripToView(RidePlanningStorage.tripDetails)
+        addressBarWidget.bindTripToView(BookingStorage.tripDetails)
     }
 
     override fun bindViews(context: Context) {
-        addressBarWidget.setJourneyInfo(RidePlanningStorage.journeyInfo)
+        addressBarWidget.setJourneyInfo(BookingStorage.journeyInfo)
 
         locateMeButton.setOnClickListener {
             if (presenter.hasLocationPermissions(context)) {

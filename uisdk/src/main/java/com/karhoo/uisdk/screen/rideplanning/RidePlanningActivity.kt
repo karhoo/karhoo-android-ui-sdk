@@ -146,8 +146,8 @@ class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMV
             return
         }
         // if destination set we clear it, close the quotes list and return
-        if (RidePlanningStorage.journeyDetailsStateViewModel.currentState.destination != null) {
-            RidePlanningStorage.journeyDetailsStateViewModel.process(
+        if (BookingStorage.journeyDetailsStateViewModel.currentState.destination != null) {
+            BookingStorage.journeyDetailsStateViewModel.process(
                 AddressBarViewContract.AddressBarEvent
                     .DestinationAddressEvent(null)
             )
@@ -184,7 +184,7 @@ class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMV
             R.id.booking_action_rides -> {
                 startActivity(
                     RidesActivity.Builder.builder
-                        .passengerDetails(RidePlanningStorage.passengerDetails)
+                        .passengerDetails(BookingStorage.passengerDetails)
                         .build(this)
                 )
                 true
@@ -199,7 +199,7 @@ class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMV
         toolbar.visibility = View.VISIBLE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
-        RidePlanningStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+        BookingStorage.journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
 
     private fun createCheckoutObserver(): Observer<in CheckoutViewContract.Action> {
