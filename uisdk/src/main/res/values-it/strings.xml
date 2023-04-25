@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Un autista vi aspetterà anche se il volo è in ritardo.</string>
     <string name="kh_uisdk_checkout_airport_title">Aggiungere un numero di volo</string>
     <string name="kh_uisdk_checkout_as_guest">PRENOTA CORSA</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Commenta per il tuo autista</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Ad esempio: seggiolino per bambini, necessità di accesso alla sedia a rotelle, ecc.</string>
     <string name="kh_uisdk_checkout_comments_title">Commento</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Sono consentiti solo lettere e numeri</string>
     <string name="kh_uisdk_checkout_train_example">ad esempio 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Inserisci destinazione</string>
     <string name="kh_uisdk_erase_address">Cancella indirizzo</string>
     <string name="kh_uisdk_error">Errore</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">L\'e-mail o la password che hai inserito non sono corrette</string>
     <string name="kh_uisdk_errors_cant_send_email">Siamo spiacenti, è impossibile inviare l’e-mail. Configura prima la tua app di posta elettronica.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Numero del volo</string>

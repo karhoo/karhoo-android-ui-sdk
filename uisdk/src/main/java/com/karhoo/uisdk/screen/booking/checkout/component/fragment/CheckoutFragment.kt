@@ -92,7 +92,7 @@ internal class CheckoutFragment : Fragment() {
         passengerActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
                 if (checkoutView.isPassengerDetailsViewVisible()) {
-                    if (checkoutView.arePassengerDetailsValid()) {
+                    if (checkoutView.arePassengerDetailFieldsValid()) {
                         checkoutView.clickedPassengerSaveButton()
                         checkoutView.showPassengerDetailsLayout(false)
                         passengerActionButton.onLoadingComplete()
@@ -105,7 +105,7 @@ internal class CheckoutFragment : Fragment() {
 
         checkoutActionButton.actions = object : LoadingButtonView.Actions {
             override fun onLoadingButtonClick() {
-                if (!checkoutView.arePassengerDetailsValid()) {
+                if (!checkoutView.arePassengerDetailFieldsValid()) {
                     checkoutView.showPassengerDetailsLayout(true)
                     checkoutActionButton.onLoadingComplete()
                 } else {
@@ -119,7 +119,7 @@ internal class CheckoutFragment : Fragment() {
 
         checkoutActionButton.setText(
             presenter.getBookButtonState(
-                arePassengerDetailsValid = checkoutView.arePassengerDetailsValid(),
+                arePassengerDetailsValid = checkoutView.arePassengerDetailFieldsValid(),
                 isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
             )
                 .resId
@@ -151,7 +151,7 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
                         false,
-                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.arePassengerDetailFieldsValid(),
                         checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
@@ -167,7 +167,7 @@ internal class CheckoutFragment : Fragment() {
                 checkoutActionButton.setText(
                     presenter.getBookButtonState(
                         visible,
-                        checkoutView.arePassengerDetailsValid(),
+                        checkoutView.arePassengerDetailFieldsValid(),
                         isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
@@ -209,9 +209,10 @@ internal class CheckoutFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putParcelable(
             PASSENGER_DETAILS,
-            if (presenter.passengerDetails != null) presenter.passengerDetails else checkoutView.getPassengerDetails()
+            presenter.passengerDetails
         )
         outState.putParcelable(SAVED_PAYMENT_INFO, KarhooApi.userStore.savedPaymentInfo)
+        outState.putBoolean(PASSENGER_DETAILS_VISIBLE, checkoutView.isPassengerDetailsViewVisible())
         checkoutView.onPause()
     }
 
@@ -222,6 +223,10 @@ internal class CheckoutFragment : Fragment() {
                 val passDetails = it[PASSENGER_DETAILS] as PassengerDetails
                 checkoutView.bindPassenger(passDetails)
             }
+            if(it.getBoolean(PASSENGER_DETAILS_VISIBLE)){
+               checkoutView.showPassengerDetailsLayout(show = true)
+            }
+
 //            if(it[SAVED_PAYMENT_INFO] != null){
 //                val paymentInfo = it[SAVED_PAYMENT_INFO] as SavedPaymentInfo?
 //                KarhooApi.userStore.savedPaymentInfo = paymentInfo
@@ -303,6 +308,7 @@ internal class CheckoutFragment : Fragment() {
     companion object {
         private const val PASSENGER_DETAILS = "PASSENGER_DETAILS"
         private const val SAVED_PAYMENT_INFO = "SAVED_PAYMENT_INFO"
+        private const val PASSENGER_DETAILS_VISIBLE = "PASSENGER_DETAILS_VISIBLE"
 
         fun newInstance(arguments: Bundle): CheckoutFragment {
             val fragment = CheckoutFragment()

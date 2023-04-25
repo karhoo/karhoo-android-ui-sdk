@@ -19,6 +19,9 @@ class QuotesListViewMock: QuotesFragmentContract.View {
     override fun destinationChanged(journeyDetails: JourneyDetails) { /** do nothing **/ }
 
     override fun updateList(quoteList: List<Quote>) { /** do nothing **/ }
+    override fun updateListForSorting(quoteList: List<Quote>) {
+        /** do nothing **/
+    }
 
     override fun setSortMethod(sortMethod: SortMethod) { /** do nothing **/ }
 

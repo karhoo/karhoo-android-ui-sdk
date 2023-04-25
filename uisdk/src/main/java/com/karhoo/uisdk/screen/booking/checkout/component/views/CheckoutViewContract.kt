@@ -74,7 +74,7 @@ interface CheckoutViewContract {
 
         fun showPassengerDetailsLayout(show: Boolean)
 
-        fun arePassengerDetailsValid(): Boolean
+        fun arePassengerDetailFieldsValid(): Boolean
 
         fun clickedPassengerSaveButton()
 
@@ -97,6 +97,7 @@ interface CheckoutViewContract {
         var commentsListener: ((commentBottomSheet: CheckoutCommentBottomSheet) -> Unit?)?
 
         var travelDetailsListener: ((travelDetailsBottomSheet: CheckoutTravelDetailsBottomSheet) -> Unit?)?
+        fun revertPassengerDetails()
     }
 
     interface Presenter {

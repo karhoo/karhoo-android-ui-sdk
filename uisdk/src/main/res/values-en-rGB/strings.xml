@@ -107,7 +107,7 @@
     <string name="kh_uisdk_alternative">"Select an alternative "</string>
     <string name="kh_uisdk_arrival">Arrival</string>
     <string name="kh_uisdk_arrived">Your %s driver has arrived</string>
-    <string name="kh_uisdk_asap_no_coverage_warning">ASAP bookings are not available at your pick up address</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">ASAP bookings are not available for the selected addresses</string>
     <string name="kh_uisdk_back">Back</string>
     <string name="kh_uisdk_baggage_max">%d piece(s) of luggage max</string>
     <string name="kh_uisdk_base">Base fare</string>
@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">A driver will be waiting for you even if the flight is delayed.</string>
     <string name="kh_uisdk_checkout_airport_title">Add a flight number</string>
     <string name="kh_uisdk_checkout_as_guest">Book a ride</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Child seat, wheelchair access needed, etc.</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">For example: child seat, wheelchair access needed, etc.</string>
     <string name="kh_uisdk_checkout_comments_title">Comment</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Only letters and numbers are allowed</string>
     <string name="kh_uisdk_checkout_train_example">e.g 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Enter destination</string>
     <string name="kh_uisdk_erase_address">Delete address</string>
     <string name="kh_uisdk_error">Error</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message">Please update your application before using this feature</string>
     <string name="kh_uisdk_error_invalid_password">The email or password you\'ve entered is incorrect</string>
     <string name="kh_uisdk_errors_cant_send_email">Sorry, the email can\'t be sent. Please configure your email app first.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Flight number</string>

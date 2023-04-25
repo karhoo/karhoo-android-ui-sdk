@@ -107,7 +107,7 @@
     <string name="kh_uisdk_alternative">PILIH ALTERNATIF</string>
     <string name="kh_uisdk_arrival">Kedatangan</string>
     <string name="kh_uisdk_arrived">Pengemudi %s Anda telah tiba</string>
-    <string name="kh_uisdk_asap_no_coverage_warning">Pemesanan ASAP tidak tersedia di alamat penjemputan Anda</string>
+    <string name="kh_uisdk_asap_no_coverage_warning">Pemesanan ASAP tidak tersedia untuk alamat yang dipilih</string>
     <string name="kh_uisdk_back">Kembali</string>
     <string name="kh_uisdk_baggage_max">%d bagasi maks</string>
     <string name="kh_uisdk_base">Tarif dasar</string>
@@ -147,7 +147,7 @@
     <string name="kh_uisdk_checkout_airport_subtitle">Seorang pengemudi akan menunggu Anda meskipun penerbangan ditunda.</string>
     <string name="kh_uisdk_checkout_airport_title">Menambahkan nomor penerbangan</string>
     <string name="kh_uisdk_checkout_as_guest">PESAN PERJALANAN</string>
-    <string name="kh_uisdk_checkout_comments_subtitle">Komentar untuk pengemudi Anda</string>
+    <string name="kh_uisdk_checkout_comments_subtitle">Misalnya: kursi anak, akses kursi roda yang dibutuhkan, dll.</string>
     <string name="kh_uisdk_checkout_comments_title">Komentar</string>
     <string name="kh_uisdk_checkout_error_only_letters_and_digits_allowed">Hanya huruf dan angka yang diperbolehkan</string>
     <string name="kh_uisdk_checkout_train_example">misalnya 6809</string>
@@ -185,6 +185,7 @@
     <string name="kh_uisdk_enter_destination">Masukkan tujuan</string>
     <string name="kh_uisdk_erase_address">Hapus alamat</string>
     <string name="kh_uisdk_error">Kesalahan</string>
+    <string name="kh_uisdk_error_incorrect_sdk_version_message"/>
     <string name="kh_uisdk_error_invalid_password">Email atau kata sandi yang Anda masukkan salah</string>
     <string name="kh_uisdk_errors_cant_send_email">Maaf, email tidak dapat terkirim. Harap konfigurasikan aplikasi mail terlebih dahulu.</string>
     <string name="kh_uisdk_errors_flight_number_validator_error">Nomor penerbangan</string>
