@@ -321,7 +321,6 @@ class BookingMapView @JvmOverloads constructor(
             setupMap()
         }
     }
-    
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
