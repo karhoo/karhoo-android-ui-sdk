@@ -160,7 +160,7 @@ class TimeDatePickerPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
-        verify(timePickerPresenter).displayTimePicker(any(), any(), any())
+        verify(timePickerPresenter).displayTimePicker(any(), any(), any(), any())
     }
 
     /**
@@ -173,7 +173,7 @@ class TimeDatePickerPresenterTest {
         whenever(journeyDetailsStateViewModel.currentState).thenReturn(journeyDetails)
         whenever(journeyDetails.pickup).thenReturn(LOCATION_INFO)
         timePickerPresenter.dateSelected(1, 1, 1)
-        verify(timePickerPresenter).displayTimePicker(any(), any(), eq("GMT"))
+        verify(timePickerPresenter).displayTimePicker(any(), any(), eq("GMT"), any())
     }
 
     /**
@@ -191,7 +191,9 @@ class TimeDatePickerPresenterTest {
         verify(timePickerPresenter).displayTimePicker(
                 capture(intArgumentCaptor),
                 any(),
-                any())
+                any(),
+                any()
+        )
 
         assertThat(intArgumentCaptor.firstValue).isGreaterThanOrEqualTo(oneHourAheadLondon.hourOfDay)
     }
@@ -211,7 +213,9 @@ class TimeDatePickerPresenterTest {
         verify(timePickerPresenter).displayTimePicker(
                 capture(intArgumentCaptor),
                 any(),
-                any())
+                any(),
+                any()
+        )
 
         assertThat(intArgumentCaptor.firstValue).isGreaterThanOrEqualTo(oneHourAheadAmsterdam.hourOfDay)
     }
