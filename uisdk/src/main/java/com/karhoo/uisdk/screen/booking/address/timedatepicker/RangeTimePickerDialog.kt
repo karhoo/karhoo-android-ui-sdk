@@ -22,18 +22,6 @@ class RangeTimePickerDialog(
     private val calendar = Calendar.getInstance()
     private val dateFormat: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT)
 
-    init {
-        try {
-            val superclass: Class<*> = javaClass.superclass as Class<*>
-            val mTimePickerField = superclass.getDeclaredField("mTimePicker")
-            mTimePickerField.isAccessible = true
-            val mTimePicker = mTimePickerField[this] as TimePicker
-            mTimePicker.setOnTimeChangedListener(this)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     fun setMin(hour: Int, minute: Int) {
         minHour = hour
         minMinute = minute

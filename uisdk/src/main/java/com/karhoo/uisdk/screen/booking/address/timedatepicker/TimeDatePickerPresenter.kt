@@ -84,7 +84,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
             day = dayOfMonth
 
             val oneHourAheadOfCurrentHour = oneHourAhead(minuteRoundingHourExtra)
-            displayTimePicker(oneHourAheadOfCurrentHour, minutesRoundedToNearestFive, localisedTimeZone)
+            displayTimePicker(oneHourAheadOfCurrentHour, minutesRoundedToNearestFive, localisedTimeZone, (year == nowDateTime.year && month == nowDateTime.monthOfYear && day == nowDateTime.dayOfMonth))
         }
     }
 
@@ -109,7 +109,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
         }
     }
 
-    fun displayTimePicker(hour: Int, minute: Int, timeZone: String) {
+    fun displayTimePicker(hour: Int, minute: Int, timeZone: String, isCurrentDay: Boolean = false) {
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
             val dialog = RangeTimePickerDialog(it.getContext(),
@@ -121,7 +121,8 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
             if(!forUnitTests)
                 dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
 
-            dialog.setMin(nowPlusOneHour.hourOfDay, nowPlusOneHour.minuteOfHour)
+            if(isCurrentDay)
+                dialog.setMin(nowPlusOneHour.hourOfDay, nowPlusOneHour.minuteOfHour)
             dialog.show()
         }
     }
