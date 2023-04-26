@@ -387,6 +387,7 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     AddressCodes.PICKUP -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                     AddressCodes.DESTINATION -> addressBarWidget.onActivityResult(requestCode, resultCode, data)
                 }
+                bookingMapWidget.setTopPadding(addressBarWidget.height)
             }
             resultCode == QuotesActivity.QUOTES_RESULT_OK -> {
                 parseDataFromIntent(data)
