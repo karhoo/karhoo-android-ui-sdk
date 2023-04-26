@@ -31,6 +31,9 @@ interface TripAllocationContract {
     }
 
     interface Widget {
+        fun onActivityResult(tripInfo: TripInfo)
+
+        //TODO Remove this after switching to the RidePlanningActivity
         fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     }
 
