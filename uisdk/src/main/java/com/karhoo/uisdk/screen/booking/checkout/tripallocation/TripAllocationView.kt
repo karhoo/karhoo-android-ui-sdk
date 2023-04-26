@@ -57,9 +57,15 @@ class TripAllocationView @JvmOverloads constructor(
         View.inflate(context, R.layout.uisdk_view_trip_allocation, this)
     }
 
+    override fun onActivityResult(tripInfo: TripInfo) {
+        waitForAllocation(tripInfo)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val tripInfo = data?.getParcelableExtra<TripInfo>(CheckoutActivity
-                                                                  .BOOKING_CHECKOUT_TRIP_INFO_KEY)
+        val tripInfo = data?.getParcelableExtra<TripInfo>(
+            CheckoutActivity
+                .BOOKING_CHECKOUT_TRIP_INFO_KEY
+        )
         if (tripInfo != null) {
             waitForAllocation(tripInfo)
         }

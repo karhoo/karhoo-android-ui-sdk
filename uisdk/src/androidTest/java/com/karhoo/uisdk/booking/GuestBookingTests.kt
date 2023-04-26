@@ -42,10 +42,8 @@ import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_BEFORE_DRIVER_EN_ROUTE
 import com.karhoo.uisdk.util.TestData.Companion.VEHICLES_ASAP_WITH_CANCELLATION_AGREEMENTS_ZERO_MINUTES
 import com.karhoo.uisdk.util.TestSDKConfig
-import com.karhoo.uisdk.util.extension.toNormalizedLocale
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain

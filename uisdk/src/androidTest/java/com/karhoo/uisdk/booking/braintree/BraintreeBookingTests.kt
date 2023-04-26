@@ -2,7 +2,6 @@ package com.karhoo.uisdk.booking.braintree
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.test.espresso.NoActivityResumedException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
@@ -20,14 +19,12 @@ import com.karhoo.uisdk.common.testrunner.UiSDKTestConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.util.BRAINTREE
 import com.karhoo.uisdk.util.TestData
-import com.karhoo.uisdk.util.TestData.Companion.ADDRESSES_IDENTICAL
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_DESTINATION
 import com.karhoo.uisdk.util.TestData.Companion.ADDRESS_ORIGIN
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_PROVIDER
 import com.karhoo.uisdk.util.TestData.Companion.BRAINTREE_TOKEN
 import com.karhoo.uisdk.util.TestData.Companion.DESTINATION_TRIP
 import com.karhoo.uisdk.util.TestData.Companion.DRIVER_TRACKING
-import com.karhoo.uisdk.util.TestData.Companion.FLEET_INFO_ALT
 import com.karhoo.uisdk.util.TestData.Companion.GENERAL_ERROR
 import com.karhoo.uisdk.util.TestData.Companion.NO_AVAILABILITY
 import com.karhoo.uisdk.util.TestData.Companion.ORIGIN_TRIP
@@ -40,7 +37,6 @@ import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS
 import com.karhoo.uisdk.util.TestData.Companion.REVERSE_GEO_SUCCESS_ALTERNATIVE
 import com.karhoo.uisdk.util.TestData.Companion.SEARCH_ADDRESS
 import com.karhoo.uisdk.util.TestData.Companion.SELECTED_ADDRESS
-import com.karhoo.uisdk.util.TestData.Companion.LAST_FLEET
 import com.karhoo.uisdk.util.TestData.Companion.TIMEOUT
 import com.karhoo.uisdk.util.TestData.Companion.TRIP
 import com.karhoo.uisdk.util.TestData.Companion.TRIP_DER_NO_NUMBER_PLATE
@@ -53,7 +49,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
-import java.net.HttpURLConnection
 import java.net.HttpURLConnection.HTTP_BAD_REQUEST
 import java.net.HttpURLConnection.HTTP_CREATED
 import java.net.HttpURLConnection.HTTP_OK
