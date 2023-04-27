@@ -69,6 +69,7 @@ class BookingMapView @JvmOverloads constructor(
     private var isDeepLink: Boolean = false
     var initialLocation: LatLng? = null
     private var googleMap: GoogleMap? = null
+    private var topPadding: Int? = null
 
     private var presenter: BookingMapMVP.Presenter = BookingMapPresenter(
         this,
@@ -114,6 +115,13 @@ class BookingMapView @JvmOverloads constructor(
             R.styleable.BookingMapView_curvedLineColor, R.color.kh_uisdk_primary_blue
         )
         typedArray.recycle()
+    }
+
+    fun setTopPadding(padding: Int){
+        topPadding = padding
+        val width = resources.displayMetrics.widthPixels
+        val paddingSides = (width * BOOKING_MAP_CAMERA_ZOOM_WIDTH_PADDING).toInt()
+        googleMap?.setPadding(paddingSides, padding, paddingSides, 0)
     }
 
     fun centreMapToPickupPin() {
@@ -285,6 +293,10 @@ class BookingMapView @JvmOverloads constructor(
 
         val cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding)
         googleMap?.moveCamera(cu)
+
+        topPadding?.let {
+            googleMap?.setPadding(padding, it, padding, padding)
+        }
     }
 
     private fun recentreMapIfDestinationIsNull() {
