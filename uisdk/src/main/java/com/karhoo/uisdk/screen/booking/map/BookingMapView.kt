@@ -543,6 +543,10 @@ class BookingMapView @JvmOverloads constructor(
         )
     }
 
+    override fun showBlockingErrorDialog(stringId: Int, karhooError: KarhooError?) {
+        // Do nothing since booking map view is not exposed
+    }
+
     companion object {
         private const val MAP_DEFAULT_NO_PERMISSIONS_ZOOM = 5.0f
         private const val MAP_DEFAULT_ZOOM = 16f
