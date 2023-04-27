@@ -217,13 +217,11 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
         val featureFlag = FeatureFlagsProvider.getFeatureFlags()
 
         featureFlag?.forEach {
-            if (BuildConfig.VERSION_NAME >= it.version
-                && it.flags[ADYEN_AVAILABLE] == false
-                && KarhooUISDKConfigurationProvider.configuration.paymentManager.javaClass.name.contains(
-                    FORBIDDEN_PAYMENT_MANAGER
-                )
-            ) {
-                showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
+            if (BuildConfig.VERSION_NAME >= it.version && KarhooUISDKConfigurationProvider.configuration.paymentManager.javaClass.name.contains(FORBIDDEN_PAYMENT_MANAGER)) {
+                if (it.flags[ADYEN_AVAILABLE] == false) {
+                    showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
+                }
+
                 return
             }
         }

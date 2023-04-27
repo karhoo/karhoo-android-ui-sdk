@@ -50,9 +50,6 @@ object KarhooUISDK {
         KarhooApi.setConfiguration(configuration)
 
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
-        VehicleMappingsProvider.retrieveVehicleMappings()
-
         FeatureFlagsProvider.setup(KarhooApi.configService)
-        FeatureFlagsProvider.retrieveFeatureFlags()
     }
 }
