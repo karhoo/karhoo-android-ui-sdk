@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -26,6 +27,9 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.util.FeatureFlagsProvider
+import com.karhoo.uisdk.util.FeatureFlagsProvider.ADYEN_AVAILABLE
+import com.karhoo.uisdk.util.FeatureFlagsProvider.FORBIDDEN_PAYMENT_MANAGER
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -60,6 +64,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
         handleExtras()
         initialiseViewListeners()
         bindViews()
+        checkAdyenCompatibility()
     }
 
     override fun onResume() {
@@ -206,6 +211,30 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
     private fun enableErrorLock() {
         backgroundFade?.startTransition(resources.getInteger(R.integer.kh_uisdk_snackbar_background_fade))
         snackBarContainer?.isClickable = true
+    }
+
+    private fun checkAdyenCompatibility() {
+        val featureFlag = FeatureFlagsProvider.getFeatureFlags()
+
+        featureFlag?.forEach {
+            if (BuildConfig.VERSION_NAME >= it.version && KarhooUISDKConfigurationProvider.configuration.paymentManager.javaClass.name.contains(FORBIDDEN_PAYMENT_MANAGER)) {
+                if (it.flags[ADYEN_AVAILABLE] == false) {
+                    showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
+                }
+
+                return
+            }
+        }
+    }
+
+    override fun showBlockingErrorDialog(stringId: Int, karhooError: KarhooError?) {
+        val config = KarhooAlertDialogConfig(
+            messageResId = stringId,
+            karhooError = karhooError,
+            cancellable = false,
+            positiveButton = KarhooAlertDialogAction(R.string.kh_uisdk_ok) { dialog, _ -> this.finish() }
+        )
+        KarhooAlertDialogHelper(this).showAlertDialog(config)
     }
 
     protected abstract fun handleExtras()

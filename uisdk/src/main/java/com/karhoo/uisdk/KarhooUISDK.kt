@@ -14,6 +14,7 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
 import com.karhoo.uisdk.screen.trip.TripActivity
+import com.karhoo.uisdk.util.FeatureFlagsProvider
 
 object KarhooUISDK {
 
@@ -48,11 +49,7 @@ object KarhooUISDK {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
         KarhooApi.setConfiguration(configuration)
 
-        cacheVehicleMappings()
-    }
-
-    private fun cacheVehicleMappings() {
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
-        VehicleMappingsProvider.retrieveVehicleMappings()
+        FeatureFlagsProvider.setup(KarhooApi.configService)
     }
 }
