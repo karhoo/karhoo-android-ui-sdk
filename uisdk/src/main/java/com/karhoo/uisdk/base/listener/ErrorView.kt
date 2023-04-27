@@ -14,6 +14,8 @@ interface ErrorView {
 
     fun showErrorDialog(@StringRes stringId: Int, karhooError: KarhooError? = null)
 
+    fun showBlockingErrorDialog(@StringRes stringId: Int, karhooError: KarhooError? = null)
+
     fun dismissSnackbar()
 
 }

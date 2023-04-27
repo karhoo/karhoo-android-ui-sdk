@@ -12,6 +12,10 @@ object FeatureFlagsProvider {
     private const val FEATURE_FLAGS_DEV_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-sdk/develop/feature_flag.json"
     private var featureFlags: List<FeatureFlag>? = null
     private lateinit var configService: ConfigService
+    const val ADYEN_AVAILABLE = "adyenAvailable"
+    const val NEW_RIDE_PLANNING = "newRidePlanningScreen"
+    const val FORBIDDEN_PAYMENT_MANAGER = "AdyenPaymentManager"
+
 
     fun setup(configService: ConfigService) {
         this.configService = configService
@@ -45,5 +49,4 @@ object FeatureFlagsProvider {
     fun getFeatureFlags(): List<FeatureFlag>? {
         return featureFlags
     }
-
 }
