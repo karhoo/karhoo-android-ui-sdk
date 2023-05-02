@@ -371,6 +371,11 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
                     journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
                 } else if (data?.hasExtra(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY) == true) {
                     journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
+                    bookingMapWidget.clearMarkers()
+                    bookingModeWidget.show(show = false)
+                    if(isLocateMeEnabled(this)){
+                        bookingMapWidget.locateUser()
+                    }
                     val tripInfo =
                         data.getParcelableExtra<TripInfo>(CheckoutActivity.BOOKING_CHECKOUT_PREBOOK_TRIP_INFO_KEY)
 
@@ -490,8 +495,13 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     override fun onBookingCancelledOrFinished() {
         addressBarWidget.visibility = View.VISIBLE
         toolbar.visibility = View.VISIBLE
-        bookingModeWidget.visibility = View.VISIBLE
+        bookingModeWidget.visibility = View.GONE
         navigationDrawerWidget.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
+        bookingMapWidget.clearMarkers()
+        if(isLocateMeEnabled(this)){
+            bookingMapWidget.locateUser()
+        }
 
         journeyDetailsStateViewModel.process(AddressBarViewContract.AddressBarEvent.ResetJourneyDetailsEvent)
     }
