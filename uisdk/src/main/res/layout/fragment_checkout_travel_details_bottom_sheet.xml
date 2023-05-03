@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small_intermediate"
-        android:textColor="@color/kh_uisdk_text_primary"
+        android:textColor="@color/kh_uisdk_label"
         android:textSize="12sp"
         />
 
