@@ -27,6 +27,7 @@ class BookingVehicleDetailsView @JvmOverloads constructor(
 
     fun bindViews(
         url: String?,
+        vehicleImageContentDescription: String?,
         fleetName: String,
         type: String?,
         serviceCancellation: ServiceCancellation?,
@@ -44,8 +45,10 @@ class BookingVehicleDetailsView @JvmOverloads constructor(
 
         presenter.checkCancellationSLAMinutes(context, serviceCancellation, isPrebook)
         loadImage(url)
+        logoImage.contentDescription = vehicleImageContentDescription
 
         vehicleFleet.text = fleetName
+        vehicleFleet.contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_fleet_name) + " " + fleetName
 
         Picasso.get().load(vehicleFleetLogoUrl).into(vehicleLogo)
 

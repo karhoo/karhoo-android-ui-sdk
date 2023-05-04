@@ -271,12 +271,18 @@ internal class CheckoutView @JvmOverloads constructor(
     }
 
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
-        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
-            vehicle.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
-        } ?: vehicle.fleet.logoUrl
+        val logoImageRule = VehicleMappingsProvider.getVehicleMappings()?.let {
+            vehicle.vehicle.getCorrespondingLogoMapping(it)
+        }
+        val logoImageUrl = logoImageRule?.vehicleImagePNG ?: vehicle.fleet.logoUrl
+        val logoImageTag =
+            logoImageRule?.vehicleTags?.firstOrNull() ?:
+            vehicle.vehicle.vehicleTags.firstOrNull() ?:
+            vehicle.vehicle.vehicleType
 
         bookingRequestQuotesWidget.bindViews(
             logoImageUrl,
+            logoImageTag,
             vehicle.fleet.name.orEmpty(),
             vehicle.vehicle.vehicleType,
             vehicle.serviceAgreements?.freeCancellation,

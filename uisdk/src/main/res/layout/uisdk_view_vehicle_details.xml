@@ -15,7 +15,8 @@
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/uisdk_ic_profile" />
+        tools:src="@drawable/uisdk_ic_profile"
+        />
 
     <TextView
         android:id="@+id/vehicleType"
