@@ -46,8 +46,8 @@ class LegalNoticeView @JvmOverloads constructor(
                 resources.getString(R.string.kh_uisdk_legal_notice_title),
                 resources.getString(R.string.kh_uisdk_legal_notice_link),
                 noticeText,
-                resources.getColor(R.color.kh_uisdk_colorAccent)
-                                                                  )
+                resources.getColor(R.color.kh_uisdk_accent)
+            )
         } else {
             legalNoticeContainer.visibility = GONE
         }
