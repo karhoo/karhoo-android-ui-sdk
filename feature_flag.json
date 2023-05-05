@@ -19,7 +19,7 @@
       "adyenAvailable": true,
       "newRidePlaningScreen": false,
       "loyaltyCanEarn": true,
-      "loyaltyCanBurn": false
+      "loyaltyCanBurn": true
     }
   }
 ]
