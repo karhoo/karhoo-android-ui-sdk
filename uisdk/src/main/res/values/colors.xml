@@ -116,6 +116,11 @@
     <color name="kh_uisdk_background4">#E5E5E5</color>
     <color name="kh_uisdk_background4_transparent">#C5E5E5E5</color>
 
+    <!-- Always variations of white and black no matter the theme -->
+    <!-- For example the white text on the secondary color buttons or the black gradient on the bottom sheet -->
+    <color name="kh_uisdk_white">#FFFFFF</color>
+    <color name="kh_uisdk_black">#121212</color>
+
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>
     <color name="textColor">@color/kh_uisdk_text_primary</color>
