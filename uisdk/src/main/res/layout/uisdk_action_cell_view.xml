@@ -14,7 +14,8 @@
         android:layout_width="@dimen/kh_uisdk_checkout_icon_size_default"
         android:layout_height="@dimen/kh_uisdk_checkout_icon_size_default"
         android:background="@drawable/kh_uisdk_ic_passenger"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:importantForAccessibility="no"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,6 +61,7 @@
                 android:layout_width="@dimen/kh_uisdk_spacing_x6small"
                 android:layout_height="@dimen/kh_uisdk_spacing_small_intermediate"
                 android:background="@drawable/kh_uisdk_ic_arrow_right"
+                android:contentDescription="@string/kh_uisdk_accessibility_icon_edit_arrow"
                 />
         </LinearLayout>
 

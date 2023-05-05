@@ -271,12 +271,18 @@ internal class CheckoutView @JvmOverloads constructor(
     }
 
     override fun bindQuoteAndTerms(vehicle: Quote, isPrebook: Boolean) {
-        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
-            vehicle.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
-        } ?: vehicle.fleet.logoUrl
+        val logoImageRule = VehicleMappingsProvider.getVehicleMappings()?.let {
+            vehicle.vehicle.getCorrespondingLogoMapping(it)
+        }
+        val logoImageUrl = logoImageRule?.vehicleImagePNG ?: vehicle.fleet.logoUrl
+        val logoImageTag =
+            logoImageRule?.vehicleTags?.firstOrNull() ?:
+            vehicle.vehicle.vehicleTags.firstOrNull() ?:
+            vehicle.vehicle.vehicleType
 
         bookingRequestQuotesWidget.bindViews(
             logoImageUrl,
+            logoImageTag,
             vehicle.fleet.name.orEmpty(),
             vehicle.vehicle.vehicleType,
             vehicle.serviceAgreements?.freeCancellation,
@@ -503,11 +509,15 @@ internal class CheckoutView @JvmOverloads constructor(
         }
 
         if (arePassengerDetailFieldsValid() && passengerDetails != null) {
-            bookingCheckoutPassengerView.setTitle(passengerDetails.firstName + " " + passengerDetails.lastName)
+            val title = passengerDetails.firstName + " " + passengerDetails.lastName
+            val titleContentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_passenger)  + " " + title
+            bookingCheckoutPassengerView.setTitle(title)
             bookingCheckoutPassengerView.setSubtitle(passengerDetails.phoneNumber.toString())
+            bookingCheckoutPassengerView.setTitleContentDescription(titleContentDescription)
         } else {
             bookingCheckoutPassengerView.setTitle(resources.getString(R.string.kh_uisdk_booking_checkout_passenger))
             bookingCheckoutPassengerView.setSubtitle(resources.getString(R.string.kh_uisdk_booking_checkout_add_passenger))
+            bookingCheckoutPassengerView.setTitleContentDescription(resources.getString(R.string.kh_uisdk_accessibility_label_passenger))
         }
     }
 
@@ -546,6 +556,7 @@ internal class CheckoutView @JvmOverloads constructor(
         bookingCheckoutCommentView.setActionIcon(R.drawable.kh_uisdk_ic_checkout_comments)
 
         bookingCheckoutCommentView.setTitle(context.getString(R.string.kh_uisdk_checkout_comments_title))
+        bookingCheckoutCommentView.setTitleContentDescription(resources.getString(R.string.kh_uisdk_accessibility_label_comments))
         comments?.let {
             bookingComments = it
             if (it.isEmpty())
@@ -587,6 +598,8 @@ internal class CheckoutView @JvmOverloads constructor(
         bookingCheckoutTravelDetailsView.visibility = VISIBLE
         bookingCheckoutTravelDetailsView.setActionIcon(if(isAirport) R.drawable.kh_uisdk_ic_checkout_airport else R.drawable.kh_uisdk_ic_checkout_train)
         bookingCheckoutTravelDetailsView.setTitle(if(isAirport) context.getString(R.string.kh_uisdk_checkout_airport_title) else context.getString(R.string.kh_uisdk_checkout_train_title))
+        val titleResId = if(isAirport) R.string.kh_uisdk_accessibility_label_flight_number else R.string.kh_uisdk_accessibility_label_train_number
+        bookingCheckoutTravelDetailsView.setTitleContentDescription(resources.getString(titleResId))
         bookingCheckoutTravelDetailsView.setSubtitle(if(isAirport) context.getString(R.string.kh_uisdk_checkout_airport_subtitle) else context.getString(R.string.kh_uisdk_checkout_train_subtitle))
 
         travelDetails?.let {

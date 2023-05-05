@@ -15,7 +15,8 @@
         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_passengers" />
+        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_passengers"
+        android:importantForAccessibility="no"/>
 
     <TextView
         android:id="@+id/peopleCapacityText"
@@ -29,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/passengerIcon"
         app:layout_constraintStart_toEndOf="@+id/passengerIcon"
         app:layout_constraintTop_toTopOf="@+id/passengerIcon"
-        tools:text="4" />
+        tools:text="4"/>
 
     <ImageView
         android:id="@+id/briefcaseIcon"
@@ -41,7 +42,8 @@
         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
         app:layout_constraintStart_toEndOf="@+id/peopleCapacityText"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_baggage" />
+        app:srcCompat="@drawable/kh_uisdk_ic_capabilities_baggage"
+        android:importantForAccessibility="no"/>
 
     <TextView
         android:id="@+id/luggageCapacityText"

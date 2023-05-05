@@ -5,5 +5,6 @@ interface ActionCellContract {
         fun setActionIcon(iconId: Int)
         fun setTitle(titleId: String)
         fun setSubtitle(subtitleId: String)
+        fun setTitleContentDescription(text: String)
     }
 }
