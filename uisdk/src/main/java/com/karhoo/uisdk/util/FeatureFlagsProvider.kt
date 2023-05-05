@@ -8,13 +8,15 @@ import com.karhoo.sdk.api.service.config.ConfigService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 
 object FeatureFlagsProvider {
-    private const val FEATURE_FLAGS_PROD_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/MOB-4738/feature_flag.json"
+    private const val FEATURE_FLAGS_PROD_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/master/feature_flag.json"
     private const val FEATURE_FLAGS_DEV_URL = "https://raw.githubusercontent.com/karhoo/karhoo-android-sdk/develop/feature_flag.json"
     private var featureFlags: List<FeatureFlag>? = null
     private lateinit var configService: ConfigService
     const val ADYEN_AVAILABLE = "adyenAvailable"
     const val NEW_RIDE_PLANNING = "newRidePlanningScreen"
     const val FORBIDDEN_PAYMENT_MANAGER = "AdyenPaymentManager"
+    const val LOYALTY_CAN_EARN = "loyaltyCanEarn"
+    const val LOYALTY_CAN_BURN = "loyaltyCanBurn"
 
 
     fun setup(configService: ConfigService) {

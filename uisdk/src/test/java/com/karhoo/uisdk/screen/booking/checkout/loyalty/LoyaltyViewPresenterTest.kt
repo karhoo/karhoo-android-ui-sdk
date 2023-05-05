@@ -84,6 +84,7 @@ class LoyaltyViewPresenterTest {
     fun `When setting up a BURN mode, if the user cannot burn, then the mode isn't set`() {
         val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = false)
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         presenter.getLoyaltyStatus()
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
         presenter.updateLoyaltyMode(LoyaltyMode.BURN)
@@ -119,6 +120,7 @@ class LoyaltyViewPresenterTest {
         val loyaltyStatus = LoyaltyStatus(LOYALTY_POINTS, canEarn = false, canBurn = true)
         presenter.set(LoyaltyViewDataModel(LOYALTY_ID, LOYALTY_CURRENCY, LOYALTY_AMOUNT))
         presenter.getLoyaltyStatus()
+        whenever(userStore.loyaltyStatus).thenReturn(loyaltyStatus)
         lambdaCaptor.firstValue.invoke(Resource.Success(loyaltyStatus))
         presenter.updateLoyaltyMode(LoyaltyMode.EARN)
 
