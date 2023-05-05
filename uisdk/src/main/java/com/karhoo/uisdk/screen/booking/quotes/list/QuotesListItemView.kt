@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
 import com.karhoo.sdk.api.model.QuoteType
@@ -32,6 +33,7 @@ import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRati
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRatingLayout
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImageSmall
 import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.driverArrivalText
+import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoBadgeImage
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(
@@ -74,6 +76,17 @@ class QuotesListItemView @JvmOverloads constructor(
             vehicleDetails.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
         } ?: vehicleDetails.fleet.logoUrl
         loadImages(logoImageUrl , vehicleDetails.fleet.logoUrl)
+
+        val badgeDrawableRes = when {
+            vehicleDetails.vehicle.vehicleTags.contains("electric") -> R.drawable.kh_uisdk_electric
+            vehicleDetails.vehicle.vehicleTags.contains("hybrid") -> R.drawable.kh_uisdk_hybrid
+            vehicleDetails.vehicle.vehicleTags.contains("economy") -> R.drawable.kh_uisdk_economy
+            else -> null // Handle the case when no badge needs to be shown
+        }
+
+        if (badgeDrawableRes != null) {
+            logoBadgeImage.setImageDrawable(ContextCompat.getDrawable(context, badgeDrawableRes))
+        }
 
         setCategoryText(vehicleDetails.vehicle)
         setPrice(vehicleDetails)
