@@ -24,7 +24,7 @@ class BookingVehicleDetailsView @JvmOverloads constructor(
     init {
         inflate(context, R.layout.uisdk_view_vehicle_details, this)
     }
-
+    @Suppress("LongParameterList")
     fun bindViews(
         url: String?,
         vehicleImageContentDescription: String?,
