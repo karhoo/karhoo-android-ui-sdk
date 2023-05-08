@@ -16,6 +16,7 @@ import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
+import com.karhoo.uisdk.util.extension.logoImageTag
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
@@ -72,15 +73,21 @@ class QuotesListItemView @JvmOverloads constructor(
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name
 
-        val logoImageUrl = VehicleMappingsProvider.getVehicleMappings()?.let {
-            vehicleDetails.vehicle.getCorrespondingLogoMapping(it)?.vehicleImagePNG
-        } ?: vehicleDetails.fleet.logoUrl
+        val logoImageRule =  VehicleMappingsProvider.getVehicleMappings()?.let {
+            vehicleDetails.vehicle.getCorrespondingLogoMapping(it)
+        }
+
+        val logoImageUrl = logoImageRule?.vehicleImagePNG ?: vehicleDetails.fleet.logoUrl
         loadImages(logoImageUrl , vehicleDetails.fleet.logoUrl)
 
+        val logoImageTag = vehicleDetails.vehicle.logoImageTag(context, logoImageRule)
+        logoImage.contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_quote_card) + " " + logoImageTag
+
+        val vehicleTags = vehicleDetails.vehicle.vehicleTags.map { it.lowercase() }
         val badgeDrawableRes = when {
-            vehicleDetails.vehicle.vehicleTags.contains("electric") -> R.drawable.kh_uisdk_electric
-            vehicleDetails.vehicle.vehicleTags.contains("hybrid") -> R.drawable.kh_uisdk_hybrid
-            vehicleDetails.vehicle.vehicleTags.contains("economy") -> R.drawable.kh_uisdk_economy
+            vehicleTags.contains("electric") -> R.drawable.kh_uisdk_electric
+            vehicleTags.contains("hybrid") -> R.drawable.kh_uisdk_hybrid
+            vehicleTags.contains("economy") -> R.drawable.kh_uisdk_economy
             else -> null // Handle the case when no badge needs to be shown
         }
 
