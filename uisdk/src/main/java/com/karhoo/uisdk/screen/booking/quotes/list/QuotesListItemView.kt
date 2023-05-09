@@ -85,9 +85,9 @@ class QuotesListItemView @JvmOverloads constructor(
 
         val vehicleTags = vehicleDetails.vehicle.vehicleTags.map { it.lowercase() }
         val badgeDrawableRes = when {
+            vehicleTags.contains("economy") -> R.drawable.kh_uisdk_economy
             vehicleTags.contains("electric") -> R.drawable.kh_uisdk_electric
             vehicleTags.contains("hybrid") -> R.drawable.kh_uisdk_hybrid
-            vehicleTags.contains("economy") -> R.drawable.kh_uisdk_economy
             else -> null // Handle the case when no badge needs to be shown
         }
 

@@ -276,8 +276,6 @@ internal class CheckoutView @JvmOverloads constructor(
             vehicle.vehicle.getCorrespondingLogoMapping(it)
         }
         val logoImageUrl = logoImageRule?.vehicleImagePNG ?: vehicle.fleet.logoUrl
-
-        val vehicleTags = vehicle.vehicle.vehicleTags.map { it.lowercase() }
         val logoImageTag = vehicle.vehicle.logoImageTag(context, logoImageRule)
 
         bookingRequestQuotesWidget.bindViews(

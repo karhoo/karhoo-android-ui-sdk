@@ -87,9 +87,9 @@ fun QuoteVehicle.getCorrespondingLogoMapping(vehicleMappings: VehicleMappings): 
 fun QuoteVehicle.logoImageTag(context: Context, mapping: VehicleMapping?): String? {
     val tags = vehicleTags.map { it.lowercase() }
     val logoImageTag = when {
+        tags.contains("economy") -> context.resources.getString(R.string.kh_uisdk_accessibility_icon_economy)
         tags.contains("electric") -> context.resources.getString(R.string.kh_uisdk_accessibility_icon_electric)
         tags.contains("hybrid") -> context.resources.getString(R.string.kh_uisdk_accessibility_icon_hybrid)
-        tags.contains("economy") -> context.resources.getString(R.string.kh_uisdk_accessibility_icon_economy)
         else -> mapping?.vehicleTags?.firstOrNull() ?:
         tags.firstOrNull() ?:
         vehicleType
