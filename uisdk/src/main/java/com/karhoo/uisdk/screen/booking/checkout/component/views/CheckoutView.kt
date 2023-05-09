@@ -59,6 +59,7 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
+import com.karhoo.uisdk.util.extension.logoImageTag
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.*
@@ -275,10 +276,7 @@ internal class CheckoutView @JvmOverloads constructor(
             vehicle.vehicle.getCorrespondingLogoMapping(it)
         }
         val logoImageUrl = logoImageRule?.vehicleImagePNG ?: vehicle.fleet.logoUrl
-        val logoImageTag =
-            logoImageRule?.vehicleTags?.firstOrNull() ?:
-            vehicle.vehicle.vehicleTags.firstOrNull() ?:
-            vehicle.vehicle.vehicleType
+        val logoImageTag = vehicle.vehicle.logoImageTag(context, logoImageRule)
 
         bookingRequestQuotesWidget.bindViews(
             logoImageUrl,
