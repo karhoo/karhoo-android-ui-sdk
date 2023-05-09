@@ -115,6 +115,9 @@
     <color name="kh_uisdk_background4">#2C2C2C</color>
     <color name="kh_uisdk_background4_transparent">#C52C2C2C</color>
 
+    <color name="kh_uisdk_white">#E0E0E0</color>
+    <color name="kh_uisdk_black">#121212</color>
+
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>
     <color name="textColor">@color/kh_uisdk_text_primary</color>

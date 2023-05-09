@@ -4,7 +4,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="1.5dp"
-                android:color="@color/kh_uisdk_colorAccent" />
+                android:color="@color/kh_uisdk_accent" />
             <size
                 android:width="20dp"
                 android:height="20dp" />
@@ -19,7 +19,7 @@
         <shape android:shape="oval">
             <stroke
                 android:width="4.5dp"
-                android:color="@color/kh_uisdk_accent_opacity50" />
+                android:color="@color/kh_uisdk_transparent" />
         </shape>
     </item>
     <item
@@ -30,7 +30,7 @@
         <shape android:shape="oval">
             <solid
                 android:width="1dp"
-                android:color="@color/kh_uisdk_colorAccent" />
+                android:color="@color/kh_uisdk_accent" />
             <size
                 android:width="8dp"
                 android:height="8dp" />

@@ -25,4 +25,8 @@ class ActionCellView @kotlin.jvm.JvmOverloads constructor(context: Context,
     override fun setTitle(title: String) {
         view.actionViewTitle.text = title
     }
+
+    override fun setTitleContentDescription(text: String) {
+        view.actionViewTitle.contentDescription = text
+    }
 }

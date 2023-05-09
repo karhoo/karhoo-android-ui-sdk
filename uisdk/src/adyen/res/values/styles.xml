@@ -308,7 +308,7 @@
     </style>
 
     <style name="KhSQuotesListView">
-        <item name="android:background">@drawable/uisdk_quotes_list_bg</item>
+        <item name="android:background">@drawable/kh_uisdk_quote_list_background</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetTitle">

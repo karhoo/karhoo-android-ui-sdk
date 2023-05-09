@@ -22,6 +22,7 @@ class CapacityView @JvmOverloads constructor(
                 resources.getString(R.string.kh_uisdk_capacity, luggage.toString())
             luggageCapacityText.visibility = VISIBLE
             briefcaseIcon.visibility = VISIBLE
+            luggageCapacityText.contentDescription = resources.getString(R.string.kh_uisdk_baggage_max, luggage)
         }?: kotlin.run {
             luggageCapacityText.visibility = GONE
             briefcaseIcon.visibility = GONE
@@ -31,6 +32,7 @@ class CapacityView @JvmOverloads constructor(
             peopleCapacityText.text = resources.getString(R.string.kh_uisdk_capacity, people.toString())
             peopleCapacityText.visibility = VISIBLE
             passengerIcon.visibility = VISIBLE
+            peopleCapacityText.contentDescription = resources.getString(R.string.kh_uisdk_passengers_max, people)
         }?: kotlin.run {
             peopleCapacityText.visibility = GONE
             passengerIcon.visibility = GONE
