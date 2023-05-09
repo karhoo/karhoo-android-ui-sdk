@@ -12,6 +12,7 @@ import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyFeatureFlags
 
 class BookingPaymentHandler @JvmOverloads constructor(
     private val userStore: UserStore = KarhooApi.userStore,
@@ -121,6 +122,7 @@ class BookingPaymentHandler @JvmOverloads constructor(
     }
 
     override fun retrieveLoyaltyStatus() {
-        paymentActions?.retrieveLoyaltyStatus()
+        if(LoyaltyFeatureFlags.loyaltyEnabled)
+            paymentActions?.retrieveLoyaltyStatus()
     }
 }

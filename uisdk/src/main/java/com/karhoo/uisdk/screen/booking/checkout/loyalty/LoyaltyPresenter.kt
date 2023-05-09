@@ -191,22 +191,10 @@ class LoyaltyPresenter(
 
                         val loyaltyStatus = result.data
 
-                        var canEarn = true
-                        var canBurn = true
-                        val featureFlag = FeatureFlagsProvider.getFeatureFlags()
-                        featureFlag?.forEach {
-                            if(BuildConfig.VERSION_NAME >= it.version){
-                                if (it.flags[FeatureFlagsProvider.LOYALTY_CAN_EARN] == false)
-                                    canEarn = false
-                                if (it.flags[FeatureFlagsProvider.LOYALTY_CAN_BURN] == false)
-                                    canBurn = false
-                            }
-                        }
-
                         userStore.loyaltyStatus = LoyaltyStatus().apply {
                             this.points = loyaltyStatus.points
-                            this.canBurn = loyaltyStatus.canBurn == true && canBurn
-                            this.canEarn = loyaltyStatus.canEarn == true && canEarn
+                            this.canBurn = loyaltyStatus.canBurn == true && LoyaltyFeatureFlags.loyaltyCanBurn
+                            this.canEarn = loyaltyStatus.canEarn == true && LoyaltyFeatureFlags.loyaltyCanEarn
                         }
 
                         userStore.loyaltyStatus?.let {
