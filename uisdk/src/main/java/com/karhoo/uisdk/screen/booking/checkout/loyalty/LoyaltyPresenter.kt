@@ -8,12 +8,9 @@ import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.request.LoyaltyPreAuthPayload
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.util.FeatureFlagsProvider
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import java.util.Currency
 
 class LoyaltyPresenter(
