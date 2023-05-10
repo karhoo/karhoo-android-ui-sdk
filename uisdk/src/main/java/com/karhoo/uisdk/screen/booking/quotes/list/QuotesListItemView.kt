@@ -1,7 +1,6 @@
 package com.karhoo.uisdk.screen.booking.quotes.list
 
 import android.content.Context
-import android.opengl.Visibility
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
