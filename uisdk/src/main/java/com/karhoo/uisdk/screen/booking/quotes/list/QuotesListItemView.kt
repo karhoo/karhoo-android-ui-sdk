@@ -93,6 +93,9 @@ class QuotesListItemView @JvmOverloads constructor(
 
         if (badgeDrawableRes != null) {
             logoBadgeImage.setImageDrawable(ContextCompat.getDrawable(context, badgeDrawableRes))
+            logoBadgeImage.visibility = View.VISIBLE
+        } else {
+            logoBadgeImage.visibility = View.GONE
         }
 
         setCategoryText(vehicleDetails.vehicle)

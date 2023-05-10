@@ -32,6 +32,7 @@ import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_DR
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_PICKUP_ADDRESS
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_DATE
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP
+import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -171,6 +172,8 @@ internal class CheckoutFragment : Fragment() {
                         isTermsCheckBoxValid = checkoutView.isTermsCheckBoxValid()
                     ).resId
                 )
+                val titleId = if (visible) R.string.kh_uisdk_passenger_details else R.string.kh_uisdk_booking_checkout_title
+                (activity as CheckoutActivity)?.checkoutToolbar?.title = resources.getString(titleId)
             }
 
             override fun onPassengerSelected(passengerDetails: PassengerDetails?) {
