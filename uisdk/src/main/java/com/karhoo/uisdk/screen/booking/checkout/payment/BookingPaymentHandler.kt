@@ -132,7 +132,7 @@ class BookingPaymentHandler @JvmOverloads constructor(
             }
         }
 
-        if(loyaltyEnabled && userStore.paymentProvider?.loyalty?.id.isNullOrEmpty())
+        if(loyaltyEnabled && !userStore.paymentProvider?.loyalty?.id.isNullOrEmpty())
             paymentActions?.retrieveLoyaltyStatus()
     }
 }
