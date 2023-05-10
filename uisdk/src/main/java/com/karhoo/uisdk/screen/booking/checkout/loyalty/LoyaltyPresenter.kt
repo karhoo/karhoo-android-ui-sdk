@@ -8,7 +8,9 @@ import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.request.LoyaltyPreAuthPayload
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.loyalty.LoyaltyService
+import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.util.FeatureFlagsProvider
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
 import java.util.Currency
@@ -188,10 +190,22 @@ class LoyaltyPresenter(
 
                         val loyaltyStatus = result.data
 
+                        var canEarn = true
+                        var canBurn = true
+                        val featureFlag = FeatureFlagsProvider.getFeatureFlags()
+                        featureFlag?.forEach {
+                            if(BuildConfig.VERSION_NAME >= it.version){
+                                if (it.flags[FeatureFlagsProvider.LOYALTY_CAN_EARN] == false)
+                                    canEarn = false
+                                if (it.flags[FeatureFlagsProvider.LOYALTY_CAN_BURN] == false)
+                                    canBurn = false
+                            }
+                        }
+
                         userStore.loyaltyStatus = LoyaltyStatus().apply {
                             this.points = loyaltyStatus.points
-                            this.canBurn = loyaltyStatus.canBurn == true && LoyaltyFeatureFlags.loyaltyCanBurn
-                            this.canEarn = loyaltyStatus.canEarn == true && LoyaltyFeatureFlags.loyaltyCanEarn
+                            this.canBurn = loyaltyStatus.canBurn == true && canBurn
+                            this.canEarn = loyaltyStatus.canEarn == true && canEarn
                         }
 
                         userStore.loyaltyStatus?.let {

@@ -378,19 +378,14 @@ internal class CheckoutViewPresenter(
     }
 
     override fun createLoyaltyViewResponse() {
-        val loyaltyId = userStore.paymentProvider?.loyalty?.id
-        if (!loyaltyId.isNullOrEmpty()) {
-            view?.showLoyaltyView(
-                show = true,
-                LoyaltyViewDataModel(
-                    loyaltyId = loyaltyId,
-                    tripAmount = quote?.price?.highPrice?.toDouble() ?: 0.0,
-                    currency = quote?.price?.currencyCode ?: ""
-                )
+        view?.showLoyaltyView(
+            show = true,
+            LoyaltyViewDataModel(
+                loyaltyId = userStore.paymentProvider?.loyalty?.id!!,
+                tripAmount = quote?.price?.highPrice?.toDouble() ?: 0.0,
+                currency = quote?.price?.currencyCode ?: ""
             )
-        } else {
-            view?.showLoyaltyView(show = false)
-        }
+        )
     }
 
     private fun logBookingEvent(result: Resource<TripInfo>) {
