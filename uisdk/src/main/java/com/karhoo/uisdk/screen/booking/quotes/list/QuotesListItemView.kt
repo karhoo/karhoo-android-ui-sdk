@@ -1,6 +1,7 @@
 package com.karhoo.uisdk.screen.booking.quotes.list
 
 import android.content.Context
+import android.opengl.Visibility
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -93,6 +94,9 @@ class QuotesListItemView @JvmOverloads constructor(
 
         if (badgeDrawableRes != null) {
             logoBadgeImage.setImageDrawable(ContextCompat.getDrawable(context, badgeDrawableRes))
+            logoBadgeImage.visibility = View.VISIBLE
+        } else {
+            logoBadgeImage.visibility = View.GONE
         }
 
         setCategoryText(vehicleDetails.vehicle)
