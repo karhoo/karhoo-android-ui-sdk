@@ -17,9 +17,7 @@
     "version": "1.12.0",
     "flags": {
       "adyenAvailable": true,
-      "newRidePlaningScreen": false,
-      "loyaltyCanEarn": true,
-      "loyaltyCanBurn": true
+      "newRidePlaningScreen": false
     }
   }
 ]
