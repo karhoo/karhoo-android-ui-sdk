@@ -15,6 +15,7 @@ object FeatureFlagsProvider {
     const val ADYEN_AVAILABLE = "adyenAvailable"
     const val NEW_RIDE_PLANNING = "newRidePlanningScreen"
     const val FORBIDDEN_PAYMENT_MANAGER = "AdyenPaymentManager"
+    const val LOYALTY_ENABLED = "loyaltyEnabled"
     const val LOYALTY_CAN_EARN = "loyaltyCanEarn"
     const val LOYALTY_CAN_BURN = "loyaltyCanBurn"
 
@@ -35,7 +36,15 @@ object FeatureFlagsProvider {
             configService.featureFlags(FeatureFlagsRequest(url)).execute {
                 when (it) {
                     is Resource.Success -> {
-                        featureFlags = it.data
+                        val originalList = ArrayList<FeatureFlag>(it.data)
+                        originalList.forEach { flag ->
+                            flag.flags = flag.flags.toMutableMap().apply {
+                                put(LOYALTY_ENABLED, true)
+                                put(LOYALTY_CAN_EARN, true)
+                                put(LOYALTY_CAN_BURN, true)
+                            }
+                        }
+                        featureFlags = originalList
 
                         callback?.invoke(featureFlags)
                     }

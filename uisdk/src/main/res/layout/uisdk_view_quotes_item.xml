@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +57,8 @@
                             android:layout_height="@dimen/kh_uisdk_icon_size"
                             android:layout_alignTop="@id/logoImage"
                             android:layout_alignEnd="@id/logoImage"
-                            android:scaleType="fitXY" />
+                            android:scaleType="fitXY"
+                            android:importantForAccessibility="no"/>
                     </RelativeLayout>
 
                     <ImageView
@@ -66,7 +67,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading" />
+                        app:srcCompat="@drawable/uisdk_ic_quotes_logo_loading"
+                        android:importantForAccessibility="no"/>
 
                 </FrameLayout>
 
@@ -201,7 +203,8 @@
                 android:layout_width="@dimen/kh_uisdk_spacing_small"
                 android:layout_height="@dimen/kh_uisdk_spacing_small"
                 android:layout_gravity="center"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:importantForAccessibility="no"/>
 
             <TextView
                 android:id="@+id/quoteNameText"

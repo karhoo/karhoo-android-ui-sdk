@@ -351,9 +351,9 @@
         <item name="android:maxLines">3</item>
     </style>
 
-    <style name="KhPassengerViewTitle">
-        <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+    <style name="KhPassengerViewSubtitle">
+        <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
     <style name="KhQuoteLearnMore">
