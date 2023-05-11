@@ -55,6 +55,28 @@
         <item name="colorOnSurface">@color/kh_uisdk_secondary</item>
     </style>
 
+    <style name="MaterialDatePickerButton">
+        <item name="color">@color/kh_uisdk_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_secondary</item>
+        <item name="colorOnPrimary">@color/kh_uisdk_secondary</item>
+        <item name="colorOnSecondary">@color/kh_uisdk_secondary</item>
+        <item name="colorOnSurface">@color/kh_uisdk_secondary</item>
+    </style>
+
+    <style name="MaterialCalendarTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorOnSurface">@color/black</item>
+        <item name="materialCalendarStyle">@style/MaterialCalendarStyle</item>
+    </style>
+
+    <style name="MaterialCalendarStyle"  parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="daySelectedStyle">@style/MaterialCalendarDaySelectedStyle</item>
+    </style>
+
+    <style name="MaterialCalendarDaySelectedStyle" parent="Widget.MaterialComponents.MaterialCalendar.Day.Selected">
+        <item name="itemFillColor">@color/kh_uisdk_accent</item>
+    </style>
+
+
     <!-- Quick fix for no background buttons -->
     <style name="NoBackgroundButtonTheme">
         <item name="colorOnSurface">@color/kh_uisdk_off_white</item>

@@ -112,7 +112,7 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                     .setTitleText(if(!forUnitTests) title else "")
                     .setSelection(previousSelectedDate?.millis ?: MaterialDatePicker.todayInUtcMilliseconds())
                     .setCalendarConstraints(constraintsBuilder)
-//                    .setTheme(R.style.ThemeOverlay_App_DatePicker)
+                    .setTheme(R.style.MaterialCalendarTheme)
                     .build()
 
             datePicker.addOnPositiveButtonClickListener {
@@ -125,60 +125,24 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
             val activity = view?.getContext() as AppCompatActivity
             val fragmentManager = activity.supportFragmentManager
             datePicker.show(fragmentManager, "tag")
-//
-//            val datePicker = DatePickerDialog(it.getContext(),
-//                R.style.DialogTheme,
-//                this,
-//                previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
-//                previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
-//                previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
-//            ).apply {
-//                datePicker?.minDate = minDate
-//                datePicker?.maxDate = maxDate
-//            }
-//            if(!forUnitTests)
-//                datePicker.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
-//            datePicker.show()
-
-
         }
     }
 
     fun displayTimePicker(hour: Int, minute: Int, timeZone: String, isCurrentDay: Boolean = false) {
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
-            val title = view?.getContext()?.getString(R.string.kh_uisdk_prebook_timezone_title) + " " + timeZone
-            val isSystem24Hour = is24HourFormat(it.getContext())
-            val clockFormat = if (isSystem24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
+            val dialog = RangeTimePickerDialog(it.getContext(),
+                R.style.DialogTheme,
+                this,
+                previousSelectedDate?.hourOfDay ?: hour,
+                previousSelectedDate?.minuteOfHour ?: minute,
+                DateFormat.is24HourFormat(it.getContext()))
+            if(!forUnitTests)
+                dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
 
-            val picker =
-                MaterialTimePicker.Builder()
-                    .setTimeFormat(clockFormat)
-                    .setHour(previousSelectedDate?.hourOfDay ?: hour)
-                    .setMinute(previousSelectedDate?.minuteOfHour ?: minute)
-                    .setTitleText(title)
-                    .build()
-
-            val activity = view?.getContext() as AppCompatActivity
-            val fragmentManager = activity.supportFragmentManager
-            picker.show(fragmentManager, "tag")
-
-            picker.addOnPositiveButtonClickListener {
-                timeSelected(picker.hour, picker.minute)
-            }
-
-//            val dialog = RangeTimePickerDialog(it.getContext(),
-//                R.style.DialogTheme,
-//                this,
-//                previousSelectedDate?.hourOfDay ?: hour,
-//                previousSelectedDate?.minuteOfHour ?: minute,
-//                DateFormat.is24HourFormat(it.getContext()))
-//            if(!forUnitTests)
-//                dialog.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
-//
-//            if(isCurrentDay)
-//                dialog.setMin(nowPlusOneHour.hourOfDay, nowPlusOneHour.minuteOfHour)
-//            dialog.show()
+            if(isCurrentDay)
+                dialog.setMin(nowPlusOneHour.hourOfDay, nowPlusOneHour.minuteOfHour)
+            dialog.show()
         }
     }
 
