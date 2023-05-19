@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Offerte kaart</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Wissel adressen uit</string>
     <string name="kh_uisdk_accessibility_label_train_number">Trein nummer</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
     <string name="kh_uisdk_add_card">KAART TOEVOEGEN</string>
     <string name="kh_uisdk_add_comment_placeholder">Aanvullende opmerkingen</string>
     <string name="kh_uisdk_add_flight_details">Vluchtnummer</string>

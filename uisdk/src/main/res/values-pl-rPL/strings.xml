@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Karta cytatu</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Zamiana adresów</string>
     <string name="kh_uisdk_accessibility_label_train_number">Numer pociągu</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
     <string name="kh_uisdk_add_card">DODAJ KARTĘ</string>
     <string name="kh_uisdk_add_comment_placeholder">Dodatkowe uwagi</string>
     <string name="kh_uisdk_add_flight_details">Numer lotu (nieobowiązkowo)</string>

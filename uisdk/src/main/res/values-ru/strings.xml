@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Цитата карты</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Поменять адреса</string>
     <string name="kh_uisdk_accessibility_label_train_number">Номер поезда</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
     <string name="kh_uisdk_add_card">ДОБАВИТЬ КАРТУ</string>
     <string name="kh_uisdk_add_comment_placeholder">Дополнительные комментарии</string>
     <string name="kh_uisdk_add_flight_details">Номер рейса (необязательно)</string>
