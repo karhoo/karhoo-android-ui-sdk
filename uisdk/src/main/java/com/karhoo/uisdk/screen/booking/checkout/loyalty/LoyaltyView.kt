@@ -35,7 +35,8 @@ class LoyaltyView @JvmOverloads constructor(
 
         loyaltyViewBurnLayout.setOnClickListener {
             if (loyaltySwitch.isEnabled) {
-                loyaltySwitch.isChecked = !loyaltySwitch.isChecked
+                loyaltySwitch.toggle()
+                loyaltySwitch.contentDescription = if (loyaltySwitch.isChecked) "@string/kh_uisdk_accessibility_loyalty_switch_enabled" else  "@string/kh_uisdk_accessibility_loyalty_switch_disabled"
                 presenter.updateLoyaltyMode(if (loyaltySwitch.isChecked) LoyaltyMode.BURN else LoyaltyMode.EARN)
             }
         }

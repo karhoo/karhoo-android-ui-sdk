@@ -32,7 +32,9 @@
                 android:id="@+id/loyaltyViewEarnLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:contentDescription="@{String.concat(@string/kh_uisdk_loyalty_title, @string/kh_uisdk_loyalty_points_earned_for_trip)}"
+            >
 
                 <TextView
                     android:id="@+id/loyaltyViewEarnTitle"
@@ -103,7 +105,9 @@
                     android:layout_gravity="start|center_vertical"
                     android:layout_weight="2.5"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:contentDescription="@{String.concat(@string/kh_uisdk_loyalty_use_points_title, @string/kh_uisdk_loyalty_use_points_off_subtitle)}"
+                    >
 
                     <TextView
                         android:id="@+id/loyaltyViewBurnTitle"
