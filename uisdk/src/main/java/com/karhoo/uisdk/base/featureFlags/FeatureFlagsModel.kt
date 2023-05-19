@@ -1,8 +1,8 @@
 package com.karhoo.uisdk.base
 
 data class FeatureFlags(
-    var adyenAvailable: Boolean?,
-    var newRidePlaningScreen: Boolean?,
+    var adyenAvailable: Boolean? = null,
+    var newRidePlaningScreen: Boolean? = null,
 ) {
     val loyaltyEnabled: Boolean
         get() = true

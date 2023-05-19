@@ -1,10 +1,15 @@
 package com.karhoo.uisdk.base.featureFlags
 
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.JsonDeserializer
+import com.google.gson.reflect.TypeToken
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class FeatureFlagsService(private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore()) {
+class FeatureFlagsService(context: Context, private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
 
     fun update() {
         val jsonUrl = "https://raw.githubusercontent.com/karhoo/karhoo-ios-ui-sdk/master/KarhooUISDK/FeatureFlags/feature_flag.json"
@@ -16,7 +21,10 @@ class FeatureFlagsService(private val currentSdkVersion: String, private val fea
         val data = inputStream.readBytes()
         val jsonString = String(data)
 
-        val decoder = Json.decodeFromString<List<FeatureFlagsModel>>(jsonString)
+        val type = object : TypeToken<List<FeatureFlagsModel>>() {
+
+        }.type
+        val decoder = Gson().fromJson<List<FeatureFlagsModel>>(jsonString, type)
 
         handleFlagSets(decoder)
     }
@@ -29,7 +37,7 @@ class FeatureFlagsService(private val currentSdkVersion: String, private val fea
     private fun selectProperSet(version: String, sets: List<FeatureFlagsModel>): FeatureFlagsModel? {
         val sortedSets = sets.sortedByDescending { it.version }
         for (set in sortedSets) {
-            if (set.version.toDoubleOrNull() != null && set.version.toDoubleOrNull() <= currentSdkVersion.toDoubleOrNull()) {
+            if (set.version.toDoubleOrNull() != null && currentSdkVersion.toDoubleOrNull() != null && set.version.toDoubleOrNull()!! <= currentSdkVersion.toDoubleOrNull()!!) {
                 return set
             }
         }
