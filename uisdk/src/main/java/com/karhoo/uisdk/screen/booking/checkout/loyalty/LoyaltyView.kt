@@ -9,6 +9,8 @@ import com.karhoo.sdk.api.model.LoyaltyNonce
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.R
+import kotlinx.android.synthetic.main.uisdk_address_static_component.view.destinationAddressTextPrimary
+import kotlinx.android.synthetic.main.uisdk_address_static_component.view.destinationAddressTextSecondary
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.*
 
@@ -36,10 +38,16 @@ class LoyaltyView @JvmOverloads constructor(
         loyaltyViewBurnLayout.setOnClickListener {
             if (loyaltySwitch.isEnabled) {
                 loyaltySwitch.toggle()
-                loyaltySwitch.contentDescription = if (loyaltySwitch.isChecked) "@string/kh_uisdk_accessibility_loyalty_switch_enabled" else  "@string/kh_uisdk_accessibility_loyalty_switch_disabled"
+                if (loyaltySwitch.isChecked) {
+                    loyaltySwitch.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_enabled)
+                } else {
+                    loyaltySwitch.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_disabled)
+                }
                 presenter.updateLoyaltyMode(if (loyaltySwitch.isChecked) LoyaltyMode.BURN else LoyaltyMode.EARN)
             }
         }
+        loyaltyViewEarnLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_title) + " " + context.resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip)
+        loyaltyViewBurnTextsLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_use_points_title) + " " + context.resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle)
     }
 
     override fun toggleFeatures(earnOn: Boolean, burnON: Boolean) {
