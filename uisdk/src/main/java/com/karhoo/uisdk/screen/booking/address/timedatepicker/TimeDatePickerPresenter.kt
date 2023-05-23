@@ -3,15 +3,12 @@ package com.karhoo.uisdk.screen.booking.address.timedatepicker
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.text.format.DateFormat
-import android.text.format.DateFormat.is24HourFormat
 import android.widget.DatePicker
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
