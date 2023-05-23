@@ -2,6 +2,9 @@ package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TimePicker
 import java.text.DateFormat
 import java.util.*
@@ -40,6 +43,10 @@ class RangeTimePickerDialog(
         if (hourOfDay > maxHour || (hourOfDay == maxHour && minute > maxMinute)) {
             validTime = false
         }
+
+        if((view.getChildAt(0) as ViewGroup).getChildAt(1).visibility == View.GONE)
+            validTime = true
+
         if (validTime) {
             currentHour = hourOfDay
             currentMinute = minute
@@ -53,6 +60,24 @@ class RangeTimePickerDialog(
         calendar[Calendar.MINUTE] = minute
         val title = dateFormat.format(calendar.time)
         setTitle(title)
+    }
+
+    override fun onClick(dialog: DialogInterface?, which: Int) {
+        if(which == BUTTON_POSITIVE){
+            val view = (dialog as RangeTimePickerDialog)
+
+            var validTime = true
+            if (view.currentHour < minHour || (view.currentHour == minHour && view.currentMinute < minMinute)) {
+                validTime = false
+            }
+            if (view.currentHour > maxHour || (view.currentHour == maxHour && view.currentMinute > maxMinute)) {
+                validTime = false
+            }
+
+            if(!validTime)
+                return
+        }
+        super.onClick(dialog, which)
     }
 
     private companion object {

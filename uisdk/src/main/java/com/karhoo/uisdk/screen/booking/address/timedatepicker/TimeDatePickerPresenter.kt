@@ -1,12 +1,14 @@
 package com.karhoo.uisdk.screen.booking.address.timedatepicker
 
-import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.text.format.DateFormat
 import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.BasePresenter
@@ -17,9 +19,10 @@ import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewMod
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.joda.time.LocalDateTime
+import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
-import java.util.Calendar
+
 class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                               val analytics: Analytics?)
     : BasePresenter<TimeDatePickerMVP.View>(), TimeDatePickerMVP.Presenter, OnDateSetListener, TimePickerDialog.OnTimeSetListener  {
@@ -90,22 +93,36 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
     var forUnitTests: Boolean = false
     fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
-        val calendar = Calendar.getInstance()
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
-            val datePicker = DatePickerDialog(it.getContext(),
-                R.style.DialogTheme,
-                this,
-                previousSelectedDate?.year ?: calendar.get(Calendar.YEAR),
-                previousSelectedDate?.monthOfYear?.minus(1) ?: calendar.get(Calendar.MONTH),
-                previousSelectedDate?.dayOfMonth ?: calendar.get(Calendar.DAY_OF_MONTH),
-            ).apply {
-                datePicker?.minDate = minDate
-                datePicker?.maxDate = maxDate
+            val title = view?.getContext()?.getString(R.string.kh_uisdk_prebook_timezone_title) + " " + timeZone
+
+            val constraintsBuilder =
+                CalendarConstraints.Builder()
+                    .setStart(minDate)
+                    .setEnd(maxDate)
+                    .build()
+
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText(if(!forUnitTests) title else "")
+                    .setSelection(previousSelectedDate?.millis ?: MaterialDatePicker.todayInUtcMilliseconds())
+                    .setCalendarConstraints(constraintsBuilder)
+                    .setTheme(R.style.MaterialCalendarTheme)
+                    .build()
+
+            datePicker.addOnPositiveButtonClickListener {
+                // Respond to positive button click.
+                val calendar = Calendar.getInstance(TimeZone.getTimeZone(timeZone))
+                calendar.timeInMillis = it
+                dateSelected(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             }
-            if(!forUnitTests)
-                datePicker.setCustomTitle(TimePickerTitleView(it.getContext()).setTitle(R.string.kh_uisdk_prebook_timezone_title, timeZone))
-            datePicker.show()
+
+            if(!forUnitTests){
+                val activity = view?.getContext() as AppCompatActivity
+                val fragmentManager = activity.supportFragmentManager
+                datePicker.show(fragmentManager, "tag")
+            }
         }
     }
 
