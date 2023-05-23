@@ -5,17 +5,19 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnFocusChangeListener
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.heetch.countrypicker.Utils
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.validator.EmailValidator
-import com.karhoo.uisdk.base.validator.PhoneNumberValidator
 import com.karhoo.uisdk.base.validator.PersonNameValidator
+import com.karhoo.uisdk.base.validator.PhoneNumberValidator
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsPresenter.Companion.PLUS_SIGN
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
@@ -33,6 +35,7 @@ import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberInput
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberLayout
 import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
+
 
 class PassengerDetailsView @JvmOverloads constructor(
         context: Context,
@@ -103,9 +106,63 @@ class PassengerDetailsView @JvmOverloads constructor(
         lastNameInput.onFocusChangeListener = createFocusChangeListener()
         emailInput.onFocusChangeListener = createFocusChangeListener()
         mobileNumberInput.onFocusChangeListener = createFocusChangeListener()
+
+        firstNameLayout.hint = firstNameLayout.hint.toString() + "*"
+        lastNameLayout.hint = lastNameLayout.hint.toString() + "*"
+        emailLayout.hint = emailLayout.hint.toString() + "*"
+        mobileNumberLayout.hint = mobileNumberLayout.hint.toString() + "*"
+
+        firstNameLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = firstNameLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+            }
+        }
+
+        lastNameLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = lastNameLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+            }
+        }
+
+        emailLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = emailLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+            }
+        }
+
+        mobileNumberLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = mobileNumberLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+            }
+        }
     }
 
     override fun setErrorOnField(field: TextInputLayout, errorId: Int) {
+        field.editText?.accessibilityDelegate = object : AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = field.hint.toString().removeSuffix("*") + " " + resources.getString(errorId)
+            }
+        }
         field.error = resources.getString(errorId)
     }
 
@@ -126,6 +183,13 @@ class PassengerDetailsView @JvmOverloads constructor(
 
         if(focusPhoneNumber){
             mobileNumberInput.requestFocus()
+
+        }
+        val examplePhone = PhoneNumberUtil.getInstance().getExampleNumber(countryCode)
+        examplePhone?.let {
+            mobileNumberLayout.placeholderText = "0".repeat(it.nationalNumber.toString().length)
+        }?: run {
+            mobileNumberLayout.placeholderText = resources.getString(R.string.kh_uisdk_placeholder_mobile_phone)
         }
     }
 
@@ -287,6 +351,10 @@ class PassengerDetailsView @JvmOverloads constructor(
 
             validationCallback?.onFieldsValidated(true)
         }
+    }
+
+    override fun retrieveLocalizedText(resourceId: Int): String {
+        return resources.getString(resourceId)
     }
 
 

@@ -2,10 +2,13 @@ package com.karhoo.uisdk.screen.booking.checkout.passengerdetails
 
 import android.content.Context
 import android.content.res.Resources
+import android.view.View
+import android.view.accessibility.AccessibilityNodeInfo
 import com.google.android.material.textfield.TextInputLayout
 import com.google.i18n.phonenumbers.NumberParseException
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.karhoo.sdk.api.network.request.PassengerDetails
+import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BasePresenter
 import com.karhoo.uisdk.base.validator.EmptyFieldValidator
 import com.karhoo.uisdk.base.validator.PhoneNumberValidator
@@ -135,6 +138,15 @@ class PassengerDetailsPresenter(view: PassengerDetailsContract.View) : BasePrese
         } else {
             layout.isErrorEnabled = false
             layout.error = null
+            layout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+                override fun onInitializeAccessibilityNodeInfo(
+                    host: View,
+                    info: AccessibilityNodeInfo
+                ) {
+                    super.onInitializeAccessibilityNodeInfo(host, info)
+                    info.text = layout.hint.toString().removeSuffix("*") +  " " + view?.retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+                }
+            }
         }
     }
 

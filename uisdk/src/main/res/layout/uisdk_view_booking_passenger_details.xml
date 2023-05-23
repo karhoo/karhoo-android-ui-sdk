@@ -39,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/kh_uisdk_spacing_grid_first_column"
                 android:hint="@string/kh_uisdk_first_name_hint"
+                app:expandedHintEnabled="false"
+                app:placeholderText="@string/kh_uisdk_placeholder_first_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/passengerViewTitle">
@@ -58,6 +60,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/kh_uisdk_last_name_hint"
                 android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
+                app:expandedHintEnabled="false"
+                app:placeholderText="@string/kh_uisdk_placeholder_last_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/firstNameLayout">
@@ -78,6 +82,8 @@
                 android:hint="@string/kh_uisdk_email_hint"
                 android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
                 android:paddingBottom="@dimen/kh_uisdk_spacing_xsmall"
+                app:expandedHintEnabled="false"
+                app:placeholderText="@string/kh_uisdk_placeholder_email"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lastNameLayout">
@@ -133,6 +139,7 @@
                     android:layout_gravity="bottom"
                     android:layout_weight="0.7"
                     android:paddingStart="@dimen/kh_uisdk_spacing_xxsmall"
+                    app:expandedHintEnabled="false"
                     app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -173,7 +180,6 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <com.karhoo.uisdk.base.view.LoadingButtonView
             android:id="@+id/passengerActionButton"

@@ -34,13 +34,13 @@ class CheckoutTravelDetailsBottomSheet : MasterBottomSheetFragment() {
         if(isFlight){
             setupHeader(view = view, title = getString(R.string.kh_uisdk_checkout_airport_title))
             checkoutTravelDetailsSubtitle.text = getString(R.string.kh_uisdk_checkout_airport_subtitle)
-            checkoutTravelDetailsTextField.placeholderText = getString(R.string.kh_uisdk_checkout_airport_example)
+            checkoutTravelDetailsTextField.placeholderText = getString(R.string.kh_uisdk_placeholder_flight_number)
         }
         else{
             setupHeader(view = view, title = getString(R.string.kh_uisdk_checkout_train_title))
             checkoutTravelDetailsSubtitle.text = getString(R.string.kh_uisdk_checkout_train_subtitle)
             checkoutTravelDetailsTextField.hint = getString(R.string.kh_uisdk_checkout_train_title)
-            checkoutTravelDetailsTextField.placeholderText = getString(R.string.kh_uisdk_checkout_train_example)
+            checkoutTravelDetailsTextField.placeholderText = getString(R.string.kh_uisdk_placeholder_train_number)
         }
         checkoutTravelDetailsSave.enableButton(false)
 
