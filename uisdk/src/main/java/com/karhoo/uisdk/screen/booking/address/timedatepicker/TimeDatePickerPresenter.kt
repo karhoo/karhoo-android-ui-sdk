@@ -93,7 +93,6 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
 
     var forUnitTests: Boolean = false
     fun displayDatePicker(minDate: Long, maxDate: Long, timeZone: String) {
-        val calendar = Calendar.getInstance()
         val previousSelectedDate = getPreviousSelectedDateTime()
         view?.let {
             val title = view?.getContext()?.getString(R.string.kh_uisdk_prebook_timezone_title) + " " + timeZone
@@ -119,9 +118,11 @@ class TimeDatePickerPresenter(view: TimeDatePickerMVP.View,
                 dateSelected(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             }
 
-            val activity = view?.getContext() as AppCompatActivity
-            val fragmentManager = activity.supportFragmentManager
-            datePicker.show(fragmentManager, "tag")
+            if(!forUnitTests){
+                val activity = view?.getContext() as AppCompatActivity
+                val fragmentManager = activity.supportFragmentManager
+                datePicker.show(fragmentManager, "tag")
+            }
         }
     }
 
