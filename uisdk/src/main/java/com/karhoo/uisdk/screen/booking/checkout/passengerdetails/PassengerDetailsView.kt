@@ -112,43 +112,20 @@ class PassengerDetailsView @JvmOverloads constructor(
         emailLayout.hint = emailLayout.hint.toString() + "*"
         mobileNumberLayout.hint = mobileNumberLayout.hint.toString() + "*"
 
-        firstNameLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                info.text = firstNameLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
-            }
-        }
+        createAccessibilityDelegate(firstNameLayout, R.string.kh_uisdk_generic_mandatory_field)
+        createAccessibilityDelegate(lastNameLayout, R.string.kh_uisdk_generic_mandatory_field)
+        createAccessibilityDelegate(emailLayout, R.string.kh_uisdk_generic_mandatory_field)
+        createAccessibilityDelegate(mobileNumberLayout, R.string.kh_uisdk_generic_mandatory_field)
+    }
 
-        lastNameLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
+    private fun createAccessibilityDelegate(view: TextInputLayout, textId: Int){
+        view.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
             override fun onInitializeAccessibilityNodeInfo(
                 host: View,
                 info: AccessibilityNodeInfo
             ) {
                 super.onInitializeAccessibilityNodeInfo(host, info)
-                info.text = lastNameLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
-            }
-        }
-
-        emailLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                info.text = emailLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
-            }
-        }
-
-        mobileNumberLayout.editText?.accessibilityDelegate = object : View.AccessibilityDelegate() {
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfo
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                info.text = mobileNumberLayout.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(R.string.kh_uisdk_generic_mandatory_field)
+                info.text = view.hint.toString().removeSuffix("*") +  " " + retrieveLocalizedText(textId)
             }
         }
     }
