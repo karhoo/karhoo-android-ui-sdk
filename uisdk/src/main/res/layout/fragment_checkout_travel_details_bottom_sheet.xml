@@ -29,6 +29,8 @@
         app:errorTextColor="@color/kh_uisdk_error"
         app:boxStrokeErrorColor="@color/kh_uisdk_error"
         app:errorIconTint="@color/kh_uisdk_error"
+        app:expandedHintEnabled="false"
+        app:placeholderText="@string/kh_uisdk_placeholder_flight_number"
         >
 
         <com.google.android.material.textfield.TextInputEditText

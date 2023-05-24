@@ -38,6 +38,8 @@ interface PassengerDetailsContract {
         fun retrieveCountryCodeFromSharedPrefs(): String?
 
         fun revertPassengerDetails()
+
+        fun retrieveLocalizedText(resourceId: Int): String
     }
 
     interface Presenter {
