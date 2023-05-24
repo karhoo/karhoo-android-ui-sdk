@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">报价卡</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">交换地址</string>
     <string name="kh_uisdk_accessibility_label_train_number">车次</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">按钮状态：赚取积分 - 双击以使用您的积分</string>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">按钮状态：使用积分 - 双击赚取积分</string>
     <string name="kh_uisdk_add_card">添加卡片</string>
     <string name="kh_uisdk_add_comment_placeholder">补充评论</string>
     <string name="kh_uisdk_add_flight_details">航班号（可选）</string>

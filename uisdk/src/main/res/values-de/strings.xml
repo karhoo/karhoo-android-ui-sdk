@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Karte zitieren</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Adressen tauschen</string>
     <string name="kh_uisdk_accessibility_label_train_number">Zugnummer</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Status der Schaltfläche: Punkte sammeln - doppelt tippen, um die Punkte zu verwenden</string>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">Schaltflächenstatus: Punkte verwenden - Doppeltippen zum Sammeln von Punkten</string>
     <string name="kh_uisdk_add_card">KARTE HINZUFÜGEN</string>
     <string name="kh_uisdk_add_comment_placeholder">Zusätzliche Bemerkungen</string>
     <string name="kh_uisdk_add_flight_details">Flugnummer</string>

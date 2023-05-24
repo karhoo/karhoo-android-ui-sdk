@@ -39,7 +39,7 @@ class AddressStaticComponent @JvmOverloads constructor(
     private fun setPickupAddress(pickup: Address) {
         setAddressLines(pickup, pickupAddressTextPrimary, pickupAddressTextSecondary)
 
-        pickupAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_pickup_address) +
+        pickupAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_label_pickup_address) +
         " " + pickupAddressTextPrimary.text + " " + pickupAddressTextSecondary.text
     }
 
@@ -47,7 +47,7 @@ class AddressStaticComponent @JvmOverloads constructor(
         setAddressLines(destination, destinationAddressTextPrimary, destinationAddressTextSecondary)
 
 
-        destinationAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_destination_address) +
+        destinationAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) +
                 " " + destinationAddressTextPrimary.text + " " + destinationAddressTextSecondary.text
     }
 

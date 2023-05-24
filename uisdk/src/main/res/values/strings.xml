@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Quote card</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Swap addresses</string>
     <string name="kh_uisdk_accessibility_label_train_number">Train number</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Button status: Earning points  - double tap to use your points</string>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">Button status: using points - double tap to earn points</string>
     <string name="kh_uisdk_add_card">Add card</string>
     <string name="kh_uisdk_add_comment_placeholder">Additional comments</string>
     <string name="kh_uisdk_add_flight_details">Flight number (Optional)</string>

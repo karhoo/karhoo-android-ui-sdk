@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">ใบเสนอราคา</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">สลับที่อยู่</string>
     <string name="kh_uisdk_accessibility_label_train_number">หมายเลขรถไฟ</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">สถานะปุ่ม: รับคะแนน - แตะสองครั้งเพื่อใช้คะแนนของคุณ</string>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">สถานะปุ่ม: ใช้คะแนน - แตะสองครั้งเพื่อรับคะแนน</string>
     <string name="kh_uisdk_add_card">เพิ่มบัตร</string>
     <string name="kh_uisdk_add_comment_placeholder">ความคิดเห็นเพิ่มเติม</string>
     <string name="kh_uisdk_add_flight_details">หมายเลขเที่ยวบิน (ไม่บังคับ)</string>
