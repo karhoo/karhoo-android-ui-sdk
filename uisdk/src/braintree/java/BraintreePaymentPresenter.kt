@@ -13,10 +13,7 @@ import com.karhoo.sdk.api.datastore.user.UserManager
 import com.karhoo.sdk.api.datastore.user.UserStore
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Quote
-import com.karhoo.sdk.api.network.request.AddPaymentRequest
-import com.karhoo.sdk.api.network.request.NonceRequest
 import com.karhoo.sdk.api.network.request.PassengerDetails
-import com.karhoo.sdk.api.network.request.Payer
 import com.karhoo.sdk.api.network.request.SDKInitRequest
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
