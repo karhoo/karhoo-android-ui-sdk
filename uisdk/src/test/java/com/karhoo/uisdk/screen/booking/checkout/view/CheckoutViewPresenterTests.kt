@@ -72,8 +72,6 @@ class CheckoutViewPresenterTests {
 
     private val sdkInitCall: Call<BraintreeSDKToken> = mock()
     private val sdkInitCaptor = argumentCaptor<(Resource<BraintreeSDKToken>) -> Unit>()
-    private val getNonceCall: Call<PaymentsNonce> = mock()
-    private val getNonceCaptor = argumentCaptor<(Resource<PaymentsNonce>) -> Unit>()
     private val tripBookingCaptor = argumentCaptor<TripBooking>()
     private val tripCall: Call<TripInfo> = mock()
     private val tripCaptor = argumentCaptor<(Resource<TripInfo>) -> Unit>()
@@ -86,7 +84,6 @@ class CheckoutViewPresenterTests {
 
         whenever(quote.price).thenReturn(quotePrice)
         doNothing().whenever(sdkInitCall).execute(sdkInitCaptor.capture())
-        doNothing().whenever(getNonceCall).execute(getNonceCaptor.capture())
         doNothing().whenever(tripCall).execute(tripCaptor.capture())
 
         checkoutPresenter = CheckoutViewPresenter(
