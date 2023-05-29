@@ -72,6 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Tarjeta de cotización</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">intercambiar direcciones</string>
     <string name="kh_uisdk_accessibility_label_train_number">Número de tren</string>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Estado del botón: Ganar puntos: toque dos veces para usar sus puntos</string>
+    <!-- Text to read when loyalty switch enabled -->
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">Estado del botón: Ganar puntos: toque dos veces para usar sus puntos</string>
     <string name="kh_uisdk_add_card">AÑADIR TARJETA</string>
     <string name="kh_uisdk_add_comment_placeholder">Additional comments</string>
     <string name="kh_uisdk_add_flight_details">Número de vuelo (Opcional)</string>

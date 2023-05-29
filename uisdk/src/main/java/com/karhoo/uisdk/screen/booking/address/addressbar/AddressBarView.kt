@@ -89,6 +89,7 @@ class AddressBarView
         scheduledIcon.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
         dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
         pickupLabel.text = displayAddress
+        pickupLabel.contentDescription = context.getString(R.string.kh_uisdk_accessibility_label_pickup_address) + " " + displayAddress
     }
 
     override fun setDropoffAddress(displayAddress: String) {
@@ -96,12 +97,14 @@ class AddressBarView
             dropOffLabel.apply {
                 text = resources.getString(R.string.kh_uisdk_address_picker_dropoff_booking)
                 setTextColor(ContextCompat.getColor(context, R.color.uisdk_text_action))
+                contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) + " " + resources.getString(R.string.kh_uisdk_address_picker_dropoff_booking)
             }
             setDropoffAddressVisibility(true)
         } else {
             dropOffLabel.apply {
                 text = displayAddress
                 setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
+                contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) + " " + displayAddress
             }
             setDropoffAddressVisibility(false)
         }
@@ -121,6 +124,7 @@ class AddressBarView
 
     override fun setDefaultPickupText() {
         pickupLabel.text = context.getString(R.string.kh_uisdk_address_picker_add_pickup)
+        pickupLabel.contentDescription = context.getString(R.string.kh_uisdk_accessibility_label_pickup_address) + " " + context.getString(R.string.kh_uisdk_address_picker_add_pickup)
     }
 
     override fun showFlipButton() {

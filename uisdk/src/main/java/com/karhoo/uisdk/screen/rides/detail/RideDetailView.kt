@@ -124,8 +124,14 @@ class RideDetailView @JvmOverloads constructor(
 
     private fun displayText(trip: TripInfo) {
         trip.fleetInfo?.let { khTermsAndConditionsText.text = it.name }
-        trip.origin?.let { pickupLabel.text = it.displayAddress }
-        trip.destination?.let { dropOffLabel.text = it.displayAddress }
+        trip.origin?.let {
+            pickupLabel.text = it.displayAddress
+            pickupLabel.contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_pickup_address) + " " + it.displayAddress
+        }
+        trip.destination?.let {
+            dropOffLabel.text = it.displayAddress
+            dropOffLabel.contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) + " " + it.displayAddress
+        }
         karhooId.text = trip.displayTripId
     }
 

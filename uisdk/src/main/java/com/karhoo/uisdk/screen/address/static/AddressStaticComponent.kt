@@ -43,15 +43,14 @@ class AddressStaticComponent @JvmOverloads constructor(
     private fun setPickupAddress(pickup: Address, showCountry: Boolean) {
         setAddressLines(pickup, pickupAddressTextPrimary, pickupAddressTextSecondary, showCountry)
 
-        pickupAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_pickup_address) +
+        pickupAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_label_pickup_address) +
         " " + pickupAddressTextPrimary.text
     }
 
     private fun setDestinationAddress(destination: Address, showCountry: Boolean) {
         setAddressLines(destination, destinationAddressTextPrimary, destinationAddressTextSecondary, showCountry)
 
-
-        destinationAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_acc_destination_address) +
+        destinationAddressTextPrimary.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) +
                 " " + destinationAddressTextPrimary.text
     }
 
