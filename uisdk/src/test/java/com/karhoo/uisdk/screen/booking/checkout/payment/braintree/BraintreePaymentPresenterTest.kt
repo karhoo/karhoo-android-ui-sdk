@@ -13,7 +13,6 @@ import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.sdk.api.model.BraintreeSDKToken
 import com.karhoo.sdk.api.model.CardType
 import com.karhoo.sdk.api.model.Organisation
-import com.karhoo.sdk.api.model.PaymentsNonce
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuotePrice
 import com.karhoo.sdk.api.model.UserInfo
@@ -298,74 +297,6 @@ class BraintreePaymentPresenterTest {
 
     /**
      * Given:   An activity result is handled
-     * When:    The result is not RESULT_OK
-     * And:     There is data
-     * And:     It is a logged in Braintree user request
-     * Then:    The payment view is refreshed
-     */
-    @Test
-    fun `view refreshed for activity result not RESULT_OK for logged in Braintree user`() {
-        braintreePaymentPresenter.handleActivityResult(
-                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-                resultCode = AppCompatActivity.RESULT_CANCELED,
-                data = data)
-
-        verify(paymentsService, never()).addPaymentMethod(any())
-    }
-
-    /**
-     * Given:   An activity result is handled
-     * When:    The result is not RESULT_OK
-     * And:     There is data
-     * And:     It is a guest Braintree user request
-     * Then:    The payment view is refreshed
-     */
-    @Test
-    fun `view refreshed for activity result not RESULT_OK for guest Braintree user`() {
-        braintreePaymentPresenter.handleActivityResult(
-                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
-                resultCode = AppCompatActivity.RESULT_CANCELED,
-                data = data)
-
-        verify(paymentsService, never()).addPaymentMethod(any())
-    }
-
-    /**
-     * Given:   An activity result is handled
-     * When:    The result is RESULT_OK
-     * And:     There is no data
-     * And:     It is a logged in Braintree user request
-     * Then:    The payment view is refreshed
-     */
-    @Test
-    fun `view refreshed for activity result RESULT_OK with no data for logged in Braintree user`() {
-        braintreePaymentPresenter.handleActivityResult(
-                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = null)
-
-        verify(paymentsService, never()).addPaymentMethod(any())
-    }
-
-    /**
-     * Given:   An activity result is handled
-     * When:    The result is RESULT_OK
-     * And:     There is data
-     * And:     It is a guest Braintree user request
-     * Then:    The payment view is refreshed
-     */
-    @Test
-    fun `view refreshed for activity result RESULT_OK with no data for guest Braintree user`() {
-        braintreePaymentPresenter.handleActivityResult(
-                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE_GUEST,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = null)
-
-        verify(paymentsService, never()).addPaymentMethod(any())
-    }
-
-    /**
-     * Given:   An activity result is handled
      * When:    The result is RESULT_OK
      * And:     There is data
      * And:     It is a guest Braintree user request
@@ -388,7 +319,6 @@ class BraintreePaymentPresenterTest {
                 resultCode = AppCompatActivity.RESULT_OK,
                 data = data)
 
-        verify(paymentsService, never()).addPaymentMethod(any())
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
         assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
@@ -418,7 +348,6 @@ class BraintreePaymentPresenterTest {
             resultCode = AppCompatActivity.RESULT_OK,
             data = data)
 
-        verify(paymentsService, never()).addPaymentMethod(any())
         verify(userStore).savedPaymentInfo = capture(paymentInfoCaptor)
         assertEquals(CardType.MASTERCARD, paymentInfoCaptor.value.cardType)
         assertEquals(CARD_ENDING, paymentInfoCaptor.value.lastFour)
@@ -450,31 +379,8 @@ class BraintreePaymentPresenterTest {
             resultCode = AppCompatActivity.RESULT_OK,
             data = data)
 
-        verify(paymentsService, never()).addPaymentMethod(any())
 
         verify(paymentView).threeDSecureNonce(dropInResult.paymentMethodNonce!!.string)
-    }
-
-    /**
-     * Given:   An activity result is handled
-     * When:    The result is RESULT_OK
-     * And:     There is data
-     * And:     It is a logged in Braintree user request
-     * Then:    The add payment method call is made
-     */
-    @Test
-    fun `add payment call is not made anymore if result is RESULT_OK for logged in Braintree user`() {
-        whenever(data.getParcelableExtra<DropInResult>(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-            .thenReturn(dropInResult)
-        whenever(data.hasExtra(BraintreePaymentActivity.BRAINTREE_ACTIVITY_DROP_IN_RESULT))
-            .thenReturn(true)
-
-        braintreePaymentPresenter.handleActivityResult(
-                requestCode = BraintreePaymentView.REQ_CODE_BRAINTREE,
-                resultCode = AppCompatActivity.RESULT_OK,
-                data = data)
-
-        verify(paymentsService, never()).addPaymentMethod(any())
     }
 
     private fun setAuthenticatedUser() {
@@ -487,11 +393,6 @@ class BraintreePaymentPresenterTest {
         private const val BRAINTREE_SDK_TOKEN = "TEST TOKEN"
         private const val CARD_ENDING = "....12"
         private const val EXPECTED_AMOUNT_AS_STRING = "1500"
-
-        private val paymentsNonce = PaymentsNonce(
-                nonce = "1234557683749328",
-                cardType = CardType.VISA,
-                lastFour = "2345")
 
         private val userDetails: UserInfo = UserInfo(firstName = "David",
                                                      lastName = "Smith",
