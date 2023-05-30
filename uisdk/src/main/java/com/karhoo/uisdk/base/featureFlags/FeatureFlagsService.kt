@@ -12,7 +12,7 @@ import javax.net.ssl.HttpsURLConnection
 class FeatureFlagsService(context: Context, private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
 
     fun update() {
-        val jsonUrl = "https://raw.githubusercontent.com/karhoo/karhoo-ios-ui-sdk/master/KarhooUISDK/FeatureFlags/feature_flag.json"
+        val jsonUrl = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/master/feature_flag.json"
 
         val url = URL(jsonUrl)
         val connection = url.openConnection() as HttpsURLConnection
@@ -29,7 +29,7 @@ class FeatureFlagsService(context: Context, private val currentSdkVersion: Strin
         handleFlagSets(decoder)
     }
 
-    private fun handleFlagSets(sets: List<FeatureFlagsModel>) {
+    fun handleFlagSets(sets: List<FeatureFlagsModel>) {
         val selectedSet = selectProperSet(currentSdkVersion, sets) ?: return
         storeFeatureFlag(selectedSet)
     }
