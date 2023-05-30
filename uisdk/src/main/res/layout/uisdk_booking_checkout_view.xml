@@ -12,13 +12,15 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/uisdk_white_rounded_top_background"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:importantForAccessibility="no">
 
         <LinearLayout
             android:id="@+id/bookingRequestLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:importantForAccessibility="no">
 
             <TextView
                 android:id="@+id/checkoutDateText"

@@ -3,14 +3,14 @@ package com.karhoo.uisdk.screen.booking.checkout.loyalty
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
+import android.view.View
+import android.view.accessibility.AccessibilityNodeInfo
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.model.LoyaltyNonce
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_address_static_component.view.destinationAddressTextPrimary
-import kotlinx.android.synthetic.main.uisdk_address_static_component.view.destinationAddressTextSecondary
 import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
 import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.*
 
@@ -38,16 +38,15 @@ class LoyaltyView @JvmOverloads constructor(
         loyaltyViewBurnLayout.setOnClickListener {
             if (loyaltySwitch.isEnabled) {
                 loyaltySwitch.toggle()
-                if (loyaltySwitch.isChecked) {
-                    loyaltySwitch.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_enabled)
-                } else {
-                    loyaltySwitch.contentDescription = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_disabled)
-                }
                 presenter.updateLoyaltyMode(if (loyaltySwitch.isChecked) LoyaltyMode.BURN else LoyaltyMode.EARN)
             }
         }
-        loyaltyViewEarnLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_title) + " " + context.resources.getString(R.string.kh_uisdk_loyalty_points_earned_for_trip)
-        loyaltyViewBurnTextsLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_use_points_title) + " " + context.resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle)
+
+        // This prevents TalkBack from reading the text as an acronym
+        loyaltyViewSeparatorTextView.contentDescription = context.getString(R.string.kh_uisdk_loyalty_separator).lowercase()
+
+        setSwitchContentDescription()
+        setBurnLayoutContentDescription()
     }
 
     override fun toggleFeatures(earnOn: Boolean, burnON: Boolean) {
@@ -110,6 +109,8 @@ class LoyaltyView @JvmOverloads constructor(
             LoyaltyMode.EARN -> {
                 loyaltyViewEarnSubtitle.text = earnSubtitle
                 loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                // Adding the content description here so that the number of points is properly calculated and TalkBack is accurate
+                loyaltyViewEarnLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_title) + " " + earnSubtitle
             }
             LoyaltyMode.NONE -> {
                 loyaltyViewEarnSubtitle.text = earnSubtitle
@@ -170,5 +171,34 @@ class LoyaltyView @JvmOverloads constructor(
 
     override fun getPoints(): Int? {
         return presenter.getPoints()
+    }
+
+    private fun setSwitchContentDescription() {
+        loyaltySwitch.accessibilityDelegate = object : AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                val switchOnText = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_enabled)
+                val switchOffText = context.resources.getString(R.string.kh_uisdk_accessibility_loyalty_switch_disabled)
+                info.text = if (loyaltySwitch.isChecked) switchOnText else switchOffText
+            }
+        }
+    }
+
+    private fun setBurnLayoutContentDescription() {
+        loyaltyViewBurnTextsLayout.accessibilityDelegate = object : AccessibilityDelegate() {
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                // When burn mode is ON have TalkBack say the actual number of points being burned
+                val burnOnText = context.resources.getString(R.string.kh_uisdk_loyalty_use_points_title) + " " + loyaltyViewBurnSubtitle.text
+                val burnOffText = context.resources.getString(R.string.kh_uisdk_loyalty_use_points_title) + " " + context.resources.getString(R.string.kh_uisdk_loyalty_use_points_off_subtitle)
+                info.text = if (loyaltySwitch.isChecked) burnOnText else burnOffText
+            }
+        }
     }
 }

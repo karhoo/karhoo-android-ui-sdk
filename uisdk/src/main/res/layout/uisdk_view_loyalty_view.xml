@@ -32,7 +32,8 @@
                 android:id="@+id/loyaltyViewEarnLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:importantForAccessibility="yes">
 
                 <TextView
                     android:id="@+id/loyaltyViewEarnTitle"
@@ -48,7 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/kh_uisdk_loyalty_points_earned_for_trip"
-                    tools:text="@string/kh_uisdk_loyalty_points_earned_for_trip" />
+                    tools:text="@string/kh_uisdk_loyalty_points_earned_for_trip"
+                    android:importantForAccessibility="no"/>
             </LinearLayout>
 
             <LinearLayout
@@ -68,6 +70,7 @@
                     android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/loyaltyViewSeparatorTextView"
                     style="@style/KhLoyaltySeparatorLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

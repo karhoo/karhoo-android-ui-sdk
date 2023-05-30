@@ -36,6 +36,7 @@
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/khTermsAndConditionsCheckBox"
             style="@style/khTermsAndConditionsCheckBox"
+            android:contentDescription="@string/kh_uisdk_accessibility_checkbox_label_terms_and_conditions"
             />
 
         <TextView
