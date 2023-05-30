@@ -72,9 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Kartu kutipan</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Tukar alamat</string>
     <string name="kh_uisdk_accessibility_label_train_number">Nomor kereta</string>
-    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Status tombol: Dapatkan poin - ketuk dua kali untuk menggunakan poin Anda</string>
     <!-- Text to read when loyalty switch enabled -->
-    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">Status tombol: menggunakan poin - ketuk dua kali untuk mendapatkan poin</string>
     <string name="kh_uisdk_add_card">TAMBAHKAN KARTU</string>
     <string name="kh_uisdk_add_comment_placeholder">Komentar tambahan</string>
     <string name="kh_uisdk_add_flight_details">Nomor Penerbangan (Opsional)</string>

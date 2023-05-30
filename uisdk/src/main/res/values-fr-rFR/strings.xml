@@ -72,9 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Carte de devis</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Échanger des adresses</string>
     <string name="kh_uisdk_accessibility_label_train_number">Numéro de train</string>
-    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Statut du bouton : Gagner des points - appuyez deux fois pour utiliser vos points</string>
     <!-- Text to read when loyalty switch enabled -->
-    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">État du bouton: utilisation de points - appuyez deux fois pour gagner des points</string>
     <string name="kh_uisdk_add_card">Ajouter une carte</string>
     <string name="kh_uisdk_add_comment_placeholder">Commentaires supplémentaires</string>
     <string name="kh_uisdk_add_flight_details">Numéro de vol (Optionnel)</string>

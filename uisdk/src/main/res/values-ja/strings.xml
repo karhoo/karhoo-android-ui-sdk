@@ -72,9 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">見積もりカード</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">アドレスを交換する</string>
     <string name="kh_uisdk_accessibility_label_train_number">列車番号</string>
-    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">ボタンのステータス: ポイントの獲得 - ポイントを使用するにはダブルタップします</string>
     <!-- Text to read when loyalty switch enabled -->
-    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">ボタンのステータス: ポイントを使用中 - ダブルタップしてポイントを獲得します</string>
     <string name="kh_uisdk_add_card">カードを追加</string>
     <string name="kh_uisdk_add_comment_placeholder">追加コメント</string>
     <string name="kh_uisdk_add_flight_details">便名（オプション）</string>

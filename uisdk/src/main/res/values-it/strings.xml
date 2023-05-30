@@ -72,9 +72,9 @@
     <string name="kh_uisdk_accessibility_label_quote_card">Carta di citazione</string>
     <string name="kh_uisdk_accessibility_label_swap_addresses">Scambia indirizzi</string>
     <string name="kh_uisdk_accessibility_label_train_number">Numero del treno</string>
-    <string name="kh_uisdk_accessibility_loyalty_switch_disabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_disabled">Stato del pulsante: Guadagno punti: tocca due volte per utilizzare i tuoi punti</string>
     <!-- Text to read when loyalty switch enabled -->
-    <string name="kh_uisdk_accessibility_loyalty_switch_enabled"/>
+    <string name="kh_uisdk_accessibility_loyalty_switch_enabled">Stato del pulsante: utilizzando i punti: tocca due volte per guadagnare punti</string>
     <string name="kh_uisdk_add_card">AGGIUNGI CARTA</string>
     <string name="kh_uisdk_add_comment_placeholder">Commenti aggiuntivi</string>
     <string name="kh_uisdk_add_flight_details">Numero del volo</string>
