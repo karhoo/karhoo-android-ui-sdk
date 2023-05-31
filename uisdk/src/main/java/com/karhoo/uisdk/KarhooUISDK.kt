@@ -3,6 +3,7 @@ package com.karhoo.uisdk
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.MenuHandler
+import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
@@ -51,5 +52,6 @@ object KarhooUISDK {
 
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
         FeatureFlagsProvider.setup(KarhooApi.configService)
+//        FeatureFlagsService(context = , currentSdkVersion = "1.12.0").update()
     }
 }
