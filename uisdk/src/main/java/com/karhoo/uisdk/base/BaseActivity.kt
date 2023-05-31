@@ -212,7 +212,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
 
     private fun checkAdyenCompatibility() {
 
-        val featureFlag = KarhooFeatureFlagProvider(context = ).get()
+        val featureFlag = KarhooFeatureFlagProvider(context = applicationContext).get()
         if (featureFlag.adyenAvailable == false) {
             showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
         }
