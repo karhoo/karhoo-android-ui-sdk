@@ -1,23 +1,24 @@
 package com.karhoo.uisdk.featureFlags
+
 import android.content.Context
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.karhoo.uisdk.base.FeatureFlags
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
+import com.karhoo.uisdk.base.featureFlags.FeatureFlagsStore
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Before
+import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(MockitoJUnitRunner::class)
 class FeatureFlagsTest {
 
-    private lateinit var instrumentationContext: Context
+    private val context: Context = mock()
 
     @Before
     fun setup() {
-        instrumentationContext = InstrumentationRegistry.getInstrumentation().context
     }
 
     @Test
@@ -70,13 +71,13 @@ class FeatureFlagsTest {
     }
 
     private fun performTestForVersions(current: String, expected: String?) {
-        val mockFeatureFlagsStore = MockFeatureFlagsStore()
+        val mockFeatureFlagsStore: FeatureFlagsStore = mock()//MockFeatureFlagsStore()
         val featureFlagsService = FeatureFlagsService(
-            instrumentationContext,
+            context = context,
             currentSdkVersion = current,
             featureFlagsStore = mockFeatureFlagsStore
         )
         featureFlagsService.handleFlagSets(getFeatureFlagsSet())
-        assertEquals(expected, mockFeatureFlagsStore.savedModel?.version)
+        assertEquals(expected, mockFeatureFlagsStore.get()?.version)
     }
 }
