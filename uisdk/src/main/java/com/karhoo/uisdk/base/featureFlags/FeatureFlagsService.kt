@@ -37,10 +37,10 @@ class FeatureFlagsService(context: Context, private val currentSdkVersion: Strin
 
     private fun selectProperSet(version: String, sets: List<FeatureFlagsModel>): FeatureFlagsModel? {
         val versionStringComparator = VersionStringComparator()
-        val sortedSets = sets.sortedWith(FeatureFlagsVersionComparator())
+        val sortedSets = sets.sortedWith(FeatureFlagsVersionComparator()).reversed()
 
         for (set in sortedSets) {
-            if ( versionStringComparator.compare(set.version, currentSdkVersion) > 0) {
+            if ( versionStringComparator.compare(set.version, currentSdkVersion) <= 0) {
                 return set
             }
 

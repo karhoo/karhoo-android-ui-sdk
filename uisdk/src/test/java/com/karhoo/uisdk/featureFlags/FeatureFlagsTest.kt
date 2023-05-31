@@ -71,7 +71,7 @@ class FeatureFlagsTest {
     }
 
     private fun performTestForVersions(current: String, expected: String?) {
-        val mockFeatureFlagsStore: FeatureFlagsStore = mock()//MockFeatureFlagsStore()
+        val mockFeatureFlagsStore: FeatureFlagsStore = MockFeatureFlagsStore()
         val featureFlagsService = FeatureFlagsService(
             context = context,
             currentSdkVersion = current,

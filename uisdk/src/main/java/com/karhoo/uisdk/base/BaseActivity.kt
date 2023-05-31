@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooError
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -28,9 +27,6 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
-import com.karhoo.uisdk.util.FeatureFlagsProvider
-import com.karhoo.uisdk.util.FeatureFlagsProvider.ADYEN_AVAILABLE
-import com.karhoo.uisdk.util.FeatureFlagsProvider.FORBIDDEN_PAYMENT_MANAGER
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -216,11 +212,10 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
 
     private fun checkAdyenCompatibility() {
 
-//        val featureFlag = KarhooFeatureFlagProvider(context = ApplicationProvider.getApplicationContext()).get()
-//
-//        if (featureFlag.adyenAvailable == false) {
-//            showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
-//        }
+        val featureFlag = KarhooFeatureFlagProvider(context = ).get()
+        if (featureFlag.adyenAvailable == false) {
+            showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
+        }
     }
 
     override fun showBlockingErrorDialog(stringId: Int, karhooError: KarhooError?) {
