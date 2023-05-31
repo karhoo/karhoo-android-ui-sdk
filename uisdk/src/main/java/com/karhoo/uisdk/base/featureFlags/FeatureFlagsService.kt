@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import java.net.URL
+import java.util.Collections
 import javax.net.ssl.HttpsURLConnection
 
 class FeatureFlagsService(context: Context, private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
@@ -35,11 +36,18 @@ class FeatureFlagsService(context: Context, private val currentSdkVersion: Strin
     }
 
     private fun selectProperSet(version: String, sets: List<FeatureFlagsModel>): FeatureFlagsModel? {
-        val sortedSets = sets.sortedByDescending { it.version }
+        val versionStringComparator = VersionStringComparator()
+        val sortedSets = sets.sortedWith(FeatureFlagsVersionComparator())
+
         for (set in sortedSets) {
-            if (set.version.toDoubleOrNull() != null && currentSdkVersion.toDoubleOrNull() != null && set.version.toDoubleOrNull()!! <= currentSdkVersion.toDoubleOrNull()!!) {
+            if ( versionStringComparator.compare(set.version, currentSdkVersion) > 0) {
                 return set
             }
+
+
+//            if (set.version.toDoubleOrNull() != null && currentSdkVersion.toDoubleOrNull() != null && set.version.toDoubleOrNull()!! <= currentSdkVersion.toDoubleOrNull()!!) {
+//                return set
+//            }
         }
         return null
     }

@@ -21,6 +21,7 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
+import com.karhoo.uisdk.base.featureFlags.KarhooFeatureFlagProvider
 import com.karhoo.uisdk.base.listener.ErrorView
 import com.karhoo.uisdk.base.listener.NetworkReceiver
 import com.karhoo.uisdk.base.snackbar.SnackbarAction
@@ -214,17 +215,12 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
     }
 
     private fun checkAdyenCompatibility() {
-        val featureFlag = FeatureFlagsProvider.getFeatureFlags()
 
-        featureFlag?.forEach {
-            if (BuildConfig.VERSION_NAME >= it.version && KarhooUISDKConfigurationProvider.configuration.paymentManager.javaClass.name.contains(FORBIDDEN_PAYMENT_MANAGER)) {
-                if (it.flags[ADYEN_AVAILABLE] == false) {
-                    showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
-                }
-
-                return
-            }
-        }
+//        val featureFlag = KarhooFeatureFlagProvider(context = ApplicationProvider.getApplicationContext()).get()
+//
+//        if (featureFlag.adyenAvailable == false) {
+//            showBlockingErrorDialog(R.string.kh_uisdk_error_incorrect_sdk_version_message)
+//        }
     }
 
     override fun showBlockingErrorDialog(stringId: Int, karhooError: KarhooError?) {
