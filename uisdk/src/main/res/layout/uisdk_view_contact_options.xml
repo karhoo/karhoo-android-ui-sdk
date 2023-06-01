@@ -13,6 +13,7 @@
         android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
         android:text="@string/kh_uisdk_cancel_ride"
         app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/kh_uisdk_accent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
         android:text="@string/kh_uisdk_contact_fleet"
+        android:textColor="@color/kh_uisdk_accent"
         app:layout_constraintTop_toBottomOf="@+id/cancelButton" />
 
     <Button
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         android:text="@string/kh_uisdk_contact_driver"
         android:visibility="gone"
+        android:textColor="@color/kh_uisdk_accent"
         app:layout_constraintTop_toBottomOf="@+id/contactFleetButton" />
 
 </LinearLayout>

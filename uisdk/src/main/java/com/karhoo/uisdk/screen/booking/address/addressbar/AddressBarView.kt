@@ -90,13 +90,23 @@ class AddressBarView
         dateTimeDivider.visibility = if (shouldHideScheduledIcon()) View.GONE else View.VISIBLE
         pickupLabel.text = displayAddress
         pickupLabel.contentDescription = context.getString(R.string.kh_uisdk_accessibility_label_pickup_address) + " " + displayAddress
+
+        if(displayAddress.isBlank()){
+            pickupLabel.apply {
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_label))
+            }
+        } else {
+            pickupLabel.apply {
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
+            }
+        }
     }
 
     override fun setDropoffAddress(displayAddress: String) {
         if (displayAddress.isBlank()) {
             dropOffLabel.apply {
                 text = resources.getString(R.string.kh_uisdk_address_picker_dropoff_booking)
-                setTextColor(ContextCompat.getColor(context, R.color.uisdk_text_action))
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_label))
                 contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) + " " + resources.getString(R.string.kh_uisdk_address_picker_dropoff_booking)
             }
             setDropoffAddressVisibility(true)
