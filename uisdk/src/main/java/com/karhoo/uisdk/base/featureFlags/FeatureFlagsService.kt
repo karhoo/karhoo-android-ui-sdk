@@ -2,32 +2,32 @@ package com.karhoo.uisdk.base.featureFlags
 
 import android.content.Context
 import com.google.gson.Gson
-import com.google.gson.JsonDeserializer
 import com.google.gson.reflect.TypeToken
-import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import java.net.URL
-import java.util.Collections
 import javax.net.ssl.HttpsURLConnection
+import kotlin.concurrent.thread
 
 class FeatureFlagsService(context: Context, private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
 
     fun update() {
-        val jsonUrl = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/master/feature_flag.json"
+        thread {
+            val jsonUrl = "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/master/feature_flag.json"
 
-        val url = URL(jsonUrl)
-        val connection = url.openConnection() as HttpsURLConnection
-        val inputStream = connection.inputStream
+            val url = URL(jsonUrl)
+            val connection = url.openConnection() as HttpsURLConnection
+            val inputStream = connection.inputStream
 
-        val data = inputStream.readBytes()
-        val jsonString = String(data)
+            val data = inputStream.readBytes()
+            val jsonString = String(data)
 
-        val type = object : TypeToken<List<FeatureFlagsModel>>() {
+            val type = object : TypeToken<List<FeatureFlagsModel>>() {
 
-        }.type
-        val decoder = Gson().fromJson<List<FeatureFlagsModel>>(jsonString, type)
+            }.type
+            val decoder = Gson().fromJson<List<FeatureFlagsModel>>(jsonString, type)
 
-        handleFlagSets(decoder)
+            handleFlagSets(decoder)
+        }
     }
 
     fun handleFlagSets(sets: List<FeatureFlagsModel>) {

@@ -14,7 +14,7 @@ open class KarhooApplication : Application() {
         appContext = applicationContext
         instance = this
         KarhooUISDK.apply {
-            setConfiguration(KarhooConfig(applicationContext))
+            setConfiguration(KarhooConfig(applicationContext), applicationContext)
         }
 
         initChannel("analyticsChannel", "analyticsChannel")

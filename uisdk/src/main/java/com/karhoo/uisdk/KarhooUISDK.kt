@@ -1,5 +1,6 @@
 package com.karhoo.uisdk
 
+import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.MenuHandler
@@ -46,12 +47,12 @@ object KarhooUISDK {
 
     var menuHandler: MenuHandler? = null
 
-    fun setConfiguration(configuration: KarhooUISDKConfiguration) {
+    fun setConfiguration(configuration: KarhooUISDKConfiguration, context: Context) {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
         KarhooApi.setConfiguration(configuration)
 
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
         FeatureFlagsProvider.setup(KarhooApi.configService)
-//        FeatureFlagsService(context = , currentSdkVersion = "1.12.0").update()
+        FeatureFlagsService(context = context, currentSdkVersion = "1.12.0").update()
     }
 }
