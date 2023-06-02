@@ -190,12 +190,13 @@ class LoyaltyPresenter(
 //                        val loyaltyStatus = LoyaltyStatus(1500, canBurn = true, canEarn = true)
 
                         val loyaltyStatus = result.data
-//                        val featureFlag = KarhooFeatureFlagProvider().get()
-//                        var canEarn = featureFlag.loyaltyCanEarn
-//                        var canBurn = featureFlag.loyaltyCanBurn
+                        val featureFlag = loyaltyViewDelegate?.getViewContext()
+                            ?.let { it1 -> KarhooFeatureFlagProvider(it1).get() }
+                        val canEarn = featureFlag?.loyaltyCanEarn ?: true
+                        val canBurn = featureFlag?.loyaltyCanBurn ?: true
 
-                        var canEarn = true
-                        var canBurn = true
+//                        var canEarn = true
+//                        var canBurn = true
 
                         userStore.loyaltyStatus = LoyaltyStatus().apply {
                             this.points = loyaltyStatus.points
