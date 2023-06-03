@@ -41,6 +41,7 @@ android {
         buildConfigField("String", "STAGING_GUEST_HOST", (secureProps.getProperty("STAGING_GUEST_HOST") ?: '""'))
 
         buildConfigField("String", "LOYALTY_CLIENT_ID", (secureProps.getProperty("LOYALTY_CLIENT_ID") ?: '""'))
+        buildConfigField("String", "LOYALTY_BRAINTREE_CLIENT_ID", (secureProps.getProperty("LOYALTY_BRAINTREE_CLIENT_ID") ?: '""'))
         buildConfigField("String", "LOYALTY_CLIENT_SCOPE", (secureProps.getProperty("LOYALTY_CLIENT_SCOPE") ?: '""'))
         buildConfigField("String", "LOYALTY_AUTH_TOKEN", (secureProps.getProperty("LOYALTY_AUTH_TOKEN") ?: '""'))
         missingDimensionStrategy 'uisdk', 'full'
