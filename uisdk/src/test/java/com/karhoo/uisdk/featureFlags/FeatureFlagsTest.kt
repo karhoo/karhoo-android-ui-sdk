@@ -9,7 +9,6 @@ import com.karhoo.uisdk.base.FeatureFlagsModel
 import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
 import com.karhoo.uisdk.base.featureFlags.FeatureFlagsStore
 import com.nhaarman.mockitokotlin2.mock
-import org.junit.Before
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
