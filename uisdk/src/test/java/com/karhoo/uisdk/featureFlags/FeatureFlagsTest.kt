@@ -17,10 +17,6 @@ class FeatureFlagsTest {
 
     private val context: Context = mock()
 
-    @Before
-    fun setup() {
-    }
-
     @Test
     fun testVersionFromList() {
         performTestForVersions(current = "2.0.1", expected = "2.0.1")
