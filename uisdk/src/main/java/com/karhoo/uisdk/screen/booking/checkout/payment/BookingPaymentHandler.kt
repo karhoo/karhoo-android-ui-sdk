@@ -10,10 +10,9 @@ import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.sdk.api.service.payments.PaymentsService
-import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
-import com.karhoo.uisdk.util.FeatureFlagsProvider
+import com.karhoo.uisdk.base.featureFlags.KarhooFeatureFlagProvider
 
 class BookingPaymentHandler @JvmOverloads constructor(
     private val userStore: UserStore = KarhooApi.userStore,
@@ -123,15 +122,7 @@ class BookingPaymentHandler @JvmOverloads constructor(
     }
 
     override fun retrieveLoyaltyStatus() {
-        var loyaltyEnabled = true
-        val featureFlag = FeatureFlagsProvider.getFeatureFlags()
-        featureFlag?.forEach {
-            if(BuildConfig.VERSION_NAME >= it.version){
-                if (it.flags[FeatureFlagsProvider.LOYALTY_ENABLED] == false)
-                    loyaltyEnabled = false
-            }
-        }
-
+        val loyaltyEnabled = KarhooFeatureFlagProvider(context).get().loyaltyEnabled
         if(loyaltyEnabled && !userStore.paymentProvider?.loyalty?.id.isNullOrEmpty())
             paymentActions?.retrieveLoyaltyStatus()
     }

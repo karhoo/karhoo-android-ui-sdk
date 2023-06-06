@@ -149,6 +149,10 @@ internal class CheckoutView @JvmOverloads constructor(
             override fun onStartLoading() {
                 //Maybe will be implemented
             }
+
+            override fun getViewContext(): Context {
+                return context
+            }
         }
 
         showLoyaltyView(false)

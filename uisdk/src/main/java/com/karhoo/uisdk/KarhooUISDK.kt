@@ -1,8 +1,10 @@
 package com.karhoo.uisdk
 
+import android.content.Context
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.analytics.Analytics
 import com.karhoo.uisdk.base.MenuHandler
+import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
 import com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity
 import com.karhoo.uisdk.notification.rides.past.RideNotificationContract
 import com.karhoo.uisdk.screen.address.AddressActivity
@@ -14,7 +16,6 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
 import com.karhoo.uisdk.screen.trip.TripActivity
-import com.karhoo.uisdk.util.FeatureFlagsProvider
 
 object KarhooUISDK {
 
@@ -45,11 +46,11 @@ object KarhooUISDK {
 
     var menuHandler: MenuHandler? = null
 
-    fun setConfiguration(configuration: KarhooUISDKConfiguration) {
+    fun setConfiguration(configuration: KarhooUISDKConfiguration, context: Context) {
         KarhooUISDKConfigurationProvider.setConfig(configuration)
         KarhooApi.setConfiguration(configuration)
 
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
-        FeatureFlagsProvider.setup(KarhooApi.configService)
+        FeatureFlagsService(context = context, currentSdkVersion = "1.12.0").update()
     }
 }

@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             KarhooUISDK.apply {
-                setConfiguration(config)
+                setConfiguration(config, applicationContext)
             }
             showLoginInputDialog()
         }
@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity() {
         }
         config.forceDarkMode = getCurrentDarkModeStatus()
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 
@@ -223,7 +223,7 @@ class MainActivity : AppCompatActivity() {
         val config = BraintreeGuestConfig(applicationContext)
         config.paymentManager = createBraintreeManager()
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 
@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity() {
         config.forceDarkMode = getCurrentDarkModeStatus()
 
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 
@@ -251,7 +251,7 @@ class MainActivity : AppCompatActivity() {
         config.forceDarkMode = getCurrentDarkModeStatus()
 
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 
@@ -306,7 +306,7 @@ class MainActivity : AppCompatActivity() {
         config.paymentManager = createAdyenManager()
         KarhooApi.userService.logout()
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 

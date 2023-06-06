@@ -1,5 +1,6 @@
 package com.karhoo.uisdk.screen.booking.checkout.loyalty
 
+import android.content.Context
 import android.content.res.Resources
 import com.karhoo.sdk.api.model.LoyaltyNonce
 import com.karhoo.sdk.api.model.LoyaltyStatus
@@ -48,5 +49,6 @@ interface LoyaltyContract {
         fun onModeChanged(mode: LoyaltyMode)
         fun onStartLoading()
         fun onEndLoading()
+        fun getViewContext(): Context
     }
 }
