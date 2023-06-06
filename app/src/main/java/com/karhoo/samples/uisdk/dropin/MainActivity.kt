@@ -35,6 +35,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
+import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenBraintreeConfig
 import com.karhoo.sdk.analytics.AnalyticsManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -112,6 +113,14 @@ class MainActivity : AppCompatActivity() {
             showLoading()
 
             applyLoyaltyTokenExchangeConfig()
+
+            loginTokenExchange(BuildConfig.LOYALTY_AUTH_TOKEN)
+        }
+
+        findViewById<Button>(R.id.bookTripButtonLoyaltyTokenExchangeBraintree).setOnClickListener {
+            showLoading()
+
+            applyLoyaltyTokenExchangeBraintreeConfig()
 
             loginTokenExchange(BuildConfig.LOYALTY_AUTH_TOKEN)
         }
@@ -235,6 +244,20 @@ class MainActivity : AppCompatActivity() {
     private fun applyLoyaltyTokenExchangeConfig() {
         val config = LoyaltyTokenConfig(applicationContext)
         config.paymentManager = createAdyenManager()
+        KarhooApi.userService.logout()
+        config.sdkAuthenticationRequired = {
+            loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
+        }
+        config.forceDarkMode = getCurrentDarkModeStatus()
+
+        KarhooUISDK.apply {
+            setConfiguration(config)
+        }
+    }
+
+    private fun applyLoyaltyTokenExchangeBraintreeConfig() {
+        val config = LoyaltyTokenBraintreeConfig(applicationContext)
+        config.paymentManager = createBraintreeManager()
         KarhooApi.userService.logout()
         config.sdkAuthenticationRequired = {
             loginInBackground(it, BuildConfig.LOYALTY_AUTH_TOKEN)
