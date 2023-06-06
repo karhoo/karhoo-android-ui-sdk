@@ -147,8 +147,8 @@
                     android:layout_height="match_parent"
                     android:gravity="start"
                     android:maxLines="1"
+                    android:textColor="@color/kh_uisdk_label"
                     android:text="@string/kh_uisdk_driver_arrival"
-                    android:textColor="@color/kh_uisdk_text_secondary"
                     android:textSize="@dimen/kh_uisdk_text_size_small" />
             </LinearLayout>
 
@@ -177,7 +177,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
                     android:maxLines="1"
-                    android:textColor="@color/kh_uisdk_text_secondary"
+                    android:textColor="@color/kh_uisdk_label"
                     android:textSize="@dimen/kh_uisdk_text_size_small"
                     tools:text="Fixed" />
             </LinearLayout>

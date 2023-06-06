@@ -45,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/khTermsAndConditionsText"
+                android:textColor="@color/kh_uisdk_label"
                 android:layout_alignParentStart="true" />
 
             <TextView
@@ -120,6 +121,7 @@
             style="@style/Text.Faded.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/kh_uisdk_label"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall" />
 
         <LinearLayout

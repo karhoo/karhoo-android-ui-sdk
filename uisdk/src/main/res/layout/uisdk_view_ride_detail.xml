@@ -55,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/khTermsAndConditionsText"
+                    android:textColor="@color/kh_uisdk_label"
                     android:layout_alignParentStart="true" />
 
                 <TextView
@@ -135,6 +136,7 @@
                 style="@style/Text.Faded.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/kh_uisdk_label"
                 android:layout_marginStart="@dimen/kh_uisdk_activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/kh_uisdk_activity_horizontal_margin" />
 
@@ -156,6 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:textColor="@color/kh_uisdk_label"
                     android:text="@string/kh_uisdk_status" />
 
                 <ImageView
@@ -190,6 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
+                    android:textColor="@color/kh_uisdk_label"
                     android:text="@string/kh_uisdk_base" />
 
                 <ImageView
@@ -230,6 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:textColor="@color/kh_uisdk_label"
                     android:text="@string/kh_uisdk_card" />
 
                 <ImageView
@@ -265,6 +270,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="start"
+                        android:textColor="@color/kh_uisdk_label"
                         android:text="@string/kh_uisdk_flight_number" />
 
                     <TextView
@@ -293,6 +299,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:paddingRight="@dimen/kh_uisdk_spacing_medium_small"
+                        android:textColor="@color/kh_uisdk_label"
                         android:text="@string/kh_uisdk_meeting_point" />
 
                     <TextView
@@ -338,6 +345,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:paddingRight="@dimen/kh_uisdk_spacing_medium_small"
+                        android:textColor="@color/kh_uisdk_label"
                         android:text="@string/kh_uisdk_info" />
 
                     <TextView
@@ -381,6 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:textColor="@color/kh_uisdk_label"
                     android:text="@string/kh_uisdk_karhoo_id" />
 
                 <TextView
@@ -444,6 +453,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
                     android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
+                    android:textColor="@color/kh_uisdk_accent"
                     android:text="@string/kh_uisdk_report_issue" />
 
                 <Button
@@ -453,6 +463,7 @@
                     android:layout_height="@dimen/kh_uisdk_spacing_large"
                     android:text="@string/kh_uisdk_rebook_ride"
                     android:layout_marginBottom="@dimen/kh_uisdk_spacing_xxsmall"
+                    android:textColor="@color/kh_uisdk_accent"
                     android:visibility="visible" />
 
                 <com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
