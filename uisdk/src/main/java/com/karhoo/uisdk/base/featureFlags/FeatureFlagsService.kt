@@ -3,12 +3,13 @@ package com.karhoo.uisdk.base.featureFlags
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.karhoo.uisdk.BuildConfig
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 import kotlin.concurrent.thread
 
-class FeatureFlagsService(context: Context, private val currentSdkVersion: String, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
+class FeatureFlagsService(context: Context, private val featureFlagsStore: FeatureFlagsStore = KarhooFeatureFlagsStore(context)) {
 
     fun update() {
         thread {
@@ -31,7 +32,7 @@ class FeatureFlagsService(context: Context, private val currentSdkVersion: Strin
     }
 
     fun handleFlagSets(sets: List<FeatureFlagsModel>) {
-        val selectedSet = selectProperSet(currentSdkVersion, sets) ?: return
+        val selectedSet = selectProperSet(BuildConfig.VERSION_NAME, sets) ?: return
         storeFeatureFlag(selectedSet)
     }
 
@@ -40,7 +41,7 @@ class FeatureFlagsService(context: Context, private val currentSdkVersion: Strin
         val sortedSets = sets.sortedWith(FeatureFlagsVersionComparator()).reversed()
 
         for (set in sortedSets) {
-            if ( versionStringComparator.compare(set.version, currentSdkVersion) <= 0) {
+            if ( versionStringComparator.compare(set.version, version) <= 0) {
                 return set
             }
 

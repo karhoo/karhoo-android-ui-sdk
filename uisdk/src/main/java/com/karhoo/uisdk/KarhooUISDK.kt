@@ -51,6 +51,6 @@ object KarhooUISDK {
         KarhooApi.setConfiguration(configuration)
 
         VehicleMappingsProvider.setup(KarhooApi.quotesService)
-        FeatureFlagsService(context = context, currentSdkVersion = "1.12.0").update()
+        FeatureFlagsService(context = context).update()
     }
 }
