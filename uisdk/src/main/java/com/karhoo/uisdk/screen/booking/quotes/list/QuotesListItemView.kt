@@ -131,8 +131,6 @@ class QuotesListItemView @JvmOverloads constructor(
             resources.getString(R.string.kh_uisdk_filter_executive)
         } else if (vehicle.vehicleTags.contains(VehicleClassFilter.LUXURY)) {
             resources.getString(R.string.kh_uisdk_filter_luxury)
-        } else if (vehicle.vehicleTags.contains(VehicleClassFilter.NORMAL)) {
-            resources.getString(R.string.kh_uisdk_filter_standard)
         } else {
             "${vehicle.vehicleType}"
         }
