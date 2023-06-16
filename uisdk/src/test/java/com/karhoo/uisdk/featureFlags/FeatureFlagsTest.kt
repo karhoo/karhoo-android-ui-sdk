@@ -1,14 +1,15 @@
 package com.karhoo.uisdk.featureFlags
 
 import android.content.Context
-import org.junit.Assert.assertEquals
-import org.junit.Test
-import org.junit.runner.RunWith
 import com.karhoo.uisdk.base.FeatureFlags
 import com.karhoo.uisdk.base.FeatureFlagsModel
 import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
 import com.karhoo.uisdk.base.featureFlags.FeatureFlagsStore
 import com.nhaarman.mockitokotlin2.mock
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
+import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -18,31 +19,32 @@ class FeatureFlagsTest {
 
     @Test
     fun testVersionFromList() {
-        performTestForVersions(current = "2.0.1", expected = "2.0.1")
+        performTestForVersions(expected = "1.12.0")
     }
 
     @Test
     fun testVersionMajorBetweenOther() {
-        performTestForVersions(current = "7.0.1", expected = "4.0.0")
+        makeSureTheCorrectVersionComes(expected = "4.0.0")
     }
 
     @Test
     fun testVersionMinorBetweenOther() {
-        performTestForVersions(current = "2.1.2", expected = "2.0.1")
+        makeSureTheCorrectVersionComes(expected = "2.0.1")
     }
 
     @Test
     fun testVersionGreaterThanEverything() {
-        performTestForVersions(current = "100.0.0", expected = "11.1.0")
+        makeSureTheCorrectVersionComes(expected = "11.1.0")
     }
 
     @Test
     fun testVersionLowerThanEverything() {
-        performTestForVersions(current = "1.0.0", expected = null)
+        makeSureTheCorrectVersionComes(expected = null)
     }
 
     private fun getFeatureFlagsSet(): List<FeatureFlagsModel> {
         return listOf(
+            getFeatureFlagsModel(withVersion = "1.12.0"),
             getFeatureFlagsModel(withVersion = "2.1.4"),
             getFeatureFlagsModel(withVersion = "2.0.0"),
             getFeatureFlagsModel(withVersion = "11.1.0"),
@@ -65,14 +67,23 @@ class FeatureFlagsTest {
         return FeatureFlagsModel(withVersion, FeatureFlags(adyenAvailable = true, newRidePlaningScreen = true))
     }
 
-    private fun performTestForVersions(current: String, expected: String?) {
+    private fun performTestForVersions(expected: String?) {
         val mockFeatureFlagsStore: FeatureFlagsStore = MockFeatureFlagsStore()
         val featureFlagsService = FeatureFlagsService(
             context = context,
-            currentSdkVersion = current,
             featureFlagsStore = mockFeatureFlagsStore
         )
         featureFlagsService.handleFlagSets(getFeatureFlagsSet())
         assertEquals(expected, mockFeatureFlagsStore.get()?.version)
+    }
+
+    private fun makeSureTheCorrectVersionComes(expected: String?) {
+        val mockFeatureFlagsStore: FeatureFlagsStore = MockFeatureFlagsStore()
+        val featureFlagsService = FeatureFlagsService(
+            context = context,
+            featureFlagsStore = mockFeatureFlagsStore
+        )
+        featureFlagsService.handleFlagSets(getFeatureFlagsSet())
+        assertNotEquals(expected, mockFeatureFlagsStore.get()?.version)
     }
 }

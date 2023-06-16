@@ -265,7 +265,7 @@ class MainActivity : AppCompatActivity() {
         config.forceDarkMode = getCurrentDarkModeStatus()
 
         KarhooUISDK.apply {
-            setConfiguration(config)
+            setConfiguration(config, applicationContext)
         }
     }
 
