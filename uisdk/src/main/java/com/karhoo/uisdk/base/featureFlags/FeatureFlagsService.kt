@@ -54,6 +54,8 @@ class FeatureFlagsService(
 
     private fun isNetworkAvailable(context: Context?): Boolean {
         if (context == null) return false
+
+        var isOk = false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -62,25 +64,25 @@ class FeatureFlagsService(
             if (capabilities != null) {
                 when {
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                        return true
+                        isOk = true
                     }
 
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                        return true
+                        isOk = true
                     }
 
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                        return true
+                        isOk = true
                     }
                 }
             }
         } else {
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
-                return true
+                isOk = true
             }
         }
-        return false
+        return isOk
     }
 
     fun handleFlagSets(sets: List<FeatureFlagsModel>) {
