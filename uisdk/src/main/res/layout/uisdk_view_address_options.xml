@@ -3,7 +3,7 @@
     android:id="@+id/addressOptions"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/kh_uisdk_off_white"
+    android:background="@color/kh_uisdk_background1"
     android:orientation="vertical">
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kh_uisdk_map_selector"
-                android:textColor="@color/kh_uisdk_off_black"
+                android:textColor="@color/kh_uisdk_text_secondary"
                 android:textSize="@dimen/kh_uisdk_text_size_medium" />
 
         </LinearLayout>
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kh_uisdk_current_location"
-                android:textColor="@color/kh_uisdk_off_black"
+                android:textColor="@color/kh_uisdk_text_secondary"
                 android:textSize="@dimen/kh_uisdk_text_size_medium" />
 
         </LinearLayout>

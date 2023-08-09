@@ -84,7 +84,7 @@
         android:padding="@dimen/kh_uisdk_spacing_xxsmall"
         android:visibility="gone"
         android:text="@string/kh_uisdk_retrieving_quotes"
-        android:textColor="@color/kh_uisdk_med_grey"
+        android:textColor="@color/kh_uisdk_label"
         app:layout_constraintTop_toBottomOf="@+id/quotesLoadingProgressBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

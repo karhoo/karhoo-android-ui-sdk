@@ -4,6 +4,6 @@
     android:viewportWidth="12.0"
     android:viewportHeight="12.0">
     <path
-        android:fillColor="@color/kh_uisdk_off_black"
+        android:fillColor="@color/kh_uisdk_text_secondary"
         android:pathData="M6,5.293l2.475,-2.475 0.707,0.707L6.707,6l2.475,2.475 -0.707,0.707L6,6.707 3.525,9.182l-0.707,-0.707L5.293,6 2.818,3.525l0.707,-0.707L6,5.293zM6,12A6,6 0,1 1,6 0a6,6 0,0 1,0 12zM6,11A5,5 0,1 0,6 1a5,5 0,0 0,0 10z" />
 </vector>

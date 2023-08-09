@@ -12,6 +12,4 @@
     <color name="bt_color_primary">@color/kh_uisdk_primary</color>
     <color name="bt_black_contrast">@color/kh_uisdk_secondary</color>
 
-    <color name="kh_uisdk_prebook_icon">@color/kh_uisdk_colorAccent</color>
-
 </resources>

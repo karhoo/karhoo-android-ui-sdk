@@ -18,7 +18,7 @@
         android:inputType="text"
         android:maxLines="1"
         android:paddingLeft="@dimen/kh_uisdk_spacing_xxxsmall"
-        android:textColor="@color/kh_uisdk_off_white"
+        android:textColor="@color/kh_uisdk_background1"
         android:textCursorDrawable="@null"
         style="@style/KhAddressSearchInput">
 

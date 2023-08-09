@@ -4,7 +4,7 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/kh_uisdk_light_gray"/>
+        android:color="@color/kh_uisdk_background2"/>
 
     <size
         android:width="@dimen/kh_uisdk_spacing_xxsmall"

@@ -11,5 +11,5 @@
     <path
         android:pathData="M5,8L9,12L6,12C6,15.31 8.69,18 12,18C13.01,18 13.97,17.75 14.8,17.3L16.26,18.76C15.03,19.54 13.57,20 12,20C7.58,20 4,16.42 4,12L1,12L5,8ZM18,12C18,8.69 15.31,6 12,6C10.99,6 10.03,6.25 9.2,6.7L7.74,5.24C8.97,4.46 10.43,4 12,4C16.42,4 20,7.58 20,12L23,12L19,16L15,12L18,12Z"
         android:fillType="nonZero"
-        android:fillColor="@color/kh_uisdk_off_black" />
+        android:fillColor="@color/kh_uisdk_text_secondary" />
 </vector>

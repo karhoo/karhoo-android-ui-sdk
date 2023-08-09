@@ -49,7 +49,7 @@
     </style>
 
     <style name="Text.White">
-        <item name="android:textColor">@color/kh_uisdk_text_white</item>
+        <item name="android:textColor">@color/kh_uisdk_background_primary</item>
     </style>
 
     <style name="Text.White.XXLarge">
@@ -155,7 +155,7 @@
     </style>
 
     <style name="Text.Red">
-        <item name="android:textColor">@color/kh_uisdk_primary_red</item>
+        <item name="android:textColor">@color/kh_uisdk_error</item>
     </style>
 
     <style name="Text.Action.Primary">
@@ -184,7 +184,7 @@
 
     <style name="Text.Primary.Small.Green">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_cancellation_green</item>
+        <item name="android:textColor">@color/kh_uisdk_success</item>
     </style>
 
     <style name="Text.Black.Medium.Bold">

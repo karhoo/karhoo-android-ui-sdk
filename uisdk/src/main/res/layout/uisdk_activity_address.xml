@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/kh_uisdk_off_white">
+    android:background="@color/kh_uisdk_background1">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/kh_uisdk_off_white"
+        android:background="@color/kh_uisdk_background1"
         android:paddingTop="@dimen/kh_uisdk_spacing_xsmall"
         android:paddingBottom="@dimen/kh_uisdk_spacing_small"
         android:src="@drawable/uisdk_powered_by_google_on_white" />
