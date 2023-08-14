@@ -19,12 +19,5 @@
       "adyenAvailable": true,
       "newRidePlaningScreen": false
     }
-  },
-  {
-    "version": "1.13.1",
-    "flags": {
-      "adyenAvailable": false,
-      "newRidePlaningScreen": false
-    }
   }
 ]
