@@ -27,6 +27,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -61,7 +62,9 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
         handleExtras()
         initialiseViewListeners()
         bindViews()
-        checkAdyenCompatibility()
+
+        if(KarhooUISDKConfigurationProvider.configuration.paymentManager is AdyenPaymentManager)
+            checkAdyenCompatibility()
     }
 
     override fun onResume() {
