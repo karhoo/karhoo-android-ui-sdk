@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooError
+import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
@@ -27,6 +28,7 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
@@ -61,7 +63,9 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
         handleExtras()
         initialiseViewListeners()
         bindViews()
-        checkAdyenCompatibility()
+
+        if(KarhooUISDKConfigurationProvider.configuration.paymentManager is AdyenPaymentManager)
+            checkAdyenCompatibility()
     }
 
     override fun onResume() {
