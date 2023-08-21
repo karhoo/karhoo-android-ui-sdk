@@ -2,26 +2,19 @@
   {
     "version": "1.11.1",
     "flags": {
-      "adyenAvailable": true,
-      "newRidePlaningScreen": true
+      "adyenAvailable": false,
+      "newRidePlaningScreen": false
     }
   },
   {
     "version": "1.11.0",
     "flags": {
-      "adyenAvailable": true,
+      "adyenAvailable": false,
       "newRidePlaningScreen": false
     }
   },
   {
     "version": "1.12.0",
-    "flags": {
-      "adyenAvailable": true,
-      "newRidePlaningScreen": false
-    }
-  },
-  {
-    "version": "1.13.2",
     "flags": {
       "adyenAvailable": false,
       "newRidePlaningScreen": false
