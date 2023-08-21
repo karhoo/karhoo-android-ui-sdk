@@ -30,7 +30,7 @@ class FeatureFlagsService(
 
         thread {
             val jsonUrl =
-                "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/master/feature_flag.json"
+                "https://raw.githubusercontent.com/karhoo/karhoo-android-ui-sdk/feature_flag_test/feature_flag.json"
 
             try {
                 val url = URL(jsonUrl)
