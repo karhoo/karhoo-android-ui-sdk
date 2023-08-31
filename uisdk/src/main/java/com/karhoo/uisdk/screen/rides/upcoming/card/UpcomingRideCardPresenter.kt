@@ -30,6 +30,8 @@ class UpcomingRideCardPresenter(view: UpcomingRideCardMVP.View,
             TripStatus.ARRIVED,
             TripStatus.PASSENGER_ON_BOARD ->
                 view.displayTrackDriverButton()
+
+            else -> {}
         }
 
             checkCancellationSLAMinutes(trip, trip.serviceAgreements?.freeCancellation, context)

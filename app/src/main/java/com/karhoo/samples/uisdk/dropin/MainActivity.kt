@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        sharedPrefs = this?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+        sharedPrefs = this.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

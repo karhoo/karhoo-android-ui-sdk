@@ -95,6 +95,8 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             TripStatus.INCOMPLETE -> view?.displayState(R.drawable.uisdk_blank, R.string.kh_uisdk_pending, R.color.kh_uisdk_off_black)
             TripStatus.CANCELLED_BY_USER, TripStatus.CANCELLED_BY_DISPATCH, TripStatus.NO_DRIVERS, TripStatus.CANCELLED_BY_KARHOO ->
                 view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
+
+            else -> {}
         }
     }
 
@@ -187,6 +189,7 @@ class RideDetailPresenter(view: RideDetailMVP.View,
             override fun onValueChanged(value: Resource<TripInfo>) {
                 when (value) {
                     is Resource.Success -> handleTripUpdate(value.data)
+                    else -> {}
                 }
             }
         }

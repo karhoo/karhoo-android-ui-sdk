@@ -64,7 +64,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 1120
-        versionName "1.13.2"
+        versionName "1.13.3"
         buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
         // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
@@ -154,7 +154,7 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
             artifactId "uisdk-${variant.flavorName}"
-            version '1.13.2'
+            version '1.13.3'
         }
     }
 }
@@ -163,8 +163,8 @@ dependencies {
     api project(':nsdk')
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
-    fullCompileOnly('com.braintreepayments.api:drop-in:6.8.0')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    fullCompileOnly('com.braintreepayments.api:drop-in:6.11.1')
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
     implementation 'com.google.android.gms:play-services-location:18.0.0'

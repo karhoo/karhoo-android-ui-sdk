@@ -117,6 +117,7 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
                 reverseGeocodeDestination(journeyInfo.destination)
                 when (result) {
                     is Resource.Success -> pickupSet(pickupLocationInfo = result.data, addressPositionInList = 0)
+                    else -> {}
                 }
             }
         } ?: run {
@@ -133,6 +134,8 @@ internal class AddressBarPresenter(view: AddressBarMVP.View,
                 when (result) {
                     is Resource.Success -> destinationSet(destinationLocationInfo = result.data, addressPositionInList
                     = 0)
+
+                    else -> {}
                 }
             }
         }

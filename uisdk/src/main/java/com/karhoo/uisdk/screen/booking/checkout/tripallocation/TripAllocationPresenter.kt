@@ -34,6 +34,7 @@ class TripAllocationPresenter(view: TripAllocationContract.View,
                     .execute { result ->
                         when (result) {
                             is Resource.Failure -> handleFailedCancellation(result.error)
+                            else -> {}
                         }
                     }
         }
@@ -68,6 +69,8 @@ class TripAllocationPresenter(view: TripAllocationContract.View,
             TripStatus.CANCELLED_BY_USER -> tripCancelledByUser()
             TripStatus.CANCELLED_BY_DISPATCH,
             TripStatus.CANCELLED_BY_KARHOO -> tripCancelled(trip)
+
+            else -> {}
         }
     }
 
@@ -111,6 +114,8 @@ class TripAllocationPresenter(view: TripAllocationContract.View,
                         }
                         checkForAllocationOrCancellation(value.data)
                     }
+
+                    else -> {}
                 }
             }
         }

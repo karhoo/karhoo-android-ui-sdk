@@ -50,6 +50,8 @@ fun ServiceCancellation.hasValidCancellationDependingOnTripStatus(tripStatus: Tr
             TripStatus.ARRIVED -> {
                 return true
             }
+
+            else -> {}
         }
     } else if (this.type == CANCELLATION_BEFORE_DRIVER_EN_ROUTE) {
         when (tripStatus) {
@@ -57,6 +59,8 @@ fun ServiceCancellation.hasValidCancellationDependingOnTripStatus(tripStatus: Tr
             TripStatus.CONFIRMED -> {
                 return true
             }
+
+            else -> {}
         }
     }
 

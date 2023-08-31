@@ -114,6 +114,8 @@ class RideNotificationView : RideNotificationContract.View {
             TripStatus.NO_DRIVERS,
             TripStatus.CANCELLED_BY_KARHOO ->
                 displayState(contentView, R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
+
+            else -> {}
         }
     }
 
