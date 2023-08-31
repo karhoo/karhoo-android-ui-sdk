@@ -164,7 +164,7 @@ dependencies {
 
     fullCompileOnly('com.adyen.checkout:drop-in:4.8.0')
     fullCompileOnly('com.braintreepayments.api:drop-in:6.11.1')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
     implementation 'joda-time:joda-time:2.10.3'
     implementation 'com.google.android.gms:play-services-location:18.0.0'

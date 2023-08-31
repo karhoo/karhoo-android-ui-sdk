@@ -140,6 +140,8 @@ class LoyaltyView @JvmOverloads constructor(
                 loyaltyViewBurnTitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
                 loyaltySwitch.isEnabled = false
             }
+
+            else -> {}
         }
     }
 

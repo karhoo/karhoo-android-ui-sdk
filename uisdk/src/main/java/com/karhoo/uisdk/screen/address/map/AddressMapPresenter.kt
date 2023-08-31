@@ -39,6 +39,8 @@ class AddressMapPresenter(view: AddressMapMVP.View,
                 is Resource.Success -> {
                     updateLocation(result.data)
                 }
+
+                else -> {}
             }
         }
     }

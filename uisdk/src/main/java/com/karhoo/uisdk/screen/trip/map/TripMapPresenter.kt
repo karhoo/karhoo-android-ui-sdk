@@ -100,6 +100,7 @@ class TripMapPresenter(view: TripMapMVP.View,
             override fun onValueChanged(value: Resource<DriverTrackingInfo>) {
                 when (value) {
                     is Resource.Success -> updateDriverPosition(value.data)
+                    else -> {}
                 }
             }
         }
@@ -141,6 +142,7 @@ class TripMapPresenter(view: TripMapMVP.View,
             override fun onValueChanged(value: Resource<TripInfo>) {
                 when (value) {
                     is Resource.Success -> handleTripUpdated(value.data)
+                    else -> {}
                 }
             }
         }
