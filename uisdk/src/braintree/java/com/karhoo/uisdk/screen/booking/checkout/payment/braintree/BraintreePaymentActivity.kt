@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.WindowManager
 import com.braintreepayments.api.DropInClient
 import com.braintreepayments.api.DropInListener
 import com.braintreepayments.api.DropInRequest
@@ -32,10 +33,12 @@ class BraintreePaymentActivity : BaseActivity(), DropInListener {
             dropInRequest = it.getParcelable<DropInRequest>(BRAINTREE_ACTIVITY_DROP_IN_REQUEST)!!
 
             dropInClient = DropInClient(this@BraintreePaymentActivity, sdkToken)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
             Handler(Looper.getMainLooper()).post {
                 dropInClient.setListener(this)
                 dropInClient.launchDropIn(dropInRequest)
+                window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
             }
         }
     }
