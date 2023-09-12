@@ -33,12 +33,12 @@ class BraintreePaymentActivity : BaseActivity(), DropInListener {
             dropInRequest = it.getParcelable<DropInRequest>(BRAINTREE_ACTIVITY_DROP_IN_REQUEST)!!
 
             dropInClient = DropInClient(this@BraintreePaymentActivity, sdkToken)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
 
             Handler(Looper.getMainLooper()).post {
                 dropInClient.setListener(this)
                 dropInClient.launchDropIn(dropInRequest)
-                window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+//                window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
             }
         }
     }
