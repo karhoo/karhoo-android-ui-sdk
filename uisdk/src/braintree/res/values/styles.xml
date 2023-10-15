@@ -19,8 +19,8 @@
         </item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
-        <item name="hintTextColor">@color/kh_uisdk_search_hint_color</item>
+        <item name="android:textColorHint">@color/kh_uisdk_text_button</item>
+        <item name="hintTextColor">@color/kh_uisdk_text_button</item>
         <item name="colorError">@color/kh_uisdk_error</item>
     </style>
 
@@ -174,7 +174,7 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="selectedTabTextColor">@color/kh_uisdk_text_primary</item>
-        <item name="unselectedTabTextColor">@color/kh_uisdk_text_alternative</item>
+        <item name="unselectedTabTextColor">@color/kh_uisdk_label</item>
         <item name="unavailableTabTextColor">@color/kh_uisdk_disabled</item>
         <item name="tabIndicatorColor">@color/kh_uisdk_accent</item>
         <item name="tabIndicatorHeight">3dp</item>
@@ -189,13 +189,13 @@
     </style>
 
     <style name="VehicleClassTabTextAppeareance" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/kh_uisdk_text_alternative</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
         <item name="android:textSize">10sp</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/kh_uisdk_lightGrey</item>
-        <item name="colorControlActivated">@color/kh_uisdk_duskYellow</item>
+        <item name="colorControlNormal">@color/kh_uisdk_background4</item>
+        <item name="colorControlActivated">@color/kh_uisdk_warning</item>
     </style>
 
     <style name="KhAddressSearchInput">
@@ -254,7 +254,7 @@
     <style name="KhBookingMapViewStyle">
         <item name="mapPickupPin">@drawable/uisdk_ic_pickup_pin</item>
         <item name="mapDropOffPin">@drawable/uisdk_ic_dropoff_pin</item>
-        <item name="curvedLineColor">@color/kh_uisdk_primary_blue</item>
+        <item name="curvedLineColor">@color/kh_uisdk_primary</item>
     </style>
 
     <style name="KhBookingMapViewPickupIcon">
@@ -545,8 +545,8 @@
     </style>
 
     <style name="KhCountryPickerSearchStyle" parent="Widget.AppCompat.SearchView">
-        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
-        <item name="android:textColor">@color/kh_uisdk_search_hint_color</item>
+        <item name="android:textColorHint">@color/kh_uisdk_text_button</item>
+        <item name="android:textColor">@color/kh_uisdk_text_button</item>
     </style>
 
     <style name="KhTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

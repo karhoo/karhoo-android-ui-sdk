@@ -6,7 +6,7 @@
     <color name="bt_text_blue">@color/kh_uisdk_accent</color>
     <color name="bt_error_red">@color/kh_uisdk_error</color>
     <color name="bt_border_color">@color/kh_uisdk_label</color>
-    <color name="bt_black_54">@color/kh_uisdk_transparent_black</color>
+    <color name="bt_black_54">@color/kh_uisdk_transparent</color>
     <color name="bt_black">@color/kh_uisdk_text_primary</color>
 
     <color name="bt_color_primary">@color/kh_uisdk_primary</color>

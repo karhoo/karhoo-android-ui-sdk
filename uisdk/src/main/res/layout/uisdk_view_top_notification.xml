@@ -11,7 +11,7 @@
         android:id="@+id/notificationLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/kh_uisdk_transparent_black_notification"
+        android:background="@color/kh_uisdk_transparent"
         android:gravity="center"
         android:padding="@dimen/kh_uisdk_spacing_xxsmall"
         android:textColor="@color/kh_uisdk_background1"

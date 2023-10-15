@@ -143,7 +143,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +217,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <!-- START: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
             <LinearLayout
@@ -318,7 +318,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_divider" />
+                    android:background="@color/kh_uisdk_background3" />
 
                 <!-- END: MAKE VISIBLE WHEN MEETING POINT AVAILABLE -->
 
@@ -364,7 +364,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_divider"
+                    android:background="@color/kh_uisdk_label"
                     android:visibility="visible" />
 
             </LinearLayout>
@@ -372,7 +372,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider"
+                android:background="@color/kh_uisdk_background3"
                 android:visibility="gone" />
             <!-- END: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
 
@@ -416,7 +416,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <com.karhoo.uisdk.screen.rides.detail.rating.RatingView
                 android:id="@+id/starRatingWidget"
@@ -435,7 +435,7 @@
                 android:id="@+id/ratingDivider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider"
+                android:background="@color/kh_uisdk_background3"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
