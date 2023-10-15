@@ -38,6 +38,8 @@ class LoyaltyStaticDetails @JvmOverloads constructor(
                     loyaltyPoints
                 )
             }
+
+            else -> {}
         }
 
         loyaltyStaticText.contentDescription =

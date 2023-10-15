@@ -8,6 +8,8 @@ fun Snackbar.showWithCheck(currentState: SnackbarState): Snackbar {
         SnackbarState.NETWORK,
         SnackbarState.INVITE,
         SnackbarState.GENERIC -> show()
+
+        else -> {}
     }
     return this
 }

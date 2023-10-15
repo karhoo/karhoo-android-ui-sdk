@@ -66,6 +66,7 @@ class DetaPresenter(view: DetaMVP.View, private val driverTrackingService: Drive
             override fun onValueChanged(value: Resource<TripState>) {
                 when (value) {
                     is Resource.Success -> handleTripState(value.data)
+                    else -> {}
                 }
             }
         }

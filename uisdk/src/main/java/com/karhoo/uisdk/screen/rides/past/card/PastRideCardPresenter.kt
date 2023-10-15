@@ -35,6 +35,8 @@ class PastRideCardPresenter(
             TripStatus.NO_DRIVERS,
             TripStatus.CANCELLED_BY_KARHOO ->
                 view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_text_secondary)
+
+            else -> {}
         }
     }
 
