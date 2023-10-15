@@ -14,7 +14,7 @@
         android:background="@color/kh_uisdk_transparent"
         android:gravity="center"
         android:padding="@dimen/kh_uisdk_spacing_xxsmall"
-        android:textColor="@color/kh_uisdk_background1"
+        android:textColor="@color/kh_uisdk_text_button"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

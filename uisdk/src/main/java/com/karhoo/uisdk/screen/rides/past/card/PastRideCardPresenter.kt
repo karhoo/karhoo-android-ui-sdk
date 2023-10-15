@@ -29,12 +29,12 @@ class PastRideCardPresenter(
     override fun bindState() {
         when (trip.tripState) {
             TripStatus.COMPLETED ->
-                view?.displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_text_secondary)
+                view?.displayState(R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_text)
             TripStatus.CANCELLED_BY_USER,
             TripStatus.CANCELLED_BY_DISPATCH,
             TripStatus.NO_DRIVERS,
             TripStatus.CANCELLED_BY_KARHOO ->
-                view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_text_secondary)
+                view?.displayState(R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_text)
 
             else -> {}
         }

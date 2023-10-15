@@ -136,7 +136,7 @@
                     android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/kh_uisdk_loading_min"
-                    android:textColor="@color/kh_uisdk_text_primary"
+                    android:textColor="@color/kh_uisdk_headline"
                     android:textSize="@dimen/kh_uisdk_text_size_medium"
                     tools:text="99 min" />
 
@@ -166,7 +166,7 @@
                     android:maxLines="1"
                     style="@style/QuotesFontTextAppearance"
                     android:textStyle="bold"
-                    android:textColor="@color/kh_uisdk_text_primary"
+                    android:textColor="@color/kh_uisdk_headline"
                     android:textSize="@dimen/kh_uisdk_text_size_medium"
                     tools:text="GBP100.00 - 100.00" />
 
@@ -213,7 +213,7 @@
                 android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/kh_uisdk_text_primary"
+                android:textColor="@color/kh_uisdk_headline"
                 android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                 tools:text="Quote Name" />
 

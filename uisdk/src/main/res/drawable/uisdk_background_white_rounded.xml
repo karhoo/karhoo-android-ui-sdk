@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/kh_uisdk_background_primary" />
+    <solid android:color="@color/kh_uisdk_background1" />
     <stroke
         android:color="@color/kh_uisdk_label"
         android:width="1dp" />

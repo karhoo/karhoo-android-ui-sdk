@@ -61,7 +61,7 @@
                 android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
                 android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                 android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
-                android:textColor="@color/kh_uisdk_background_primary"
+                android:textColor="@color/kh_uisdk_text_button"
                 android:textSize="@dimen/kh_uisdk_text_size_xsmall"
                 android:visibility="gone"/>
 

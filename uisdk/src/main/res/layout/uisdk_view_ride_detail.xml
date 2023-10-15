@@ -71,7 +71,7 @@
                     android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
                     android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
-                    android:textColor="@color/kh_uisdk_background_primary"
+                    android:textColor="@color/kh_uisdk_text_button"
                     android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
 
             </RelativeLayout>
@@ -209,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/kh_uisdk_text_secondary"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>
@@ -246,7 +246,7 @@
                     android:id="@+id/cardNumberText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kh_uisdk_text_secondary"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>
@@ -277,7 +277,7 @@
                         android:id="@+id/flightNumberText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/kh_uisdk_text_secondary"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -310,7 +310,7 @@
                         android:gravity="right"
                         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
                         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
-                        android:textColor="@color/kh_uisdk_text_secondary"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -356,7 +356,7 @@
                         android:gravity="right"
                         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
                         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
-                        android:textColor="@color/kh_uisdk_text_secondary"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -396,7 +396,7 @@
                     android:id="@+id/karhooId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kh_uisdk_text_secondary"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>

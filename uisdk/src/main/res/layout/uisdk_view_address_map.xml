@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/kh_uisdk_spacing_small"
         android:src="?attr/homeAsUpIndicator"
-        app:tint="@color/kh_uisdk_text_secondary"
+        app:tint="@color/kh_uisdk_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

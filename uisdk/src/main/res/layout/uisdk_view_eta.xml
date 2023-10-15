@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/kh_uisdk_spacing_small"
         android:elevation="@dimen/kh_uisdk_spacing_xsmall"
-        android:textColor="@color/kh_uisdk_text_secondary"
+        android:textColor="@color/kh_uisdk_text"
         android:textSize="@dimen/kh_uisdk_text_size_xxlarge"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"

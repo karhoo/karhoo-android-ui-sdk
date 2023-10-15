@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:gravity="top|start"
-            android:textColor="@color/kh_uisdk_text_primary"
+            android:textColor="@color/kh_uisdk_headline"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

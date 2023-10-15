@@ -97,7 +97,7 @@ class AddressBarView
             }
         } else {
             pickupLabel.apply {
-                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_headline))
             }
         }
     }
@@ -113,7 +113,7 @@ class AddressBarView
         } else {
             dropOffLabel.apply {
                 text = displayAddress
-                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
+                setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_headline))
                 contentDescription = resources.getString(R.string.kh_uisdk_accessibility_label_drop_off_address) + " " + displayAddress
             }
             setDropoffAddressVisibility(false)

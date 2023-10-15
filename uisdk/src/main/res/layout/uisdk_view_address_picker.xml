@@ -122,7 +122,7 @@
             android:layout_marginLeft="@dimen/kh_uisdk_margin_small"
             android:layout_marginRight="@dimen/kh_uisdk_margin_small"
             android:scaleType="centerInside"
-            app:tint="@color/kh_uisdk_text_secondary"
+            app:tint="@color/kh_uisdk_text"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|bottom"
                 android:maxLines="1"
-                android:textColor="@color/kh_uisdk_text_secondary"
+                android:textColor="@color/kh_uisdk_text"
                 android:textSize="@dimen/kh_uisdk_text_size_small_medium"
                 android:visibility="gone" />
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|top"
                 android:maxLines="1"
-                android:textColor="@color/kh_uisdk_text_secondary"
+                android:textColor="@color/kh_uisdk_text"
                 android:textSize="@dimen/kh_uisdk_text_size_small"
                 android:visibility="gone" />
         </LinearLayout>

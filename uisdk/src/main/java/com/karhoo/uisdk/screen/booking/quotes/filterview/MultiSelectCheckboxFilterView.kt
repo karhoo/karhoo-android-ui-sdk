@@ -29,7 +29,7 @@ class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
             value.forEach { data ->
                 val box = CheckBox(ContextThemeWrapper(context, R.style.KhFilterViewCheckBox))
                 box.text = data.text
-                box.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_text_primary))
+                box.setTextColor(ContextCompat.getColor(context, R.color.kh_uisdk_headline))
                 if(filter?.selectedTypes?.map { it.fixedTag }?.contains(data.fixedTag) == true)
                     box.isChecked = true
 

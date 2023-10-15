@@ -103,7 +103,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
             if (snackbarConfig.action != null) {
                 snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_INDEFINITE)
                     .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
-                    .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_background_primary))
+                    .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_button))
             } else {
                 snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_LONG)
             }

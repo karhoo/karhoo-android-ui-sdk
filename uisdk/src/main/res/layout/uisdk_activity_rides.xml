@@ -51,7 +51,7 @@
             android:scrollbars="none"
             app:tabIndicatorColor="@color/kh_uisdk_accent"
             app:tabSelectedTextColor="@color/kh_uisdk_accent"
-            app:tabTextColor="@color/kh_uisdk_text_secondary" />
+            app:tabTextColor="@color/kh_uisdk_text" />
 
     </androidx.viewpager.widget.ViewPager>
 

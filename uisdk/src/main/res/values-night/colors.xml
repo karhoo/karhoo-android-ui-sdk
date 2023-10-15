@@ -9,15 +9,15 @@
     <color name="kh_uisdk_border">#2A2A2A</color>
     <color name="kh_uisdk_error">#EB7577</color>
     <color name="kh_uisdk_success">#56CA8E</color>
+    <color name="kh_uisdk_green_dark">#009C99</color>
     <color name="kh_uisdk_disabled">#484848</color>
     <color name="kh_uisdk_warning">#FAF06E</color>
 
-    <color name="kh_uisdk_text_primary">#CECECE</color>
-    <color name="kh_uisdk_text_secondary">#CECECE</color>
+    <color name="kh_uisdk_headline">#CECECE</color>
+    <color name="kh_uisdk_text">#CECECE</color>
     <color name="kh_uisdk_label">#9E9E9E</color>
     <color name="kh_uisdk_text_button">#FFFFFF</color>
 
-    <color name="kh_uisdk_background_primary">#121212</color>
     <color name="kh_uisdk_background1">#121212</color>
     <color name="kh_uisdk_background2">#232323</color>
     <color name="kh_uisdk_background3">#252525</color>
@@ -26,9 +26,9 @@
 
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>
-    <color name="textColor">@color/kh_uisdk_text_primary</color>
-    <color name="label_color">@color/kh_uisdk_text_primary</color>
-    <color name="black">@color/kh_uisdk_text_primary</color>
+    <color name="textColor">@color/kh_uisdk_headline</color>
+    <color name="label_color">@color/kh_uisdk_headline</color>
+    <color name="black">@color/kh_uisdk_headline</color>
     <color name="primaryColor">@color/kh_uisdk_accent</color>
 
     <!-- Braintree -->
@@ -37,8 +37,8 @@
     <color name="bt_text_blue">@color/kh_uisdk_accent</color>
     <color name="bt_error_red">@color/kh_uisdk_error</color>
     <color name="bt_border_color">@color/kh_uisdk_label</color>
-    <color name="bt_black_54">@color/kh_uisdk_text_primary</color>
-    <color name="bt_black">@color/kh_uisdk_text_primary</color>
+    <color name="bt_black_54">@color/kh_uisdk_headline</color>
+    <color name="bt_black">@color/kh_uisdk_headline</color>
 
 
 </resources>

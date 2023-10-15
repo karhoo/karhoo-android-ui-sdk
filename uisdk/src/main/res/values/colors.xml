@@ -3,21 +3,21 @@
     <color name="kh_uisdk_transparent">#00000000</color>
 
     <!-- New Colors -->
-    <color name="kh_uisdk_primary">#18183F</color>
-    <color name="kh_uisdk_secondary">#FF0082</color>
-    <color name="kh_uisdk_accent">#1A70C1</color>
-    <color name="kh_uisdk_border">#EBEBEB</color>
-    <color name="kh_uisdk_error">#ED3A3A</color>
-    <color name="kh_uisdk_success">#12BE76</color>
+    <color name="kh_uisdk_primary">#66308F</color>
+    <color name="kh_uisdk_secondary">#C93B93</color>
+    <color name="kh_uisdk_accent">#8E3189</color>
+    <color name="kh_uisdk_border">#DDDDDD</color>
+    <color name="kh_uisdk_error">#F54043</color>
+    <color name="kh_uisdk_success">#47E699</color>
+    <color name="kh_uisdk_green_dark">#47E699</color>
     <color name="kh_uisdk_disabled">#E0E0E0</color>
-    <color name="kh_uisdk_warning">#F6A705</color>
+    <color name="kh_uisdk_warning">#FFCB3D</color>
 
-    <color name="kh_uisdk_text_primary">#121212</color>
-    <color name="kh_uisdk_text_secondary">#383838</color>
+    <color name="kh_uisdk_headline">#121212</color>
+    <color name="kh_uisdk_text">#383838</color>
     <color name="kh_uisdk_label">#757575</color>
     <color name="kh_uisdk_text_button">#FFFFFF</color>
 
-    <color name="kh_uisdk_background_primary">#F8F8F8</color>
     <color name="kh_uisdk_background1">#F8F8F8</color>
     <color name="kh_uisdk_background2">#FFFFFF</color>
     <color name="kh_uisdk_background3">#EBEBEB</color>
@@ -27,9 +27,9 @@
 
     <!-- Adyen -->
     <color name="white">@color/kh_uisdk_background2</color>
-    <color name="textColor">@color/kh_uisdk_text_primary</color>
-    <color name="label_color">@color/kh_uisdk_text_primary</color>
-    <color name="black">@color/kh_uisdk_text_primary</color>
+    <color name="textColor">@color/kh_uisdk_headline</color>
+    <color name="label_color">@color/kh_uisdk_headline</color>
+    <color name="black">@color/kh_uisdk_headline</color>
     <color name="primaryColor">@color/kh_uisdk_accent</color>
 
     <!-- Braintree -->
@@ -39,7 +39,7 @@
     <color name="bt_error_red">@color/kh_uisdk_error</color>
     <color name="bt_border_color">@color/kh_uisdk_label</color>
     <color name="bt_black_54">#66000000</color>
-    <color name="bt_black">@color/kh_uisdk_text_primary</color>
+    <color name="bt_black">@color/kh_uisdk_headline</color>
 
     <color name="bt_color_primary">@color/kh_uisdk_primary</color>
     <color name="bt_black_contrast">@color/kh_uisdk_secondary</color>
