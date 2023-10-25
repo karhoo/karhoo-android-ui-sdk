@@ -6,11 +6,11 @@
         <item name="colorPrimary">@color/kh_uisdk_primary</item>
         <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
         <item name="colorAccent">@color/kh_uisdk_accent</item>
-        <item name="colorControlNormal">@color/kh_uisdk_med_grey</item>
+        <item name="colorControlNormal">@color/kh_uisdk_label</item>
         <item name="colorControlActivated">@color/kh_uisdk_primary</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:actionMenuTextColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/kh_uisdk_accent</item>
         <item name="android:windowSharedElementEnterTransition">
             @transition/uisdk_change_image_transform
         </item>
@@ -18,9 +18,9 @@
             @transition/uisdk_change_image_transform
         </item>
         <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
-        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
-        <item name="hintTextColor">@color/kh_uisdk_search_hint_color</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
+        <item name="android:textColorHint">@color/kh_uisdk_text_button</item>
+        <item name="hintTextColor">@color/kh_uisdk_text_button</item>
         <item name="colorError">@color/kh_uisdk_error</item>
     </style>
 
@@ -43,7 +43,7 @@
     <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@color/kh_uisdk_primary</item>
         <item name="colorControlNormal">@color/kh_uisdk_secondary</item>
-        <item name="android:textColor">@color/kh_uisdk_dark_grey</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="colorControlActivated">@color/kh_uisdk_accent</item>
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
@@ -79,10 +79,10 @@
 
     <!-- Quick fix for no background buttons -->
     <style name="NoBackgroundButtonTheme">
-        <item name="colorOnSurface">@color/kh_uisdk_off_white</item>
-        <item name="colorPrimary">@color/kh_uisdk_off_white</item>
-        <item name="background">@color/kh_uisdk_off_white</item>
-        <item name="backgroundTint">@color/kh_uisdk_off_white</item>
+        <item name="colorOnSurface">@color/kh_uisdk_background1</item>
+        <item name="colorPrimary">@color/kh_uisdk_background1</item>
+        <item name="background">@color/kh_uisdk_background1</item>
+        <item name="backgroundTint">@color/kh_uisdk_background1</item>
         <item name="android:textColor">@color/uisdk_text_action</item>
     </style>
 
@@ -91,23 +91,23 @@
     </style>
 
     <style name="AppTheme.OffWhiteProgressBar">
-        <item name="colorAccent">@color/kh_uisdk_off_white</item>
+        <item name="colorAccent">@color/kh_uisdk_background1</item>
         <item name="android:alpha">0.7</item>
     </style>
 
     <style name="AppTheme.Toolbar">
-        <item name="colorControlNormal">@color/kh_uisdk_off_white</item>
-        <item name="android:textColorSecondary">@color/kh_uisdk_off_white</item>
+        <item name="colorControlNormal">@color/kh_uisdk_background1</item>
+        <item name="android:textColorSecondary">@color/kh_uisdk_text_button</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:background">@color/kh_uisdk_primary</item>
     </style>
 
     <style name="AppTheme.Overflow" parent="AppTheme">
-        <item name="actionMenuTextColor">@color/kh_uisdk_off_black</item>
+        <item name="actionMenuTextColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="AppTheme.Recycler" parent="AppTheme">
-        <item name="android:colorEdgeEffect">@color/kh_uisdk_off_white</item>
+        <item name="android:colorEdgeEffect">@color/kh_uisdk_background1</item>
     </style>
 
     <style name="AppTheme.TransparentActionBar" parent="AppTheme">
@@ -126,19 +126,19 @@
     <style name="AppTheme.EditText" parent="AppTheme">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="colorAccent">@color/kh_uisdk_primary</item>
-        <item name="colorControlNormal">@color/kh_uisdk_dark_grey</item>
+        <item name="colorControlNormal">@color/kh_uisdk_text</item>
         <item name="colorControlActivated">@color/kh_uisdk_primary</item>
         <item name="colorControlHighlight">@color/kh_uisdk_primary</item>
     </style>
 
     <style name="AppTheme.EditTextWithHint" parent="AppTheme.EditText">
-        <item name="android:backgroundTint">@color/kh_uisdk_off_white</item>
+        <item name="android:backgroundTint">@color/kh_uisdk_background1</item>
     </style>
 
     <style name="AppTheme.LoginPassword" parent="AppTheme">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="colorAccent">@color/kh_uisdk_primary</item>
-        <item name="colorControlNormal">@color/kh_uisdk_med_grey</item>
+        <item name="colorControlNormal">@color/kh_uisdk_label</item>
         <item name="colorControlActivated">@color/kh_uisdk_primary</item>
         <item name="colorControlHighlight">@color/kh_uisdk_primary</item>
     </style>
@@ -160,19 +160,19 @@
     </declare-styleable>
 
     <style name="HelperTextAppearance" parent="TextAppearance.Design.Error">
-        <item name="android:textColor">@color/kh_uisdk_med_grey</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
     </style>
 
     <style name="TextButton">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:background">@null</item>
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
 
     <style name="TextButtonWithNoBackground">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:background">@null</item>
         <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
@@ -189,14 +189,14 @@
 
     <style name="PlainTextButton">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:background">@null</item>
         <item name="materialThemeOverlay">@style/DialogButtonTheme</item>
     </style>
 
     <style name="PlainTextButtonWithNoBackground">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_off_black</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:background">@null</item>
         <item name="materialThemeOverlay">@style/NoBackgroundButtonTheme</item>
     </style>
@@ -204,10 +204,10 @@
     <style name="KhVehicleClassTabs" parent="Widget.Design.TabLayout">
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="selectedTabTextColor">@color/kh_uisdk_text_primary</item>
-        <item name="unselectedTabTextColor">@color/kh_uisdk_text_alternative</item>
-        <item name="unavailableTabTextColor">@color/kh_uisdk_text_unavailable</item>
-        <item name="tabIndicatorColor">@color/kh_uisdk_tab_indicator</item>
+        <item name="selectedTabTextColor">@color/kh_uisdk_headline</item>
+        <item name="unselectedTabTextColor">@color/kh_uisdk_label</item>
+        <item name="unavailableTabTextColor">@color/kh_uisdk_disabled</item>
+        <item name="tabIndicatorColor">@color/kh_uisdk_accent</item>
         <item name="tabIndicatorHeight">3dp</item>
         <item name="tabTextAppearance">@style/VehicleClassTabTextAppeareance</item>
         <item name="tabBackground">@drawable/uisdk_category_selector_tab</item>
@@ -220,13 +220,13 @@
     </style>
 
     <style name="VehicleClassTabTextAppeareance" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/kh_uisdk_text_alternative</item>
+        <item name="android:textColor">@color/kh_uisdk_label</item>
         <item name="android:textSize">10sp</item>
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/kh_uisdk_lightGrey</item>
-        <item name="colorControlActivated">@color/kh_uisdk_duskYellow</item>
+        <item name="colorControlNormal">@color/kh_uisdk_background4</item>
+        <item name="colorControlActivated">@color/kh_uisdk_warning</item>
     </style>
 
     <style name="KhAddressSearchInput">
@@ -285,7 +285,7 @@
     <style name="KhBookingMapViewStyle">
         <item name="mapPickupPin">@drawable/uisdk_ic_pickup_pin</item>
         <item name="mapDropOffPin">@drawable/uisdk_ic_dropoff_pin</item>
-        <item name="curvedLineColor">@color/kh_uisdk_primary_blue</item>
+        <item name="curvedLineColor">@color/kh_uisdk_primary</item>
     </style>
 
     <style name="KhBookingMapViewPickupIcon">
@@ -297,8 +297,8 @@
 
     <style name="KhBookingMapLocateMeButton">
         <item name="srcCompat">@drawable/uisdk_ic_location</item>
-        <item name="android:tint">@color/kh_uisdk_text_primary</item>
-        <item name="android:backgroundTint">@color/kh_uisdk_background_primary</item>
+        <item name="android:tint">@color/kh_uisdk_headline</item>
+        <item name="android:backgroundTint">@color/kh_uisdk_background1</item>
         <item name="borderWidth">0dp</item>
     </style>
 
@@ -315,8 +315,8 @@
     <style name="KhQuotesSortTabs" parent="Widget.Design.TabLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">26dp</item>
-        <item name="tabSelectedTextColor">@color/kh_uisdk_tab_indicator</item>
-        <item name="tabIndicatorColor">@color/kh_uisdk_tab_indicator</item>
+        <item name="tabSelectedTextColor">@color/kh_uisdk_accent</item>
+        <item name="tabIndicatorColor">@color/kh_uisdk_accent</item>
         <item name="tabIndicatorHeight">0dp</item>
         <item name="tabTextAppearance">@style/VehicleClassTabTextAppeareance</item>
         <item name="tabMaxWidth">0dp</item>
@@ -330,40 +330,40 @@
 
     <style name="KhBookingQuotesViewFleetTitle">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large17</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetType">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetCancellation">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhBookingQuotesViewFleetDescription">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhActionCellTitle">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">3</item>
     </style>
 
     <style name="KhTextInputEditText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhTextInputEditTextHint">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhActionCellSubtitle">
@@ -380,12 +380,12 @@
 
     <style name="KhQuoteLearnMore">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:textColor">@color/kh_uisdk_accent</item>
     </style>
 
     <style name="KhQuoteLearnMoreIcon">
         <item name="android:src">@drawable/kh_uisdk_ic_arrow_down_small</item>
-        <item name="android:tint">@color/kh_uisdk_colorAccent</item>
+        <item name="android:tint">@color/kh_uisdk_accent</item>
     </style>
 
     <style name="KhBookingCheckoutBackToQuotes">
@@ -396,12 +396,12 @@
 
     <style name="KhBookingTermsText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_colorAccent</item>
+        <item name="android:textColor">@color/kh_uisdk_accent</item>
     </style>
 
     <style name="KhBookingTermsTitleText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:gravity">center</item>
         <item name="android:lineSpacingMultiplier">1</item>
         <item name="android:lineSpacingExtra">2dp</item>
@@ -447,13 +447,13 @@
         <item name="backgroundColor">@drawable/uisdk_booking_button_background</item>
         <item name="backgroundTint">@null</item>
         <item name="android:text">@string/kh_uisdk_book_now</item>
-        <item name="android:textColor">@color/kh_uisdk_text_white</item>
+        <item name="android:textColor">@color/kh_uisdk_text_button</item>
     </style>
 
     <!-- Booking Price View -->
     <style name="KhBookingPriceMeteredText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_xxxsmall</item>
         <item name="fontWeight">400</item>
@@ -462,7 +462,7 @@
 
     <style name="KhBookingPriceValueText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
         <item name="fontWeight">600</item>
@@ -480,7 +480,7 @@
     <style name="KhBookingPickUpText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:gravity">center</item>
         <item name="fontWeight">400</item>
         <item name="lineHeight">15dp</item>
@@ -499,7 +499,7 @@
 
     <style name="KhBookingPriceInfoImage">
         <item name="android:src">@drawable/kh_ic_error_outline</item>
-        <item name="tint">@color/kh_uisdk_text_primary</item>
+        <item name="tint">@color/kh_uisdk_headline</item>
         <item name="android:paddingTop">@dimen/kh_uisdk_spacing_xxxsmall</item>
     </style>
 
@@ -549,7 +549,7 @@
 
     <style name="KhLoyaltyTitleText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="fontWeight">600</item>
@@ -575,8 +575,8 @@
     </style>
 
     <style name="KhCountryPickerSearchStyle" parent="Widget.AppCompat.SearchView">
-        <item name="android:textColorHint">@color/kh_uisdk_search_hint_color</item>
-        <item name="android:textColor">@color/kh_uisdk_search_hint_color</item>
+        <item name="android:textColorHint">@color/kh_uisdk_text_button</item>
+        <item name="android:textColor">@color/kh_uisdk_text_button</item>
     </style>
 
     <style name="KhTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -586,26 +586,26 @@
     </style>
 
     <style name="bt_add_card_activity_theme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@color/kh_uisdk_background_primary</item>
+        <item name="android:windowBackground">@color/kh_uisdk_background1</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="colorPrimary">@color/kh_uisdk_primary</item>
         <item name="colorPrimaryDark">@color/kh_uisdk_primary</item>
         <item name="colorAccent">@color/kh_uisdk_accent</item>
-        <item name="titleTextColor">@color/kh_uisdk_background_primary</item>
+        <item name="titleTextColor">@color/kh_uisdk_text_button</item>
         <item name="colorError">@color/kh_uisdk_error</item>
     </style>
 
     <style name="bt_base_textview">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhBookingLegalNoticeText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
     </style>
 
     <style name="KhLegalNoticeLabel">
@@ -636,14 +636,14 @@
         <item name="lineHeight">22dp</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="KhQuotesErrorSubtitle">
         <item name="fontWeight">400</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
         <item name="lineHeight">18dp</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="KhMasterBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -760,7 +760,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_x6small</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:layoutDirection">rtl</item>
         <item name="android:buttonTint">@color/kh_uisdk_accent</item>
     </style>
@@ -772,7 +772,7 @@
 
     <style name="QuotesFontTitleTextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:letterSpacing">0.05</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
@@ -783,7 +783,7 @@
         <item name="android:gravity">center_vertical|end</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
     </style>
 
@@ -793,7 +793,7 @@
         <item name="android:gravity">bottom|end</item>
         <item name="android:textStyle">normal</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
     </style>
 
@@ -807,7 +807,7 @@
 
     <style name="KhPrebookTime">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
@@ -819,7 +819,7 @@
 
     <style name="KhPrebookPrice">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xxlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
@@ -831,13 +831,13 @@
 
     <style name="KhPrebookConfirmed">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_xlarge</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="KhStaticAddressComponentPrimary">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:maxLines">2</item>
         <item name="fontWeight">400</item>
@@ -856,7 +856,7 @@
     <style name="KhStaticAddressComponentTime">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium15</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
@@ -872,14 +872,14 @@
     <style name="KhCheckoutDateText">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large17</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:background">@color/kh_uisdk_background2</item>
         <item name="android:maxLines">2</item>
     </style>
 
     <style name="KhBottomSheetPriceView">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small_medium</item>
-        <item name="android:textColor">@color/kh_uisdk_text_primary</item>
+        <item name="android:textColor">@color/kh_uisdk_headline</item>
         <item name="android:ellipsize">end</item>
     </style>
 
@@ -943,7 +943,7 @@
         <item name="android:fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_large</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/kh_uisdk_background2</item>
+        <item name="android:textColor">@color/kh_uisdk_text_button</item>
         <item name="android:text">@string/kh_uisdk_later</item>
         <item name="android:includeFontPadding">false</item>
     </style>

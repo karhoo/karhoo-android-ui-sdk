@@ -80,7 +80,7 @@
         android:layout_height="@dimen/kh_uisdk_margin_large"
         android:layout_marginStart="@dimen/kh_uisdk_spacing_xsmall"
         android:layout_marginEnd="@dimen/kh_uisdk_spacing_xsmall"
-        android:background="@color/kh_uisdk_divider"
+        android:background="@color/kh_uisdk_background3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fareText" />

@@ -83,7 +83,7 @@
             android:background="@drawable/uisdk_booking_button_background"
             android:enabled="false"
             android:text="@string/kh_uisdk_submit"
-            android:textColor="@color/kh_uisdk_text_white" />
+            android:textColor="@color/kh_uisdk_text_button" />
 
     </LinearLayout>
 

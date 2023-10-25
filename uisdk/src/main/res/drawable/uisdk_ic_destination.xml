@@ -4,9 +4,9 @@
     android:width="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <path
-        android:fillColor="@color/kh_uisdk_pink"
+        android:fillColor="@color/kh_uisdk_secondary"
         android:fillType="evenOdd"
         android:pathData="M188,188m-187,0a187,187 0,1 1,374 0a187,187 0,1 1,-374 0"
-        android:strokeColor="@color/kh_uisdk_pink"
+        android:strokeColor="@color/kh_uisdk_secondary"
         android:strokeWidth="1" />
 </vector>

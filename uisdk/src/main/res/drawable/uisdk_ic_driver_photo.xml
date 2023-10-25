@@ -4,17 +4,17 @@
     android:viewportWidth="32.0"
     android:viewportHeight="32.0">
     <path
-        android:fillColor="@color/kh_uisdk_off_black"
+        android:fillColor="@color/kh_uisdk_text"
         android:pathData="M16,32C7.16,32 0,24.84 0,16C0,7.16 7.16,0 16,0C24.84,0 32,7.16 32,16C32,24.84 24.84,32 16,32ZM16,30C23.73,30 30,23.73 30,16C30,8.27 23.73,2 16,2C8.27,2 2,8.27 2,16C2,23.73 8.27,30 16,30Z"
         android:strokeWidth="1"
         android:strokeColor="#00000000" />
     <path
-        android:fillColor="@color/kh_uisdk_off_black"
+        android:fillColor="@color/kh_uisdk_text"
         android:pathData="M6.19,22.92C8.01,20 11.72,18 16,18C20.28,18 23.99,20 25.81,22.92C23.63,25.99 20.05,28 16,28C11.95,28 8.37,25.99 6.19,22.92L6.19,22.92Z"
         android:strokeWidth="1"
         android:strokeColor="#00000000" />
     <path
-        android:fillColor="@color/kh_uisdk_off_black"
+        android:fillColor="@color/kh_uisdk_text"
         android:pathData="M16,11m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"
         android:strokeWidth="1"
         android:strokeColor="#00000000" />

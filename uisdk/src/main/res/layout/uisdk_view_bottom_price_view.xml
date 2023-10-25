@@ -28,7 +28,7 @@
             android:drawablePadding="@dimen/kh_uisdk_spacing_xxsmall"
             android:gravity="start"
             app:drawableEndCompat="@drawable/uisdk_ic_help"
-            app:drawableTint="@color/kh_uisdk_text_primary"
+            app:drawableTint="@color/kh_uisdk_headline"
             tools:text="£15.50" />
     </LinearLayout>
 </LinearLayout>

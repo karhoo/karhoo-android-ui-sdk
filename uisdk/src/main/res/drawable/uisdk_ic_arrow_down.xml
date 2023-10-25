@@ -11,7 +11,7 @@
             android:rotation="135">
             <path
                 android:pathData="M0,0 L14,0"
-                android:strokeColor="@color/kh_uisdk_off_black"
+                android:strokeColor="@color/kh_uisdk_text"
                 android:strokeLineCap="round"
                 android:strokeWidth="2" />
         </group>
@@ -21,7 +21,7 @@
             android:translateX="2">
             <path
                 android:pathData="M0,0 L14,0"
-                android:strokeColor="@color/kh_uisdk_off_black"
+                android:strokeColor="@color/kh_uisdk_text"
                 android:strokeLineCap="round"
                 android:strokeWidth="2" />
         </group>

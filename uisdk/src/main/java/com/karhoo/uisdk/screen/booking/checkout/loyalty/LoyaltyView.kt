@@ -104,23 +104,23 @@ class LoyaltyView @JvmOverloads constructor(
         when (mode) {
             LoyaltyMode.BURN -> {
                 loyaltyViewBurnSubtitle.text = burnSubtitle
-                loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_label))
             }
             LoyaltyMode.EARN -> {
                 loyaltyViewEarnSubtitle.text = earnSubtitle
-                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_label))
                 // Adding the content description here so that the number of points is properly calculated and TalkBack is accurate
                 loyaltyViewEarnLayout.contentDescription = context.resources.getString(R.string.kh_uisdk_loyalty_title) + " " + earnSubtitle
             }
             LoyaltyMode.NONE -> {
                 loyaltyViewEarnSubtitle.text = earnSubtitle
-                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_label))
             }
             LoyaltyMode.ERROR_BAD_CURRENCY,
             LoyaltyMode.ERROR_UNKNOWN -> {
                 loyaltyViewEarnSubtitle.text = errorMessage
                 loyaltyViewEarnSubtitle.visibility = VISIBLE
-                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_primary_red))
+                loyaltyViewEarnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_error))
                 loyaltyActionsContainer.background = ContextCompat.getDrawable(
                     context, R
                         .drawable.uisdk_loyalty_error_background
@@ -136,8 +136,8 @@ class LoyaltyView @JvmOverloads constructor(
             }
             LoyaltyMode.ERROR_INSUFFICIENT_FUNDS -> {
                 loyaltyViewBurnSubtitle.text = errorMessage
-                loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
-                loyaltyViewBurnTitle.setTextColor(resources.getColor(R.color.kh_uisdk_secondary_text))
+                loyaltyViewBurnSubtitle.setTextColor(resources.getColor(R.color.kh_uisdk_label))
+                loyaltyViewBurnTitle.setTextColor(resources.getColor(R.color.kh_uisdk_label))
                 loyaltySwitch.isEnabled = false
             }
 

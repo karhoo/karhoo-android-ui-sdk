@@ -49,7 +49,7 @@ class QuotesErrorView @JvmOverloads constructor(
         quotesErrorSubtitle.text = presenter.createSpannable(
             contactUsLabel[0].uppercaseChar() + contactUsLabel.substring(1).toLowerCase(),
             reason.subtitle,
-            resources.getColor(R.color.kh_uisdk_colorAccent)
+            resources.getColor(R.color.kh_uisdk_accent)
         )
 
         quotesErrorSubtitle.movementMethod = LinkMovementMethod.getInstance()

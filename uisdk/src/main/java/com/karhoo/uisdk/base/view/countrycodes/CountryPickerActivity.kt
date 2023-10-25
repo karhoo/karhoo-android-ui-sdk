@@ -32,7 +32,7 @@ internal class CountryPickerActivity : AppCompatActivity() {
         setContentView(R.layout.uisdk_activity_country_picker)
 
         search_view_layout.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
-                .setHintTextColor(resources.getColor(R.color.kh_uisdk_search_hint_color))
+                .setHintTextColor(resources.getColor(R.color.kh_uisdk_text_button))
 
         setSupportActionBar(toolbar)
         supportActionBar?.apply {

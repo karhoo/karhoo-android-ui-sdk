@@ -108,12 +108,12 @@ class RideNotificationView : RideNotificationContract.View {
     fun bindState(contentView: RemoteViews) {
         when (trip.tripState) {
             TripStatus.COMPLETED ->
-                displayState(contentView, R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_off_black)
+                displayState(contentView, R.drawable.uisdk_ic_trip_completed, R.string.kh_uisdk_ride_state_completed, R.color.kh_uisdk_text)
             TripStatus.CANCELLED_BY_USER,
             TripStatus.CANCELLED_BY_DISPATCH,
             TripStatus.NO_DRIVERS,
             TripStatus.CANCELLED_BY_KARHOO ->
-                displayState(contentView, R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_off_black)
+                displayState(contentView, R.drawable.uisdk_ic_trip_cancelled, R.string.kh_uisdk_ride_state_cancelled, R.color.kh_uisdk_text)
 
             else -> {}
         }

@@ -71,7 +71,7 @@
                     android:paddingRight="@dimen/kh_uisdk_spacing_xxsmall"
                     android:paddingBottom="@dimen/kh_uisdk_spacing_xxxsmall"
                     android:text="@string/kh_uisdk_pickup_type_meet_and_greet"
-                    android:textColor="@color/kh_uisdk_text_white"
+                    android:textColor="@color/kh_uisdk_text_button"
                     android:textSize="@dimen/kh_uisdk_text_size_xsmall" />
 
             </RelativeLayout>
@@ -143,7 +143,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:textColor="@color/kh_uisdk_off_black"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>
@@ -217,7 +217,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <!-- START: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
             <LinearLayout
@@ -246,7 +246,7 @@
                     android:id="@+id/cardNumberText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kh_uisdk_off_black"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>
@@ -277,7 +277,7 @@
                         android:id="@+id/flightNumberText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/kh_uisdk_off_black"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -310,7 +310,7 @@
                         android:gravity="right"
                         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
                         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
-                        android:textColor="@color/kh_uisdk_off_black"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -318,7 +318,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_divider" />
+                    android:background="@color/kh_uisdk_background3" />
 
                 <!-- END: MAKE VISIBLE WHEN MEETING POINT AVAILABLE -->
 
@@ -356,7 +356,7 @@
                         android:gravity="right"
                         android:paddingTop="@dimen/kh_uisdk_spacing_xxsmall"
                         android:paddingBottom="@dimen/kh_uisdk_spacing_xxsmall"
-                        android:textColor="@color/kh_uisdk_off_black"
+                        android:textColor="@color/kh_uisdk_text"
                         android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
                 </LinearLayout>
@@ -364,7 +364,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/kh_uisdk_divider_height"
-                    android:background="@color/kh_uisdk_divider"
+                    android:background="@color/kh_uisdk_label"
                     android:visibility="visible" />
 
             </LinearLayout>
@@ -372,7 +372,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider"
+                android:background="@color/kh_uisdk_background3"
                 android:visibility="gone" />
             <!-- END: MAKE VISIBLE WHEN CARD DETAILS AVAILABLE -->
 
@@ -396,7 +396,7 @@
                     android:id="@+id/karhooId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/kh_uisdk_off_black"
+                    android:textColor="@color/kh_uisdk_text"
                     android:textSize="@dimen/kh_uisdk_text_size_small_medium" />
 
             </LinearLayout>
@@ -416,7 +416,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider" />
+                android:background="@color/kh_uisdk_background3" />
 
             <com.karhoo.uisdk.screen.rides.detail.rating.RatingView
                 android:id="@+id/starRatingWidget"
@@ -435,7 +435,7 @@
                 android:id="@+id/ratingDivider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kh_uisdk_divider_height"
-                android:background="@color/kh_uisdk_divider"
+                android:background="@color/kh_uisdk_background3"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

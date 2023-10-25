@@ -142,7 +142,7 @@
             android:layout_marginStart="@dimen/kh_uisdk_spacing_xxsmall"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/kh_uisdk_text_primary"
+            android:textColor="@color/kh_uisdk_headline"
             android:textSize="@dimen/kh_uisdk_text_size_small"
             tools:text="Quote Name" />
 

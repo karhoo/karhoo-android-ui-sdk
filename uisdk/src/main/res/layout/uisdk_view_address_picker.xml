@@ -38,7 +38,7 @@
         android:id="@+id/addressDivider"
         android:layout_width="@dimen/kh_uisdk_spacing_none"
         android:layout_height="@dimen/kh_uisdk_divider_height"
-        android:background="@color/kh_uisdk_off_white"
+        android:background="@color/kh_uisdk_background1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@id/guidelineCentre" />
@@ -122,7 +122,7 @@
             android:layout_marginLeft="@dimen/kh_uisdk_margin_small"
             android:layout_marginRight="@dimen/kh_uisdk_margin_small"
             android:scaleType="centerInside"
-            app:tint="@color/kh_uisdk_off_black"
+            app:tint="@color/kh_uisdk_text"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal|bottom"
                 android:maxLines="1"
-                android:textColor="@color/kh_uisdk_dark_grey"
+                android:textColor="@color/kh_uisdk_text"
                 android:textSize="@dimen/kh_uisdk_text_size_small_medium"
                 android:visibility="gone" />
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|top"
                 android:maxLines="1"
-                android:textColor="@color/kh_uisdk_dark_grey"
+                android:textColor="@color/kh_uisdk_text"
                 android:textSize="@dimen/kh_uisdk_text_size_small"
                 android:visibility="gone" />
         </LinearLayout>
@@ -200,7 +200,7 @@
             android:layout_width="@dimen/kh_uisdk_divider_height"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/kh_uisdk_spacing_xsmall"
-            android:background="@color/kh_uisdk_off_white"
+            android:background="@color/kh_uisdk_background1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -93,7 +93,7 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 ds.isUnderlineText = false
-                ds.color = resources.getColor(R.color.kh_uisdk_colorAccent)
+                ds.color = resources.getColor(R.color.kh_uisdk_accent)
             }
         }
     }

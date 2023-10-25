@@ -11,28 +11,28 @@
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="@color/kh_uisdk_transparent"
-        android:strokeColor="@color/kh_uisdk_text_secondary"
+        android:strokeColor="@color/kh_uisdk_text"
         android:strokeLineCap="round"/>
     <path
         android:pathData="M12.75,15.75V14.25C12.75,13.4544 12.4339,12.6913 11.8713,12.1287C11.3087,11.5661 10.5456,11.25 9.75,11.25H3.75C2.9543,11.25 2.1913,11.5661 1.6287,12.1287C1.0661,12.6913 0.75,13.4544 0.75,14.25V15.75"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="@color/kh_uisdk_transparent"
-        android:strokeColor="@color/kh_uisdk_text_secondary"
+        android:strokeColor="@color/kh_uisdk_text"
         android:strokeLineCap="round"/>
     <path
         android:pathData="M12,2.3475C12.6453,2.5127 13.2173,2.888 13.6257,3.4142C14.0342,3.9404 14.2559,4.5876 14.2559,5.2537C14.2559,5.9199 14.0342,6.5671 13.6257,7.0933C13.2173,7.6195 12.6453,7.9948 12,8.16"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="@color/kh_uisdk_transparent"
-        android:strokeColor="@color/kh_uisdk_text_secondary"
+        android:strokeColor="@color/kh_uisdk_text"
         android:strokeLineCap="round"/>
     <path
         android:pathData="M6.75,8.25C8.4068,8.25 9.75,6.9068 9.75,5.25C9.75,3.5931 8.4068,2.25 6.75,2.25C5.0932,2.25 3.75,3.5931 3.75,5.25C3.75,6.9068 5.0932,8.25 6.75,8.25Z"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="@color/kh_uisdk_transparent"
-        android:strokeColor="@color/kh_uisdk_text_secondary"
+        android:strokeColor="@color/kh_uisdk_text"
         android:strokeLineCap="round"/>
   </group>
 </vector>

@@ -4,12 +4,12 @@
     <style name="Text"></style>
 
     <style name="Text.Fare">
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
         <item name="android:textSize">@dimen/kh_uisdk_text_size_medium</item>
     </style>
 
     <style name="Text.Primary">
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="Text.Primary.XXLarge">
@@ -49,7 +49,7 @@
     </style>
 
     <style name="Text.White">
-        <item name="android:textColor">@color/kh_uisdk_text_white</item>
+        <item name="android:textColor">@color/kh_uisdk_text_button</item>
     </style>
 
     <style name="Text.White.XXLarge">
@@ -85,7 +85,7 @@
     </style>
 
     <style name="Text.Alternative">
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="Text.Alternative.XLarge">
@@ -143,7 +143,7 @@
     </style>
 
     <style name="Text.Faded">
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="Text.Faded.Medium">
@@ -155,7 +155,7 @@
     </style>
 
     <style name="Text.Red">
-        <item name="android:textColor">@color/kh_uisdk_primary_red</item>
+        <item name="android:textColor">@color/kh_uisdk_error</item>
     </style>
 
     <style name="Text.Action.Primary">
@@ -175,7 +175,7 @@
     </style>
 
     <style name="Text.Black">
-        <item name="android:textColor">@color/kh_uisdk_text_secondary</item>
+        <item name="android:textColor">@color/kh_uisdk_text</item>
     </style>
 
     <style name="Text.Black.Medium">
@@ -184,7 +184,7 @@
 
     <style name="Text.Primary.Small.Green">
         <item name="android:textSize">@dimen/kh_uisdk_text_size_small</item>
-        <item name="android:textColor">@color/kh_uisdk_cancellation_green</item>
+        <item name="android:textColor">@color/kh_uisdk_green_dark</item>
     </style>
 
     <style name="Text.Black.Medium.Bold">
