@@ -9,7 +9,7 @@
       android:strokeAlpha="0.6"
       android:fillType="evenOdd"
       android:fillAlpha="0.6">
-    <aapt:attr name="android:fillColor">
+    <aapt:attr name="@color/kh_uisdk_transparent">
       <gradient 
           android:startY="14"
           android:startX="17"
