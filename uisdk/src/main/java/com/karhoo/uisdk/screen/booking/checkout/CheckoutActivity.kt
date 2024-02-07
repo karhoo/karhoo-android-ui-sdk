@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -25,51 +28,58 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(checkoutToolbar)
-        checkoutToolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(true)
+//        setSupportActionBar(checkoutToolbar)
+//        checkoutToolbar.setNavigationOnClickListener {
+//            onBackPressed()
+//        }
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
+//        supportActionBar?.setDisplayShowTitleEnabled(true)
 
-        if(savedInstanceState != null){
-            fragment = supportFragmentManager.getFragment(savedInstanceState, CHECKOUT_FRAGMENT) as CheckoutFragment
-            supportFragmentManager.beginTransaction().replace(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                .commit()
-        }
-        else{
-            extras?.let { extras ->
-                val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
+//        if(savedInstanceState != null){
+//            fragment = supportFragmentManager.getFragment(savedInstanceState, CHECKOUT_FRAGMENT) as CheckoutFragment
+//            supportFragmentManager.beginTransaction().replace(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+//                .commit()
+//        }
+//        else{
+//            extras?.let { extras ->
+//                val quote = extras.getParcelable<Quote>(BOOKING_CHECKOUT_QUOTE_KEY)
+//
+//                quote?.let {
+//                    removeIfCheckoutFragmentExists()
+//                    val ft = supportFragmentManager.beginTransaction()
+//
+//                    fragment = CheckoutFragment.newInstance(extras)
+//
+//                    ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
+//                        .commit()
+//                } ?: run {
+//                    finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
+//                }
+//            } ?: run {
+//                finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
+//            }
+//        }
 
-                quote?.let {
-                    removeIfCheckoutFragmentExists()
-                    val ft = supportFragmentManager.beginTransaction()
-
-                    fragment = CheckoutFragment.newInstance(extras)
-
-                    ft.add(R.id.checkoutActivityFragmentContainer, fragment, fragment::class.java.name)
-                        .commit()
-                } ?: run {
-                    finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
-                }
-            } ?: run {
-                finishWithError(BOOKING_CHECKOUT_ERROR_NO_QUOTE)
-            }
+        setContent {
+            CheckoutComposable(
+                extras = extras,
+                onCheckoutAction = { /*TODO*/ }
+            )
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        supportFragmentManager.putFragment(outState, CHECKOUT_FRAGMENT, fragment)
+//        supportFragmentManager.putFragment(outState, CHECKOUT_FRAGMENT, fragment)
     }
 
     fun removeIfCheckoutFragmentExists(){
-        for(item in supportFragmentManager.fragments){
-            if(item is CheckoutFragment){
-                supportFragmentManager.beginTransaction().remove(item).commit();
-            }
-        }
+//        for(item in supportFragmentManager.fragments){
+//            if(item is CheckoutFragment){
+//                supportFragmentManager.beginTransaction().remove(item).commit();
+//            }
+//        }
     }
 
     override fun handleExtras() {
@@ -89,7 +99,7 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        fragment.onActivityResult(requestCode, resultCode, data)
+//        fragment.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -97,13 +107,13 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         url?.let { khWebView?.show(it) }
     }
 
-    override fun onBackPressed() {
-        if(khWebView.visibility == View.VISIBLE) {
-            khWebView.hide()
-        } else {
-            fragment.onBackPressed()
-        }
-    }
+//    override fun onBackPressed() {
+//        if(khWebView.visibility == View.VISIBLE) {
+//            khWebView.hide()
+//        } else {
+//            fragment.onBackPressed()
+//        }
+//    }
 
     /**
      * Intent Builder

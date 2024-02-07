@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import com.google.android.gms.maps.model.LatLng
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.model.LocationInfo
@@ -120,6 +121,10 @@ class AddressActivity : BaseActivity(), AddressResultListMVP.Actions, AddressSea
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    override fun getCustomLifecycle(): Lifecycle {
+        return lifecycle
     }
 
     override fun addressSelected(location: LocationInfo, addressPositionInList: Int) {

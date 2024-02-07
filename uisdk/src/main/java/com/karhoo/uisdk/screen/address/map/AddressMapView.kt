@@ -59,7 +59,7 @@ class AddressMapView @JvmOverloads constructor(context: Context,
 
     init {
         View.inflate(context, R.layout.uisdk_view_address_map, this)
-        actions?.getLifecycle()?.addObserver(this)
+        actions?.getCustomLifecycle()?.addObserver(this)
         addressSelectButton.setOnClickListener {
             presenter.selectAddressPressed()
         }

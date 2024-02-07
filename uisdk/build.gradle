@@ -57,12 +57,12 @@ if (getCurrentFlavor().contains('adyen')) {
 }
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
     buildToolsVersion '30.0.3'
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1120
         versionName "1.13.3"
         buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
@@ -128,6 +128,14 @@ android {
         }
     }
 
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.0-alpha02'
+        kotlinCompilerVersion '1.7.21'
+    }
+
     defaultPublishConfig "fullRelease"
 }
 
@@ -180,6 +188,11 @@ dependencies {
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.2'
     implementation 'com.github.heetch:Android-country-picker:1.0.6'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.1'
+
+    implementation 'androidx.compose.ui:ui:1.6.0'
+    implementation 'androidx.compose.material:material:1.6.0'
+    implementation 'androidx.compose.ui:ui-tooling:1.6.0'
+    implementation("androidx.activity:activity-compose:1.8.2")
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'

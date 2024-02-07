@@ -43,7 +43,7 @@ interface AddressMapMVP {
 
     interface Actions {
 
-        fun getLifecycle(): Lifecycle
+        fun getCustomLifecycle(): Lifecycle
 
         fun addressSelected(locationInfo: LocationInfo, addressPositionInList: Int = 0)
 

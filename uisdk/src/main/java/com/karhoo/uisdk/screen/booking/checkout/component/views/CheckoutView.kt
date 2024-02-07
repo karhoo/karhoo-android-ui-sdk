@@ -409,9 +409,9 @@ internal class CheckoutView @JvmOverloads constructor(
                     }
                 }
 
-            (context as CheckoutActivity).supportFragmentManager.let {
-                bookingConfirmationView.show(it, BookingConfirmationView.TAG)
-            }
+//            (context as CheckoutActivity).supportFragmentManager.let {
+//                bookingConfirmationView.show(it, BookingConfirmationView.TAG)
+//            }
 
         }
     }
