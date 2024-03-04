@@ -3,6 +3,7 @@ package com.karhoo.uisdk.screen.trip
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.model.TripStatus
 import com.karhoo.uisdk.KarhooUISDK
@@ -11,15 +12,13 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
+import com.karhoo.uisdk.screen.trip.address.TripAddressView
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusActions
+import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusView
+import com.karhoo.uisdk.screen.trip.deta.DetaView
+import com.karhoo.uisdk.screen.trip.eta.EtaView
 import com.karhoo.uisdk.screen.trip.map.TripMapMVP
-import kotlinx.android.synthetic.main.uisdk_activity_trip.bookingStatusWidget
-import kotlinx.android.synthetic.main.uisdk_activity_trip.toolbar
-import kotlinx.android.synthetic.main.uisdk_activity_trip.tripAddressWidget
-import kotlinx.android.synthetic.main.uisdk_activity_trip.tripMapWidget
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.detaWidget
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.etaWidget
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.locateMeButton
+import com.karhoo.uisdk.screen.trip.map.TripMapView
 
 class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
 
@@ -27,6 +26,14 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
     private var backToBooking: Boolean = false
 
     override val layout = R.layout.uisdk_activity_trip
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var tripMapWidget: TripMapView
+    private lateinit var etaWidget: EtaView
+    private lateinit var detaWidget: DetaView
+    private lateinit var bookingStatusWidget: BookingStatusView
+    private lateinit var locateMeButton: FloatingActionButton
+    private lateinit var tripAddressWidget: TripAddressView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +90,13 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
     }
 
     override fun initialiseViews() {
-        // Do nothing
+        toolbar = findViewById(R.id.toolbar)
+        tripMapWidget = findViewById(R.id.tripMapWidget)
+        etaWidget = findViewById(R.id.etaWidget)
+        detaWidget = findViewById(R.id.detaWidget)
+        bookingStatusWidget = findViewById(R.id.bookingStatusWidget)
+        locateMeButton = findViewById(R.id.locateMeButton)
+        tripAddressWidget = findViewById(R.id.tripAddressWidget)
     }
 
     override fun initialiseViewListeners() {

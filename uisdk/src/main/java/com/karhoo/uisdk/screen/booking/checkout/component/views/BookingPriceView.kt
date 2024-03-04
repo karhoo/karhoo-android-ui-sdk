@@ -3,21 +3,13 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteType
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.extension.toLocalisedInfoString
 import com.karhoo.uisdk.util.extension.toLocalisedString
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.etaTypeText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pickUpTypeText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceInfoText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.pricingTypeTextLayout
 import java.util.Currency
 
 class BookingPriceView @JvmOverloads constructor(context: Context,
@@ -27,8 +19,28 @@ class BookingPriceView @JvmOverloads constructor(context: Context,
 
     private var presenter: BookingPriceViewContract.Presenter
 
+    private lateinit var etaText: TextView
+    private lateinit var etaTypeText: TextView
+    private lateinit var pickUpTypeText: TextView
+    private lateinit var priceInfoLayout: LinearLayout
+    private lateinit var priceInfoText: TextView
+    private lateinit var priceLayout: LinearLayout
+    private lateinit var priceText: TextView
+    private lateinit var pricingTypeText: TextView
+    private lateinit var pricingTypeTextLayout: LinearLayout
+
     init {
         inflate(context, R.layout.uisdk_view_booking_time_price, this)
+
+        etaText = findViewById(R.id.etaText)
+        etaTypeText = findViewById(R.id.etaTypeText)
+        pickUpTypeText = findViewById(R.id.pickUpTypeText)
+        priceInfoLayout = findViewById(R.id.priceInfoLayout)
+        priceInfoText = findViewById(R.id.priceInfoText)
+        priceLayout = findViewById(R.id.priceLayout)
+        priceText = findViewById(R.id.priceText)
+        pricingTypeText = findViewById(R.id.pricingTypeText)
+        pricingTypeTextLayout = findViewById(R.id.pricingTypeTextLayout)
 
         presenter = BookingPriceViewPresenter()
         presenter.attachView(this)

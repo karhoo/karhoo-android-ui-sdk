@@ -3,12 +3,12 @@ package com.karhoo.uisdk.screen.address.search
 import android.content.Context
 import android.text.Editable
 import android.util.AttributeSet
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.listener.SimpleTextWatcher
 import com.karhoo.uisdk.screen.address.domain.AddressSearchProvider
-import kotlinx.android.synthetic.main.uisdk_view_address_search.view.clearSearchButtonIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_search.view.searchInput
 
 class AddressSearchView @JvmOverloads constructor(context: Context,
                                                   attrs: AttributeSet? = null,
@@ -17,8 +17,15 @@ class AddressSearchView @JvmOverloads constructor(context: Context,
     private var presenter: AddressSearchPresenter? = null
     var actions: Actions? = null
 
+    private lateinit var clearSearchButtonIcon: ImageView
+    private lateinit var searchInput: EditText
+
     init {
         inflate(context, R.layout.uisdk_view_address_search, this)
+
+        clearSearchButtonIcon = findViewById(R.id.clearSearchButtonIcon)
+        searchInput = findViewById(R.id.searchInput)
+
         initialiseListeners()
     }
 

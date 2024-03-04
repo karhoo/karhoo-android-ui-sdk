@@ -3,13 +3,11 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.quotes.sortview.QuotesSortView
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_booking_time_price.view.priceTypeText
 import java.util.*
 
 class BottomPriceView @JvmOverloads constructor(
@@ -19,8 +17,15 @@ class BottomPriceView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr), BookingPriceViewContract.BottomView {
     private var presenter: BookingPriceViewContract.BottomViewPresenter
 
+    private lateinit var priceLayout: LinearLayout
+    private lateinit var priceText: TextView
+    private lateinit var priceTypeText: TextView
     init {
         inflate(context, R.layout.uisdk_view_bottom_price_view, this)
+
+        priceLayout = findViewById(R.id.priceLayout)
+        priceText = findViewById(R.id.priceText)
+        priceTypeText = findViewById(R.id.priceTypeText)
 
         presenter = BottomPriceViewPresenter()
         presenter.attachView(this)

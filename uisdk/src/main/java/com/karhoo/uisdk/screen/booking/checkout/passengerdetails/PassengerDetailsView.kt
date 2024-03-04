@@ -6,9 +6,13 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.preference.PreferenceManager
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -23,18 +27,6 @@ import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetail
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
 import com.karhoo.uisdk.util.parsePhoneNumber
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryFlagImageView
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryFlagLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.countryPrefixCodeText
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailInput
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.emailLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.firstNameInput
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.firstNameLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.lastNameInput
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.lastNameLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberInput
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.mobileNumberLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_passenger_details.view.updatePassengerDetailsMask
 
 
 class PassengerDetailsView @JvmOverloads constructor(
@@ -47,8 +39,35 @@ class PassengerDetailsView @JvmOverloads constructor(
     private val presenter: PassengerDetailsContract.Presenter = PassengerDetailsPresenter(this)
     var validationCallback: PassengerDetailsContract.Validator? = null
 
+    private lateinit var countryFlagImageView: ImageView
+    private lateinit var countryFlagLayout: LinearLayout
+    private lateinit var countryPrefixCodeText: TextView
+    private lateinit var emailInput: TextInputEditText
+    private lateinit var emailLayout: TextInputLayout
+    private lateinit var firstNameInput: TextInputEditText
+    private lateinit var firstNameLayout: TextInputLayout
+    private lateinit var lastNameInput: TextInputEditText
+    private lateinit var lastNameLayout: TextInputLayout
+    private lateinit var mobileNumberInput: TextInputEditText
+    private lateinit var mobileNumberLayout: TextInputLayout
+    private lateinit var updatePassengerDetailsMask: View
+
     init {
         View.inflate(context, R.layout.uisdk_view_booking_passenger_details, this)
+
+        countryFlagImageView = findViewById(R.id.countryFlagImageView)
+        countryFlagLayout = findViewById(R.id.countryFlagLayout)
+        countryPrefixCodeText = findViewById(R.id.countryPrefixCodeText)
+        emailInput = findViewById(R.id.emailInput)
+        emailLayout = findViewById(R.id.emailLayout)
+        firstNameInput = findViewById(R.id.firstNameInput)
+        firstNameLayout = findViewById(R.id.firstNameLayout)
+        lastNameInput = findViewById(R.id.lastNameInput)
+        lastNameLayout = findViewById(R.id.lastNameLayout)
+        mobileNumberInput = findViewById(R.id.mobileNumberInput)
+        mobileNumberLayout = findViewById(R.id.mobileNumberLayout)
+        updatePassengerDetailsMask = findViewById(R.id.updatePassengerDetailsMask)
+
         initialiseFieldListeners()
     }
 

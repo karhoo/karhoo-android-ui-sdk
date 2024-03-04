@@ -5,9 +5,11 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.LocationInfo
@@ -20,8 +22,6 @@ import com.karhoo.uisdk.screen.address.domain.AddressSearchProvider
 import com.karhoo.uisdk.screen.address.domain.AddressSearchProvider.OnAddressesChangedListener
 import com.karhoo.uisdk.screen.address.domain.Addresses
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
-import kotlinx.android.synthetic.main.uisdk_view_simple_recycler.view.emptyText
-import kotlinx.android.synthetic.main.uisdk_view_simple_recycler.view.recycler
 
 class AddressResultListView @JvmOverloads constructor(
         context: Context,
@@ -33,8 +33,13 @@ class AddressResultListView @JvmOverloads constructor(
     private val addressAdapter: AddressAdapter
     var actions: AddressResultListMVP.Actions? = null
 
+    private lateinit var recycler: RecyclerView
+    private lateinit var emptyText: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_simple_recycler, this)
+        recycler = findViewById(R.id.recycler)
+        emptyText = findViewById(R.id.emptyText)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             forceHasOverlappingRendering(false)
         }

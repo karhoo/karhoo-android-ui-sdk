@@ -10,14 +10,17 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.model.LocationInfo
@@ -29,17 +32,12 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.screen.address.map.picker.AddressPickerView
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
-import kotlinx.android.synthetic.main.uisdk_view_address_map.view.addressSelectButton
-import kotlinx.android.synthetic.main.uisdk_view_address_map.view.addressSelectionWidget
-import kotlinx.android.synthetic.main.uisdk_view_address_map.view.mapDismissIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_map.view.pickupPinIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_map_picker.view.pickupDropoffIcon
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
 
 private const val MAP_DEFAULT_ZOOM = 16.0f
 
@@ -57,8 +55,23 @@ class AddressMapView @JvmOverloads constructor(context: Context,
     private val presenter: AddressMapMVP.Presenter = AddressMapPresenter(this,
             locationProvider = LocationProvider(context, KarhooUISDK.karhooApi.addressService))
 
+    private lateinit var addressSelectButton: FloatingActionButton
+    private lateinit var mapDismissIcon: ImageView
+    private lateinit var mapView: MapView
+    private lateinit var addressSelectionWidget: AddressPickerView
+    private lateinit var pickupDropoffIcon: ImageView
+    private lateinit var pickupPinIcon: ImageView
+
     init {
         View.inflate(context, R.layout.uisdk_view_address_map, this)
+
+        addressSelectButton = findViewById(R.id.addressSelectButton)
+        mapDismissIcon = findViewById(R.id.mapDismissIcon)
+        mapView = findViewById(R.id.mapView)
+        addressSelectionWidget = findViewById(R.id.addressSelectionWidget)
+        pickupDropoffIcon = findViewById(R.id.pickupDropoffIcon)
+        pickupPinIcon = findViewById(R.id.pickupPinIcon)
+
         actions?.getLifecycle()?.addObserver(this)
         addressSelectButton.setOnClickListener {
             presenter.selectAddressPressed()

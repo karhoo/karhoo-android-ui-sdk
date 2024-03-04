@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_comments.view.bookingCommentsInput
-import kotlinx.android.synthetic.main.uisdk_view_booking_comments.view.bookingCommentsLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_comments.view.updateBookingCommentsMask
 
 class BookingOptionalInfoView @JvmOverloads constructor(context: Context,
                                                         attrs: AttributeSet? = null,
@@ -15,9 +14,17 @@ class BookingOptionalInfoView @JvmOverloads constructor(context: Context,
     : ConstraintLayout(context, attrs, defStyleAttr), BookingOptionalInfoMVP.View {
 
     private val presenter: BookingOptionalInfoMVP.Presenter = BookingOptionalInfoPresenter(this)
+    private lateinit var bookingCommentsInput: TextInputEditText
+    private lateinit var  bookingCommentsLayout: TextInputLayout
+    private lateinit var  updateBookingCommentsMask: View
 
     init {
         View.inflate(context, R.layout.uisdk_view_booking_comments, this)
+
+        bookingCommentsInput = findViewById(R.id.bookingCommentsInput)
+        bookingCommentsLayout = findViewById(R.id.bookingCommentsLayout)
+        updateBookingCommentsMask = findViewById(R.id.updateBookingCommentsMask)
+
         initialiseFieldListeners()
     }
 

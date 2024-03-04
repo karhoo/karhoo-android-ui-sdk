@@ -2,9 +2,11 @@ package com.karhoo.uisdk.screen.booking.quotes.capacity
 
 import android.content.Context
 import android.util.AttributeSet
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_capacity.view.*
 
 class CapacityView @JvmOverloads constructor(
     context: Context,
@@ -12,8 +14,19 @@ class CapacityView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), CapacityMVP.View {
 
+    private lateinit var peopleCapacityText: TextView
+    private lateinit var luggageCapacityText: TextView
+    private lateinit var briefcaseIcon: ImageView
+    private lateinit var passengerIcon: ImageView
+    private lateinit var capacitiesLayout: ConstraintLayout
+
     init {
         inflate(context, R.layout.uisdk_view_capacity, this)
+        peopleCapacityText = findViewById(R.id.peopleCapacityText)
+        luggageCapacityText = findViewById(R.id.luggageCapacityText)
+        briefcaseIcon = findViewById(R.id.briefcaseIcon)
+        passengerIcon = findViewById(R.id.passengerIcon)
+        capacitiesLayout = findViewById(R.id.capacitiesLayout)
     }
 
     override fun setCapacity(luggage: Int?, people: Int?, otherCapabilities: Int?) {

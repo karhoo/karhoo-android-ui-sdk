@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -29,40 +33,16 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.basefare.BaseFareView
+import com.karhoo.uisdk.screen.rides.detail.rating.RatingView
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackCompletedTripsStore
 import com.karhoo.uisdk.screen.trip.TripActivity
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
+import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
 import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.baseFareIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.khTermsAndConditionsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.carText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardLogoImage
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.cardNumberText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsLayout
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.commentsText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dateTimeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.dropOffLabel
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightDetailsLayout
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.flightNumberText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.karhooId
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.meetingPointText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupLabel
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.pickupTypeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.priceTypeText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.rebookRideButton
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.reportIssueButton
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.rideDetailCancellationText
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.starRatingWidget
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateIcon
-import kotlinx.android.synthetic.main.uisdk_view_ride_detail.view.stateText
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.*
 import org.joda.time.DateTime
 
 class RideDetailView @JvmOverloads constructor(
@@ -76,8 +56,63 @@ class RideDetailView @JvmOverloads constructor(
     private var cancellationDialog: AlertDialog? = null
     var rideDetailActions: RideDetailMVP.View.Actions? = null
 
+    private lateinit var baseFareIcon: ImageView
+    private lateinit var khTermsAndConditionsText: TextView
+    private lateinit var carText: TextView
+    private lateinit var cardLogoImage: ImageView
+    private lateinit var cardNumberText: TextView
+    private lateinit var commentsLayout: LinearLayout
+    private lateinit var commentsText: TextView
+    private lateinit var dateTimeText: TextView
+    private lateinit var dropOffLabel: TextView
+    private lateinit var flightDetailsLayout: LinearLayout
+    private lateinit var flightNumberText: TextView
+    private lateinit var karhooId: TextView
+    private lateinit var logoImage: ImageView
+    private lateinit var meetingPointText: TextView
+    private lateinit var pickupLabel: TextView
+    private lateinit var pickupTypeText: TextView
+    private lateinit var priceText: TextView
+    private lateinit var priceTypeText: TextView
+    private lateinit var rebookRideButton: Button
+    private lateinit var reportIssueButton: Button
+    private lateinit var rideDetailCancellationText: TextView
+    private lateinit var starRatingWidget: RatingView
+    private lateinit var stateIcon: ImageView
+    private lateinit var stateText: TextView
+    private lateinit var contactOptionsWidget: ContactOptionsView
+    private lateinit var trackButton: Button
+
     init {
         View.inflate(context, R.layout.uisdk_view_ride_detail, this)
+
+        baseFareIcon = findViewById(R.id.baseFareIcon)
+        khTermsAndConditionsText = findViewById(R.id.khTermsAndConditionsText)
+        carText = findViewById(R.id.carText)
+        cardLogoImage = findViewById(R.id.cardLogoImage)
+        cardNumberText = findViewById(R.id.cardNumberText)
+        commentsLayout = findViewById(R.id.commentsLayout)
+        commentsText = findViewById(R.id.commentsText)
+        dateTimeText = findViewById(R.id.dateTimeText)
+        dropOffLabel = findViewById(R.id.dropOffLabel)
+        flightDetailsLayout = findViewById(R.id.flightDetailsLayout)
+        flightNumberText = findViewById(R.id.flightNumberText)
+        karhooId = findViewById(R.id.karhooId)
+        logoImage = findViewById(R.id.logoImage)
+        meetingPointText = findViewById(R.id.meetingPointText)
+        pickupLabel = findViewById(R.id.pickupLabel)
+        pickupTypeText = findViewById(R.id.pickupTypeText)
+        priceText = findViewById(R.id.priceText)
+        priceTypeText = findViewById(R.id.priceTypeText)
+        rebookRideButton = findViewById(R.id.rebookRideButton)
+        reportIssueButton = findViewById(R.id.reportIssueButton)
+        rideDetailCancellationText = findViewById(R.id.rideDetailCancellationText)
+        starRatingWidget = findViewById(R.id.starRatingWidget)
+        stateIcon = findViewById(R.id.stateIcon)
+        stateText = findViewById(R.id.stateText)
+        contactOptionsWidget = findViewById(R.id.contactOptionsWidget)
+        trackButton = findViewById(R.id.trackButton)
+
         contactOptionsWidget.actions = this
     }
 

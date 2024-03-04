@@ -11,9 +11,6 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.booking.domain.userlocation.LocationProvider
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
-import kotlinx.android.synthetic.main.uisdk_view_address_options.view.addressOptions
-import kotlinx.android.synthetic.main.uisdk_view_address_options.view.currentLocation
-import kotlinx.android.synthetic.main.uisdk_view_address_options.view.setOnMap
 
 class AddressOptionsView @JvmOverloads constructor(context: Context,
                                                    attrs: AttributeSet? = null,
@@ -22,8 +19,16 @@ class AddressOptionsView @JvmOverloads constructor(context: Context,
     var actions: AddressOptionsMVP.Actions? = null
     private var presenter: AddressOptionsMVP.Presenter = AddressOptionsPresenter(this, locationProvider = LocationProvider(context))
 
+    private lateinit var addressOptions: LinearLayout
+    private lateinit var currentLocation: LinearLayout
+    private lateinit var setOnMap: LinearLayout
+
     init {
         inflate(context, R.layout.uisdk_view_address_options, this)
+
+        addressOptions = findViewById(R.id.addressOptions)
+        currentLocation = findViewById(R.id.currentLocation)
+        setOnMap = findViewById(R.id.setOnMap)
 
         if (shouldShowMapSearchOptions()) {
 

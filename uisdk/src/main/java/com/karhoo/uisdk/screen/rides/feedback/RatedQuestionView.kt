@@ -5,15 +5,15 @@ import android.text.Editable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.annotation.AttrRes
+import com.google.android.material.textfield.TextInputEditText
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.listener.SimpleTextWatcher
 import com.karhoo.uisdk.base.validator.EmptyFieldValidator
+import com.karhoo.uisdk.base.view.SelfValidatingTextLayout
 import com.karhoo.uisdk.util.extension.showSoftKeyboard
-import kotlinx.android.synthetic.main.uisdk_view_rated_question.view.commentEditText
-import kotlinx.android.synthetic.main.uisdk_view_rated_question.view.commentEditTextLayout
-import kotlinx.android.synthetic.main.uisdk_view_rated_question.view.questionText
-import kotlinx.android.synthetic.main.uisdk_view_rated_question.view.ratingWidget
 
 /**
  * Widget for providing a question with a rating bar and comment
@@ -24,6 +24,11 @@ class RatedQuestionView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr) {
+
+    private lateinit var commentEditText: TextInputEditText
+    private lateinit var commentEditTextLayout: SelfValidatingTextLayout
+    private lateinit var questionText: TextView
+    private lateinit var ratingWidget: RatingBar
 
     var fieldId: String = ""
         private set
@@ -40,6 +45,11 @@ class RatedQuestionView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_rated_question, this)
+
+        commentEditText = findViewById(R.id.commentEditText)
+        commentEditTextLayout = findViewById(R.id.commentEditTextLayout)
+        questionText = findViewById(R.id.questionText)
+        ratingWidget = findViewById(R.id.ratingWidget)
 
         with(context.obtainStyledAttributes(attrs, R.styleable.RatedQuestionView)) {
             questionText.text = getString(R.styleable.RatedQuestionView_question)

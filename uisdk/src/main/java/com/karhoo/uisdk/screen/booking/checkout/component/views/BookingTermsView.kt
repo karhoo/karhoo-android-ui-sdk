@@ -8,15 +8,13 @@ import android.widget.LinearLayout
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsText
 import android.text.TextPaint
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBox
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsTextWithCheckBox
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.khTermsAndConditionsCheckBoxLayout
 import android.text.style.ClickableSpan
 import android.view.View
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
+import android.widget.TextView
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 
@@ -27,8 +25,18 @@ class BookingTermsView @JvmOverloads constructor(context: Context,
 
     var actions: WebViewActions? = null
 
+    private lateinit var khTermsAndConditionsText: TextView
+    lateinit var khTermsAndConditionsCheckBox: MaterialCheckBox
+    private lateinit var khTermsAndConditionsTextWithCheckBox: TextView
+    private lateinit var khTermsAndConditionsCheckBoxLayout: LinearLayout
+
     init {
         inflate(context, R.layout.uisdk_view_booking_terms, this)
+
+        khTermsAndConditionsText = findViewById(R.id.khTermsAndConditionsText)
+        khTermsAndConditionsCheckBox = findViewById(R.id.khTermsAndConditionsCheckBox)
+        khTermsAndConditionsTextWithCheckBox = findViewById(R.id.khTermsAndConditionsTextWithCheckBox)
+        khTermsAndConditionsCheckBoxLayout = findViewById(R.id.khTermsAndConditionsCheckBoxLayout)
     }
 
     private var initialCheckBoxColorStateList: ColorStateList? = null

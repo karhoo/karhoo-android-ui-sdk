@@ -13,15 +13,15 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.CollapsiblePanelView
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsActions
+import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
 import com.karhoo.uisdk.screen.trip.bookingstatus.tripinfo.TripInfoActions
-import kotlinx.android.synthetic.main.uisdk_view_booking_status.view.tripInfoCollapsibleLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_status.view.tripInfoWidget
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
+import com.karhoo.uisdk.screen.trip.bookingstatus.tripinfo.TripInfoView
 
 class BookingStatusView @JvmOverloads constructor(
         context: Context,
@@ -37,8 +37,16 @@ class BookingStatusView @JvmOverloads constructor(
 
     private var viewIsVisible = false
 
+    private lateinit var tripInfoCollapsibleLayout: CollapsiblePanelView
+    private lateinit var tripInfoWidget: TripInfoView
+    private lateinit var contactOptionsWidget: ContactOptionsView
+
     init {
         inflate(context, R.layout.uisdk_view_booking_status, this)
+
+        tripInfoCollapsibleLayout = findViewById(R.id.tripInfoCollapsibleLayout)
+        tripInfoWidget = findViewById(R.id.tripInfoWidget)
+        contactOptionsWidget = findViewById(R.id.contactOptionsWidget)
 
         if (!isInEditMode) {
             tripInfoWidget.apply {

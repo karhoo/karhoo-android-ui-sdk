@@ -12,6 +12,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -19,6 +20,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
@@ -29,17 +32,22 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
+import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
+import com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
+import com.karhoo.uisdk.screen.booking.map.BookingMapView
+import com.karhoo.uisdk.screen.booking.map.BookingModeView
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_CANCELLED
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity.Companion.QUOTES_INFO_REQUEST_NUMBER
@@ -49,12 +57,6 @@ import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
-import kotlinx.android.synthetic.main.uisdk_activity_base.*
-import kotlinx.android.synthetic.main.uisdk_activity_booking_content.*
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.*
-import kotlinx.android.synthetic.main.uisdk_nav_header_main.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_mode.*
 import org.joda.time.DateTime
 
 class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
@@ -84,6 +86,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     private var bookingMetadata: HashMap<String, String>? = null
 
     private var isGuest = false
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var navigationDrawerWidget: BookingDrawerView
+    private lateinit var bookingMapWidget: BookingMapView
+    private lateinit var bookingModeWidget: BookingModeView
+    private var navigationHeaderIcon: ImageView? = null
+    private lateinit var addressBarWidget: AddressBarView
+    private lateinit var tripAllocationWidget: TripAllocationView
+    private lateinit var navigationWidget: NavigationView
+    private lateinit var locateMeButton: FloatingActionButton
 
     override val layout: Int
         get() = R.layout.uisdk_activity_booking_main
@@ -213,6 +225,16 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
     }
 
     override fun initialiseViews() {
+        toolbar = findViewById(R.id.toolbar)
+        navigationDrawerWidget = findViewById(R.id.navigationDrawerWidget)
+        bookingMapWidget = findViewById(R.id.bookingMapWidget)
+        bookingModeWidget = findViewById(R.id.bookingModeWidget)
+        navigationHeaderIcon = findViewById(R.id.navigationHeaderIcon)
+        addressBarWidget = findViewById(R.id.addressBarWidget)
+        tripAllocationWidget = findViewById(R.id.tripAllocationWidget)
+        navigationWidget = findViewById(R.id.navigationWidget)
+        locateMeButton = findViewById(R.id.locateMeButton)
+
         isGuest = KarhooUISDKConfigurationProvider.isGuest()
 
         addressBarWidget.watchJourneyDetailsState(

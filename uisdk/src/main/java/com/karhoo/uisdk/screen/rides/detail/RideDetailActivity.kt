@@ -9,14 +9,14 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity.Companion.EXTRA_TRIP
-import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.rideDetailWidget
-import kotlinx.android.synthetic.main.uisdk_activity_ride_detail.toolbar
-
 class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
 
     private var trip: TripInfo? = null
 
     override val layout = R.layout.uisdk_activity_ride_detail
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var rideDetailWidget: RideDetailView
 
     override var externalDateTime: String
         get() = supportActionBar?.title.toString()
@@ -38,7 +38,8 @@ class RideDetailActivity : BaseActivity(), RideDetailMVP.View.Actions {
     }
 
     override fun initialiseViews() {
-        // Do nothing
+        toolbar = findViewById(R.id.toolbar)
+        rideDetailWidget = findViewById(R.id.rideDetailWidget)
     }
 
     override fun initialiseViewListeners() {

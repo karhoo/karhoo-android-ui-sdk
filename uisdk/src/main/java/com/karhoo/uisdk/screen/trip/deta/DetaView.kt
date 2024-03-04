@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.DateUtil
-import kotlinx.android.synthetic.main.uisdk_view_deta.view.detaText
 import org.joda.time.DateTime
 import java.util.Date
 import java.util.TimeZone
@@ -23,12 +23,15 @@ class DetaView @JvmOverloads constructor(context: Context,
     private val presenter = DetaPresenter(this, KarhooApi.driverTrackingService,
                                           KarhooApi.tripService)
 
+    private lateinit var detaText: TextView
+
     companion object {
         private const val MILLISECONDS_IN_ONE_MINUTE = 60L * 1000L
     }
 
     init {
         inflate(context, R.layout.uisdk_view_deta, this)
+        detaText = findViewById(R.id.detaText)
     }
 
     fun monitorDeta(tripIdentifier: String, timeZone: String) {

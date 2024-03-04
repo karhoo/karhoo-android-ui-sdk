@@ -2,7 +2,6 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 dependencies {
     api project(':nsdk')

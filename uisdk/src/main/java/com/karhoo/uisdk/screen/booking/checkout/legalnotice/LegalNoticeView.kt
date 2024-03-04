@@ -7,13 +7,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
-import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeContainer
 
 import android.net.Uri
 import android.content.Intent
 import android.text.method.LinkMovementMethod
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
-import kotlinx.android.synthetic.main.uisdk_view_legal_notice.view.legalNoticeText
 
 class LegalNoticeView @JvmOverloads constructor(
     context: Context,
@@ -26,8 +26,14 @@ class LegalNoticeView @JvmOverloads constructor(
     private var presenter: LegalNoticePresenter
     private lateinit var emailComposer: KarhooFeedbackEmailComposer
 
+    private lateinit var legalNoticeContainer: RelativeLayout
+    private lateinit var legalNoticeText: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_legal_notice, this)
+
+        legalNoticeContainer = findViewById(R.id.legalNoticeContainer)
+        legalNoticeText = findViewById(R.id.legalNoticeText)
 
         presenter = LegalNoticePresenter()
 

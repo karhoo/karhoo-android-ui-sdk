@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.sdk.api.model.LocationInfo
@@ -13,24 +16,13 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
+import com.karhoo.uisdk.screen.booking.address.DropOffEmptyView
+import com.karhoo.uisdk.screen.booking.address.DropOffFullView
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
 import com.karhoo.uisdk.util.DateUtil
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.clearDateTimeButtonIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.clearDestinationButtonIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeLabelLayout
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeLowerText
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeUpperText
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dropOffEmptyIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dropOffFullIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dropOffLabel
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.flipButtonIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.pickupLabel
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.scheduledIcon
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeDivider
-import kotlinx.android.synthetic.main.uisdk_view_address_picker.view.dateTimeLayout
 import org.joda.time.DateTime
 
 class AddressBarView
@@ -43,8 +35,36 @@ class AddressBarView
 
     private val timeDatePresenter: TimeDatePickerMVP.Presenter = TimeDatePickerPresenter(this, KarhooUISDK.analytics)
 
+    private lateinit var clearDateTimeButtonIcon: ImageView
+    private lateinit var clearDestinationButtonIcon: ImageView
+    private lateinit var dateTimeLabelLayout: LinearLayout
+    private lateinit var dateTimeLowerText: TextView
+    private lateinit var dateTimeUpperText: TextView
+    private lateinit var dropOffEmptyIcon: DropOffEmptyView
+    private lateinit var dropOffFullIcon: DropOffFullView
+    private lateinit var dropOffLabel: TextView
+    private lateinit var flipButtonIcon: ImageView
+    private lateinit var pickupLabel: TextView
+    private lateinit var scheduledIcon: ImageView
+    private lateinit var dateTimeDivider: View
+    private lateinit var dateTimeLayout: ConstraintLayout
+
     init {
         inflate(context, R.layout.uisdk_view_address_picker, this)
+
+        clearDateTimeButtonIcon = findViewById(R.id.clearDateTimeButtonIcon)
+        clearDestinationButtonIcon = findViewById(R.id.clearDestinationButtonIcon)
+        dateTimeLabelLayout = findViewById(R.id.dateTimeLabelLayout)
+        dateTimeLowerText = findViewById(R.id.dateTimeLowerText)
+        dateTimeUpperText = findViewById(R.id.dateTimeUpperText)
+        dropOffEmptyIcon = findViewById(R.id.dropOffEmptyIcon)
+        dropOffFullIcon = findViewById(R.id.dropOffFullIcon)
+        dropOffLabel = findViewById(R.id.dropOffLabel)
+        flipButtonIcon = findViewById(R.id.flipButtonIcon)
+        pickupLabel = findViewById(R.id.pickupLabel)
+        scheduledIcon = findViewById(R.id.scheduledIcon)
+        dateTimeDivider = findViewById(R.id.dateTimeDivider)
+        dateTimeLayout = findViewById(R.id.dateTimeLayout)
 
         pickupLabel.setOnClickListener { addressPresenter.pickUpAddressClicked() }
         dateTimeLabelLayout.setOnClickListener { timeDatePresenter.datePickerClicked() }

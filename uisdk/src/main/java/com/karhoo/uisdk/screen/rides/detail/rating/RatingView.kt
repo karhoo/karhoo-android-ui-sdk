@@ -4,16 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RatingBar
+import android.widget.TextView
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity
-import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.additionalFeedbackButton
-import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.labelLayout
-import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.ratingBar
-import kotlinx.android.synthetic.main.uisdk_view_star_rating.view.ratingLabel
-
 class RatingView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -22,8 +19,18 @@ class RatingView @JvmOverloads constructor(
 
     var trip: TripInfo? = null
 
+    private lateinit var additionalFeedbackButton: Button
+    private lateinit var ratingBar: RatingBar
+    private lateinit var ratingLabel: TextView
+    private lateinit var labelLayout: LinearLayout
+
     init {
         View.inflate(context, R.layout.uisdk_view_star_rating, this)
+
+        additionalFeedbackButton = findViewById(R.id.additionalFeedbackButton)
+        ratingBar = findViewById(R.id.ratingBar)
+        ratingLabel = findViewById(R.id.ratingLabel)
+        labelLayout = findViewById(R.id.labelLayout)
 
         additionalFeedbackButton.setOnClickListener {
             (context as Activity).startActivity(FeedbackActivity.Builder.newBuilder()

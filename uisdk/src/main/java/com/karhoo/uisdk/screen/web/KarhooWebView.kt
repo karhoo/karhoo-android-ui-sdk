@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.uisdk.R
@@ -20,10 +21,6 @@ import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
 import com.karhoo.uisdk.util.VersionUtil
 import com.karhoo.uisdk.util.formattedTripId
-import kotlinx.android.synthetic.main.uisdk_view_web.view.khWebViewToolbar
-import kotlinx.android.synthetic.main.uisdk_view_web.view.progressBar
-import kotlinx.android.synthetic.main.uisdk_view_web.view.webView
-
 class KarhooWebView @JvmOverloads constructor(context: Context,
                                               attrs: AttributeSet? = null,
                                               defStyleAttr: Int = 0
@@ -31,8 +28,16 @@ class KarhooWebView @JvmOverloads constructor(context: Context,
 
     private var tripId: String = ""
 
+    private lateinit var khWebViewToolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var progressBar: ProgressBar
+    private lateinit var webView: WebView
+
     init {
         View.inflate(context, R.layout.uisdk_view_web, this)
+
+        khWebViewToolbar = findViewById(R.id.khWebViewToolbar)
+        progressBar = findViewById(R.id.progressBar)
+        webView = findViewById(R.id.webView)
 
         (context as AppCompatActivity).setSupportActionBar(khWebViewToolbar)
         khWebViewToolbar.setNavigationOnClickListener {

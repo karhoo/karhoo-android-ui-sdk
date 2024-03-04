@@ -6,16 +6,18 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_filter_multi_select_checkbox.view.filterViewItemTitle
-import kotlinx.android.synthetic.main.uisdk_view_filter_multi_select_checkbox.view.filterViewItemCheckboxGroup
 
 class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
                                                                attrs: AttributeSet? = null,
                                                                defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
     var filter: MultiSelectFilter? = null
+
+    private lateinit var filterViewItemTitle: TextView
+    private lateinit var filterViewItemCheckboxGroup: LinearLayout
 
     var delegate: (() -> Unit)? = null
         set(value) {
@@ -46,6 +48,9 @@ class MultiSelectCheckboxFilterView  @JvmOverloads constructor(context: Context,
 
     init {
         View.inflate(context, R.layout.uisdk_view_filter_multi_select_checkbox, this)
+
+        filterViewItemTitle = findViewById(R.id.filterViewItemTitle)
+        filterViewItemCheckboxGroup = findViewById(R.id.filterViewItemCheckboxGroup)
     }
 
     fun setTitle(title: String){

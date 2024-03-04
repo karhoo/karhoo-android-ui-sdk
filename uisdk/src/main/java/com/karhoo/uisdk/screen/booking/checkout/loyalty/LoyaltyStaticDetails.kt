@@ -3,8 +3,8 @@ package com.karhoo.uisdk.screen.booking.checkout.loyalty
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_loyalty_static_details.view.*
 
 class LoyaltyStaticDetails @JvmOverloads constructor(
     context: Context,
@@ -12,6 +12,8 @@ class LoyaltyStaticDetails @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     var loyaltyMode: LoyaltyMode = LoyaltyMode.EARN
+
+    private lateinit var loyaltyStaticText: TextView
 
     init {
         inflate(context, R.layout.uisdk_loyalty_static_details, this)
@@ -23,6 +25,7 @@ class LoyaltyStaticDetails @JvmOverloads constructor(
         loyaltyPoints: Int
     ) {
         this.loyaltyMode = loyaltyMode
+        loyaltyStaticText = findViewById(R.id.loyaltyStaticText)
 
         when (loyaltyMode) {
             LoyaltyMode.NONE,

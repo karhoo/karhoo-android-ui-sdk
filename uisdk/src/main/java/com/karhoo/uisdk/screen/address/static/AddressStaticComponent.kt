@@ -6,13 +6,13 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.karhoo.sdk.api.model.Address
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.util.DateUtil.getTimeFormat
 import com.karhoo.uisdk.util.extension.removeLastOccurrenceOf
 import com.karhoo.uisdk.util.extension.removeSubstringWithRegexUsing
-import kotlinx.android.synthetic.main.uisdk_address_static_component.view.*
 import org.joda.time.DateTime
 import java.util.*
 
@@ -25,8 +25,22 @@ class AddressStaticComponent @JvmOverloads constructor(
 
     private val addressCountryRegexPattern = ",{1} *[A-Za-z]*$"
 
+    private lateinit var pickupAddressTextPrimary: TextView
+    private lateinit var pickupAddressTextSecondary: TextView
+    private lateinit var destinationAddressTextPrimary: TextView
+    private lateinit var destinationAddressTextSecondary: TextView
+    private lateinit var staticAddressComponentTime: TextView
+    private lateinit var staticAddressComponentLayout: ConstraintLayout
+
     init {
         inflate(context, R.layout.uisdk_address_static_component, this)
+
+        pickupAddressTextPrimary = findViewById(R.id.pickupAddressTextPrimary)
+        pickupAddressTextSecondary = findViewById(R.id.pickupAddressTextSecondary)
+        destinationAddressTextPrimary = findViewById(R.id.destinationAddressTextPrimary)
+        destinationAddressTextSecondary = findViewById(R.id.destinationAddressTextSecondary)
+        staticAddressComponentTime = findViewById(R.id.staticAddressComponentTime)
+        staticAddressComponentLayout = findViewById(R.id.staticAddressComponentLayout)
     }
 
     override fun setup(

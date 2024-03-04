@@ -5,25 +5,30 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.base.view.ErrorStateView
 import com.karhoo.uisdk.screen.rides.LayoutArrayPagerAdapter
 import com.karhoo.uisdk.screen.rides.RidesLoading
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_rides.view.emptyStateLayout
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_rides.view.errorStateWidget
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_rides.view.recyclerView
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_rides.view.swipeRefreshLayout
 
 class UpcomingRidesView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyle: Int = 0)
     : FrameLayout(context, attrs, defStyle), UpcomingRidesMVP.View, LayoutArrayPagerAdapter.Refreshable {
+
+        private lateinit var emptyStateLayout: LinearLayout
+        private lateinit var errorStateWidget: ErrorStateView
+        private lateinit var recyclerView: RecyclerView
+        private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private val presenter: UpcomingRidesMVP.Presenter = UpcomingRidesPresenter(this, KarhooApi.tripService)
 
@@ -32,6 +37,11 @@ class UpcomingRidesView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.uisdk_view_upcoming_rides, this)
+
+        emptyStateLayout = findViewById(R.id.emptyStateLayout)
+        errorStateWidget = findViewById(R.id.errorStateWidget)
+        recyclerView = findViewById(R.id.recyclerView)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
 
         errorStateWidget.setRetryButtonClickListener(OnClickListener { refresh() })
         swipeRefreshLayout.setOnRefreshListener { presenter.getUpcomingRides() }

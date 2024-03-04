@@ -9,9 +9,11 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import com.google.android.material.navigation.NavigationView
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -24,16 +26,9 @@ import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewCont
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
+import com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import kotlinx.android.synthetic.main.uisdk_activity_base.*
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.*
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationDrawerWidget
-import kotlinx.android.synthetic.main.uisdk_activity_booking_main.navigationWidget
-import kotlinx.android.synthetic.main.uisdk_activity_ride_planning.*
-import kotlinx.android.synthetic.main.uisdk_nav_header_main.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_mode.*
 
 class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Actions,
     TripAllocationContract.Actions {
@@ -42,6 +37,10 @@ class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMV
         get() = R.layout.uisdk_activity_ride_planning
 
     private lateinit var view: RidePlanningContract.View
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var navigationDrawerWidget: BookingDrawerView
+    private lateinit var navigationHeaderIcon: ImageView
+    private lateinit var navigationWidget: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (KarhooUISDKConfigurationProvider.configuration.forceDarkMode()) {
@@ -51,6 +50,11 @@ class RidePlanningActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMV
         }
 
         window.allowEnterTransitionOverlap = true
+
+        toolbar = findViewById(R.id.toolbar)
+        navigationDrawerWidget = findViewById(R.id.navigationDrawerWidget)
+        navigationHeaderIcon = findViewById(R.id.navigationHeaderIcon)
+        navigationWidget = findViewById(R.id.navigationWidget)
 
         super.onCreate(savedInstanceState)
 

@@ -75,7 +75,8 @@ class LocationProvider(private val context: Context,
             }
         }
 
-        fun requestFreshLocationUpdates() = fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
+        fun requestFreshLocationUpdates() = fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback as LocationCallback, Looper.myLooper())
 
         settingsClient.checkLocationSettings(settingsRequest)
                 .addOnSuccessListener {

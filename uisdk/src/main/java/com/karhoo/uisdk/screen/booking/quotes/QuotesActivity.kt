@@ -14,17 +14,17 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.quotes.fragment.QuotesFragment
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.*
 
 class QuotesActivity : BaseActivity(), WebViewActions {
     override val layout: Int
         get() = R.layout.uisdk_quotes_activity
 
     private lateinit var fragment: Fragment
+    lateinit var checkoutToolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        checkoutToolbar = findViewById(R.id.checkoutToolbar)
         setSupportActionBar(checkoutToolbar)
         checkoutToolbar.setNavigationOnClickListener {
             val data = Intent().apply {

@@ -3,30 +3,33 @@ package com.karhoo.uisdk.screen.booking.checkout.component.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewIcon
-import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewSubtitle
-import kotlinx.android.synthetic.main.uisdk_action_cell_view.view.actionViewTitle
 
 class ActionCellView @kotlin.jvm.JvmOverloads constructor(context: Context,
                                                           attrs: AttributeSet? = null,
                                                           defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), ActionCellContract.View {
     private val view: View = inflate(context, R.layout.uisdk_action_cell_view, this)
+    private val actionViewIcon: ImageView = view.findViewById(R.id.actionViewIcon)
+    private val actionViewSubtitle: TextView = view.findViewById(R.id.actionViewSubtitle)
+    private val actionViewTitle: TextView = view.findViewById(R.id.actionViewTitle)
+
 
     override fun setActionIcon(iconId: Int) {
-        view.actionViewIcon.setBackgroundResource(iconId)
+        actionViewIcon.setBackgroundResource(iconId)
     }
 
     override fun setSubtitle(subtitle: String) {
-        view.actionViewSubtitle.text = subtitle
+        actionViewSubtitle.text = subtitle
     }
 
     override fun setTitle(title: String) {
-        view.actionViewTitle.text = title
+        actionViewTitle.text = title
     }
 
     override fun setTitleContentDescription(text: String) {
-        view.actionViewTitle.contentDescription = text
+        actionViewTitle.contentDescription = text
     }
 }

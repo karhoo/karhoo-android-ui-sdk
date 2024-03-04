@@ -13,21 +13,26 @@ import android.webkit.SslErrorHandler
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogAction
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogConfig
 import com.karhoo.uisdk.base.dialog.KarhooAlertDialogHelper
-import kotlinx.android.synthetic.main.uisdk_activity_web.activityWebView
-import kotlinx.android.synthetic.main.uisdk_activity_web.progressBar
 
 class WebActivity : BaseActivity() {
 
     override val layout: Int
         get() = R.layout.uisdk_activity_web
 
+    private lateinit var activityWebView: WebView
+    private lateinit var progressBar: ProgressBar
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun initialiseViews() {
+        activityWebView = findViewById(R.id.activityWebView)
+        progressBar = findViewById(R.id.progressBar)
+
         val url = extras?.getString(EXTRA_URL)
 
         activityWebView.apply {

@@ -4,11 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
+import com.google.android.material.chip.ChipGroup
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_filter_multi_select_chips.view.*
 
 
 class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
@@ -16,6 +17,9 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
                                                            defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
     var filter: MultiSelectFilter? = null
+
+    private lateinit var filterViewItemChipGroup: ChipGroup
+    private lateinit var filterViewItemTitle: TextView
 
     var delegate: (() -> Unit)? = null
         set(value) {
@@ -73,6 +77,9 @@ class MultiSelectChipsFilterView @JvmOverloads constructor(context: Context,
 
     init {
         View.inflate(context, R.layout.uisdk_view_filter_multi_select_chips, this)
+
+        filterViewItemChipGroup = findViewById(R.id.filterViewItemChipGroup)
+        filterViewItemTitle = findViewById(R.id.filterViewItemTitle)
     }
 
     fun setTitle(title: String){

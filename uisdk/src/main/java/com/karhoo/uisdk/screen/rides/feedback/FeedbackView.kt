@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.annotation.AttrRes
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_feedback.view.questions
-import kotlinx.android.synthetic.main.uisdk_view_feedback.view.submitButton
-import kotlinx.android.synthetic.main.uisdk_view_feedback.view.tripIdEditText
 
 /**
  * Widget that contains a form made up of multiple RatedQuestionView widgets.
@@ -22,6 +22,10 @@ class FeedbackView @JvmOverloads constructor(
         attrs: AttributeSet? = null,
         @AttrRes defStyleAttr: Int = 0)
     : FrameLayout(context, attrs, defStyleAttr), FeedbackMVP.View, RatedQuestionsMVP.Actions {
+
+        private lateinit var questions: LinearLayout
+        private lateinit var submitButton: Button
+        private lateinit var tripIdEditText: EditText
 
     var tripId: String = ""
         set(value) {
@@ -36,6 +40,10 @@ class FeedbackView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_feedback, this)
+        questions = findViewById(R.id.questions)
+        submitButton = findViewById(R.id.submitButton)
+        tripIdEditText = findViewById(R.id.tripIdEditText)
+
         setActionsOnRatedQuestionViews()
     }
 

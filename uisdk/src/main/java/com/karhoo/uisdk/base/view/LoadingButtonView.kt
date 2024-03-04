@@ -3,13 +3,13 @@ package com.karhoo.uisdk.base.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.StringRes
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingButtonLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingProgressBar
-import kotlinx.android.synthetic.main.uisdk_view_booking_button.view.bookingRequestLabel
 
 class LoadingButtonView @JvmOverloads constructor(context: Context,
                                                   attrs: AttributeSet? = null,
@@ -18,8 +18,16 @@ class LoadingButtonView @JvmOverloads constructor(context: Context,
 
     var actions: Actions? = null
 
+    private lateinit var bookingButtonLayout: FrameLayout
+    private lateinit var bookingRequestLabel: TextView
+    private lateinit var bookingProgressBar: ProgressBar
+
     init {
         inflate(context, R.layout.uisdk_view_booking_button, this)
+
+        bookingButtonLayout = findViewById(R.id.bookingButtonLayout)
+        bookingRequestLabel = findViewById(R.id.bookingRequestLabel)
+        bookingProgressBar = findViewById(R.id.bookingProgressBar)
         setOnClickListener(this)
     }
 

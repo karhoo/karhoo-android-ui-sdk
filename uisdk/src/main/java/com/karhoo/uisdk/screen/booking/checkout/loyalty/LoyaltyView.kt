@@ -5,14 +5,15 @@ import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.View
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.karhoo.sdk.api.model.LoyaltyNonce
 import com.karhoo.sdk.api.model.LoyaltyStatus
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
-import kotlinx.android.synthetic.main.uisdk_view_loyalty_view.view.*
 
 class LoyaltyView @JvmOverloads constructor(
     context: Context,
@@ -23,6 +24,21 @@ class LoyaltyView @JvmOverloads constructor(
 
     private val presenter: LoyaltyContract.Presenter = LoyaltyPresenter()
 
+    private lateinit var loyaltyViewBurnLayout: LinearLayout
+    private lateinit var loyaltySwitch: SwitchMaterial
+    private lateinit var loyaltyViewSeparatorTextView: TextView
+    private lateinit var loyaltyView: LoyaltyView
+    private lateinit var loyaltyViewSeparatorLayout: LinearLayout
+    private lateinit var loyaltyViewEarnSubtitle: TextView
+    private lateinit var loyaltyViewFullWidthSeparator: View
+    private lateinit var loyaltyActionsContainer: LinearLayout
+    private lateinit var loyaltyViewBalance: TextView
+    private lateinit var loyaltyInfoLayout: LinearLayout
+    private lateinit var loyaltyViewBurnSubtitle: TextView
+    private lateinit var loyaltyViewEarnLayout: LinearLayout
+    private lateinit var loyaltyViewBurnTitle: TextView
+    private lateinit var loyaltyViewBurnTextsLayout: LinearLayout
+
     override var delegate: LoyaltyContract.LoyaltyViewDelegate? = null
     set(value) {
         field = value
@@ -31,6 +47,21 @@ class LoyaltyView @JvmOverloads constructor(
 
     init {
         inflate(context, R.layout.uisdk_view_loyalty_view, this)
+
+        loyaltyViewBurnLayout = findViewById(R.id.loyaltyViewBurnLayout)
+        loyaltySwitch = findViewById(R.id.loyaltySwitch)
+        loyaltyViewSeparatorTextView = findViewById(R.id.loyaltyViewSeparatorTextView)
+        loyaltyView = findViewById(R.id.loyaltyView)
+        loyaltyViewSeparatorLayout = findViewById(R.id.loyaltyViewSeparatorLayout)
+        loyaltyViewEarnSubtitle = findViewById(R.id.loyaltyViewEarnSubtitle)
+        loyaltyViewFullWidthSeparator = findViewById(R.id.loyaltyViewFullWidthSeparator)
+        loyaltyActionsContainer = findViewById(R.id.loyaltyActionsContainer)
+        loyaltyViewBalance = findViewById(R.id.loyaltyViewBalance)
+        loyaltyInfoLayout = findViewById(R.id.loyaltyInfoLayout)
+        loyaltyViewBurnSubtitle = findViewById(R.id.loyaltyViewBurnSubtitle)
+        loyaltyViewEarnLayout = findViewById(R.id.loyaltyViewEarnLayout)
+        loyaltyViewBurnTitle = findViewById(R.id.loyaltyViewBurnTitle)
+        loyaltyViewBurnTextsLayout = findViewById(R.id.loyaltyViewBurnTextsLayout)
 
         presenter.loyaltyPresenterDelegate = this
         presenter.updateLoyaltyMode(LoyaltyMode.NONE)
