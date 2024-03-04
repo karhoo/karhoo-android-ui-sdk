@@ -26,16 +26,16 @@ internal class CountryPickerActivity : AppCompatActivity() {
     private var countriesResourceName: String = "countries_dialing_code"
 
     private lateinit var toolbar: androidx.appcompat.widget.Toolbar
-    private lateinit var search_view_layout: androidx.appcompat.widget.SearchView
+    private lateinit var searchViewLayout: androidx.appcompat.widget.SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.uisdk_activity_country_picker)
 
         toolbar = findViewById(R.id.toolbar)
-        search_view_layout = findViewById(R.id.search_view_layout)
+        searchViewLayout = findViewById(R.id.search_view_layout)
 
-        search_view_layout.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
+        searchViewLayout.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)
                 .setHintTextColor(resources.getColor(R.color.kh_uisdk_text_button))
 
         setSupportActionBar(toolbar)
