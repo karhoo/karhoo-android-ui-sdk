@@ -12,14 +12,17 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelStoreOwner
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
 import com.karhoo.uisdk.screen.booking.checkout.component.views.CheckoutViewContract
 import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationContract
+import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
 import com.karhoo.uisdk.screen.booking.map.BookingMapMVP
-import kotlinx.android.synthetic.main.uisdk_ride_planning_view.view.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.*
+import com.karhoo.uisdk.screen.booking.map.BookingMapView
+import com.karhoo.uisdk.screen.booking.map.BookingModeView
 import org.joda.time.DateTime
 
 class RidePlanningView @JvmOverloads constructor(
@@ -33,8 +36,20 @@ class RidePlanningView @JvmOverloads constructor(
     override lateinit var checkoutObserver: Observer<in CheckoutViewContract.Action>
     override lateinit var handleNavigationVisiblityCallback: (toolbarVisibility: Int, navigationMode: Int) -> Unit
 
+    private lateinit var addressBarWidget: AddressBarView
+    private lateinit var bookingModeWidget: BookingModeView
+    private lateinit var tripAllocationWidget: TripAllocationView
+    private lateinit var bookingMapWidget: BookingMapView
+    private lateinit var locateMeButton: FloatingActionButton
+
     init {
         inflate(context, R.layout.uisdk_ride_planning_view, this)
+
+        addressBarWidget = findViewById(R.id.addressBarWidget)
+        bookingModeWidget = findViewById(R.id.bookingModeWidget)
+        tripAllocationWidget = findViewById(R.id.tripAllocationWidget)
+        bookingMapWidget = findViewById(R.id.bookingMapWidget)
+        locateMeButton = findViewById(R.id.locateMeButton)
     }
 
     override fun setup(

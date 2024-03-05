@@ -11,9 +11,11 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -25,10 +27,12 @@ import androidx.transition.TransitionManager
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.analytics.Event
 import com.karhoo.sdk.api.KarhooApi
@@ -55,10 +59,6 @@ import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.orZero
 import com.karhoo.uisdk.util.extension.showCurvedPolyline
 import com.karhoo.uisdk.util.extension.showShadowedPolyLine
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.bookingMapLayout
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.locateMeButton
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.mapView
-import kotlinx.android.synthetic.main.uisdk_view_booking_map.view.pickupPinIcon
 
 @Suppress("TooManyFunctions")
 class BookingMapView @JvmOverloads constructor(
@@ -70,6 +70,11 @@ class BookingMapView @JvmOverloads constructor(
     var initialLocation: LatLng? = null
     private var googleMap: GoogleMap? = null
     private var topPadding: Int? = null
+
+    private lateinit var bookingMapLayout: ConstraintLayout
+    private lateinit var locateMeButton: FloatingActionButton
+    private lateinit var mapView: MapView
+    private lateinit var pickupPinIcon: ImageView
 
     private var presenter: BookingMapMVP.Presenter = BookingMapPresenter(
         this,
@@ -97,6 +102,11 @@ class BookingMapView @JvmOverloads constructor(
     init {
         getCustomisationParameters(context, attrs, defStyleAttr)
         View.inflate(context, R.layout.uisdk_view_booking_map, this)
+
+        bookingMapLayout = findViewById(R.id.bookingMapLayout)
+        locateMeButton = findViewById(R.id.locateMeButton)
+        mapView = findViewById(R.id.mapView)
+        pickupPinIcon = findViewById(R.id.pickupPinIcon)
     }
 
     private fun getCustomisationParameters(

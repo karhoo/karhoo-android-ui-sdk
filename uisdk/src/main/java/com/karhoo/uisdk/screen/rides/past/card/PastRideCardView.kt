@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -18,16 +20,6 @@ import com.karhoo.uisdk.util.DateUtil
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.khTermsAndConditionsText
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.carText
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dateTimeText
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.dropOffLabel
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.pickupLabel
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.pickupTypeText
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.stateIcon
-import kotlinx.android.synthetic.main.uisdk_view_past_ride_card.view.stateText
 import org.joda.time.DateTime
 
 class PastRideCardView @JvmOverloads constructor(
@@ -37,8 +29,30 @@ class PastRideCardView @JvmOverloads constructor(
     : FrameLayout(context, attrs, defStyleAttr), PastRideCardMVP.View {
     private var presenter: PastRideCardMVP.Presenter? = null
 
+    private lateinit var khTermsAndConditionsText: TextView
+    private lateinit var carText: TextView
+    private lateinit var dateTimeText: TextView
+    private lateinit var dropOffLabel: TextView
+    private lateinit var logoImage: ImageView
+    private lateinit var pickupLabel: TextView
+    private lateinit var pickupTypeText: TextView
+    private lateinit var priceText: TextView
+    private lateinit var stateIcon: ImageView
+    private lateinit var stateText: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_past_ride_card, this)
+
+        khTermsAndConditionsText = findViewById(R.id.khTermsAndConditionsText)
+        carText = findViewById(R.id.carText)
+        dateTimeText = findViewById(R.id.dateTimeText)
+        dropOffLabel = findViewById(R.id.dropOffLabel)
+        logoImage = findViewById(R.id.logoImage)
+        pickupLabel = findViewById(R.id.pickupLabel)
+        pickupTypeText = findViewById(R.id.pickupTypeText)
+        priceText = findViewById(R.id.priceText)
+        stateIcon = findViewById(R.id.stateIcon)
+        stateText = findViewById(R.id.stateText)
     }
 
     fun bind(trip: TripInfo) {

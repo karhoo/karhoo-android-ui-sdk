@@ -12,8 +12,6 @@ import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerPresenter
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
-import kotlinx.android.synthetic.main.uisdk_view_booking_mode.view.*
-import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.*
 import org.joda.time.DateTime
 
 class BookingModeView @JvmOverloads constructor(
@@ -28,8 +26,16 @@ class BookingModeView @JvmOverloads constructor(
     var callbackToStartQuoteList: ((isPrebook: Boolean) -> Unit)? = null
     private var animating: Boolean = false
 
+    private lateinit var nowActionButton: LinearLayout
+    private lateinit var scheduleActionButton: LinearLayout
+    private lateinit var loyaltyInfoLayout: LinearLayout
+
     init {
         inflate(context, R.layout.uisdk_view_booking_mode, this)
+
+        nowActionButton = findViewById(R.id.nowActionButton)
+        scheduleActionButton = findViewById(R.id.scheduleActionButton)
+        loyaltyInfoLayout = findViewById(R.id.loyaltyInfoLayout)
 
         nowActionButton.setOnClickListener {
             callbackToStartQuoteList?.invoke(false)

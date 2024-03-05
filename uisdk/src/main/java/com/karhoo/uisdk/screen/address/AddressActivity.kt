@@ -13,19 +13,16 @@ import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.base.address.AddressType
 import com.karhoo.uisdk.screen.address.addresslist.AddressResultListMVP
+import com.karhoo.uisdk.screen.address.addresslist.AddressResultListView
 import com.karhoo.uisdk.screen.address.domain.AddressSearchProvider
 import com.karhoo.uisdk.screen.address.domain.KarhooAddressProvider
 import com.karhoo.uisdk.screen.address.map.AddressMapMVP
+import com.karhoo.uisdk.screen.address.map.AddressMapView
 import com.karhoo.uisdk.screen.address.options.AddressOptionsMVP
+import com.karhoo.uisdk.screen.address.options.AddressOptionsView
 import com.karhoo.uisdk.screen.address.recents.RecentsListView
 import com.karhoo.uisdk.screen.address.search.AddressSearchView
 import com.karhoo.uisdk.util.extension.orZero
-import kotlinx.android.synthetic.main.uisdk_activity_address.addressMapView
-import kotlinx.android.synthetic.main.uisdk_activity_address.addressOptionsWidget
-import kotlinx.android.synthetic.main.uisdk_activity_address.addressResultListWidget
-import kotlinx.android.synthetic.main.uisdk_activity_address.addressSearchWidget
-import kotlinx.android.synthetic.main.uisdk_activity_address.recentsListWidget
-import kotlinx.android.synthetic.main.uisdk_activity_address.toolbar
 
 class AddressActivity : BaseActivity(), AddressResultListMVP.Actions, AddressSearchView.Actions,
                         RecentsListView.Actions, AddressMapMVP.Actions, AddressOptionsMVP.Actions {
@@ -38,6 +35,13 @@ class AddressActivity : BaseActivity(), AddressResultListMVP.Actions, AddressSea
     private var longitude: Double = 0.0
 
     override val layout: Int = R.layout.uisdk_activity_address
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var addressMapView: AddressMapView
+    private lateinit var addressSearchWidget: AddressSearchView
+    private lateinit var addressResultListWidget: AddressResultListView
+    private lateinit var addressOptionsWidget: AddressOptionsView
+    private lateinit var recentsListWidget: RecentsListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +81,16 @@ class AddressActivity : BaseActivity(), AddressResultListMVP.Actions, AddressSea
     override fun onLowMemory() {
         super.onLowMemory()
         addressMapView.onLowMemory()
+    }
+
+    override fun initialiseViews() {
+        super.initialiseViews()
+        toolbar = findViewById(R.id.toolbar)
+        addressMapView = findViewById(R.id.addressMapView)
+        addressSearchWidget = findViewById(R.id.addressSearchWidget)
+        addressResultListWidget = findViewById(R.id.addressResultListWidget)
+        addressOptionsWidget = findViewById(R.id.addressOptionsWidget)
+        recentsListWidget = findViewById(R.id.recentsListWidget)
     }
 
     override fun handleExtras() {

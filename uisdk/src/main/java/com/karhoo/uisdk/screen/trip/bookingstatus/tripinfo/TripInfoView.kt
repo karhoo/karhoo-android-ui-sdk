@@ -8,25 +8,20 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
+import com.karhoo.uisdk.screen.trip.bookingstatus.contact.ContactOptionsView
 import com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity
 import com.karhoo.uisdk.util.LogoTransformation
 import com.karhoo.uisdk.util.extension.convertDpToPixels
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.carTypeText
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.contactOptionsWidget
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.detailsArrowIcon
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.driverDetailsLayout
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.driverNameText
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.driverPhotoImage
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.licenceNumberText
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.locateMeButton
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.registrationPlateText
-import kotlinx.android.synthetic.main.uisdk_view_trip_info.view.rideOptionsLabel
 
 class TripInfoView @JvmOverloads constructor(context: Context,
                                              attrs: AttributeSet? = null,
@@ -36,8 +31,31 @@ class TripInfoView @JvmOverloads constructor(context: Context,
     private var presenter: TripInfoPresenter = TripInfoPresenter(this)
     internal var actions: TripInfoActions? = null
 
+    private lateinit var carTypeText: TextView
+    private lateinit var contactOptionsWidget: ContactOptionsView
+    private lateinit var detailsArrowIcon: ImageView
+    private lateinit var driverDetailsLayout: ConstraintLayout
+    private lateinit var driverNameText: TextView
+    private lateinit var driverPhotoImage: ImageView
+    private lateinit var licenceNumberText: TextView
+    private lateinit var locateMeButton: FloatingActionButton
+    private lateinit var registrationPlateText: TextView
+    private lateinit var rideOptionsLabel: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_trip_info, this)
+
+        carTypeText = findViewById(R.id.carTypeText)
+        contactOptionsWidget = findViewById(R.id.contactOptionsWidget)
+        detailsArrowIcon = findViewById(R.id.detailsArrowIcon)
+        driverDetailsLayout = findViewById(R.id.driverDetailsLayout)
+        driverNameText = findViewById(R.id.driverNameText)
+        driverPhotoImage = findViewById(R.id.driverPhotoImage)
+        licenceNumberText = findViewById(R.id.licenceNumberText)
+        locateMeButton = findViewById(R.id.locateMeButton)
+        registrationPlateText = findViewById(R.id.registrationPlateText)
+        rideOptionsLabel = findViewById(R.id.rideOptionsLabel)
+
         setLocateMeButtonVisibility(context)
         driverDetailsLayout.setOnClickListener { toggleContactOptionsVisibility() }
         contactOptionsWidget.layoutTransition?.addTransitionListener(this@TripInfoView)

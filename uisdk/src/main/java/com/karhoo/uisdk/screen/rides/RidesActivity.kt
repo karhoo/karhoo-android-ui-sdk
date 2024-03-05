@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
+import android.widget.ProgressBar
+import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -11,16 +14,17 @@ import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
-import kotlinx.android.synthetic.main.uisdk_activity_rides.bookRideButton
-import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbar
-import kotlinx.android.synthetic.main.uisdk_activity_rides.toolbarProgressBar
-import kotlinx.android.synthetic.main.uisdk_activity_rides.viewPager
 
 class RidesActivity : BaseActivity(), RidesLoading, ViewPager.OnPageChangeListener {
 
     private var adapter: LayoutArrayPagerAdapter? = null
 
     override val layout: Int = R.layout.uisdk_activity_rides
+
+    private lateinit var bookRideButton: Button
+    private lateinit var toolbar: Toolbar
+    private lateinit var toolbarProgressBar: ProgressBar
+    private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,11 @@ class RidesActivity : BaseActivity(), RidesLoading, ViewPager.OnPageChangeListen
     }
 
     override fun initialiseViews() {
+        bookRideButton = findViewById(R.id.bookRideButton)
+        toolbar = findViewById(R.id.toolbar)
+        toolbarProgressBar = findViewById(R.id.toolbarProgressBar)
+        viewPager = findViewById(R.id.viewPager)
+
         val pages = arrayOf(LayoutArrayPagerAdapter.Page(getString(R.string.kh_uisdk_title_page_upcoming), R.layout.uisdk_page_rides_upcoming),
                             LayoutArrayPagerAdapter.Page(getString(R.string.kh_uisdk_title_page_past), R.layout.uisdk_page_rides_past))
         adapter = LayoutArrayPagerAdapter(pages)

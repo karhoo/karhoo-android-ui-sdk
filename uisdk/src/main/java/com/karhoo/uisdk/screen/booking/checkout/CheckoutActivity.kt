@@ -13,8 +13,6 @@ import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragm
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_activity.checkoutToolbar
 import java.util.HashMap
 
 class CheckoutActivity : BaseActivity(), WebViewActions {
@@ -22,9 +20,11 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
         get() = R.layout.uisdk_booking_checkout_activity
 
     private lateinit var fragment: CheckoutFragment
+    lateinit var checkoutToolbar: androidx.appcompat.widget.Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkoutToolbar = findViewById(R.id.checkoutToolbar)
         setSupportActionBar(checkoutToolbar)
         checkoutToolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -98,8 +98,8 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
     }
 
     override fun onBackPressed() {
-        if(khWebView.visibility == View.VISIBLE) {
-            khWebView.hide()
+        if(khWebView?.visibility == View.VISIBLE) {
+            khWebView?.hide()
         } else {
             fragment.onBackPressed()
         }

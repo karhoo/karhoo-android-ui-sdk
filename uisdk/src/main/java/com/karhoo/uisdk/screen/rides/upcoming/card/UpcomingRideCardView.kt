@@ -3,7 +3,10 @@ package com.karhoo.uisdk.screen.rides.upcoming.card
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.AttrRes
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
@@ -17,7 +20,6 @@ import com.karhoo.uisdk.util.IntentUtils
 import com.karhoo.uisdk.util.extension.categoryToLocalisedString
 import com.karhoo.uisdk.util.extension.toLocalisedString
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_upcoming_ride_card.view.*
 import org.joda.time.DateTime
 
 class UpcomingRideCardView @JvmOverloads constructor(
@@ -28,8 +30,30 @@ class UpcomingRideCardView @JvmOverloads constructor(
 
     private var presenter: UpcomingRideCardMVP.Presenter? = null
 
+    private lateinit var khTermsAndConditionsText: TextView
+    private lateinit var pickupLabel: TextView
+    private lateinit var dropOffLabel: TextView
+    private lateinit var callButton: Button
+    private lateinit var trackButton: Button
+    private lateinit var dateTimeText: TextView
+    private lateinit var logoImage: ImageView
+    private lateinit var pickupTypeText: TextView
+    private lateinit var carText: TextView
+    private lateinit var upcomingRideCancellationText: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_upcoming_ride_card, this)
+
+        khTermsAndConditionsText = findViewById(R.id.khTermsAndConditionsText)
+        pickupLabel = findViewById(R.id.pickupLabel)
+        dropOffLabel = findViewById(R.id.dropOffLabel)
+        callButton = findViewById(R.id.callButton)
+        trackButton = findViewById(R.id.trackButton)
+        dateTimeText = findViewById(R.id.dateTimeText)
+        logoImage = findViewById(R.id.logoImage)
+        pickupTypeText = findViewById(R.id.pickupTypeText)
+        carText = findViewById(R.id.carText)
+        upcomingRideCancellationText = findViewById(R.id.upcomingRideCancellationText)
     }
 
     fun bind(trip: TripInfo) {

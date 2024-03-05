@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.textfield.TextInputEditText
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
-import kotlinx.android.synthetic.main.fragment_checkout_comment_bottom_sheet.*
 
 class CheckoutCommentBottomSheet : MasterBottomSheetFragment() {
 
     var onCommentsChanged: ((comment: String?) -> Unit?)? = null
     var initialComments: String? = null
+
+    private lateinit var checkoutCommentsEditText: TextInputEditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,6 +23,8 @@ class CheckoutCommentBottomSheet : MasterBottomSheetFragment() {
         // Inflate the layout for this fragment
         val view =
             inflater.inflate(R.layout.fragment_checkout_comment_bottom_sheet, container, false)
+
+        checkoutCommentsEditText = view.findViewById(R.id.checkoutCommentsEditText)
         setupHeader(view = view, title = getString(R.string.kh_uisdk_checkout_comments_title))
         setupButton(
             view = view,

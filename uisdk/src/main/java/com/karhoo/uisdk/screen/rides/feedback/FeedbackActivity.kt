@@ -7,12 +7,13 @@ import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
-import kotlinx.android.synthetic.main.uisdk_activity_feedback.feedbackWidget
-import kotlinx.android.synthetic.main.uisdk_activity_feedback.toolbar
 
 class FeedbackActivity : BaseActivity() {
 
     override val layout: Int = R.layout.uisdk_activity_feedback
+
+    private lateinit var toolbar: androidx.appcompat.widget.Toolbar
+    private lateinit var feedbackWidget: FeedbackView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,14 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseActivity
 import com.karhoo.uisdk.util.ViewsConstants.DRIVER_PHOTO_ACTIVITY_NAME_ANIM_START_OFFSET
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.driverNameText
-import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.driverPhotoImage
-import kotlinx.android.synthetic.main.uisdk_activity_driver_photo.layoutRoot
 import java.lang.Exception
 
 private const val DRIVER_PHOTO_URL = "DriverPhotoActivity.URL"
@@ -22,6 +22,10 @@ private const val DRIVER_NAME = "DriverPhotoActivity.DRIVER_NAME"
 class DriverPhotoActivity : BaseActivity() {
 
     override val layout = R.layout.uisdk_activity_driver_photo
+
+    private lateinit var driverPhotoImage: ImageView
+    private lateinit var driverNameText: TextView
+    private lateinit var layoutRoot: RelativeLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

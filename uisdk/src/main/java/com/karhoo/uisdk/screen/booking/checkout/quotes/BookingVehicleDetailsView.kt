@@ -4,12 +4,15 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.karhoo.sdk.api.model.ServiceCancellation
 import com.karhoo.uisdk.R
+import com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
 import com.karhoo.uisdk.util.PicassoLoader
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.uisdk_view_vehicle_details.view.*
 import java.util.*
 
 class BookingVehicleDetailsView @JvmOverloads constructor(
@@ -21,8 +24,26 @@ class BookingVehicleDetailsView @JvmOverloads constructor(
     private val presenter: BookingVehicleDetailsMVP.Presenter = BookingVehicleDetailsPresenter(this)
     private var isExpandedSectionShown = false
 
+    private lateinit var vehicleType: TextView
+    private lateinit var logoImage: ImageView
+    private lateinit var vehicleLogo: ImageView
+    private lateinit var quoteLearnMoreIcon: ImageView
+    private lateinit var vehicleFleet: TextView
+    private lateinit var bookingQuoteCancellationText: TextView
+    private lateinit var quoteLearnMoreContainer: LinearLayout
+    private lateinit var capacityWidget: CapacityView
+
     init {
         inflate(context, R.layout.uisdk_view_vehicle_details, this)
+
+        vehicleType = findViewById(R.id.vehicleType)
+        logoImage = findViewById(R.id.logoImage)
+        vehicleLogo = findViewById(R.id.vehicleLogo)
+        quoteLearnMoreIcon = findViewById(R.id.quoteLearnMoreIcon)
+        vehicleFleet = findViewById(R.id.vehicleFleet)
+        bookingQuoteCancellationText = findViewById(R.id.bookingQuoteCancellationText)
+        quoteLearnMoreContainer = findViewById(R.id.quoteLearnMoreContainer)
+        capacityWidget = findViewById(R.id.capacityWidget)
     }
     @Suppress("LongParameterList")
     fun bindViews(

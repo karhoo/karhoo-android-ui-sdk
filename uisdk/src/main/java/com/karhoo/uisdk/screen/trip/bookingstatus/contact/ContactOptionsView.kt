@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import com.karhoo.sdk.api.KarhooApi
@@ -20,9 +21,6 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailMVP
 import com.karhoo.uisdk.screen.trip.bookingstatus.BookingStatusMVP
 import com.karhoo.uisdk.util.IntentUtils
-import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.cancelButton
-import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.contactDriverButton
-import kotlinx.android.synthetic.main.uisdk_view_contact_options.view.contactFleetButton
 
 class ContactOptionsView @JvmOverloads constructor(
         context: Context,
@@ -37,8 +35,16 @@ class ContactOptionsView @JvmOverloads constructor(
     private var progressDialog: ProgressDialog? = null
     private var cancellationDialog: AlertDialog? = null
 
+    private lateinit var cancelButton: Button
+    private lateinit var contactDriverButton: Button
+    private lateinit var contactFleetButton: Button
+
     init {
         inflate(context, R.layout.uisdk_view_contact_options, this)
+
+        cancelButton = findViewById(R.id.cancelButton)
+        contactDriverButton = findViewById(R.id.contactDriverButton)
+        contactFleetButton = findViewById(R.id.contactFleetButton)
 
         contactDriverButton.setOnClickListener { presenter.contactDriver() }
         contactFleetButton.setOnClickListener {

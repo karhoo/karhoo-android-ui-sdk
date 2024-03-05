@@ -7,13 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_filter_numbered.view.*
 
 class NumberedFilterView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
+
+    private lateinit var filterViewItemTitle: TextView
+    private lateinit var filterViewItemValue: TextView
+    private lateinit var filterViewItemMinusImage: ImageView
+    private lateinit var filterViewItemPlusImage: ImageView
+    private lateinit var filterViewItemImage: ImageView
 
     var filter: NumberedFilter? = null
         set(value) {
@@ -48,6 +53,12 @@ class NumberedFilterView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.uisdk_view_filter_numbered, this)
+
+        filterViewItemTitle = findViewById(R.id.filterViewItemTitle)
+        filterViewItemValue = findViewById(R.id.filterViewItemValue)
+        filterViewItemMinusImage = findViewById(R.id.filterViewItemMinusImage)
+        filterViewItemPlusImage = findViewById(R.id.filterViewItemPlusImage)
+        filterViewItemImage = findViewById(R.id.filterViewItemImage)
 
         val filterViewItemPlusImage = findViewById<ImageView>(R.id.filterViewItemPlusImage)
         val filterViewItemMinusImage = findViewById<ImageView>(R.id.filterViewItemMinusImage)

@@ -108,7 +108,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         initializeSortView()
         initializeFilterView()
 
-        journeyDetailsStateViewModel.viewActions().observe(this, bindToAddressBarOutputs())
+        journeyDetailsStateViewModel.viewActions().observe(viewLifecycleOwner, bindToAddressBarOutputs())
         addressBarWidget.watchJourneyDetailsState(this, journeyDetailsStateViewModel)
 
         journeyDetailsStateViewModel.viewStates().apply {

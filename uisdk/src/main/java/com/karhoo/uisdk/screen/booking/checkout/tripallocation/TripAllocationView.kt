@@ -10,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.karhoo.sdk.api.KarhooApi
@@ -38,10 +39,6 @@ import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_S
 import com.karhoo.uisdk.util.ViewsConstants.TRIP_ALLOCATION_TEXT_ROTATION_ANIM_START_OFFSET_SHORT
 import com.karhoo.uisdk.util.extension.convertDpToPixels
 import com.karhoo.uisdk.util.extension.guestTripTrackingUrl
-import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationOneLabel
-import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.allocationTwoLabel
-import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.cancelButton
-import kotlinx.android.synthetic.main.uisdk_view_trip_allocation.view.findingYourTripLabel
 
 class TripAllocationView @JvmOverloads constructor(
         context: Context,
@@ -53,8 +50,18 @@ class TripAllocationView @JvmOverloads constructor(
     private var presenter: TripAllocationContract.Presenter? = null
     var actions: TripAllocationContract.Actions? = null
 
+    private lateinit var allocationOneLabel: TextView
+    private lateinit var allocationTwoLabel: TextView
+    private lateinit var findingYourTripLabel: TextView
+    private lateinit var cancelButton: CancelButton
+
     init {
         View.inflate(context, R.layout.uisdk_view_trip_allocation, this)
+
+        allocationOneLabel = findViewById(R.id.allocationOneLabel)
+        allocationTwoLabel = findViewById(R.id.allocationTwoLabel)
+        findingYourTripLabel = findViewById(R.id.findingYourTripLabel)
+        cancelButton = findViewById(R.id.cancelButton)
     }
 
     override fun onActivityResult(tripInfo: TripInfo) {

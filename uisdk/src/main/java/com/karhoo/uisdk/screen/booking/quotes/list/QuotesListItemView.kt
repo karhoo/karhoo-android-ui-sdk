@@ -3,7 +3,10 @@ package com.karhoo.uisdk.screen.booking.quotes.list
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteSource
@@ -13,6 +16,7 @@ import com.karhoo.sdk.api.model.FleetRating
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.BaseRecyclerAdapter
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
+import com.karhoo.uisdk.screen.booking.quotes.capacity.CapacityView
 import com.karhoo.uisdk.screen.booking.quotes.filterview.VehicleClassFilter
 import com.karhoo.uisdk.util.PicassoLoader
 import com.karhoo.uisdk.util.extension.getCorrespondingLogoMapping
@@ -20,21 +24,6 @@ import com.karhoo.uisdk.util.extension.logoImageTag
 import com.karhoo.uisdk.util.formatted
 import com.karhoo.uisdk.util.intToRangedPrice
 import com.squareup.picasso.Callback
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.capacityWidget
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.categoryText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.etaText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.fareTypeText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.loadingIcon
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImage
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.priceText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteNameText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteProgressBar
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.detailsButton
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRating
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.quoteFleetRatingLayout
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoImageSmall
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.driverArrivalText
-import kotlinx.android.synthetic.main.uisdk_view_quotes_item.view.logoBadgeImage
 import java.util.Currency
 
 class QuotesListItemView @JvmOverloads constructor(
@@ -45,6 +34,22 @@ class QuotesListItemView @JvmOverloads constructor(
 
     var itemLayout: Int = R.layout.uisdk_view_quotes_item
     private var isPrebook: Boolean = false
+
+    private lateinit var capacityWidget: CapacityView
+    private lateinit var categoryText: TextView
+    private var etaText: TextView? = null
+    private lateinit var fareTypeText: TextView
+    private lateinit var loadingIcon: ImageView
+    private lateinit var logoImage: ImageView
+    private lateinit var priceText: TextView
+    private lateinit var quoteNameText: TextView
+    private lateinit var quoteProgressBar: ProgressBar
+    private var detailsButton: TextView? = null
+    private lateinit var quoteFleetRating: TextView
+    private lateinit var quoteFleetRatingLayout: LinearLayout
+    private lateinit var logoImageSmall: ImageView
+    private var driverArrivalText: TextView? = null
+    private lateinit var logoBadgeImage: ImageView
 
     private fun getListItemLayout(context: Context, attr: AttributeSet?, defStyleAttr: Int): Int {
         val typedArray = context.obtainStyledAttributes(
@@ -69,6 +74,22 @@ class QuotesListItemView @JvmOverloads constructor(
         this.isPrebook = isPrebook
         itemLayout = getListItemLayout(context, attrs, defStyleAttr)
         View.inflate(context, itemLayout, this)
+
+        capacityWidget = findViewById(R.id.capacityWidget)
+        categoryText = findViewById(R.id.categoryText)
+        etaText = findViewById(R.id.etaText)
+        fareTypeText = findViewById(R.id.fareTypeText)
+        loadingIcon = findViewById(R.id.loadingIcon)
+        logoImage = findViewById(R.id.logoImage)
+        priceText = findViewById(R.id.priceText)
+        quoteNameText = findViewById(R.id.quoteNameText)
+        quoteProgressBar = findViewById(R.id.quoteProgressBar)
+        detailsButton = findViewById(R.id.detailsButton)
+        quoteFleetRating = findViewById(R.id.quoteFleetRating)
+        quoteFleetRatingLayout = findViewById(R.id.quoteFleetRatingLayout)
+        logoImageSmall = findViewById(R.id.logoImageSmall)
+        driverArrivalText = findViewById(R.id.driverArrivalText)
+        logoBadgeImage = findViewById(R.id.logoBadgeImage)
 
         startLoading()
         quoteNameText.text = vehicleDetails.fleet.name

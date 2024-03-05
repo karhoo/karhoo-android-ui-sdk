@@ -4,9 +4,11 @@ import android.content.Context
 import android.text.method.LinkMovementMethod
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import com.karhoo.uisdk.R
-import kotlinx.android.synthetic.main.uisdk_view_quotes_error.view.*
 
 class QuotesErrorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null,
@@ -17,8 +19,18 @@ class QuotesErrorView @JvmOverloads constructor(
     private var presenter: QuotesErrorViewPresenter = QuotesErrorViewPresenter()
     private var delegateQuotesError: QuotesErrorViewContract.QuotesErrorViewDelegate? = null
 
+    private lateinit var quotesErrorContainer: LinearLayout
+    private lateinit var quotesErrorIcon: ImageView
+    private lateinit var quotesErrorTitle: TextView
+    private lateinit var quotesErrorSubtitle: TextView
+
     init {
         View.inflate(context, R.layout.uisdk_view_quotes_error, this)
+
+        quotesErrorContainer = findViewById(R.id.quotesErrorContainer)
+        quotesErrorIcon = findViewById(R.id.quotesErrorIcon)
+        quotesErrorTitle = findViewById(R.id.quotesErrorTitle)
+        quotesErrorSubtitle = findViewById(R.id.quotesErrorSubtitle)
 
         presenter.setDelegate(this)
 

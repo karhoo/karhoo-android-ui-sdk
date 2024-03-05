@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,8 +17,8 @@ import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingQuotesViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.SortMethod
 import com.karhoo.uisdk.screen.booking.domain.support.KarhooFeedbackEmailComposer
 import com.karhoo.uisdk.screen.booking.quotes.errorview.ErrorViewGenericReason
+import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorView
 import com.karhoo.uisdk.screen.booking.quotes.errorview.QuotesErrorViewContract
-import kotlinx.android.synthetic.main.uisdk_view_quotes_recycler.view.*
 
 class QuotesRecyclerView @JvmOverloads constructor(
     context: Context,
@@ -29,8 +31,18 @@ class QuotesRecyclerView @JvmOverloads constructor(
 
     private var bookingQuotesViewModel: BookingQuotesViewModel? = null
 
+    private lateinit var quotesListRecycler: androidx.recyclerview.widget.RecyclerView
+    private lateinit var quotesErrorView: QuotesErrorView
+    private lateinit var quotesLoadingProgressBar: ProgressBar
+    private lateinit var quotesLoadingLabel: TextView
+
     init {
         inflate(context, R.layout.uisdk_view_quotes_recycler, this)
+
+        quotesListRecycler = findViewById(R.id.quotesListRecycler)
+        quotesErrorView = findViewById(R.id.quotesErrorView)
+        quotesLoadingProgressBar = findViewById(R.id.quotesLoadingProgressBar)
+        quotesLoadingLabel = findViewById(R.id.quotesLoadingLabel)
 
         if (!isInEditMode) {
             quotesAdapter.setItemClickListener { _, _, item ->

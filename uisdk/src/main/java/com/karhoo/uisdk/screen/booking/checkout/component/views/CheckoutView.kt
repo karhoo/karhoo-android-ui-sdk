@@ -8,10 +8,14 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
+import com.google.android.material.checkbox.MaterialCheckBox
 import com.karhoo.sdk.api.KarhooApi
 import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.datastore.user.SavedPaymentInfo
@@ -50,6 +54,9 @@ import com.karhoo.uisdk.screen.booking.checkout.payment.BookingPaymentHandler
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfirmationView
 import com.karhoo.uisdk.screen.booking.checkout.comment.CheckoutCommentBottomSheet
+import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyView
+import com.karhoo.uisdk.screen.booking.checkout.passengerdetails.PassengerDetailsView
+import com.karhoo.uisdk.screen.booking.checkout.quotes.BookingVehicleDetailsView
 import com.karhoo.uisdk.screen.booking.checkout.traveldetails.CheckoutTravelDetailsBottomSheet
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
@@ -61,8 +68,6 @@ import com.karhoo.uisdk.util.extension.hideSoftKeyboard
 import com.karhoo.uisdk.util.extension.isGuest
 import com.karhoo.uisdk.util.extension.logoImageTag
 import com.karhoo.uisdk.util.returnErrorStringOrLogoutIfRequired
-import kotlinx.android.synthetic.main.uisdk_booking_checkout_view.view.*
-import kotlinx.android.synthetic.main.uisdk_view_booking_terms.view.*
 import org.joda.time.DateTime
 import java.text.SimpleDateFormat
 import java.util.*
@@ -95,8 +100,40 @@ internal class CheckoutView @JvmOverloads constructor(
 
     private val bookingPaymentHandler = BookingPaymentHandler(context = context)
 
+    private lateinit var bookingCheckoutCommentView: ActionCellView
+    private lateinit var khTermsAndConditionsCheckBox: MaterialCheckBox
+    private lateinit var bookingRequestTermsWidget: BookingTermsView
+    private lateinit var bookingRequestLinearLayout: LinearLayout
+    private lateinit var bookingCheckoutPassengerView: ActionCellView
+    private lateinit var bookingCheckoutTravelDetailsView: ActionCellView
+    private lateinit var passengersDetailLayout: PassengerDetailsView
+    private lateinit var loyaltyView: LoyaltyView
+    private lateinit var bookingCheckoutViewLayout: ScrollView
+    private lateinit var bookingRequestPriceWidget: BookingPriceView
+    private lateinit var bottomPriceView: BottomPriceView
+    private lateinit var bookingRequestQuotesWidget: BookingVehicleDetailsView
+    private lateinit var checkoutAddressComponent: AddressStaticComponent
+    private lateinit var checkoutDateText: TextView
+    private lateinit var bottomSectionContainer: LinearLayout
+
     init {
         View.inflate(context, R.layout.uisdk_booking_checkout_view, this)
+
+        bookingRequestTermsWidget = findViewById(R.id.bookingRequestTermsWidget)
+        bookingRequestLinearLayout = findViewById(R.id.bookingRequestLinearLayout)
+        bookingCheckoutPassengerView = findViewById(R.id.bookingCheckoutPassengerView)
+        bookingCheckoutTravelDetailsView = findViewById(R.id.bookingCheckoutTravelDetailsView)
+        passengersDetailLayout = findViewById(R.id.passengersDetailLayout)
+        loyaltyView = findViewById(R.id.loyaltyView)
+        bookingCheckoutViewLayout = findViewById(R.id.bookingCheckoutViewLayout)
+        bookingRequestPriceWidget = findViewById(R.id.bookingRequestPriceWidget)
+        bottomPriceView = findViewById(R.id.bottomPriceView)
+        bookingRequestQuotesWidget = findViewById(R.id.bookingRequestQuotesWidget)
+        checkoutAddressComponent = findViewById(R.id.checkoutAddressComponent)
+        checkoutDateText = findViewById(R.id.checkoutDateText)
+        bottomSectionContainer = findViewById(R.id.bottomSectionContainer)
+        bookingCheckoutCommentView = findViewById(R.id.bookingCheckoutCommentView)
+        khTermsAndConditionsCheckBox = findViewById(R.id.khTermsAndConditionsCheckBox)
 
         bookingPaymentHandler.cardActions = this
         bookingPaymentHandler.paymentActions = this

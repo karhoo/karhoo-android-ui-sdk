@@ -4,12 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.screen.address.adapter.RecentAddressAdapter
-import kotlinx.android.synthetic.main.uisdk_view_simple_recycler.view.emptyText
-import kotlinx.android.synthetic.main.uisdk_view_simple_recycler.view.recycler
 
 class RecentsListView @JvmOverloads constructor(context: Context,
                                                 attrs: AttributeSet? = null,
@@ -20,8 +20,14 @@ class RecentsListView @JvmOverloads constructor(context: Context,
 
     var actions: Actions? = null
 
+    private lateinit var emptyText: TextView
+    private lateinit var recycler: RecyclerView
+
     init {
         inflate(context, R.layout.uisdk_view_simple_recycler, this)
+
+        emptyText = findViewById(R.id.emptyText)
+        recycler = findViewById(R.id.recycler)
 
         if (!isInEditMode) {
             emptyText.setText(R.string.kh_uisdk_recents_empty)

@@ -18,6 +18,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
@@ -50,13 +51,14 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import kotlinx.android.synthetic.main.uisdk_view_trip_map.view.mapView
 
 class TripMapView @JvmOverloads constructor(context: Context,
                                             attrs: AttributeSet? = null,
                                             defStyleAttr: Int = 0)
     : LinearLayout(context, attrs, defStyleAttr), OnMapReadyCallback, PermissionListener,
       TripMapMVP.View, GoogleMap.OnCameraMoveStartedListener, LifecycleObserver {
+
+          private lateinit var mapView: MapView
 
     private var presenter: TripMapPresenter = TripMapPresenter(this, KarhooApi.driverTrackingService,
                                                                KarhooApi.tripService, KarhooUISDK.analytics,
@@ -83,6 +85,7 @@ class TripMapView @JvmOverloads constructor(context: Context,
     init {
         getCustomisationParameters(context, attrs, defStyleAttr)
         inflate(context, R.layout.uisdk_view_trip_map, this)
+        mapView = findViewById(R.id.mapView)
         checkPermissions()
     }
 

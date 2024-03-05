@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
@@ -27,12 +28,11 @@ import com.karhoo.uisdk.base.snackbar.SnackbarAction
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
 import com.karhoo.uisdk.base.snackbar.SnackbarPriority
 import com.karhoo.uisdk.base.snackbar.SnackbarType
+import com.karhoo.uisdk.base.view.notification.TopNotificationView
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
+import com.karhoo.uisdk.screen.web.KarhooWebView
 import com.karhoo.uisdk.util.Logger
 import com.karhoo.uisdk.util.extension.hideSoftKeyboard
-import kotlinx.android.synthetic.main.uisdk_activity_base.khWebView
-import kotlinx.android.synthetic.main.uisdk_activity_base.snackBarContainer
-import kotlinx.android.synthetic.main.uisdk_activity_base.topNotificationWidget
 
 abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
     NetworkReceiver.Actions {
@@ -43,6 +43,10 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
     private var snackbar: Snackbar? = null
     private var networkLostError: Boolean = false
     protected var extras: Bundle? = null
+
+    protected var khWebView: KarhooWebView? = null
+    private var snackBarContainer: FrameLayout? = null
+    private var topNotificationWidget: TopNotificationView? = null
 
     @get:LayoutRes
     abstract val layout: Int
@@ -55,6 +59,10 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
 
         super.onCreate(savedInstanceState)
         setContentView(layout)
+        khWebView = findViewById(R.id.khWebView)
+        snackBarContainer = findViewById(R.id.snackBarContainer)
+        topNotificationWidget = findViewById(R.id.topNotificationWidget)
+
         backgroundFade = snackBarContainer?.background as TransitionDrawable?
         extras = intent?.extras
 
@@ -101,11 +109,13 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
 
             errorShown = snackbarConfig.type
             if (snackbarConfig.action != null) {
-                snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
-                    .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_button))
+                snackbar = snackBarContainer?.let {
+                    Snackbar.make(it, text, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(snackbarConfig.action.text) { snackbarConfig.action.action() }
+                        .setActionTextColor(ContextCompat.getColor(this, R.color.kh_uisdk_text_button))
+                }
             } else {
-                snackbar = Snackbar.make(snackBarContainer, text, Snackbar.LENGTH_LONG)
+                snackbar = snackBarContainer?.let { Snackbar.make(it, text, Snackbar.LENGTH_LONG) }
             }
 
             val snackText = snackbar?.view?.findViewById(R.id.snackbar_text) as? TextView
@@ -136,7 +146,7 @@ abstract class BaseActivity : AppCompatActivity(), LocationLock, ErrorView,
     }
 
     override fun showTopBarNotification(value: String) {
-        topNotificationWidget.setNotificationText(value)
+        topNotificationWidget?.setNotificationText(value)
     }
 
     override fun showErrorDialog(stringId: Int, karhooError: KarhooError?) {

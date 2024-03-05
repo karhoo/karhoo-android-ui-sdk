@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
-import kotlinx.android.synthetic.main.fragment_checkout_travel_details_bottom_sheet.*
+import com.karhoo.uisdk.base.view.LoadingButtonView
+
 
 class CheckoutTravelDetailsBottomSheet : MasterBottomSheetFragment() {
 
@@ -15,12 +19,22 @@ class CheckoutTravelDetailsBottomSheet : MasterBottomSheetFragment() {
     var initialValue: String? = null
     var isFlight: Boolean = false
 
+    private lateinit var checkoutTravelDetailsEditText: TextInputEditText
+    private lateinit var checkoutTravelDetailsSubtitle: TextView
+    private lateinit var checkoutTravelDetailsTextField: TextInputLayout
+    private lateinit var checkoutTravelDetailsSave: LoadingButtonView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_checkout_travel_details_bottom_sheet, container, false)
+
+        checkoutTravelDetailsEditText = view.findViewById(R.id.checkoutTravelDetailsEditText)
+        checkoutTravelDetailsSubtitle = view.findViewById(R.id.checkoutTravelDetailsSubtitle)
+        checkoutTravelDetailsTextField = view.findViewById(R.id.checkoutTravelDetailsTextField)
+        checkoutTravelDetailsSave = view.findViewById(R.id.checkoutTravelDetailsSave)
 
         setupButton(view = view, buttonId = R.id.checkoutTravelDetailsSave, text = getString(R.string.kh_uisdk_save)) {
             checkoutTravelDetailsEditText.text?.let { onValueChanged?.invoke(it.toString()) }
