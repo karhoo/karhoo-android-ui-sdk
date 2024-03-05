@@ -64,7 +64,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 34
         versionCode 1120
-        versionName "1.13.3"
+        versionName "1.13.4"
         buildConfigField 'int', 'VERSION_CODE', "${versionCode}"
         // fix for version code and name being removed from BuildConfig for libraries starting from AGP 4.1
         buildConfigField 'String', 'VERSION_NAME', "\"${versionName}\""
@@ -154,7 +154,7 @@ afterEvaluate {
             from components.findByName(variant.name)
             groupId 'com.karhoo'
             artifactId "uisdk-${variant.flavorName}"
-            version '1.13.3'
+            version '1.13.4'
         }
     }
 }
