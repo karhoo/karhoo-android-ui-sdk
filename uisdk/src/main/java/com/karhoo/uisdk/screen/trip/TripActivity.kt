@@ -155,7 +155,7 @@ class TripActivity : BaseActivity(), BookingStatusActions, TripMapMVP.Actions {
 
         fun build(context: Context): Intent {
             val intent = Intent(context, KarhooUISDK.Routing.trip)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtras(extras)
             return intent
         }

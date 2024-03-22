@@ -39,12 +39,10 @@ import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenBraintreeConfig
 import com.karhoo.sdk.analytics.AnalyticsManager
-import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
-import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.map.BookingMapActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
@@ -88,6 +86,16 @@ class MainActivity : AppCompatActivity() {
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
+        setButtonEvents()
+
+        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
+        checkbox.setChecked(getCurrentNotificationStatus())
+
+        val checkbox2 = findViewById<CheckBox>(R.id.darkmode_checkbox)
+        checkbox2.isChecked = getCurrentDarkModeStatus()
+    }
+
+    private fun setButtonEvents(){
         findViewById<Button>(R.id.bookTripButtonBraintreeGuest).setOnClickListener {
             showLoading()
 
@@ -164,12 +172,6 @@ class MainActivity : AppCompatActivity() {
             }
             showLoginInputDialog()
         }
-
-        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
-        checkbox.setChecked(getCurrentNotificationStatus())
-
-        val checkbox2 = findViewById<CheckBox>(R.id.darkmode_checkbox)
-        checkbox2.isChecked = getCurrentDarkModeStatus()
     }
 
     private fun showLoginInputDialog() {
@@ -349,7 +351,7 @@ class MainActivity : AppCompatActivity() {
     ) { result: ActivityResult? ->
         if (result?.resultCode == RESULT_OK) {
             val journeyDetails =
-                result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_INFO)
+                result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_DETAILS)
 
             val builder = QuotesActivity.Builder()
                 .bookingInfo(journeyDetails)
@@ -402,11 +404,8 @@ class MainActivity : AppCompatActivity() {
     private var tripActivityLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult? ->
-        if (result?.resultCode == RESULT_OK) {
-
-        }
+        goToBookingNew()
     }
-
 
     private fun goToBooking() {
         AnalyticsManager.initialise()

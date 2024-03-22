@@ -2,11 +2,9 @@ package com.karhoo.uisdk.screen.booking.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
@@ -16,15 +14,10 @@ import android.widget.ImageView
 //import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationView
-import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.TripInfo
-import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
 import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
@@ -34,18 +27,12 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarMVP
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarView
 import com.karhoo.uisdk.screen.booking.address.addressbar.AddressBarViewContract
-import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
-import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
-import com.karhoo.uisdk.screen.booking.checkout.tripallocation.TripAllocationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetailsStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyInfo
-import com.karhoo.uisdk.screen.booking.domain.bookingrequest.BookingRequestStateViewModel
 import com.karhoo.uisdk.screen.booking.domain.quotes.KarhooAvailability
-import com.karhoo.uisdk.screen.booking.drawer.BookingDrawerView
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
-import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
 import com.karhoo.uisdk.util.extension.isLocateMeEnabled
 import com.karhoo.uisdk.util.extension.toSimpleLocationInfo
 import org.joda.time.DateTime
@@ -98,8 +85,8 @@ class BookingMapActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.
         super.onCreate(savedInstanceState)
 
         savedInstanceState?.let {
-            if (it[JOURNEY_INFO] != null) {
-                val journeyDetails = it[JOURNEY_INFO] as JourneyDetails
+            if (it[JOURNEY_DETAILS] != null) {
+                val journeyDetails = it[JOURNEY_DETAILS] as JourneyDetails
                 journeyDetailsStateViewModel.process(
                     AddressBarViewContract.AddressBarEvent
                         .PrebookBookingEvent(
@@ -138,7 +125,7 @@ class BookingMapActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.
             if(!isPrebook){
                 journeyDetailsStateViewModel.currentState.date = null
             }
-            data.putExtra(BookingMapActivity.JOURNEY_INFO, journeyDetailsStateViewModel.currentState)
+            data.putExtra(BookingMapActivity.JOURNEY_DETAILS, journeyDetailsStateViewModel.currentState)
             setResult(RESULT_OK, data)
             finish()
         }
@@ -172,7 +159,7 @@ class BookingMapActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(JOURNEY_INFO, journeyDetailsStateViewModel.currentState)
+        outState.putParcelable(JOURNEY_DETAILS, journeyDetailsStateViewModel.currentState)
         bookingMapWidget.onSaveInstanceState(outState)
     }
 
@@ -440,6 +427,7 @@ class BookingMapActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.
                     RidesActivity.Builder.builder
                         .build(this)
                 )
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -525,6 +513,6 @@ class BookingMapActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.
         private const val REQ_CODE_BRAINTREE_GUEST = 302
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 1001
         private const val NAVIGATION_ICON_DELAY = 100L
-        const val JOURNEY_INFO = "JOURNEY_INFO"
+        const val JOURNEY_DETAILS = "JOURNEY_DETAILS"
     }
 }
