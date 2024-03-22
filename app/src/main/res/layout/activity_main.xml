@@ -87,7 +87,7 @@
         android:text="Analytics notifications"
         android:onClick="onCheckboxClicked"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLoyaltyTokenExchangeBraintree" />
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonBraintreeTokenExchangeNew" />
     />
 
     <CheckBox android:id="@+id/darkmode_checkbox"
@@ -110,5 +110,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bookTripButtonLoyaltyTokenExchange" />
+
+    <Button
+        android:id="@+id/bookTripButtonBraintreeTokenExchangeNew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/book_a_trip_braintree_token_exchange_new"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookTripButtonLoyaltyTokenExchangeBraintree" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

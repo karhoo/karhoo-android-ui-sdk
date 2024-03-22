@@ -22,7 +22,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
-import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
@@ -31,12 +30,19 @@ import kotlin.system.exitProcess
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import android.widget.CheckBox
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenBraintreeConfig
 import com.karhoo.sdk.analytics.AnalyticsManager
+import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.map.BookingMapActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -91,6 +97,15 @@ class MainActivity : AppCompatActivity() {
             applyBraintreeTokenExchangeConfig()
 
             loginTokenExchange(BuildConfig.BRAINTREE_AUTH_TOKEN)
+        }
+
+
+        findViewById<Button>(R.id.bookTripButtonBraintreeTokenExchangeNew).setOnClickListener {
+            showLoading()
+
+            applyBraintreeTokenExchangeConfig()
+
+            loginTokenExchange(BuildConfig.BRAINTREE_AUTH_TOKEN, newFlow = true)
         }
 
         findViewById<Button>(R.id.bookTripButtonAdyenGuest).setOnClickListener {
@@ -310,15 +325,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginTokenExchange(token: String) {
+    private fun loginTokenExchange(token: String, newFlow: Boolean = false) {
         KarhooApi.userService.logout()
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
-                is Resource.Success -> goToBooking()
+                is Resource.Success -> if(!newFlow) goToBooking() else goToBookingNew()
                 is Resource.Failure -> toastErrorMessage(result.error)
             }
         }
     }
+
+    private var bookingMapLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        if(result?.resultCode == RESULT_OK){
+            val journeyDetails = result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_INFO)
+
+            val builder = QuotesActivity.Builder()
+                .bookingInfo(journeyDetails)
+            quotesLauncher.launch(builder.build(this@MainActivity))
+        }
+    }
+
+    private var quotesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+
+    }
+
+
 
     private fun goToBooking() {
         AnalyticsManager.initialise()
@@ -326,6 +361,14 @@ class MainActivity : AppCompatActivity() {
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
         startActivity(builder.build(this))
+        hideLoading()
+    }
+
+    private fun goToBookingNew() {
+        AnalyticsManager.initialise()
+        KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
+        val builder = BookingMapActivity.Builder.builder
+        bookingMapLauncher.launch(builder.build(this))
         hideLoading()
     }
 
