@@ -39,10 +39,16 @@ import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenBraintreeConfig
 import com.karhoo.sdk.analytics.AnalyticsManager
+import com.karhoo.sdk.api.model.LocationInfo
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.checkout.bookingconfirmation.BookingConfirmationView
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
 import com.karhoo.uisdk.screen.booking.map.BookingMapActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.trip.TripActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -56,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private var requestedAuthentication = false
     private var username: String? = null
     private var password: String? = null
-    private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
+    private var deferredRequests: MutableList<(() -> Unit)> = arrayListOf()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -206,22 +212,24 @@ class MainActivity : AppCompatActivity() {
 
                         callback?.invoke()
                     }
+
                     is Resource.Failure -> toastErrorMessage(result.error)
                 }
             }
     }
 
-    private fun createBraintreeManager(): BraintreePaymentManager{
+    private fun createBraintreeManager(): BraintreePaymentManager {
         return BraintreePaymentManager().apply {
             this.paymentProviderView = BraintreePaymentView()
         }
     }
 
-    private fun createAdyenManager(): AdyenPaymentManager{
+    private fun createAdyenManager(): AdyenPaymentManager {
         return AdyenPaymentManager().apply {
             this.paymentProviderView = AdyenPaymentView()
         }
     }
+
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
         config.paymentManager = createBraintreeManager()
@@ -304,6 +312,7 @@ class MainActivity : AppCompatActivity() {
 
                             requestedAuthentication = false
                         }
+
                         is Resource.Failure -> toastErrorMessage(result.error)
                     }
                 }
@@ -329,7 +338,7 @@ class MainActivity : AppCompatActivity() {
         KarhooApi.userService.logout()
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
-                is Resource.Success -> if(!newFlow) goToBooking() else goToBookingNew()
+                is Resource.Success -> if (!newFlow) goToBooking() else goToBookingNew()
                 is Resource.Failure -> toastErrorMessage(result.error)
             }
         }
@@ -338,8 +347,9 @@ class MainActivity : AppCompatActivity() {
     private var bookingMapLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult? ->
-        if(result?.resultCode == RESULT_OK){
-            val journeyDetails = result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_INFO)
+        if (result?.resultCode == RESULT_OK) {
+            val journeyDetails =
+                result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_INFO)
 
             val builder = QuotesActivity.Builder()
                 .bookingInfo(journeyDetails)
@@ -350,9 +360,52 @@ class MainActivity : AppCompatActivity() {
     private var quotesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult? ->
+        val quote =
+            result?.data?.getParcelableExtra<Quote>(QuotesActivity.QUOTES_SELECTED_QUOTE_KEY)
+        quote?.let { quote ->
+            val builder = CheckoutActivity.Builder()
+                .quote(quote)
+                .journeyDetailsExpanded(
+                    result.data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS),
+                    result.data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS),
+                    null
+                )
 
+            val validityTimeStamp = result.data?.getLongExtra(
+                QuotesActivity.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
+            )
+
+            validityTimeStamp?.let {
+                builder.validityDeadlineTimestamp(
+                    validityTimeStamp
+                )
+            }
+            checkoutLauncher.launch(builder.build(this))
+        }
     }
 
+    private var checkoutLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        if (result?.resultCode == RESULT_OK) {
+            val tripInfo = result.data?.getParcelableExtra<TripInfo>(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_TRIP_INFO_KEY
+            )
+
+            val builder = TripActivity.Builder.builder
+                .tripInfo(tripInfo!!)
+           tripActivityLauncher.launch(builder.build(this))
+        }
+    }
+
+    private var tripActivityLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        if (result?.resultCode == RESULT_OK) {
+
+        }
+    }
 
 
     private fun goToBooking() {
@@ -419,10 +472,9 @@ class MainActivity : AppCompatActivity() {
             putBoolean(darkModeId, value)
             apply()
         }
-        if(value){
+        if (value) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-        else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }

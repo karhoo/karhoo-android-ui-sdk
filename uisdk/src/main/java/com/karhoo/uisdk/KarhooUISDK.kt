@@ -12,7 +12,7 @@ import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
 import com.karhoo.uisdk.screen.booking.domain.quotes.VehicleMappingsProvider
 import com.karhoo.uisdk.screen.booking.map.BookingMapActivity
-import com.karhoo.uisdk.screen.booking.map.TripAllocationMapActivity
+//import com.karhoo.uisdk.screen.booking.map.TripAllocationMapActivity
 import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
 import com.karhoo.uisdk.screen.rides.RidesActivity
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity

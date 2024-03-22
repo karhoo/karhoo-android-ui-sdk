@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.network.request.PassengerDetails
 import com.karhoo.uisdk.KarhooUISDK
@@ -13,6 +14,7 @@ import com.karhoo.uisdk.screen.booking.checkout.component.fragment.CheckoutFragm
 import com.karhoo.uisdk.screen.booking.checkout.loyalty.LoyaltyInfo
 import com.karhoo.uisdk.screen.booking.checkout.payment.WebViewActions
 import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import org.joda.time.DateTime
 import java.util.HashMap
 
 class CheckoutActivity : BaseActivity(), WebViewActions {
@@ -146,6 +148,16 @@ class CheckoutActivity : BaseActivity(), WebViewActions {
          * the JourneyDetails object.
          */
         fun journeyDetails(journeyDetails: JourneyDetails): Builder {
+            extrasBundle.putParcelable(BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY, journeyDetails)
+            return this
+        }
+
+        fun journeyDetailsExpanded(pickup: LocationInfo?, destination: LocationInfo?, dateAsString: String?): Builder {
+            var date: DateTime? = null
+            dateAsString?.let {
+                date = DateTime.parse(dateAsString)
+            }
+            val journeyDetails = JourneyDetails(pickup = pickup, destination = destination, date = date)
             extrasBundle.putParcelable(BOOKING_CHECKOUT_JOURNEY_DETAILS_KEY, journeyDetails)
             return this
         }
