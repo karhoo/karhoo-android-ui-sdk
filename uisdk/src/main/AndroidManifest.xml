@@ -4,7 +4,6 @@
     package="com.karhoo.uisdk">
 
     <application>
-        
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="YOUR_GOOGLE_API_KEY" />
@@ -13,90 +12,101 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.karhoo.uisdk.screen.address.AddressActivity"
+            android:name=".screen.address.AddressActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_address"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true"
             tools:replace="android:theme" />
         <activity
-            android:name="com.karhoo.uisdk.screen.booking.BookingActivity"
+            android:name=".screen.booking.BookingActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.karhoo.uisdk.screen.trip.TripActivity"
+            android:name=".screen.trip.TripActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.base.view.countrycodes.CountryPickerActivity"
+            android:name=".base.view.countrycodes.CountryPickerActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.rides.RidesActivity"
+            android:name=".screen.rides.RidesActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.rides.detail.RideDetailActivity"
+            android:name=".screen.rides.detail.RideDetailActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_rides"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
+            android:name=".screen.trip.bookingstatus.driverphoto.DriverPhotoActivity"
+            android:exported="true"
             android:label="driverPhoto"
-            android:parentActivityName="com.karhoo.uisdk.screen.trip.TripActivity"
-            android:exported="true"
+            android:parentActivityName=".screen.trip.TripActivity"
             android:theme="@style/AppTheme.Transparent" />
         <activity
-            android:name="com.karhoo.uisdk.screen.rides.feedback.FeedbackActivity"
+            android:name=".screen.rides.feedback.FeedbackActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_feedback"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity"
+            android:name=".screen.booking.checkout.CheckoutActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name="com.karhoo.uisdk.screen.web.WebActivity"
+            android:name=".screen.web.WebActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_trip"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screen.booking.checkout.payment.adyen.AdyenResultActivity"
+        <activity
+            android:name=".screen.booking.checkout.payment.adyen.AdyenResultActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_payment_details"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".screen.booking.quotes.QuotesActivity"
+        <activity
+            android:name=".screen.booking.quotes.QuotesActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_quotes_activity_title"
             android:screenOrientation="portrait"
-            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".screen.booking.checkout.bookingconfirmation.MockBookingConfirmationBaseActivity"
+            android:exported="true"
             android:label="@string/kh_uisdk_title_activity_address"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
-            android:exported="true"
             tools:replace="android:theme" />
+        <activity
+            android:name=".screen.booking.map.BookingMapActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+<!--        <activity-->
+<!--            android:name=".screen.booking.map.TripAllocationMapActivity"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/AppTheme.NoActionBar"-->
+<!--            android:windowSoftInputMode="adjustResize" />-->
 
-        <service
-            android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService"
-          />
-
+        <service android:name=".screen.booking.checkout.payment.adyen.AdyenDropInService" />
     </application>
 
 </manifest>

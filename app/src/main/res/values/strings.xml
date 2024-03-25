@@ -3,6 +3,7 @@
     <string name="book_a_trip_login" translatable="false">Book a Trip login</string>
     <string name="book_a_trip_braintree_guest" translatable="false">Book a Trip Braintree [Guest]</string>
     <string name="book_a_trip_braintree_token_exchange" translatable="false">Book a Trip Braintree [Token]</string>
+    <string name="book_a_trip_braintree_token_exchange_new" translatable="false">Book a Trip Braintree [Token] New Flow</string>
     <string name="book_a_trip_adyen_guest" translatable="false">Book a Trip Adyen [Guest]</string>
     <string name="book_a_trip_adyen_token_exchange" translatable="false">Book a Trip Adeyn [Token]</string>
     <string name="book_a_trip_loyalty_token_exchange" translatable="false">Book a Trip Loyalty [Token]</string>
