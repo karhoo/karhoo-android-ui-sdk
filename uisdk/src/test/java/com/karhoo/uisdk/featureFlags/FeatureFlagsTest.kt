@@ -3,11 +3,7 @@ package com.karhoo.uisdk.featureFlags
 import android.content.Context
 import com.karhoo.uisdk.base.FeatureFlags
 import com.karhoo.uisdk.base.FeatureFlagsModel
-import com.karhoo.uisdk.base.featureFlags.FeatureFlagsService
-import com.karhoo.uisdk.base.featureFlags.FeatureFlagsStore
 import com.nhaarman.mockitokotlin2.mock
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
