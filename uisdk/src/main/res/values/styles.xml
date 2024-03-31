@@ -903,13 +903,17 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="KhNowScheduleActionButtonContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:padding">@dimen/kh_uisdk_spacing_small</item>
+    </style>
+
     <style name="KhNowActionButtonContainer">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_small</item>
-        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_small</item>
-        <item name="android:layout_marginBottom">@dimen/kh_uisdk_spacing_small</item>
         <item name="android:background">@drawable/uisdk_gradient_enabled_secondary</item>
     </style>
 
@@ -929,10 +933,6 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginStart">@dimen/kh_uisdk_spacing_small</item>
-        <item name="android:layout_marginTop">@dimen/kh_uisdk_spacing_small</item>
-        <item name="android:layout_marginBottom">@dimen/kh_uisdk_spacing_small</item>
-        <item name="android:layout_marginEnd">@dimen/kh_uisdk_spacing_small</item>
         <item name="android:background">@drawable/uisdk_gradient_enabled</item>
     </style>
 

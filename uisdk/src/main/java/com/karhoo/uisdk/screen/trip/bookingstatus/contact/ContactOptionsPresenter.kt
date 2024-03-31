@@ -112,6 +112,11 @@ internal class ContactOptionsPresenter(view: ContactOptionsMVP.View,
                 disableCallDriver()
             }
         }
+
+        if(KarhooUISDKConfigurationProvider.configuration.disableCallDriverOrFleetFeature()) {
+            view?.disableCallDriver()
+            view?.disableCallFleet()
+        }
     }
 
     override fun contactFleet() {

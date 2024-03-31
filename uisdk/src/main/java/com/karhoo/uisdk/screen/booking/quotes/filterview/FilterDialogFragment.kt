@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.bottomSheet.MasterBottomSheetFragment
 import com.karhoo.uisdk.base.view.LoadingButtonView
@@ -109,15 +110,61 @@ class FilterDialogFragment : MasterBottomSheetFragment(), FilterDialogContract.V
     }
 
     override fun createFilters(filterChain: FilterChain) {
-        createPassengerNumberedFilter()
-        createLuggageNumberedFilter()
-        createQuoteTypeFilter()
-        createServiceAgreementsFilter()
-        createVehicleTypeFilter()
-        createVehicleClassFilter()
-        createVehicleExtrasFilter()
-        createVehicleEcoFilter()
-        createFleetCapabilitiesFilter()
+        val excludedFilters = KarhooUISDKConfigurationProvider.configuration.excludedFilterCategories()
+
+        if(excludedFilters.contains(FilterCategory.PASSENGERS)) {
+            filterViewPassengerNumberedFilter.visibility = View.GONE
+        }
+        else
+            createPassengerNumberedFilter()
+
+        if(excludedFilters.contains(FilterCategory.LUGGAGE)) {
+            filterViewLuggageNumberedFilter.visibility = View.GONE
+        }
+        else
+            createLuggageNumberedFilter()
+
+        if(excludedFilters.contains(FilterCategory.QUOTE_TYPES)) {
+            filterViewQuoteTypeMultiSelectCheckboxFilter.visibility = View.GONE
+        }
+        else
+            createQuoteTypeFilter()
+
+        if(excludedFilters.contains(FilterCategory.SERVICE_AGREEMENTS)) {
+            filterViewServiceAgreementsMultiSelectCheckboxFilter.visibility = View.GONE
+        }
+        else
+            createServiceAgreementsFilter()
+
+        if(excludedFilters.contains(FilterCategory.VEHICLE_TYPE)) {
+            filterViewVehicleTypeMultiSelectChipsFilter.visibility = View.GONE
+        }
+        else
+            createVehicleTypeFilter()
+
+        if(excludedFilters.contains(FilterCategory.VEHICLE_CLASS)) {
+            filterViewVehicleClassMultiSelectChipsFilter.visibility = View.GONE
+        }
+        else
+            createVehicleClassFilter()
+
+        if(excludedFilters.contains(FilterCategory.VEHICLE_EXTRAS)) {
+            filterViewVehicleExtrasMultiSelectChipsFilter.visibility = View.GONE
+        }
+        else
+            createVehicleExtrasFilter()
+
+        if(excludedFilters.contains(FilterCategory.ECO_FRIENDLY)) {
+            filterViewVehicleEcoMultiSelectChipsFilter.visibility = View.GONE
+        }
+        else
+            createVehicleEcoFilter()
+
+        if(excludedFilters.contains(FilterCategory.FLEET_CAPABILITIES)) {
+            filterViewFleetCapabilitiesMultiSelectChipsFilter.visibility = View.GONE
+        }
+        else
+            createFleetCapabilitiesFilter()
     }
 
     private fun createPassengerNumberedFilter() {

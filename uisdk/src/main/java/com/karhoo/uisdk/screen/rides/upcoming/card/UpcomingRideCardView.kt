@@ -11,6 +11,7 @@ import androidx.annotation.AttrRes
 import com.karhoo.sdk.api.model.PickupType
 import com.karhoo.sdk.api.model.TripInfo
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.ScheduledDateViewBinder
 import com.karhoo.uisdk.screen.rides.detail.RideDetailActivity
@@ -81,6 +82,9 @@ class UpcomingRideCardView @JvmOverloads constructor(
         setOnClickListener { presenter?.selectDetails() }
 
         presenter?.bindDate()
+
+        if(KarhooUISDKConfigurationProvider.configuration.disableCallDriverOrFleetFeature())
+            callButton.visibility = View.GONE
     }
 
     override fun displayDate(date: DateTime) {
