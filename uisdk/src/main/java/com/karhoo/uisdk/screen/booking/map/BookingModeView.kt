@@ -5,8 +5,10 @@ import android.util.AttributeSet
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import android.widget.Space
 import androidx.lifecycle.LifecycleOwner
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.listener.SimpleAnimationListener
 import com.karhoo.uisdk.screen.booking.address.timedatepicker.TimeDatePickerMVP
@@ -29,6 +31,7 @@ class BookingModeView @JvmOverloads constructor(
     private lateinit var nowActionButton: LinearLayout
     private lateinit var scheduleActionButton: LinearLayout
     private lateinit var loyaltyInfoLayout: LinearLayout
+    private lateinit var bookingModeActionButtonSpace: Space
 
     init {
         inflate(context, R.layout.uisdk_view_booking_mode, this)
@@ -36,6 +39,7 @@ class BookingModeView @JvmOverloads constructor(
         nowActionButton = findViewById(R.id.nowActionButton)
         scheduleActionButton = findViewById(R.id.scheduleActionButton)
         loyaltyInfoLayout = findViewById(R.id.loyaltyInfoLayout)
+        bookingModeActionButtonSpace = findViewById(R.id.bookingModeActionButtonSpace)
 
         nowActionButton.setOnClickListener {
             callbackToStartQuoteList?.invoke(false)
@@ -47,6 +51,11 @@ class BookingModeView @JvmOverloads constructor(
 
         nowActionButton.alpha = disabledOpacity
         scheduleActionButton.alpha = disabledOpacity
+
+        if(KarhooUISDKConfigurationProvider.configuration.disablePrebookRides()) {
+            scheduleActionButton.visibility = GONE
+            bookingModeActionButtonSpace.visibility = GONE
+        }
     }
 
     override fun enableNowButton(enable: Boolean) {

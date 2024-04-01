@@ -5,6 +5,7 @@ import com.karhoo.sdk.analytics.AnalyticsManager
 import com.karhoo.sdk.api.KarhooSDKConfiguration
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterCategory
 
 interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConfig {
     var paymentManager: PaymentManager
@@ -18,6 +19,12 @@ interface KarhooUISDKConfiguration : KarhooSDKConfiguration, PaymentProviderConf
     fun useAddToCalendarFeature(): Boolean = true
 
     fun forceDarkMode(): Boolean = false
+
+    fun disablePrebookRides(): Boolean = false
+
+    fun excludedFilterCategories(): List<FilterCategory> = emptyList()
+
+    fun disableCallDriverOrFleetFeature(): Boolean = false
 }
 
 internal object KarhooUISDKConfigurationProvider {

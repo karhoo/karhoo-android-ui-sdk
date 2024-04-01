@@ -27,9 +27,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        style="@style/KhNowScheduleActionButtonContainer">
 
         <LinearLayout
             android:id="@+id/nowActionButton"
@@ -37,6 +35,11 @@
 
             <TextView style="@style/KhNowActionButtonText" />
         </LinearLayout>
+
+        <Space
+            android:id="@+id/bookingModeActionButtonSpace"
+            android:layout_width="@dimen/kh_uisdk_spacing_small"
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:id="@+id/scheduleActionButton"
