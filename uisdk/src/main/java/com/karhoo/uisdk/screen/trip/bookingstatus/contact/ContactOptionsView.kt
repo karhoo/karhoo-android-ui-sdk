@@ -107,7 +107,7 @@ class ContactOptionsView @JvmOverloads constructor(
         }
         cancelButton.apply {
             setOnClickListener { }
-            visibility = View.INVISIBLE
+            visibility = View.GONE
         }
     }
 
