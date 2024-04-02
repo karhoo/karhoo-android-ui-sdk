@@ -11,6 +11,7 @@ import com.karhoo.sdk.api.KarhooEnvironment
 import com.karhoo.sdk.api.model.AuthenticationMethod
 import com.karhoo.uisdk.KarhooUISDKConfiguration
 import com.karhoo.uisdk.screen.booking.checkout.payment.PaymentManager
+import com.karhoo.uisdk.screen.booking.quotes.filterview.FilterCategory
 
 class BraintreeTokenExchangeConfig(private val context: Context) : KarhooUISDKConfiguration {
     override lateinit var paymentManager: PaymentManager
@@ -55,5 +56,20 @@ class BraintreeTokenExchangeConfig(private val context: Context) : KarhooUISDKCo
 
     override fun forceDarkMode(): Boolean {
         return forceDarkMode
+    }
+
+    override fun disablePrebookRides(): Boolean {
+        return true
+    }
+
+    override fun excludedFilterCategories(): List<FilterCategory> {
+        return listOf(
+            FilterCategory.LUGGAGE,
+            FilterCategory.ECO_FRIENDLY,
+        )
+    }
+
+    override fun disableCallDriverOrFleetFeature(): Boolean {
+        return true
     }
 }

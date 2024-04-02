@@ -24,6 +24,7 @@ import com.karhoo.sdk.api.model.LocationInfo
 import com.karhoo.sdk.api.model.Quote
 import com.karhoo.sdk.api.model.QuoteStatus
 import com.karhoo.uisdk.KarhooUISDK
+import com.karhoo.uisdk.KarhooUISDKConfigurationProvider
 import com.karhoo.uisdk.R
 import com.karhoo.uisdk.base.address.AddressCodes
 import com.karhoo.uisdk.base.snackbar.SnackbarConfig
@@ -137,7 +138,7 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
         initProgressBar()
 
         showFilteringWidgets(true)
-        addressBarWidget.showPrebookIcon(true)
+        addressBarWidget.showPrebookIcon(!KarhooUISDKConfigurationProvider.configuration.disablePrebookRides())
 
         return view
     }

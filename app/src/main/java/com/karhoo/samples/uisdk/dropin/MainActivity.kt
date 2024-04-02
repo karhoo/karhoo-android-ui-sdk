@@ -22,7 +22,6 @@ import com.karhoo.sdk.api.KarhooError
 import com.karhoo.sdk.api.network.request.UserLogin
 import com.karhoo.sdk.api.network.response.Resource
 import com.karhoo.uisdk.KarhooUISDK
-import com.karhoo.uisdk.screen.booking.BookingActivity
 import com.karhoo.uisdk.screen.booking.checkout.payment.AdyenPaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.BraintreePaymentManager
 import com.karhoo.uisdk.screen.booking.checkout.payment.adyen.AdyenPaymentView
@@ -31,12 +30,23 @@ import kotlin.system.exitProcess
 import kotlinx.coroutines.GlobalScope
 import android.util.Log
 import android.widget.CheckBox
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import com.karhoo.farechoice.service.analytics.KarhooAnalytics
 import com.karhoo.samples.uisdk.dropin.BuildConfig.ADYEN_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.BuildConfig.BRAINTREE_AUTH_TOKEN
 import com.karhoo.samples.uisdk.dropin.config.LoyaltyTokenBraintreeConfig
 import com.karhoo.sdk.analytics.AnalyticsManager
+import com.karhoo.sdk.api.model.Quote
+import com.karhoo.sdk.api.model.TripInfo
+import com.karhoo.uisdk.screen.booking.BookingActivity
+import com.karhoo.uisdk.screen.booking.checkout.CheckoutActivity
+import com.karhoo.uisdk.screen.booking.domain.address.JourneyDetails
+import com.karhoo.uisdk.screen.booking.map.BookingMapActivity
+import com.karhoo.uisdk.screen.booking.quotes.QuotesActivity
+import com.karhoo.uisdk.screen.trip.TripActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
@@ -50,7 +60,7 @@ class MainActivity : AppCompatActivity() {
     private var requestedAuthentication = false
     private var username: String? = null
     private var password: String? = null
-    private var deferredRequests: MutableList<(()-> Unit)> = arrayListOf()
+    private var deferredRequests: MutableList<(() -> Unit)> = arrayListOf()
 
     init {
         Thread.setDefaultUncaughtExceptionHandler { _, eh ->
@@ -76,6 +86,16 @@ class MainActivity : AppCompatActivity() {
 
         loadingProgressBar = findViewById<View>(R.id.loadingSpinner)
 
+        setButtonEvents()
+
+        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
+        checkbox.setChecked(getCurrentNotificationStatus())
+
+        val checkbox2 = findViewById<CheckBox>(R.id.darkmode_checkbox)
+        checkbox2.isChecked = getCurrentDarkModeStatus()
+    }
+
+    private fun setButtonEvents(){
         findViewById<Button>(R.id.bookTripButtonBraintreeGuest).setOnClickListener {
             showLoading()
 
@@ -91,6 +111,15 @@ class MainActivity : AppCompatActivity() {
             applyBraintreeTokenExchangeConfig()
 
             loginTokenExchange(BuildConfig.BRAINTREE_AUTH_TOKEN)
+        }
+
+
+        findViewById<Button>(R.id.bookTripButtonBraintreeTokenExchangeNew).setOnClickListener {
+            showLoading()
+
+            applyBraintreeTokenExchangeConfig()
+
+            loginTokenExchange(BuildConfig.BRAINTREE_AUTH_TOKEN, newFlow = true)
         }
 
         findViewById<Button>(R.id.bookTripButtonAdyenGuest).setOnClickListener {
@@ -143,12 +172,6 @@ class MainActivity : AppCompatActivity() {
             }
             showLoginInputDialog()
         }
-
-        val checkbox = findViewById<CheckBox>(R.id.notifications_checkbox)
-        checkbox.setChecked(getCurrentNotificationStatus())
-
-        val checkbox2 = findViewById<CheckBox>(R.id.darkmode_checkbox)
-        checkbox2.isChecked = getCurrentDarkModeStatus()
     }
 
     private fun showLoginInputDialog() {
@@ -191,22 +214,24 @@ class MainActivity : AppCompatActivity() {
 
                         callback?.invoke()
                     }
+
                     is Resource.Failure -> toastErrorMessage(result.error)
                 }
             }
     }
 
-    private fun createBraintreeManager(): BraintreePaymentManager{
+    private fun createBraintreeManager(): BraintreePaymentManager {
         return BraintreePaymentManager().apply {
             this.paymentProviderView = BraintreePaymentView()
         }
     }
 
-    private fun createAdyenManager(): AdyenPaymentManager{
+    private fun createAdyenManager(): AdyenPaymentManager {
         return AdyenPaymentManager().apply {
             this.paymentProviderView = AdyenPaymentView()
         }
     }
+
     private fun applyBraintreeTokenExchangeConfig() {
         val config = BraintreeTokenExchangeConfig(applicationContext)
         config.paymentManager = createBraintreeManager()
@@ -289,6 +314,7 @@ class MainActivity : AppCompatActivity() {
 
                             requestedAuthentication = false
                         }
+
                         is Resource.Failure -> toastErrorMessage(result.error)
                     }
                 }
@@ -310,14 +336,75 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginTokenExchange(token: String) {
+    private fun loginTokenExchange(token: String, newFlow: Boolean = false) {
         KarhooApi.userService.logout()
         KarhooApi.authService.login(token).execute { result ->
             when (result) {
-                is Resource.Success -> goToBooking()
+                is Resource.Success -> if (!newFlow) goToBooking() else goToBookingNew()
                 is Resource.Failure -> toastErrorMessage(result.error)
             }
         }
+    }
+
+    private var bookingMapLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        if (result?.resultCode == RESULT_OK) {
+            val journeyDetails =
+                result.data?.getParcelableExtra<JourneyDetails>(BookingMapActivity.JOURNEY_DETAILS)
+
+            val builder = QuotesActivity.Builder()
+                .bookingInfo(journeyDetails)
+            quotesLauncher.launch(builder.build(this@MainActivity))
+        }
+    }
+
+    private var quotesLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        val quote =
+            result?.data?.getParcelableExtra<Quote>(QuotesActivity.QUOTES_SELECTED_QUOTE_KEY)
+        quote?.let { quote ->
+            val builder = CheckoutActivity.Builder()
+                .quote(quote)
+                .journeyDetailsExpanded(
+                    result.data?.getParcelableExtra(QuotesActivity.QUOTES_PICKUP_ADDRESS),
+                    result.data?.getParcelableExtra(QuotesActivity.QUOTES_DROPOFF_ADDRESS),
+                    null
+                )
+
+            val validityTimeStamp = result.data?.getLongExtra(
+                QuotesActivity.QUOTES_SELECTED_QUOTE_VALIDITY_TIMESTAMP, 0
+            )
+
+            validityTimeStamp?.let {
+                builder.validityDeadlineTimestamp(
+                    validityTimeStamp
+                )
+            }
+            checkoutLauncher.launch(builder.build(this))
+        }
+    }
+
+    private var checkoutLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        if (result?.resultCode == RESULT_OK) {
+            val tripInfo = result.data?.getParcelableExtra<TripInfo>(
+                CheckoutActivity
+                    .BOOKING_CHECKOUT_TRIP_INFO_KEY
+            )
+
+            val builder = TripActivity.Builder.builder
+                .tripInfo(tripInfo!!)
+           tripActivityLauncher.launch(builder.build(this))
+        }
+    }
+
+    private var tripActivityLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult? ->
+        goToBookingNew()
     }
 
     private fun goToBooking() {
@@ -326,6 +413,14 @@ class MainActivity : AppCompatActivity() {
         val builder = BookingActivity.Builder.builder
             .initialLocation(null)
         startActivity(builder.build(this))
+        hideLoading()
+    }
+
+    private fun goToBookingNew() {
+        AnalyticsManager.initialise()
+        KarhooUISDK.analytics = KarhooAnalytics.INSTANCE
+        val builder = BookingMapActivity.Builder.builder
+        bookingMapLauncher.launch(builder.build(this))
         hideLoading()
     }
 
@@ -376,10 +471,9 @@ class MainActivity : AppCompatActivity() {
             putBoolean(darkModeId, value)
             apply()
         }
-        if(value){
+        if (value) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
-        else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
