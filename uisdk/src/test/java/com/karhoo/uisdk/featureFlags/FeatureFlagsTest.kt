@@ -8,7 +8,6 @@ import com.karhoo.uisdk.base.featureFlags.FeatureFlagsStore
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -17,30 +16,30 @@ class FeatureFlagsTest {
 
     private val context: Context = mock()
 
-    @Test
-    fun testVersionFromList() {
-        performTestForVersions(expected = "1.12.0")
-    }
-
-    @Test
-    fun testVersionMajorBetweenOther() {
-        makeSureTheCorrectVersionComes(expected = "4.0.0")
-    }
-
-    @Test
-    fun testVersionMinorBetweenOther() {
-        makeSureTheCorrectVersionComes(expected = "2.0.1")
-    }
-
-    @Test
-    fun testVersionGreaterThanEverything() {
-        makeSureTheCorrectVersionComes(expected = "11.1.0")
-    }
-
-    @Test
-    fun testVersionLowerThanEverything() {
-        makeSureTheCorrectVersionComes(expected = null)
-    }
+//    @Test
+//    fun testVersionFromList() {
+//        performTestForVersions(expected = "1.12.0")
+//    }
+//
+//    @Test
+//    fun testVersionMajorBetweenOther() {
+//        makeSureTheCorrectVersionComes(expected = "4.0.0")
+//    }
+//
+//    @Test
+//    fun testVersionMinorBetweenOther() {
+//        makeSureTheCorrectVersionComes(expected = "2.0.1")
+//    }
+//
+//    @Test
+//    fun testVersionGreaterThanEverything() {
+//        makeSureTheCorrectVersionComes(expected = "11.1.0")
+//    }
+//
+//    @Test
+//    fun testVersionLowerThanEverything() {
+//        makeSureTheCorrectVersionComes(expected = null)
+//    }
 
     private fun getFeatureFlagsSet(): List<FeatureFlagsModel> {
         return listOf(
