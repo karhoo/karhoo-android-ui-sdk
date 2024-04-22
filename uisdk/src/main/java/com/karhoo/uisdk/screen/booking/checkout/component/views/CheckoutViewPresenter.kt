@@ -221,7 +221,7 @@ internal class CheckoutViewPresenter(
         }
 
         val metadata = getBookingMetadataMap(identifier, tripId)
-        val additionalPassengers = metadata?.get(PASSENGER_NUMBER)?.toInt() ?: kotlin.run { 0 }
+        val additionalPassengers = metadata?.get(ADDITIONAL_PASSENGERS)?.toInt() ?: kotlin.run { 0 }
         val luggage = metadata?.get(LUGGAGE)?.toInt() ?: kotlin.run { 0 }
 
         tripsService.book(
@@ -440,6 +440,7 @@ internal class CheckoutViewPresenter(
     companion object {
         const val TRIP_ID = "trip_id"
         const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
+        const val ADDITIONAL_PASSENGERS = "ADDITIONAL_PASSENGERS"
         const val LUGGAGE = "LUGGAGE"
     }
 }
