@@ -358,6 +358,10 @@ class QuotesFragment : Fragment(), QuotesSortView.Listener,
                     PASSENGER_NUMBER,
                     (filterChain.filters[0] as PassengersFilter).currentNumber
                 )
+                bundle.putInt(
+                    QuotesActivity.ADDITIONAL_PASSENGERS,
+                    (filterChain.filters[0] as PassengersFilter).currentNumber - 1
+                )
                 bundle.putInt(LUGGAGE, (filterChain.filters[1] as LuggageFilter).currentNumber)
 
                 /** Tell the availability provider to run in background when going to the

@@ -241,6 +241,7 @@ class RidePlanningPresenter : RidePlanningContract.Presenter {
         }
 
         BookingStorage.bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+        BookingStorage.bookingMetadata?.put(QuotesActivity.ADDITIONAL_PASSENGERS, (passengerNumber!! - 1).toString())
         BookingStorage.bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
     }
 

@@ -130,6 +130,7 @@ class QuotesActivity : BaseActivity(), WebViewActions {
         const val QUOTES_INFO_REQUEST_NUMBER = 20
         const val QUOTES_CANCELLED = 22
         const val PASSENGER_NUMBER = "PASSENGER_NUMBER"
+        const val ADDITIONAL_PASSENGERS = "ADDITIONAL_PASSENGERS"
         const val LUGGAGE = "LUGGAGE"
         const val QUOTES_RESTORE_PREVIOUS_DATA_KEY = "QUOTES_SELECTED_DATE"
         const val QUOTES_FRAGMENT = "QUOTES_FRAGMENT"

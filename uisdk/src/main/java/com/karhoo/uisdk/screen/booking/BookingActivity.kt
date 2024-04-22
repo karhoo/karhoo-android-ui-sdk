@@ -601,6 +601,9 @@ class BookingActivity : BaseActivity(), AddressBarMVP.Actions, BookingMapMVP.Act
             bookingMetadata = HashMap()
         }
         bookingMetadata?.put(QuotesActivity.PASSENGER_NUMBER, passengerNumber.toString())
+        if (passengerNumber != null) {
+            bookingMetadata?.put(QuotesActivity.ADDITIONAL_PASSENGERS, (passengerNumber - 1).toString())
+        }
         bookingMetadata?.put(QuotesActivity.LUGGAGE, luggage.toString())
     }
 
