@@ -72,7 +72,7 @@ class AddressMapView @JvmOverloads constructor(context: Context,
         pickupDropoffIcon = findViewById(R.id.pickupDropoffIcon)
         pickupPinIcon = findViewById(R.id.pickupPinIcon)
 
-        actions?.getLifecycle()?.addObserver(this)
+        actions?.getActionsLifecycle()?.addObserver(this)
         addressSelectButton.setOnClickListener {
             presenter.selectAddressPressed()
         }
